@@ -32,9 +32,6 @@ data/users.json
 *.sln
 *.sw?
 
-# Desktop app installers (large binaries — upload to server manually or via volume)
-downloads/*.dmg
-downloads/*.exe
-downloads/*.zip
+# Desktop app installers tracked via Git LFS (see .gitattributes)
 downloads/*.deb
 downloads/*.AppImage
