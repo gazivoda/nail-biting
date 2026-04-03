@@ -5,8 +5,8 @@ import {
   Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
 
-const DOWNLOAD_MAC_ARM = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail.Habit.Tracker-1.0.0-arm64.dmg';
-const DOWNLOAD_MAC_INTEL = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail.Habit.Tracker-1.0.0.dmg';
+const DOWNLOAD_MAC_ARM = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
+const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
 
 function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   const base = size === 'lg'

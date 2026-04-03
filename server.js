@@ -306,6 +306,26 @@ app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => 
   }
 });
 
+// ─── Downloads ───────────────────────────────────────────────────────────────
+// Serves installer files (DMG, EXE) from the downloads/ directory.
+// On Coolify, mount a persistent volume to DOWNLOADS_DIR so large binaries
+// are not baked into the image.
+const DOWNLOADS_DIR = process.env.DOWNLOADS_DIR || join(__dirname, 'downloads');
+
+app.get('/downloads/:file', (req, res) => {
+  const { file } = req.params;
+  // Only allow alphanumeric filenames with safe extensions
+  if (!/^[\w.\-]+\.(dmg|exe|zip|deb|AppImage)$/i.test(file)) {
+    return res.status(400).send('Invalid filename');
+  }
+  const filePath = join(DOWNLOADS_DIR, file);
+  res.download(filePath, file, (err) => {
+    if (err && !res.headersSent) {
+      res.status(404).send('File not found');
+    }
+  });
+});
+
 // ─── Static (production) ─────────────────────────────────────────────────────
 const distPath = join(__dirname, 'dist');
 if (existsSync(distPath)) {
