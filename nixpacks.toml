@@ -1,8 +1,8 @@
 # nixpacks.toml — used by Coolify when Build Pack is set to Nixpacks.
-# Builds the frontend and starts the Express server.
+# Builds the React frontend and starts the Express server.
 
 [phases.setup]
-nixPkgs = ["nodejs_22", "python3", "gnumake", "gcc"]
+nixPkgs = ["python3", "gnumake", "gcc"]
 
 [phases.install]
 cmds = ["npm ci"]
@@ -12,3 +12,8 @@ cmds = ["VITE_BUILD_TARGET=web npm run build:web"]
 
 [start]
 cmd = "node server.js"
+
+# Pin Node to 22 (latest patch) so Vite 5 engine requirement is satisfied.
+# Nixpacks respects NIXPACKS_NODE_VERSION — Coolify also passes this automatically.
+[variables]
+NIXPACKS_NODE_VERSION = "22"
