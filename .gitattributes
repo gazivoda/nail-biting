@@ -1,0 +1,3 @@
+downloads/*.dmg filter=lfs diff=lfs merge=lfs -text
+downloads/*.exe filter=lfs diff=lfs merge=lfs -text
+downloads/*.zip filter=lfs diff=lfs merge=lfs -text

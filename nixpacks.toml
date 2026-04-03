@@ -2,7 +2,7 @@
 # Builds the React frontend and starts the Express server.
 
 [phases.setup]
-nixPkgs = ["python3", "gnumake", "gcc"]
+nixPkgs = ["python3", "gnumake", "gcc", "git-lfs"]
 
 [phases.install]
 cmds = ["npm ci"]
