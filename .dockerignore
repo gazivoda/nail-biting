@@ -2,8 +2,6 @@ node_modules
 dist
 dist-electron
 build
-public
-src
 electron
 data
 .env
