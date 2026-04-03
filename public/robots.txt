@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+# Allow all major AI search crawlers for citation visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Block AI training crawlers (not search)
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://nailhabit.app/sitemap.xml

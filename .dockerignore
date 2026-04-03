@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-electron
+build
+public
+src
+electron
+data
+.env
+*.dmg
+*.zip
+*.exe
+*.AppImage
+*.deb
+*.blockmap

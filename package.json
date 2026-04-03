@@ -1,0 +1,177 @@
+{
+  "name": "nail-habit-app",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"vite\" \"node server.js\"",
+    "build": "tsc -b && vite build",
+    "start": "node server.js",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "electron:build-main": "vite build --config vite.electron.config.ts",
+    "electron:dev": "concurrently \"vite\" \"node server.js\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:build": "npm run build && npm run electron:build-main",
+    "electron:dist": "npm run electron:build && electron-builder",
+    "electron:dist:mac": "npm run electron:build && electron-builder --mac",
+    "electron:dist:win": "npm run electron:build && electron-builder --win",
+    "electron:dist:all": "npm run electron:build && electron-builder --mac --win"
+  },
+  "build": {
+    "appId": "com.nailhabit.app",
+    "productName": "Nail Habit Tracker",
+    "copyright": "Copyright © 2024 Nail Habit",
+    "asar": true,
+    "asarUnpack": [
+      "dist/mediapipe-wasm/**",
+      "dist/mediapipe-models/**"
+    ],
+    "files": [
+      "dist/**/*",
+      "!dist/mac/**",
+      "!dist/mac-arm64/**",
+      "!dist/win-unpacked/**",
+      "!dist/linux-unpacked/**",
+      "!dist/*.dmg",
+      "!dist/*.zip",
+      "!dist/*.exe",
+      "!dist/*.AppImage",
+      "!dist/*.deb",
+      "!dist/*.blockmap",
+      "!dist/.icon-icns/**",
+      "dist-electron/**/*",
+      "!dist-electron/**/*.map",
+      "!**/*.map.js"
+    ],
+    "extraResources": [
+      {
+        "from": "data",
+        "to": "data",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": ".env",
+        "to": ".env"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Nail Habit",
+        "schemes": [
+          "nailhabit"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.healthcare-fitness",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "public/icons/icon-512x512.png",
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/icons/icon-256x256.png",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "dmg": {
+      "title": "Nail Habit Tracker",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.33",
+    "@paypal/react-paypal-js": "^9.0.2",
+    "better-sqlite3": "^12.8.0",
+    "date-fns": "^4.1.0",
+    "express": "^5.2.1",
+    "google-auth-library": "^10.6.2",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.0.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-is": "^19.2.4",
+    "recharts": "^3.8.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^24.12.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.27",
+    "concurrently": "^9.2.1",
+    "electron": "^41.1.1",
+    "electron-builder": "^26.8.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.0.0",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19",
+    "tslib": "^2.8.1",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.57.0",
+    "vite": "^8.0.1",
+    "wait-on": "^9.0.4"
+  }
+}
