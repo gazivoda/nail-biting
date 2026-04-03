@@ -119,6 +119,9 @@ function authMiddleware(req, res, next) {
   }
 }
 
+// ─── Health check ────────────────────────────────────────────────────────────
+app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+
 // ─── OAuth ───────────────────────────────────────────────────────────────────
 const oauthClient = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, REDIRECT_URI);
 
