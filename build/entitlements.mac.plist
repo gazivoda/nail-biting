@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <!-- Allow the app to access the camera -->
+    <key>com.apple.security.device.camera</key>
+    <true/>
+    <!-- Allow the app to send user notifications -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <!-- Allow outbound network connections (for Google OAuth and PayPal) -->
+    <key>com.apple.security.network.server</key>
+    <true/>
+    <!-- Required for hardened runtime + notarisation -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+  </dict>
+</plist>
