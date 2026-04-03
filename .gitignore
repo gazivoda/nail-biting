@@ -31,3 +31,10 @@ data/users.json
 *.njsproj
 *.sln
 *.sw?
+
+# Desktop app installers (large binaries — upload to server manually or via volume)
+downloads/*.dmg
+downloads/*.exe
+downloads/*.zip
+downloads/*.deb
+downloads/*.AppImage

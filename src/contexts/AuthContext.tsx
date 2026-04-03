@@ -103,6 +103,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     window.addEventListener('electron-auth', onElectronAuth);
 
+    // Check URL hash for OAuth callback token (web browser flow).
+    // Server redirects to /#token=xxx or /#auth_error=xxx after Google OAuth.
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const hashToken = hashParams.get('token');
+    const hashError = hashParams.get('auth_error');
+
+    if (hashToken) {
+      localStorage.setItem(TOKEN_KEY, hashToken);
+      window.history.replaceState(null, '', '/');
+      apiFetch('/api/user/me')
+        .then(applyUser)
+        .catch(() => {
+          localStorage.removeItem(TOKEN_KEY);
+          setAccessStatus('no_auth');
+        });
+      return () => window.removeEventListener('electron-auth', onElectronAuth);
+    }
+
+    if (hashError) {
+      console.error('Auth error from OAuth callback:', hashError);
+      window.history.replaceState(null, '', '/');
+      setAccessStatus('no_auth');
+      return () => window.removeEventListener('electron-auth', onElectronAuth);
+    }
+
     // On initial mount: check for a token already stored (persisted login)
     const storedToken = localStorage.getItem(TOKEN_KEY);
     if (!storedToken) {

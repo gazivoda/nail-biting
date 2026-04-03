@@ -8,7 +8,7 @@ import { CameraToggle } from '../components/dashboard/CameraToggle';
 import { useCamera } from '../hooks/useCamera';
 import { useAppStore } from '../store/useAppStore';
 
-const DOWNLOAD_MAC_ARM = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail.Habit.Tracker-1.0.0-arm64.dmg';
+const DOWNLOAD_MAC_ARM = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
 const isElectron = navigator.userAgent.includes('Electron');
 
 export function Dashboard() {
