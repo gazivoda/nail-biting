@@ -5,8 +5,8 @@ import {
   Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
 
-const DOWNLOAD_MAC_ARM = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail Habit Tracker-1.0.0-arm64.dmg';
-const DOWNLOAD_MAC_INTEL = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail Habit Tracker-1.0.0.dmg';
+const DOWNLOAD_MAC_ARM = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail.Habit.Tracker-1.0.0-arm64.dmg';
+const DOWNLOAD_MAC_INTEL = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail.Habit.Tracker-1.0.0.dmg';
 
 function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   const base = size === 'lg'
@@ -29,6 +29,14 @@ function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
         <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
         Intel Mac
       </a>
+      <span
+        title="Coming soon"
+        className={`${base} bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed select-none`}
+      >
+        <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+        Windows
+        <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'}`}>soon</span>
+      </span>
     </div>
   );
 }
@@ -70,7 +78,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
         >
           <div className="max-w-3xl mx-auto">
             <p className="text-xs tracking-[0.25em] uppercase text-emerald-400 font-medium mb-6">
-              Nail Habit Tracker · macOS
+              Mac · Windows · Web App
             </p>
 
             <h1 className="text-5xl sm:text-6xl font-bold text-slate-100 leading-tight">
@@ -83,7 +91,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
               then sounds an alarm.{' '}
               <span className="text-slate-300 font-medium">No cloud processing.</span>{' '}
               <span className="text-slate-300 font-medium">No camera data sent anywhere.</span>{' '}
-              Your video never leaves your Mac.
+              Available as a native desktop app for Mac and Windows, and in your browser.
             </p>
 
             <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs py-1.5 px-4 bg-emerald-950/40 border border-emerald-900/40 rounded-full mt-6 w-fit mx-auto">
@@ -98,11 +106,11 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
                 <button
                   onClick={onLaunch}
                   disabled={signingIn}
-                  className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors disabled:opacity-50"
+                  className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95 disabled:opacity-50"
                 >
                   {signingIn
                     ? <><Loader2 size={14} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
-                    : <><Zap size={14} aria-hidden="true" />Or launch web version</>
+                    : <><Zap size={14} aria-hidden="true" />Use Web App</>
                   }
                 </button>
                 <a
@@ -122,7 +130,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
 
             {/* Social proof strip */}
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-600">
-              {['macOS 12+', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
+              {['Mac & Windows', 'Web App', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
                 <span key={tag} className="flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-emerald-800" aria-hidden="true" />
                   {tag}
@@ -419,22 +427,28 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
             style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(16,185,129,0.06) 0%, transparent 70%)' }}
           >
             <h2 className="text-3xl font-bold text-slate-100">Ready to stop nail biting?</h2>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto mt-4">
-              Download the app, sign in with Google, allow camera access — nail biting detection starts in under ten seconds.
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
+              Download the desktop app for Mac or Windows, or use the web app directly in your browser —
+              sign in with Google and nail biting detection starts in under ten seconds.
             </p>
-            <div className="mt-8 flex flex-col items-center gap-3">
+            <div className="mt-8 flex flex-col items-center gap-4">
               <DownloadButtons size="lg" />
-              <p className="text-slate-600 text-xs">macOS 12+ required · Windows coming soon</p>
+              <div className="flex items-center gap-3">
+                <div className="h-px w-12 bg-slate-800" />
+                <span className="text-slate-600 text-xs">or</span>
+                <div className="h-px w-12 bg-slate-800" />
+              </div>
               <button
                 onClick={onLaunch}
                 disabled={signingIn}
-                className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-300 text-xs transition-colors disabled:opacity-50 mt-1"
+                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95 disabled:opacity-50"
               >
                 {signingIn
-                  ? <><Loader2 size={12} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
-                  : <><Zap size={12} aria-hidden="true" />Use web version instead</>
+                  ? <><Loader2 size={14} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
+                  : <><Zap size={14} aria-hidden="true" />Use Web App — free trial</>
                 }
               </button>
+              <p className="text-slate-700 text-xs">7-day free trial · no credit card required</p>
             </div>
           </section>
 
@@ -447,8 +461,8 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
           <div>
             <p className="text-slate-400 text-sm font-semibold">Nail Habit Tracker</p>
             <p className="text-slate-700 text-xs mt-1 max-w-xs leading-relaxed">
-              A macOS app to stop nail biting (onychophagia) using on-device AI. Built with MediaPipe,
-              React, and WebAssembly. All detection data stays on your device.
+              Stop nail biting (onychophagia) using on-device AI. Available as a native desktop app
+              for Mac and Windows, and as a web app. Built with MediaPipe, React, and WebAssembly.
             </p>
           </div>
           <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">

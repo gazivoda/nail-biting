@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import Database from 'better-sqlite3';
@@ -13,7 +14,6 @@ if (!process.env.GOOGLE_CLIENT_ID) {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-app.use(express.json());
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
@@ -26,6 +26,11 @@ const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
 const PAYPAL_API = process.env.PAYPAL_ENV === 'production'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
+
+// CORS — allow requests from APP_URL (same origin when served from Docker,
+// but needed for local dev where Vite proxy may not cover all cases).
+app.use(cors({ origin: APP_URL, credentials: true }));
+app.use(express.json());
 // When running inside Electron (packaged), APP_URL is localhost:3000 and we
 // redirect auth results to the custom protocol so the OS routes them back to
 // the Electron app window (avoids Google's embedded-webview block).

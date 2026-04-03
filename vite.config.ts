@@ -3,9 +3,9 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
-  // Use relative base so the built index.html works when loaded via file://
-  // (Electron packaged app) as well as from a web server.
-  base: './',
+  // Electron (file://) needs relative base './'; web server needs absolute '/'.
+  // Set VITE_BUILD_TARGET=web when building for Docker/Coolify.
+  base: process.env.VITE_BUILD_TARGET === 'web' ? '/' : './',
 
   server: {
     proxy: {
