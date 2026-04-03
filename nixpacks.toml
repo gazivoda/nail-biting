@@ -1,0 +1,9 @@
+# nixpacks.toml — fallback if Coolify uses nixpacks instead of Dockerfile
+# The preferred build method is Dockerfile (set in Coolify UI: Build Pack → Dockerfile)
+# This file ensures nixpacks doesn't run tsc/vite if it intercepts the build
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "node server.js"
