@@ -12,8 +12,6 @@ dist
 dist-ssr
 *.local
 
-# MediaPipe bundled model files (large binaries, downloaded at build time)
-public/mediapipe-models/
 
 # Server data (users DB — never commit)
 data/users.json

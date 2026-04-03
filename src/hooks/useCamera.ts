@@ -18,6 +18,10 @@ export function useCamera(enabled: boolean) {
 
     async function start() {
       try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          console.error('Camera unavailable: page must be served over HTTPS');
+          return;
+        }
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
           audio: false,
