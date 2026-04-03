@@ -2,28 +2,42 @@ import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
   Code2, ChevronDown, Camera, Bell, Loader2, BookOpen,
-  Star, ArrowRight,
+  Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
+
+const DOWNLOAD_MAC_ARM = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail Habit Tracker-1.0.0-arm64.dmg';
+const DOWNLOAD_MAC_INTEL = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0/Nail Habit Tracker-1.0.0.dmg';
+
+function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
+  const base = size === 'lg'
+    ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-150 px-6 py-3 text-sm'
+    : 'inline-flex items-center gap-2 font-semibold rounded-xl transition-all duration-150 px-4 py-2 text-xs';
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <a
+        href={DOWNLOAD_MAC_ARM}
+        className={`${base} bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95`}
+      >
+        <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+        Download for Mac
+        <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'} opacity-70`}>(Apple Silicon)</span>
+      </a>
+      <a
+        href={DOWNLOAD_MAC_INTEL}
+        className={`${base} bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:-translate-y-0.5 active:scale-95`}
+      >
+        <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+        Intel Mac
+      </a>
+    </div>
+  );
+}
 
 interface Props {
   onLaunch: () => void;
   signingIn?: boolean;
 }
 
-function LaunchButton({ onLaunch, size = 'lg', signingIn = false }: { onLaunch: () => void; size?: 'lg' | 'sm'; signingIn?: boolean }) {
-  return (
-    <button
-      onClick={onLaunch}
-      disabled={signingIn}
-      className={`inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 disabled:bg-emerald-800 disabled:cursor-not-allowed text-slate-950 font-semibold rounded-2xl transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${size === 'lg' ? 'px-8 py-4 text-base' : 'px-6 py-3 text-sm'}`}
-    >
-      {signingIn
-        ? <><Loader2 size={16} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
-        : <><Zap size={16} aria-hidden="true" />Launch App — It's Free</>
-      }
-    </button>
-  );
-}
 
 export function Landing({ onLaunch, signingIn = false }: Props) {
   return (
@@ -37,13 +51,13 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <button
-            onClick={onLaunch}
-            disabled={signingIn}
-            className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors disabled:opacity-50"
+          <a
+            href={DOWNLOAD_MAC_ARM}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5"
           >
-            {signingIn ? 'Signing in…' : 'Launch App'}
-          </button>
+            <Download size={13} aria-hidden="true" />
+            Download
+          </a>
         </div>
       </nav>
 
@@ -78,9 +92,19 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" aria-hidden="true" />
             </div>
 
-            <div className="mt-10 flex flex-col items-center gap-3">
+            <div className="mt-10 flex flex-col items-center gap-4">
+              <DownloadButtons size="lg" />
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <LaunchButton onLaunch={onLaunch} signingIn={signingIn} />
+                <button
+                  onClick={onLaunch}
+                  disabled={signingIn}
+                  className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors disabled:opacity-50"
+                >
+                  {signingIn
+                    ? <><Loader2 size={14} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
+                    : <><Zap size={14} aria-hidden="true" />Or launch web version</>
+                  }
+                </button>
                 <a
                   href="#/blog"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors"
@@ -396,11 +420,21 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
           >
             <h2 className="text-3xl font-bold text-slate-100">Ready to stop nail biting?</h2>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto mt-4">
-              Sign in with Google, allow camera access, and nail biting detection starts in under ten seconds.
-              No configuration. No setup. The AI does the rest.
+              Download the app, sign in with Google, allow camera access — nail biting detection starts in under ten seconds.
             </p>
-            <div className="mt-8">
-              <LaunchButton onLaunch={onLaunch} signingIn={signingIn} />
+            <div className="mt-8 flex flex-col items-center gap-3">
+              <DownloadButtons size="lg" />
+              <p className="text-slate-600 text-xs">macOS 12+ required · Windows coming soon</p>
+              <button
+                onClick={onLaunch}
+                disabled={signingIn}
+                className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-300 text-xs transition-colors disabled:opacity-50 mt-1"
+              >
+                {signingIn
+                  ? <><Loader2 size={12} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
+                  : <><Zap size={12} aria-hidden="true" />Use web version instead</>
+                }
+              </button>
             </div>
           </section>
 
