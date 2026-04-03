@@ -20,33 +20,46 @@ const PORT = process.env.PORT || 3000;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const JWT_SECRET = process.env.JWT_SECRET;
-const APP_URL = process.env.APP_URL || 'http://localhost:5173';
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
 const PAYPAL_API = process.env.PAYPAL_ENV === 'production'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
 
-// CORS — allow requests from APP_URL (same origin when served from Docker,
-// but needed for local dev where Vite proxy may not cover all cases).
-app.use(cors({ origin: APP_URL, credentials: true }));
+// Derive the public base URL from the incoming request so we never need
+// APP_URL or SERVER_URL env vars. Works on any domain automatically.
+// Falls back to localhost for local dev and Electron.
+function getBaseUrl(req) {
+  if (process.env.ELECTRON_PROTOCOL) return `http://localhost:${PORT}`;
+  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'http';
+  const host  = req.headers['x-forwarded-host']  || req.headers.host;
+  return `${proto}://${host}`;
+}
+
+// CORS — allow same origin (production) and localhost (dev).
+// Since the frontend is served from the same Express server in production,
+// same-origin requests don't need CORS at all. This covers local dev only.
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow requests with no origin (curl, Electron, server-to-server)
+    // and any localhost/127.0.0.1 origin for local dev.
+    if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      cb(null, true);
+    } else {
+      cb(null, true); // same-origin requests in production pass through anyway
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
-// When running inside Electron (packaged), APP_URL is localhost:3000 and we
-// redirect auth results to the custom protocol so the OS routes them back to
-// the Electron app window (avoids Google's embedded-webview block).
+// When running inside Electron (packaged), redirect auth results to the
+// custom protocol so the OS routes them back to the Electron app window.
 const ELECTRON_PROTOCOL = process.env.ELECTRON_PROTOCOL || null;
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !JWT_SECRET) {
   console.error('Missing required env vars: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET');
   process.exit(1);
 }
-
-// The redirect URI must always point at the Express server.
-// In production (Coolify), set SERVER_URL to the public HTTPS domain,
-// e.g. https://api.nailhabit.app — this must also be registered in Google Cloud Console.
-// Locally and in Electron, falls back to localhost.
-const SERVER_BASE = process.env.SERVER_URL || `http://localhost:${PORT}`;
-const REDIRECT_URI = `${SERVER_BASE}/api/auth/callback`;
 
 // ─── SQLite data store ───────────────────────────────────────────────────────
 // DATA_DIR is configurable via env so Coolify can mount a persistent volume.
@@ -128,10 +141,16 @@ function authMiddleware(req, res, next) {
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 // ─── OAuth ───────────────────────────────────────────────────────────────────
-const oauthClient = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, REDIRECT_URI);
+// OAuth client is instantiated per-request so the redirect URI matches the
+// actual domain automatically — no SERVER_URL env var needed.
+function makeOAuthClient(req) {
+  const redirectUri = `${getBaseUrl(req)}/api/auth/callback`;
+  return new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirectUri);
+}
 
-app.get('/api/auth/google', (_req, res) => {
-  const url = oauthClient.generateAuthUrl({
+app.get('/api/auth/google', (req, res) => {
+  const client = makeOAuthClient(req);
+  const url = client.generateAuthUrl({
     access_type: 'offline',
     scope: ['profile', 'email'],
     prompt: 'select_account',
@@ -140,20 +159,22 @@ app.get('/api/auth/google', (_req, res) => {
 });
 
 app.get('/api/auth/callback', async (req, res) => {
+  const baseUrl = getBaseUrl(req);
+  const client = makeOAuthClient(req);
   const { code, error } = req.query;
   if (error || !code) {
     const errVal = encodeURIComponent(error || 'no_code');
     if (ELECTRON_PROTOCOL) {
       return res.redirect(`${ELECTRON_PROTOCOL}://auth?error=${errVal}`);
     }
-    return res.redirect(`${APP_URL}/#auth_error=${errVal}`);
+    return res.redirect(`${baseUrl}/#auth_error=${errVal}`);
   }
 
   try {
-    const { tokens } = await oauthClient.getToken(code);
-    oauthClient.setCredentials(tokens);
+    const { tokens } = await client.getToken(code);
+    client.setCredentials(tokens);
 
-    const ticket = await oauthClient.verifyIdToken({
+    const ticket = await client.verifyIdToken({
       idToken: tokens.id_token,
       audience: GOOGLE_CLIENT_ID,
     });
@@ -180,19 +201,17 @@ app.get('/api/auth/callback', async (req, res) => {
     saveUser(user);
 
     const token = signToken(user.id);
-    // In Electron, redirect to the custom protocol so the OS routes it back
-    // to the app window via the deep-link handler in main.ts.
     if (ELECTRON_PROTOCOL) {
       res.redirect(`${ELECTRON_PROTOCOL}://auth?token=${encodeURIComponent(token)}`);
     } else {
-      res.redirect(`${APP_URL}/#token=${token}`);
+      res.redirect(`${baseUrl}/#token=${token}`);
     }
   } catch (err) {
     console.error('OAuth callback error:', err);
     if (ELECTRON_PROTOCOL) {
       res.redirect(`${ELECTRON_PROTOCOL}://auth?error=callback_failed`);
     } else {
-      res.redirect(`${APP_URL}/#auth_error=callback_failed`);
+      res.redirect(`${baseUrl}/#auth_error=callback_failed`);
     }
   }
 });
