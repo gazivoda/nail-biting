@@ -151,11 +151,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       window.electronAPI.openGoogleAuth();
 
       let attempts = 0;
-      const poll = setInterval(() => {
+      let poll: ReturnType<typeof setInterval> | null = setInterval(() => {
         attempts++;
         const token = localStorage.getItem(ELECTRON_TOKEN_KEY);
         if (token) {
-          clearInterval(poll);
+          if (poll) { clearInterval(poll); poll = null; }
           apiFetch('/api/user/me')
             .then(profile => { setSigningIn(false); applyUser(profile); })
             .catch(() => {
@@ -165,7 +165,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             });
           return;
         }
-        if (attempts > 180) { clearInterval(poll); setSigningIn(false); }
+        if (attempts > 180) {
+          if (poll) { clearInterval(poll); poll = null; }
+          setSigningIn(false);
+        }
       }, 1000);
     } else {
       // Web: navigate to OAuth start. Server sets state cookie, redirects to Google.

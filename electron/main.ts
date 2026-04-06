@@ -59,7 +59,7 @@ const API_BASE = isDev
 const SERVER_PORT = 3000;
 
 // Custom protocol for OAuth deep-link redirect
-const PROTOCOL = 'nailhabit';
+const PROTOCOL = 'stopbiting';
 
 // ─── Globals ─────────────────────────────────────────────────────────────────
 
@@ -70,7 +70,7 @@ let quitting = false;
 
 // ─── Deep-link / protocol ────────────────────────────────────────────────────
 
-// Register custom protocol so the OAuth callback can redirect to nailhabit://...
+// Register custom protocol so the OAuth callback can redirect to stopbiting://...
 // This lets us use the same Google OAuth flow in the desktop app.
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
@@ -234,7 +234,7 @@ async function createWindow() {
     height: 780,
     minWidth: 800,
     minHeight: 600,
-    title: 'Nail Habit Tracker',
+    title: 'Stop Biting',
     // Use default traffic lights on Mac; we can customise later
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     backgroundColor: '#020617', // matches app background
@@ -299,7 +299,7 @@ async function createWindow() {
       // Show a one-time balloon/notification telling the user the app is in the tray
       if (process.platform === 'win32') {
         tray?.displayBalloon({
-          title: 'Nail Habit Tracker',
+          title: 'Stop Biting',
           content: 'Still watching in the background. Click the tray icon to restore.',
         });
       }
@@ -330,7 +330,7 @@ function createTray() {
   }
 
   tray = new Tray(img);
-  tray.setToolTip('Nail Habit Tracker');
+  tray.setToolTip('Stop Biting');
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -398,7 +398,7 @@ function setupIPC() {
     if (!mainWindow?.isVisible()) {
       if (Notification.isSupported()) {
         new Notification({
-          title: 'Nail Habit Tracker',
+          title: 'Stop Biting',
           body: 'Stop biting your nails!',
         }).show();
       }
@@ -423,7 +423,7 @@ app.on('activate', () => {
   }
 });
 
-// macOS: handle deep-link from protocol (launched via nailhabit://...)
+// macOS: handle deep-link from protocol (launched via stopbiting://...)
 app.on('open-url', (event, url) => {
   event.preventDefault();
   handleDeepLink(url);
