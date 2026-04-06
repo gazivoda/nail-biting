@@ -54,7 +54,7 @@ const RENDERER_FILE = path.join(__dirname, '..', 'dist', 'index.html');
 // The backend server — hosted in production, local in dev
 const API_BASE = isDev
   ? `http://localhost:${process.env.PORT || 3000}`
-  : (process.env.API_BASE_URL || 'http://localhost:3000');
+  : (process.env.API_BASE_URL || 'https://stopbiting.today');
 // Derive port for local dev proxy
 const SERVER_PORT = 3000;
 
@@ -325,10 +325,6 @@ function createTray() {
     ? nativeImage.createFromPath(iconPath)
     : nativeImage.createEmpty();
 
-  if (process.platform === 'darwin' && !img.isEmpty()) {
-    img.setTemplateImage(true);
-  }
-
   tray = new Tray(img);
   tray.setToolTip('Stop Biting');
 
@@ -408,6 +404,15 @@ function setupIPC() {
 // ─── App lifecycle ────────────────────────────────────────────────────────────
 
 app.on('ready', async () => {
+  // Set dock icon explicitly on macOS (prevents white square)
+  if (process.platform === 'darwin') {
+    const iconPath = isDev
+      ? path.join(__dirname, '..', 'public', 'icons', 'icon-512x512.png')
+      : path.join(__dirname, '..', 'dist', 'icons', 'icon-512x512.png');
+    if (existsSync(iconPath)) {
+      app.dock?.setIcon(nativeImage.createFromPath(iconPath));
+    }
+  }
   startBackendServer();
   setupIPC();
   await createWindow();
