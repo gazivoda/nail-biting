@@ -1,9 +1,8 @@
-# Coolify Deployment — Nail Habit Backend
+# Coolify Deployment — Stop Biting
 
 ## 1. Create the service
 
-- New resource → **Docker** → connect your Git repo, branch `main`
-- Dockerfile path: `Dockerfile` (root of repo)
+- New resource → **Nixpacks** → connect your Git repo, branch `main`
 
 ## 2. Add a persistent volume
 
@@ -11,7 +10,7 @@ The SQLite database lives here. Without this, user accounts are wiped on every r
 
 | Field | Value |
 |-------|-------|
-| Source name | `nail-habit-data` (or any name) |
+| Source name | `stop-biting-data` (or any name) |
 | Destination path | `/app/data` |
 
 ## 3. Environment variables
@@ -19,15 +18,14 @@ The SQLite database lives here. Without this, user accounts are wiped on every r
 Set all of these in the Coolify service settings:
 
 ```
-GOOGLE_CLIENT_ID=123258382265-u1qnmtqe5rtp94vroa1t1d0t3e945ght.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=REDACTED
-JWT_SECRET=REDACTED
-ELECTRON_PROTOCOL=nailhabit
-SERVER_URL=https://your-coolify-domain.com
+GOOGLE_CLIENT_ID=<from Google Cloud Console>
+GOOGLE_CLIENT_SECRET=<from Google Cloud Console>
+JWT_SECRET=<generate: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
+ELECTRON_PROTOCOL=stopbiting
+APP_URL=https://stopbiting.today
 PORT=3000
+DATA_DIR=/app/data
 ```
-
-Replace `your-coolify-domain.com` with the actual domain Coolify assigns.
 
 ## 4. Register the redirect URI in Google Cloud Console
 
@@ -35,27 +33,21 @@ Replace `your-coolify-domain.com` with the actual domain Coolify assigns.
 2. Open the OAuth 2.0 Client ID for this app
 3. Under **Authorized redirect URIs**, add:
    ```
-   https://your-coolify-domain.com/api/auth/callback
+   https://stopbiting.today/api/auth/callback
    ```
 4. Save
 
-## 5. Update the Electron app
-
-Once the service is live and you have the URL, add it to your local `.env`:
+## 5. Build args (baked into frontend at build time)
 
 ```
-API_BASE_URL=https://your-coolify-domain.com
-```
-
-Then rebuild the DMG:
-
-```bash
-npm run electron:dist:mac
+VITE_PAYPAL_CLIENT_ID=<PayPal client ID>
+VITE_PAYPAL_PLAN_ID_MONTHLY=<PayPal monthly plan ID>
+VITE_PAYPAL_PLAN_ID_YEARLY=<PayPal yearly plan ID>
 ```
 
 ## Notes
 
 - The SQLite database file is at `/app/data/users.db` inside the container
-- `DATA_DIR` env var can override the data directory path if needed
-- `SERVER_URL` must match exactly what is registered in Google Cloud Console (including `https://`)
-- PayPal env vars (`PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_ENV`) can be added later when enabling payments
+- `DATA_DIR` env var controls the data directory path
+- `APP_URL` must match exactly what is registered in Google Cloud Console (including `https://`)
+- PayPal env vars can be added later when enabling payments

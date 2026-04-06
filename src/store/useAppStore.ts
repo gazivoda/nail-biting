@@ -54,7 +54,7 @@ export const useAppStore = create<AppState & AppActions>()(
       }),
     }),
     {
-      name: 'nail-habit-state',
+      name: 'stop-biting-state',
       // cameraEnabled intentionally excluded — should always start as false on page load
       partialize: (state) => {
         const { cameraEnabled: _skip, ...rest } = state as AppState & AppActions;

@@ -31,7 +31,7 @@ export function BlogIndex() {
 
       {/* Nav */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
-        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Nail Habit</a>
+        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
           <a href="#/blog" aria-current="page" className="flex items-center gap-1.5 text-emerald-400 text-sm font-medium">
             <BookOpen size={14} aria-hidden="true" />
@@ -114,7 +114,7 @@ export function BlogIndex() {
       {/* Footer */}
       <footer className="border-t border-slate-900 py-8 px-6 text-center text-slate-600 text-sm">
         <p>
-          <a href="/" className="hover:text-slate-400 transition-colors">Nail Habit App</a>
+          <a href="/" className="hover:text-slate-400 transition-colors">Stop Biting</a>
           {' — '}AI-powered nail biting tracker for Mac and Windows
         </p>
       </footer>

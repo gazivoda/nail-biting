@@ -41,17 +41,17 @@ export function BlogPost({ slug }: Props) {
       dateModified: post.dateModified,
       author: {
         '@type': 'Organization',
-        name: 'Nail Habit App',
-        url: 'https://nailhabit.app',
+        name: 'Stop Biting',
+        url: 'https://stopbiting.today',
       },
       publisher: {
         '@type': 'Organization',
-        name: 'Nail Habit App',
-        url: 'https://nailhabit.app',
+        name: 'Stop Biting',
+        url: 'https://stopbiting.today',
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `https://nailhabit.app/#/blog/${post.slug}`,
+        '@id': `https://stopbiting.today/#/blog/${post.slug}`,
       },
       keywords: post.tag,
       timeRequired: `PT${post.readingMinutes}M`,
@@ -68,7 +68,7 @@ export function BlogPost({ slug }: Props) {
 
     // Set page title
     const prevTitle = document.title;
-    document.title = `${post.title} | Nail Habit App`;
+    document.title = `${post.title} | Stop Biting`;
 
     return () => {
       const el = document.getElementById('blog-post-schema');
@@ -87,7 +87,7 @@ export function BlogPost({ slug }: Props) {
 
       {/* Nav */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
-        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Nail Habit</a>
+        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
           <a href="#/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
@@ -184,7 +184,7 @@ export function BlogPost({ slug }: Props) {
           {/* CTA */}
           <div className="mt-14 rounded-2xl bg-slate-900 border border-slate-800 p-8 text-center">
             <p className="text-slate-400 text-sm mb-1">Ready to start tracking?</p>
-            <p className="text-slate-100 font-semibold text-xl mb-5">Try Nail Habit App — free to start</p>
+            <p className="text-slate-100 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
             <a
               href="/"
               className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95"
@@ -209,7 +209,7 @@ export function BlogPost({ slug }: Props) {
       {/* Footer */}
       <footer className="border-t border-slate-900 py-8 px-6 text-center text-slate-600 text-sm">
         <p>
-          <a href="/" className="hover:text-slate-400 transition-colors">Nail Habit App</a>
+          <a href="/" className="hover:text-slate-400 transition-colors">Stop Biting</a>
           {' — '}AI-powered nail biting tracker for Mac and Windows
         </p>
       </footer>
