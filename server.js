@@ -1,11 +1,16 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import Database from 'better-sqlite3';
 import { existsSync, mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { randomBytes } from 'crypto';
+
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
 if (!process.env.GOOGLE_CLIENT_ID) {
@@ -17,58 +22,88 @@ const app = express();
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID     = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const JWT_SECRET = process.env.JWT_SECRET;
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
+const JWT_SECRET           = process.env.JWT_SECRET;
+const PAYPAL_CLIENT_ID     = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
 const PAYPAL_API = process.env.PAYPAL_ENV === 'production'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
 
-// Derive the public base URL from the incoming request so we never need
-// APP_URL or SERVER_URL env vars. Works on any domain automatically.
-// Falls back to localhost for local dev and Electron.
-function getBaseUrl(req) {
-  if (process.env.ELECTRON_PROTOCOL) return `http://localhost:${PORT}`;
-  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-  const host  = req.headers['x-forwarded-host']  || req.headers.host;
-  return `${proto}://${host}`;
-}
-
-// CORS — allow same origin (production) and localhost (dev).
-// Since the frontend is served from the same Express server in production,
-// same-origin requests don't need CORS at all. This covers local dev only.
-app.use(cors({
-  origin: (origin, cb) => {
-    // Allow requests with no origin (curl, Electron, server-to-server)
-    // and any localhost/127.0.0.1 origin for local dev.
-    if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
-      cb(null, true);
-    } else {
-      cb(null, true); // same-origin requests in production pass through anyway
-    }
-  },
-  credentials: true,
-}));
-app.use(express.json());
-// When running inside Electron (packaged), redirect auth results to the
-// custom protocol so the OS routes them back to the Electron app window.
+// When running inside Electron, redirect auth results to the custom protocol.
 const ELECTRON_PROTOCOL = process.env.ELECTRON_PROTOCOL || null;
+
+// APP_URL: the canonical public URL of this server. Used for OAuth redirect URI.
+// Must be set in production. Falls back to localhost for local dev.
+const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
 
 if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !JWT_SECRET) {
   console.error('Missing required env vars: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET');
   process.exit(1);
 }
 
+// ─── Security middleware ─────────────────────────────────────────────────────
+
+// H-1: Helmet — sets X-Frame-Options, X-Content-Type-Options, HSTS, Referrer-Policy, etc.
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc:  ["'self'"],
+      scriptSrc:   ["'self'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
+      frameSrc:    ["'self'", 'https://www.paypal.com'],
+      connectSrc:  ["'self'", 'https://www.paypal.com', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com'],
+      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com'],
+      styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
+      fontSrc:     ["'self'", 'data:'],
+    },
+  },
+  // HSTS: force HTTPS for 1 year once on HTTPS. Fine to set even on HTTP (ignored by browsers on HTTP).
+  strictTransportSecurity: { maxAge: 31536000, includeSubDomains: true },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+}));
+
+// C-1: CORS — strict allowlist. Production is same-origin so CORS isn't needed there,
+// but localhost needs it for the Vite dev server.
+const ALLOWED_ORIGINS = new Set(
+  (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://localhost:3000').split(',')
+);
+app.use(cors({
+  origin: (origin, cb) => {
+    // No origin = same-origin or curl/Electron — allow.
+    if (!origin || ALLOWED_ORIGINS.has(origin)) return cb(null, true);
+    cb(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+}));
+
+app.use(cookieParser());
+app.use(express.json({ limit: '10kb' }));  // M-8: explicit body size limit
+
+// H-3: Rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,  // 15 minutes
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' },
+});
+const authLimiter = rateLimit({
+  windowMs: 60 * 1000,  // 1 minute
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many auth requests, please slow down.' },
+});
+app.use('/api/', apiLimiter);
+app.use('/api/auth/', authLimiter);
+
 // ─── SQLite data store ───────────────────────────────────────────────────────
-// DATA_DIR is configurable via env so Coolify can mount a persistent volume.
-// Default: ./data (works locally and in Electron).
 const DATA_DIR = process.env.DATA_DIR || join(__dirname, 'data');
 if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
 
 const db = new Database(join(DATA_DIR, 'users.db'));
-db.pragma('journal_mode = WAL');  // safe concurrent reads
+db.pragma('journal_mode = WAL');
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -121,15 +156,27 @@ function saveUser(user) {
 }
 
 // ─── JWT helpers ─────────────────────────────────────────────────────────────
+
+// C-4: Shortened to 14 days (was 90d). M-2: algorithm pinned.
 function signToken(userId) {
-  return jwt.sign({ sub: userId }, JWT_SECRET, { expiresIn: '90d' });
+  return jwt.sign({ sub: userId }, JWT_SECRET, { expiresIn: '14d', algorithm: 'HS256' });
 }
 
+// Reads JWT from HttpOnly cookie (web) or Authorization header (Electron).
 function authMiddleware(req, res, next) {
-  const header = req.headers.authorization;
-  if (!header?.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
+  // Web: cookie-based (HttpOnly, not readable by JS)
+  const cookieToken = req.cookies?.nh_session;
+  // Electron: Bearer token in Authorization header (Electron sets this via localStorage)
+  const headerToken = req.headers.authorization?.startsWith('Bearer ')
+    ? req.headers.authorization.slice(7)
+    : null;
+
+  const token = cookieToken || headerToken;
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
   try {
-    const payload = jwt.verify(header.slice(7), JWT_SECRET);
+    // M-2: algorithm pinned
+    const payload = jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] });
     req.userId = payload.sub;
     next();
   } catch {
@@ -141,36 +188,54 @@ function authMiddleware(req, res, next) {
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 
 // ─── OAuth ───────────────────────────────────────────────────────────────────
-// OAuth client is instantiated per-request so the redirect URI matches the
-// actual domain automatically — no SERVER_URL env var needed.
-function makeOAuthClient(req) {
-  const redirectUri = `${getBaseUrl(req)}/api/auth/callback`;
+function makeOAuthClient() {
+  // H-4: Use APP_URL env var — not request headers — for the redirect URI.
+  // This prevents host-header injection attacks on the OAuth redirect URI.
+  const redirectUri = ELECTRON_PROTOCOL
+    ? `http://localhost:${PORT}/api/auth/callback`
+    : `${APP_URL}/api/auth/callback`;
   return new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, redirectUri);
 }
 
+// H-5: OAuth state parameter — prevents CSRF on the callback.
 app.get('/api/auth/google', (req, res) => {
-  const client = makeOAuthClient(req);
+  const state = randomBytes(16).toString('hex');
+  // Store state in a short-lived HttpOnly cookie (5 min TTL)
+  res.cookie('oauth_state', state, {
+    httpOnly: true,
+    maxAge: 5 * 60 * 1000,
+    sameSite: 'lax',
+    secure: APP_URL.startsWith('https'),
+  });
+
+  const client = makeOAuthClient();
   const url = client.generateAuthUrl({
     access_type: 'offline',
     scope: ['profile', 'email'],
     prompt: 'select_account',
+    state,
   });
   res.redirect(url);
 });
 
 app.get('/api/auth/callback', async (req, res) => {
-  const baseUrl = getBaseUrl(req);
-  const client = makeOAuthClient(req);
-  const { code, error } = req.query;
+  const { code, state, error } = req.query;
+
+  // H-5: Validate state to prevent CSRF
+  const expectedState = req.cookies?.oauth_state;
+  if (!ELECTRON_PROTOCOL && (!expectedState || state !== expectedState)) {
+    return res.redirect(`${APP_URL}/#auth_error=state_mismatch`);
+  }
+  res.clearCookie('oauth_state');
+
   if (error || !code) {
     const errVal = encodeURIComponent(error || 'no_code');
-    if (ELECTRON_PROTOCOL) {
-      return res.redirect(`${ELECTRON_PROTOCOL}://auth?error=${errVal}`);
-    }
-    return res.redirect(`${baseUrl}/#auth_error=${errVal}`);
+    if (ELECTRON_PROTOCOL) return res.redirect(`${ELECTRON_PROTOCOL}://auth?error=${errVal}`);
+    return res.redirect(`${APP_URL}/#auth_error=${errVal}`);
   }
 
   try {
+    const client = makeOAuthClient();
     const { tokens } = await client.getToken(code);
     client.setCredentials(tokens);
 
@@ -178,8 +243,8 @@ app.get('/api/auth/callback', async (req, res) => {
       idToken: tokens.id_token,
       audience: GOOGLE_CLIENT_ID,
     });
-    const payload = ticket.getPayload();
-    const googleId = payload.sub;
+    const googlePayload = ticket.getPayload();
+    const googleId = googlePayload.sub;
 
     // Find or create user
     let user = getUser(googleId);
@@ -187,9 +252,9 @@ app.get('/api/auth/callback', async (req, res) => {
       const trialEnd = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
       user = {
         id: googleId,
-        email: payload.email,
-        name: payload.name,
-        avatar: payload.picture,
+        email: googlePayload.email,
+        name: googlePayload.name,
+        avatar: googlePayload.picture,
         trial_end_date: trialEnd,
         subscription_status: 'trial',
         subscription_plan: null,
@@ -201,19 +266,32 @@ app.get('/api/auth/callback', async (req, res) => {
     saveUser(user);
 
     const token = signToken(user.id);
+
     if (ELECTRON_PROTOCOL) {
-      res.redirect(`${ELECTRON_PROTOCOL}://auth?token=${encodeURIComponent(token)}`);
-    } else {
-      res.redirect(`${baseUrl}/#token=${token}`);
+      // Electron: token goes in redirect URL to the custom protocol handler.
+      // The Electron main process reads it and stores it (not in a browser context).
+      return res.redirect(`${ELECTRON_PROTOCOL}://auth?token=${encodeURIComponent(token)}`);
     }
+
+    // C-2/C-3: Web — set HttpOnly cookie instead of exposing token in URL hash.
+    res.cookie('nh_session', token, {
+      httpOnly: true,                          // not readable by JS — XSS-safe
+      secure: APP_URL.startsWith('https'),     // HTTPS only in production
+      sameSite: 'lax',                         // CSRF protection
+      maxAge: 14 * 24 * 60 * 60 * 1000,       // 14 days, matches JWT expiry
+    });
+    res.redirect(`${APP_URL}/`);
   } catch (err) {
-    console.error('OAuth callback error:', err);
-    if (ELECTRON_PROTOCOL) {
-      res.redirect(`${ELECTRON_PROTOCOL}://auth?error=callback_failed`);
-    } else {
-      res.redirect(`${baseUrl}/#auth_error=callback_failed`);
-    }
+    console.error('OAuth callback error:', err.message);
+    if (ELECTRON_PROTOCOL) return res.redirect(`${ELECTRON_PROTOCOL}://auth?error=callback_failed`);
+    res.redirect(`${APP_URL}/#auth_error=callback_failed`);
   }
+});
+
+// C-4/L-2: Explicit sign-out — clears the session cookie server-side.
+app.post('/api/auth/signout', (req, res) => {
+  res.clearCookie('nh_session', { httpOnly: true, sameSite: 'lax' });
+  res.json({ ok: true });
 });
 
 // ─── User API ─────────────────────────────────────────────────────────────────
@@ -223,23 +301,11 @@ app.get('/api/user/me', authMiddleware, (req, res) => {
   res.json(user);
 });
 
-app.patch('/api/user/me', authMiddleware, (req, res) => {
-  const user = getUser(req.userId);
-  if (!user) return res.status(404).json({ error: 'User not found' });
-
-  // Only allow updating subscription fields
-  const allowed = ['subscription_status', 'subscription_plan', 'subscription_end_date', 'paypal_subscription_id'];
-  for (const key of allowed) {
-    if (key in req.body) user[key] = req.body[key];
-  }
-
-  saveUser(user);
-  res.json(user);
-});
+// H-2: PATCH /api/user/me removed — subscription fields are only written
+// by the server-side PayPal verification endpoint, never by the client.
 
 // ─── PayPal helpers ──────────────────────────────────────────────────────────
 
-// Get a PayPal access token using client credentials (server-to-server).
 async function getPayPalAccessToken() {
   const credentials = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64');
   const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
@@ -255,7 +321,6 @@ async function getPayPalAccessToken() {
   return data.access_token;
 }
 
-// Fetch a subscription from PayPal's API and return its status + billing cycle.
 async function getPayPalSubscription(subscriptionId) {
   const token = await getPayPalAccessToken();
   const res = await fetch(`${PAYPAL_API}/v1/billing/subscriptions/${subscriptionId}`, {
@@ -266,9 +331,6 @@ async function getPayPalSubscription(subscriptionId) {
 }
 
 // ─── PayPal verify endpoint ───────────────────────────────────────────────────
-
-// Called by the client after PayPal onApprove. Verifies the subscription
-// server-side before activating — prevents self-granting pro access.
 app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => {
   const { subscriptionId, plan } = req.body;
   if (!subscriptionId || !plan) {
@@ -277,6 +339,10 @@ app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => 
   if (!['monthly', 'yearly'].includes(plan)) {
     return res.status(400).json({ error: 'Invalid plan' });
   }
+  // M-3: Validate subscriptionId format before passing to PayPal API
+  if (!/^I-[A-Z0-9]{5,30}$/.test(subscriptionId)) {
+    return res.status(400).json({ error: 'Invalid subscriptionId format' });
+  }
   if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
     return res.status(503).json({ error: 'PayPal not configured on server' });
   }
@@ -284,31 +350,43 @@ app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => 
   try {
     const subscription = await getPayPalSubscription(subscriptionId);
 
-    // PayPal subscription must be ACTIVE to grant access
     if (subscription.status !== 'ACTIVE') {
-      return res.status(402).json({ error: `Subscription is ${subscription.status}, not ACTIVE` });
+      return res.status(402).json({ error: `Subscription is not active` });
     }
 
+    // H-6: Verify the subscription belongs to the authenticated user.
+    // We check the subscriber email against the user's stored email.
     const user = getUser(req.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
+    const subscriberEmail = subscription.subscriber?.email_address;
+    if (subscriberEmail && user.email && subscriberEmail.toLowerCase() !== user.email.toLowerCase()) {
+      console.warn(`PayPal subscription ${subscriptionId} belongs to ${subscriberEmail}, not ${user.email}`);
+      return res.status(403).json({ error: 'Subscription does not belong to this account' });
+    }
+
+    // M-4: Use next_billing_time from PayPal if available, otherwise fall back to duration.
+    const nextBilling = subscription.billing_info?.next_billing_time;
     const durationDays = plan === 'monthly' ? 30 : 365;
-    user.subscription_status = 'active';
-    user.subscription_plan = plan;
-    user.subscription_end_date = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+    const endDate = nextBilling
+      ? new Date(nextBilling).toISOString()
+      : new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+
+    user.subscription_status   = 'active';
+    user.subscription_plan     = plan;
+    user.subscription_end_date = endDate;
     user.paypal_subscription_id = subscriptionId;
     saveUser(user);
 
     res.json(user);
   } catch (err) {
-    console.error('PayPal verify error:', err);
+    // M-5: Don't log PayPal response bodies — log only the message.
+    console.error('PayPal verify error:', err.message);
     res.status(502).json({ error: 'Failed to verify subscription with PayPal' });
   }
 });
 
 // ─── Downloads ───────────────────────────────────────────────────────────────
-// Redirects installer downloads to GitHub Releases so large binaries don't
-// need to be baked into the container image.
 const GITHUB_RELEASE_BASE = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0';
 const DOWNLOAD_MAP = {
   'Nail-Habit-Tracker-1.0.0-arm64.dmg': 'Nail.Habit.Tracker-1.0.0-arm64.dmg',
@@ -318,9 +396,7 @@ const DOWNLOAD_MAP = {
 app.get('/downloads/:file', (req, res) => {
   const { file } = req.params;
   const ghFile = DOWNLOAD_MAP[file];
-  if (!ghFile) {
-    return res.status(404).send('File not found');
-  }
+  if (!ghFile) return res.status(404).send('File not found');
   res.redirect(302, `${GITHUB_RELEASE_BASE}/${ghFile}`);
 });
 

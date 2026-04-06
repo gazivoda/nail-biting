@@ -14,7 +14,9 @@ dist-ssr
 
 
 # Server data (users DB — never commit)
-data/users.json
+data/users.db
+data/users.db-wal
+data/users.db-shm
 
 # Server secrets
 .env
