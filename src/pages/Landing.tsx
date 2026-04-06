@@ -1,7 +1,7 @@
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
-  Code2, ChevronDown, Camera, Bell, Loader2, BookOpen,
+  Code2, ChevronDown, Camera, Bell, BookOpen,
   Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
 
@@ -41,13 +41,9 @@ function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   );
 }
 
-interface Props {
-  onLaunch: () => void;
-  signingIn?: boolean;
-}
+interface Props {}
 
-
-export function Landing({ onLaunch, signingIn = false }: Props) {
+export function Landing(_props: Props) {
   return (
     <div className="min-h-dvh bg-slate-950 text-slate-100">
 
@@ -103,16 +99,14 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
             <div className="mt-10 flex flex-col items-center gap-4">
               <DownloadButtons size="lg" />
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <button
-                  onClick={onLaunch}
-                  disabled={signingIn}
-                  className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95 disabled:opacity-50"
+                <a
+                  href="/api/auth/google"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
                 >
-                  {signingIn
-                    ? <><Loader2 size={14} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
-                    : <><Zap size={14} aria-hidden="true" />Use Web App</>
-                  }
-                </button>
+                  <Zap size={14} aria-hidden="true" />Use Web App
+                </a>
                 <a
                   href="#/blog"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors"
@@ -121,11 +115,6 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
                   Read the science
                 </a>
               </div>
-              {signingIn && (
-                <p className="text-slate-400 text-sm animate-pulse">
-                  Sign-in opened in your browser — come back here when done.
-                </p>
-              )}
             </div>
 
             {/* Social proof strip */}
@@ -438,16 +427,14 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
                 <span className="text-slate-600 text-xs">or</span>
                 <div className="h-px w-12 bg-slate-800" />
               </div>
-              <button
-                onClick={onLaunch}
-                disabled={signingIn}
-                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95 disabled:opacity-50"
+              <a
+                href="/api/auth/google"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
               >
-                {signingIn
-                  ? <><Loader2 size={14} className="animate-spin" aria-hidden="true" />Waiting for sign-in…</>
-                  : <><Zap size={14} aria-hidden="true" />Use Web App — free trial</>
-                }
-              </button>
+                <Zap size={14} aria-hidden="true" />Use Web App — free trial
+              </a>
               <p className="text-slate-700 text-xs">7-day free trial · no credit card required</p>
             </div>
           </section>
