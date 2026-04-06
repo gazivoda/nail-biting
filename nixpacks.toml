@@ -8,7 +8,7 @@ nixPkgs = ["python3", "gnumake", "gcc", "git-lfs"]
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["VITE_BUILD_TARGET=web npm run build:web"]
+cmds = ["VITE_BUILD_TARGET=web npx vite build"]
 
 [start]
 cmd = "node server.js"
