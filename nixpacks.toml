@@ -2,18 +2,22 @@
 # Builds the React frontend and starts the Express server.
 
 [phases.setup]
-nixPkgs = ["python3", "gnumake", "gcc", "git-lfs"]
+# python3/gnumake/gcc needed to compile better-sqlite3 native addon.
+# git-lfs not needed at runtime but harmless; LFS assets are served via GitHub redirect.
+nixPkgs = ["python3", "gnumake", "gcc"]
 
 [phases.install]
-cmds = ["npm ci"]
+# --ignore-scripts=false ensures better-sqlite3 native build runs.
+# npm ci uses package-lock.json for reproducible installs.
+cmds = ["npm ci --ignore-scripts=false"]
 
 [phases.build]
-cmds = ["VITE_BUILD_TARGET=web npx vite build"]
+# Build only the web frontend. Skip tsc (fails on Coolify due to missing Electron types).
+cmds = ["VITE_BUILD_TARGET=web npx vite build --mode production"]
 
 [start]
 cmd = "node server.js"
 
-# Pin Node to 22 (latest patch) so Vite 5 engine requirement is satisfied.
-# Nixpacks respects NIXPACKS_NODE_VERSION — Coolify also passes this automatically.
+# Pin Node to 22 (latest LTS patch) so Vite 5 engine requirement is satisfied.
 [variables]
 NIXPACKS_NODE_VERSION = "22"
