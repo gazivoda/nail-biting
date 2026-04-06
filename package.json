@@ -16,7 +16,6 @@
     "electron:build": "npm run build && npm run electron:build-main",
     "electron:dist": "npm run electron:build && electron-builder",
     "electron:dist:mac": "npm run electron:build && electron-builder --mac",
-    "electron:dist:mac:signed": "npm run electron:build && CSC_LINK=$CSC_LINK CSC_KEY_PASSWORD=$CSC_KEY_PASSWORD APPLE_ID=$APPLE_ID APPLE_APP_SPECIFIC_PASSWORD=$APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID=$APPLE_TEAM_ID electron-builder --mac",
     "electron:dist:win": "npm run electron:build && electron-builder --win",
     "electron:dist:all": "npm run electron:build && electron-builder --mac --win"
   },
@@ -89,10 +88,7 @@
       "entitlements": "build/entitlements.mac.plist",
       "entitlementsInherit": "build/entitlements.mac.plist",
       "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "notarize": {
-        "teamId": "YOUR_TEAM_ID"
-      }
+      "gatekeeperAssess": false
     },
     "win": {
       "target": [

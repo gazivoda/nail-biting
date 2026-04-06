@@ -5,38 +5,43 @@ import {
   Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
 
-const DOWNLOAD_MAC_ARM   = '/downloads/Stop-Biting-1.1.0-arm64.dmg';
-const DOWNLOAD_MAC_INTEL = '/downloads/Stop-Biting-1.1.0.dmg';
+const DOWNLOAD_MAC_ARM   = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
+const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
 
 function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   const base = size === 'lg'
     ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-150 px-6 py-3 text-sm'
     : 'inline-flex items-center gap-2 font-semibold rounded-xl transition-all duration-150 px-4 py-2 text-xs';
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <a
-        href={DOWNLOAD_MAC_ARM}
-        className={`${base} bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95`}
-      >
-        <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-        Download for Mac
-        <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'} opacity-70`}>(Apple Silicon)</span>
-      </a>
-      <a
-        href={DOWNLOAD_MAC_INTEL}
-        className={`${base} bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:-translate-y-0.5 active:scale-95`}
-      >
-        <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-        Intel Mac
-      </a>
-      <span
-        title="Coming soon"
-        className={`${base} bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed select-none`}
-      >
-        <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-        Windows
-        <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'}`}>soon</span>
-      </span>
+    <div className="flex flex-col items-start gap-2">
+      <div className="flex flex-wrap items-center gap-3">
+        <a
+          href={DOWNLOAD_MAC_ARM}
+          className={`${base} bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95`}
+        >
+          <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+          Download for Mac
+          <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'} opacity-70`}>(Apple Silicon)</span>
+        </a>
+        <a
+          href={DOWNLOAD_MAC_INTEL}
+          className={`${base} bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:-translate-y-0.5 active:scale-95`}
+        >
+          <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+          Intel Mac
+        </a>
+        <span
+          title="Coming soon"
+          className={`${base} bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed select-none`}
+        >
+          <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
+          Windows
+          <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'}`}>soon</span>
+        </span>
+      </div>
+      <p className="text-slate-600 text-xs leading-relaxed">
+        If macOS says it can't verify the app: right-click the .app → <span className="text-slate-400">Open</span> → <span className="text-slate-400">Open</span> anyway.
+      </p>
     </div>
   );
 }
