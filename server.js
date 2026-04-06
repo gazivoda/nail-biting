@@ -393,17 +393,21 @@ app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => 
 });
 
 // ─── Downloads ───────────────────────────────────────────────────────────────
-const GITHUB_RELEASE_BASE = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0';
+const GITHUB_RELEASES_BASE = 'https://github.com/gazivoda/nail-biting/releases/download';
 const DOWNLOAD_MAP = {
-  'Nail-Habit-Tracker-1.0.0-arm64.dmg': 'Nail.Habit.Tracker-1.0.0-arm64.dmg',
-  'Nail-Habit-Tracker-1.0.0.dmg':       'Nail.Habit.Tracker-1.0.0.dmg',
+  // v1.0.0 — old name (Nail Habit Tracker), still on GitHub Release
+  'Nail-Habit-Tracker-1.0.0-arm64.dmg': 'v1.0.0/Nail.Habit.Tracker-1.0.0-arm64.dmg',
+  'Nail-Habit-Tracker-1.0.0.dmg':       'v1.0.0/Nail.Habit.Tracker-1.0.0.dmg',
+  // v1.1.0 — Stop Biting, signed + notarized
+  'Stop-Biting-1.1.0-arm64.dmg': 'v1.1.0/Stop.Biting-1.1.0-arm64.dmg',
+  'Stop-Biting-1.1.0.dmg':       'v1.1.0/Stop.Biting-1.1.0.dmg',
 };
 
 app.get('/downloads/:file', (req, res) => {
   const { file } = req.params;
-  const ghFile = DOWNLOAD_MAP[file];
-  if (!ghFile) return res.status(404).send('File not found');
-  res.redirect(302, `${GITHUB_RELEASE_BASE}/${ghFile}`);
+  const ghPath = DOWNLOAD_MAP[file];
+  if (!ghPath) return res.status(404).send('File not found');
+  res.redirect(302, `${GITHUB_RELEASES_BASE}/${ghPath}`);
 });
 
 // ─── Static (production) ─────────────────────────────────────────────────────
