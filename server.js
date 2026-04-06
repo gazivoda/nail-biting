@@ -50,10 +50,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
-      frameSrc:    ["'self'", 'https://www.paypal.com'],
-      connectSrc:  ["'self'", 'https://www.paypal.com', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com'],
-      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com'],
+      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
+      frameSrc:    ["'self'", 'https://www.paypal.com', 'https://www.sandbox.paypal.com'],
+      connectSrc:  ["'self'", 'https://www.paypal.com', 'https://www.sandbox.paypal.com', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com'],
+      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://www.paypalobjects.com'],
       styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
       fontSrc:     ["'self'", 'data:'],
     },
