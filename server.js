@@ -63,19 +63,21 @@ app.use(helmet({
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
 }));
 
-// C-1: CORS — strict allowlist. Production is same-origin so CORS isn't needed there,
-// but localhost needs it for the Vite dev server.
-const ALLOWED_ORIGINS = new Set(
-  (process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://localhost:3000').split(',')
-);
-app.use(cors({
+// C-1: CORS — scoped to /api/ only. Static assets are same-origin and never need CORS.
+// APP_URL is always allowed so production works without setting ALLOWED_ORIGINS explicitly.
+const ALLOWED_ORIGINS = new Set([
+  APP_URL,  // always allow the production domain (e.g. https://stopbiting.today)
+  ...(process.env.ALLOWED_ORIGINS || 'http://localhost:5173,http://localhost:3000').split(','),
+]);
+const corsMiddleware = cors({
   origin: (origin, cb) => {
-    // No origin = same-origin or curl/Electron — allow.
+    // No origin = same-origin request or curl/Electron — allow.
     if (!origin || ALLOWED_ORIGINS.has(origin)) return cb(null, true);
     cb(new Error('Not allowed by CORS'));
   },
   credentials: true,
-}));
+});
+app.use('/api/', corsMiddleware);  // only API routes need CORS, not static assets
 
 app.use(cookieParser());
 app.use(express.json({ limit: '10kb' }));  // M-8: explicit body size limit
