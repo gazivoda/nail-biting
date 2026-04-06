@@ -16,7 +16,7 @@ let modelInitPromise: Promise<{ hand: HandLandmarker; face: FaceLandmarker }> | 
 // Resolve a path relative to this module's location, which works correctly
 // under both http:// (web/dev) and file:// (Electron packaged) origins.
 // In Electron, import.meta.url is something like:
-//   file:///Applications/Nail Habit Tracker.app/Contents/Resources/app.asar/dist/assets/index-xxx.js
+//   file:///Applications/Stop Biting.app/Contents/Resources/app.asar/dist/assets/index-xxx.js
 // Going up two levels from assets/ lands us in dist/, where mediapipe-wasm/ lives.
 function assetUrl(relativePath: string): string {
   try {
@@ -173,7 +173,7 @@ export function useDetection(
 
     // Tab title flash
     if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
-    document.title = '⚠️ Stop biting! – Nail Habit';
+    document.title = '⚠️ Stop biting! – Stop Biting';
     titleTimerRef.current = setTimeout(() => {
       document.title = originalTitleRef.current;
     }, 3000);

@@ -53,7 +53,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
-        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Nail Habit</a>
+        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
           <a href="#/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
@@ -87,7 +87,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
             </h1>
 
             <p className="text-slate-400 text-lg leading-relaxed max-w-xl mx-auto mt-6">
-              The Nail Habit App uses your webcam and on-device AI to catch onychophagia the moment it starts —
+              The Stop Biting app uses your webcam and on-device AI to catch onychophagia the moment it starts —
               then sounds an alarm.{' '}
               <span className="text-slate-300 font-medium">No cloud processing.</span>{' '}
               <span className="text-slate-300 font-medium">No camera data sent anywhere.</span>{' '}
@@ -459,7 +459,7 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
       <footer className="border-t border-slate-900 py-10 px-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start justify-between gap-6">
           <div>
-            <p className="text-slate-400 text-sm font-semibold">Nail Habit Tracker</p>
+            <p className="text-slate-400 text-sm font-semibold">Stop Biting</p>
             <p className="text-slate-700 text-xs mt-1 max-w-xs leading-relaxed">
               Stop nail biting (onychophagia) using on-device AI. Available as a native desktop app
               for Mac and Windows, and as a web app. Built with MediaPipe, React, and WebAssembly.
@@ -468,13 +468,13 @@ export function Landing({ onLaunch, signingIn = false }: Props) {
           <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">
             <a href="/" className="text-slate-600 hover:text-slate-400 transition-colors">Home</a>
             <a href="#/blog" className="text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
-            <a href="mailto:hello@nailhabit.app" className="text-slate-600 hover:text-slate-400 transition-colors">Contact</a>
+            <a href="mailto:hello@stopbiting.today" className="text-slate-600 hover:text-slate-400 transition-colors">Contact</a>
             <a href="#/privacy" className="text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
           </nav>
         </div>
         <p className="text-slate-800 text-xs text-center mt-8">
-          © {new Date().getFullYear()} Nail Habit App · Science-backed habit reversal training for onychophagia ·{' '}
-          <a href="https://nailhabit.app/" className="hover:text-slate-600 transition-colors">nailhabit.app</a>
+          © {new Date().getFullYear()} Stop Biting · AI-powered nail biting detection ·{' '}
+          <a href="https://stopbiting.today/" className="hover:text-slate-600 transition-colors">stopbiting.today</a>
         </p>
       </footer>
 

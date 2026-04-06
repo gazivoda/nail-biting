@@ -1,23 +1,23 @@
-# Nail Habit App
-> A Mac desktop app that uses on-device AI to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. 100% private — no camera data leaves your device.
+# Stop Biting
+> An app that uses on-device AI to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. 100% private — no camera data leaves your device. Available as a native desktop app for Mac and Windows, and as a web app.
 
 ## Key pages
 
-- [Home](https://nailhabit.app/): Landing page — download, features, privacy commitment
-- [Blog](https://nailhabit.app/#/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
+- [Home](https://stopbiting.today/): Landing page — download, features, privacy commitment
+- [Blog](https://stopbiting.today/#/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
 
 ## Blog articles
 
-- [Why Do People Bite Their Nails?](https://nailhabit.app/#/blog/why-do-people-bite-their-nails): Causes, triggers, and the psychology behind onychophagia
-- [Habit Reversal Training: The Complete Guide](https://nailhabit.app/#/blog/habit-reversal-training-guide): Evidence-based HRT technique for stopping nail biting
-- [The Real Health Risks of Nail Biting](https://nailhabit.app/#/blog/nail-biting-health-risks): Dental damage, infections, and long-term consequences
-- [Nail Biting in Children: What Parents Should Know](https://nailhabit.app/#/blog/nail-biting-in-children): Age-appropriate strategies and when to seek help
-- [Best Remedies to Stop Nail Biting](https://nailhabit.app/#/blog/best-nail-biting-remedies): Ranking every method from bitter polish to AI detection
-- [The Stress–Nail Biting Connection](https://nailhabit.app/#/blog/stress-and-nail-biting): Why anxiety drives the habit and how to break the loop
-- [Onychophagia and OCD: Understanding the Link](https://nailhabit.app/#/blog/onychophagia-ocd-connection): BFRB classification, OCD-spectrum overlap, treatment implications
-- [How AI Can Help You Stop Biting Your Nails](https://nailhabit.app/#/blog/how-ai-can-help-stop-nail-biting): Real-time webcam detection and the awareness mechanism
-- [Nail Biting at Work: The Focus–Habit Loop](https://nailhabit.app/#/blog/nail-biting-during-focus-and-work): Why deep concentration triggers biting and how to interrupt it
-- [The Science of Breaking Any Habit](https://nailhabit.app/#/blog/breaking-any-habit-science): Neuroscience of habit loops applied to nail biting
+- [Why Do People Bite Their Nails?](https://stopbiting.today/#/blog/why-do-people-bite-their-nails): Causes, triggers, and the psychology behind onychophagia
+- [Habit Reversal Training: The Complete Guide](https://stopbiting.today/#/blog/habit-reversal-training-guide): Evidence-based HRT technique for stopping nail biting
+- [The Real Health Risks of Nail Biting](https://stopbiting.today/#/blog/nail-biting-health-risks): Dental damage, infections, and long-term consequences
+- [Nail Biting in Children: What Parents Should Know](https://stopbiting.today/#/blog/nail-biting-in-children): Age-appropriate strategies and when to seek help
+- [Best Remedies to Stop Nail Biting](https://stopbiting.today/#/blog/best-nail-biting-remedies): Ranking every method from bitter polish to AI detection
+- [The Stress–Nail Biting Connection](https://stopbiting.today/#/blog/stress-and-nail-biting): Why anxiety drives the habit and how to break the loop
+- [Onychophagia and OCD: Understanding the Link](https://stopbiting.today/#/blog/onychophagia-ocd-connection): BFRB classification, OCD-spectrum overlap, treatment implications
+- [How AI Can Help You Stop Biting Your Nails](https://stopbiting.today/#/blog/how-ai-can-help-stop-nail-biting): Real-time webcam detection and the awareness mechanism
+- [Nail Biting at Work: The Focus–Habit Loop](https://stopbiting.today/#/blog/nail-biting-during-focus-and-work): Why deep concentration triggers biting and how to interrupt it
+- [The Science of Breaking Any Habit](https://stopbiting.today/#/blog/breaking-any-habit-science): Neuroscience of habit loops applied to nail biting
 
 ## Key facts
 
@@ -25,4 +25,4 @@
 - Habit Reversal Training (HRT) reduces biting frequency by 70–90% in consistent practitioners
 - The app uses MediaPipe running in WebAssembly — zero network requests during detection
 - Detection works fully offline after initial setup
-- Free to use — available for macOS 12+
+- Free to start — available for macOS 12+, Windows, and in the browser

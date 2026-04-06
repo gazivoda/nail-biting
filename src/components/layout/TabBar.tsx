@@ -37,7 +37,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
       <div className="px-5 py-5 border-b border-slate-800">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <p className="text-sm font-semibold text-slate-100">Nail Habit</p>
+          <p className="text-sm font-semibold text-slate-100">Stop Biting</p>
         </div>
         <p className="text-xs text-slate-600 mt-0.5">AI nail biting detector</p>
       </div>

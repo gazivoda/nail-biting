@@ -24,4 +24,4 @@ Disallow: /
 User-agent: Bytespider
 Disallow: /
 
-Sitemap: https://nailhabit.app/sitemap.xml
+Sitemap: https://stopbiting.today/sitemap.xml

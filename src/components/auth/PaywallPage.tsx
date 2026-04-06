@@ -48,7 +48,7 @@ export function PaywallPage({ onBack }: Props) {
             <Check size={32} className="text-emerald-400" />
           </div>
           <h2 className="text-2xl font-bold text-slate-100 mb-2">You're all set!</h2>
-          <p className="text-slate-400 mb-2">Subscription activated. Enjoy Nail Habit Pro.</p>
+          <p className="text-slate-400 mb-2">Subscription activated. Enjoy Stop Biting Pro.</p>
           <p className="text-slate-500 text-sm">Redirecting to app…</p>
         </div>
       </div>
@@ -67,7 +67,7 @@ export function PaywallPage({ onBack }: Props) {
       <header className="border-b border-slate-800 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-sm font-semibold text-slate-100">Nail Habit</span>
+          <span className="text-sm font-semibold text-slate-100">Stop Biting</span>
         </div>
         <div className="flex items-center gap-3">
           {onBack && (
@@ -87,7 +87,7 @@ export function PaywallPage({ onBack }: Props) {
         {isTrialExpired && (
           <div className="flex items-center gap-2 bg-amber-950/50 border border-amber-800/50 text-amber-400 rounded-lg px-4 py-2.5 text-sm mb-8">
             <AlertTriangle size={14} />
-            <span>Your 7-day free trial has ended. Subscribe to keep using Nail Habit.</span>
+            <span>Your 7-day free trial has ended. Subscribe to keep using Stop Biting.</span>
           </div>
         )}
 
