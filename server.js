@@ -50,7 +50,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
+      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
       frameSrc:    ["'self'", 'https://www.paypal.com'],
       connectSrc:  ["'self'", 'https://www.paypal.com', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com'],
       imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com'],
