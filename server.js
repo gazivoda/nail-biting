@@ -402,9 +402,13 @@ app.get('/downloads/:file', (req, res) => {
 
 // ─── Static (production) ─────────────────────────────────────────────────────
 const distPath = join(__dirname, 'dist');
-if (existsSync(distPath)) {
-  app.use(express.static(distPath));
-  app.get('/{*path}', (_req, res) => res.sendFile(join(distPath, 'index.html')));
+if (!existsSync(distPath)) {
+  // Crash loudly so Coolify marks the deploy as failed rather than serving a broken app.
+  console.error('FATAL: dist/ directory not found. The frontend build did not run or failed.');
+  console.error('Run: VITE_BUILD_TARGET=web npx vite build');
+  process.exit(1);
 }
+app.use(express.static(distPath));
+app.get('/{*path}', (_req, res) => res.sendFile(join(distPath, 'index.html')));
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
