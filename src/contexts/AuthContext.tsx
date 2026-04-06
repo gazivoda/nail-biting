@@ -14,7 +14,7 @@ export interface UserProfile {
   paypal_subscription_id: string | null;
 }
 
-// 'loading'       — checking stored token on app start
+// 'loading'       — checking session on app start
 // 'no_auth'       — not signed in
 // 'trial_active'  — signed in, within 7-day trial
 // 'subscribed'    — signed in, active paid subscription
@@ -26,13 +26,19 @@ interface AuthContextType {
   accessStatus: AccessStatus;
   signingIn: boolean;
   signInWithGoogle: () => void;
-  signOut: () => void;
+  signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-const TOKEN_KEY = 'nh_token';
+// Electron only: Bearer token stored in localStorage by the main process.
+// Web: sessions are HttpOnly cookies — no token in JS at all.
+const ELECTRON_TOKEN_KEY = 'nh_token';
+
+function isElectron(): boolean {
+  return typeof window !== 'undefined' && !!window.electronAPI;
+}
 
 function computeAccessStatus(user: UserProfile): Exclude<AccessStatus, 'loading'> {
   const now = Date.now();
@@ -57,11 +63,22 @@ function computeAccessStatus(user: UserProfile): Exclude<AccessStatus, 'loading'
   return 'paywall';
 }
 
+// apiFetch:
+// - Web: credentials: 'include' sends the HttpOnly session cookie automatically.
+// - Electron: reads Bearer token from localStorage (set by main process).
 async function apiFetch(path: string, options?: RequestInit) {
-  const token = localStorage.getItem(TOKEN_KEY);
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(path, { ...options, headers: { ...headers, ...options?.headers } });
+  const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(options?.headers as Record<string, string>) };
+
+  if (isElectron()) {
+    const token = localStorage.getItem(ELECTRON_TOKEN_KEY);
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(path, {
+    ...options,
+    headers,
+    credentials: 'include',  // sends HttpOnly cookie on web; harmless in Electron
+  });
   if (!res.ok) throw new Error(`API error ${res.status}`);
   return res.json();
 }
@@ -80,18 +97,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAccessStatus(computeAccessStatus(profile));
   }, []);
 
-  // On mount: check URL hash for token from OAuth callback, then load profile
+  // On mount: load session. For web, the HttpOnly cookie is sent automatically
+  // with credentials: 'include'. For Electron, the Bearer token is in localStorage.
   useEffect(() => {
     // Handle Electron deep-link auth result delivered via custom event.
     // Main process writes token to localStorage then fires 'electron-auth'.
     const onElectronAuth = (e: Event) => {
       const { token, error } = (e as CustomEvent<{ token?: string; error?: string }>).detail;
       if (token) {
-        // Token is already in localStorage (set by executeJavaScript in main.ts)
         apiFetch('/api/user/me')
           .then(profile => { setSigningIn(false); applyUser(profile); })
           .catch(() => {
-            localStorage.removeItem(TOKEN_KEY);
+            localStorage.removeItem(ELECTRON_TOKEN_KEY);
             setSigningIn(false);
             setAccessStatus('no_auth');
           });
@@ -103,24 +120,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     window.addEventListener('electron-auth', onElectronAuth);
 
-    // Check URL hash for OAuth callback token (web browser flow).
-    // Server redirects to /#token=xxx or /#auth_error=xxx after Google OAuth.
+    // Handle OAuth error passed via URL hash (web flow error path only)
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    const hashToken = hashParams.get('token');
     const hashError = hashParams.get('auth_error');
-
-    if (hashToken) {
-      localStorage.setItem(TOKEN_KEY, hashToken);
-      window.history.replaceState(null, '', '/');
-      apiFetch('/api/user/me')
-        .then(applyUser)
-        .catch(() => {
-          localStorage.removeItem(TOKEN_KEY);
-          setAccessStatus('no_auth');
-        });
-      return () => window.removeEventListener('electron-auth', onElectronAuth);
-    }
-
     if (hashError) {
       console.error('Auth error from OAuth callback:', hashError);
       window.history.replaceState(null, '', '/');
@@ -128,60 +130,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return () => window.removeEventListener('electron-auth', onElectronAuth);
     }
 
-    // On initial mount: check for a token already stored (persisted login)
-    const storedToken = localStorage.getItem(TOKEN_KEY);
-    if (!storedToken) {
-      setAccessStatus('no_auth');
-    } else {
-      apiFetch('/api/user/me')
-        .then(applyUser)
-        .catch(() => {
-          localStorage.removeItem(TOKEN_KEY);
-          setAccessStatus('no_auth');
-        });
-    }
+    // Attempt to load the current session (cookie on web, localStorage on Electron)
+    apiFetch('/api/user/me')
+      .then(applyUser)
+      .catch(() => {
+        // No valid session — clear any stale Electron token too
+        if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
+        setAccessStatus('no_auth');
+      });
 
-    return () => {
-      window.removeEventListener('electron-auth', onElectronAuth);
-    };
+    return () => window.removeEventListener('electron-auth', onElectronAuth);
   }, [applyUser]);
 
   const signInWithGoogle = () => {
     if (window.electronAPI?.openGoogleAuth) {
-      // In Electron: main process fetches the Google URL from Express and opens
-      // it in the system browser via shell.openExternal — never inside Electron.
-      // After auth, server redirects to nailhabit://auth?token=xxx which the OS
-      // routes back to Electron. Main process writes token to localStorage and
-      // fires 'electron-auth'. We also poll localStorage as a belt-and-suspenders
-      // fallback in case the event is missed (e.g. page still loading when fired).
+      // Electron: main process opens system browser, auth redirects back via custom protocol.
+      // Main process writes token to localStorage and fires 'electron-auth'.
+      // We also poll localStorage as a belt-and-suspenders fallback.
       setSigningIn(true);
       window.electronAPI.openGoogleAuth();
 
       let attempts = 0;
       const poll = setInterval(() => {
         attempts++;
-        const token = localStorage.getItem(TOKEN_KEY);
+        const token = localStorage.getItem(ELECTRON_TOKEN_KEY);
         if (token) {
           clearInterval(poll);
           apiFetch('/api/user/me')
             .then(profile => { setSigningIn(false); applyUser(profile); })
             .catch(() => {
-              localStorage.removeItem(TOKEN_KEY);
+              localStorage.removeItem(ELECTRON_TOKEN_KEY);
               setSigningIn(false);
               setAccessStatus('no_auth');
             });
+          return;
         }
-        // Stop polling after 3 minutes
         if (attempts > 180) { clearInterval(poll); setSigningIn(false); }
       }, 1000);
     } else {
-      // In browser / PWA: normal navigation
+      // Web: navigate to OAuth start. Server sets state cookie, redirects to Google.
+      // On return, server sets HttpOnly session cookie and redirects to /.
       window.location.href = '/api/auth/google';
     }
   };
 
-  const signOut = () => {
-    localStorage.removeItem(TOKEN_KEY);
+  const signOut = async () => {
+    try {
+      // C-4/L-2: Tell the server to clear the session cookie
+      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' });
+    } catch {
+      // best effort
+    }
+    if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
     setUser(null);
     setAccessStatus('no_auth');
   };
