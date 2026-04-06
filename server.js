@@ -185,7 +185,11 @@ function authMiddleware(req, res, next) {
 }
 
 // ─── Health check ────────────────────────────────────────────────────────────
-app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+app.get('/health', (_req, res) => res.json({
+  status: 'ok',
+  commit: process.env.SOURCE_COMMIT || process.env.COMMIT_SHA || 'unknown',
+  dist: existsSync(join(__dirname, 'dist')),
+}));
 
 // ─── OAuth ───────────────────────────────────────────────────────────────────
 function makeOAuthClient() {
