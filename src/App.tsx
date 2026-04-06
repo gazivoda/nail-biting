@@ -24,7 +24,7 @@ function useHash() {
 type Tab = 'dashboard' | 'log' | 'settings';
 
 function AppRouter() {
-  const { accessStatus, signInWithGoogle, signingIn } = useAuth();
+  const { accessStatus } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showPaywall, setShowPaywall] = useState(false);
   const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
@@ -45,7 +45,7 @@ function AppRouter() {
 
   // ── Not authenticated → Landing ──────────────────────────────────────────
   if (accessStatus === 'no_auth') {
-    return <Landing onLaunch={signInWithGoogle} signingIn={signingIn} />;
+    return <Landing />;
   }
 
   // ── Paywall (trial expired) or voluntary upgrade ────────────────────────
