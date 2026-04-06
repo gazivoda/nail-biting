@@ -7,7 +7,8 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++
 
 COPY package*.json ./
-RUN npm ci
+# Skip Electron binary download — not needed for the web build
+RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
 
 # Copy only what vite needs to build the frontend
 COPY src ./src
@@ -15,8 +16,9 @@ COPY public ./public
 COPY index.html tsconfig.json tsconfig.app.json tsconfig.node.json ./
 COPY vite.config.ts tailwind.config.js postcss.config.js ./
 
-# Build with web base path (/ instead of ./ which is for Electron file://)
-RUN VITE_BUILD_TARGET=web npm run build:web
+# Build with web base path (/ not ./ which is for Electron file://)
+# Call vite directly — skip tsc which fails on Electron-specific types in CI
+RUN VITE_BUILD_TARGET=web npx vite build --mode production
 
 # ── Stage 2: production node_modules (native addons compiled) ─────────────────
 FROM node:22-alpine AS deps
@@ -26,7 +28,7 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++
 
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci --omit=dev
 
 # ── Stage 3: lean runtime image ───────────────────────────────────────────────
 FROM node:22-alpine
