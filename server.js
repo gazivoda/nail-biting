@@ -307,23 +307,21 @@ app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => 
 });
 
 // ─── Downloads ───────────────────────────────────────────────────────────────
-// Serves installer files (DMG, EXE) from the downloads/ directory.
-// On Coolify, mount a persistent volume to DOWNLOADS_DIR so large binaries
-// are not baked into the image.
-const DOWNLOADS_DIR = process.env.DOWNLOADS_DIR || join(__dirname, 'downloads');
+// Redirects installer downloads to GitHub Releases so large binaries don't
+// need to be baked into the container image.
+const GITHUB_RELEASE_BASE = 'https://github.com/gazivoda/nail-biting/releases/download/v1.0.0';
+const DOWNLOAD_MAP = {
+  'Nail-Habit-Tracker-1.0.0-arm64.dmg': 'Nail.Habit.Tracker-1.0.0-arm64.dmg',
+  'Nail-Habit-Tracker-1.0.0.dmg':       'Nail.Habit.Tracker-1.0.0.dmg',
+};
 
 app.get('/downloads/:file', (req, res) => {
   const { file } = req.params;
-  // Only allow alphanumeric filenames with safe extensions
-  if (!/^[\w.\-]+\.(dmg|exe|zip|deb|AppImage)$/i.test(file)) {
-    return res.status(400).send('Invalid filename');
+  const ghFile = DOWNLOAD_MAP[file];
+  if (!ghFile) {
+    return res.status(404).send('File not found');
   }
-  const filePath = join(DOWNLOADS_DIR, file);
-  res.download(filePath, file, (err) => {
-    if (err && !res.headersSent) {
-      res.status(404).send('File not found');
-    }
-  });
+  res.redirect(302, `${GITHUB_RELEASE_BASE}/${ghFile}`);
 });
 
 // ─── Static (production) ─────────────────────────────────────────────────────
