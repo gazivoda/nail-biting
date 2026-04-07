@@ -43,7 +43,7 @@ export function Dashboard() {
     <div className="p-8">
       {/* Desktop app promo — only shown in browser, dismissible */}
       {!isElectron && !bannerDismissed && (
-        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card animate-fade-up" style={{ animationDelay: '0ms' }}>
+        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card dark:shadow-card-dark animate-fade-up" style={{ animationDelay: '0ms' }}>
           <span className="text-stone-500 dark:text-stone-400">
             For the best experience, try the{' '}
             <strong className="text-stone-700 dark:text-stone-200">native desktop app</strong> — runs fully offline, no browser needed.

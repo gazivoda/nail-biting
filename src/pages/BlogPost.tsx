@@ -9,14 +9,14 @@ interface Props {
 }
 
 const TAG_COLORS: Record<string, string> = {
-  Psychology:  'bg-violet-100 text-violet-700 border-violet-200',
-  Treatment:   'bg-forest-100 text-forest-700 border-forest-200',
-  Health:      'bg-rose-100 text-rose-700 border-rose-200',
-  Parenting:   'bg-sky-100 text-sky-700 border-sky-200',
-  Clinical:    'bg-amber-100 text-amber-700 border-amber-200',
-  Technology:  'bg-cyan-100 text-cyan-700 border-cyan-200',
-  Productivity:'bg-orange-100 text-orange-700 border-orange-200',
-  Science:     'bg-indigo-100 text-indigo-700 border-indigo-200',
+  Psychology:  'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800',
+  Treatment:   'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border-forest-200 dark:border-forest-800',
+  Health:      'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
+  Parenting:   'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800',
+  Clinical:    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+  Technology:  'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800',
+  Productivity:'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
+  Science:     'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800',
 };
 
 function tagClass(tag: string) {

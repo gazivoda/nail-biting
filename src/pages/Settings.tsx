@@ -11,7 +11,7 @@ function Section({ title, icon: Icon, children, fullWidth }: {
   fullWidth?: boolean;
 }) {
   return (
-    <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card ${fullWidth ? 'col-span-2' : ''}`}>
+    <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'col-span-2' : ''}`}>
       <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
         <Icon size={15} className="text-stone-400 dark:text-stone-500" />
         <p className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</p>
@@ -281,7 +281,7 @@ export function Settings() {
           <Toggle value={remindersEnabled} onChange={handleReminderToggle} />
         </Row>
         {notifStatus && (
-          <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg px-3 py-2">
+          <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-3 py-2">
             {notifStatus}
           </p>
         )}
@@ -306,11 +306,11 @@ export function Settings() {
       <Section title="Data" icon={Trash2}>
         {showConfirm ? (
           <div className="space-y-3">
-            <p className="text-sm text-red-700 dark:text-red-400">This will erase your entire history, reset your streak, and cannot be undone.</p>
+            <p className="text-sm text-alert-600 dark:text-alert-400">This will erase your entire history, reset your streak, and cannot be undone.</p>
             <div className="flex gap-2">
               <button
                 onClick={() => { clearAllData(); setShowConfirm(false); }}
-                className="flex-1 bg-red-600 hover:bg-red-700 rounded-xl py-2 text-sm text-white transition-colors"
+                className="flex-1 bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
               >
                 Yes, clear everything
               </button>
@@ -325,7 +325,7 @@ export function Settings() {
         ) : (
           <button
             onClick={() => setShowConfirm(true)}
-            className="w-full flex items-center justify-center gap-2 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-xl py-2.5 text-sm transition-colors"
+            className="w-full flex items-center justify-center gap-2 text-alert-600 dark:text-alert-400 hover:text-alert-800 dark:hover:text-alert-100 bg-alert-100 dark:bg-alert-900/20 hover:bg-alert-100 dark:hover:bg-alert-900/30 border border-alert-400 dark:border-alert-800 rounded-xl py-2.5 text-sm transition-colors"
           >
             <Trash2 size={14} />
             Clear all data
