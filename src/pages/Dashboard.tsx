@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ShieldCheck, Download, X } from 'lucide-react';
+import { ShieldCheck, Download, X, Camera } from 'lucide-react';
 import { CameraView } from '../components/detection/CameraView';
 import { StreakCard } from '../components/dashboard/StreakCard';
 import { StatsRow } from '../components/dashboard/StatsRow';
@@ -11,12 +11,28 @@ import { useAppStore } from '../store/useAppStore';
 const DOWNLOAD_MAC_ARM = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
 const isElectron = navigator.userAgent.includes('Electron');
 
+function FirstRunHint() {
+  return (
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none select-none">
+      <div className="w-12 h-12 rounded-2xl bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center">
+        <Camera size={22} className="text-forest-600 dark:text-forest-400" />
+      </div>
+      <div className="text-center px-6">
+        <p className="text-stone-600 dark:text-stone-300 font-medium text-sm">Enable AI detection to start</p>
+        <p className="text-stone-400 dark:text-stone-500 text-xs mt-1">Toggle "AI Detection" on the right →</p>
+      </div>
+    </div>
+  );
+}
+
 export function Dashboard() {
-  const { cameraEnabled } = useAppStore();
+  const { cameraEnabled, incidents } = useAppStore();
   const { videoRef } = useCamera(cameraEnabled);
   const [bannerDismissed, setBannerDismissed] = useState(
     () => localStorage.getItem('desktop_banner_dismissed') === '1'
   );
+
+  const isFirstRun = !cameraEnabled && incidents.length === 0;
 
   function dismissBanner() {
     localStorage.setItem('desktop_banner_dismissed', '1');
@@ -60,8 +76,9 @@ export function Dashboard() {
       {/* Two-column: camera left, controls right */}
       <div className="grid grid-cols-5 gap-8 items-start">
         {/* Camera — takes 3/5 */}
-        <div className="col-span-3">
+        <div className="col-span-3 relative">
           <CameraView videoRef={videoRef} />
+          {isFirstRun && <FirstRunHint />}
         </div>
 
         {/* Stats + controls — takes 2/5 */}

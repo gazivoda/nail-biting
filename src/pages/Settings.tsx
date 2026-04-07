@@ -39,6 +39,8 @@ function Row({ label, description, children }: {
 function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
   return (
     <button
+      role="switch"
+      aria-checked={value}
       onClick={() => onChange(!value)}
       className={`relative flex-shrink-0 w-12 h-6 rounded-full transition-colors duration-200 ${value ? 'bg-forest-500' : 'bg-stone-200 dark:bg-ink-400'}`}
     >

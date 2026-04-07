@@ -15,6 +15,9 @@ export function CameraToggle() {
           </div>
         </div>
         <button
+          role="switch"
+          aria-checked={cameraEnabled}
+          aria-label="Toggle AI detection"
           onClick={() => setCameraEnabled(!cameraEnabled)}
           className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
             cameraEnabled ? 'bg-forest-500' : 'bg-stone-300 dark:bg-ink-400'
@@ -35,6 +38,9 @@ export function CameraToggle() {
             <span>Show camera feed</span>
           </div>
           <button
+            role="switch"
+            aria-checked={showCameraFeed}
+            aria-label="Show camera feed"
             onClick={() => setShowCameraFeed(!showCameraFeed)}
             className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${
               showCameraFeed ? 'bg-stone-400 dark:bg-stone-500' : 'bg-stone-300 dark:bg-ink-400'

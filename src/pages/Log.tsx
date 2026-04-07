@@ -128,11 +128,11 @@ export function Log() {
 
   return (
     <div className="p-8">
-      {/* Split: chart left, incident list right */}
-      <div className="grid grid-cols-[360px_1fr] gap-8 items-start">
+      {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}
+      <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
         {/* Left: sticky chart + summary */}
-        <div className="sticky top-8 flex flex-col gap-4">
+        <div className="xl:sticky xl:top-8 flex flex-col gap-4">
           <WeekChart />
 
           {incidents.length > 0 && (
