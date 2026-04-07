@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
+import { useTheme } from '../hooks/useTheme';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 interface Props {
   slug: string;
@@ -33,6 +35,7 @@ function getRelated(currentSlug: string, currentTag: string) {
 }
 
 export function BlogPost({ slug }: Props) {
+  useTheme();
   const post = getPost(slug);
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
   const related = post ? getRelated(slug, post.tag) : [];
@@ -136,17 +139,18 @@ export function BlogPost({ slug }: Props) {
   }, [slug]);
 
   return (
-    <div className="min-h-dvh bg-cream-100 text-stone-800">
+    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
       {/* Nav */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 backdrop-blur-md border-b border-stone-200">
-        <a href="/" className="text-sm font-semibold text-stone-800 tracking-tight">Stop Biting</a>
+      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
+        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 text-sm transition-colors">
+          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <a href="/" className="text-sm font-semibold text-stone-500 hover:text-stone-800 transition-colors">
+          <ThemeToggle />
+          <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Launch App
           </a>
         </div>
@@ -155,9 +159,9 @@ export function BlogPost({ slug }: Props) {
       {/* 404 */}
       {!post && (
         <div className="flex flex-col items-center justify-center min-h-dvh gap-4 text-center px-6">
-          <p className="text-6xl font-bold text-stone-300">404</p>
-          <p className="text-stone-500">Article not found.</p>
-          <a href="/blog" className="mt-2 inline-flex items-center gap-2 text-forest-600 hover:text-forest-500 text-sm">
+          <p className="text-6xl font-bold text-stone-300 dark:text-stone-600">404</p>
+          <p className="text-stone-500 dark:text-stone-400">Article not found.</p>
+          <a href="/blog" className="mt-2 inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 hover:text-forest-500 text-sm">
             <ArrowLeft size={14} aria-hidden="true" />
             Back to blog
           </a>
@@ -169,12 +173,12 @@ export function BlogPost({ slug }: Props) {
         <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
           {/* Breadcrumb nav */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 mb-8">
-            <a href="/" className="hover:text-stone-600 transition-colors">Home</a>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 mb-8">
+            <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
             <span aria-hidden="true">/</span>
-            <a href="/blog" className="hover:text-stone-600 transition-colors">Blog</a>
+            <a href="/blog" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Blog</a>
             <span aria-hidden="true">/</span>
-            <span className="text-stone-500 truncate max-w-[200px]">{post.tag}</span>
+            <span className="text-stone-500 dark:text-stone-400 truncate max-w-[200px]">{post.tag}</span>
           </nav>
 
           {/* Article header */}
@@ -183,31 +187,31 @@ export function BlogPost({ slug }: Props) {
               <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${tagClass(post.tag)}`}>
                 {post.tag}
               </span>
-              <span className="flex items-center gap-1 text-xs text-stone-400">
+              <span className="flex items-center gap-1 text-xs text-stone-400 dark:text-stone-500">
                 <Clock size={11} aria-hidden="true" />
                 {post.readingMinutes} min read
               </span>
-              <time dateTime={post.datePublished} className="text-xs text-stone-400">
+              <time dateTime={post.datePublished} className="text-xs text-stone-400 dark:text-stone-500">
                 {formatDate(post.datePublished)}
               </time>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-800 leading-tight mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-800 dark:text-stone-100 leading-tight mb-4">
               {post.title}
             </h1>
 
-            <p className="text-lg text-stone-500 leading-relaxed mb-6">
+            <p className="text-lg text-stone-500 dark:text-stone-400 leading-relaxed mb-6">
               {post.description}
             </p>
 
             {/* Author byline — authority signal for AI crawlers */}
-            <div className="flex items-center gap-3 py-4 border-t border-b border-stone-200">
-              <div className="w-8 h-8 rounded-full bg-forest-100 border border-forest-200 flex items-center justify-center shrink-0">
-                <span className="text-forest-600 text-xs font-bold">SB</span>
+            <div className="flex items-center gap-3 py-4 border-t border-b border-stone-200 dark:border-ink-400">
+              <div className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center shrink-0">
+                <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">SB</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-stone-700">Stop Biting Editorial Team</p>
-                <p className="text-xs text-stone-400">
+                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">Stop Biting Editorial Team</p>
+                <p className="text-xs text-stone-400 dark:text-stone-500">
                   Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
                   {post.dateModified !== post.datePublished && (
                     <> Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>.</>
@@ -217,18 +221,18 @@ export function BlogPost({ slug }: Props) {
             </div>
           </header>
 
-          <hr className="border-stone-200 mb-10" />
+          <hr className="border-stone-200 dark:border-ink-400 mb-10" />
 
           {/* Article body */}
           <article>
             {post.sections.map((section, i) => (
               <section key={i} className="mb-10">
-                <h2 className="text-xl font-semibold text-stone-800 mb-4 leading-snug">
+                <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4 leading-snug">
                   {section.heading}
                 </h2>
 
                 {section.body.split('\n\n').map((para, j) => (
-                  <p key={j} className="text-stone-600 leading-relaxed mb-4 text-[15px]">
+                  <p key={j} className="text-stone-600 dark:text-stone-400 leading-relaxed mb-4 text-[15px]">
                     {para}
                   </p>
                 ))}
@@ -236,7 +240,7 @@ export function BlogPost({ slug }: Props) {
                 {section.list && section.list.length > 0 && (
                   <ul className="mt-3 space-y-3">
                     {section.list.map((item, k) => (
-                      <li key={k} className="flex gap-3 text-[15px] text-stone-600 leading-relaxed">
+                      <li key={k} className="flex gap-3 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-forest-500 shrink-0" aria-hidden="true" />
                         <span>{item}</span>
                       </li>
@@ -248,9 +252,9 @@ export function BlogPost({ slug }: Props) {
           </article>
 
           {/* CTA */}
-          <div className="mt-14 rounded-2xl bg-forest-50 border border-forest-200 p-8 text-center">
-            <p className="text-stone-500 text-sm mb-1">Ready to start tracking?</p>
-            <p className="text-stone-800 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
+          <div className="mt-14 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
+            <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">Ready to start tracking?</p>
+            <p className="text-stone-800 dark:text-stone-100 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
             <a
               href="/"
               className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
@@ -262,7 +266,7 @@ export function BlogPost({ slug }: Props) {
           {/* Related articles — internal linking for SEO */}
           {related.length > 0 && (
             <section className="mt-14" aria-labelledby="related-heading">
-              <h2 id="related-heading" className="text-lg font-semibold text-stone-800 mb-5">
+              <h2 id="related-heading" className="text-lg font-semibold text-stone-800 dark:text-stone-100 mb-5">
                 Related articles
               </h2>
               <div className="flex flex-col gap-3">
@@ -270,17 +274,17 @@ export function BlogPost({ slug }: Props) {
                   <a
                     key={rel.slug}
                     href={`/blog/${rel.slug}`}
-                    className="group flex items-start justify-between gap-4 rounded-xl border border-stone-200 bg-white px-4 py-3 hover:border-forest-300 hover:shadow-sm transition-all"
+                    className="group flex items-start justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-sm transition-all"
                   >
                     <div className="flex-1 min-w-0">
                       <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full border mb-1.5 ${tagClass(rel.tag)}`}>
                         {rel.tag}
                       </span>
-                      <p className="text-sm font-medium text-stone-700 leading-snug group-hover:text-forest-600 transition-colors line-clamp-2">
+                      <p className="text-sm font-medium text-stone-700 dark:text-stone-200 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors line-clamp-2">
                         {rel.title}
                       </p>
                     </div>
-                    <ArrowRight size={14} className="text-stone-400 group-hover:text-forest-500 mt-1 shrink-0 transition-colors" aria-hidden="true" />
+                    <ArrowRight size={14} className="text-stone-400 dark:text-stone-500 group-hover:text-forest-500 dark:group-hover:text-forest-400 mt-1 shrink-0 transition-colors" aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -291,7 +295,7 @@ export function BlogPost({ slug }: Props) {
           <div className="mt-10 text-center">
             <a
               href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-stone-400 hover:text-stone-600 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
             >
               <ArrowLeft size={14} aria-hidden="true" />
               Back to all articles
@@ -301,9 +305,9 @@ export function BlogPost({ slug }: Props) {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-stone-200 py-8 px-6 text-center text-stone-400 text-sm bg-cream-200">
+      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
         <p>
-          <a href="/" className="hover:text-stone-600 transition-colors">Stop Biting</a>
+          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
           {' — '}AI-powered nail biting tracker for Mac and Windows
         </p>
       </footer>

@@ -9,11 +9,11 @@ interface Props {
 }
 
 const config: Record<DetectionStatus, { icon: typeof Eye; label: string; color: string }> = {
-  idle: { icon: EyeOff, label: 'Detection off', color: 'text-slate-500' },
+  idle: { icon: EyeOff, label: 'Detection off', color: 'text-stone-500' },
   loading: { icon: Loader2, label: 'Loading AI models…', color: 'text-amber-400' },
-  watching: { icon: Eye, label: 'Watching you', color: 'text-emerald-400' },
-  alert: { icon: AlertTriangle, label: 'Hands near mouth!', color: 'text-red-400' },
-  error: { icon: WifiOff, label: 'Model load failed', color: 'text-red-500' },
+  watching: { icon: Eye, label: 'Watching you', color: 'text-forest-400' },
+  alert: { icon: AlertTriangle, label: 'Hands near mouth!', color: 'text-alert-400' },
+  error: { icon: WifiOff, label: 'Model load failed', color: 'text-alert-600' },
 };
 
 export function DetectionStatus({ status, onRetry }: Props) {
@@ -42,12 +42,12 @@ export function DetectionStatus({ status, onRetry }: Props) {
       <Icon size={14} className={isLoading ? 'animate-spin' : ''} />
       <span>{label}</span>
       {status === 'watching' && (
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow" />
+        <span className="w-2 h-2 rounded-full bg-forest-400 animate-pulse-slow" />
       )}
       {status === 'error' && onRetry && (
         <button
           onClick={onRetry}
-          className="ml-1 text-xs underline text-red-400 hover:text-red-300"
+          className="ml-1 text-xs underline text-alert-400 hover:text-alert-600"
         >
           Retry
         </button>

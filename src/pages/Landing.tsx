@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
@@ -10,16 +11,44 @@ import { ThemeToggle } from '../components/ThemeToggle';
 const DOWNLOAD_MAC_ARM   = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
 const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
 
+// Activates scroll-reveal on all .reveal and .reveal-card elements
+function useScrollReveal() {
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      document.querySelectorAll('.reveal, .reveal-card').forEach(el => {
+        el.classList.add('revealed');
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   const base = size === 'lg'
-    ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-150 px-6 py-3 text-sm'
-    : 'inline-flex items-center gap-2 font-semibold rounded-xl transition-all duration-150 px-4 py-2 text-xs';
+    ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-200 px-6 py-3 text-sm'
+    : 'inline-flex items-center gap-2 font-semibold rounded-xl transition-all duration-200 px-4 py-2 text-xs';
   return (
     <div className="flex flex-col items-start gap-2">
       <div className="flex flex-wrap items-center gap-3">
         <a
           href={DOWNLOAD_MAC_ARM}
-          className={`${base} bg-forest-600 hover:bg-forest-500 text-cream-100 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95`}
+          className={`${base} btn-shimmer bg-forest-600 hover:bg-forest-500 text-cream-100 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95`}
         >
           <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
           Download for Mac
@@ -52,6 +81,8 @@ interface Props {}
 
 export function Landing(_props: Props) {
   useTheme();
+  useScrollReveal();
+
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
@@ -78,20 +109,62 @@ export function Landing(_props: Props) {
       <main>
         <section
           aria-label="Hero"
-          className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16"
+          className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16 overflow-hidden"
           style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, oklch(92% 0.055 148 / 0.25) 0%, transparent 70%)' }}
         >
-          <div className="max-w-3xl mx-auto">
-            <p className="text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6">
+          {/* Floating ambient orbs */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+              className="animate-float-slow absolute rounded-full opacity-30 dark:opacity-20"
+              style={{
+                width: 420, height: 420,
+                top: '8%', left: '-8%',
+                background: 'radial-gradient(circle, oklch(84% 0.080 148) 0%, transparent 70%)',
+                filter: 'blur(60px)',
+              }}
+            />
+            <div
+              className="animate-float-medium absolute rounded-full opacity-20 dark:opacity-15"
+              style={{
+                width: 320, height: 320,
+                top: '20%', right: '-6%',
+                background: 'radial-gradient(circle, oklch(70% 0.110 148) 0%, transparent 70%)',
+                filter: 'blur(50px)',
+                animationDelay: '1.5s',
+              }}
+            />
+            <div
+              className="animate-float-slow absolute rounded-full opacity-15 dark:opacity-10"
+              style={{
+                width: 260, height: 260,
+                bottom: '15%', left: '20%',
+                background: 'radial-gradient(circle, oklch(76% 0.155 75) 0%, transparent 70%)',
+                filter: 'blur(45px)',
+                animationDelay: '3s',
+              }}
+            />
+          </div>
+
+          <div className="max-w-3xl mx-auto relative z-10">
+            <p
+              className="animate-fade-up text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6"
+              style={{ animationDelay: '0ms' }}
+            >
               Mac · Windows · Web App
             </p>
 
-            <h1 className="text-5xl sm:text-6xl font-bold text-stone-800 dark:text-stone-100 leading-tight tracking-tight">
+            <h1
+              className="animate-fade-up text-5xl sm:text-6xl font-bold text-stone-800 dark:text-stone-100 leading-tight tracking-tight"
+              style={{ animationDelay: '80ms' }}
+            >
               Stop nail biting with<br />
               <span className="text-forest-600 dark:text-forest-400">real-time AI detection.</span>
             </h1>
 
-            <p className="text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6">
+            <p
+              className="animate-fade-up text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6"
+              style={{ animationDelay: '160ms' }}
+            >
               The Stop Biting app uses your webcam and on-device AI to catch onychophagia the moment it starts —
               then sounds an alarm.{' '}
               <span className="text-stone-700 dark:text-stone-200 font-medium">No cloud processing.</span>{' '}
@@ -99,13 +172,19 @@ export function Landing(_props: Props) {
               Available as a native desktop app for Mac and Windows, and in your browser.
             </p>
 
-            <div className="flex items-center justify-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mt-6 w-fit mx-auto">
+            <div
+              className="animate-fade-up flex items-center justify-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mt-6 w-fit mx-auto"
+              style={{ animationDelay: '240ms' }}
+            >
               <ShieldCheck size={12} aria-hidden="true" />
               <span>All AI processing on-device — zero network requests during detection</span>
               <span className="w-1.5 h-1.5 rounded-full bg-forest-500 animate-pulse ml-1" aria-hidden="true" />
             </div>
 
-            <div className="mt-10 flex flex-col items-center gap-4">
+            <div
+              className="animate-fade-up mt-10 flex flex-col items-center gap-4"
+              style={{ animationDelay: '320ms' }}
+            >
               <DownloadButtons size="lg" />
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <a
@@ -127,7 +206,10 @@ export function Landing(_props: Props) {
             </div>
 
             {/* Social proof strip */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-400 dark:text-stone-500">
+            <div
+              className="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-400 dark:text-stone-500"
+              style={{ animationDelay: '400ms' }}
+            >
               {['Mac & Windows', 'Web App', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
                 <span key={tag} className="flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-forest-400" aria-hidden="true" />
@@ -137,7 +219,7 @@ export function Landing(_props: Props) {
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: '600ms' }}>
             <ChevronDown size={20} className="text-stone-300 dark:text-stone-600 animate-bounce" aria-hidden="true" />
           </div>
         </section>
@@ -145,7 +227,7 @@ export function Landing(_props: Props) {
         <div className="max-w-6xl mx-auto px-8 space-y-20 pb-20">
 
           {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
-          <section aria-labelledby="privacy-heading">
+          <section aria-labelledby="privacy-heading" className="reveal">
             <div className="bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 rounded-2xl p-8 text-center">
               <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center mx-auto mb-6">
                 <Lock size={32} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
@@ -165,8 +247,8 @@ export function Landing(_props: Props) {
 
           {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
           <section aria-labelledby="how-heading">
-            <p className="text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">How it works</p>
-            <h2 id="how-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Three steps to start stopping nail biting.</h2>
+            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">How it works</p>
+            <h2 id="how-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Three steps to start stopping nail biting.</h2>
 
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
@@ -182,8 +264,12 @@ export function Landing(_props: Props) {
                   n: '03', icon: Bell, heading: 'Get alerted the moment it happens',
                   body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment — the core of habit reversal training.',
                 },
-              ].map(({ n, icon: Icon, heading, body }) => (
-                <div key={n} className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 shadow-card">
+              ].map(({ n, icon: Icon, heading, body }, i) => (
+                <div
+                  key={n}
+                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
                   <div className="flex items-center gap-3 mb-5">
                     <span className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center text-xs font-bold text-forest-600 dark:text-forest-400 flex-shrink-0">
                       {n}
@@ -199,8 +285,8 @@ export function Landing(_props: Props) {
 
           {/* ── FEATURE GRID ──────────────────────────────────────────────── */}
           <section aria-labelledby="features-heading">
-            <h2 id="features-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Everything you need to build the habit.</h2>
-            <p className="text-stone-500 dark:text-stone-400 text-base text-center mt-1">Nothing you don't.</p>
+            <h2 id="features-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Everything you need to build the habit.</h2>
+            <p className="reveal text-stone-500 dark:text-stone-400 text-base text-center mt-1">Nothing you don't.</p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-10">
               {[
@@ -210,14 +296,15 @@ export function Landing(_props: Props) {
                 { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.', accent: false, color: 'text-stone-500 dark:text-stone-400' },
                 { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.', accent: false, color: 'text-forest-500 dark:text-forest-400' },
                 { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.', accent: true, color: 'text-stone-500 dark:text-stone-400' },
-              ].map(({ icon: Icon, name, desc, accent, color }) => (
+              ].map(({ icon: Icon, name, desc, accent, color }, i) => (
                 <div
                   key={name}
-                  className={`bg-white dark:bg-ink-50 rounded-2xl p-5 border shadow-card ${
+                  className={`reveal-card bg-white dark:bg-ink-50 rounded-2xl p-5 border shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 ${
                     accent
                       ? 'border-forest-200 dark:border-forest-800'
                       : 'border-stone-200 dark:border-ink-400'
                   }`}
+                  style={{ transitionDelay: `${i * 60}ms` }}
                 >
                   <Icon size={20} className={color} aria-hidden="true" />
                   <p className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-3">{name}</p>
@@ -230,7 +317,7 @@ export function Landing(_props: Props) {
           {/* ── WHY / HRT ─────────────────────────────────────────────────── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-            <article aria-labelledby="why-bite-heading" className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card">
+            <article aria-labelledby="why-bite-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
               <h2 id="why-bite-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Why do people bite their nails?</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
                 Nail biting — medically known as <strong className="text-stone-700 dark:text-stone-200">onychophagia</strong> — is a
@@ -261,12 +348,13 @@ export function Landing(_props: Props) {
                 occurs — which is when intervention is most effective.
               </p>
 
-              <a href="/blog/why-do-people-bite-their-nails" className="inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
-                Read the full article <ArrowRight size={12} aria-hidden="true" />
+              <a href="/blog/why-do-people-bite-their-nails" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
+                Read the full article{' '}
+                <ArrowRight size={12} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </article>
 
-            <article aria-labelledby="hrt-heading" className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card">
+            <article aria-labelledby="hrt-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
               <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">What is habit reversal training?</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
                 <strong className="text-stone-700 dark:text-stone-200">Habit Reversal Training (HRT)</strong> is the gold-standard
@@ -296,8 +384,9 @@ export function Landing(_props: Props) {
                 without external support. The competing response is up to you.
               </p>
 
-              <a href="/blog/habit-reversal-training-guide" className="inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
-                Read the full HRT guide <ArrowRight size={12} aria-hidden="true" />
+              <a href="/blog/habit-reversal-training-guide" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
+                Read the full HRT guide{' '}
+                <ArrowRight size={12} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </article>
 
@@ -305,7 +394,7 @@ export function Landing(_props: Props) {
 
           {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
           <section aria-labelledby="testimonials-heading">
-            <h2 id="testimonials-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">What people are saying</h2>
+            <h2 id="testimonials-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">What people are saying</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-8">
               {[
                 {
@@ -323,8 +412,12 @@ export function Landing(_props: Props) {
                   name: 'Priya M.',
                   context: 'Remote worker, 15-year habit',
                 },
-              ].map(({ quote, name, context }) => (
-                <blockquote key={name} className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card">
+              ].map(({ quote, name, context }, i) => (
+                <blockquote
+                  key={name}
+                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
                   <div className="flex gap-0.5 mb-3">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={12} className="text-amber-400 fill-amber-400" aria-hidden="true" />
@@ -342,8 +435,8 @@ export function Landing(_props: Props) {
 
           {/* ── PRIVACY DEEP-DIVE ─────────────────────────────────────────── */}
           <section aria-labelledby="privacy-details-heading">
-            <h2 id="privacy-details-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Open, honest, verifiable.</h2>
-            <p className="text-stone-500 dark:text-stone-400 text-sm text-center mt-2 max-w-xs mx-auto">
+            <h2 id="privacy-details-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Open, honest, verifiable.</h2>
+            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2 max-w-xs mx-auto">
               The privacy claims on this page aren't marketing. You can verify every one of them yourself.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
@@ -363,8 +456,12 @@ export function Landing(_props: Props) {
                   title: 'Built on open web technologies',
                   detail: 'The app runs on React, WebAssembly, and MediaPipe — all inspectable. Camera frames never leave the canvas element.',
                 },
-              ].map(({ icon: Icon, title, detail }) => (
-                <div key={title} className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl px-5 py-4 flex items-start gap-4 shadow-card">
+              ].map(({ icon: Icon, title, detail }, i) => (
+                <div
+                  key={title}
+                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl px-5 py-4 flex items-start gap-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
                   <Icon size={16} className="text-forest-500 dark:text-forest-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <p className="text-stone-800 dark:text-stone-100 text-sm font-semibold">{title}</p>
@@ -376,7 +473,7 @@ export function Landing(_props: Props) {
           </section>
 
           {/* ── STATS STRIP ───────────────────────────────────────────────── */}
-          <section aria-label="Key statistics" className="flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
+          <section aria-label="Key statistics" className="reveal flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
             {[
               { number: '20–30%', label: 'Of adults affected by onychophagia' },
               { number: '70–90%', label: 'Biting reduction with consistent HRT' },
@@ -391,16 +488,17 @@ export function Landing(_props: Props) {
               </div>
             ))}
           </section>
-          <p className="text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
+          <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
             HRT efficacy data sourced from published clinical literature. Camera privacy verified by architecture — no server-side processing exists.
           </p>
 
           {/* ── BLOG PREVIEW ──────────────────────────────────────────────── */}
           <section aria-labelledby="blog-preview-heading">
-            <div className="flex items-center justify-between mb-6">
+            <div className="reveal flex items-center justify-between mb-6">
               <h2 id="blog-preview-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">From the blog</h2>
-              <a href="/blog" className="inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-sm hover:text-forest-500 transition-colors">
-                All articles <ArrowRight size={14} aria-hidden="true" />
+              <a href="/blog" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-sm hover:text-forest-500 transition-colors">
+                All articles{' '}
+                <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
               </a>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -408,11 +506,12 @@ export function Landing(_props: Props) {
                 { slug: 'habit-reversal-training-guide', title: 'Habit Reversal Training: The Complete Guide', tag: 'Treatment', mins: 9 },
                 { slug: 'nail-biting-health-risks', title: 'The Real Health Risks of Nail Biting', tag: 'Health', mins: 6 },
                 { slug: 'how-ai-can-help-stop-nail-biting', title: 'How AI Can Help You Stop Biting Your Nails', tag: 'Technology', mins: 7 },
-              ].map(({ slug, title, tag, mins }) => (
+              ].map(({ slug, title, tag, mins }, i) => (
                 <a
                   key={slug}
                   href={`/blog/${slug}`}
-                  className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-card-md transition-all duration-200 group shadow-card"
+                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 group shadow-card"
+                  style={{ transitionDelay: `${i * 80}ms` }}
                 >
                   <span className="text-xs text-forest-600 dark:text-forest-400 font-semibold uppercase tracking-wider">{tag}</span>
                   <h3 className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-2 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{title}</h3>
@@ -425,7 +524,7 @@ export function Landing(_props: Props) {
           {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
           <section
             aria-label="Call to action"
-            className="text-center py-12 rounded-3xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800"
+            className="reveal text-center py-12 rounded-3xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800"
           >
             <h2 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Ready to stop nail biting?</h2>
             <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
