@@ -1,7 +1,6 @@
-import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap, Sun, Moon, Monitor } from 'lucide-react';
+import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useAppStore } from '../../store/useAppStore';
-import type { Theme } from '../../types';
+import { ThemeToggle } from '../ThemeToggle';
 
 type Tab = 'dashboard' | 'log' | 'settings';
 
@@ -17,15 +16,8 @@ const tabs: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
-const themeOptions: { value: Theme; icon: typeof Sun; label: string }[] = [
-  { value: 'light', icon: Sun, label: 'Light' },
-  { value: 'system', icon: Monitor, label: 'System' },
-  { value: 'dark', icon: Moon, label: 'Dark' },
-];
-
 export function TabBar({ active, onChange, onUpgrade }: Props) {
   const { user, accessStatus, signOut } = useAuth();
-  const { theme, setTheme } = useAppStore();
 
   const trialDaysLeft = user?.trial_end_date
     ? Math.max(0, Math.ceil((new Date(user.trial_end_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
@@ -67,28 +59,13 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
             {label}
           </button>
         ))}
-      </nav>
 
-      {/* Theme switcher */}
-      <div className="mx-3 mb-3">
-        <p className="text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1.5 px-1">Appearance</p>
-        <div className="flex gap-1 p-1 bg-stone-100 dark:bg-ink-300 rounded-xl">
-          {themeOptions.map(({ value, icon: Icon, label }) => (
-            <button
-              key={value}
-              onClick={() => setTheme(value)}
-              title={label}
-              className={`flex-1 flex items-center justify-center py-1.5 rounded-lg transition-all duration-150 ${
-                theme === value
-                  ? 'bg-white dark:bg-ink-50 text-stone-700 dark:text-stone-200 shadow-sm'
-                  : 'text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300'
-              }`}
-            >
-              <Icon size={13} />
-            </button>
-          ))}
+        {/* Theme switcher */}
+        <div className="pt-4 pb-1">
+          <p className="text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1.5 px-1">Appearance</p>
+          <ThemeToggle fullWidth />
         </div>
-      </div>
+      </nav>
 
       {/* Trial upgrade prompt */}
       {accessStatus === 'trial_active' && (
