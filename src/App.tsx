@@ -38,7 +38,7 @@ function AppRouter() {
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-cream-100 dark:bg-ink-100">
+      <div className="flex items-center justify-center min-h-dvh bg-cream-100 dark:bg-ink-100">
         <div className="flex items-center gap-3 text-stone-400">
           <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
           <span className="text-sm">Loading…</span>
@@ -63,7 +63,7 @@ function AppRouter() {
 
   // ── App (trial_active or subscribed) ────────────────────────────────────
   return (
-    <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-screen">
+    <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
       <TabBar
         active={activeTab}
         onChange={setActiveTab}

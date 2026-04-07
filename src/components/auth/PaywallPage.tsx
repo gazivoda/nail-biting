@@ -39,7 +39,7 @@ export function PaywallPage({ onBack }: Props) {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-cream-100 dark:bg-ink-100 flex items-center justify-center p-6">
+      <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 flex items-center justify-center p-6">
         <div className="text-center">
           <div className="w-16 h-16 rounded-full bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center mx-auto mb-4 shadow-card">
             <Check size={32} className="text-forest-600 dark:text-forest-400" />
@@ -59,7 +59,7 @@ export function PaywallPage({ onBack }: Props) {
   const isTrialExpired = !onBack;
 
   return (
-    <div className="min-h-screen bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col">
+    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col">
       {/* Header */}
       <header className="border-b border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-200 px-6 py-4 flex items-center justify-between shadow-card">
         <div className="flex items-center gap-2">
@@ -82,7 +82,7 @@ export function PaywallPage({ onBack }: Props) {
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
         {/* Trial expired notice */}
         {isTrialExpired && (
-          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-lg px-4 py-2.5 text-sm mb-8">
+          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl px-4 py-2.5 text-sm mb-8">
             <AlertTriangle size={14} />
             <span>Your 7-day free trial has ended. Subscribe to keep using Stop Biting.</span>
           </div>
@@ -110,7 +110,7 @@ export function PaywallPage({ onBack }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
           {/* Monthly */}
-          <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card">
+          <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center">
                 <Zap size={16} className="text-forest-600 dark:text-forest-400" />
@@ -145,9 +145,9 @@ export function PaywallPage({ onBack }: Props) {
           </div>
 
           {/* Yearly */}
-          <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md relative">
+          <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="bg-forest-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+              <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
                 Best value — save 19%
               </span>
             </div>
@@ -187,7 +187,7 @@ export function PaywallPage({ onBack }: Props) {
         </div>
 
         {error && (
-          <div className="mt-6 max-w-lg text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3">
+          <div className="mt-6 max-w-lg text-sm text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/20 border border-alert-400 dark:border-alert-800 rounded-xl px-4 py-3">
             {error}
           </div>
         )}

@@ -43,7 +43,7 @@ function useScrollReveal() {
 function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
   const base = size === 'lg'
     ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-200 px-6 py-3 text-sm'
-    : 'inline-flex items-center gap-2 font-semibold rounded-xl transition-all duration-200 px-4 py-2 text-xs';
+    : 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-200 px-4 py-2 text-xs';
   return (
     <div className="flex flex-col items-start gap-2">
       <div className="flex flex-wrap items-center gap-3">
@@ -533,7 +533,7 @@ export function Landing(_props: Props) {
           {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
           <section
             aria-label="Call to action"
-            className="reveal text-center py-12 rounded-3xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800"
+            className="reveal text-center py-12 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800"
           >
             <h2 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Ready to stop nail biting?</h2>
             <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">

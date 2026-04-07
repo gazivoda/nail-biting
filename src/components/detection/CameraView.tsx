@@ -50,7 +50,7 @@ export function CameraView({ videoRef }: Props) {
       <div
         className={`relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
           isAlerting
-            ? 'border-alert-500 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
+            ? 'border-alert-400 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
             : 'border-stone-800 dark:border-ink-400'
         }`}
       >

@@ -5,7 +5,7 @@ export function CameraToggle() {
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-4 space-y-3 shadow-card">
+    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-4 space-y-3 shadow-card dark:shadow-card-dark">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Camera size={18} className={cameraEnabled ? 'text-forest-500 dark:text-forest-400' : 'text-stone-400 dark:text-stone-500'} />
@@ -20,7 +20,7 @@ export function CameraToggle() {
           aria-label="Toggle AI detection"
           onClick={() => setCameraEnabled(!cameraEnabled)}
           className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${
-            cameraEnabled ? 'bg-forest-500' : 'bg-stone-300 dark:bg-ink-400'
+            cameraEnabled ? 'bg-forest-500' : 'bg-stone-200 dark:bg-ink-400'
           }`}
         >
           <span
@@ -43,7 +43,7 @@ export function CameraToggle() {
             aria-label="Show camera feed"
             onClick={() => setShowCameraFeed(!showCameraFeed)}
             className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${
-              showCameraFeed ? 'bg-stone-400 dark:bg-stone-500' : 'bg-stone-300 dark:bg-ink-400'
+              showCameraFeed ? 'bg-forest-500' : 'bg-stone-200 dark:bg-ink-400'
             }`}
           >
             <span

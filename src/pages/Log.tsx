@@ -43,7 +43,7 @@ function WeekChart() {
   const tooltipLabel = isDark ? '#d1d5db' : '#57534e';
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card">
+    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card dark:shadow-card-dark">
       <p className="text-stone-700 dark:text-stone-200 font-semibold mb-1">Last 7 days</p>
       <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">Bites per day</p>
       <ResponsiveContainer width="100%" height={160}>
@@ -85,7 +85,7 @@ function ClearAllButton() {
         <span className="text-stone-500 dark:text-stone-400">Clear all data?</span>
         <button
           onClick={() => { clearAllData(); setConfirming(false); }}
-          className="px-2.5 py-1 rounded-lg bg-alert-600 hover:bg-alert-400 text-white font-semibold transition-colors"
+          className="px-2.5 py-1 rounded-lg bg-alert-600 hover:bg-alert-800 text-cream-100 font-semibold transition-colors"
         >
           Yes, clear
         </button>
@@ -136,7 +136,7 @@ export function Log() {
           <WeekChart />
 
           {incidents.length > 0 && (
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card">
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card dark:shadow-card-dark">
               <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 font-medium">Summary</p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -185,7 +185,7 @@ export function Log() {
                     {items.map(inc => (
                       <div
                         key={inc.id}
-                        className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card"
+                        className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card dark:shadow-card-dark"
                       >
                         <span className="text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
                         <div className="flex items-center gap-3">

@@ -42,7 +42,7 @@ export function PanicButton() {
 
   if (showTags) {
     return (
-      <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card animate-fade-up">
+      <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card dark:shadow-card-dark animate-fade-up">
         <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
           {tags.map(({ id, label, emoji }) => (
@@ -69,7 +69,7 @@ export function PanicButton() {
   return (
     <button
       onPointerDown={handleMainPress}
-      className={`w-full bg-alert-100 dark:bg-alert-900/30 hover:bg-alert-100 dark:hover:bg-alert-900/50 border border-alert-400 dark:border-alert-800 hover:border-alert-600 rounded-2xl py-4 text-alert-600 dark:text-alert-400 font-medium text-base transition-all duration-150 select-none ${
+      className={`w-full bg-alert-100 dark:bg-alert-900/30 hover:bg-alert-100/80 dark:hover:bg-alert-900/50 border border-alert-400 dark:border-alert-800 hover:border-alert-600 rounded-2xl py-4 text-alert-600 dark:text-alert-400 font-medium text-base transition-all duration-150 select-none ${
         pressing ? 'scale-95 shadow-inner' : 'active:scale-95'
       }`}
     >
