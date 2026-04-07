@@ -34,6 +34,7 @@ export interface AppState {
 
 export interface AppActions {
   logIncident: (tag: TriggerTag, autoDetected?: boolean) => void;
+  deleteIncident: (id: string) => void;
   setCameraEnabled: (enabled: boolean) => void;
   setShowCameraFeed: (show: boolean) => void;
   setSensitivity: (s: DetectionSensitivity) => void;
