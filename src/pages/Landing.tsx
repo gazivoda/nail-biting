@@ -3,14 +3,11 @@ import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
   Code2, ChevronDown, Camera, Bell, BookOpen,
-  Star, ArrowRight, Download, Monitor,
+  Star, ArrowRight,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
-
-const DOWNLOAD_MAC_ARM   = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
-const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
 
 // Activates scroll-reveal on all .reveal and .reveal-card elements
 function useScrollReveal() {
@@ -40,44 +37,6 @@ function useScrollReveal() {
   }, []);
 }
 
-function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
-  const base = size === 'lg'
-    ? 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-200 px-6 py-3 text-sm'
-    : 'inline-flex items-center gap-2 font-semibold rounded-2xl transition-all duration-200 px-4 py-2 text-xs';
-  return (
-    <div className="flex flex-col items-start gap-2">
-      <div className="flex flex-wrap items-center gap-3">
-        <a
-          href={DOWNLOAD_MAC_ARM}
-          className={`${base} btn-shimmer bg-forest-600 hover:bg-forest-500 text-cream-100 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95`}
-        >
-          <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-          Download for Mac
-          <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'} opacity-70`}>(Apple Silicon)</span>
-        </a>
-        <a
-          href={DOWNLOAD_MAC_INTEL}
-          className={`${base} bg-cream-200 dark:bg-ink-50 hover:bg-cream-300 dark:hover:bg-ink-200 text-stone-700 dark:text-stone-200 border border-stone-200 dark:border-ink-400 hover:-translate-y-0.5 active:scale-95`}
-        >
-          <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-          Intel Mac
-        </a>
-        <span
-          title="Coming soon"
-          className={`${base} bg-stone-100 dark:bg-ink-300 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-ink-400 cursor-not-allowed select-none`}
-        >
-          <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
-          Windows
-          <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'}`}>soon</span>
-        </span>
-      </div>
-      <p className="text-stone-400 dark:text-stone-500 text-xs leading-relaxed">
-        If macOS says it can't verify the app: right-click the .app → <span className="text-stone-600 dark:text-stone-300">Open</span> → <span className="text-stone-600 dark:text-stone-300">Open</span> anyway.
-      </p>
-    </div>
-  );
-}
-
 interface Props {}
 
 export function Landing(_props: Props) {
@@ -97,11 +56,13 @@ export function Landing(_props: Props) {
           </a>
           <ThemeToggle />
           <a
-            href={DOWNLOAD_MAC_ARM}
+            href="/api/auth/google"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"
           >
-            <Download size={13} aria-hidden="true" />
-            Download
+            <Zap size={13} aria-hidden="true" />
+            Get started free
           </a>
         </div>
       </nav>
@@ -151,7 +112,7 @@ export function Landing(_props: Props) {
               className="animate-fade-up text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6"
               style={{ animationDelay: '0ms' }}
             >
-              Mac · Windows · Web App
+              AI-powered · On-device · Free trial
             </p>
 
             <h1
@@ -166,11 +127,11 @@ export function Landing(_props: Props) {
               className="animate-fade-up text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6"
               style={{ animationDelay: '160ms' }}
             >
-              The Stop Biting app uses your webcam and on-device AI to catch onychophagia the moment it starts —
+              The Stop Biting app uses your webcam and on-device AI to catch nail biting the moment it starts —
               then sounds an alarm.{' '}
               <span className="text-stone-700 dark:text-stone-200 font-medium">No cloud processing.</span>{' '}
               <span className="text-stone-700 dark:text-stone-200 font-medium">No camera data sent anywhere.</span>{' '}
-              Available as a native desktop app for Mac and Windows, and in your browser.
+              Works right in your browser — no install needed.
             </p>
 
             <div
@@ -186,15 +147,16 @@ export function Landing(_props: Props) {
               className="animate-fade-up mt-10 flex flex-col items-center gap-4"
               style={{ animationDelay: '320ms' }}
             >
-              <DownloadButtons size="lg" />
-              <div className="flex flex-wrap items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-3">
                 <a
                   href="/api/auth/google"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-cream-200 dark:bg-ink-50 hover:bg-cream-300 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
+                  className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
                 >
-                  <Zap size={14} aria-hidden="true" />Use Web App
+                  <Zap size={15} aria-hidden="true" />
+                  Start free trial
+                  <ArrowRight size={14} className="opacity-70 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                 </a>
                 <a
                   href="/blog"
@@ -211,7 +173,7 @@ export function Landing(_props: Props) {
               className="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-400 dark:text-stone-500"
               style={{ animationDelay: '400ms' }}
             >
-              {['Mac & Windows', 'Web App', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
+              {['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
                 <span key={tag} className="flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-forest-400" aria-hidden="true" />
                   {tag}
@@ -537,23 +499,17 @@ export function Landing(_props: Props) {
           >
             <h2 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Ready to stop nail biting?</h2>
             <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
-              Download the desktop app for Mac or Windows, or use the web app directly in your browser —
-              sign in with Google and nail biting detection starts in under ten seconds.
+              Use the web app directly in your browser — sign in with Google and nail biting detection starts in under ten seconds. No install needed.
             </p>
-            <div className="mt-8 flex flex-col items-center gap-4">
-              <DownloadButtons size="lg" />
-              <div className="flex items-center gap-3">
-                <div className="h-px w-12 bg-stone-300 dark:bg-ink-400" />
-                <span className="text-stone-400 dark:text-stone-500 text-xs">or</span>
-                <div className="h-px w-12 bg-stone-300 dark:bg-ink-400" />
-              </div>
+            <div className="mt-8 flex flex-col items-center gap-3">
               <a
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white dark:bg-ink-50 hover:bg-cream-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
+                className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-8 py-3.5 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
               >
-                <Zap size={14} aria-hidden="true" />Use Web App — free trial
+                <Zap size={15} aria-hidden="true" />
+                Start free trial — it's free
               </a>
               <p className="text-stone-400 dark:text-stone-500 text-xs">7-day free trial · no credit card required</p>
             </div>
@@ -568,8 +524,7 @@ export function Landing(_props: Props) {
           <div>
             <p className="text-stone-700 dark:text-stone-200 text-sm font-semibold">Stop Biting</p>
             <p className="text-stone-400 dark:text-stone-500 text-xs mt-1 max-w-xs leading-relaxed">
-              Stop nail biting (onychophagia) using on-device AI. Available as a native desktop app
-              for Mac and Windows, and as a web app. Built with MediaPipe, React, and WebAssembly.
+              Stop nail biting (onychophagia) using on-device AI. Works in your browser as a Progressive Web App — no install required. Built with MediaPipe, React, and WebAssembly.
             </p>
           </div>
           <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">
