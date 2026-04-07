@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
@@ -73,8 +75,43 @@ function WeekChart() {
   );
 }
 
+function ClearAllButton() {
+  const { clearAllData } = useAppStore();
+  const [confirming, setConfirming] = useState(false);
+
+  if (confirming) {
+    return (
+      <div className="flex items-center gap-2 text-xs">
+        <span className="text-stone-500 dark:text-stone-400">Clear all data?</span>
+        <button
+          onClick={() => { clearAllData(); setConfirming(false); }}
+          className="px-2.5 py-1 rounded-lg bg-alert-600 hover:bg-alert-400 text-white font-semibold transition-colors"
+        >
+          Yes, clear
+        </button>
+        <button
+          onClick={() => setConfirming(false)}
+          className="px-2.5 py-1 rounded-lg border border-stone-200 dark:border-ink-400 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setConfirming(true)}
+      className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 transition-colors"
+    >
+      <Trash2 size={12} />
+      Clear all
+    </button>
+  );
+}
+
 export function Log() {
-  const { incidents } = useAppStore();
+  const { incidents, deleteIncident } = useAppStore();
 
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
@@ -133,6 +170,14 @@ export function Log() {
             </div>
           ) : (
             <div className="space-y-6">
+              {/* Header row with clear-all */}
+              <div className="flex items-center justify-between px-1">
+                <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest font-medium">
+                  {incidents.length} incident{incidents.length !== 1 ? 's' : ''}
+                </p>
+                <ClearAllButton />
+              </div>
+
               {grouped.map(({ date, items }) => (
                 <div key={date}>
                   <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 px-1 font-medium">{date}</p>
@@ -140,12 +185,21 @@ export function Log() {
                     {items.map(inc => (
                       <div
                         key={inc.id}
-                        className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card"
+                        className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card"
                       >
                         <span className="text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
-                        <span className={`text-xs px-2.5 py-1 rounded-full border ${TAG_COLORS[inc.tag]}`}>
-                          {TAG_LABELS[inc.tag]}
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <span className={`text-xs px-2.5 py-1 rounded-full border ${TAG_COLORS[inc.tag]}`}>
+                            {TAG_LABELS[inc.tag]}
+                          </span>
+                          <button
+                            onClick={() => deleteIncident(inc.id)}
+                            aria-label="Delete incident"
+                            className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 text-stone-300 dark:text-stone-600 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>

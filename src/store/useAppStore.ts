@@ -42,6 +42,17 @@ export const useAppStore = create<AppState & AppActions>()(
         });
       },
 
+      deleteIncident: (id: string) => {
+        const { incidents, lastBiteTime } = get();
+        const next = incidents.filter(i => i.id !== id);
+        // If we deleted the most recent incident, roll lastBiteTime back to the new most recent
+        const mostRecent = next[0]?.timestamp ?? null;
+        const newLastBite = lastBiteTime === incidents.find(i => i.id === id)?.timestamp
+          ? mostRecent
+          : lastBiteTime;
+        set({ incidents: next, lastBiteTime: newLastBite });
+      },
+
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),
       setShowCameraFeed: (show) => set({ showCameraFeed: show }),
       setSensitivity: (s: DetectionSensitivity) => set({ detectionSensitivity: s }),

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, BookOpen } from 'lucide-react';
 import { BLOG_POSTS } from '../data/blogPosts';
 import { useTheme } from '../hooks/useTheme';
@@ -21,8 +21,25 @@ function tagClass(tag: string) {
   return TAG_COLORS[tag] ?? 'bg-stone-100 dark:bg-ink-300 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-ink-400';
 }
 
+function useScrollReveal() {
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      document.querySelectorAll('.reveal, .reveal-card').forEach(el => el.classList.add('revealed'));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); observer.unobserve(e.target); } }),
+      { threshold: 0.10, rootMargin: '0px 0px -30px 0px' },
+    );
+    document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export function BlogIndex() {
   useTheme();
+  useScrollReveal();
   const [activeTag, setActiveTag] = useState('All');
 
   const posts = activeTag === 'All'
@@ -48,7 +65,7 @@ export function BlogIndex() {
       </nav>
 
       {/* Header */}
-      <header className="pt-28 pb-12 px-6 text-center max-w-3xl mx-auto">
+      <header className="reveal pt-28 pb-12 px-6 text-center max-w-3xl mx-auto">
         <p className="text-forest-600 dark:text-forest-400 text-sm font-semibold tracking-wider uppercase mb-3">Evidence-based guides</p>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-stone-800 dark:text-stone-100 mb-4">
           Nail Biting Resources
@@ -59,7 +76,7 @@ export function BlogIndex() {
       </header>
 
       {/* Tag filter */}
-      <div className="flex flex-wrap justify-center gap-2 px-6 pb-10" role="group" aria-label="Filter by category">
+      <div className="reveal flex flex-wrap justify-center gap-2 px-6 pb-10" role="group" aria-label="Filter by category">
         {ALL_TAGS.map(tag => (
           <button
             key={tag}
@@ -78,11 +95,12 @@ export function BlogIndex() {
       {/* Post grid */}
       <main className="max-w-5xl mx-auto px-6 pb-24">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map(post => (
+          {posts.map((post, i) => (
             <a
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-md transition-all duration-200 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500"
+              style={{ transitionDelay: `${(i % 3) * 70}ms` }}
+              className="reveal-card group flex flex-col bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500"
             >
               <div className="flex items-center justify-between mb-4">
                 <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${tagClass(post.tag)}`}>
