@@ -13,8 +13,6 @@ import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
-// The server handles /blog and /blog/:slug with SSR meta injection,
-// then serves the same SPA shell which this router then renders client-side.
 function usePath() {
   const [path, setPath] = useState(window.location.pathname);
   useEffect(() => {
@@ -23,6 +21,28 @@ function usePath() {
     return () => window.removeEventListener('popstate', handler);
   }, []);
   return path;
+}
+
+// Apply / remove the `dark` class on <html> based on theme preference.
+function useThemeEffect() {
+  const { theme } = useAppStore();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else if (theme === 'light') {
+      root.classList.remove('dark');
+    } else {
+      // system
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
+      const apply = (e: MediaQueryListEvent | MediaQueryList) =>
+        e.matches ? root.classList.add('dark') : root.classList.remove('dark');
+      apply(mq);
+      mq.addEventListener('change', apply);
+      return () => mq.removeEventListener('change', apply);
+    }
+  }, [theme]);
 }
 
 type Tab = 'dashboard' | 'log' | 'settings';
@@ -34,11 +54,12 @@ function AppRouter() {
   const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
 
   useNotifications(remindersEnabled, reminderIntervalMinutes);
+  useThemeEffect();
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-cream-100">
+      <div className="flex items-center justify-center min-h-screen bg-cream-100 dark:bg-ink-100">
         <div className="flex items-center gap-3 text-stone-400">
           <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
           <span className="text-sm">Loading…</span>
@@ -63,7 +84,7 @@ function AppRouter() {
 
   // ── App (trial_active or subscribed) ────────────────────────────────────
   return (
-    <div className="flex bg-cream-100 text-stone-800 min-h-screen">
+    <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-screen">
       <TabBar
         active={activeTab}
         onChange={setActiveTab}
@@ -95,9 +116,9 @@ export default function App() {
   // Privacy policy
   if (path === '/privacy') {
     return (
-      <div className="min-h-dvh bg-cream-100 text-stone-800 flex flex-col items-center justify-center px-6 py-24 text-center">
+      <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col items-center justify-center px-6 py-24 text-center">
         <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
-        <p className="text-stone-500 max-w-prose text-sm leading-relaxed">
+        <p className="text-stone-500 dark:text-stone-400 max-w-prose text-sm leading-relaxed">
           Stop Biting processes your webcam feed entirely on-device using WebAssembly. No camera data is ever transmitted to any server. Session logs and streak data are stored locally in SQLite on your machine. Uninstalling the app removes all local data. Google account information is used solely for authentication.
         </p>
         <a href="/" className="mt-8 text-sm text-forest-600 hover:text-forest-500 transition-colors">Back to app</a>
