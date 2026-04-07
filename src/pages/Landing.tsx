@@ -4,6 +4,8 @@ import {
   Code2, ChevronDown, Camera, Bell, BookOpen,
   Star, ArrowRight, Download, Monitor,
 } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 const DOWNLOAD_MAC_ARM   = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
 const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
@@ -49,6 +51,7 @@ function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
 interface Props {}
 
 export function Landing(_props: Props) {
+  useTheme();
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
@@ -60,6 +63,7 @@ export function Landing(_props: Props) {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
+          <ThemeToggle />
           <a
             href={DOWNLOAD_MAC_ARM}
             className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"

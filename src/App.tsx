@@ -9,6 +9,7 @@ import { PaywallPage } from './components/auth/PaywallPage';
 import { BlogIndex } from './pages/BlogIndex';
 import { BlogPost } from './pages/BlogPost';
 import { useNotifications } from './hooks/useNotifications';
+import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
@@ -23,28 +24,6 @@ function usePath() {
   return path;
 }
 
-// Apply / remove the `dark` class on <html> based on theme preference.
-function useThemeEffect() {
-  const { theme } = useAppStore();
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else if (theme === 'light') {
-      root.classList.remove('dark');
-    } else {
-      // system
-      const mq = window.matchMedia('(prefers-color-scheme: dark)');
-      const apply = (e: MediaQueryListEvent | MediaQueryList) =>
-        e.matches ? root.classList.add('dark') : root.classList.remove('dark');
-      apply(mq);
-      mq.addEventListener('change', apply);
-      return () => mq.removeEventListener('change', apply);
-    }
-  }, [theme]);
-}
-
 type Tab = 'dashboard' | 'log' | 'settings';
 
 function AppRouter() {
@@ -54,7 +33,7 @@ function AppRouter() {
   const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
 
   useNotifications(remindersEnabled, reminderIntervalMinutes);
-  useThemeEffect();
+  useTheme();
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') {
