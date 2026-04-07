@@ -10,6 +10,7 @@ import { BlogIndex } from './pages/BlogIndex';
 import { BlogPost } from './pages/BlogPost';
 import { useNotifications } from './hooks/useNotifications';
 import { useAppStore } from './store/useAppStore';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
 function useHash() {
   const [hash, setHash] = useState(window.location.hash);
@@ -100,6 +101,7 @@ export default function App() {
   return (
     <AuthProvider>
       <AppRouter />
+      <PWAInstallPrompt />
     </AuthProvider>
   );
 }

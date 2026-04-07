@@ -56,6 +56,7 @@ app.use(helmet({
       imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://www.paypalobjects.com'],
       styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
       fontSrc:     ["'self'", 'data:'],
+      workerSrc:   ["'self'"],  // PWA service worker registration
     },
   },
   // HSTS: force HTTPS for 1 year once on HTTPS. Fine to set even on HTTP (ignored by browsers on HTTP).
