@@ -1,5 +1,6 @@
 export type TriggerTag = 'auto-detected' | 'stress' | 'focus' | 'boredom' | 'unknown';
 export type Theme = 'light' | 'dark' | 'system';
+export type AlertSound = 'alarm' | 'chime' | 'buzz' | 'chirp' | 'whistle';
 
 export interface Incident {
   id: string;
@@ -30,6 +31,9 @@ export interface AppState {
 
   // Theme preference
   theme: Theme;
+
+  // Alert sound
+  alertSound: AlertSound;
 }
 
 export interface AppActions {
@@ -39,6 +43,7 @@ export interface AppActions {
   setShowCameraFeed: (show: boolean) => void;
   setSensitivity: (s: DetectionSensitivity) => void;
   setAlertType: (t: AlertType) => void;
+  setAlertSound: (s: AlertSound) => void;
   setRemindersEnabled: (enabled: boolean) => void;
   setReminderInterval: (minutes: ReminderInterval) => void;
   setTheme: (theme: Theme) => void;

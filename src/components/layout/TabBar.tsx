@@ -45,20 +45,29 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
 
       {/* Nav items */}
       <nav className="flex-1 p-3 space-y-0.5" aria-label="Main navigation">
-        {tabs.map(({ id, label, icon: Icon }) => (
-          <button
-            key={id}
-            onClick={() => onChange(id)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 text-left ${
-              active === id
-                ? 'bg-forest-50 dark:bg-forest-900/40 text-forest-700 dark:text-forest-300 font-medium shadow-sm'
-                : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50'
-            }`}
-          >
-            <Icon size={15} />
-            {label}
-          </button>
-        ))}
+        {tabs.map(({ id, label, icon: Icon }) => {
+          const isActive = active === id;
+          return (
+            <button
+              key={id}
+              onClick={() => onChange(id)}
+              className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 text-left overflow-hidden ${
+                isActive
+                  ? 'bg-forest-50 dark:bg-forest-900/40 text-forest-700 dark:text-forest-300 font-medium shadow-sm'
+                  : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50'
+              }`}
+            >
+              {/* Left-edge active indicator bar */}
+              <span
+                className={`absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-forest-500 transition-all duration-200 ${
+                  isActive ? 'h-5 opacity-100' : 'h-0 opacity-0'
+                }`}
+              />
+              <Icon size={15} />
+              {label}
+            </button>
+          );
+        })}
 
         {/* Theme switcher */}
         <div className="pt-4 pb-1">

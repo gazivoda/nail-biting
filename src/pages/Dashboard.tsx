@@ -43,7 +43,7 @@ export function Dashboard() {
     <div className="p-8">
       {/* Desktop app promo — only shown in browser, dismissible */}
       {!isElectron && !bannerDismissed && (
-        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card">
+        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card animate-fade-up" style={{ animationDelay: '0ms' }}>
           <span className="text-stone-500 dark:text-stone-400">
             For the best experience, try the{' '}
             <strong className="text-stone-700 dark:text-stone-200">native desktop app</strong> — runs fully offline, no browser needed.
@@ -68,7 +68,10 @@ export function Dashboard() {
       )}
 
       {/* Privacy badge */}
-      <div className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mb-8 w-fit">
+      <div
+        className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mb-8 w-fit animate-fade-up"
+        style={{ animationDelay: '60ms' }}
+      >
         <ShieldCheck size={12} />
         <span>All processing on-device — camera feed never leaves this app</span>
       </div>
@@ -76,17 +79,28 @@ export function Dashboard() {
       {/* Two-column: camera left, controls right */}
       <div className="grid grid-cols-5 gap-8 items-start">
         {/* Camera — takes 3/5 */}
-        <div className="col-span-3 relative">
+        <div
+          className="col-span-3 relative animate-fade-up"
+          style={{ animationDelay: '120ms' }}
+        >
           <CameraView videoRef={videoRef} />
           {isFirstRun && <FirstRunHint />}
         </div>
 
-        {/* Stats + controls — takes 2/5 */}
+        {/* Stats + controls — takes 2/5, staggered children */}
         <div className="col-span-2 flex flex-col gap-4">
-          <StreakCard />
-          <StatsRow />
-          <CameraToggle />
-          <PanicButton />
+          <div className="animate-fade-up" style={{ animationDelay: '160ms' }}>
+            <StreakCard />
+          </div>
+          <div className="animate-fade-up" style={{ animationDelay: '200ms' }}>
+            <StatsRow />
+          </div>
+          <div className="animate-fade-up" style={{ animationDelay: '240ms' }}>
+            <CameraToggle />
+          </div>
+          <div className="animate-fade-up" style={{ animationDelay: '280ms' }}>
+            <PanicButton />
+          </div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import {
   FaceLandmarker,
   FilesetResolver,
 } from '@mediapipe/tasks-vision';
-import type { DetectionSensitivity } from '../types';
+import type { DetectionSensitivity, AlertSound } from '../types';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -97,21 +97,23 @@ function dist2d(a: { x: number; y: number }, b: { x: number; y: number }) {
   return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }
 
-// Starts a rapid repeating beep alarm. Returns a stop function.
-function startAlarm(): (() => void) {
+// Starts a repeating alert sound based on the selected AlertSound profile.
+// Returns a stop function.
+function startAlarm(sound: AlertSound): (() => void) {
   let ctx: AudioContext;
   let intervalId: ReturnType<typeof setInterval>;
+  let stopFn: (() => void) | null = null;
 
   try {
     ctx = new AudioContext();
 
-    function beep() {
+    // ── alarm: rapid alternating 1000/800 Hz beep (original) ──────────────
+    function playAlarm() {
       try {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
         gain.connect(ctx.destination);
-        // Alternates 1000Hz / 800Hz each beep for a more jarring alarm tone
         osc.frequency.value = ctx.currentTime % 0.6 < 0.3 ? 1000 : 800;
         gain.gain.setValueAtTime(0.5, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
@@ -120,16 +122,100 @@ function startAlarm(): (() => void) {
       } catch { /* ignore */ }
     }
 
-    beep(); // fire immediately
-    intervalId = setInterval(beep, 250); // then every 250ms — 4 beeps/second
+    // ── chime: soft decaying bell strike at 880 Hz ─────────────────────────
+    function playChime() {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 1.2);
+      } catch { /* ignore */ }
+    }
+
+    // ── buzz: harsh low sawtooth rumble at 120 Hz ──────────────────────────
+    function playBuzz() {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.value = 120;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.18);
+      } catch { /* ignore */ }
+    }
+
+    // ── chirp: ascending FM sweep 400→1200 Hz over 200ms ──────────────────
+    function playChirp() {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.45, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.2);
+      } catch { /* ignore */ }
+    }
+
+    // ── whistle: descending pure tone 1400→600 Hz over 300ms ──────────────
+    function playWhistle() {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.3);
+      } catch { /* ignore */ }
+    }
+
+    const playFn = {
+      alarm: playAlarm,
+      chime: playChime,
+      buzz: playBuzz,
+      chirp: playChirp,
+      whistle: playWhistle,
+    }[sound];
+
+    const intervalMs = {
+      alarm: 250,   // 4/s
+      chime: 1400,  // one bell per decay
+      buzz: 220,    // rapid buzz pulses
+      chirp: 300,   // quick repeating sweep
+      whistle: 400, // descending tone loop
+    }[sound];
+
+    playFn(); // fire immediately
+    intervalId = setInterval(playFn, intervalMs);
   } catch {
     return () => {};
   }
 
-  return () => {
+  stopFn = () => {
     clearInterval(intervalId);
     try { ctx.close(); } catch { /* ignore */ }
   };
+
+  return () => stopFn?.();
 }
 
 // --------------------------------------------------------------------------
@@ -143,6 +229,7 @@ export function useDetection(
   enabled: boolean,
   sensitivity: DetectionSensitivity,
   alertType: 'sound' | 'flash' | 'both',
+  alertSound: AlertSound,
   onAlert: () => void,
 ) {
   const [status, setStatus] = useState<DetectionStatus>('idle');
@@ -152,6 +239,8 @@ export function useDetection(
   sensitivityRef.current = sensitivity;
   const alertTypeRef = useRef(alertType);
   alertTypeRef.current = alertType;
+  const alertSoundRef = useRef(alertSound);
+  alertSoundRef.current = alertSound;
   const onAlertRef = useRef(onAlert);
   onAlertRef.current = onAlert;
 
@@ -166,7 +255,7 @@ export function useDetection(
     isBitingRef.current = true;
     const type = alertTypeRef.current;
     if (type === 'sound' || type === 'both') {
-      stopAlarmRef.current = startAlarm();
+      stopAlarmRef.current = startAlarm(alertSoundRef.current);
     }
     setStatus('alert');
     onAlertRef.current(); // log the incident once when biting starts

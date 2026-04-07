@@ -16,6 +16,7 @@ export function CameraView({ videoRef }: Props) {
     showCameraFeed,
     detectionSensitivity,
     alertType,
+    alertSound,
     logIncident,
     setCameraEnabled,
   } = useAppStore();
@@ -35,16 +36,24 @@ export function CameraView({ videoRef }: Props) {
     cameraEnabled,
     detectionSensitivity as DetectionSensitivity,
     alertType,
+    alertSound,
     handleAlert,
   );
 
   const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
+  const isAlerting = status === 'alert';
 
   return (
     <>
       <AlertOverlay visible={showFlash} />
 
-      <div className="relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border border-stone-800 dark:border-ink-400">
+      <div
+        className={`relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
+          isAlerting
+            ? 'border-alert-500 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
+            : 'border-stone-800 dark:border-ink-400'
+        }`}
+      >
         {/* Video element always present for MediaPipe, visibility toggled */}
         <video
           ref={videoRef}
