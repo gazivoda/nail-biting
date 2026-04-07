@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, ReminderInterval, Incident, Theme } from '../types';
+import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme } from '../types';
 
 const initialState: AppState = {
   incidents: [],
@@ -11,6 +11,7 @@ const initialState: AppState = {
   showCameraFeed: true,
   detectionSensitivity: 'medium',
   alertType: 'both',
+  alertSound: 'alarm',
   remindersEnabled: false,
   reminderIntervalMinutes: 15,
   theme: 'system',
@@ -57,6 +58,7 @@ export const useAppStore = create<AppState & AppActions>()(
       setShowCameraFeed: (show) => set({ showCameraFeed: show }),
       setSensitivity: (s: DetectionSensitivity) => set({ detectionSensitivity: s }),
       setAlertType: (t: AlertType) => set({ alertType: t }),
+      setAlertSound: (s: AlertSound) => set({ alertSound: s }),
       setRemindersEnabled: (enabled) => set({ remindersEnabled: enabled }),
       setReminderInterval: (minutes: ReminderInterval) => set({ reminderIntervalMinutes: minutes }),
       setTheme: (theme: Theme) => set({ theme }),

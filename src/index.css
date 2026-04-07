@@ -138,6 +138,13 @@ html.dark {
   animation: shimmer 2.4s linear infinite;
 }
 
+/* ── CameraView alert-ring pulse ─────────────────────────────────────────── */
+
+@keyframes alert-ring {
+  0%, 100% { box-shadow: 0 0 0 3px oklch(55% 0.22 25 / 0.35); }
+  50%       { box-shadow: 0 0 0 6px oklch(55% 0.22 25 / 0.15); }
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
