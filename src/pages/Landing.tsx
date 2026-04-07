@@ -461,7 +461,7 @@ export function Landing(_props: Props) {
             <a href="/" className="text-slate-600 hover:text-slate-400 transition-colors">Home</a>
             <a href="/blog" className="text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
             <a href="mailto:hello@stopbiting.today" className="text-slate-600 hover:text-slate-400 transition-colors">Contact</a>
-            <a href="#/privacy" className="text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
+            <a href="/privacy" className="text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
           </nav>
         </div>
         <p className="text-slate-800 text-xs text-center mt-8">

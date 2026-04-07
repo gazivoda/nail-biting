@@ -468,6 +468,46 @@ if (!existsSync(distPath)) {
       title: 'The Neuroscience of Habit Breaking: How to Apply It Specifically to Nail Biting',
       description: 'Why are habits so hard to break? This article explains the neuroscience of habit formation and extinction, and how those mechanisms apply to stopping nail biting.',
     },
+    'nail-biting-vs-skin-picking': {
+      title: 'Nail Biting vs Skin Picking: How BFRBs Compare and What Works for Each',
+      description: 'Nail biting and skin picking are both BFRBs but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.',
+    },
+    'stopping-nail-biting-for-good': {
+      title: 'Stopping Nail Biting for Good: What Relapses Mean and How to Build Lasting Change',
+      description: 'Most people who stop nail biting relapse at least once. This article explains why relapse is neurologically expected, what it tells you, and the evidence-based path to lasting change.',
+    },
+    'nail-biting-anxiety-treatment': {
+      title: 'Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit',
+      description: 'For some nail biters, anxiety is the root cause — not just a trigger. This article explains how to identify anxiety-driven biting and when treating anxiety directly is the right approach.',
+    },
+    'how-long-to-stop-nail-biting': {
+      title: 'How Long Does It Take to Stop Nail Biting? A Realistic Timeline',
+      description: 'Most people want to know how long it takes to stop nail biting. The honest answer depends on habit severity and method. This article gives a research-based realistic timeline.',
+    },
+    'nail-biting-adults-why-persists': {
+      title: 'Why Nail Biting Persists into Adulthood — and What Makes It Different to Childhood Habits',
+      description: 'Nail biting that persists into adulthood is fundamentally different from childhood nail biting. This article explains why adult habits are harder to break and what approaches work best.',
+    },
+    'webcam-privacy-nail-biting-app': {
+      title: 'Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained',
+      description: 'Using a webcam app to track nail biting raises legitimate privacy questions. This article explains exactly what data is collected, how on-device AI works, and why no camera data leaves your device.',
+    },
+    'nail-biting-during-sleep': {
+      title: 'Nail Biting During Sleep: Does It Happen and What Can You Do?',
+      description: 'Some people bite their nails during sleep without knowing it. This article explains sleep-related nail biting, how to tell if it\'s happening, and evidence-based approaches to stop it.',
+    },
+    'bitter-nail-polish-review': {
+      title: 'Bitter Nail Polish for Nail Biting: Does It Work? A Review of the Evidence',
+      description: 'Bitter nail polish is one of the most popular nail biting remedies. This article reviews the evidence for products like Mavala Stop, how they work, and when they are and are not effective.',
+    },
+    'nail-biting-genetics': {
+      title: 'Is Nail Biting Genetic? What the Research Says About Hereditary BFRB Risk',
+      description: 'Studies show nail biting runs in families, but is it genetic or learned? This article reviews twin studies and genetic research on BFRB heritability and what it means for treatment.',
+    },
+    'mediapipe-ai-detection-explained': {
+      title: 'How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer',
+      description: 'Stop Biting uses Google\'s MediaPipe framework running in WebAssembly to detect nail biting in real time. This article explains the technology stack for technically curious users.',
+    },
   };
 
   // Helper: inject page-specific <title>, <meta description>, and <link canonical>
@@ -521,6 +561,17 @@ if (!existsSync(distPath)) {
       title: 'Nail Biting Resources — Evidence-Based Guides | Stop Biting',
       description: 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.',
       canonical: 'https://stopbiting.today/blog',
+    });
+    res.type('html').send(injected);
+  });
+
+  // Privacy policy page
+  app.get('/privacy', (req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Privacy Policy | Stop Biting',
+      description: 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.',
+      canonical: 'https://stopbiting.today/privacy',
     });
     res.type('html').send(injected);
   });

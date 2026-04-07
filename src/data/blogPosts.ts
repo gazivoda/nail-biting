@@ -364,3 +364,324 @@ export const BLOG_POSTS: BlogPost[] = [
 export function getPost(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find(p => p.slug === slug);
 }
+
+// ─── Additional posts ─────────────────────────────────────────────────────────
+
+const ADDITIONAL_POSTS: BlogPost[] = [
+  {
+    slug: 'nail-biting-vs-skin-picking',
+    title: 'Nail Biting vs Skin Picking: How BFRBs Compare and What Works for Each',
+    description: 'Nail biting and skin picking are both BFRBs but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.',
+    tag: 'Clinical',
+    readingMinutes: 7,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'What do nail biting and skin picking have in common?',
+        body: `Nail biting (onychophagia) and skin picking (excoriation disorder) are both classified as Body-Focused Repetitive Behaviors (BFRBs) — a cluster of conditions involving repetitive, compulsive self-grooming actions that cause physical damage and persist despite attempts to stop. Both are classified in the DSM-5 under OCD-related disorders, both cause visible physical damage, and both generate significant shame in affected individuals.\n\nCritically, both share the same fundamental mechanism: an automatic habit loop triggered by emotional states or sensory cues, executed below the threshold of conscious awareness, and reinforced by a brief feeling of relief or stimulation. This shared mechanism is why both respond well to the same first-line treatment — Habit Reversal Training — and why both are resistant to willpower-based approaches.`,
+      },
+      {
+        heading: 'How nail biting and skin picking differ',
+        body: `Despite their similarities, the two behaviors differ in important ways that affect treatment approach. Nail biting is predominantly an oral motor behavior — the primary sensory reward comes from the proprioceptive feedback of the jaw and mouth. Skin picking is predominantly a tactile behavior — the primary reward is the sensory relief of finding and manipulating an "imperfection" on the skin surface.\n\nThis difference in sensory channel matters for competing response design. For nail biters, effective competing responses redirect oral motor activation (pressing lips together, chewing gum). For skin pickers, effective competing responses redirect tactile seeking (running fingers over a textured surface, squeezing a smooth stone). Using the wrong type of competing response — even one that is physically incompatible with the habit — reduces effectiveness because it doesn't satisfy the underlying sensory need.\n\nSkin picking also tends to have a stronger perfectionism and "incompleteness" component than nail biting. Pickers frequently report an irresistible urge to even out, smooth, or "fix" a perceived imperfection, and an inability to stop until the area feels "right." This OCD-like feature makes excoriation disorder somewhat more responsive to ERP (Exposure and Response Prevention) than nail biting is.`,
+      },
+      {
+        heading: 'Which triggers are more common for each?',
+        body: `Both behaviors are triggered by stress, boredom, and focus states, but with different frequency distributions. Nail biters more commonly report biting during focused cognitive work — coding, reading, video calls — where the oral motor habit runs in parallel with prefrontal engagement. The habit is often described as helping maintain focus.\n\nSkin pickers more frequently report picking during states of low arousal (lying in bed, watching television, idle time) and during tactile exploration — running fingers over skin while distracted. The "inspection" trigger is particularly specific to skin picking: many pickers report that touching a perceived blemish, bump, or dry patch while grooming initiates the picking sequence.\n\nBoth behaviors intensify during high-stress periods, but nail biters show a clearer correlation with acute stress events (deadlines, conflict, anticipation), while skin pickers show more sensitivity to chronic stress and low mood states.`,
+      },
+      {
+        heading: 'Treatment differences: what works for each',
+        body: `For nail biting, HRT with a physical competing response has the strongest evidence base. The competing response should be physically incompatible with the hand-to-mouth movement and maintainable for 1–3 minutes. Real-time AI detection tools are particularly well-suited to nail biting because the detection event (hand near mouth) is geometrically precise and can be reliably identified by computer vision.\n\nFor skin picking, HRT remains first-line, but the competing response design requires more attention to the tactile seeking dimension — smooth textures, fidget tools, or barrier methods (wearing gloves, applying bandages to frequently picked areas) are commonly used. The StopPicking protocol and the ComB (Comprehensive Behavioral Treatment) framework, developed specifically for BFRBs, provide more nuanced approaches than standard HRT for skin picking at clinical severity.\n\nN-acetylcysteine (NAC), a glutamate modulator, has shown meaningful benefit in randomised trials for excoriation disorder (and to a lesser degree for hair pulling), with more modest evidence for nail biting. For those with co-occurring anxiety or depression, treating the primary condition often produces parallel improvements in both behaviors.`,
+      },
+      {
+        heading: 'Can someone have both nail biting and skin picking?',
+        body: `Yes — BFRB co-occurrence is common. Studies suggest that approximately 40–60% of individuals with one BFRB also engage in at least one other BFRB. The most common combinations are nail biting with skin picking, nail biting with cheek biting, and hair pulling with skin picking. This co-occurrence has a genetic basis: twin studies confirm a shared heritable component across the BFRB family.\n\nFor individuals with multiple BFRBs, treatment sequencing matters. Beginning with the most physically damaging or most distressing behavior is generally recommended. Attempting to address multiple BFRBs simultaneously reduces the focus and practice time available for each competing response, typically producing inferior results compared to sequential treatment of individual behaviors.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'stopping-nail-biting-for-good',
+    title: 'Stopping Nail Biting for Good: What Relapses Mean and How to Build Lasting Change',
+    description: 'Most people who stop nail biting relapse at least once. This article explains why relapse is neurologically expected, what it tells you, and the evidence-based path to lasting change.',
+    tag: 'Treatment',
+    readingMinutes: 7,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'Why do people relapse after stopping nail biting?',
+        body: `Relapse after a successful period of not biting is not a sign of weakness or failure — it is a predictable consequence of how the brain stores habits. Neuroscience research shows that established habits are not erased when suppressed; the original neural pathway in the basal ganglia remains encoded and can be reactivated by sufficiently strong cues.\n\nThe most common relapse triggers are stress escalation (a period of unusually high stress that overwhelms the competing response habit), context change (returning to an environment or situation where biting was the norm — home for the holidays, a stressful work period), and lapse permissiveness (the "what the hell" effect, where a single instance of biting after a period of success is interpreted as total failure, removing the motivation to apply the competing response).`,
+      },
+      {
+        heading: 'The lapse vs. relapse distinction',
+        body: `Cognitive behavioral therapy draws an important distinction between a lapse (a single instance of the old behavior) and a relapse (a return to pre-treatment levels over an extended period). The distinction matters because lapses are neurologically inevitable — the original habit pathway will be reactivated from time to time, particularly under high stress — but they only become relapses if the person responds to the lapse with abandonment rather than recommitment.\n\nResearch on habit change across multiple behavioral domains (smoking cessation, alcohol reduction, exercise) consistently finds that how a person responds to a lapse is a stronger predictor of long-term outcome than whether a lapse occurs at all. Treating a lapse as data (what triggered it, what context made the competing response fail) rather than as failure dramatically improves long-term outcomes.`,
+      },
+      {
+        heading: 'What does a sustainable stopping strategy look like?',
+        body: `Long-term success with nail biting requires treating the habit as an ongoing management challenge rather than a one-time fix. Several evidence-based components support sustained remission. First, maintenance of the competing response: the competing response habit must itself be maintained through practice — it is not self-sustaining indefinitely without reinforcement. Periods of high stress are the most important times to actively practice the competing response, not times to relax the protocol.\n\nSecond, environmental engineering: reducing the presence of cues that trigger biting — particularly context cues (specific locations, activities) and sensory cues (rough nail edges, hangnails that create an "imperfection" urge) — reduces trigger frequency and extends the window between triggers and response. Keeping nails trimmed and smooth removes a major sensory trigger.\n\nThird, monitoring: maintaining some form of ongoing self-monitoring, even at low intensity, provides the awareness bridge that prevents the habit from becoming fully automatic again. Weekly awareness checks — reviewing whether biting occurred and in what contexts — take minutes and substantially reduce relapse risk.`,
+      },
+      {
+        heading: 'How long until the risk of relapse decreases significantly?',
+        body: `The relapse risk curve for nail biting follows a pattern seen across behavioral habits: highest in the first 2–4 weeks, significantly reduced by 3 months of consistent competing response practice, and substantially lower (though never zero) after 6–12 months. The 2010 Lally et al. study on habit formation found that new behaviors take 18–254 days to become automatic, with a median of 66 days — suggesting that 2–3 months of consistent practice is the minimum threshold for meaningful automaticity of the competing response.\n\nAfter 12 months of maintained behavior change, the risk of relapse drops substantially, but high-stress periods continue to represent elevated risk indefinitely. Former nail biters who remain aware of their highest-risk contexts and maintain light touch self-monitoring report the best long-term outcomes.`,
+      },
+      {
+        heading: 'When should you seek professional support?',
+        body: `Self-directed HRT using apps, workbooks, or structured self-help protocols is effective for the majority of nail biters. Professional support is appropriate when: self-directed efforts have failed after two or more sincere 8-week attempts; the habit is causing significant physical damage (infections, dental damage, permanent nail changes); nail biting is accompanied by significant anxiety, depression, or other BFRBs; or when the shame and distress associated with the habit is itself impairing quality of life.\n\nTherapists trained in BFRBs — rather than generalist CBT therapists — produce significantly better outcomes. The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org) maintains a directory of BFRB-trained clinicians, and telehealth delivery is now well-validated for HRT, making geographic barriers largely irrelevant.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'nail-biting-anxiety-treatment',
+    title: 'Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit',
+    description: 'For some nail biters, anxiety is the root cause — not just a trigger. This article explains how to identify anxiety-driven biting and when treating anxiety directly is the right approach.',
+    tag: 'Psychology',
+    readingMinutes: 6,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'Is your nail biting driven by anxiety?',
+        body: `Not all nail biting is equally anxiety-driven. Research identifies three functional profiles: anxiety-regulatory biting (the habit primarily functions as a stress response), stimulation-seeking biting (the habit primarily functions to provide sensory input during under-stimulation), and automatic biting (the habit has become so overlearned that it occurs independent of emotional state).\n\nDistinguishing between these profiles matters for treatment because the most effective intervention differs. Anxiety-regulatory biters benefit most from combining HRT with anxiety reduction strategies. Stimulation-seeking biters respond best to environmental stimulation adjustments and sensory substitutes. Automatic biters need the full HRT protocol with particular emphasis on awareness training. Many people show mixed profiles, but identifying the dominant pattern guides prioritization.`,
+      },
+      {
+        heading: 'How to identify if anxiety is your primary driver',
+        body: `A one-week habit diary is the most reliable tool for identifying your dominant biting profile. Record each biting episode with: time, location, what you were doing, and your emotional state (on a 1–10 stress scale). After one week, pattern analysis typically reveals one of three dominant patterns: biting clusters around high-stress periods and emotionally charged situations (anxiety-regulatory); biting clusters around passive, low-stimulation activities (stimulation-seeking); or biting is distributed relatively evenly across emotional states (automatic).\n\nAnxiety-regulatory biters also frequently report that the urge to bite is accompanied by a recognizable anxious arousal state — a feeling of tension, agitation, or the "need to do something" — that precedes the bite and is briefly relieved by it. If this description resonates, the anxiety component is likely primary.`,
+      },
+      {
+        heading: 'Does treating anxiety reduce nail biting?',
+        body: `For anxiety-regulatory biters, treating anxiety produces meaningful reductions in biting frequency — though rarely eliminates it entirely, because the habit pathway in the basal ganglia persists independently of the anxiety level. The analogy of a fire alarm connected to a thermostat remains apt: reducing the temperature (anxiety) makes the alarm fire less often, but the alarm circuit (habit response) still exists.\n\nClinical evidence supports this pattern. Studies of CBT for generalized anxiety disorder and social anxiety disorder consistently find parallel reductions in associated BFRB behaviors, including nail biting, even when the BFRBs are not directly targeted in treatment. The effect size is meaningful — typically 30–50% reduction in BFRB frequency — but does not reach the 70–90% reductions achieved by targeting the habit directly with HRT.`,
+      },
+      {
+        heading: 'Evidence-based anxiety treatments that reduce nail biting',
+        body: `For nail biters whose habit is clearly anxiety-driven, the following treatments have the best evidence for anxiety reduction and, secondarily, BFRB reduction.`,
+        list: [
+          'CBT for anxiety — Cognitive Behavioral Therapy targets the thought patterns (catastrophising, overestimation of threat) that generate anxiety, reducing trigger frequency at the source.',
+          'Acceptance and Commitment Therapy (ACT) — ACT reduces experiential avoidance and increases psychological flexibility, reducing the emotional reactivity that triggers biting without requiring anxiety suppression.',
+          'MBSR (Mindfulness-Based Stress Reduction) — 8-week structured program with the strongest evidence for reducing anxiety-driven behavioral habits.',
+          'Diaphragmatic breathing — Activates the parasympathetic nervous system within 2–3 minutes, providing an immediate anxiety-reduction competing response compatible with most settings.',
+        ],
+      },
+      {
+        heading: 'The optimal approach: treat both',
+        body: `For most anxiety-driven nail biters, the optimal outcome comes from treating both the anxiety and the habit directly. Anxiety treatment reduces trigger frequency and intensity; HRT dismantles the automatic habit loop itself. Either alone produces partial results; both together produce the most durable and complete change.\n\nA practical sequencing recommendation: begin HRT immediately (awareness training and competing response practice), while simultaneously initiating an anxiety management practice. The HRT produces faster visible results — reducing biting frequency within 2–4 weeks — which itself reduces the shame-driven anxiety component, creating a positive feedback loop that makes the anxiety management work more effectively.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'how-long-to-stop-nail-biting',
+    title: 'How Long Does It Take to Stop Nail Biting? A Realistic Timeline',
+    description: 'Most people want to know how long it takes to stop nail biting. The honest answer depends on habit severity and method. This article gives a research-based realistic timeline.',
+    tag: 'Treatment',
+    readingMinutes: 5,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'The honest answer: it varies widely',
+        body: `The popular claim that habits take 21 days to break is not supported by research. The actual evidence suggests that for complex, emotionally-loaded behaviors like nail biting, meaningful and durable change takes 6–12 weeks of consistent effort, with the full consolidation of a new automatic response taking 3–6 months. Some individuals — particularly those with long-established habits, high baseline stress, or co-occurring anxiety — may require longer.\n\nThis is not discouraging; it is realistic. Understanding the timeline sets appropriate expectations and prevents the common pattern of abandoning effective treatment because it hasn't produced complete results within two weeks.`,
+      },
+      {
+        heading: 'Week 1–2: Awareness surge',
+        body: `The first phase of effective nail biting treatment is characterised by a striking increase in perceived biting frequency. This is not because biting is increasing — it is because awareness is increasing. Most nail biters notice fewer than half of their daily biting episodes under normal conditions. When awareness training begins (habit diary, competing response practice, real-time detection), the full scope of the habit becomes visible for the first time.\n\nThis phase is often the most psychologically challenging. The gap between perceived and actual biting frequency can be discouraging. Reframing it as accurate data collection rather than evidence of severity helps. The awareness itself is therapeutically active — simply noticing the habit creates the neurological opening for the competing response and begins to weaken the automatic chain.`,
+      },
+      {
+        heading: 'Week 2–6: Active reduction',
+        body: `Once awareness is established, the competing response begins to take effect. Biting frequency decreases — typically by 30–60% within the first four weeks of consistent HRT practice. The reduction is not linear: there are days of high biting (often correlating with elevated stress) and days of very low biting. The trend across the period is downward.\n\nBy week 4–6, most consistent practitioners report a qualitative shift: they begin noticing the urge to bite before the hand has moved, rather than only after the fact. This proactive interception — catching the urge rather than the behavior — is the target outcome of awareness training and signals that the competing response is beginning to compete with the original habit at the level of automaticity.`,
+      },
+      {
+        heading: 'Week 6–12: Consolidation',
+        body: `Between weeks 6 and 12, biting frequency continues to decline toward baseline levels (near zero, or episodic rather than constant). The competing response becomes increasingly automatic — requiring less deliberate effort to initiate. Nail regrowth becomes visible for the first time in many cases, which provides its own positive reinforcement.\n\nThe primary risk in this phase is premature discontinuation. Once biting has reduced substantially and the competing response feels habitual, many people relax the monitoring and practice that produced the improvement. Maintaining light-touch monitoring — reviewing biting episodes once per week, continuing to practice the competing response in highest-risk contexts — substantially reduces relapse risk during this consolidation phase.`,
+      },
+      {
+        heading: 'What makes the timeline shorter or longer?',
+        body: `Several factors reliably predict faster or slower progress. Factors that accelerate the timeline: high motivation and consistent daily practice, real-time external awareness feedback (detection apps, partners), low baseline stress levels, short habit duration (habit established within the last 2–3 years). Factors that extend the timeline: habit established in childhood (deeper encoding), high chronic stress (constant trigger activation), co-occurring anxiety disorder, previous failed attempts that have undermined self-efficacy.\n\nThe single strongest predictor of timeline is consistency of competing response practice. Research shows that practicing the competing response only in response to detected biting — reactive practice — produces slower results than also practicing it proactively in the highest-risk contexts, even before the urge arises. Proactive practice in the work/focus context, the most common high-risk context for many nail biters, consistently accelerates the consolidation timeline.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'nail-biting-adults-why-persists',
+    title: 'Why Nail Biting Persists into Adulthood — and What Makes It Different to Childhood Habits',
+    description: 'Nail biting that persists into adulthood is fundamentally different from childhood nail biting. This article explains why adult habits are harder to break and what approaches work best.',
+    tag: 'Psychology',
+    readingMinutes: 6,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'Why does nail biting persist into adulthood?',
+        body: `Nail biting that continues into adulthood has typically been practiced daily for 10–20+ years. This duration of practice produces a qualitatively different habit from one that has been established for months. Long-established habits are encoded more deeply in basal ganglia circuitry, are activated by a wider range of cues (through generalisation), and are more resistant to extinction because they have been reinforced tens of thousands of times.\n\nThere is also a developmental dimension. Habits formed during childhood and adolescence are encoded during periods of high neuroplasticity — the brain's capacity to form new connections is at its peak. Paradoxically, this means childhood habits are formed more efficiently and are more deeply embedded than habits formed in adulthood. The flip side is that the adult brain, while less plastic, has greater capacity for deliberate, top-down habit regulation — the prefrontal cortex is fully developed and capable of sustained behavioral override in a way that the adolescent brain is not.`,
+      },
+      {
+        heading: 'The role of life stress in adult nail biting',
+        body: `Adult life introduces stressors that are qualitatively different from childhood stressors — work pressure, financial stress, relationship demands, parenting — and that are more sustained and less escapable. These chronic stress conditions maintain the anxiety and arousal states that trigger nail biting at elevated levels, making trigger frequency higher in adulthood than in childhood even when the habit mechanism is the same.\n\nFor many adults, nail biting has also become embedded in specific adult-life contexts — desk work, video meetings, evening relaxation — that did not exist during childhood. Each new context becomes a cue, progressively widening the trigger profile. An adult nail biter who has been biting during focused work for 15 years has associated their entire work identity and environment with the habit, making context modification substantially more challenging than for a child biter whose habit is primarily associated with homework or television.`,
+      },
+      {
+        heading: 'What is different about treating adult nail biting?',
+        body: `Adult nail biters generally have greater cognitive resources for treatment — better self-monitoring capacity, stronger ability to maintain a habit diary, better understanding of the habit loop mechanism. They also typically have stronger intrinsic motivation (the social and professional costs of damaged nails are more visible in adult life) and greater access to treatment resources.\n\nHowever, adult treatment also faces specific challenges. The competing response must be compatible with professional contexts — it cannot be conspicuous during meetings, video calls, or client interactions. The habit has typically been associated with multiple contexts that must each be addressed. And the longer timeline required for deeply encoded habits requires sustained effort over a period that many adults struggle to maintain alongside work and life demands.`,
+      },
+      {
+        heading: 'The most effective approaches for long-established adult habits',
+        body: `For adult nail biters with habits of 10+ years, the evidence points to a combination approach. HRT remains first-line, but with specific adaptations for adult contexts: competing responses designed for desk-work and meeting environments, habit diaries integrated into digital tools rather than paper notebooks, and awareness tools (including AI detection) that function during work hours without requiring behavioral overhead.\n\nFor deeply established habits in high-stress adults, augmenting HRT with stress management (particularly brief mindfulness practices and diaphragmatic breathing) accelerates outcomes. The stress reduction component lowers trigger frequency; the HRT component dismantles the automatic response. Neither alone produces the results that both together achieve. Adults with habits established before age 10 may benefit from the longer treatment timelines recommended for deeply encoded behaviors — 16–24 weeks of consistent practice rather than the 8-week standard protocol.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'webcam-privacy-nail-biting-app',
+    title: 'Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained',
+    description: 'Using a webcam app to track nail biting raises legitimate privacy questions. This article explains exactly what data is collected, how on-device AI works, and why no camera data leaves your device.',
+    tag: 'Technology',
+    readingMinutes: 5,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'The core privacy concern with webcam habit apps',
+        body: `The idea of running a webcam continuously during work hours raises an obvious and legitimate concern: where does the camera data go? Most people have an intuitive understanding that webcam footage is sensitive — it captures your face, your environment, and potentially other people in your space. Before using any webcam-based application, understanding the data architecture is essential.\n\nThe answer depends entirely on whether the app processes video on-device or sends it to a server. Cloud-based processing — where video frames are transmitted to a server for analysis — creates genuine privacy risks regardless of the app developer's stated policies. On-device processing, where all analysis happens locally on the user's own hardware, eliminates the transmission risk by design.`,
+      },
+      {
+        heading: 'How on-device AI processing works',
+        body: `Stop Biting uses MediaPipe, Google's open-source machine learning framework, compiled to WebAssembly — a portable binary format that runs at near-native speed inside browsers and desktop applications. The hand and face landmark detection models run entirely on the user's local CPU or GPU. No video frames, no landmark coordinates, and no detection events are transmitted to any server.\n\nThis can be independently verified by anyone using network monitoring tools (Charles Proxy, Wireshark, or the browser's built-in Network tab in Developer Tools). Running Stop Biting while monitoring network traffic will show zero camera-related network requests. The absence of data transmission is architectural — there is no server endpoint to send data to, because all processing is local.`,
+      },
+      {
+        heading: 'What data is and is not stored',
+        body: `Stop Biting stores the following data locally on your device: bite count statistics (number of detections per session), streak data (consecutive days without biting), and session logs used to generate the 7-day frequency chart. None of this data includes video, images, or biometric data. It is equivalent to a manual tally in a notebook — counts and timestamps, not recordings.\n\nThis data is stored in a local SQLite database. It is not synced to any cloud service, not accessible to the app's servers, and is deleted permanently when the app is uninstalled. There is no user account linked to biometric data; your Google account is used only for authentication (to verify your subscription status) and does not store any habit data.`,
+      },
+      {
+        heading: 'The camera permission question',
+        body: `Stop Biting requests camera permission, as any webcam-based application must. On macOS, Windows, and in the browser, this permission can be revoked at any time through system privacy settings. The app cannot access the camera without active permission.\n\nImportantly, granting camera permission does not mean your camera feed is being recorded or transmitted — it means the application has access to the camera stream for local processing. The distinction between access and transmission is the key architectural fact. MediaPipe receives each frame as a JavaScript object, performs landmark detection, and discards the frame. No frame is written to disk or sent over the network.`,
+      },
+      {
+        heading: 'How to verify the privacy claims yourself',
+        body: `Independent verification is straightforward. Open your browser's Developer Tools (F12), navigate to the Network tab, and start a Stop Biting session. Filter network requests by "Media" or "WebSocket." During normal detection operation, you will see no camera-related traffic. The only outgoing requests will be to the authentication API (to verify your session token) — not camera data.\n\nFor desktop app users, tools like Little Snitch (macOS) or GlassWire (Windows) provide real-time network monitoring and will similarly show no camera-related outbound traffic during app operation. Privacy claims that can be independently verified by users are meaningfully different from privacy policies that must be taken on trust — on-device architecture provides the former.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'nail-biting-during-sleep',
+    title: 'Nail Biting During Sleep: Does It Happen and What Can You Do?',
+    description: 'Some people bite their nails during sleep without knowing it. This article explains sleep-related nail biting, how to tell if it\'s happening, and evidence-based approaches to stop it.',
+    tag: 'Health',
+    readingMinutes: 5,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'Can nail biting happen during sleep?',
+        body: `Sleep-related nail biting — also called sleep bruxism's oral analog — does occur in a subset of nail biters, though it is less common than waking nail biting and often goes unnoticed. Unlike waking nail biting, which involves purposeful hand-to-mouth movements, sleep-related nail biting typically occurs during light sleep stages (NREM stage 1 and 2) and during sleep-wake transitions, when motor inhibition is incomplete.\n\nDaytime nail biters who also bite during sleep often notice the evidence indirectly: nails that appear more damaged in the morning than they remember from the previous evening, cuticle soreness upon waking, or sleep partners who have observed the behavior. Without a deliberate attempt to monitor for it, sleep nail biting can account for a meaningful proportion of overall nail damage while remaining invisible to the person's waking awareness.`,
+      },
+      {
+        heading: 'What causes nail biting during sleep?',
+        body: `Sleep-related nail biting has several proposed mechanisms. First, habitual automaticity: deeply encoded habits can be expressed during light sleep, when the habit circuitry in the basal ganglia operates without the inhibitory oversight of the fully conscious prefrontal cortex. The same mechanism underlies sleep talking, sleep walking, and other parasomnias.\n\nSecond, stress and anxiety: elevated cortisol levels and autonomic arousal — associated with high-stress periods — are linked to increased parasomnias and motor activity during sleep. People with high daytime stress and anxiety are more likely to show sleep-related oral motor activity, including nail biting.\n\nThird, dental and oral factors: individuals with bruxism (sleep teeth grinding) appear to have elevated rates of sleep-related oral behaviors generally, suggesting a shared neurological propensity for oral motor activity during sleep.`,
+      },
+      {
+        heading: 'How to tell if you are biting during sleep',
+        body: `Several indicators suggest sleep nail biting: nails that are shorter or more damaged in the morning than expected given recalled waking behavior; cuticle soreness or raw skin around the nails upon waking; reports from a sleep partner; or nail damage that cannot be accounted for by recalled waking behavior even with careful daytime monitoring.\n\nFor definitive identification, brief video monitoring during sleep — using a phone camera set to record for the first few hours after sleep onset — can capture the behavior directly. This approach is used in sleep behavior research and provides unambiguous evidence. Finding sleep nail biting does not require treatment unless it is contributing to significant nail damage or causing sleep disruption.`,
+      },
+      {
+        heading: 'How to address sleep nail biting',
+        body: `Physical barriers are the most effective intervention for sleep nail biting because behavioral awareness-based approaches cannot operate during sleep. The following approaches are commonly used and have good anecdotal support, though randomised trial evidence specific to sleep nail biting is limited.\n\nFinger cots or gloves worn during sleep physically prevent the fingers from reaching the mouth in the habitual way. Bitter-tasting nail preparations applied before sleep provide aversive conditioning if the fingers do reach the mouth. Nail glue or acrylic overlays reduce the sensory reward of biting by altering the surface texture and resistance of the nail.\n\nAddressing underlying anxiety and improving sleep hygiene reduces the sleep arousal that facilitates sleep-related motor behaviors generally. Consistent sleep-wake timing, reducing alcohol consumption (which fragments sleep architecture and increases parasomnias), and stress management practices before bed all reduce the propensity for motor activity during light sleep.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'bitter-nail-polish-review',
+    title: 'Bitter Nail Polish for Nail Biting: Does It Work? A Review of the Evidence',
+    description: 'Bitter nail polish is one of the most popular nail biting remedies. This article reviews the evidence for products like Mavala Stop, how they work, and when they are and are not effective.',
+    tag: 'Treatment',
+    readingMinutes: 5,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'How does bitter nail polish work?',
+        body: `Bitter nail preparations — the most well-known being Mavala Stop, Orly No Bite, Control-It, and Thum — contain denatonium benzoate, the most bitter substance known to science, detectable at concentrations as low as 10 parts per billion. Applied to the nails and allowed to dry, these preparations transfer an intensely bitter taste to the mouth whenever the fingers enter — interrupting the biting behavior through aversive conditioning.\n\nThe mechanism is technically that of classical aversive conditioning: a previously neutral stimulus (the nail entering the mouth) becomes associated with an unpleasant outcome (intensely bitter taste), reducing the probability of the behavior. This is distinct from the awareness-based mechanism of HRT — bitter polish works even without conscious awareness of the biting event, making it useful as an adjunct to awareness-based approaches.`,
+      },
+      {
+        heading: 'What does the evidence say?',
+        body: `Clinical evidence for bitter nail preparations as a standalone treatment is modest. A Cochrane review of interventions for nail biting found that while bitter preparations produce short-term reductions in biting behavior, the evidence base is limited by small sample sizes and methodological heterogeneity. Real-world effectiveness is further constrained by compliance issues: the preparations wash off with hand washing, require daily reapplication, and are often forgotten or skipped.\n\nHowever, as an adjunct to HRT — particularly in the first 4–8 weeks when the competing response habit is not yet established — bitter preparations provide a useful secondary layer of interruption. The aversive taste occurs even when the competing response fails, adding a behavioral cost to biting that reinforces the overall behavior change effort. The combination of HRT plus bitter preparation consistently outperforms either alone in head-to-head comparisons.`,
+      },
+      {
+        heading: 'Who benefits most from bitter nail polish?',
+        body: `Bitter nail preparations work best for three specific groups. First, mild habitual nail biters whose habit is not deeply encoded and who respond to aversive feedback. For this group, a bitter preparation alone may be sufficient to break the habit, particularly if used consistently for 4–8 weeks.\n\nSecond, children aged 7–14, for whom the strong aversive feedback is more effective and for whom awareness-based protocols are harder to implement consistently. Bitter preparations are one of the most age-appropriate first-line interventions for childhood nail biting.\n\nThird, motivated adults using HRT who want an additional behavioral safeguard during the early phase of treatment, before the competing response is sufficiently established to reliably override the automatic habit.`,
+      },
+      {
+        heading: 'Why bitter polish alone often fails for established habits',
+        body: `For nail biters with established, automatic habits, bitter preparations frequently fail as a standalone treatment for a predictable reason: the behavior is executed below the threshold of conscious awareness, and the aversive taste arrives after the bite has already begun. The automatic habit chain — cue, hand movement, mouth contact, bite — is interrupted only at the last step. This late-stage interruption is less effective than early-stage interruption (catching the urge or the hand movement before mouth contact) because the habit routine has already been initiated.\n\nAdditionally, many nail biters habituate to the bitterness over time, particularly if they are consuming the substance repeatedly throughout the day. Rotating between products (using different bitter preparations on alternate weeks) partially addresses habituation but does not eliminate it. For established habits, bitter preparations are best understood as a supplementary tool rather than a primary intervention.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'nail-biting-genetics',
+    title: 'Is Nail Biting Genetic? What the Research Says About Hereditary BFRB Risk',
+    description: 'Studies show nail biting runs in families, but is it genetic or learned? This article reviews twin studies and genetic research on BFRB heritability and what it means for treatment.',
+    tag: 'Science',
+    readingMinutes: 6,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'Does nail biting run in families?',
+        body: `Nail biting does cluster in families, and the question of whether this reflects genetic transmission, modelling (children observing and imitating parental behavior), or shared environmental stress is an active area of research. The evidence points to a meaningful genetic contribution, though the full picture involves all three factors.\n\nFamily studies consistently find that nail biters are more likely to have at least one first-degree relative who also bites their nails — with estimates of familial clustering ranging from 2.5x to 4x the population base rate. This familial aggregation is consistent with genetic transmission, shared environment, or behavioral modelling, and cannot distinguish between these factors on its own.`,
+      },
+      {
+        heading: 'What twin studies reveal about heritability',
+        body: `Twin studies — which compare the concordance rates of a trait in identical (monozygotic) twins, who share 100% of their genes, versus fraternal (dizygotic) twins, who share 50% — provide the clearest evidence for genetic versus environmental contributions. Multiple twin studies of BFRBs, including studies that specifically include nail biting, find heritability estimates of 30–45% for BFRB behaviors generally.\n\nThis means that approximately 30–45% of the variation in BFRB risk across the population is attributable to genetic differences, with the remaining 55–70% attributable to environmental factors (both shared family environment and individual experience). A heritability of 40% places nail biting in the "moderately heritable" category — more heritable than most personality traits, less heritable than height or IQ.`,
+      },
+      {
+        heading: 'What genes are involved?',
+        body: `The genetic architecture of nail biting and BFRBs generally is complex — involving many genes of small individual effect rather than a single "nail biting gene." Genome-wide association studies of OCD-spectrum disorders have identified several candidate loci, including genes involved in serotonergic signalling, glutamate regulation, and corticostriatal circuitry.\n\nOf particular interest are variants in the SAPAP3 gene, which encodes a postsynaptic scaffolding protein in corticostriatal synapses. Mouse models with SAPAP3 mutations show excessive repetitive self-grooming behaviors that closely parallel human BFRBs, and human SAPAP3 variants have been associated with OCD and BFRB phenotypes in several studies. SLC1A1, a glutamate transporter gene, has also been associated with OCD-spectrum behaviors in multiple cohorts.`,
+      },
+      {
+        heading: 'Does having a genetic risk mean you cannot stop?',
+        body: `No. Genetic risk factors are probabilistic — they increase likelihood, not certainty. Having a genetic predisposition to nail biting means you are more likely to develop the habit under triggering conditions, and may find it somewhat more persistent once established, but it does not determine outcome. The 55–70% of nail biting variance that is environmental means that environmental interventions — stress reduction, awareness training, competing response practice — have substantial leverage even in genetically predisposed individuals.\n\nThe most useful framing of genetic risk is as explanation rather than limitation: understanding that one's nail biting has a meaningful inherited component can reduce self-blame and set more realistic expectations about treatment timeline. It does not change the treatment approach — HRT remains equally effective regardless of genetic predisposition — but it reframes the challenge from "character failure" to "neurobiological trait that responds to structured intervention."`,
+      },
+      {
+        heading: 'Implications for parents of nail-biting children',
+        body: `For parents who themselves bite their nails, the 30–45% heritability figure has a practical implication: their children are at elevated risk of developing nail biting, making early environmental intervention more valuable. The behavioral modelling component is also real — children do learn nail biting partly by observing caregivers — making parental habit change doubly impactful.\n\nFor parents concerned about genetic transmission, the best evidence suggests that low-stress parenting environments, secure attachment, and avoidance of punitive responses to early nail biting (which increase anxiety and paradoxically increase the habit) substantially reduce the probability that genetic predisposition translates into established habit. The environmental components are genuinely modifiable, and they interact with genetic risk rather than simply being overridden by it.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'mediapipe-ai-detection-explained',
+    title: 'How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer',
+    description: 'Stop Biting uses Google\'s MediaPipe framework running in WebAssembly to detect nail biting in real time. This article explains the technology stack for technically curious users.',
+    tag: 'Technology',
+    readingMinutes: 6,
+    datePublished: '2026-04-07',
+    dateModified: '2026-04-07',
+    sections: [
+      {
+        heading: 'What is MediaPipe and why does it matter?',
+        body: `MediaPipe is an open-source machine learning framework developed by Google Research, designed for real-time perception tasks — detecting, tracking, and understanding objects in camera streams. Originally developed for Google's own products (Pixel's portrait mode, Google Meet's background blur), it was open-sourced in 2019 and has become the dominant framework for on-device computer vision in web and mobile applications.\n\nThe key property that makes MediaPipe relevant for a nail biting detection app is its speed and its architecture: all models run locally on the user's device, with no cloud dependency, achieving 30–60 frames per second on standard consumer hardware. This allows continuous, real-time monitoring without latency or privacy implications.`,
+      },
+      {
+        heading: 'The two models used for detection',
+        body: `Stop Biting uses two MediaPipe models in combination. The hand landmark model detects and tracks the hand in the camera frame, identifying 21 keypoints — fingertips, knuckle joints, wrist — with sub-centimetre accuracy. The face mesh model detects 468 facial landmarks including the precise location of the lips, mouth corners, and chin.\n\nThe detection logic computes the geometric distance between the fingertip landmarks (specifically the index and middle fingertip points, which are most commonly involved in nail biting) and the mouth landmark cluster in real time. When this distance falls below a calibrated threshold — meaning the fingers are within typical nail-biting proximity of the mouth — the detection event fires. The threshold is designed to minimize both false positives (alarm fires when not biting) and false negatives (biting occurs without alarm).`,
+      },
+      {
+        heading: 'WebAssembly: why the models run so fast',
+        body: `MediaPipe's models are compiled to WebAssembly (WASM), a binary instruction format that executes at near-native speed in web browsers and Node.js environments. WASM provides roughly 50–80% of native C++ performance in the browser — fast enough to run both landmark detection models simultaneously at 30+ frames per second on a standard laptop.\n\nThe WASM binary includes SIMD (Single Instruction Multiple Data) optimizations for compatible CPUs, allowing multiple pixel operations to be performed in parallel in a single instruction cycle. The app includes both SIMD and non-SIMD WASM builds, selecting the appropriate version based on the browser's capability detection, ensuring broad hardware compatibility without sacrificing performance on modern CPUs.`,
+      },
+      {
+        heading: 'Model size and loading time',
+        body: `The face landmark model is approximately 3.9MB, and the hand landmark model is approximately 8.4MB. Both are loaded from local storage (bundled with the app) rather than from the network during each session. First-load time for model initialization is typically 1–3 seconds on modern hardware; subsequent loads use cached models and are near-instantaneous.\n\nThe WASM runtime itself adds approximately 6MB of runtime payload. Total cold-start overhead (loading WASM + both models) is typically under 5 seconds, after which detection runs continuously at full frame rate. This initialization overhead is the primary latency in the user experience — once running, the detection operates with no perceptible lag.`,
+      },
+      {
+        heading: 'Accuracy and detection limitations',
+        body: `MediaPipe's hand and face landmark models are trained on diverse datasets and perform well across skin tones, lighting conditions, and camera angles. However, detection accuracy degrades in specific conditions: very low light (detection works best in ambient-lit environments), extreme camera angles (more than 45° off-axis from the face significantly reduces face detection confidence), and partial occlusion of the hand (if the hand approaches from the periphery of the camera frame rather than the center).\n\nThe most common source of false positives is touching the face in the mouth-adjacent area without biting — scratching the chin, resting a hand on the cheek, or eating. Users typically calibrate their mental model of the detection system within the first few sessions and adjust their body positioning accordingly. False negatives — biting events that the system misses — most commonly occur when the hand approaches from below the camera frame or when lighting creates shadows that reduce landmark confidence below the detection threshold.`,
+      },
+    ],
+  },
+];
+
+// Merge additional posts into the main array
+BLOG_POSTS.push(...ADDITIONAL_POSTS);

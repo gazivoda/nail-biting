@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { ArrowLeft, Clock, BookOpen } from 'lucide-react';
-import { getPost } from '../data/blogPosts';
+import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
+import { BLOG_POSTS, getPost } from '../data/blogPosts';
 
 interface Props {
   slug: string;
@@ -25,16 +25,24 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+// Return up to 3 related posts: same tag first, then others, excluding current
+function getRelated(currentSlug: string, currentTag: string) {
+  const sameTag = BLOG_POSTS.filter(p => p.slug !== currentSlug && p.tag === currentTag);
+  const others  = BLOG_POSTS.filter(p => p.slug !== currentSlug && p.tag !== currentTag);
+  return [...sameTag, ...others].slice(0, 3);
+}
+
 export function BlogPost({ slug }: Props) {
   const post = getPost(slug);
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
+  const related = post ? getRelated(slug, post.tag) : [];
 
-  // Inject JSON-LD BlogPosting schema + update meta tags client-side
+  // Inject JSON-LD BlogPosting + BreadcrumbList schemas + update meta tags client-side
   // (server already injects correct title/description/canonical in initial HTML)
   useEffect(() => {
     if (!post) return;
 
-    const schema = {
+    const blogPosting = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: post.title,
@@ -64,33 +72,61 @@ export function BlogPost({ slug }: Props) {
       timeRequired: `PT${post.readingMinutes}M`,
     };
 
-    const existing = document.getElementById('blog-post-schema');
-    if (existing) existing.remove();
+    const breadcrumb = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: 'https://stopbiting.today/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Blog',
+          item: 'https://stopbiting.today/blog',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: post.title,
+          item: canonicalUrl,
+        },
+      ],
+    };
 
-    const script = document.createElement('script');
-    script.id = 'blog-post-schema';
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
+    document.getElementById('blog-post-schema')?.remove();
+    document.getElementById('blog-breadcrumb-schema')?.remove();
 
-    // Update title and canonical client-side for SPA navigation
+    const postScript = document.createElement('script');
+    postScript.id = 'blog-post-schema';
+    postScript.type = 'application/ld+json';
+    postScript.textContent = JSON.stringify(blogPosting);
+    document.head.appendChild(postScript);
+
+    const crumbScript = document.createElement('script');
+    crumbScript.id = 'blog-breadcrumb-schema';
+    crumbScript.type = 'application/ld+json';
+    crumbScript.textContent = JSON.stringify(breadcrumb);
+    document.head.appendChild(crumbScript);
+
     const prevTitle = document.title;
     document.title = `${post.title} | Stop Biting`;
 
-    // Update canonical link tag
     let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     const prevCanonical = canonicalEl?.href ?? '';
     if (canonicalEl) canonicalEl.href = canonicalUrl;
 
     return () => {
-      const el = document.getElementById('blog-post-schema');
-      if (el) el.remove();
+      document.getElementById('blog-post-schema')?.remove();
+      document.getElementById('blog-breadcrumb-schema')?.remove();
       document.title = prevTitle;
       if (canonicalEl) canonicalEl.href = prevCanonical;
     };
   }, [post, canonicalUrl]);
 
-  // Scroll to top when slug changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [slug]);
@@ -128,14 +164,14 @@ export function BlogPost({ slug }: Props) {
       {post && (
         <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
-          {/* Back link */}
-          <a
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-8"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            All articles
-          </a>
+          {/* Breadcrumb nav */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-600 mb-8">
+            <a href="/" className="hover:text-slate-400 transition-colors">Home</a>
+            <span aria-hidden="true">/</span>
+            <a href="/blog" className="hover:text-slate-400 transition-colors">Blog</a>
+            <span aria-hidden="true">/</span>
+            <span className="text-slate-500 truncate max-w-[200px]">{post.tag}</span>
+          </nav>
 
           {/* Article header */}
           <header className="mb-10">
@@ -161,10 +197,9 @@ export function BlogPost({ slug }: Props) {
             </p>
           </header>
 
-          {/* Divider */}
           <hr className="border-slate-800 mb-10" />
 
-          {/* Sections */}
+          {/* Article body */}
           <article>
             {post.sections.map((section, i) => (
               <section key={i} className="mb-10">
@@ -172,14 +207,12 @@ export function BlogPost({ slug }: Props) {
                   {section.heading}
                 </h2>
 
-                {/* Body paragraphs */}
                 {section.body.split('\n\n').map((para, j) => (
                   <p key={j} className="text-slate-300 leading-relaxed mb-4 text-[15px]">
                     {para}
                   </p>
                 ))}
 
-                {/* Optional list */}
                 {section.list && section.list.length > 0 && (
                   <ul className="mt-3 space-y-3">
                     {section.list.map((item, k) => (
@@ -206,7 +239,35 @@ export function BlogPost({ slug }: Props) {
             </a>
           </div>
 
-          {/* Back link bottom */}
+          {/* Related articles — internal linking for SEO */}
+          {related.length > 0 && (
+            <section className="mt-14" aria-labelledby="related-heading">
+              <h2 id="related-heading" className="text-lg font-semibold text-slate-100 mb-5">
+                Related articles
+              </h2>
+              <div className="flex flex-col gap-3">
+                {related.map(rel => (
+                  <a
+                    key={rel.slug}
+                    href={`/blog/${rel.slug}`}
+                    className="group flex items-start justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 hover:border-slate-600 hover:bg-slate-800/60 transition-all"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full border mb-1.5 ${tagClass(rel.tag)}`}>
+                        {rel.tag}
+                      </span>
+                      <p className="text-sm font-medium text-slate-200 leading-snug group-hover:text-emerald-300 transition-colors line-clamp-2">
+                        {rel.title}
+                      </p>
+                    </div>
+                    <ArrowRight size={14} className="text-slate-600 group-hover:text-emerald-400 mt-1 shrink-0 transition-colors" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Back link */}
           <div className="mt-10 text-center">
             <a
               href="/blog"
