@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { ShieldCheck, Download, X, Camera } from 'lucide-react';
+import { ShieldCheck, Camera } from 'lucide-react';
 import { CameraView } from '../components/detection/CameraView';
 import { StreakCard } from '../components/dashboard/StreakCard';
 import { StatsRow } from '../components/dashboard/StatsRow';
@@ -7,9 +6,6 @@ import { PanicButton } from '../components/dashboard/PanicButton';
 import { CameraToggle } from '../components/dashboard/CameraToggle';
 import { useCamera } from '../hooks/useCamera';
 import { useAppStore } from '../store/useAppStore';
-
-const DOWNLOAD_MAC_ARM = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
-const isElectron = navigator.userAgent.includes('Electron');
 
 function FirstRunHint() {
   return (
@@ -28,49 +24,16 @@ function FirstRunHint() {
 export function Dashboard() {
   const { cameraEnabled, incidents } = useAppStore();
   const { videoRef } = useCamera(cameraEnabled);
-  const [bannerDismissed, setBannerDismissed] = useState(
-    () => localStorage.getItem('desktop_banner_dismissed') === '1'
-  );
 
   const isFirstRun = !cameraEnabled && incidents.length === 0;
 
-  function dismissBanner() {
-    localStorage.setItem('desktop_banner_dismissed', '1');
-    setBannerDismissed(true);
-  }
-
   return (
     <div className="p-8">
-      {/* Desktop app promo — only shown in browser, dismissible */}
-      {!isElectron && !bannerDismissed && (
-        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card dark:shadow-card-dark animate-fade-up" style={{ animationDelay: '0ms' }}>
-          <span className="text-stone-500 dark:text-stone-400">
-            For the best experience, try the{' '}
-            <strong className="text-stone-700 dark:text-stone-200">native desktop app</strong> — runs fully offline, no browser needed.
-          </span>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <a
-              href={DOWNLOAD_MAC_ARM}
-              className="inline-flex items-center gap-1.5 text-forest-600 dark:text-forest-400 hover:text-forest-500 font-medium text-xs transition-colors"
-            >
-              <Download size={12} aria-hidden="true" />
-              Download for Mac
-            </a>
-            <button
-              onClick={dismissBanner}
-              aria-label="Dismiss"
-              className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
-            >
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Privacy badge */}
       <div
         className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mb-8 w-fit animate-fade-up"
-        style={{ animationDelay: '60ms' }}
+        style={{ animationDelay: '0ms' }}
       >
         <ShieldCheck size={12} />
         <span>All processing on-device — camera feed never leaves this app</span>
@@ -81,7 +44,7 @@ export function Dashboard() {
         {/* Camera — takes 3/5 */}
         <div
           className="col-span-3 relative animate-fade-up"
-          style={{ animationDelay: '120ms' }}
+          style={{ animationDelay: '60ms' }}
         >
           <CameraView videoRef={videoRef} />
           {isFirstRun && <FirstRunHint />}
@@ -89,16 +52,16 @@ export function Dashboard() {
 
         {/* Stats + controls — takes 2/5, staggered children */}
         <div className="col-span-2 flex flex-col gap-4">
-          <div className="animate-fade-up" style={{ animationDelay: '160ms' }}>
+          <div className="animate-fade-up" style={{ animationDelay: '120ms' }}>
             <StreakCard />
           </div>
-          <div className="animate-fade-up" style={{ animationDelay: '200ms' }}>
+          <div className="animate-fade-up" style={{ animationDelay: '160ms' }}>
             <StatsRow />
           </div>
-          <div className="animate-fade-up" style={{ animationDelay: '240ms' }}>
+          <div className="animate-fade-up" style={{ animationDelay: '200ms' }}>
             <CameraToggle />
           </div>
-          <div className="animate-fade-up" style={{ animationDelay: '280ms' }}>
+          <div className="animate-fade-up" style={{ animationDelay: '240ms' }}>
             <PanicButton />
           </div>
         </div>
