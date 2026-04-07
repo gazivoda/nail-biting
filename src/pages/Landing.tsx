@@ -62,7 +62,7 @@ export function Landing(_props: Props) {
             className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"
           >
             <Zap size={13} aria-hidden="true" />
-            Get started free
+            Sign in to app
           </a>
         </div>
       </nav>
