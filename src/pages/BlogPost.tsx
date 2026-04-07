@@ -51,8 +51,10 @@ export function BlogPost({ slug }: Props) {
       dateModified: post.dateModified,
       author: {
         '@type': 'Organization',
-        name: 'Stop Biting',
+        name: 'Stop Biting Editorial Team',
         url: 'https://stopbiting.today',
+        description: 'Science-based editorial team covering onychophagia, body-focused repetitive behaviors (BFRBs), and habit reversal training.',
+        knowsAbout: ['onychophagia', 'nail biting', 'body-focused repetitive behaviors', 'habit reversal training', 'BFRB treatment'],
       },
       publisher: {
         '@type': 'Organization',
@@ -70,6 +72,8 @@ export function BlogPost({ slug }: Props) {
       url: canonicalUrl,
       keywords: post.tag,
       timeRequired: `PT${post.readingMinutes}M`,
+      inLanguage: 'en',
+      isAccessibleForFree: true,
     };
 
     const breadcrumb = {
@@ -192,9 +196,25 @@ export function BlogPost({ slug }: Props) {
               {post.title}
             </h1>
 
-            <p className="text-lg text-slate-400 leading-relaxed">
+            <p className="text-lg text-slate-400 leading-relaxed mb-6">
               {post.description}
             </p>
+
+            {/* Author byline — authority signal for AI crawlers */}
+            <div className="flex items-center gap-3 py-4 border-t border-b border-slate-800">
+              <div className="w-8 h-8 rounded-full bg-emerald-900/60 border border-emerald-700/40 flex items-center justify-center shrink-0">
+                <span className="text-emerald-400 text-xs font-bold">SB</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-200">Stop Biting Editorial Team</p>
+                <p className="text-xs text-slate-500">
+                  Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
+                  {post.dateModified !== post.datePublished && (
+                    <> Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>.</>
+                  )}
+                </p>
+              </div>
+            </div>
           </header>
 
           <hr className="border-slate-800 mb-10" />

@@ -529,6 +529,54 @@ if (!existsSync(distPath)) {
       );
   }
 
+  // Helper: inject BlogPosting + BreadcrumbList JSON-LD schemas into the <head>.
+  // AI crawlers and Googlebot do not execute JavaScript, so useEffect-injected
+  // schemas are invisible to them. Server-side injection ensures all crawlers
+  // see correct structured data in the initial HTML response.
+  function injectBlogSchemas(html, { slug, title, description, canonical }) {
+    const blogPosting = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      url: canonical,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+      author: {
+        '@type': 'Organization',
+        name: 'Stop Biting Editorial Team',
+        url: 'https://stopbiting.today',
+        description: 'Science-based editorial team covering onychophagia, body-focused repetitive behaviors (BFRBs), and habit reversal training.',
+        knowsAbout: ['onychophagia', 'nail biting', 'body-focused repetitive behaviors', 'habit reversal training', 'BFRB treatment'],
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Stop Biting',
+        url: 'https://stopbiting.today',
+        logo: { '@type': 'ImageObject', url: 'https://stopbiting.today/icons/icon-512x512.png' },
+      },
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+    };
+
+    const breadcrumb = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://stopbiting.today/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://stopbiting.today/blog' },
+        { '@type': 'ListItem', position: 3, name: title, item: canonical },
+      ],
+    };
+
+    const schemas = [
+      `<script type="application/ld+json">${JSON.stringify(blogPosting)}</script>`,
+      `<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`,
+    ].join('\n    ');
+
+    // Inject before closing </head>
+    return html.replace('</head>', `    ${schemas}\n  </head>`);
+  }
+
   // Read index.html once at startup (it's static after build)
   let indexHtml = null;
   const indexPath = join(distPath, 'index.html');
@@ -536,7 +584,7 @@ if (!existsSync(distPath)) {
     indexHtml = readFileSync(indexPath, 'utf-8');
   }
 
-  // Blog post pages — inject per-post meta before serving the SPA shell
+  // Blog post pages — inject per-post meta + structured data before serving the SPA shell
   app.get('/blog/:slug', (req, res) => {
     const { slug } = req.params;
     const meta = BLOG_META[slug];
@@ -546,8 +594,15 @@ if (!existsSync(distPath)) {
       return res.type('html').send(indexHtml);
     }
     const canonical = `https://stopbiting.today/blog/${slug}`;
-    const injected = injectMeta(indexHtml, {
-      title: `${meta.title} | Stop Biting`,
+    const pageTitle = `${meta.title} | Stop Biting`;
+    let injected = injectMeta(indexHtml, {
+      title: pageTitle,
+      description: meta.description,
+      canonical,
+    });
+    injected = injectBlogSchemas(injected, {
+      slug,
+      title: meta.title,
       description: meta.description,
       canonical,
     });
@@ -557,11 +612,34 @@ if (!existsSync(distPath)) {
   // Blog index page
   app.get('/blog', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath);
-    const injected = injectMeta(indexHtml, {
+    let injected = injectMeta(indexHtml, {
       title: 'Nail Biting Resources — Evidence-Based Guides | Stop Biting',
       description: 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.',
       canonical: 'https://stopbiting.today/blog',
     });
+
+    // Inject CollectionPage schema so AI crawlers can discover all blog posts
+    const collectionSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Nail Biting Resources — Evidence-Based Guides',
+      description: 'Research-backed articles on onychophagia, habit reversal training, and body-focused repetitive behaviors.',
+      url: 'https://stopbiting.today/blog',
+      publisher: {
+        '@type': 'Organization',
+        name: 'Stop Biting',
+        url: 'https://stopbiting.today',
+      },
+      hasPart: Object.entries(BLOG_META).map(([slug, m]) => ({
+        '@type': 'BlogPosting',
+        headline: m.title,
+        description: m.description,
+        url: `https://stopbiting.today/blog/${slug}`,
+      })),
+    };
+
+    const schemaTag = `<script type="application/ld+json">${JSON.stringify(collectionSchema)}</script>`;
+    injected = injected.replace('</head>', `    ${schemaTag}\n  </head>`);
     res.type('html').send(injected);
   });
 
