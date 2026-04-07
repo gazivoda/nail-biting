@@ -26,6 +26,12 @@ Disallow: /
 User-agent: Bytespider
 Disallow: /
 
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
 # Block Gemini model training (does NOT affect Google Search indexing)
 User-agent: Google-Extended
 Disallow: /
