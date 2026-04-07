@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import Database from 'better-sqlite3';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomBytes } from 'crypto';
@@ -417,8 +417,119 @@ if (!existsSync(distPath)) {
   // Log clearly — Dockerfile guarantees dist/ exists, so this means a build failure.
   console.error('WARNING: dist/ not found — frontend was not built. Static files will not be served.');
 } else {
+  // H-8: Serve hashed assets (JS/CSS chunks) with long-lived immutable cache.
+  // Vite generates content-hashed filenames (e.g. index-CedykY1_.js) so stale
+  // cache is impossible — the filename changes with every build.
+  app.use('/assets', express.static(join(distPath, 'assets'), {
+    maxAge: '1y',
+    immutable: true,
+  }));
+
+  // Blog post metadata for server-side meta tag injection.
+  // Mirrors src/data/blogPosts.ts — kept in sync manually (no build step needed).
+  const BLOG_META = {
+    'why-do-people-bite-their-nails': {
+      title: 'Why Do People Bite Their Nails? The Psychology and Science Behind Onychophagia',
+      description: 'Nail biting (onychophagia) affects 20–30% of adults. This article explains the psychological triggers, habit loops, and brain mechanisms that drive the behaviour.',
+    },
+    'habit-reversal-training-guide': {
+      title: 'Habit Reversal Training for Nail Biting: A Complete Evidence-Based Guide',
+      description: 'Habit Reversal Training (HRT) reduces nail biting frequency by 70–90%. This guide explains the three components, the evidence behind them, and how to apply them.',
+    },
+    'nail-biting-health-risks': {
+      title: 'The Real Health Risks of Nail Biting: What Onychophagia Actually Does to Your Body',
+      description: 'Nail biting causes dental damage, nail infections, pathogen transfer, and social anxiety. This article details the evidence-based health risks of chronic onychophagia.',
+    },
+    'nail-biting-in-children': {
+      title: 'Nail Biting in Children: Causes, When to Worry, and Effective Strategies for Parents',
+      description: 'Nail biting affects up to 45% of children. This guide explains normal vs. concerning levels, age-appropriate interventions, and when to seek professional help.',
+    },
+    'best-nail-biting-remedies': {
+      title: 'Best Remedies to Stop Nail Biting: Every Method Ranked by Evidence',
+      description: 'From bitter nail polish to AI detection apps — a ranked review of every method to stop nail biting, with the evidence for each and who each approach suits best.',
+    },
+    'stress-and-nail-biting': {
+      title: 'The Stress–Nail Biting Connection: Why Anxiety Drives the Habit and How to Break the Loop',
+      description: 'Stress is the most cited nail biting trigger. This article explains the neuroscience of anxiety-driven nail biting and evidence-based strategies to interrupt the stress–bite cycle.',
+    },
+    'onychophagia-ocd-connection': {
+      title: 'Onychophagia and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder',
+      description: 'Nail biting sits at the intersection of habit, anxiety, and OCD-spectrum disorders. This article explains the BFRB classification, diagnostic differences, and treatment implications.',
+    },
+    'how-ai-can-help-stop-nail-biting': {
+      title: 'How AI Can Help You Stop Biting Your Nails: The Technology Behind Real-Time Detection',
+      description: 'Real-time AI detection solves the awareness problem at the core of nail biting. This article explains how webcam-based AI works, the HRT mechanism it automates, and what to expect.',
+    },
+    'nail-biting-during-focus-and-work': {
+      title: 'Nail Biting at Work: Why Deep Focus and Concentration Trigger the Habit',
+      description: 'Many people bite their nails specifically during focused work — coding, reading, meetings. This article explains the focus-habit loop and how to interrupt it without breaking your flow state.',
+    },
+    'breaking-any-habit-science': {
+      title: 'The Neuroscience of Habit Breaking: How to Apply It Specifically to Nail Biting',
+      description: 'Why are habits so hard to break? This article explains the neuroscience of habit formation and extinction, and how those mechanisms apply to stopping nail biting.',
+    },
+  };
+
+  // Helper: inject page-specific <title>, <meta description>, and <link canonical>
+  // into the SPA index.html shell before sending it. This makes critical SEO
+  // elements visible to Googlebot without a full SSR framework.
+  function injectMeta(html, { title, description, canonical }) {
+    return html
+      .replace(
+        /<title>[^<]*<\/title>/,
+        `<title>${title}</title>`
+      )
+      .replace(
+        /<meta name="description" content="[^"]*"/,
+        `<meta name="description" content="${description}"`
+      )
+      .replace(
+        /<link rel="canonical" href="[^"]*"/,
+        `<link rel="canonical" href="${canonical}"`
+      );
+  }
+
+  // Read index.html once at startup (it's static after build)
+  let indexHtml = null;
+  const indexPath = join(distPath, 'index.html');
+  if (existsSync(indexPath)) {
+    indexHtml = readFileSync(indexPath, 'utf-8');
+  }
+
+  // Blog post pages — inject per-post meta before serving the SPA shell
+  app.get('/blog/:slug', (req, res) => {
+    const { slug } = req.params;
+    const meta = BLOG_META[slug];
+    if (!indexHtml) return res.sendFile(indexPath);
+    if (!meta) {
+      // Unknown slug — serve shell with default meta (React will show 404)
+      return res.type('html').send(indexHtml);
+    }
+    const canonical = `https://stopbiting.today/blog/${slug}`;
+    const injected = injectMeta(indexHtml, {
+      title: `${meta.title} | Stop Biting`,
+      description: meta.description,
+      canonical,
+    });
+    res.type('html').send(injected);
+  });
+
+  // Blog index page
+  app.get('/blog', (req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Nail Biting Resources — Evidence-Based Guides | Stop Biting',
+      description: 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.',
+      canonical: 'https://stopbiting.today/blog',
+    });
+    res.type('html').send(injected);
+  });
+
+  // Remaining static assets (icons, WASM, models, etc.)
   app.use(express.static(distPath));
-  app.get('/{*path}', (_req, res) => res.sendFile(join(distPath, 'index.html')));
+
+  // SPA fallback — all other routes serve index.html with default meta
+  app.get('/{*path}', (_req, res) => res.sendFile(indexPath));
 }
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

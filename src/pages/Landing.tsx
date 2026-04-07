@@ -56,7 +56,7 @@ export function Landing(_props: Props) {
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
         <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
-          <a href="#/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
+          <a href="/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
@@ -113,7 +113,7 @@ export function Landing(_props: Props) {
                   <Zap size={14} aria-hidden="true" />Use Web App
                 </a>
                 <a
-                  href="#/blog"
+                  href="/blog"
                   className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors"
                 >
                   <BookOpen size={14} aria-hidden="true" />
@@ -253,7 +253,7 @@ export function Landing(_props: Props) {
                 occurs — which is when intervention is most effective.
               </p>
 
-              <a href="#/blog/why-do-people-bite-their-nails" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
+              <a href="/blog/why-do-people-bite-their-nails" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
                 Read the full article <ArrowRight size={12} aria-hidden="true" />
               </a>
             </article>
@@ -288,7 +288,7 @@ export function Landing(_props: Props) {
                 without external support. The competing response is up to you.
               </p>
 
-              <a href="#/blog/habit-reversal-training-guide" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
+              <a href="/blog/habit-reversal-training-guide" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
                 Read the full HRT guide <ArrowRight size={12} aria-hidden="true" />
               </a>
             </article>
@@ -391,7 +391,7 @@ export function Landing(_props: Props) {
           <section aria-labelledby="blog-preview-heading">
             <div className="flex items-center justify-between mb-6">
               <h2 id="blog-preview-heading" className="text-2xl font-bold text-slate-100">From the blog</h2>
-              <a href="#/blog" className="inline-flex items-center gap-1 text-emerald-400 text-sm hover:text-emerald-300 transition-colors">
+              <a href="/blog" className="inline-flex items-center gap-1 text-emerald-400 text-sm hover:text-emerald-300 transition-colors">
                 All articles <ArrowRight size={14} aria-hidden="true" />
               </a>
             </div>
@@ -403,7 +403,7 @@ export function Landing(_props: Props) {
               ].map(({ slug, title, tag, mins }) => (
                 <a
                   key={slug}
-                  href={`#/blog/${slug}`}
+                  href={`/blog/${slug}`}
                   className="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors group"
                 >
                   <span className="text-xs text-emerald-400 font-medium uppercase tracking-wider">{tag}</span>
@@ -459,7 +459,7 @@ export function Landing(_props: Props) {
           </div>
           <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">
             <a href="/" className="text-slate-600 hover:text-slate-400 transition-colors">Home</a>
-            <a href="#/blog" className="text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
+            <a href="/blog" className="text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
             <a href="mailto:hello@stopbiting.today" className="text-slate-600 hover:text-slate-400 transition-colors">Contact</a>
             <a href="#/privacy" className="text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
           </nav>
