@@ -20,14 +20,14 @@ export function PanicButton() {
 
   if (showTags) {
     return (
-      <div className="bg-slate-900 border border-red-900 rounded-2xl p-4">
-        <p className="text-slate-400 text-sm text-center mb-3">What triggered it?</p>
+      <div className="bg-white border border-alert-400 rounded-2xl p-4 shadow-sm">
+        <p className="text-stone-500 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
           {tags.map(({ id, label, emoji }) => (
             <button
               key={id}
               onClick={() => handleLog(id)}
-              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl px-3 py-3 text-sm text-slate-200 transition-colors"
+              className="flex items-center gap-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-xl px-3 py-3 text-sm text-stone-700 transition-colors"
             >
               <span className="text-lg">{emoji}</span>
               <span>{label}</span>
@@ -36,7 +36,7 @@ export function PanicButton() {
         </div>
         <button
           onClick={() => setShowTags(false)}
-          className="w-full mt-2 text-slate-600 text-xs py-1 hover:text-slate-400 transition-colors"
+          className="w-full mt-2 text-stone-400 text-xs py-1 hover:text-stone-600 transition-colors"
         >
           Cancel
         </button>
@@ -47,7 +47,7 @@ export function PanicButton() {
   return (
     <button
       onClick={() => setShowTags(true)}
-      className="w-full bg-red-950 hover:bg-red-900 border border-red-800 hover:border-red-700 rounded-2xl py-4 text-red-300 font-medium text-base transition-all active:scale-95"
+      className="w-full bg-alert-100 hover:bg-alert-100 border border-alert-400 hover:border-alert-600 rounded-2xl py-4 text-alert-600 font-medium text-base transition-all active:scale-95"
     >
       😬 I just bit my nails
     </button>
