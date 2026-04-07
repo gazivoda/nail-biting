@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { DetectionWave } from '../components/DetectionWave';
 
 const DOWNLOAD_MAC_ARM   = '/downloads/Nail-Habit-Tracker-1.0.0-arm64.dmg';
 const DOWNLOAD_MAC_INTEL = '/downloads/Nail-Habit-Tracker-1.0.0.dmg';
@@ -216,6 +217,14 @@ export function Landing(_props: Props) {
                   {tag}
                 </span>
               ))}
+            </div>
+
+            {/* Detection waveform animation */}
+            <div
+              className="animate-fade-up mt-10 w-full"
+              style={{ animationDelay: '500ms' }}
+            >
+              <DetectionWave />
             </div>
           </div>
 
