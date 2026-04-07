@@ -17,7 +17,7 @@ function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
       <div className="flex flex-wrap items-center gap-3">
         <a
           href={DOWNLOAD_MAC_ARM}
-          className={`${base} bg-emerald-500 hover:bg-emerald-400 text-slate-950 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95`}
+          className={`${base} bg-forest-600 hover:bg-forest-500 text-cream-100 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95`}
         >
           <Download size={size === 'lg' ? 15 : 13} aria-hidden="true" />
           Download for Mac
@@ -25,22 +25,22 @@ function DownloadButtons({ size = 'lg' }: { size?: 'lg' | 'sm' }) {
         </a>
         <a
           href={DOWNLOAD_MAC_INTEL}
-          className={`${base} bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:-translate-y-0.5 active:scale-95`}
+          className={`${base} bg-cream-200 hover:bg-cream-300 text-stone-700 border border-stone-200 hover:-translate-y-0.5 active:scale-95`}
         >
           <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
           Intel Mac
         </a>
         <span
           title="Coming soon"
-          className={`${base} bg-slate-900 text-slate-600 border border-slate-800 cursor-not-allowed select-none`}
+          className={`${base} bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed select-none`}
         >
           <Monitor size={size === 'lg' ? 15 : 13} aria-hidden="true" />
           Windows
           <span className={`${size === 'lg' ? 'text-xs' : 'text-[10px]'}`}>soon</span>
         </span>
       </div>
-      <p className="text-slate-600 text-xs leading-relaxed">
-        If macOS says it can't verify the app: right-click the .app → <span className="text-slate-400">Open</span> → <span className="text-slate-400">Open</span> anyway.
+      <p className="text-stone-400 text-xs leading-relaxed">
+        If macOS says it can't verify the app: right-click the .app → <span className="text-stone-600">Open</span> → <span className="text-stone-600">Open</span> anyway.
       </p>
     </div>
   );
@@ -50,19 +50,19 @@ interface Props {}
 
 export function Landing(_props: Props) {
   return (
-    <div className="min-h-dvh bg-slate-950 text-slate-100">
+    <div className="min-h-dvh bg-cream-100 text-stone-800">
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
-        <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
+      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 backdrop-blur-md border-b border-stone-200">
+        <a href="/" className="text-sm font-semibold text-stone-800 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
+          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
           <a
             href={DOWNLOAD_MAC_ARM}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5"
           >
             <Download size={13} aria-hidden="true" />
             Download
@@ -75,30 +75,30 @@ export function Landing(_props: Props) {
         <section
           aria-label="Hero"
           className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16"
-          style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(16,185,129,0.07) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, oklch(92% 0.055 148 / 0.30) 0%, transparent 70%)' }}
         >
           <div className="max-w-3xl mx-auto">
-            <p className="text-xs tracking-[0.25em] uppercase text-emerald-400 font-medium mb-6">
+            <p className="text-xs tracking-[0.25em] uppercase text-forest-600 font-semibold mb-6">
               Mac · Windows · Web App
             </p>
 
-            <h1 className="text-5xl sm:text-6xl font-bold text-slate-100 leading-tight">
+            <h1 className="text-5xl sm:text-6xl font-bold text-stone-800 leading-tight">
               Stop nail biting with<br />
-              <span className="text-emerald-400">real-time AI detection.</span>
+              <span className="text-forest-600">real-time AI detection.</span>
             </h1>
 
-            <p className="text-slate-400 text-lg leading-relaxed max-w-xl mx-auto mt-6">
+            <p className="text-stone-500 text-lg leading-relaxed max-w-xl mx-auto mt-6">
               The Stop Biting app uses your webcam and on-device AI to catch onychophagia the moment it starts —
               then sounds an alarm.{' '}
-              <span className="text-slate-300 font-medium">No cloud processing.</span>{' '}
-              <span className="text-slate-300 font-medium">No camera data sent anywhere.</span>{' '}
+              <span className="text-stone-700 font-medium">No cloud processing.</span>{' '}
+              <span className="text-stone-700 font-medium">No camera data sent anywhere.</span>{' '}
               Available as a native desktop app for Mac and Windows, and in your browser.
             </p>
 
-            <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs py-1.5 px-4 bg-emerald-950/40 border border-emerald-900/40 rounded-full mt-6 w-fit mx-auto">
+            <div className="flex items-center justify-center gap-1.5 text-forest-600 text-xs py-1.5 px-4 bg-forest-50 border border-forest-200 rounded-full mt-6 w-fit mx-auto">
               <ShieldCheck size={12} aria-hidden="true" />
               <span>All AI processing on-device — zero network requests during detection</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" aria-hidden="true" />
+              <span className="w-1.5 h-1.5 rounded-full bg-forest-500 animate-pulse ml-1" aria-hidden="true" />
             </div>
 
             <div className="mt-10 flex flex-col items-center gap-4">
@@ -108,13 +108,13 @@ export function Landing(_props: Props) {
                   href="/api/auth/google"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
+                  className="inline-flex items-center gap-2 bg-cream-200 hover:bg-cream-300 border border-stone-200 text-stone-700 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
                 >
                   <Zap size={14} aria-hidden="true" />Use Web App
                 </a>
                 <a
                   href="/blog"
-                  className="inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 text-sm transition-colors"
+                  className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 text-sm transition-colors"
                 >
                   <BookOpen size={14} aria-hidden="true" />
                   Read the science
@@ -123,10 +123,10 @@ export function Landing(_props: Props) {
             </div>
 
             {/* Social proof strip */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-600">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-400">
               {['Mac & Windows', 'Web App', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
                 <span key={tag} className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-emerald-800" aria-hidden="true" />
+                  <span className="w-1 h-1 rounded-full bg-forest-400" aria-hidden="true" />
                   {tag}
                 </span>
               ))}
@@ -134,7 +134,7 @@ export function Landing(_props: Props) {
           </div>
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <ChevronDown size={20} className="text-slate-700 animate-bounce" aria-hidden="true" />
+            <ChevronDown size={20} className="text-stone-300 animate-bounce" aria-hidden="true" />
           </div>
         </section>
 
@@ -142,18 +142,18 @@ export function Landing(_props: Props) {
 
           {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
           <section aria-labelledby="privacy-heading">
-            <div className="bg-emerald-950/10 border border-emerald-900/30 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-950/40 border border-emerald-900/40 flex items-center justify-center mx-auto mb-6">
-                <Lock size={32} className="text-emerald-400" aria-hidden="true" />
+            <div className="bg-forest-50 border border-forest-200 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-forest-100 border border-forest-200 flex items-center justify-center mx-auto mb-6">
+                <Lock size={32} className="text-forest-600" aria-hidden="true" />
               </div>
-              <h2 id="privacy-heading" className="text-2xl font-bold text-slate-100">Your camera never leaves this app.</h2>
-              <p className="text-emerald-400 text-lg font-medium mt-1">Not even for a millisecond.</p>
-              <p className="text-slate-400 text-sm leading-relaxed mt-4 max-w-sm mx-auto">
+              <h2 id="privacy-heading" className="text-2xl font-bold text-stone-800">Your camera never leaves this app.</h2>
+              <p className="text-forest-600 text-lg font-medium mt-1">Not even for a millisecond.</p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-4 max-w-sm mx-auto">
                 MediaPipe runs entirely in WebAssembly inside this app. Every frame of video is processed
                 locally on your CPU or GPU. Zero bytes of camera data are transmitted to any server —
                 because there is no server involved in detection.
               </p>
-              <p className="text-slate-300 text-sm font-medium mt-4 pt-4 border-t border-slate-800">
+              <p className="text-stone-700 text-sm font-medium mt-4 pt-4 border-t border-forest-200">
                 Disconnect from the internet and the app works exactly the same.
               </p>
             </div>
@@ -161,8 +161,8 @@ export function Landing(_props: Props) {
 
           {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
           <section aria-labelledby="how-heading">
-            <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 text-center font-medium">How it works</p>
-            <h2 id="how-heading" className="text-2xl font-bold text-slate-100 text-center mt-2">Three steps to start stopping nail biting.</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-forest-600 text-center font-semibold">How it works</p>
+            <h2 id="how-heading" className="text-2xl font-bold text-stone-800 text-center mt-2">Three steps to start stopping nail biting.</h2>
 
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
@@ -179,15 +179,15 @@ export function Landing(_props: Props) {
                   body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment — the core of habit reversal training.',
                 },
               ].map(({ n, icon: Icon, heading, body }) => (
-                <div key={n} className="bg-slate-900 border border-slate-800 rounded-2xl p-7">
+                <div key={n} className="bg-white border border-stone-200 rounded-2xl p-7 shadow-sm">
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-emerald-400 flex-shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-forest-100 border border-forest-200 flex items-center justify-center text-xs font-bold text-forest-600 flex-shrink-0">
                       {n}
                     </span>
-                    <Icon size={18} className="text-emerald-400" aria-hidden="true" />
+                    <Icon size={18} className="text-forest-500" aria-hidden="true" />
                   </div>
-                  <h3 className="text-slate-100 font-semibold text-base">{heading}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mt-2">{body}</p>
+                  <h3 className="text-stone-800 font-semibold text-base">{heading}</h3>
+                  <p className="text-stone-500 text-sm leading-relaxed mt-2">{body}</p>
                 </div>
               ))}
             </div>
@@ -195,25 +195,25 @@ export function Landing(_props: Props) {
 
           {/* ── FEATURE GRID ──────────────────────────────────────────────── */}
           <section aria-labelledby="features-heading">
-            <h2 id="features-heading" className="text-2xl font-bold text-slate-100 text-center">Everything you need to build the habit.</h2>
-            <p className="text-slate-400 text-base text-center mt-1">Nothing you don't.</p>
+            <h2 id="features-heading" className="text-2xl font-bold text-stone-800 text-center">Everything you need to build the habit.</h2>
+            <p className="text-stone-500 text-base text-center mt-1">Nothing you don't.</p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-10">
               {[
-                { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.', accent: true, color: 'text-emerald-400' },
-                { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.', accent: false, color: 'text-red-400' },
-                { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.', accent: false, color: 'text-amber-400' },
-                { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.', accent: false, color: 'text-slate-400' },
-                { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.', accent: false, color: 'text-emerald-400' },
-                { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.', accent: true, color: 'text-slate-400' },
+                { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.', accent: true, color: 'text-forest-500' },
+                { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.', accent: false, color: 'text-alert-600' },
+                { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.', accent: false, color: 'text-amber-500' },
+                { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.', accent: false, color: 'text-stone-500' },
+                { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.', accent: false, color: 'text-forest-500' },
+                { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.', accent: true, color: 'text-stone-500' },
               ].map(({ icon: Icon, name, desc, accent, color }) => (
                 <div
                   key={name}
-                  className={`bg-slate-900 rounded-2xl p-5 border ${accent ? 'border-emerald-900/40' : 'border-slate-800'}`}
+                  className={`bg-white rounded-2xl p-5 border shadow-sm ${accent ? 'border-forest-200' : 'border-stone-200'}`}
                 >
                   <Icon size={20} className={color} aria-hidden="true" />
-                  <p className="text-slate-100 font-semibold text-sm mt-3">{name}</p>
-                  <p className="text-slate-500 text-xs leading-relaxed mt-1">{desc}</p>
+                  <p className="text-stone-800 font-semibold text-sm mt-3">{name}</p>
+                  <p className="text-stone-500 text-xs leading-relaxed mt-1">{desc}</p>
                 </div>
               ))}
             </div>
@@ -222,15 +222,15 @@ export function Landing(_props: Props) {
           {/* ── WHY / HRT — GEO-optimised answer blocks ───────────────────── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-            <article aria-labelledby="why-bite-heading" className="bg-slate-900 border border-slate-800 rounded-2xl p-7 space-y-4">
-              <h2 id="why-bite-heading" className="text-xl font-bold text-slate-100">Why do people bite their nails?</h2>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Nail biting — medically known as <strong className="text-slate-300">onychophagia</strong> — is a
+            <article aria-labelledby="why-bite-heading" className="bg-white border border-stone-200 rounded-2xl p-7 space-y-4 shadow-sm">
+              <h2 id="why-bite-heading" className="text-xl font-bold text-stone-800">Why do people bite their nails?</h2>
+              <p className="text-stone-500 text-sm leading-relaxed">
+                Nail biting — medically known as <strong className="text-stone-700">onychophagia</strong> — is a
                 body-focused repetitive behaviour (BFRB) that affects 20–30% of adults. It most commonly begins
                 in childhood or adolescence and often persists into adulthood without targeted intervention.
               </p>
 
-              <h3 className="text-slate-200 text-sm font-semibold pt-1">The three main triggers</h3>
+              <h3 className="text-stone-700 text-sm font-semibold pt-1">The three main triggers</h3>
               <ul className="space-y-3 text-sm">
                 {[
                   ['Stress and anxiety', 'The most cited driver. Biting activates the oral motor system and produces a short-lived calming effect — reinforcing the loop every time it happens.'],
@@ -238,35 +238,35 @@ export function Landing(_props: Props) {
                   ['Compulsive habit loop', 'Over time, context alone (sitting at a desk, watching a screen) triggers the behaviour, independent of emotional state. The cue-routine-reward loop is fully automatic.'],
                 ].map(([label, text]) => (
                   <li key={label as string} className="flex gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 flex-shrink-0 mt-1.5" aria-hidden="true" />
-                    <span className="text-slate-400 leading-relaxed">
-                      <span className="text-slate-300 font-medium">{label}: </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-forest-500 flex-shrink-0 mt-1.5" aria-hidden="true" />
+                    <span className="text-stone-500 leading-relaxed">
+                      <span className="text-stone-700 font-medium">{label}: </span>
                       {text}
                     </span>
                   </li>
                 ))}
               </ul>
 
-              <p className="text-slate-400 text-sm leading-relaxed pt-2 border-t border-slate-800">
-                Unlike <strong className="text-slate-300">products to stop nail biting</strong> such as bitter-tasting
+              <p className="text-stone-500 text-sm leading-relaxed pt-2 border-t border-stone-200">
+                Unlike <strong className="text-stone-700">products to stop nail biting</strong> such as bitter-tasting
                 nail polishes, habit-reversal approaches create awareness at the exact moment the behaviour
                 occurs — which is when intervention is most effective.
               </p>
 
-              <a href="/blog/why-do-people-bite-their-nails" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
+              <a href="/blog/why-do-people-bite-their-nails" className="inline-flex items-center gap-1 text-forest-600 text-xs hover:text-forest-500 transition-colors">
                 Read the full article <ArrowRight size={12} aria-hidden="true" />
               </a>
             </article>
 
-            <article aria-labelledby="hrt-heading" className="bg-slate-900 border border-slate-800 rounded-2xl p-7 space-y-4">
-              <h2 id="hrt-heading" className="text-xl font-bold text-slate-100">What is habit reversal training?</h2>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                <strong className="text-slate-300">Habit Reversal Training (HRT)</strong> is the gold-standard
+            <article aria-labelledby="hrt-heading" className="bg-white border border-stone-200 rounded-2xl p-7 space-y-4 shadow-sm">
+              <h2 id="hrt-heading" className="text-xl font-bold text-stone-800">What is habit reversal training?</h2>
+              <p className="text-stone-500 text-sm leading-relaxed">
+                <strong className="text-stone-700">Habit Reversal Training (HRT)</strong> is the gold-standard
                 cognitive-behavioural therapy for body-focused repetitive behaviours including onychophagia.
                 Clinical studies report 70–90% reductions in biting frequency among consistent practitioners.
               </p>
 
-              <h3 className="text-slate-200 text-sm font-semibold pt-1">The three components of HRT</h3>
+              <h3 className="text-stone-700 text-sm font-semibold pt-1">The three components of HRT</h3>
               <div className="space-y-3">
                 {[
                   ['Awareness training', 'The person learns to notice every instance of the habit — the exact moment it begins, the sensation, the context. Most nail biters are conscious of fewer than half their daily bites.'],
@@ -274,21 +274,21 @@ export function Landing(_props: Props) {
                   ['Sensory interruption', 'An external signal — traditionally a coach or partner — breaks the automatic chain at the point of awareness. An audio alarm achieves the same effect with zero social friction.'],
                 ].map(([title, text]) => (
                   <div key={title as string} className="flex gap-3">
-                    <span className="w-1 rounded-full bg-emerald-700 flex-shrink-0 self-stretch" aria-hidden="true" />
+                    <span className="w-1 rounded-full bg-forest-400 flex-shrink-0 self-stretch" aria-hidden="true" />
                     <div>
-                      <p className="text-slate-200 text-sm font-semibold">{title as string}</p>
-                      <p className="text-slate-400 text-sm leading-relaxed mt-0.5">{text as string}</p>
+                      <p className="text-stone-700 text-sm font-semibold">{title as string}</p>
+                      <p className="text-stone-500 text-sm leading-relaxed mt-0.5">{text as string}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <p className="text-slate-400 text-sm leading-relaxed pt-2 border-t border-slate-800">
+              <p className="text-stone-500 text-sm leading-relaxed pt-2 border-t border-stone-200">
                 This app automates awareness and sensory interruption — the two hardest components to achieve
                 without external support. The competing response is up to you.
               </p>
 
-              <a href="/blog/habit-reversal-training-guide" className="inline-flex items-center gap-1 text-emerald-400 text-xs hover:text-emerald-300 transition-colors">
+              <a href="/blog/habit-reversal-training-guide" className="inline-flex items-center gap-1 text-forest-600 text-xs hover:text-forest-500 transition-colors">
                 Read the full HRT guide <ArrowRight size={12} aria-hidden="true" />
               </a>
             </article>
@@ -297,7 +297,7 @@ export function Landing(_props: Props) {
 
           {/* ── TESTIMONIALS / SOCIAL PROOF ───────────────────────────────── */}
           <section aria-labelledby="testimonials-heading">
-            <h2 id="testimonials-heading" className="text-2xl font-bold text-slate-100 text-center">What people are saying</h2>
+            <h2 id="testimonials-heading" className="text-2xl font-bold text-stone-800 text-center">What people are saying</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-8">
               {[
                 {
@@ -316,16 +316,16 @@ export function Landing(_props: Props) {
                   context: 'Remote worker, 15-year habit',
                 },
               ].map(({ quote, name, context }) => (
-                <blockquote key={name} className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <blockquote key={name} className="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm">
                   <div className="flex gap-0.5 mb-3">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} size={12} className="text-amber-400 fill-amber-400" aria-hidden="true" />
                     ))}
                   </div>
-                  <p className="text-slate-300 text-sm leading-relaxed">"{quote}"</p>
+                  <p className="text-stone-600 text-sm leading-relaxed">"{quote}"</p>
                   <footer className="mt-4">
-                    <p className="text-slate-100 text-xs font-semibold">{name}</p>
-                    <p className="text-slate-600 text-xs">{context}</p>
+                    <p className="text-stone-800 text-xs font-semibold">{name}</p>
+                    <p className="text-stone-400 text-xs">{context}</p>
                   </footer>
                 </blockquote>
               ))}
@@ -334,8 +334,8 @@ export function Landing(_props: Props) {
 
           {/* ── PRIVACY DEEP-DIVE ─────────────────────────────────────────── */}
           <section aria-labelledby="privacy-details-heading">
-            <h2 id="privacy-details-heading" className="text-2xl font-bold text-slate-100 text-center">Open, honest, verifiable.</h2>
-            <p className="text-slate-400 text-sm text-center mt-2 max-w-xs mx-auto">
+            <h2 id="privacy-details-heading" className="text-2xl font-bold text-stone-800 text-center">Open, honest, verifiable.</h2>
+            <p className="text-stone-500 text-sm text-center mt-2 max-w-xs mx-auto">
               The privacy claims on this page aren't marketing. You can verify every one of them yourself.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
@@ -356,11 +356,11 @@ export function Landing(_props: Props) {
                   detail: 'The app runs on React, WebAssembly, and MediaPipe — all inspectable. Camera frames never leave the canvas element.',
                 },
               ].map(({ icon: Icon, title, detail }) => (
-                <div key={title} className="bg-slate-900 border border-slate-800 rounded-2xl px-5 py-4 flex items-start gap-4">
-                  <Icon size={16} className="text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <div key={title} className="bg-white border border-stone-200 rounded-2xl px-5 py-4 flex items-start gap-4 shadow-sm">
+                  <Icon size={16} className="text-forest-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
-                    <p className="text-slate-100 text-sm font-semibold">{title}</p>
-                    <p className="text-slate-500 text-xs leading-relaxed mt-0.5">{detail}</p>
+                    <p className="text-stone-800 text-sm font-semibold">{title}</p>
+                    <p className="text-stone-500 text-xs leading-relaxed mt-0.5">{detail}</p>
                   </div>
                 </div>
               ))}
@@ -376,22 +376,22 @@ export function Landing(_props: Props) {
             ].map(({ number, label }, i) => (
               <div key={label} className="flex items-center gap-8">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-emerald-400">{number}</p>
-                  <p className="text-slate-500 text-xs uppercase tracking-wider mt-1">{label}</p>
+                  <p className="text-3xl font-bold text-forest-600">{number}</p>
+                  <p className="text-stone-400 text-xs uppercase tracking-wider mt-1">{label}</p>
                 </div>
-                {i < 2 && <div className="border-l border-slate-800 h-10 hidden sm:block" aria-hidden="true" />}
+                {i < 2 && <div className="border-l border-stone-200 h-10 hidden sm:block" aria-hidden="true" />}
               </div>
             ))}
           </section>
-          <p className="text-slate-600 text-xs text-center -mt-12">
+          <p className="text-stone-400 text-xs text-center -mt-12">
             HRT efficacy data sourced from published clinical literature. Camera privacy verified by architecture — no server-side processing exists.
           </p>
 
           {/* ── BLOG PREVIEW ──────────────────────────────────────────────── */}
           <section aria-labelledby="blog-preview-heading">
             <div className="flex items-center justify-between mb-6">
-              <h2 id="blog-preview-heading" className="text-2xl font-bold text-slate-100">From the blog</h2>
-              <a href="/blog" className="inline-flex items-center gap-1 text-emerald-400 text-sm hover:text-emerald-300 transition-colors">
+              <h2 id="blog-preview-heading" className="text-2xl font-bold text-stone-800">From the blog</h2>
+              <a href="/blog" className="inline-flex items-center gap-1 text-forest-600 text-sm hover:text-forest-500 transition-colors">
                 All articles <ArrowRight size={14} aria-hidden="true" />
               </a>
             </div>
@@ -404,11 +404,11 @@ export function Landing(_props: Props) {
                 <a
                   key={slug}
                   href={`/blog/${slug}`}
-                  className="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors group"
+                  className="bg-white border border-stone-200 rounded-2xl p-5 hover:border-forest-300 hover:shadow-md transition-all duration-200 group shadow-sm"
                 >
-                  <span className="text-xs text-emerald-400 font-medium uppercase tracking-wider">{tag}</span>
-                  <h3 className="text-slate-100 font-semibold text-sm mt-2 leading-snug group-hover:text-emerald-300 transition-colors">{title}</h3>
-                  <p className="text-slate-600 text-xs mt-3">{mins} min read</p>
+                  <span className="text-xs text-forest-600 font-semibold uppercase tracking-wider">{tag}</span>
+                  <h3 className="text-stone-800 font-semibold text-sm mt-2 leading-snug group-hover:text-forest-600 transition-colors">{title}</h3>
+                  <p className="text-stone-400 text-xs mt-3">{mins} min read</p>
                 </a>
               ))}
             </div>
@@ -417,30 +417,29 @@ export function Landing(_props: Props) {
           {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
           <section
             aria-label="Call to action"
-            className="text-center py-8"
-            style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(16,185,129,0.06) 0%, transparent 70%)' }}
+            className="text-center py-12 rounded-3xl bg-forest-50 border border-forest-200"
           >
-            <h2 className="text-3xl font-bold text-slate-100">Ready to stop nail biting?</h2>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
+            <h2 className="text-3xl font-bold text-stone-800">Ready to stop nail biting?</h2>
+            <p className="text-stone-500 text-sm leading-relaxed max-w-sm mx-auto mt-4">
               Download the desktop app for Mac or Windows, or use the web app directly in your browser —
               sign in with Google and nail biting detection starts in under ten seconds.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4">
               <DownloadButtons size="lg" />
               <div className="flex items-center gap-3">
-                <div className="h-px w-12 bg-slate-800" />
-                <span className="text-slate-600 text-xs">or</span>
-                <div className="h-px w-12 bg-slate-800" />
+                <div className="h-px w-12 bg-stone-300" />
+                <span className="text-stone-400 text-xs">or</span>
+                <div className="h-px w-12 bg-stone-300" />
               </div>
               <a
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
+                className="inline-flex items-center gap-2 bg-white hover:bg-cream-200 border border-stone-200 text-stone-700 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 active:scale-95"
               >
                 <Zap size={14} aria-hidden="true" />Use Web App — free trial
               </a>
-              <p className="text-slate-700 text-xs">7-day free trial · no credit card required</p>
+              <p className="text-stone-400 text-xs">7-day free trial · no credit card required</p>
             </div>
           </section>
 
@@ -448,25 +447,25 @@ export function Landing(_props: Props) {
       </main>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-slate-900 py-10 px-8">
+      <footer className="border-t border-stone-200 py-10 px-8 bg-cream-200">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start justify-between gap-6">
           <div>
-            <p className="text-slate-400 text-sm font-semibold">Stop Biting</p>
-            <p className="text-slate-700 text-xs mt-1 max-w-xs leading-relaxed">
+            <p className="text-stone-700 text-sm font-semibold">Stop Biting</p>
+            <p className="text-stone-400 text-xs mt-1 max-w-xs leading-relaxed">
               Stop nail biting (onychophagia) using on-device AI. Available as a native desktop app
               for Mac and Windows, and as a web app. Built with MediaPipe, React, and WebAssembly.
             </p>
           </div>
           <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">
-            <a href="/" className="text-slate-600 hover:text-slate-400 transition-colors">Home</a>
-            <a href="/blog" className="text-slate-600 hover:text-slate-400 transition-colors">Blog</a>
-            <a href="mailto:hello@stopbiting.today" className="text-slate-600 hover:text-slate-400 transition-colors">Contact</a>
-            <a href="/privacy" className="text-slate-600 hover:text-slate-400 transition-colors">Privacy Policy</a>
+            <a href="/" className="text-stone-500 hover:text-stone-700 transition-colors">Home</a>
+            <a href="/blog" className="text-stone-500 hover:text-stone-700 transition-colors">Blog</a>
+            <a href="mailto:hello@stopbiting.today" className="text-stone-500 hover:text-stone-700 transition-colors">Contact</a>
+            <a href="/privacy" className="text-stone-500 hover:text-stone-700 transition-colors">Privacy Policy</a>
           </nav>
         </div>
-        <p className="text-slate-800 text-xs text-center mt-8">
+        <p className="text-stone-400 text-xs text-center mt-8">
           © {new Date().getFullYear()} Stop Biting · AI-powered nail biting detection ·{' '}
-          <a href="https://stopbiting.today/" className="hover:text-slate-600 transition-colors">stopbiting.today</a>
+          <a href="https://stopbiting.today/" className="hover:text-stone-600 transition-colors">stopbiting.today</a>
         </p>
       </footer>
 

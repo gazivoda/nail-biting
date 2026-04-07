@@ -10,13 +10,13 @@ export function StatsRow() {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
-        <p className="text-3xl font-bold text-red-400">{todayCount}</p>
-        <p className="text-slate-500 text-xs mt-1">bites today</p>
+      <div className="bg-white border border-stone-200 rounded-xl p-4 text-center shadow-sm">
+        <p className="text-3xl font-bold text-alert-600">{todayCount}</p>
+        <p className="text-stone-400 text-xs mt-1">bites today</p>
       </div>
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
-        <p className="text-3xl font-bold text-slate-300">{totalCount}</p>
-        <p className="text-slate-500 text-xs mt-1">total logged</p>
+      <div className="bg-white border border-stone-200 rounded-xl p-4 text-center shadow-sm">
+        <p className="text-3xl font-bold text-stone-600">{totalCount}</p>
+        <p className="text-stone-400 text-xs mt-1">total logged</p>
       </div>
     </div>
   );

@@ -5,19 +5,19 @@ export function CameraToggle() {
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+    <div className="bg-white border border-stone-200 rounded-2xl p-4 space-y-3 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Camera size={18} className={cameraEnabled ? 'text-emerald-400' : 'text-slate-500'} />
+          <Camera size={18} className={cameraEnabled ? 'text-forest-500' : 'text-stone-400'} />
           <div>
-            <p className="text-sm font-medium text-slate-200">AI Detection</p>
-            <p className="text-xs text-slate-500">100% on-device — no data sent</p>
+            <p className="text-sm font-medium text-stone-700">AI Detection</p>
+            <p className="text-xs text-stone-400">100% on-device — no data sent</p>
           </div>
         </div>
         <button
           onClick={() => setCameraEnabled(!cameraEnabled)}
           className={`relative w-12 h-6 rounded-full transition-colors ${
-            cameraEnabled ? 'bg-emerald-500' : 'bg-slate-700'
+            cameraEnabled ? 'bg-forest-500' : 'bg-stone-300'
           }`}
         >
           <span
@@ -29,15 +29,15 @@ export function CameraToggle() {
       </div>
 
       {cameraEnabled && (
-        <div className="flex items-center justify-between pt-2 border-t border-slate-800">
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
+        <div className="flex items-center justify-between pt-2 border-t border-stone-200">
+          <div className="flex items-center gap-2 text-stone-500 text-sm">
             {showCameraFeed ? <Eye size={14} /> : <EyeOff size={14} />}
             <span>Show camera feed</span>
           </div>
           <button
             onClick={() => setShowCameraFeed(!showCameraFeed)}
             className={`relative w-10 h-5 rounded-full transition-colors ${
-              showCameraFeed ? 'bg-slate-500' : 'bg-slate-700'
+              showCameraFeed ? 'bg-stone-400' : 'bg-stone-300'
             }`}
           >
             <span
