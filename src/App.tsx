@@ -12,14 +12,17 @@ import { useNotifications } from './hooks/useNotifications';
 import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
-function useHash() {
-  const [hash, setHash] = useState(window.location.hash);
+// Real path-based routing (no hash fragments — required for Google indexability).
+// The server handles /blog and /blog/:slug with SSR meta injection,
+// then serves the same SPA shell which this router then renders client-side.
+function usePath() {
+  const [path, setPath] = useState(window.location.pathname);
   useEffect(() => {
-    const handler = () => setHash(window.location.hash);
-    window.addEventListener('hashchange', handler);
-    return () => window.removeEventListener('hashchange', handler);
+    const handler = () => setPath(window.location.pathname);
+    window.addEventListener('popstate', handler);
+    return () => window.removeEventListener('popstate', handler);
   }, []);
-  return hash;
+  return path;
 }
 
 type Tab = 'dashboard' | 'log' | 'settings';
@@ -76,17 +79,21 @@ function AppRouter() {
 }
 
 export default function App() {
-  const hash = useHash();
+  const path = usePath();
 
-  if (hash === '#/blog') {
+  // Blog index
+  if (path === '/blog' || path === '/blog/') {
     return <BlogIndex />;
   }
 
-  if (hash.startsWith('#/blog/')) {
-    return <BlogPost slug={hash.slice(7)} />;
+  // Blog post — /blog/:slug
+  if (path.startsWith('/blog/')) {
+    const slug = path.slice(6).replace(/\/$/, '');
+    return <BlogPost slug={slug} />;
   }
 
-  if (hash === '#/privacy') {
+  // Privacy policy
+  if (path === '/privacy') {
     return (
       <div className="min-h-dvh bg-slate-950 text-slate-100 flex flex-col items-center justify-center px-6 py-24 text-center">
         <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
@@ -98,6 +105,7 @@ export default function App() {
     );
   }
 
+  // Main app (root and everything else)
   return (
     <AuthProvider>
       <AppRouter />

@@ -27,8 +27,10 @@ function formatDate(iso: string) {
 
 export function BlogPost({ slug }: Props) {
   const post = getPost(slug);
+  const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
 
-  // Inject JSON-LD BlogPosting schema
+  // Inject JSON-LD BlogPosting schema + update meta tags client-side
+  // (server already injects correct title/description/canonical in initial HTML)
   useEffect(() => {
     if (!post) return;
 
@@ -48,11 +50,16 @@ export function BlogPost({ slug }: Props) {
         '@type': 'Organization',
         name: 'Stop Biting',
         url: 'https://stopbiting.today',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://stopbiting.today/icons/icon-512x512.png',
+        },
       },
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `https://stopbiting.today/#/blog/${post.slug}`,
+        '@id': canonicalUrl,
       },
+      url: canonicalUrl,
       keywords: post.tag,
       timeRequired: `PT${post.readingMinutes}M`,
     };
@@ -66,16 +73,22 @@ export function BlogPost({ slug }: Props) {
     script.textContent = JSON.stringify(schema);
     document.head.appendChild(script);
 
-    // Set page title
+    // Update title and canonical client-side for SPA navigation
     const prevTitle = document.title;
     document.title = `${post.title} | Stop Biting`;
+
+    // Update canonical link tag
+    let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    const prevCanonical = canonicalEl?.href ?? '';
+    if (canonicalEl) canonicalEl.href = canonicalUrl;
 
     return () => {
       const el = document.getElementById('blog-post-schema');
       if (el) el.remove();
       document.title = prevTitle;
+      if (canonicalEl) canonicalEl.href = prevCanonical;
     };
-  }, [post]);
+  }, [post, canonicalUrl]);
 
   // Scroll to top when slug changes
   useEffect(() => {
@@ -89,7 +102,7 @@ export function BlogPost({ slug }: Props) {
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
         <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
-          <a href="#/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
+          <a href="/blog" className="flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
@@ -104,7 +117,7 @@ export function BlogPost({ slug }: Props) {
         <div className="flex flex-col items-center justify-center min-h-dvh gap-4 text-center px-6">
           <p className="text-6xl font-bold text-slate-700">404</p>
           <p className="text-slate-400">Article not found.</p>
-          <a href="#/blog" className="mt-2 inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm">
+          <a href="/blog" className="mt-2 inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm">
             <ArrowLeft size={14} aria-hidden="true" />
             Back to blog
           </a>
@@ -117,7 +130,7 @@ export function BlogPost({ slug }: Props) {
 
           {/* Back link */}
           <a
-            href="#/blog"
+            href="/blog"
             className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors mb-8"
           >
             <ArrowLeft size={14} aria-hidden="true" />
@@ -196,7 +209,7 @@ export function BlogPost({ slug }: Props) {
           {/* Back link bottom */}
           <div className="mt-10 text-center">
             <a
-              href="#/blog"
+              href="/blog"
               className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors"
             >
               <ArrowLeft size={14} aria-hidden="true" />

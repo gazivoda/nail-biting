@@ -33,7 +33,7 @@ export function BlogIndex() {
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-slate-950/80 backdrop-blur-md border-b border-slate-900">
         <a href="/" className="text-sm font-semibold text-slate-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-6">
-          <a href="#/blog" aria-current="page" className="flex items-center gap-1.5 text-emerald-400 text-sm font-medium">
+          <a href="/blog" aria-current="page" className="flex items-center gap-1.5 text-emerald-400 text-sm font-medium">
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
@@ -77,7 +77,7 @@ export function BlogIndex() {
           {posts.map(post => (
             <a
               key={post.slug}
-              href={`#/blog/${post.slug}`}
+              href={`/blog/${post.slug}`}
               className="group flex flex-col bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-600 hover:bg-slate-800/60 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
             >
               <div className="flex items-center justify-between mb-4">

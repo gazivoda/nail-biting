@@ -1,9 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
 # Allow all major AI search crawlers for citation visibility
 User-agent: GPTBot
 Allow: /
+Disallow: /api/
 
 User-agent: OAI-SearchBot
 Allow: /
@@ -17,11 +19,15 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-# Block AI training crawlers (not search)
+# Block AI training crawlers (not search/citations)
 User-agent: CCBot
 Disallow: /
 
 User-agent: Bytespider
+Disallow: /
+
+# Block Gemini model training (does NOT affect Google Search indexing)
+User-agent: Google-Extended
 Disallow: /
 
 Sitemap: https://stopbiting.today/sitemap.xml
