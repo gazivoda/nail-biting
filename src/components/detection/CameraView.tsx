@@ -44,7 +44,7 @@ export function CameraView({ videoRef }: Props) {
     <>
       <AlertOverlay visible={showFlash} />
 
-      <div className="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+      <div className="relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border border-stone-800 dark:border-ink-400">
         {/* Video element always present for MediaPipe, visibility toggled */}
         <video
           ref={videoRef}
@@ -59,17 +59,17 @@ export function CameraView({ videoRef }: Props) {
 
         {/* Hidden feed placeholder */}
         {cameraEnabled && !showCameraFeed && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-slate-900 gap-3">
-            <VideoOff className="text-slate-600" size={40} />
-            <p className="text-slate-500 text-sm">Camera hidden — detection active</p>
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 gap-3">
+            <VideoOff className="text-stone-600 dark:text-stone-500" size={40} />
+            <p className="text-stone-500 dark:text-stone-400 text-sm">Camera hidden — detection active</p>
           </div>
         )}
 
         {/* Offline / idle state */}
         {!cameraEnabled && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-slate-950 gap-3">
-            <VideoOff className="text-slate-700" size={40} />
-            <p className="text-slate-600 text-sm">Camera off</p>
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-950 dark:bg-ink-300 gap-3">
+            <VideoOff className="text-stone-700 dark:text-stone-600" size={40} />
+            <p className="text-stone-600 dark:text-stone-500 text-sm">Camera off</p>
           </div>
         )}
 
