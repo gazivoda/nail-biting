@@ -1,4 +1,5 @@
 export type TriggerTag = 'auto-detected' | 'stress' | 'focus' | 'boredom' | 'unknown';
+export type Theme = 'light' | 'dark' | 'system';
 
 export interface Incident {
   id: string;
@@ -26,6 +27,9 @@ export interface AppState {
   // Fallback reminders
   remindersEnabled: boolean;
   reminderIntervalMinutes: ReminderInterval;
+
+  // Theme preference
+  theme: Theme;
 }
 
 export interface AppActions {
@@ -36,5 +40,6 @@ export interface AppActions {
   setAlertType: (t: AlertType) => void;
   setRemindersEnabled: (enabled: boolean) => void;
   setReminderInterval: (minutes: ReminderInterval) => void;
+  setTheme: (theme: Theme) => void;
   clearAllData: () => void;
 }

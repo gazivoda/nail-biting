@@ -20,14 +20,14 @@ export function PanicButton() {
 
   if (showTags) {
     return (
-      <div className="bg-white border border-alert-400 rounded-2xl p-4 shadow-sm">
-        <p className="text-stone-500 text-sm text-center mb-3">What triggered it?</p>
+      <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card">
+        <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
           {tags.map(({ id, label, emoji }) => (
             <button
               key={id}
               onClick={() => handleLog(id)}
-              className="flex items-center gap-2 bg-stone-100 hover:bg-stone-200 border border-stone-200 rounded-xl px-3 py-3 text-sm text-stone-700 transition-colors"
+              className="flex items-center gap-2 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-colors"
             >
               <span className="text-lg">{emoji}</span>
               <span>{label}</span>
@@ -36,7 +36,7 @@ export function PanicButton() {
         </div>
         <button
           onClick={() => setShowTags(false)}
-          className="w-full mt-2 text-stone-400 text-xs py-1 hover:text-stone-600 transition-colors"
+          className="w-full mt-2 text-stone-400 dark:text-stone-500 text-xs py-1 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
         >
           Cancel
         </button>
@@ -47,7 +47,7 @@ export function PanicButton() {
   return (
     <button
       onClick={() => setShowTags(true)}
-      className="w-full bg-alert-100 hover:bg-alert-100 border border-alert-400 hover:border-alert-600 rounded-2xl py-4 text-alert-600 font-medium text-base transition-all active:scale-95"
+      className="w-full bg-alert-100 dark:bg-alert-900/30 hover:bg-alert-100 dark:hover:bg-alert-900/50 border border-alert-400 dark:border-alert-800 hover:border-alert-600 rounded-2xl py-4 text-alert-600 dark:text-alert-400 font-medium text-base transition-all duration-150 active:scale-95"
     >
       😬 I just bit my nails
     </button>

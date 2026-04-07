@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, ReminderInterval, Incident } from '../types';
+import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, ReminderInterval, Incident, Theme } from '../types';
 
 const initialState: AppState = {
   incidents: [],
@@ -13,6 +13,7 @@ const initialState: AppState = {
   alertType: 'both',
   remindersEnabled: false,
   reminderIntervalMinutes: 15,
+  theme: 'system',
 };
 
 export const useAppStore = create<AppState & AppActions>()(
@@ -47,6 +48,7 @@ export const useAppStore = create<AppState & AppActions>()(
       setAlertType: (t: AlertType) => set({ alertType: t }),
       setRemindersEnabled: (enabled) => set({ remindersEnabled: enabled }),
       setReminderInterval: (minutes: ReminderInterval) => set({ reminderIntervalMinutes: minutes }),
+      setTheme: (theme: Theme) => set({ theme }),
 
       clearAllData: () => set({
         ...initialState,

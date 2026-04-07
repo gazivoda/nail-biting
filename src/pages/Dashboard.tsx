@@ -27,15 +27,15 @@ export function Dashboard() {
     <div className="p-8">
       {/* Desktop app promo — only shown in browser, dismissible */}
       {!isElectron && !bannerDismissed && (
-        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white border border-stone-200 rounded-xl text-sm shadow-sm">
-          <span className="text-stone-500">
+        <div className="flex items-center justify-between gap-4 mb-6 px-4 py-3 bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl text-sm shadow-card">
+          <span className="text-stone-500 dark:text-stone-400">
             For the best experience, try the{' '}
-            <strong className="text-stone-700">native desktop app</strong> — runs fully offline, no browser needed.
+            <strong className="text-stone-700 dark:text-stone-200">native desktop app</strong> — runs fully offline, no browser needed.
           </span>
           <div className="flex items-center gap-3 flex-shrink-0">
             <a
               href={DOWNLOAD_MAC_ARM}
-              className="inline-flex items-center gap-1.5 text-forest-600 hover:text-forest-500 font-medium text-xs transition-colors"
+              className="inline-flex items-center gap-1.5 text-forest-600 dark:text-forest-400 hover:text-forest-500 font-medium text-xs transition-colors"
             >
               <Download size={12} aria-hidden="true" />
               Download for Mac
@@ -43,7 +43,7 @@ export function Dashboard() {
             <button
               onClick={dismissBanner}
               aria-label="Dismiss"
-              className="text-stone-400 hover:text-stone-600 transition-colors"
+              className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
             >
               <X size={14} />
             </button>
@@ -52,7 +52,7 @@ export function Dashboard() {
       )}
 
       {/* Privacy badge */}
-      <div className="flex items-center gap-1.5 text-forest-600 text-xs py-1.5 px-4 bg-forest-50 border border-forest-200 rounded-full mb-8 w-fit">
+      <div className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mb-8 w-fit">
         <ShieldCheck size={12} />
         <span>All processing on-device — camera feed never leaves this app</span>
       </div>
