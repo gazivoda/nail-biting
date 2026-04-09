@@ -1,6 +1,7 @@
-import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap } from 'lucide-react';
+import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap, Download } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { ThemeToggle } from '../ThemeToggle';
+import { usePWAInstall } from '../../hooks/usePWAInstall';
 
 type Tab = 'dashboard' | 'log' | 'settings';
 
@@ -18,6 +19,7 @@ const tabs: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
 
 export function TabBar({ active, onChange, onUpgrade }: Props) {
   const { user, accessStatus, signOut } = useAuth();
+  const { canInstall, triggerInstall } = usePWAInstall();
 
   const trialDaysLeft = user?.trial_end_date
     ? Math.max(0, Math.ceil((new Date(user.trial_end_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
@@ -119,6 +121,19 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
           >
             <LogOut size={12} />
             Sign out
+          </button>
+        </div>
+      )}
+
+      {/* Install app button — visible when PWA install is available */}
+      {canInstall && (
+        <div className="mx-3 mb-2">
+          <button
+            onClick={triggerInstall}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors border border-stone-200 dark:border-ink-400"
+          >
+            <Download size={13} />
+            Install app
           </button>
         </div>
       )}
