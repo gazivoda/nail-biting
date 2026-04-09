@@ -50,10 +50,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://www.paypal.com', 'https://www.paypalobjects.com'],
-      frameSrc:    ["'self'", 'https://www.paypal.com', 'https://www.sandbox.paypal.com'],
-      connectSrc:  ["'self'", 'https://www.paypal.com', 'https://www.sandbox.paypal.com', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com'],
-      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://www.paypalobjects.com'],
+      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn', 'https://www.googletagmanager.com'],
+      frameSrc:    ["'self'", 'https://*.paypal.com', 'https://*.paypal.cn'],
+      connectSrc:  ["'self'", 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com', 'https://*.qualtrics.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
+      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn'],
       styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
       fontSrc:     ["'self'", 'data:'],
       workerSrc:   ["'self'"],  // PWA service worker registration
@@ -140,7 +140,19 @@ const stmtUpsert = db.prepare(`
     paypal_subscription_id = excluded.paypal_subscription_id
 `);
 
-function getUser(id) { return stmtGet.get(id) ?? null; }
+function getUser(id) {
+  const user = stmtGet.get(id) ?? null;
+  if (
+    user &&
+    user.subscription_status === 'trial' &&
+    user.trial_end_date &&
+    new Date(user.trial_end_date).getTime() < Date.now()
+  ) {
+    user.subscription_status = 'expired';
+    saveUser(user);
+  }
+  return user;
+}
 
 function saveUser(user) {
   stmtUpsert.run({

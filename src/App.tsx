@@ -8,6 +8,9 @@ import { Landing } from './pages/Landing';
 import { PaywallPage } from './components/auth/PaywallPage';
 import { BlogIndex } from './pages/BlogIndex';
 import { BlogPost } from './pages/BlogPost';
+import { PrivacyPage } from './pages/PrivacyPage';
+import { TermsPage } from './pages/TermsPage';
+import { RefundPage } from './pages/RefundPage';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
@@ -94,15 +97,17 @@ export default function App() {
 
   // Privacy policy
   if (path === '/privacy') {
-    return (
-      <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col items-center justify-center px-6 py-24 text-center">
-        <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
-        <p className="text-stone-500 dark:text-stone-400 max-w-prose text-sm leading-relaxed">
-          Stop Biting processes your webcam feed entirely on-device using WebAssembly. No camera data is ever transmitted to any server. Session logs and streak data are stored locally in SQLite on your machine. Uninstalling the app removes all local data. Google account information is used solely for authentication.
-        </p>
-        <a href="/" className="mt-8 text-sm text-forest-600 hover:text-forest-500 transition-colors">Back to app</a>
-      </div>
-    );
+    return <PrivacyPage />;
+  }
+
+  // Terms of service
+  if (path === '/terms-and-conditions') {
+    return <TermsPage />;
+  }
+
+  // Refund policy
+  if (path === '/refund-policy') {
+    return <RefundPage />;
   }
 
   // Main app (root and everything else)
