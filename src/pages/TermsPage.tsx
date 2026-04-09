@@ -24,11 +24,11 @@ export function TermsPage() {
         {
           heading: '4. Subscriptions and Billing',
           content: [
-            'Subscriptions are billed through PayPal. By subscribing, you authorise recurring charges to your PayPal account.',
-            'Monthly plan: €2.99 per month, billed monthly.',
-            'Yearly plan: €29.00 per year, billed annually.',
+            'Subscriptions are billed through Paddle, our merchant of record. By subscribing, you authorise recurring charges via your chosen payment method.',
+            'Monthly plan: $2.99 per month, billed monthly.',
+            'Yearly plan: $29.00 per year, billed annually.',
             'Subscriptions automatically renew unless cancelled at least 24 hours before the renewal date.',
-            'You may cancel your subscription at any time from your PayPal account settings.',
+            'You may cancel your subscription at any time from within the app or via the cancellation link in your Paddle receipt email.',
           ],
         },
         {
