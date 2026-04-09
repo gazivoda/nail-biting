@@ -11,7 +11,6 @@ export interface UserProfile {
   subscription_status: 'trial' | 'active' | 'cancelled' | 'expired';
   subscription_plan: 'monthly' | 'yearly' | null;
   subscription_end_date: string | null;
-  paypal_subscription_id: string | null;
   paddle_subscription_id: string | null;
   paddle_customer_id: string | null;
 }
