@@ -7,8 +7,8 @@ const initialState: AppState = {
   firstOpenTime: Date.now(),
   lastBiteTime: null,
   bestStreakMs: 0,
-  cameraEnabled: false,
-  showCameraFeed: true,
+  cameraEnabled: true,
+  showCameraFeed: false,
   detectionSensitivity: 'medium',
   alertType: 'both',
   alertSound: 'alarm',
@@ -70,9 +70,9 @@ export const useAppStore = create<AppState & AppActions>()(
     }),
     {
       name: 'stop-biting-state',
-      // cameraEnabled intentionally excluded — should always start as false on page load
+      // cameraEnabled + showCameraFeed excluded — always start with detection on, feed hidden
       partialize: (state) => {
-        const { cameraEnabled: _skip, ...rest } = state as AppState & AppActions;
+        const { cameraEnabled: _a, showCameraFeed: _b, ...rest } = state as AppState & AppActions;
         return rest as AppState & AppActions;
       },
     }
