@@ -1,50 +1,39 @@
 import { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
-
-// BeforeInstallPromptEvent is not in the standard TS lib yet
-interface BeforeInstallPromptEvent extends Event {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
-}
-
-const DISMISSED_KEY = 'pwa_install_dismissed';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 export function PWAInstallPrompt() {
-  const [promptEvent, setPromptEvent] = useState<BeforeInstallPromptEvent | null>(null);
-  const [visible, setVisible] = useState(false);
+  const { canInstall, bannerDismissed, triggerInstall, dismissBanner } = usePWAInstall();
+  const [show, setShow] = useState(false);
 
+  // Slide in after a short delay once the prompt is available
   useEffect(() => {
-    // Don't show if user already dismissed or app is already installed
-    if (localStorage.getItem(DISMISSED_KEY)) return;
-    if (window.matchMedia('(display-mode: standalone)').matches) return;
+    if (!canInstall || bannerDismissed) return;
+    const timer = setTimeout(() => setShow(true), 800);
+    return () => clearTimeout(timer);
+  }, [canInstall, bannerDismissed]);
 
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setPromptEvent(e as BeforeInstallPromptEvent);
-      setVisible(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  if (!visible || !promptEvent) return null;
+  if (!canInstall || bannerDismissed) return null;
 
   const handleInstall = async () => {
-    promptEvent.prompt();
-    const { outcome } = await promptEvent.userChoice;
-    if (outcome === 'accepted') {
-      setVisible(false);
-    }
+    const accepted = await triggerInstall();
+    if (accepted) setShow(false);
   };
 
   const handleDismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, '1');
-    setVisible(false);
+    setShow(false);
+    // Wait for slide-out animation to finish before removing from DOM
+    setTimeout(dismissBanner, 300);
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4">
+    <div
+      className={`fixed bottom-4 left-1/2 z-50 w-full max-w-sm px-4 transition-all duration-300 ease-out ${
+        show
+          ? '-translate-x-1/2 translate-y-0 opacity-100'
+          : '-translate-x-1/2 translate-y-8 opacity-0'
+      }`}
+    >
       <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl shadow-card-md dark:shadow-card-md-dark p-4 flex items-start gap-3">
         <img
           src="/icons/icon-192x192.png"
