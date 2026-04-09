@@ -30,6 +30,13 @@
 - [Is Nail Biting Genetic?](https://stopbiting.today/blog/nail-biting-genetics): Twin studies and BFRB heritability research — 30–45% heritable
 - [How MediaPipe AI Detection Works](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Technical explainer of WebAssembly hand/face landmark detection
 
+## Pricing
+
+- Free trial: 7 days, no credit card required — full detection and tracking features included
+- Monthly: €2.99/month
+- Yearly: €29.00/year (~€2.42/month, saves 19%)
+- All paid plans include unlimited AI detection, streak tracking, incident history, and all alert types
+
 ## Key facts
 
 - Nail biting (onychophagia) affects 20–30% of adults and up to 45% of children
@@ -38,4 +45,4 @@
 - Stop Biting uses MediaPipe running in WebAssembly — zero network requests during detection
 - Detection works fully offline after initial load; no camera data is transmitted or stored
 - The app detects nail biting using hand landmark (21 keypoints) + face mesh (468 landmarks) models
-- Free to start — available for macOS 12+, Windows 10+, and in the browser as a PWA
+- Free 7-day trial — available for macOS 12+, Windows 10+, and in the browser as a PWA
