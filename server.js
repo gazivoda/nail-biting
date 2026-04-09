@@ -50,11 +50,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paddle.com', 'https://cdn.paddle.com', 'https://www.googletagmanager.com'],
+      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paddle.com', 'https://cdn.paddle.com', 'https://public.profitwell.com', 'https://www.googletagmanager.com'],
       frameSrc:    ["'self'", 'https://*.paddle.com'],
-      connectSrc:  ["'self'", 'https://*.paddle.com', 'https://checkout.paddle.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
+      connectSrc:  ["'self'", 'https://*.paddle.com', 'https://checkout.paddle.com', 'https://checkout-service.paddle.com', 'https://public.profitwell.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
       imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://*.paddle.com'],
-      styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
+      styleSrc:    ["'self'", "'unsafe-inline'", 'https://cdn.paddle.com'],  // Tailwind + Paddle CSS
       fontSrc:     ["'self'", 'data:'],
       workerSrc:   ["'self'"],  // PWA service worker registration
     },
