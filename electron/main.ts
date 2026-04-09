@@ -367,7 +367,7 @@ function setupIPC() {
     }
   });
 
-  // Renderer asks to open an external URL (e.g. PayPal, Chrome Web Store)
+  // Renderer asks to open an external URL (e.g. Paddle checkout, Chrome Web Store)
   ipcMain.on('open-external', (_event, url: string) => {
     shell.openExternal(url);
   });
