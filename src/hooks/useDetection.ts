@@ -291,6 +291,8 @@ export function useDetection(
 
     let cancelled = false;
     let rafId = 0;
+    let bgIntervalId: ReturnType<typeof setInterval> | null = null;
+    let visibilityHandler: (() => void) | null = null;
 
     getModels()
       .then(({ hand, face }) => {
@@ -301,31 +303,20 @@ export function useDetection(
         let consecutiveHits = 0;
         let missedFrames = 0; // consecutive frames with no fingertip near mouth
 
-        function processFrame() {
-          if (cancelled) return;
-          rafId = requestAnimationFrame(processFrame);
-
-          // Skip when tab hidden — rAF already pauses but be explicit
-          if (document.hidden) return;
-
+        function runInference() {
           const now = performance.now();
-          // Throttle to ~5fps: only infer every INFERENCE_INTERVAL_MS
-          if (now - lastInferenceTs < INFERENCE_INTERVAL_MS) return;
           lastInferenceTs = now;
 
           const video = videoRef.current;
           if (!video || video.readyState < 2) return;
 
           try {
-            // Run both models every tick so temporal tracking stays warm.
-            // Skipping face on "no-hand" frames breaks face re-detection.
             const handResult = hand.detectForVideo(video, now);
             const faceResult = face.detectForVideo(video, now + 0.1);
 
             const hands = handResult.landmarks ?? [];
             const faces = faceResult.faceLandmarks ?? [];
 
-            // Compute whether a fingertip is near the mouth (false if models found nothing)
             let fingertipNearMouth = false;
             if (hands.length > 0 && faces.length > 0) {
               const facePoints = faces[0];
@@ -344,7 +335,6 @@ export function useDetection(
               }
             }
 
-            // Always update alarm state — never early-return before this block
             if (fingertipNearMouth) {
               missedFrames = 0;
               consecutiveHits++;
@@ -354,8 +344,6 @@ export function useDetection(
             } else {
               consecutiveHits = 0;
               missedFrames++;
-              // 2 missed frames (~400ms) grace before stopping — avoids cutting
-              // out during brief occlusion mid-bite
               if (missedFrames >= 2) {
                 stopBiting();
                 missedFrames = 0;
@@ -365,6 +353,50 @@ export function useDetection(
             // Skip frames with transient errors silently
           }
         }
+
+        function processFrame() {
+          if (cancelled) return;
+          rafId = requestAnimationFrame(processFrame);
+
+          // When tab is hidden, rAF is throttled/paused. The background
+          // setInterval fallback (below) handles detection instead.
+          if (document.hidden) return;
+
+          const now = performance.now();
+          if (now - lastInferenceTs < INFERENCE_INTERVAL_MS) return;
+
+          runInference();
+        }
+
+        // Background detection fallback: when the tab is hidden but PiP keeps
+        // the video stream alive, use setInterval (~1fps) instead of rAF.
+        // Browsers throttle setInterval to ~1/second for hidden tabs, which is
+        // enough to catch biting episodes.
+        function startBgInterval() {
+          if (bgIntervalId) return;
+          bgIntervalId = setInterval(() => {
+            if (!cancelled && document.hidden) runInference();
+          }, 500);
+        }
+
+        function stopBgInterval() {
+          if (bgIntervalId) {
+            clearInterval(bgIntervalId);
+            bgIntervalId = null;
+          }
+        }
+
+        visibilityHandler = () => {
+          if (document.hidden) {
+            startBgInterval();
+          } else {
+            stopBgInterval();
+          }
+        };
+
+        document.addEventListener('visibilitychange', visibilityHandler);
+        // If tab is already hidden when detection starts, start the interval
+        if (document.hidden) startBgInterval();
 
         rafId = requestAnimationFrame(processFrame);
       })
@@ -376,6 +408,8 @@ export function useDetection(
     return () => {
       cancelled = true;
       cancelAnimationFrame(rafId);
+      if (visibilityHandler) document.removeEventListener('visibilitychange', visibilityHandler);
+      if (bgIntervalId) clearInterval(bgIntervalId);
       if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
       if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
       stopAlarmRef.current?.();

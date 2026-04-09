@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
-import { VideoOff } from 'lucide-react';
+import { VideoOff, PictureInPicture2 } from 'lucide-react';
 import { useDetection } from '../../hooks/useDetection';
+import { usePictureInPicture } from '../../hooks/usePictureInPicture';
 import { DetectionStatus } from './DetectionStatus';
 import { AlertOverlay } from './AlertOverlay';
 import { useAppStore } from '../../store/useAppStore';
@@ -22,6 +23,7 @@ export function CameraView({ videoRef }: Props) {
   } = useAppStore();
 
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { pipActive, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
   const handleAlert = () => logIncident('auto-detected', true);
 
@@ -86,6 +88,21 @@ export function CameraView({ videoRef }: Props) {
         <div className="absolute bottom-3 left-3">
           <DetectionStatus status={status} cameraEnabled={cameraEnabled} onRetry={handleRetry} />
         </div>
+
+        {/* PiP button — keeps detection alive when tab is minimized */}
+        {cameraEnabled && pipSupported && (
+          <button
+            onClick={togglePiP}
+            className={`absolute top-3 right-3 p-1.5 rounded-lg transition-all duration-150 ${
+              pipActive
+                ? 'bg-forest-600 text-cream-100 shadow-sm'
+                : 'bg-stone-900/60 text-stone-300 hover:bg-stone-800/80 hover:text-stone-100'
+            }`}
+            title={pipActive ? 'Exit Picture-in-Picture' : 'Picture-in-Picture — keeps detection active when minimized'}
+          >
+            <PictureInPicture2 size={16} />
+          </button>
+        )}
       </div>
     </>
   );
