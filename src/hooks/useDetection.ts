@@ -267,6 +267,23 @@ export function useDetection(
       document.title = originalTitleRef.current;
     }, 3000);
 
+    // Background notifications: when the tab is hidden (PiP detection),
+    // notify via app badge + OS notification so the user knows.
+    if (document.hidden) {
+      // App icon badge (PWA Badging API — no permission required)
+      navigator.setAppBadge?.().catch(() => {});
+
+      // OS notification (uses existing permission from reminders toggle)
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        new Notification('Stop biting!', {
+          body: 'Nail biting detected — take your hands away.',
+          icon: '/icons/icon-192x192.png',
+          tag: 'bite-alert', // deduplicates — only one notification at a time
+          requireInteraction: false,
+        });
+      }
+    }
+
     // Electron: notify the main process so it can show a system notification
     // when the app window is minimised to tray
     window.electronAPI?.onBiteDetected?.();
@@ -391,6 +408,8 @@ export function useDetection(
             startBgInterval();
           } else {
             stopBgInterval();
+            // Clear app badge when user returns to the tab
+            navigator.clearAppBadge?.().catch(() => {});
           }
         };
 
