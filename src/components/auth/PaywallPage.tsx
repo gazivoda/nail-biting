@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { useState, useEffect, useCallback } from 'react';
+import { initializePaddle, type Paddle } from '@paddle/paddle-js';
 import { Check, Zap, Star, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 
@@ -7,34 +7,69 @@ interface Props {
   onBack?: () => void;
 }
 
-const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID as string;
-const PLAN_MONTHLY = import.meta.env.VITE_PAYPAL_PLAN_ID_MONTHLY as string;
-const PLAN_YEARLY = import.meta.env.VITE_PAYPAL_PLAN_ID_YEARLY as string;
+const PADDLE_CLIENT_TOKEN = import.meta.env.VITE_PADDLE_CLIENT_TOKEN as string;
+const PRICE_MONTHLY = import.meta.env.VITE_PADDLE_PRICE_ID_MONTHLY as string;
+const PRICE_YEARLY = import.meta.env.VITE_PADDLE_PRICE_ID_YEARLY as string;
 
 export function PaywallPage({ onBack }: Props) {
   const { user, refreshProfile, signOut } = useAuth();
   const [activating, setActivating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [paddle, setPaddle] = useState<Paddle | null>(null);
 
-  const plansConfigured = !!(PLAN_MONTHLY && PLAN_YEARLY);
+  const plansConfigured = !!(PRICE_MONTHLY && PRICE_YEARLY && PADDLE_CLIENT_TOKEN);
 
-  const handleSuccess = async (subscriptionId: string, plan: 'monthly' | 'yearly') => {
+  // Initialize Paddle SDK
+  useEffect(() => {
+    if (!PADDLE_CLIENT_TOKEN) return;
+    initializePaddle({
+      token: PADDLE_CLIENT_TOKEN,
+      eventCallback: (event) => {
+        if (event.name === 'checkout.completed') {
+          const data = event.data as Record<string, unknown> | undefined;
+          handleCheckoutComplete((data?.subscription_id as string) || null);
+        }
+      },
+    }).then((paddleInstance) => {
+      if (paddleInstance) setPaddle(paddleInstance);
+    });
+  }, []);
+
+  const handleCheckoutComplete = useCallback(async (subscriptionId: string | null) => {
     setActivating(true);
     setError(null);
     try {
-      await apiFetch('/api/paypal/verify-subscription', {
-        method: 'POST',
-        body: JSON.stringify({ subscriptionId, plan }),
-      });
+      if (subscriptionId) {
+        // Try to verify immediately — webhook may not have arrived yet
+        await apiFetch('/api/paddle/verify-subscription', {
+          method: 'POST',
+          body: JSON.stringify({ subscriptionId }),
+        });
+      }
+      // Wait briefly for webhook to process, then refresh
+      await new Promise(resolve => setTimeout(resolve, 2000));
       await refreshProfile();
       setSuccess(true);
-    } catch (err) {
-      setError('Payment received but failed to activate. Contact support with your PayPal subscription ID: ' + subscriptionId);
-      console.error(err);
+    } catch {
+      // Webhook may still process — try refreshing after a delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      await refreshProfile();
+      setSuccess(true);
     } finally {
       setActivating(false);
     }
+  }, [refreshProfile]);
+
+  const openCheckout = (priceId: string) => {
+    if (!paddle) return;
+    setError(null);
+
+    paddle.Checkout.open({
+      items: [{ priceId, quantity: 1 }],
+      customer: user?.email ? { email: user.email } : undefined,
+      customData: { userId: user?.id || '' },
+    });
   };
 
   if (success) {
@@ -99,12 +134,19 @@ export function PaywallPage({ onBack }: Props) {
           <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-5 py-4 mb-8 max-w-lg w-full">
             <AlertTriangle size={16} className="text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
             <div>
-              <p className="text-amber-800 dark:text-amber-300 text-sm font-medium mb-1">PayPal plans not configured</p>
+              <p className="text-amber-800 dark:text-amber-300 text-sm font-medium mb-1">Paddle plans not configured</p>
               <p className="text-amber-600 dark:text-amber-500 text-xs leading-relaxed">
-                Set <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PAYPAL_PLAN_ID_MONTHLY</code> and
-                <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PAYPAL_PLAN_ID_YEARLY</code> in .env
+                Set <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PADDLE_PRICE_ID_MONTHLY</code> and
+                <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PADDLE_PRICE_ID_YEARLY</code> in .env
               </p>
             </div>
+          </div>
+        )}
+
+        {activating && (
+          <div className="flex items-center gap-3 text-stone-400 mb-8">
+            <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
+            <span className="text-sm">Activating your subscription…</span>
           </div>
         )}
 
@@ -121,7 +163,7 @@ export function PaywallPage({ onBack }: Props) {
               </div>
             </div>
             <div className="mb-4">
-              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€2.99</span>
+              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
               <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
             </div>
             <ul className="space-y-2 mb-6 flex-1">
@@ -132,15 +174,13 @@ export function PaywallPage({ onBack }: Props) {
               ))}
             </ul>
             {plansConfigured && (
-              <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID, currency: 'EUR', intent: 'subscription', vault: true }}>
-                <PayPalButtons
-                  disabled={activating}
-                  createSubscription={(_d, actions) => actions.subscription.create({ plan_id: PLAN_MONTHLY })}
-                  onApprove={async (data) => { if (data.subscriptionID) await handleSuccess(data.subscriptionID, 'monthly'); }}
-                  onError={(err) => setError(String(err))}
-                  style={{ layout: 'vertical', color: 'blue', shape: 'rect', label: 'subscribe', height: 40 }}
-                />
-              </PayPalScriptProvider>
+              <button
+                disabled={activating || !paddle}
+                onClick={() => openCheckout(PRICE_MONTHLY)}
+                className="inline-flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Subscribe Monthly
+              </button>
             )}
           </div>
 
@@ -161,10 +201,10 @@ export function PaywallPage({ onBack }: Props) {
               </div>
             </div>
             <div className="mb-1">
-              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€29.00</span>
+              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
               <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
             </div>
-            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">Just €2.42/month</p>
+            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">Just $2.42/month</p>
             <ul className="space-y-2 mb-6 flex-1">
               {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
@@ -173,15 +213,14 @@ export function PaywallPage({ onBack }: Props) {
               ))}
             </ul>
             {plansConfigured && (
-              <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID, currency: 'EUR', intent: 'subscription', vault: true }}>
-                <PayPalButtons
-                  disabled={activating}
-                  createSubscription={(_d, actions) => actions.subscription.create({ plan_id: PLAN_YEARLY })}
-                  onApprove={async (data) => { if (data.subscriptionID) await handleSuccess(data.subscriptionID, 'yearly'); }}
-                  onError={(err) => setError(String(err))}
-                  style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'subscribe', height: 40 }}
-                />
-              </PayPalScriptProvider>
+              <button
+                disabled={activating || !paddle}
+                onClick={() => openCheckout(PRICE_YEARLY)}
+                className="inline-flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Zap size={13} />
+                Subscribe Yearly
+              </button>
             )}
           </div>
         </div>
@@ -193,7 +232,7 @@ export function PaywallPage({ onBack }: Props) {
         )}
 
         <div className="flex items-center gap-6 mt-10 text-xs text-stone-400 dark:text-stone-500">
-          <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure PayPal payment</span></div>
+          <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>
           <div className="flex items-center gap-1.5"><Check size={11} /><span>Cancel anytime</span></div>
           <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" /><span>Camera stays on-device</span></div>
         </div>

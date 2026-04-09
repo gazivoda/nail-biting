@@ -9,7 +9,7 @@ import Database from 'better-sqlite3';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { randomBytes } from 'crypto';
+import { randomBytes, createHmac } from 'crypto';
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -25,11 +25,11 @@ const PORT = process.env.PORT || 3000;
 const GOOGLE_CLIENT_ID     = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const JWT_SECRET           = process.env.JWT_SECRET;
-const PAYPAL_CLIENT_ID     = process.env.PAYPAL_CLIENT_ID;
-const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
-const PAYPAL_API = process.env.PAYPAL_ENV === 'production'
-  ? 'https://api-m.paypal.com'
-  : 'https://api-m.sandbox.paypal.com';
+const PADDLE_API_KEY        = process.env.PADDLE_API_KEY;
+const PADDLE_WEBHOOK_SECRET = process.env.PADDLE_WEBHOOK_SECRET;
+const PADDLE_API = process.env.PADDLE_ENV === 'production'
+  ? 'https://api.paddle.com'
+  : 'https://sandbox-api.paddle.com';
 
 // When running inside Electron, redirect auth results to the custom protocol.
 const ELECTRON_PROTOCOL = process.env.ELECTRON_PROTOCOL || null;
@@ -50,10 +50,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn', 'https://www.googletagmanager.com'],
-      frameSrc:    ["'self'", 'https://*.paypal.com', 'https://*.paypal.cn'],
-      connectSrc:  ["'self'", 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn', 'https://api-m.paypal.com', 'https://api-m.sandbox.paypal.com', 'https://*.qualtrics.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
-      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://*.paypal.com', 'https://*.paypal.cn', 'https://*.paypalobjects.com', 'https://objects.paypal.cn'],
+      scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paddle.com', 'https://cdn.paddle.com', 'https://www.googletagmanager.com'],
+      frameSrc:    ["'self'", 'https://*.paddle.com'],
+      connectSrc:  ["'self'", 'https://*.paddle.com', 'https://checkout.paddle.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
+      imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://*.paddle.com'],
       styleSrc:    ["'self'", "'unsafe-inline'"],  // Tailwind needs inline styles
       fontSrc:     ["'self'", 'data:'],
       workerSrc:   ["'self'"],  // PWA service worker registration
@@ -81,7 +81,11 @@ const corsMiddleware = cors({
 app.use('/api/', corsMiddleware);  // only API routes need CORS, not static assets
 
 app.use(cookieParser());
-app.use(express.json({ limit: '10kb' }));  // M-8: explicit body size limit
+// Skip JSON body parsing for the Paddle webhook route (needs raw body for signature verification)
+app.use((req, res, next) => {
+  if (req.path === '/api/paddle/webhook') return next();
+  express.json({ limit: '10kb' })(req, res, next);
+});
 
 // H-3: Rate limiting
 const apiLimiter = rateLimit({
@@ -119,16 +123,23 @@ db.exec(`
     subscription_plan     TEXT,
     subscription_end_date TEXT,
     paypal_subscription_id TEXT,
+    paddle_subscription_id TEXT,
+    paddle_customer_id     TEXT,
     created_at            TEXT NOT NULL
   )
 `);
 
+// Migration: add paddle columns to existing DB
+try { db.exec('ALTER TABLE users ADD COLUMN paddle_subscription_id TEXT'); } catch { /* already exists */ }
+try { db.exec('ALTER TABLE users ADD COLUMN paddle_customer_id TEXT'); } catch { /* already exists */ }
+
 const stmtGet    = db.prepare('SELECT * FROM users WHERE id = ?');
+const stmtFindByEmail = db.prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
 const stmtUpsert = db.prepare(`
   INSERT INTO users (id, email, name, avatar, trial_end_date, subscription_status,
-    subscription_plan, subscription_end_date, paypal_subscription_id, created_at)
+    subscription_plan, subscription_end_date, paypal_subscription_id, paddle_subscription_id, paddle_customer_id, created_at)
   VALUES (@id, @email, @name, @avatar, @trial_end_date, @subscription_status,
-    @subscription_plan, @subscription_end_date, @paypal_subscription_id, @created_at)
+    @subscription_plan, @subscription_end_date, @paypal_subscription_id, @paddle_subscription_id, @paddle_customer_id, @created_at)
   ON CONFLICT(id) DO UPDATE SET
     email                  = excluded.email,
     name                   = excluded.name,
@@ -137,7 +148,9 @@ const stmtUpsert = db.prepare(`
     subscription_status    = excluded.subscription_status,
     subscription_plan      = excluded.subscription_plan,
     subscription_end_date  = excluded.subscription_end_date,
-    paypal_subscription_id = excluded.paypal_subscription_id
+    paypal_subscription_id = excluded.paypal_subscription_id,
+    paddle_subscription_id = excluded.paddle_subscription_id,
+    paddle_customer_id     = excluded.paddle_customer_id
 `);
 
 function getUser(id) {
@@ -165,6 +178,8 @@ function saveUser(user) {
     subscription_plan:     user.subscription_plan ?? null,
     subscription_end_date: user.subscription_end_date ?? null,
     paypal_subscription_id: user.paypal_subscription_id ?? null,
+    paddle_subscription_id: user.paddle_subscription_id ?? null,
+    paddle_customer_id:     user.paddle_customer_id ?? null,
     created_at:            user.created_at,
   });
   return getUser(user.id);
@@ -279,6 +294,8 @@ app.get('/api/auth/callback', async (req, res) => {
         subscription_plan: null,
         subscription_end_date: null,
         paypal_subscription_id: null,
+        paddle_subscription_id: null,
+        paddle_customer_id: null,
         created_at: new Date().toISOString(),
       };
     }
@@ -321,87 +338,170 @@ app.get('/api/user/me', authMiddleware, (req, res) => {
 });
 
 // H-2: PATCH /api/user/me removed — subscription fields are only written
-// by the server-side PayPal verification endpoint, never by the client.
+// by the server-side Paddle webhook/verification endpoint, never by the client.
 
-// ─── PayPal helpers ──────────────────────────────────────────────────────────
+// ─── Paddle webhook ──────────────────────────────────────────────────────────
 
-async function getPayPalAccessToken() {
-  const credentials = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64');
-  const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials',
-  });
-  if (!res.ok) throw new Error(`PayPal token request failed: ${res.status}`);
-  const data = await res.json();
-  return data.access_token;
+// Paddle sends webhooks as JSON with an HMAC-SHA256 signature in the
+// Paddle-Signature header. We verify the signature before processing.
+function verifyPaddleWebhookSignature(rawBody, signatureHeader) {
+  if (!PADDLE_WEBHOOK_SECRET || !signatureHeader) return false;
+
+  // Header format: ts=TIMESTAMP;h1=HASH
+  const parts = {};
+  for (const part of signatureHeader.split(';')) {
+    const [key, value] = part.split('=');
+    parts[key] = value;
+  }
+
+  const ts = parts.ts;
+  const h1 = parts.h1;
+  if (!ts || !h1) return false;
+
+  const payload = `${ts}:${rawBody}`;
+  const computed = createHmac('sha256', PADDLE_WEBHOOK_SECRET)
+    .update(payload)
+    .digest('hex');
+
+  return computed === h1;
 }
 
-async function getPayPalSubscription(subscriptionId) {
-  const token = await getPayPalAccessToken();
-  const res = await fetch(`${PAYPAL_API}/v1/billing/subscriptions/${subscriptionId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error(`PayPal subscription lookup failed: ${res.status}`);
-  return res.json();
-}
+// Paddle webhook needs raw body for signature verification.
+// We add a separate raw-body middleware for this route only.
+app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const rawBody = req.body.toString();
+  const signature = req.headers['paddle-signature'];
 
-// ─── PayPal verify endpoint ───────────────────────────────────────────────────
-app.post('/api/paypal/verify-subscription', authMiddleware, async (req, res) => {
-  const { subscriptionId, plan } = req.body;
-  if (!subscriptionId || !plan) {
-    return res.status(400).json({ error: 'subscriptionId and plan are required' });
+  if (!verifyPaddleWebhookSignature(rawBody, signature)) {
+    console.warn('Paddle webhook: invalid signature');
+    return res.status(401).json({ error: 'Invalid signature' });
   }
-  if (!['monthly', 'yearly'].includes(plan)) {
-    return res.status(400).json({ error: 'Invalid plan' });
+
+  let event;
+  try {
+    event = JSON.parse(rawBody);
+  } catch {
+    return res.status(400).json({ error: 'Invalid JSON' });
   }
-  // M-3: Validate subscriptionId format before passing to PayPal API
-  if (!/^I-[A-Z0-9]{5,30}$/.test(subscriptionId)) {
-    return res.status(400).json({ error: 'Invalid subscriptionId format' });
+
+  const eventType = event.event_type;
+  const data = event.data;
+
+  console.log(`Paddle webhook: ${eventType}`);
+
+  try {
+    if (eventType === 'subscription.activated' || eventType === 'subscription.updated') {
+      // Find user by customData.userId or by customer email
+      const userId = data.custom_data?.userId;
+      const customerEmail = data.customer?.email || null;
+
+      let user = userId ? getUser(userId) : null;
+      if (!user && customerEmail) {
+        user = stmtFindByEmail.get(customerEmail) ?? null;
+      }
+
+      if (!user) {
+        console.warn(`Paddle webhook: no user found for subscription ${data.id}`);
+        return res.json({ received: true });
+      }
+
+      // Determine plan from billing cycle
+      const billingInterval = data.items?.[0]?.price?.billing_cycle?.interval;
+      const plan = billingInterval === 'year' ? 'yearly' : 'monthly';
+
+      // Use current_billing_period.ends_at or next_billed_at for end date
+      const endDate = data.current_billing_period?.ends_at
+        || data.next_billed_at
+        || null;
+
+      user.subscription_status = 'active';
+      user.subscription_plan = plan;
+      user.subscription_end_date = endDate;
+      user.paddle_subscription_id = data.id;
+      user.paddle_customer_id = data.customer_id || null;
+      saveUser(user);
+
+    } else if (eventType === 'subscription.canceled') {
+      const userId = data.custom_data?.userId;
+      const customerEmail = data.customer?.email || null;
+
+      let user = userId ? getUser(userId) : null;
+      if (!user && customerEmail) {
+        user = stmtFindByEmail.get(customerEmail) ?? null;
+      }
+
+      if (user) {
+        user.subscription_status = 'cancelled';
+        saveUser(user);
+      }
+
+    } else if (eventType === 'transaction.payment_failed') {
+      const subscriptionId = data.subscription_id;
+      if (subscriptionId) {
+        // Find user by paddle_subscription_id
+        const user = db.prepare('SELECT * FROM users WHERE paddle_subscription_id = ? LIMIT 1').get(subscriptionId);
+        if (user) {
+          user.subscription_status = 'expired';
+          saveUser(user);
+        }
+      }
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    console.error('Paddle webhook processing error:', err.message);
+    res.status(500).json({ error: 'Webhook processing failed' });
   }
-  if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
-    return res.status(503).json({ error: 'PayPal not configured on server' });
+});
+
+// ─── Paddle verify endpoint (fallback for immediate activation) ──────────────
+// Called by frontend after checkout.completed to ensure DB is updated even if
+// webhook hasn't arrived yet (race condition).
+app.post('/api/paddle/verify-subscription', authMiddleware, async (req, res) => {
+  const { subscriptionId } = req.body;
+  if (!subscriptionId) {
+    return res.status(400).json({ error: 'subscriptionId is required' });
+  }
+  if (!PADDLE_API_KEY) {
+    return res.status(503).json({ error: 'Paddle not configured on server' });
   }
 
   try {
-    const subscription = await getPayPalSubscription(subscriptionId);
+    const paddleRes = await fetch(`${PADDLE_API}/subscriptions/${subscriptionId}`, {
+      headers: { Authorization: `Bearer ${PADDLE_API_KEY}` },
+    });
 
-    if (subscription.status !== 'ACTIVE') {
-      return res.status(402).json({ error: `Subscription is not active` });
+    if (!paddleRes.ok) {
+      throw new Error(`Paddle subscription lookup failed: ${paddleRes.status}`);
     }
 
-    // H-6: Verify the subscription belongs to the authenticated user.
-    // We check the subscriber email against the user's stored email.
+    const { data } = await paddleRes.json();
+
+    if (data.status !== 'active') {
+      return res.status(402).json({ error: 'Subscription is not active yet' });
+    }
+
     const user = getUser(req.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const subscriberEmail = subscription.subscriber?.email_address;
-    if (subscriberEmail && user.email && subscriberEmail.toLowerCase() !== user.email.toLowerCase()) {
-      console.warn(`PayPal subscription ${subscriptionId} belongs to ${subscriberEmail}, not ${user.email}`);
-      return res.status(403).json({ error: 'Subscription does not belong to this account' });
-    }
+    const billingInterval = data.items?.[0]?.price?.billing_cycle?.interval;
+    const plan = billingInterval === 'year' ? 'yearly' : 'monthly';
 
-    // M-4: Use next_billing_time from PayPal if available, otherwise fall back to duration.
-    const nextBilling = subscription.billing_info?.next_billing_time;
-    const durationDays = plan === 'monthly' ? 30 : 365;
-    const endDate = nextBilling
-      ? new Date(nextBilling).toISOString()
-      : new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+    const endDate = data.current_billing_period?.ends_at
+      || data.next_billed_at
+      || new Date(Date.now() + (plan === 'monthly' ? 30 : 365) * 24 * 60 * 60 * 1000).toISOString();
 
-    user.subscription_status   = 'active';
-    user.subscription_plan     = plan;
+    user.subscription_status = 'active';
+    user.subscription_plan = plan;
     user.subscription_end_date = endDate;
-    user.paypal_subscription_id = subscriptionId;
+    user.paddle_subscription_id = data.id;
+    user.paddle_customer_id = data.customer_id || null;
     saveUser(user);
 
     res.json(user);
   } catch (err) {
-    // M-5: Don't log PayPal response bodies — log only the message.
-    console.error('PayPal verify error:', err.message);
-    res.status(502).json({ error: 'Failed to verify subscription with PayPal' });
+    console.error('Paddle verify error:', err.message);
+    res.status(502).json({ error: 'Failed to verify subscription with Paddle' });
   }
 });
 

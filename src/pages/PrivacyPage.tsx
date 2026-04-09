@@ -25,7 +25,7 @@ export function PrivacyPage() {
           content: [
             'Account information: your name, email address, and profile picture — provided by Google when you sign in.',
             'Usage data: your habit streaks, incident logs, and detection session timestamps — stored on our server linked to your account.',
-            'Subscription data: your PayPal subscription ID and subscription status — used to manage your access.',
+            'Subscription data: your Paddle subscription ID and subscription status — used to manage your access.',
             'We do not collect biometric data, browsing history, or any data from your camera.',
           ],
         },
@@ -34,7 +34,7 @@ export function PrivacyPage() {
           content: [
             'To authenticate you and maintain your session.',
             'To store and display your habit tracking history, streaks, and incident log.',
-            'To manage your subscription and payment status via PayPal.',
+            'To manage your subscription and payment status via Paddle.',
             'We do not sell, rent, or share your personal data with third parties for marketing purposes.',
           ],
         },
@@ -46,7 +46,7 @@ export function PrivacyPage() {
         {
           heading: '6. Payment Processing',
           content:
-            'Payments are processed by PayPal. We do not store your credit card number or full payment details. We receive and store your PayPal subscription ID to verify your subscription status. PayPal\'s privacy policy applies to all payment transactions.',
+            'Payments are processed by Paddle, who acts as the merchant of record. We do not store your credit card number or full payment details. We receive and store your Paddle subscription ID to verify your subscription status. Paddle\'s privacy policy applies to all payment transactions.',
         },
         {
           heading: '7. Data Storage',

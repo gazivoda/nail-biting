@@ -28,17 +28,17 @@ export function RefundPage() {
         {
           heading: '4. How to Request a Refund',
           content:
-            'To request a refund, email hello@stopbiting.today within 14 days of your payment with the subject line "Refund Request". Please include the email address associated with your account and your PayPal transaction ID. We will process your request within 5 business days.',
+            'To request a refund, email hello@stopbiting.today within 14 days of your payment with the subject line "Refund Request". Please include the email address associated with your account and your Paddle transaction ID. We will process your request within 5 business days.',
         },
         {
           heading: '5. Processing',
           content:
-            'Approved refunds are processed back to your original PayPal payment method. Processing time is typically 3–5 business days, depending on PayPal and your bank. Once a refund is issued, your subscription will be cancelled and access to paid features will end.',
+            'Approved refunds are processed back to your original payment method via Paddle. Processing time is typically 3–5 business days, depending on your payment provider and bank. Once a refund is issued, your subscription will be cancelled and access to paid features will end.',
         },
         {
           heading: '6. Cancellation',
           content:
-            'You may cancel your subscription at any time from your PayPal account under Settings → Payments → Manage Automatic Payments. Cancellation stops future charges. You will retain access to the Service until the end of your current billing period. Cancellation alone does not trigger a refund.',
+            'You may cancel your subscription at any time from within the app or via the cancellation link in your Paddle receipt email. Cancellation stops future charges. You will retain access to the Service until the end of your current billing period. Cancellation alone does not trigger a refund.',
         },
         {
           heading: '7. Exceptional Circumstances',
