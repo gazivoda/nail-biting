@@ -27,8 +27,10 @@ export function PaywallPage({ onBack }: Props) {
       token: PADDLE_CLIENT_TOKEN,
       eventCallback: (event) => {
         if (event.name === 'checkout.completed') {
+          // checkout.completed provides transaction_id, not subscription_id.
+          // The server will look up the transaction to find the subscription.
           const data = event.data as Record<string, unknown> | undefined;
-          handleCheckoutComplete((data?.subscription_id as string) || null);
+          handleCheckoutComplete((data?.transaction_id as string) || null);
         }
       },
     }).then((paddleInstance) => {
@@ -36,15 +38,15 @@ export function PaywallPage({ onBack }: Props) {
     });
   }, []);
 
-  const handleCheckoutComplete = useCallback(async (subscriptionId: string | null) => {
+  const handleCheckoutComplete = useCallback(async (transactionId: string | null) => {
     setActivating(true);
     setError(null);
     try {
-      if (subscriptionId) {
-        // Try to verify immediately — webhook may not have arrived yet
+      if (transactionId) {
+        // Verify via transaction ID — server looks up the subscription from Paddle API
         await apiFetch('/api/paddle/verify-subscription', {
           method: 'POST',
-          body: JSON.stringify({ subscriptionId }),
+          body: JSON.stringify({ transactionId }),
         });
       }
       // Wait briefly for webhook to process, then refresh

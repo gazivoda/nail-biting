@@ -390,7 +390,7 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
   console.log(`Paddle webhook: ${eventType}`);
 
   try {
-    if (eventType === 'subscription.activated' || eventType === 'subscription.updated') {
+    if (eventType === 'subscription.created' || eventType === 'subscription.activated' || eventType === 'subscription.updated') {
       // Find user by customData.userId or by customer email
       const userId = data.custom_data?.userId;
       const customerEmail = data.customer?.email || null;
@@ -457,28 +457,49 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
 // ─── Paddle verify endpoint (fallback for immediate activation) ──────────────
 // Called by frontend after checkout.completed to ensure DB is updated even if
 // webhook hasn't arrived yet (race condition).
+// The checkout.completed event only provides a transaction_id — we look up the
+// transaction via Paddle API to find the subscription_id, then fetch the sub.
 app.post('/api/paddle/verify-subscription', authMiddleware, async (req, res) => {
-  const { subscriptionId } = req.body;
-  if (!subscriptionId) {
-    return res.status(400).json({ error: 'subscriptionId is required' });
+  const { transactionId } = req.body;
+  if (!transactionId) {
+    return res.status(400).json({ error: 'transactionId is required' });
   }
   if (!PADDLE_API_KEY) {
     return res.status(503).json({ error: 'Paddle not configured on server' });
   }
 
   try {
-    const paddleRes = await fetch(`${PADDLE_API}/subscriptions/${subscriptionId}`, {
+    // Step 1: Look up the transaction to find the subscription_id
+    const txnRes = await fetch(`${PADDLE_API}/transactions/${transactionId}`, {
       headers: { Authorization: `Bearer ${PADDLE_API_KEY}` },
     });
 
-    if (!paddleRes.ok) {
-      throw new Error(`Paddle subscription lookup failed: ${paddleRes.status}`);
+    if (!txnRes.ok) {
+      throw new Error(`Paddle transaction lookup failed: ${txnRes.status}`);
     }
 
-    const { data } = await paddleRes.json();
+    const txnBody = await txnRes.json();
+    const subscriptionId = txnBody.data?.subscription_id;
 
-    if (data.status !== 'active') {
-      return res.status(402).json({ error: 'Subscription is not active yet' });
+    if (!subscriptionId) {
+      // Subscription may not be created yet — tell client to retry via webhook
+      return res.status(202).json({ error: 'Subscription not yet created, webhook will handle it' });
+    }
+
+    // Step 2: Fetch the subscription details
+    const subRes = await fetch(`${PADDLE_API}/subscriptions/${subscriptionId}`, {
+      headers: { Authorization: `Bearer ${PADDLE_API_KEY}` },
+    });
+
+    if (!subRes.ok) {
+      throw new Error(`Paddle subscription lookup failed: ${subRes.status}`);
+    }
+
+    const { data } = await subRes.json();
+
+    // Accept active or trialing status (Paddle may use either)
+    if (data.status !== 'active' && data.status !== 'trialing') {
+      return res.status(402).json({ error: `Subscription status is '${data.status}', not active` });
     }
 
     const user = getUser(req.userId);

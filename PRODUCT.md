@@ -61,7 +61,7 @@ All paid plans include unlimited AI detection, streak tracking, full incident hi
 6. **7-day frequency chart** — visual bite history, colour-coded by severity
 7. **Camera toggle and panic button** — visible controls alongside the live camera view
 8. **Google sign-in** — one-click auth, no passwords
-9. **PayPal subscriptions** — server-side verified before access is granted (no client-side bypass)
+9. **Paddle subscriptions** — server-side verified before access is granted (no client-side bypass)
 10. **SEO blog** — 10 long-form articles on the psychology, neuroscience, and treatment of nail biting
 
 ---
@@ -73,7 +73,7 @@ All paid plans include unlimited AI detection, streak tracking, full incident hi
 - **Desktop:** Electron 41, electron-builder (DMG for Mac, NSIS for Windows)
 - **Backend:** Node.js + Express 5 + SQLite (better-sqlite3)
 - **Auth:** Google OAuth → HttpOnly session cookie (web) / Bearer token via deep-link (Electron)
-- **Payments:** PayPal Subscriptions (@paypal/react-paypal-js), server-side verified
+- **Payments:** Paddle Subscriptions (@paddle/paddle-js), server-side verified
 - **Hosting:** Coolify (Nixpacks, self-hosted VPS)
 - **Domain:** stopbiting.today
 

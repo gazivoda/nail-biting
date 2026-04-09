@@ -40,9 +40,9 @@ DATA_DIR=/app/data
 ## 5. Build args (baked into frontend at build time)
 
 ```
-VITE_PAYPAL_CLIENT_ID=<PayPal client ID>
-VITE_PAYPAL_PLAN_ID_MONTHLY=<PayPal monthly plan ID>
-VITE_PAYPAL_PLAN_ID_YEARLY=<PayPal yearly plan ID>
+VITE_PADDLE_CLIENT_TOKEN=<Paddle client token>
+VITE_PADDLE_PRICE_ID_MONTHLY=<Paddle monthly price ID>
+VITE_PADDLE_PRICE_ID_YEARLY=<Paddle yearly price ID>
 ```
 
 ## Notes
@@ -50,4 +50,4 @@ VITE_PAYPAL_PLAN_ID_YEARLY=<PayPal yearly plan ID>
 - The SQLite database file is at `/app/data/users.db` inside the container
 - `DATA_DIR` env var controls the data directory path
 - `APP_URL` must match exactly what is registered in Google Cloud Console (including `https://`)
-- PayPal env vars can be added later when enabling payments
+- Paddle env vars must be set as build args (VITE_ prefix) and as runtime env vars (PADDLE_API_KEY, PADDLE_WEBHOOK_SECRET, PADDLE_ENV)
