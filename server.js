@@ -122,24 +122,22 @@ db.exec(`
     subscription_status   TEXT NOT NULL DEFAULT 'trial',
     subscription_plan     TEXT,
     subscription_end_date TEXT,
-    paypal_subscription_id TEXT,
     paddle_subscription_id TEXT,
     paddle_customer_id     TEXT,
     created_at            TEXT NOT NULL
   )
 `);
 
-// Migration: add paddle columns to existing DB
-try { db.exec('ALTER TABLE users ADD COLUMN paddle_subscription_id TEXT'); } catch { /* already exists */ }
-try { db.exec('ALTER TABLE users ADD COLUMN paddle_customer_id TEXT'); } catch { /* already exists */ }
+// Migration: drop legacy paypal column from existing DBs
+try { db.exec('ALTER TABLE users DROP COLUMN paypal_subscription_id'); } catch { /* already dropped or never existed */ }
 
 const stmtGet    = db.prepare('SELECT * FROM users WHERE id = ?');
 const stmtFindByEmail = db.prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
 const stmtUpsert = db.prepare(`
   INSERT INTO users (id, email, name, avatar, trial_end_date, subscription_status,
-    subscription_plan, subscription_end_date, paypal_subscription_id, paddle_subscription_id, paddle_customer_id, created_at)
+    subscription_plan, subscription_end_date, paddle_subscription_id, paddle_customer_id, created_at)
   VALUES (@id, @email, @name, @avatar, @trial_end_date, @subscription_status,
-    @subscription_plan, @subscription_end_date, @paypal_subscription_id, @paddle_subscription_id, @paddle_customer_id, @created_at)
+    @subscription_plan, @subscription_end_date, @paddle_subscription_id, @paddle_customer_id, @created_at)
   ON CONFLICT(id) DO UPDATE SET
     email                  = excluded.email,
     name                   = excluded.name,
@@ -148,7 +146,6 @@ const stmtUpsert = db.prepare(`
     subscription_status    = excluded.subscription_status,
     subscription_plan      = excluded.subscription_plan,
     subscription_end_date  = excluded.subscription_end_date,
-    paypal_subscription_id = excluded.paypal_subscription_id,
     paddle_subscription_id = excluded.paddle_subscription_id,
     paddle_customer_id     = excluded.paddle_customer_id
 `);
@@ -177,7 +174,6 @@ function saveUser(user) {
     subscription_status:   user.subscription_status,
     subscription_plan:     user.subscription_plan ?? null,
     subscription_end_date: user.subscription_end_date ?? null,
-    paypal_subscription_id: user.paypal_subscription_id ?? null,
     paddle_subscription_id: user.paddle_subscription_id ?? null,
     paddle_customer_id:     user.paddle_customer_id ?? null,
     created_at:            user.created_at,
@@ -293,7 +289,6 @@ app.get('/api/auth/callback', async (req, res) => {
         subscription_status: 'trial',
         subscription_plan: null,
         subscription_end_date: null,
-        paypal_subscription_id: null,
         paddle_subscription_id: null,
         paddle_customer_id: null,
         created_at: new Date().toISOString(),
