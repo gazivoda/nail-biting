@@ -34,6 +34,5 @@ data/users.db-shm
 *.sln
 *.sw?
 
-# Desktop app installers tracked via Git LFS (see .gitattributes)
-downloads/*.deb
-downloads/*.AppImage
+# Desktop app installers — not served by the web app, keep out of git
+downloads/
