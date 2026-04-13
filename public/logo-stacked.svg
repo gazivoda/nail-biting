@@ -1,0 +1,40 @@
+<svg width="200" height="253" viewBox="100 60 300 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stop Biting Nails">
+
+  <!-- Finger (dark outline, transparent fill) -->
+  <g stroke="#1d2d2a" stroke-width="6" fill="none">
+    <path d="M 212 260 L 212 145 A 38 38 0 0 1 288 145 L 288 260" />
+    <path d="M 226 122 L 226 152 A 24 24 0 0 0 274 152 L 274 122 C 274 107, 226 107, 226 122 Z" />
+    <path d="M 235 208 Q 250 216 265 208" stroke-linecap="round" />
+  </g>
+
+  <!-- Prohibition circle + diagonal slash -->
+  <g stroke="#65b974" stroke-width="10" fill="none">
+    <circle cx="250" cy="170" r="90" />
+    <line x1="186.4" y1="106.4" x2="313.6" y2="233.6" />
+  </g>
+
+  <!-- "st[o]p" — "o" is drawn as the circle -->
+  <text x="170" y="335" font-size="64" font-weight="400" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+        fill="#1d2d2a">s</text>
+  <text x="215" y="335" font-size="64" font-weight="400" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+        fill="#1d2d2a">t</text>
+  <circle cx="265" cy="315" r="18" stroke="#65b974" stroke-width="7" fill="none" />
+  <text x="320" y="335" font-size="64" font-weight="400" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+        fill="#1d2d2a">p</text>
+
+  <!-- "biting nails" -->
+  <text x="250" y="380" font-size="32" font-weight="400" letter-spacing="9" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+        fill="#1d2d2a">biting nails</text>
+
+  <!-- — APP — -->
+  <line x1="190" y1="405" x2="210" y2="405" stroke="#65b974" stroke-width="1.5" />
+  <text x="252" y="411" font-size="18" font-weight="500" letter-spacing="7" text-anchor="middle"
+        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
+        fill="#65b974">APP</text>
+  <line x1="293" y1="405" x2="313" y2="405" stroke="#65b974" stroke-width="1.5" />
+
+</svg>
