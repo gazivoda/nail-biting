@@ -48,7 +48,10 @@ export function Landing(_props: Props) {
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
+        <a href="/" className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
+            <img src="/favicon.svg" alt="" width="28" height="28" aria-hidden="true" />
+            Stop Biting Nails
+          </a>
         <div className="flex items-center gap-6">
           <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
@@ -199,8 +202,8 @@ export function Landing(_props: Props) {
 
           {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
           <section aria-labelledby="privacy-heading" className="reveal">
-            <div className="bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center mx-auto mb-6">
+            <div className="bg-forest-50 dark:bg-forest-900/50 border border-forest-200 dark:border-forest-700/60 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-700/60 flex items-center justify-center mx-auto mb-6">
                 <Lock size={32} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
               </div>
               <h2 id="privacy-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Your camera never leaves this app.</h2>
@@ -210,7 +213,7 @@ export function Landing(_props: Props) {
                 locally on your CPU or GPU. Zero bytes of camera data are transmitted to any server —
                 because there is no server involved in detection.
               </p>
-              <p className="text-stone-700 dark:text-stone-300 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-800">
+              <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700/60">
                 Disconnect from the internet and the app works exactly the same.
               </p>
             </div>
