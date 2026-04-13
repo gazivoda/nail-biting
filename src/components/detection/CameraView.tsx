@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react';
-import { VideoOff, PictureInPicture2 } from 'lucide-react';
+import { PictureInPicture2 } from 'lucide-react';
+import { DetectionWave } from '../DetectionWave';
 import { useDetection } from '../../hooks/useDetection';
 import { usePictureInPicture } from '../../hooks/usePictureInPicture';
 import { DetectionStatus } from './DetectionStatus';
@@ -68,19 +69,17 @@ export function CameraView({ videoRef }: Props) {
           style={{ transform: 'scaleX(-1)' }}
         />
 
-        {/* Hidden feed placeholder */}
+        {/* Hidden feed placeholder — detection is active, wave shows real events */}
         {cameraEnabled && !showCameraFeed && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 gap-3">
-            <VideoOff className="text-stone-600 dark:text-stone-500" size={40} />
-            <p className="text-stone-500 dark:text-stone-400 text-sm">Camera hidden — detection active</p>
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 px-6">
+            <DetectionWave detectionStatus={status} />
           </div>
         )}
 
-        {/* Offline / idle state */}
+        {/* Offline / idle state — wave runs in demo mode */}
         {!cameraEnabled && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-950 dark:bg-ink-300 gap-3">
-            <VideoOff className="text-stone-700 dark:text-stone-600" size={40} />
-            <p className="text-stone-600 dark:text-stone-500 text-sm">Camera off</p>
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-950 dark:bg-ink-300 px-6">
+            <DetectionWave />
           </div>
         )}
 

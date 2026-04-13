@@ -77,9 +77,14 @@ function easeInOut(t: number) {
 interface Props {
   /** Extra class on the wrapper */
   className?: string;
+  /**
+   * When provided, disables the demo auto-cycle and reacts to real detection
+   * events instead. Pass the status from useDetection.
+   */
+  detectionStatus?: 'idle' | 'loading' | 'watching' | 'alert' | 'error';
 }
 
-export function DetectionWave({ className = '' }: Props) {
+export function DetectionWave({ className = '', detectionStatus }: Props) {
   const svgRef    = useRef<SVGPathElement>(null);
   const svg2Ref   = useRef<SVGPathElement>(null); // ghost / shadow wave
   const gradRef   = useRef<SVGLinearGradientElement>(null);
@@ -87,7 +92,8 @@ export function DetectionWave({ className = '' }: Props) {
   const labelRef  = useRef<HTMLSpanElement>(null);
   const dotRef    = useRef<HTMLSpanElement>(null);
   const rafRef    = useRef<number>(0);
-  const stateRef  = useRef<WaveState>('watching');
+  const stateRef      = useRef<WaveState>('watching');
+  const isControlled  = useRef(detectionStatus !== undefined);
   const phaseRef  = useRef(0);
   const ampRef    = useRef(CFG.calmAmp);
   const phaseStepRef = useRef(CFG.calmSpeed);
@@ -142,8 +148,10 @@ export function DetectionWave({ className = '' }: Props) {
       if (dotRef.current) {
         dotRef.current.style.background = '';
       }
-      // Schedule next cycle
-      cycleTimerRef.current = setTimeout(triggerSpike, CYCLE_INTERVAL);
+      // Schedule next cycle only in demo mode
+      if (!isControlled.current) {
+        cycleTimerRef.current = setTimeout(triggerSpike, CYCLE_INTERVAL);
+      }
     }, SPIKE_DURATION + DECAY_DURATION);
   }, []);
 
@@ -151,8 +159,10 @@ export function DetectionWave({ className = '' }: Props) {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
-    // Start first auto-detection cycle
-    cycleTimerRef.current = setTimeout(triggerSpike, CYCLE_INTERVAL);
+    // Start first auto-detection cycle (demo mode only)
+    if (!isControlled.current) {
+      cycleTimerRef.current = setTimeout(triggerSpike, CYCLE_INTERVAL);
+    }
 
     function frame(now: number) {
       const state     = stateRef.current;
@@ -200,6 +210,24 @@ export function DetectionWave({ className = '' }: Props) {
       if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
     };
   }, [triggerSpike]);
+
+  // React to real detection events when in controlled mode
+  useEffect(() => {
+    if (detectionStatus === undefined) return;
+    isControlled.current = true;
+
+    if (detectionStatus === 'alert' && stateRef.current === 'watching') {
+      triggerSpike();
+    } else if (labelRef.current) {
+      if (detectionStatus === 'loading') {
+        labelRef.current.textContent = 'Loading models…';
+      } else if (detectionStatus === 'watching') {
+        labelRef.current.textContent = 'Watching…';
+      } else if (detectionStatus === 'idle' || detectionStatus === 'error') {
+        labelRef.current.textContent = detectionStatus === 'error' ? 'Model error' : 'Waiting…';
+      }
+    }
+  }, [detectionStatus, triggerSpike]);
 
   return (
     <div
