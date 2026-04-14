@@ -48,10 +48,9 @@ export function Landing(_props: Props) {
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
-            <img src="/favicon.svg" alt="" width="28" height="28" aria-hidden="true" />
-            Stop Biting Nails
-          </a>
+        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
+          Stop Biting Nails
+        </a>
         <div className="flex items-center gap-6">
           <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
