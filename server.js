@@ -416,6 +416,41 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
       user.paddle_customer_id = data.customer_id || null;
       saveUser(user);
 
+    } else if (eventType === 'subscription.paused') {
+      const userId = data.custom_data?.userId;
+      const customerEmail = data.customer?.email || null;
+
+      let user = userId ? getUser(userId) : null;
+      if (!user && customerEmail) {
+        user = stmtFindByEmail.get(customerEmail) ?? null;
+      }
+
+      if (user) {
+        user.subscription_status = 'paused';
+        // Keep subscription_end_date so access holds until period end
+        saveUser(user);
+      }
+
+    } else if (eventType === 'subscription.resumed') {
+      const userId = data.custom_data?.userId;
+      const customerEmail = data.customer?.email || null;
+
+      let user = userId ? getUser(userId) : null;
+      if (!user && customerEmail) {
+        user = stmtFindByEmail.get(customerEmail) ?? null;
+      }
+
+      if (user) {
+        const billingInterval = data.items?.[0]?.price?.billing_cycle?.interval;
+        const plan = billingInterval === 'year' ? 'yearly' : 'monthly';
+        const endDate = data.current_billing_period?.ends_at || data.next_billed_at || null;
+
+        user.subscription_status = 'active';
+        user.subscription_plan = plan;
+        user.subscription_end_date = endDate;
+        saveUser(user);
+      }
+
     } else if (eventType === 'subscription.canceled') {
       const userId = data.custom_data?.userId;
       const customerEmail = data.customer?.email || null;

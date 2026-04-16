@@ -8,7 +8,7 @@ export interface UserProfile {
   name: string;
   avatar: string | null;
   trial_end_date: string | null;
-  subscription_status: 'trial' | 'active' | 'cancelled' | 'expired';
+  subscription_status: 'trial' | 'active' | 'paused' | 'cancelled' | 'expired';
   subscription_plan: 'monthly' | 'yearly' | null;
   subscription_end_date: string | null;
   paddle_subscription_id: string | null;
@@ -45,7 +45,7 @@ function computeAccessStatus(user: UserProfile): Exclude<AccessStatus, 'loading'
   const now = Date.now();
 
   if (
-    user.subscription_status === 'active' &&
+    (user.subscription_status === 'active' || user.subscription_status === 'paused') &&
     user.subscription_end_date &&
     new Date(user.subscription_end_date).getTime() > now
   ) {

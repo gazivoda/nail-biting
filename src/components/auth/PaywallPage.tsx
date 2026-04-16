@@ -10,6 +10,7 @@ interface Props {
 const PADDLE_CLIENT_TOKEN = import.meta.env.VITE_PADDLE_CLIENT_TOKEN as string;
 const PRICE_MONTHLY = import.meta.env.VITE_PADDLE_PRICE_ID_MONTHLY as string;
 const PRICE_YEARLY = import.meta.env.VITE_PADDLE_PRICE_ID_YEARLY as string;
+const PADDLE_ENV = (import.meta.env.VITE_PADDLE_ENV || 'production') as 'production' | 'sandbox';
 
 export function PaywallPage({ onBack }: Props) {
   const { user, refreshProfile, signOut } = useAuth();
@@ -23,8 +24,11 @@ export function PaywallPage({ onBack }: Props) {
   // Initialize Paddle SDK
   useEffect(() => {
     if (!PADDLE_CLIENT_TOKEN) return;
+    const emailAtInit = user?.email;
     initializePaddle({
       token: PADDLE_CLIENT_TOKEN,
+      environment: PADDLE_ENV,
+      pwCustomer: emailAtInit ? { email: emailAtInit } : undefined,
       eventCallback: (event) => {
         if (event.name === 'checkout.completed') {
           // checkout.completed provides transaction_id, not subscription_id.
