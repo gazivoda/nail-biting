@@ -279,7 +279,7 @@ app.get('/api/auth/callback', async (req, res) => {
     // Find or create user
     let user = getUser(googleId);
     if (!user) {
-      const trialEnd = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+      const trialEnd = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
       user = {
         id: googleId,
         email: googlePayload.email,

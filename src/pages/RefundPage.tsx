@@ -14,7 +14,7 @@ export function RefundPage() {
         {
           heading: '2. Free Trial',
           content:
-            'All new users receive a 7-day free trial with full access to all features. No credit card is required to start the trial. We encourage you to fully evaluate the Service during the trial period before subscribing.',
+            'All new users receive a 3-day free trial with full access to all features. No credit card is required to start the trial. We encourage you to fully evaluate the Service during the trial period before subscribing.',
         },
         {
           heading: '3. Refund Eligibility',
