@@ -137,7 +137,7 @@ export function Landing(_props: Props) {
             </p>
 
             <div
-              className="animate-fade-up flex items-center justify-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mt-6 w-fit mx-auto"
+              className="animate-fade-up flex items-center justify-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-800 rounded-full mt-6 w-fit mx-auto"
               style={{ animationDelay: '240ms' }}
             >
               <ShieldCheck size={12} aria-hidden="true" />
@@ -201,8 +201,8 @@ export function Landing(_props: Props) {
 
           {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
           <section aria-labelledby="privacy-heading" className="reveal">
-            <div className="bg-forest-50 dark:bg-forest-900/50 border border-forest-200 dark:border-forest-700/60 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-700/60 flex items-center justify-center mx-auto mb-6">
+            <div className="bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-700 rounded-2xl p-8 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-800 border border-forest-200 dark:border-forest-700 flex items-center justify-center mx-auto mb-6">
                 <Lock size={32} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
               </div>
               <h2 id="privacy-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Your camera never leaves this app.</h2>
@@ -212,7 +212,7 @@ export function Landing(_props: Props) {
                 locally on your CPU or GPU. Zero bytes of camera data are transmitted to any server —
                 because there is no server involved in detection.
               </p>
-              <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700/60">
+              <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700">
                 Disconnect from the internet and the app works exactly the same.
               </p>
             </div>
@@ -244,7 +244,7 @@ export function Landing(_props: Props) {
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center text-xs font-bold text-forest-600 dark:text-forest-400 flex-shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-800 border border-forest-200 dark:border-forest-800 flex items-center justify-center text-xs font-bold text-forest-600 dark:text-forest-400 flex-shrink-0">
                       {n}
                     </span>
                     <Icon size={18} className="text-forest-500 dark:text-forest-400" aria-hidden="true" />
@@ -475,7 +475,7 @@ export function Landing(_props: Props) {
               {/* Monthly */}
               <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
                 <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
                     <Zap size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
                   </div>
                   <div>
@@ -512,7 +512,7 @@ export function Landing(_props: Props) {
                   </span>
                 </div>
                 <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center">
+                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
                     <Star size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
                   </div>
                   <div>
@@ -585,7 +585,7 @@ export function Landing(_props: Props) {
           {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
           <section
             aria-label="Call to action"
-            className="reveal text-center py-12 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800"
+            className="reveal text-center py-12 rounded-2xl bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-800"
           >
             <h2 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Ready to stop nail biting?</h2>
             <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
