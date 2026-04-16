@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { initializePaddle, type Paddle } from '@paddle/paddle-js';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
 import { Check, Zap, Star, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 
@@ -18,6 +18,7 @@ export function PaywallPage({ onBack }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [paddle, setPaddle] = useState<Paddle | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const plansConfigured = !!(PRICE_MONTHLY && PRICE_YEARLY && PADDLE_CLIENT_TOKEN);
 
@@ -33,14 +34,29 @@ export function PaywallPage({ onBack }: Props) {
         if (event.name === 'checkout.completed') {
           // checkout.completed provides transaction_id, not subscription_id.
           // The server will look up the transaction to find the subscription.
-          const data = event.data as Record<string, unknown> | undefined;
-          handleCheckoutComplete((data?.transaction_id as string) || null);
+          const txId = (event.data as CheckoutEventsData | undefined)?.transaction_id ?? null;
+          handleCheckoutComplete(txId);
         }
       },
     }).then((paddleInstance) => {
       if (paddleInstance) setPaddle(paddleInstance);
     });
   }, []);
+
+  // When success screen is shown, poll refreshProfile until App.tsx transitions away.
+  // This handles PayPal (and other async) payments where the webhook arrives after
+  // the first refreshProfile() call.
+  useEffect(() => {
+    if (!success) return;
+    pollRef.current = setInterval(() => { refreshProfile(); }, 3000);
+    const timeout = setTimeout(() => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    }, 90_000);
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+      clearTimeout(timeout);
+    };
+  }, [success, refreshProfile]);
 
   const handleCheckoutComplete = useCallback(async (transactionId: string | null) => {
     setActivating(true);
@@ -86,8 +102,14 @@ export function PaywallPage({ onBack }: Props) {
             <Check size={32} className="text-forest-600 dark:text-forest-400" />
           </div>
           <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2 tracking-tight">You're all set!</h2>
-          <p className="text-stone-500 dark:text-stone-400 mb-2">Subscription activated. Enjoy Stop Biting Pro.</p>
-          <p className="text-stone-400 dark:text-stone-500 text-sm">Redirecting to app…</p>
+          <p className="text-stone-500 dark:text-stone-400 mb-6">Subscription activated. Enjoy Stop Biting Pro.</p>
+          <button
+            onClick={() => refreshProfile()}
+            className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5"
+          >
+            Go to app →
+          </button>
+          <p className="text-stone-400 dark:text-stone-500 text-xs mt-4">Takes a moment to activate…</p>
         </div>
       </div>
     );
