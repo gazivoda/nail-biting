@@ -15,6 +15,7 @@ import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
+import { PWAGuideModal } from './components/PWAGuideModal';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -58,26 +59,32 @@ function AppRouter() {
   // ── Paywall (trial expired) or voluntary upgrade ────────────────────────
   if (accessStatus === 'paywall' || showPaywall) {
     return (
-      <PaywallPage
-        onBack={accessStatus === 'trial_active' ? () => setShowPaywall(false) : undefined}
-      />
+      <>
+        <PaywallPage
+          onBack={accessStatus === 'trial_active' ? () => setShowPaywall(false) : undefined}
+        />
+        <PWAGuideModal />
+      </>
     );
   }
 
   // ── App (trial_active or subscribed) ────────────────────────────────────
   return (
-    <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
-      <TabBar
-        active={activeTab}
-        onChange={setActiveTab}
-        onUpgrade={() => setShowPaywall(true)}
-      />
-      <main className="flex-1 ml-56">
-        {activeTab === 'dashboard' && <Dashboard />}
-        {activeTab === 'log' && <Log />}
-        {activeTab === 'settings' && <Settings />}
-      </main>
-    </div>
+    <>
+      <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
+        <TabBar
+          active={activeTab}
+          onChange={setActiveTab}
+          onUpgrade={() => setShowPaywall(true)}
+        />
+        <main className="flex-1 ml-56">
+          {activeTab === 'dashboard' && <Dashboard />}
+          {activeTab === 'log' && <Log />}
+          {activeTab === 'settings' && <Settings />}
+        </main>
+      </div>
+      <PWAGuideModal />
+    </>
   );
 }
 
