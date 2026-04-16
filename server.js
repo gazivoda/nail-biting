@@ -27,7 +27,7 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const JWT_SECRET           = process.env.JWT_SECRET;
 const PADDLE_API_KEY        = process.env.PADDLE_API_KEY;
 const PADDLE_WEBHOOK_SECRET = process.env.PADDLE_WEBHOOK_SECRET;
-const PADDLE_API = process.env.PADDLE_ENV === 'production'
+const PADDLE_API = (process.env.VITE_PADDLE_ENV || process.env.PADDLE_ENV) === 'production'
   ? 'https://api.paddle.com'
   : 'https://sandbox-api.paddle.com';
 
