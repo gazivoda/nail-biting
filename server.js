@@ -556,6 +556,37 @@ app.post('/api/paddle/verify-subscription', authMiddleware, async (req, res) => 
   }
 });
 
+// ─── Paddle customer portal session ─────────────────────────────────────────
+// Returns a one-time URL to Paddle's self-serve customer portal so users can
+// manage or cancel their subscription without contacting support.
+app.get('/api/paddle/portal-session', authMiddleware, async (req, res) => {
+  const user = getUser(req.userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  if (!user.paddle_customer_id) return res.status(400).json({ error: 'No Paddle customer on record' });
+  if (!PADDLE_API_KEY) return res.status(503).json({ error: 'Paddle not configured' });
+
+  try {
+    const r = await fetch(`${PADDLE_API}/customers/${user.paddle_customer_id}/portal-sessions`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${PADDLE_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+
+    if (!r.ok) throw new Error(`Paddle portal session failed: ${r.status}`);
+    const body = await r.json();
+    const url = body.data?.urls?.general?.overview;
+    if (!url) throw new Error('No portal URL in Paddle response');
+
+    res.json({ url });
+  } catch (err) {
+    console.error('Portal session error:', err.message);
+    res.status(502).json({ error: 'Failed to create portal session' });
+  }
+});
+
 // ─── Downloads ───────────────────────────────────────────────────────────────
 const GITHUB_RELEASES_BASE = 'https://github.com/gazivoda/nail-biting/releases/download';
 const DOWNLOAD_MAP = {

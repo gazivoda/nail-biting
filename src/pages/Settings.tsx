@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
-import { Bell, ShieldCheck, Sliders, Trash2, Volume2 } from 'lucide-react';
+import { Bell, ShieldCheck, Sliders, Trash2, Volume2, CreditCard, ExternalLink, Zap, RefreshCw } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
+import { useAuth, apiFetch } from '../contexts/AuthContext';
 import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval } from '../types';
 
 function Section({ title, icon: Icon, children, fullWidth }: {
@@ -200,7 +201,115 @@ function SoundPicker({ value, onChange }: { value: AlertSound; onChange: (s: Ale
   );
 }
 
-export function Settings() {
+// ── Plan section ─────────────────────────────────────────────────────────────
+
+const STATUS_BADGE: Record<string, { label: string; className: string }> = {
+  trial:     { label: 'Free Trial', className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
+  active:    { label: 'Active',     className: 'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700' },
+  paused:    { label: 'Paused',     className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
+  cancelled: { label: 'Cancelled',  className: 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
+  expired:   { label: 'Expired',    className: 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
+};
+
+function fmt(iso: string) {
+  return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
+  const { user, accessStatus } = useAuth();
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  if (!user) return null;
+
+  const { subscription_status, subscription_plan, subscription_end_date, trial_end_date } = user;
+  const badge = STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired;
+
+  const trialDaysLeft = trial_end_date
+    ? Math.max(0, Math.ceil((new Date(trial_end_date).getTime() - Date.now()) / 86_400_000))
+    : 0;
+
+  const openPortal = async () => {
+    setPortalLoading(true);
+    try {
+      const { url } = await apiFetch('/api/paddle/portal-session') as { url: string };
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch {
+      window.open('https://customer.paddle.com/', '_blank', 'noopener,noreferrer');
+    } finally {
+      setPortalLoading(false);
+    }
+  };
+
+  const canManage = subscription_status === 'active' || subscription_status === 'paused' || subscription_status === 'cancelled';
+
+  return (
+    <Section title="Plan" icon={CreditCard} fullWidth>
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+
+        {/* Status + detail */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center text-forest-600 dark:text-forest-400 flex-shrink-0">
+            <CreditCard size={17} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${badge.className}`}>
+                {badge.label}
+              </span>
+              {(subscription_status === 'active' || subscription_status === 'paused') && subscription_plan && (
+                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
+                  Stop Biting Pro · {subscription_plan === 'yearly' ? 'Yearly' : 'Monthly'}
+                </span>
+              )}
+              {subscription_status === 'trial' && (
+                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting</span>
+              )}
+              {subscription_status === 'cancelled' && (
+                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting Pro</span>
+              )}
+            </div>
+            <p className="text-xs text-stone-400 dark:text-stone-500">
+              {subscription_status === 'trial' && trial_end_date && (
+                trialDaysLeft > 0
+                  ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} left in trial — ends ${fmt(trial_end_date)}`
+                  : 'Trial has ended'
+              )}
+              {subscription_status === 'active' && subscription_end_date && `Renews ${fmt(subscription_end_date)}`}
+              {subscription_status === 'paused' && subscription_end_date && `Access until ${fmt(subscription_end_date)}`}
+              {subscription_status === 'cancelled' && subscription_end_date && `Access until ${fmt(subscription_end_date)}`}
+            </p>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          {accessStatus === 'trial_active' && onUpgrade && (
+            <button
+              onClick={onUpgrade}
+              className="inline-flex items-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-4 py-2 text-xs transition-all duration-150 hover:-translate-y-0.5"
+            >
+              <Zap size={12} />
+              Upgrade to Pro
+            </button>
+          )}
+          {canManage && (
+            <button
+              onClick={openPortal}
+              disabled={portalLoading}
+              className="inline-flex items-center gap-1.5 border border-stone-200 dark:border-ink-400 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-ink-100 rounded-xl px-4 py-2 text-xs transition-colors disabled:opacity-50"
+            >
+              {portalLoading ? <RefreshCw size={12} className="animate-spin" /> : <ExternalLink size={12} />}
+              {portalLoading ? 'Opening…' : 'Manage subscription'}
+            </button>
+          )}
+        </div>
+
+      </div>
+    </Section>
+  );
+}
+
+export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
   const {
     detectionSensitivity, setSensitivity,
     alertType, setAlertType,
@@ -229,6 +338,9 @@ export function Settings() {
     <div className="p-8 max-w-5xl">
       <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-8 tracking-tight">Settings</h1>
       <div className="grid grid-cols-2 gap-4">
+
+      {/* Plan */}
+      <PlanSection onUpgrade={onUpgrade} />
 
       {/* Privacy */}
       <Section title="Privacy" icon={ShieldCheck}>

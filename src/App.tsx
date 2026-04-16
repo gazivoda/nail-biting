@@ -80,7 +80,7 @@ function AppRouter() {
         <main className="flex-1 ml-56">
           {activeTab === 'dashboard' && <Dashboard />}
           {activeTab === 'log' && <Log />}
-          {activeTab === 'settings' && <Settings />}
+          {activeTab === 'settings' && <Settings onUpgrade={() => setShowPaywall(true)} />}
         </main>
       </div>
       <PWAGuideModal />
