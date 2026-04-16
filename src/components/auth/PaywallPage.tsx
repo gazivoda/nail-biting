@@ -147,7 +147,7 @@ export function PaywallPage({ onBack }: Props) {
         {isTrialExpired && (
           <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl px-4 py-2.5 text-sm mb-8">
             <AlertTriangle size={14} />
-            <span>Your 7-day free trial has ended. Subscribe to keep using Stop Biting.</span>
+            <span>Your 3-day free trial has ended. Subscribe to keep using Stop Biting.</span>
           </div>
         )}
 

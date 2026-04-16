@@ -19,7 +19,7 @@ export function TermsPage() {
         {
           heading: '3. Free Trial',
           content:
-            'New users receive a 7-day free trial with full access to all features. No credit card is required to start the trial. At the end of the trial period, continued access requires a paid subscription.',
+            'New users receive a 3-day free trial with full access to all features. No credit card is required to start the trial. At the end of the trial period, continued access requires a paid subscription.',
         },
         {
           heading: '4. Subscriptions and Billing',
