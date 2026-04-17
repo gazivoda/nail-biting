@@ -1,6 +1,10 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend = null;
+function getResend() {
+  if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
+  return resend;
+}
 const FROM = 'Stop Biting Nails <onboarding@resend.dev>';
 const ADMIN_EMAIL = 'gazivodai61@gmail.com';
 const APP_URL = process.env.APP_URL || 'https://stopbiting.today';
@@ -15,7 +19,7 @@ export async function sendWelcomeEmail({ name, email, trial_end_date }) {
   const firstName = name ? name.split(' ')[0] : 'there';
   const trialEnd = formatDate(trial_end_date);
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: email,
     subject: `Welcome to Stop Biting Nails, ${firstName}!`,
@@ -81,7 +85,7 @@ export async function sendAdminNotification({ name, email, created_at, trial_end
   const signedUpAt = new Date(created_at).toUTCString();
   const trialEnd = formatDate(trial_end_date);
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: ADMIN_EMAIL,
     subject: `New signup: ${displayName}`,
