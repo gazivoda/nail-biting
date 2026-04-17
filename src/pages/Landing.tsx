@@ -293,17 +293,15 @@ export function Landing(_props: Props) {
             <article aria-labelledby="why-bite-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
               <h2 id="why-bite-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Why do people bite their nails?</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                Nail biting — medically known as <strong className="text-stone-700 dark:text-stone-200">onychophagia</strong> — is a
-                body-focused repetitive behaviour (BFRB) that affects 20–30% of adults. It most commonly begins
-                in childhood or adolescence and often persists into adulthood without targeted intervention.
+                About 1 in 4 adults bites their nails — not occasionally, but chronically. Most have been doing it since childhood. Most have tried to stop more than once. The reason it's so hard isn't weak willpower. It's that the habit runs on autopilot, below the level of conscious thought.
               </p>
 
-              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">The three main triggers</h3>
+              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">When it tends to happen</h3>
               <ul className="space-y-3 text-sm">
                 {[
-                  ['Stress and anxiety', 'The most cited driver. Biting activates the oral motor system and produces a short-lived calming effect — reinforcing the loop every time it happens.'],
-                  ['Deep focus and boredom', 'Many people bite during intense concentration (coding, reading) or when under-stimulated. The hand moves to the mouth without any conscious decision.'],
-                  ['Compulsive habit loop', 'Over time, context alone (sitting at a desk, watching a screen) triggers the behaviour, independent of emotional state. The cue-routine-reward loop is fully automatic.'],
+                  ['Stress', "Your brain reaches for something familiar when anxiety spikes. Biting gives a brief sense of relief, which teaches your brain to reach for it again next time."],
+                  ['Deep focus', "The part of your brain that monitors what your hands are doing goes quiet when you're concentrating hard. This is why you look down and realise you've been biting for the last 20 minutes."],
+                  ['Pure habit', 'After years of repetition, the context itself — laptop open, meeting on, desk — is enough to trigger it. No stress required. The hand just... moves.'],
                 ].map(([label, text]) => (
                   <li key={label as string} className="flex gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest-500 dark:bg-forest-400 flex-shrink-0 mt-1.5" aria-hidden="true" />
@@ -316,9 +314,7 @@ export function Landing(_props: Props) {
               </ul>
 
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed pt-2 border-t border-stone-200 dark:border-ink-400">
-                Unlike <strong className="text-stone-700 dark:text-stone-200">products to stop nail biting</strong> such as bitter-tasting
-                nail polishes, habit-reversal approaches create awareness at the exact moment the behaviour
-                occurs — which is when intervention is most effective.
+                Bitter nail polish and physical barriers don't fix this — they fight the symptom. What actually works is catching the moment it starts and building awareness of when and why it happens.
               </p>
 
               <a href="/blog/why-do-people-bite-their-nails" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
@@ -328,19 +324,17 @@ export function Landing(_props: Props) {
             </article>
 
             <article aria-labelledby="hrt-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
-              <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">What is habit reversal training?</h2>
+              <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">The approach that actually works</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                <strong className="text-stone-700 dark:text-stone-200">Habit Reversal Training (HRT)</strong> is the gold-standard
-                cognitive-behavioural therapy for body-focused repetitive behaviours including onychophagia.
-                Clinical studies report 70–90% reductions in biting frequency among consistent practitioners.
+                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. Studies consistently show 70–90% reductions in biting frequency. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
               </p>
 
-              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">The three components of HRT</h3>
+              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">How it works</h3>
               <div className="space-y-3">
                 {[
-                  ['Awareness training', 'The person learns to notice every instance of the habit — the exact moment it begins, the sensation, the context. Most nail biters are conscious of fewer than half their daily bites.'],
-                  ['Competing response', 'A physically incompatible behaviour replaces the habit the moment awareness fires: clenching a fist, pressing palms flat on a surface, or picking up a pen.'],
-                  ['Sensory interruption', 'An external signal — traditionally a coach or partner — breaks the automatic chain at the point of awareness. An audio alarm achieves the same effect with zero social friction.'],
+                  ['Notice it happening', "Most nail biters catch fewer than half their daily biting episodes. Step one is simply becoming aware every single time — which is harder than it sounds when the habit is fully automatic."],
+                  ['Do something else instead', 'The moment you notice it, replace the bite with something your hands can\'t do simultaneously — press your palms flat, clench a fist, grip the desk. Hold it for a minute.'],
+                  ['Get an external signal', 'In clinical settings, a therapist would tap your shoulder. The audio alarm in this app does the same thing: it catches the moment you missed.'],
                 ].map(([title, text]) => (
                   <div key={title as string} className="flex gap-3">
                     <span className="w-1 rounded-full bg-forest-400 dark:bg-forest-600 flex-shrink-0 self-stretch" aria-hidden="true" />
@@ -353,8 +347,7 @@ export function Landing(_props: Props) {
               </div>
 
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed pt-2 border-t border-stone-200 dark:border-ink-400">
-                This app automates awareness and sensory interruption — the two hardest components to achieve
-                without external support. The competing response is up to you.
+                Stop Biting handles the awareness and the signal. What you do with your hands instead is up to you.
               </p>
 
               <a href="/blog/habit-reversal-training-guide" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
@@ -448,8 +441,8 @@ export function Landing(_props: Props) {
           {/* ── STATS STRIP ───────────────────────────────────────────────── */}
           <section aria-label="Key statistics" className="reveal flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
             {[
-              { number: '20–30%', label: 'Of adults affected by onychophagia' },
-              { number: '70–90%', label: 'Biting reduction with consistent HRT' },
+              { number: '20–30%', label: 'of adults bite their nails chronically' },
+              { number: '70–90%', label: 'fewer biting incidents after 6 weeks of awareness training' },
               { number: '0 bytes', label: 'Of camera data sent to servers' },
             ].map(({ number, label }, i) => (
               <div key={label} className="flex items-center gap-8">
@@ -462,7 +455,7 @@ export function Landing(_props: Props) {
             ))}
           </section>
           <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
-            HRT efficacy data sourced from published clinical literature. Camera privacy verified by architecture — no server-side processing exists.
+            Biting reduction figures from clinical studies on habit reversal training. Camera privacy is architectural — there's no server to send data to.
           </p>
 
           {/* ── PRICING ───────────────────────────────────────────────────── */}
