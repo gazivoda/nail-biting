@@ -19,7 +19,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'why-do-people-bite-their-nails',
     title: 'Why Do People Bite Their Nails — And Why Is It So Hard to Stop?',
-    description: 'About 1 in 4 adults bites their nails chronically. Here\'s what actually drives the habit, why willpower rarely works, and what the research says about breaking it.',
+    description: "About 1 in 4 adults bites their nails chronically. Here\'s what actually drives the habit, why willpower rarely works, and what the research says about breaking it.",
     tag: 'Psychology',
     readingMinutes: 7,
     datePublished: '2026-04-03',
@@ -33,9 +33,9 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: 'The three situations where it tends to happen',
         body: `Ask a nail biter when they do it, and you'll usually hear variations on the same three answers.`,
         list: [
-          'Stress or anxiety — It feels like it helps, briefly. The biting gives you something to focus on and produces a small release of tension. That relief is real, which is exactly why your brain keeps returning to it when you\'re anxious.',
-          'Deep concentration — When you\'re fully absorbed in something, the part of your brain that monitors your hands just... goes offline. This is why people finish a coding session and suddenly notice they\'ve been biting for an hour without realising it.',
-          'Pure habit — After years of repetition, the context itself becomes the trigger. Sitting at a desk. Watching something. Being on a call. No stress required. The hand moves before there\'s any conscious decision to move it.',
+          "Stress or anxiety — It feels like it helps, briefly. The biting gives you something to focus on and produces a small release of tension. That relief is real, which is exactly why your brain keeps returning to it when you\'re anxious.",
+          "Deep concentration — When you\'re fully absorbed in something, the part of your brain that monitors your hands just... goes offline. This is why people finish a coding session and suddenly notice they\'ve been biting for an hour without realising it.",
+          "Pure habit — After years of repetition, the context itself becomes the trigger. Sitting at a desk. Watching something. Being on a call. No stress required. The hand moves before there\'s any conscious decision to move it.",
         ],
       },
       {
@@ -43,7 +43,7 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `Sort of, but not really. In its more severe forms, nail biting sits in the same diagnostic neighbourhood as OCD — the DSM-5 groups it with what it calls "other specified obsessive-compulsive and related disorders." But the mechanics are different. OCD is driven by intrusive thoughts that compulsions are performed to relieve. Nail biting is almost entirely automatic — it's not relieving an obsession, it's just a habit the brain has grooved deeply enough that it runs without conscious involvement.\n\nAround a third of people with OCD also have habits like nail biting or skin picking, and there's genuine neurological overlap between the two. But for most nail biters, the connection to OCD isn't the useful frame. The useful frame is: this is a very well-practised automatic behaviour, and automatic behaviours need specific interventions to change.`,
       },
       {
-        heading: 'Why willpower doesn\'t work',
+        heading: "Why willpower doesn\'t work",
         body: `Here's the thing about willpower: it only works on things you're consciously deciding to do. Nail biting, for most people, has been running automatically for long enough that it happens before the decision-making part of the brain gets involved at all. The hand is already at the mouth. The bite has already started. The awareness arrives afterward.\n\nYou can't override a behaviour you don't notice happening. That's not a failure of motivation — it's a basic feature of how deeply-ingrained habits work. They live in a different part of the brain than the part you use when you decide to do things.`,
       },
       {
@@ -56,14 +56,14 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'habit-reversal-training-guide',
     title: 'Habit Reversal Training for Nail Biting: What It Is and How to Actually Do It',
-    description: 'Habit Reversal Training is the most effective method for stopping nail biting — studies show 70–90% reductions in biting frequency. Here\'s how it works and how to use it.',
+    description: "Habit Reversal Training is the most effective method for stopping nail biting — studies show 70–90% reductions in biting frequency. Here\'s how it works and how to use it.",
     tag: 'Treatment',
     readingMinutes: 8,
     datePublished: '2026-04-03',
     dateModified: '2026-04-17',
     sections: [
       {
-        heading: 'The method that works (and why most people haven\'t tried it)',
+        heading: "The method that works (and why most people haven\'t tried it)",
         body: `Habit Reversal Training has been studied since the 1970s and has consistently outperformed every other nail biting intervention — bitter polish, physical barriers, motivation-based approaches. Studies report 70–90% reductions in biting frequency among people who stick with it for 4–8 weeks.\n\nMost people haven't tried it because it requires more than deciding to stop. It requires a specific procedure. The good news is that the procedure isn't complicated once you understand what it's actually trying to do.`,
       },
       {
@@ -119,8 +119,8 @@ export const BLOG_POSTS: BlogPost[] = [
 
   {
     slug: 'nail-biting-in-children',
-    title: 'Nail Biting in Kids: When It's Normal, When to Step In, and What Actually Helps',
-    description: 'Up to 45% of kids bite their nails at some point. Most grow out of it. Here's how to tell the difference, and what to do if they don't.',
+    title: "Nail Biting in Kids: When It's Normal, When to Step In, and What Actually Helps",
+    description: "Up to 45% of kids bite their nails at some point. Most grow out of it. Here's how to tell the difference, and what to do if they don't.",
     tag: 'Parenting',
     readingMinutes: 7,
     datePublished: '2026-04-03',
@@ -135,7 +135,7 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `In children, nail biting serves similar psychological functions to those seen in adults, but the triggering contexts differ. Common triggers in children include: school-related anxiety (tests, social pressures, transitions); boredom, particularly during passive activities like watching television or riding in a car; excitement or anticipation (which can trigger the same oral motor activation as anxiety); and imitation of peers or family members who bite their nails.\n\nYounger children (4–7) are less likely to bite from true anxiety and more likely to bite from boredom or imitation. In older children and adolescents, the anxiety component becomes more prominent. The behaviour should be interpreted in the context of the child's overall emotional regulation — isolated nail biting in an otherwise well-adjusted child is very different from nail biting that accompanies pervasive anxiety, school refusal, or other concerning signs.`,
       },
       {
-        heading: 'When should parents be concerned about a child\'s nail biting?',
+        heading: "When should parents be concerned about a child\'s nail biting?",
         body: `Most childhood nail biting does not require professional intervention. The following signs suggest a need for closer attention and potentially professional evaluation:`,
         list: [
           'The biting causes physical damage — significant shortening of nails, bleeding cuticles, infections, or visible pain.',
@@ -565,7 +565,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-during-sleep',
     title: 'Nail Biting During Sleep: Does It Happen and What Can You Do?',
-    description: 'Some people bite their nails during sleep without knowing it. This article explains sleep-related nail biting, how to tell if it\'s happening, and evidence-based approaches to stop it.',
+    description: "Some people bite their nails during sleep without knowing it. This article explains sleep-related nail biting, how to tell if it\'s happening, and evidence-based approaches to stop it.",
     tag: 'Health',
     readingMinutes: 5,
     datePublished: '2026-04-07',
@@ -653,7 +653,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'mediapipe-ai-detection-explained',
     title: 'How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer',
-    description: 'Stop Biting uses Google\'s MediaPipe framework running in WebAssembly to detect nail biting in real time. This article explains the technology stack for technically curious users.',
+    description: "Stop Biting uses Google\'s MediaPipe framework running in WebAssembly to detect nail biting in real time. This article explains the technology stack for technically curious users.",
     tag: 'Technology',
     readingMinutes: 6,
     datePublished: '2026-04-07',
