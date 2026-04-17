@@ -5,11 +5,15 @@ const FROM = 'Stop Biting Nails <onboarding@resend.dev>';
 const ADMIN_EMAIL = 'gazivodai61@gmail.com';
 const APP_URL = process.env.APP_URL || 'https://stopbiting.today';
 
+function formatDate(isoString) {
+  if (!isoString) return 'soon';
+  const d = new Date(isoString);
+  return isNaN(d) ? 'soon' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
 export async function sendWelcomeEmail({ name, email, trial_end_date }) {
   const firstName = name ? name.split(' ')[0] : 'there';
-  const trialEnd = new Date(trial_end_date).toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-  });
+  const trialEnd = formatDate(trial_end_date);
 
   await resend.emails.send({
     from: FROM,
@@ -73,15 +77,14 @@ export async function sendWelcomeEmail({ name, email, trial_end_date }) {
 }
 
 export async function sendAdminNotification({ name, email, created_at, trial_end_date }) {
+  const displayName = name || 'Unknown';
   const signedUpAt = new Date(created_at).toUTCString();
-  const trialEnd = new Date(trial_end_date).toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-  });
+  const trialEnd = formatDate(trial_end_date);
 
   await resend.emails.send({
     from: FROM,
     to: ADMIN_EMAIL,
-    subject: `New signup: ${name}`,
-    text: `New user signed up on Stop Biting Nails.\n\nName: ${name}\nEmail: ${email}\nSigned up: ${signedUpAt}\nTrial ends: ${trialEnd}`,
+    subject: `New signup: ${displayName}`,
+    text: `New user signed up on Stop Biting Nails.\n\nName: ${displayName}\nEmail: ${email}\nSigned up: ${signedUpAt}\nTrial ends: ${trialEnd}`,
   });
 }
