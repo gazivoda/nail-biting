@@ -57,8 +57,9 @@ export function ContactForm() {
               id="contact-name"
               type="text"
               required
+              autoComplete="name"
               value={form.fullName}
-              onChange={e => setForm(f => ({ ...f, fullName: e.target.value }))}
+              onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, fullName: e.target.value })); }}
               placeholder="Jane Smith"
               className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
             />
@@ -71,8 +72,9 @@ export function ContactForm() {
               id="contact-email"
               type="email"
               required
+              autoComplete="email"
               value={form.email}
-              onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+              onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, email: e.target.value })); }}
               placeholder="jane@example.com"
               className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
             />
@@ -85,26 +87,29 @@ export function ContactForm() {
               id="contact-message"
               required
               rows={5}
+              autoComplete="off"
               value={form.message}
-              onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+              onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, message: e.target.value })); }}
               placeholder="Tell us what's on your mind..."
               className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition resize-none"
             />
           </div>
-          {status === 'success' && (
-            <p className="text-forest-600 dark:text-forest-400 text-sm text-center">
-              Message sent! We'll get back to you soon.
-            </p>
-          )}
-          {status === 'error' && (
-            <p className="text-red-600 dark:text-red-400 text-sm text-center">
-              Something went wrong. Please try again or email us at hello@stopbiting.today.
-            </p>
-          )}
+          <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
+            {status === 'success' && (
+              <p className="text-forest-600 dark:text-forest-400 text-sm text-center">
+                Message sent! We'll get back to you soon.
+              </p>
+            )}
+            {status === 'error' && (
+              <p className="text-red-600 dark:text-red-400 text-sm text-center">
+                Something went wrong. Please try again or email us at hello@stopbiting.today.
+              </p>
+            )}
+          </div>
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="inline-flex justify-center items-center gap-2 bg-forest-600 hover:bg-forest-500 disabled:opacity-50 text-cream-100 font-semibold rounded-2xl px-8 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+            className="inline-flex justify-center items-center gap-2 bg-forest-600 hover:bg-forest-500 disabled:opacity-50 disabled:cursor-not-allowed text-cream-100 font-semibold rounded-2xl px-8 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
           >
             {status === 'sending' ? 'Sending…' : 'Send Message'}
           </button>
