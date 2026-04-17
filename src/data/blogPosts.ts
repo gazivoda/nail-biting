@@ -716,7 +716,7 @@ BLOG_POSTS.push({
       ],
     },
     {
-      heading: 'The part where you tell yourself you'll stop',
+      heading: "The part where you tell yourself you'll stop",
       body: `Here is where things get interesting. At some point — perhaps while looking at your hands after a particularly enthusiastic session — you will tell yourself that you are going to stop. This is an extremely reasonable decision. You are an adult. You have willpower. You have, at various points in your life, completed difficult things. Stopping yourself from putting your fingers in your mouth should, in theory, be achievable.\n\nAnd then you open your laptop again.\n\nThe problem is not motivation. The problem is not character. The problem is that nail biting has been rerouted into the automatic, unconscious part of your brain — the part that also drives your car home and brushes your teeth. You cannot out-willpower an automatic habit any more than you can consciously manage your heartbeat. The behaviour happens before the decision-making part of your brain gets a vote.\n\nThis is why people bite their nails for 15 years while actively trying not to. It is not weakness. It is neuroscience.`,
     },
     {
