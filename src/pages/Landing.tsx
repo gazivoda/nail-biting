@@ -8,6 +8,7 @@ import {
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
+import { ContactForm } from '../components/ContactForm';
 
 // Activates scroll-reveal on all .reveal and .reveal-card elements
 function useScrollReveal() {
@@ -597,6 +598,9 @@ export function Landing(_props: Props) {
               <p className="text-stone-400 dark:text-stone-500 text-xs">3-day free trial · no credit card required</p>
             </div>
           </section>
+
+          {/* ── CONTACT ───────────────────────────────────────────────────────── */}
+          <ContactForm />
 
         </div>
       </main>
