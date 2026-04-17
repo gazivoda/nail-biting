@@ -10,6 +10,7 @@ import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomBytes, createHmac } from 'crypto';
+import { sendWelcomeEmail, sendAdminNotification } from './email.js';
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -278,6 +279,7 @@ app.get('/api/auth/callback', async (req, res) => {
 
     // Find or create user
     let user = getUser(googleId);
+    const isNewUser = !user;
     if (!user) {
       const trialEnd = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
       user = {
@@ -295,6 +297,11 @@ app.get('/api/auth/callback', async (req, res) => {
       };
     }
     saveUser(user);
+
+    if (isNewUser) {
+      sendWelcomeEmail(user).catch(err => console.error('[email] welcome failed:', err));
+      sendAdminNotification(user).catch(err => console.error('[email] admin notification failed:', err));
+    }
 
     const token = signToken(user.id);
 
