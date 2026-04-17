@@ -685,3 +685,51 @@ const ADDITIONAL_POSTS: BlogPost[] = [
 
 // Merge additional posts into the main array
 BLOG_POSTS.push(...ADDITIONAL_POSTS);
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-laptop-working-from-home',
+  title: 'You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.',
+  description: 'A funny, honest look at why working on a laptop turns even calm, rational adults into compulsive nail biters — and how AI detection can finally break the cycle.',
+  tag: 'Humor',
+  readingMinutes: 5,
+  datePublished: '2026-04-17',
+  dateModified: '2026-04-17',
+  sections: [
+    {
+      heading: 'Scene: you, your laptop, and your fingers',
+      body: `It starts innocently. You open your laptop, pull up a browser tab, and begin doing something productive. Maybe you're reviewing a document. Maybe you're in a Zoom call pretending to look engaged. Maybe you're staring at a bug that has no right to exist.\n\nThen it happens. Somewhere between clicking "open file" and realising the file doesn't open, your hand drifts upward. Your thumb finds your index finger. And before your conscious brain has filed the necessary paperwork, you're biting your nail with the focused intensity of a person trying to defuse a bomb.\n\nYou didn't decide to do this. You didn't even notice it happening. One moment you were a functioning adult; the next, you were chewing your own hand. Welcome to nail biting at a laptop — the habit that 30% of adults share and approximately 0% of adults talk about.`,
+    },
+    {
+      heading: 'Why laptops specifically are a nail-biting trap',
+      body: `There is something uniquely, almost cosmically perfect about the laptop as a nail-biting catalyst. Consider the setup: you are sitting still, slightly hunched, staring at a glowing rectangle, experiencing a rotating roster of emotions ranging from mild frustration to existential dread. Your hands are hovering near your face at all times. Your brain is working hard enough that its self-monitoring functions have taken the afternoon off.\n\nThis is the exact neurological environment in which habitual behaviour thrives. Researchers call it "depleted inhibitory control" — your prefrontal cortex is so busy processing the cascading disaster of your inbox that it has no spare capacity to notice your hand creeping toward your mouth like a raccoon approaching an unattended picnic.\n\nThe laptop also provides an infinite conveyor belt of micro-stresses: the email that requires a careful reply, the Slack message that is technically a question but is spiritually an accusation, the Pull Request that someone has left seventeen comments on. Each one generates a small pulse of anxiety. Each pulse is a cue. And for a nail biter, each cue reliably produces the same routine.`,
+    },
+    {
+      heading: 'A brief taxonomy of laptop nail-biting situations',
+      body: `For research purposes, nail biting at a laptop falls into several well-documented categories. You may recognise one or more of the following:`,
+      list: [
+        'The Waiting Bite — the page is loading, the compile is running, the file is uploading. You have been given a three-second window of enforced idleness. Your fingers seize the opportunity immediately.',
+        'The Thinking Bite — you are genuinely unsure what to do next. Your brain is searching. Your mouth has apparently decided to assist by consuming your thumbnail.',
+        'The Stress Bite — the deadline is today, the client has replied, the build has failed. Your hand moves with the calm, purposeful energy of a person who has simply accepted their fate.',
+        'The Boredom Bite — it is a long meeting. Nothing relevant to you has been said in eleven minutes. Your fingers have found entertainment.',
+        'The Zoom Bite — you are on camera. You know you are on camera. You are doing it anyway, with the quiet dignity of someone who has stopped caring.',
+        'The Reading Bite — you are reading something difficult. Medical literature, legal copy, terms and conditions. The biting appears to be a processing fee.',
+      ],
+    },
+    {
+      heading: 'The part where you tell yourself you'll stop',
+      body: `Here is where things get interesting. At some point — perhaps while looking at your hands after a particularly enthusiastic session — you will tell yourself that you are going to stop. This is an extremely reasonable decision. You are an adult. You have willpower. You have, at various points in your life, completed difficult things. Stopping yourself from putting your fingers in your mouth should, in theory, be achievable.\n\nAnd then you open your laptop again.\n\nThe problem is not motivation. The problem is not character. The problem is that nail biting has been rerouted into the automatic, unconscious part of your brain — the part that also drives your car home and brushes your teeth. You cannot out-willpower an automatic habit any more than you can consciously manage your heartbeat. The behaviour happens before the decision-making part of your brain gets a vote.\n\nThis is why people bite their nails for 15 years while actively trying not to. It is not weakness. It is neuroscience.`,
+    },
+    {
+      heading: 'What actually works (and why it sounds almost too simple)',
+      body: `The gold-standard treatment for nail biting is called Habit Reversal Training, and its core insight is this: you cannot stop a habit you are not aware of. The reason the habit persists is not that you lack motivation — you clearly want to stop — it is that the habit is invisible to you while it is happening.\n\nThe intervention that consistently works is external awareness: something that tells you, at the exact moment the behaviour occurs, that it is occurring. Traditionally this required a therapist, a patient spouse, or a very observant colleague. None of these are particularly convenient for a solo Zoom call at 9am.\n\nThis is where Stop Biting comes in. It uses your laptop's webcam and on-device AI to watch for the specific gesture of hand-to-mouth contact and fire an alert the moment it detects it. Not five minutes later when you notice your hand is sore. Not the next morning when you look at your nails. Right now, as it happens — which is the only moment when awareness is therapeutically useful.\n\nThe camera never leaves the app. Nothing is recorded or sent anywhere. It is just a silent observer that, unlike your prefrontal cortex, does not take a break when the build fails.`,
+    },
+    {
+      heading: 'What using it actually looks like',
+      body: `You open your laptop and start a detection session. The AI runs in the background while you work. You forget it is there entirely — which is the point. You are not supposed to consciously monitor yourself. The app does that part.\n\nAt some point — perhaps during a tense code review, perhaps during a meeting that could have been an email — your hand drifts upward and the alert fires. You become aware of what you were doing. You put your hand down. You return to whatever you were doing.\n\nThat's it. That single moment of external awareness is the lever that habit science has consistently identified as the active ingredient. Over days and weeks, the pattern starts to shift. Biting frequency drops. The automatic loop weakens through non-reinforcement. Your nails, gradually, start to look like nails again.\n\nYou will still have bad deadlines. The builds will still fail. The meetings will still be long. But your fingers might survive them.`,
+    },
+    {
+      heading: 'The part where we get slightly serious for one paragraph',
+      body: `Nail biting at a laptop is funny to describe and genuinely frustrating to live with. If you have tried to stop — through bitter polish, through gloves, through sheer willpower — and found that nothing holds, you are not failing. You are running the wrong intervention on the right problem.\n\nThe right intervention works with the architecture of your habit rather than against it. Stop Biting is free to try for three days, requires no installation, and runs entirely on your device. If you're going to be in front of your laptop anyway, you might as well let it do something useful.`,
+    },
+  ],
+});
