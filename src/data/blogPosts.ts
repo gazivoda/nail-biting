@@ -688,7 +688,7 @@ BLOG_POSTS.push(...ADDITIONAL_POSTS);
 
 BLOG_POSTS.push({
   slug: 'nail-biting-laptop-working-from-home',
-  title: 'You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.',
+  title: "You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.",
   description: 'A funny, honest look at why working on a laptop turns even calm, rational adults into compulsive nail biters — and how AI detection can finally break the cycle.',
   tag: 'Humor',
   readingMinutes: 5,
