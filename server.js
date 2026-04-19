@@ -962,10 +962,49 @@ if (!existsSync(distPath)) {
       ],
     };
 
-    const schemas = [
+    const schemaBlocks = [
       `<script type="application/ld+json">${JSON.stringify(blogPosting)}</script>`,
       `<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`,
-    ].join('\n    ');
+    ];
+
+    if (slug === 'habit-reversal-training-guide') {
+      const howTo = {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to Stop Nail Biting Using Habit Reversal Training',
+        description: 'A three-step evidence-based protocol (HRT) proven to reduce nail biting frequency by 70–90% in consistent practitioners over 4–8 weeks.',
+        totalTime: 'P8W',
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'Start awareness training',
+            text: 'Keep a habit diary for one week, recording every nail biting episode — time, context, emotional state, and trigger. Practise noticing the precursor movements (hand rising, fingers touching lips) before the bite. This phase alone produces measurable reductions and is the most impactful component of HRT.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Choose and practise a competing response',
+            text: 'Select a behaviour physically incompatible with nail biting that you can maintain for at least one minute in any context — pressing fingertips to a flat surface, clenching a fist, or gripping an object. At the moment you notice the urge or the habit beginning, immediately perform the competing response and hold it for 1–3 minutes until the urge passes.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Add external awareness support',
+            text: 'Use a real-time alert system — a support person, a phone habit tracker, or an AI-powered detection app — to flag instances you miss during the awareness gap. This closes the loop for automatic biting episodes that occur below conscious threshold, which account for the majority of daily biting in most people.',
+          },
+          {
+            '@type': 'HowToStep',
+            position: 4,
+            name: 'Maintain practice for 4–8 weeks',
+            text: 'Biting frequency typically decreases significantly between weeks 2 and 6. A 12-month follow-up study found 87% of HRT responders maintained their improvements at one year — the competing response becomes self-sustaining once established. Continue daily monitoring during high-stress periods to prevent relapse.',
+          },
+        ],
+      };
+      schemaBlocks.push(`<script type="application/ld+json">${JSON.stringify(howTo)}</script>`);
+    }
+
+    const schemas = schemaBlocks.join('\n    ');
 
     // Inject before closing </head>
     return html.replace('</head>', `    ${schemas}\n  </head>`);

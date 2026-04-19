@@ -172,6 +172,41 @@
       ]
     }
     </script>
+
+    <!-- Structured Data: MedicalCondition — Onychophagia -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalCondition",
+      "name": "Onychophagia",
+      "alternateName": ["nail biting", "chronic nail biting", "compulsive nail biting"],
+      "description": "Onychophagia is the clinical term for chronic, compulsive nail biting — a body-focused repetitive behaviour (BFRB) classified in the DSM-5 under Other Specified Obsessive-Compulsive and Related Disorders. It affects 20–30% of adults and up to 45% of children.",
+      "associatedAnatomy": {
+        "@type": "AnatomicalStructure",
+        "name": "Fingernails"
+      },
+      "cause": "Anxiety, stress, boredom, deep focus states, and OCD-spectrum tendencies are the primary drivers. Habit loops in the basal ganglia make the behaviour automatic over time.",
+      "possibleTreatment": [
+        {
+          "@type": "MedicalTherapy",
+          "name": "Habit Reversal Training (HRT)",
+          "description": "Three-component CBT protocol (awareness training, competing response, social support) proven to reduce nail biting by 70–90% in consistent practitioners."
+        },
+        {
+          "@type": "MedicalTherapy",
+          "name": "Bitter-taste nail polish",
+          "description": "Aversion therapy using denatonium benzoate (Mavala Stop, Orly No Bite) applied to nails as a chemical deterrent."
+        }
+      ],
+      "relevantSpecialty": ["Psychiatry", "Psychology"],
+      "epidemiology": "Affects 20–30% of adults globally; prevalence peaks at 45% in adolescents aged 11–14.",
+      "recognizingAuthority": {
+        "@type": "Organization",
+        "name": "American Psychiatric Association",
+        "url": "https://www.psychiatry.org"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
