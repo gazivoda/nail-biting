@@ -25,6 +25,16 @@ export default defineConfig({
       ),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@mediapipe')) return 'mediapipe';
+          if (id.includes('node_modules')) return 'vendor';
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     // PWA only for web builds — Electron handles its own install/update flow.
@@ -32,8 +42,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       // Service worker file name
       filename: 'sw.js',
-      // Inject the SW registration into index.html automatically
-      injectRegister: 'auto',
+      // Manual registration (in main.tsx) defers SW from the critical path.
+      injectRegister: 'null',
       manifest: {
         name: 'Stop Biting — AI Nail Habit Tracker',
         short_name: 'Stop Biting',

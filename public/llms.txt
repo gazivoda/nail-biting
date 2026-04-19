@@ -37,8 +37,8 @@
 ## Pricing
 
 - Free trial: 3 days, no credit card required — full detection and tracking features included
-- Monthly: €2.99/month
-- Yearly: €29.00/year (~€2.42/month, saves 19%)
+- Monthly: $2.99/month
+- Yearly: $29.00/year (~$2.42/month, saves 19%)
 - All paid plans include unlimited AI detection, streak tracking, incident history, and all alert types
 
 ## Key facts
