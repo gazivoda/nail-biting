@@ -763,7 +763,7 @@ BLOG_POSTS.push({
     },
     {
       heading: '#2 — Stop Biting (AI Detection App)',
-      body: `Stop Biting is a web and desktop app (macOS, Windows, browser PWA) that uses your webcam and MediaPipe AI to detect the moment your hand approaches your mouth. It fires an instant alert — all processing happens on your device. No camera data is ever uploaded.\n\nBest for: People who bite during screen-based work (coding, studying, browsing). The app watches passively while you work — no manual tracking required. Pricing: Free 7-day trial. €2.99/month or €29/year. No credit card required.\n\nWhat makes it different: Real-time detection solves the hardest part of HRT — awareness. Most nail biters notice fewer than half of their daily biting episodes. Stop Biting closes that gap automatically.\n\nDisclosure: Stop Biting is the product behind this site.`,
+      body: `Stop Biting is a web and desktop app (macOS, Windows, browser PWA) that uses your webcam and MediaPipe AI to detect the moment your hand approaches your mouth. It fires an instant alert — all processing happens on your device. No camera data is ever uploaded.\n\nBest for: People who bite during screen-based work (coding, studying, browsing). The app watches passively while you work — no manual tracking required. Pricing: Free 3-day trial. €2.99/month or €29/year. No credit card required.\n\nWhat makes it different: Real-time detection solves the hardest part of HRT — awareness. Most nail biters notice fewer than half of their daily biting episodes. Stop Biting closes that gap automatically.\n\nDisclosure: Stop Biting is the product behind this site.`,
     },
     {
       heading: '#3 — Mavala Stop (Bitter Polish)',
@@ -789,7 +789,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Frequently asked questions',
-      body: `Are there any free apps to stop nail biting?\nStop Biting offers a free 7-day trial with full detection features — no credit card required. After the trial, it costs €2.99/month. General habit trackers can log the habit manually but don't detect or interrupt it automatically.\n\nDo nail biting apps actually work?\nApps that use real-time detection work by solving the awareness gap — the core challenge in habit change. Catching each episode at the moment it happens creates the neural interruption necessary for a competing response to fire. The evidence base for AI-assisted awareness intervention is newer than HRT but mechanistically sound.\n\nWhat's the fastest way to stop nail biting?\nCombining Habit Reversal Training with a real-time alert tool produces the fastest results in most cases. HRT provides the competing response; the alert tool provides the awareness. Without awareness training, the habit stays below conscious threshold and the competing response never fires. Most users see significant reduction within the first two weeks of consistent use.`,
+      body: `Are there any free apps to stop nail biting?\nStop Biting offers a free 3-day trial with full detection features — no credit card required. After the trial, it costs €2.99/month. General habit trackers can log the habit manually but don't detect or interrupt it automatically.\n\nDo nail biting apps actually work?\nApps that use real-time detection work by solving the awareness gap — the core challenge in habit change. Catching each episode at the moment it happens creates the neural interruption necessary for a competing response to fire. The evidence base for AI-assisted awareness intervention is newer than HRT but mechanistically sound.\n\nWhat's the fastest way to stop nail biting?\nCombining Habit Reversal Training with a real-time alert tool produces the fastest results in most cases. HRT provides the competing response; the alert tool provides the awareness. Without awareness training, the habit stays below conscious threshold and the competing response never fires. Most users see significant reduction within the first two weeks of consistent use.`,
     },
   ],
 });
@@ -814,7 +814,7 @@ BLOG_POSTS.push({
         'Mechanism — Stop Biting: AI webcam detection fires an alert before the bite. Mavala Stop: bitter taste deters on contact.',
         'Works away from screen — Stop Biting: No (screen-time only). Mavala Stop: Yes (works 24/7).',
         'Effective for established habits — Stop Biting: Strong (awareness mechanism directly addresses automaticity). Mavala Stop: Variable (habituation risk within 2–3 weeks).',
-        'Price — Stop Biting: €2.99/month or €29/year with 7-day free trial. Mavala Stop: ~€10–€12 one-time purchase.',
+        'Price — Stop Biting: €2.99/month or €29/year with 3-day free trial. Mavala Stop: ~€10–€12 one-time purchase.',
         'Privacy — Stop Biting: 100% on-device, no data transmitted. Mavala Stop: physical product, no data.',
         'Addresses root trigger — Stop Biting: Yes (builds awareness). Mavala Stop: No (deterrent only).',
       ],
