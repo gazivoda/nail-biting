@@ -30,6 +30,9 @@
 - [Bitter Nail Polish Review: Does It Work?](https://stopbiting.today/blog/bitter-nail-polish-review): Evidence review of Mavala Stop and denatonium benzoate products
 - [Is Nail Biting Genetic?](https://stopbiting.today/blog/nail-biting-genetics): Twin studies and BFRB heritability research — 30–45% heritable
 - [How MediaPipe AI Detection Works](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Technical explainer of WebAssembly hand/face landmark detection
+- [You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.](https://stopbiting.today/blog/nail-biting-laptop-working-from-home): Humorous look at why laptops trigger nail biting and how AI detection breaks the cycle
+- [5 Best Tools to Stop Nail Biting in 2026](https://stopbiting.today/blog/best-apps-to-stop-nail-biting): Ranked comparison of AI detection, bitter polish, HRT, and other methods by clinical evidence
+- [Stop Biting vs Mavala Stop](https://stopbiting.today/blog/stop-biting-vs-mavala-stop): Head-to-head comparison of AI webcam detection vs bitter nail polish
 
 ## Pricing
 
