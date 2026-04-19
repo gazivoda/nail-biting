@@ -86,6 +86,8 @@ export function Landing(_props: Props) {
                 top: '8%', left: '-8%',
                 background: 'radial-gradient(circle, oklch(84% 0.080 148) 0%, transparent 70%)',
                 filter: 'blur(60px)',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
               }}
             />
             <div
@@ -96,6 +98,8 @@ export function Landing(_props: Props) {
                 background: 'radial-gradient(circle, oklch(70% 0.110 148) 0%, transparent 70%)',
                 filter: 'blur(50px)',
                 animationDelay: '1.5s',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
               }}
             />
             <div
@@ -106,6 +110,8 @@ export function Landing(_props: Props) {
                 background: 'radial-gradient(circle, oklch(76% 0.155 75) 0%, transparent 70%)',
                 filter: 'blur(45px)',
                 animationDelay: '3s',
+                willChange: 'transform',
+                transform: 'translateZ(0)',
               }}
             />
           </div>
@@ -478,7 +484,7 @@ export function Landing(_props: Props) {
                   </div>
                 </div>
                 <div className="mb-5">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€2.99</span>
+                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
                   <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
                 </div>
                 <ul className="space-y-2.5 mb-7 flex-1">
@@ -515,10 +521,10 @@ export function Landing(_props: Props) {
                   </div>
                 </div>
                 <div className="mb-1">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€29.00</span>
+                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
                   <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
                 </div>
-                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just €2.42/month</p>
+                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just $2.42/month</p>
                 <ul className="space-y-2.5 mb-7 flex-1">
                   {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
                     <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">

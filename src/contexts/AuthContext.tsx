@@ -88,12 +88,20 @@ async function apiFetch(path: string, options?: RequestInit) {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// If no prior session indicator exists, start as no_auth so the landing page
+// renders immediately without waiting for the /api/user/me round-trip.
+// The flag is set after a successful auth and cleared on sign-out.
+const SESSION_FLAG = 'sb_has_session';
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [accessStatus, setAccessStatus] = useState<AccessStatus>('loading');
+  const [accessStatus, setAccessStatus] = useState<AccessStatus>(
+    localStorage.getItem(SESSION_FLAG) ? 'loading' : 'no_auth'
+  );
   const [signingIn, setSigningIn] = useState(false);
 
   const applyUser = useCallback((profile: UserProfile) => {
+    localStorage.setItem(SESSION_FLAG, '1');
     setUser(profile);
     setAccessStatus(computeAccessStatus(profile));
   }, []);
@@ -186,6 +194,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // best effort
     }
     if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
+    localStorage.removeItem(SESSION_FLAG);
     setUser(null);
     setAccessStatus('no_auth');
   };

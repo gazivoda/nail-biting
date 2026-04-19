@@ -1,0 +1,76 @@
+[
+  {
+    "_page": "best-apps-to-stop-nail-biting",
+    "_description": "ItemList schema for the roundup page",
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Best Tools to Stop Nail Biting in 2026",
+    "description": "Ranked comparison of nail biting remedies by clinical evidence — AI detection, bitter polish, HRT, competing response tools.",
+    "url": "https://stopbiting.today/blog/best-apps-to-stop-nail-biting",
+    "numberOfItems": 5,
+    "itemListOrder": "https://schema.org/ItemListOrderDescending",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Habit Reversal Training (HRT)",
+        "url": "https://stopbiting.today/blog/habit-reversal-training-guide",
+        "description": "Gold standard CBT protocol — 70–90% reduction in biting frequency in clinical trials. Free self-guided or therapist-led."
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Stop Biting (AI Detection App)",
+        "url": "https://stopbiting.today",
+        "description": "Real-time webcam AI detects nail biting and fires an alert. 100% on-device. Free 3-day trial, $2.99/month."
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Mavala Stop (Bitter Polish)",
+        "url": "https://stopbiting.today/blog/bitter-nail-polish-review",
+        "description": "Denatonium benzoate deterrent applied to nails. ~$10 one-time purchase. Works 24/7 including away from screen."
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Orly No Bite (Bitter Polish)",
+        "url": "https://stopbiting.today/blog/bitter-nail-polish-review",
+        "description": "Alternative bitter polish with longer-wear formula. Same mechanism as Mavala Stop. ~$9–11."
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Competing Response / Fidget Tools",
+        "url": "https://stopbiting.today/blog/habit-reversal-training-guide",
+        "description": "Physical objects (fidget rings, textured tools) that occupy hands during high-risk contexts. Best as HRT adjunct."
+      }
+    ]
+  },
+  {
+    "_page": "stop-biting-vs-mavala-stop",
+    "_description": "SoftwareApplication schema for the vs page (Stop Biting side)",
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stop Biting",
+    "url": "https://stopbiting.today",
+    "description": "Web and desktop app (macOS, Windows, PWA) that uses MediaPipe AI to detect nail biting via webcam in real-time. 100% on-device processing. Free 3-day trial.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web, macOS 12+, Windows 10+",
+    "offers": {
+      "@type": "Offer",
+      "price": "2.99",
+      "priceCurrency": "USD",
+      "priceValidUntil": "2026-12-31",
+      "availability": "https://schema.org/InStock",
+      "description": "Monthly subscription — $2.99/month or $29/year. Free 3-day trial included."
+    },
+    "featureList": [
+      "Real-time AI nail biting detection",
+      "100% on-device — no camera data uploaded",
+      "Instant audible alert on detection",
+      "Streak tracking and habit history",
+      "Works in browser as PWA — no install needed"
+    ]
+  }
+]
