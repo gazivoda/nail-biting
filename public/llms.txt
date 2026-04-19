@@ -6,6 +6,7 @@
 - [Home](https://stopbiting.today/): Landing page — download, features, privacy commitment
 - [Blog](https://stopbiting.today/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
 - [Privacy Policy](https://stopbiting.today/privacy): Data handling and privacy commitment
+- [Contact](https://stopbiting.today/#contact): Contact form for support and feedback
 
 ## Blog articles
 
