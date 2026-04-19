@@ -115,7 +115,7 @@ export function Landing(_props: Props) {
               className="animate-fade-up text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6"
               style={{ animationDelay: '0ms' }}
             >
-              AI-powered · On-device · Free trial
+              AI-powered · On-device · 7-day free trial
             </p>
 
             <h1
@@ -463,7 +463,7 @@ export function Landing(_props: Props) {
           <section id="pricing" aria-labelledby="pricing-heading">
             <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Pricing</p>
             <h2 id="pricing-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Simple, honest pricing.</h2>
-            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2">Start with a 3-day free trial. No credit card required.</p>
+            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2">Start with a 7-day free trial. No credit card required.</p>
 
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
               {/* Monthly */}
@@ -478,7 +478,7 @@ export function Landing(_props: Props) {
                   </div>
                 </div>
                 <div className="mb-5">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
+                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€2.99</span>
                   <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
                 </div>
                 <ul className="space-y-2.5 mb-7 flex-1">
@@ -515,10 +515,10 @@ export function Landing(_props: Props) {
                   </div>
                 </div>
                 <div className="mb-1">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
+                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">€29.00</span>
                   <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
                 </div>
-                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just $2.42/month</p>
+                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just €2.42/month</p>
                 <ul className="space-y-2.5 mb-7 flex-1">
                   {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
                     <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
@@ -542,7 +542,7 @@ export function Landing(_props: Props) {
             <div className="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-stone-400 dark:text-stone-500">
               <div className="flex items-center gap-1.5"><Shield size={11} aria-hidden="true" /><span>Secure payment via Paddle</span></div>
               <div className="flex items-center gap-1.5"><Check size={11} aria-hidden="true" /><span>Cancel anytime</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>3-day free trial</span></div>
+              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>7-day free trial</span></div>
               <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>No credit card required to start</span></div>
             </div>
           </section>
@@ -595,7 +595,7 @@ export function Landing(_props: Props) {
                 <Zap size={15} aria-hidden="true" />
                 Start free trial — it's free
               </a>
-              <p className="text-stone-400 dark:text-stone-500 text-xs">3-day free trial · no credit card required</p>
+              <p className="text-stone-400 dark:text-stone-500 text-xs">7-day free trial · no credit card required</p>
             </div>
           </section>
 
