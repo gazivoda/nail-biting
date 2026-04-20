@@ -1134,6 +1134,28 @@ if (!existsSync(distPath)) {
     res.type('html').send(injected);
   });
 
+  // Terms of Service page
+  app.get('/terms-and-conditions', (req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Terms of Service | Stop Biting',
+      description: 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.',
+      canonical: 'https://stopbiting.today/terms-and-conditions',
+    });
+    res.type('html').send(injected);
+  });
+
+  // Refund Policy page
+  app.get('/refund-policy', (req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Refund Policy | Stop Biting',
+      description: 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.',
+      canonical: 'https://stopbiting.today/refund-policy',
+    });
+    res.type('html').send(injected);
+  });
+
   // Remaining static assets (icons, WASM, models, etc.)
   app.use(express.static(distPath));
 
