@@ -616,7 +616,10 @@ export function Landing(_props: Props) {
       <footer className="border-t border-stone-200 dark:border-ink-400 py-10 px-8 bg-cream-200 dark:bg-ink-200">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start justify-between gap-6">
           <div>
-            <p className="text-stone-700 dark:text-stone-200 text-sm font-semibold">Stop Biting</p>
+            <div className="flex items-center gap-2 mb-1">
+              <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
+              <p className="text-stone-700 dark:text-stone-200 text-sm font-semibold">Stop Biting</p>
+            </div>
             <p className="text-stone-400 dark:text-stone-500 text-xs mt-1 max-w-xs leading-relaxed">
               Stop nail biting (onychophagia) using on-device AI. Works in your browser as a Progressive Web App — no install required. Built with MediaPipe, React, and WebAssembly.
             </p>
