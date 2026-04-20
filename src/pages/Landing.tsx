@@ -49,7 +49,8 @@ export function Landing(_props: Props) {
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
+        <a href="/" className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
+          <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
           Stop Biting Nails
         </a>
         <div className="flex items-center gap-6">
