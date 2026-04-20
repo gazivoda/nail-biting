@@ -1,23 +1,4 @@
-<svg width="230" height="56" viewBox="0 0 230 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stop Biting Nails logo">
-
-  <!-- Icon scaled to ~48×48, centered vertically -->
-  <g transform="translate(-36,-12.8) scale(0.24)">
-    <g stroke="#1d2d2a" stroke-width="6" fill="none">
-      <path d="M 212 260 L 212 145 A 38 38 0 0 1 288 145 L 288 260" />
-      <path d="M 226 122 L 226 152 A 24 24 0 0 0 274 152 L 274 122 C 274 107, 226 107, 226 122 Z" />
-      <path d="M 235 208 Q 250 216 265 208" stroke-linecap="round" />
-    </g>
-    <g stroke="#65b974" stroke-width="10" fill="none">
-      <circle cx="250" cy="170" r="90" />
-      <line x1="186.4" y1="106.4" x2="313.6" y2="233.6" />
-    </g>
-  </g>
-
-  <text x="54" y="25"
-        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
-        font-size="20" font-weight="700" letter-spacing="-0.4" fill="#1d2d2a">stop biting</text>
-  <text x="54" y="44"
-        font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
-        font-size="13" font-weight="500" letter-spacing="3" fill="#65b974">NAILS</text>
-
+<svg width="393" height="393" viewBox="0 0 393 393" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M77 324V174C77 107.726 130.726 54 197 54C263.274 54 317 107.726 317 174V324" stroke="#004D2C" stroke-width="18" stroke-linecap="round"/>
+<path d="M107 174C107 124.294 147.294 84 197 84C246.706 84 287 124.294 287 174V249C287 282.136 260.136 309 227 309H167C133.863 309 107 282.136 107 249V174Z" fill="#E8F5E9" stroke="#004D2C" stroke-width="12"/>
 </svg>

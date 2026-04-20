@@ -38,8 +38,8 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
     <aside className="fixed top-0 left-0 h-screen w-56 bg-white dark:bg-ink-200 border-r border-stone-200 dark:border-ink-400 flex flex-col z-50 shadow-[1px_0_0_0_oklch(88%_0.014_120/0.5)]">
       {/* Brand */}
       <div className="px-5 py-5 border-b border-stone-200 dark:border-ink-400">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
+        <div className="flex items-center gap-2.5">
+          <img src="/logo.svg" alt="Stop Biting logo" className="w-8 h-8 flex-shrink-0" />
           <p className="text-sm font-semibold tracking-tight text-stone-800 dark:text-stone-100">Stop Biting</p>
         </div>
         <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-0.5 tracking-wide">AI nail biting detector</p>

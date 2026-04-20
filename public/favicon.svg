@@ -1,9 +1,7 @@
-<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stop Biting Nails">
-  <rect width="80" height="80" rx="17" fill="#1D5C38"/>
-  <text
-    x="40" y="53"
-    text-anchor="middle"
-    font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif"
-    font-size="34" font-weight="700" letter-spacing="-1"
-    fill="white">SB</text>
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stop Biting">
+  <rect width="80" height="80" rx="17" fill="#E8F5E9"/>
+  <g transform="translate(8, 8) scale(0.163)">
+    <path d="M77 324V174C77 107.726 130.726 54 197 54C263.274 54 317 107.726 317 174V324" stroke="#004D2C" stroke-width="18" stroke-linecap="round"/>
+    <path d="M107 174C107 124.294 147.294 84 197 84C246.706 84 287 124.294 287 174V249C287 282.136 260.136 309 227 309H167C133.863 309 107 282.136 107 249V174Z" fill="#E8F5E9" stroke="#004D2C" stroke-width="12"/>
+  </g>
 </svg>
