@@ -126,11 +126,11 @@ export function Landing(_props: Props) {
             </p>
 
             <h1
-              className="animate-fade-up text-5xl sm:text-6xl font-bold text-stone-800 dark:text-stone-100 leading-tight tracking-tight"
+              className="animate-fade-up font-display text-5xl sm:text-6xl font-normal text-stone-800 dark:text-stone-100 leading-tight"
               style={{ animationDelay: '80ms' }}
             >
               Stop nail biting with<br />
-              <span className="text-forest-600 dark:text-forest-400">real-time AI detection.</span>
+              <em className="not-italic text-forest-600 dark:text-forest-400">real-time AI detection.</em>
             </h1>
 
             <p
@@ -369,41 +369,52 @@ export function Landing(_props: Props) {
           {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
           <section aria-labelledby="testimonials-heading">
             <h2 id="testimonials-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">What people are saying</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-8">
-              {[
-                {
-                  quote: "I've tried bitter nail polish, gloves, everything. This is the only thing that actually caught me in the act. Three weeks clean.",
-                  name: 'Sarah K.',
-                  context: 'Software engineer, 8-year nail biter',
-                },
-                {
-                  quote: "The alarm is jarring at first. That's exactly the point. My brain finally made the connection between the urge and the action.",
-                  name: 'Marcus T.',
-                  context: 'Designer, broke the habit in 6 weeks',
-                },
-                {
-                  quote: "I bit during video calls without ever noticing. This caught me every single time. Two months in and the urge is genuinely fading.",
-                  name: 'Priya M.',
-                  context: 'Remote worker, 15-year habit',
-                },
-              ].map(({ quote, name, context }, i) => (
-                <blockquote
-                  key={name}
-                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
-                  style={{ transitionDelay: `${i * 80}ms` }}
-                >
-                  <div className="flex gap-0.5 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={12} className="text-amber-400 fill-amber-400" aria-hidden="true" />
-                    ))}
-                  </div>
-                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">"{quote}"</p>
-                  <footer className="mt-4">
-                    <p className="text-stone-800 dark:text-stone-200 text-xs font-semibold">{name}</p>
-                    <p className="text-stone-400 dark:text-stone-500 text-xs">{context}</p>
-                  </footer>
-                </blockquote>
-              ))}
+
+            <div className="mt-8 space-y-4">
+              {/* Featured quote — full width, forest tint */}
+              <blockquote className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
+                <div className="flex gap-0.5 mb-4" aria-label="5 out of 5 stars">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={13} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
+                </div>
+                <p className="text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
+                  "I've tried bitter nail polish, gloves, everything. This is the only thing that actually caught me in the act. Three weeks clean."
+                </p>
+                <footer className="mt-5">
+                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">Sarah K.</p>
+                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-0.5">Software engineer, 8-year nail biter</p>
+                </footer>
+              </blockquote>
+
+              {/* Two smaller quotes side by side */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    quote: "The alarm is jarring at first. That's exactly the point. My brain finally made the connection between the urge and the action.",
+                    name: 'Marcus T.',
+                    context: 'Designer, broke the habit in 6 weeks',
+                  },
+                  {
+                    quote: "I bit during video calls without ever noticing. This caught me every single time. Two months in and the urge is genuinely fading.",
+                    name: 'Priya M.',
+                    context: 'Remote worker, 15-year habit',
+                  },
+                ].map(({ quote, name, context }, i) => (
+                  <blockquote
+                    key={name}
+                    className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
+                    style={{ transitionDelay: `${i * 80}ms` }}
+                  >
+                    <div className="flex gap-0.5 mb-3" aria-label="5 out of 5 stars">
+                      {[...Array(5)].map((_, j) => <Star key={j} size={11} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
+                    </div>
+                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">"{quote}"</p>
+                    <footer className="mt-4">
+                      <p className="text-stone-800 dark:text-stone-200 text-xs font-semibold">{name}</p>
+                      <p className="text-stone-400 dark:text-stone-500 text-xs">{context}</p>
+                    </footer>
+                  </blockquote>
+                ))}
+              </div>
             </div>
           </section>
 
@@ -455,7 +466,7 @@ export function Landing(_props: Props) {
             ].map(({ number, label }, i) => (
               <div key={label} className="flex items-center gap-8">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-forest-600 dark:text-forest-400 tracking-tight">{number}</p>
+                  <p className="font-display text-4xl text-forest-600 dark:text-forest-400">{number}</p>
                   <p className="text-stone-400 dark:text-stone-500 text-xs uppercase tracking-wider mt-1">{label}</p>
                 </div>
                 {i < 2 && <div className="border-l border-stone-200 dark:border-ink-400 h-10 hidden sm:block" aria-hidden="true" />}

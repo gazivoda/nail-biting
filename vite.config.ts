@@ -43,7 +43,7 @@ export default defineConfig({
       // Service worker file name
       filename: 'sw.js',
       // Manual registration (in main.tsx) defers SW from the critical path.
-      injectRegister: 'null',
+      injectRegister: null,
       manifest: {
         name: 'Stop Biting — AI Nail Habit Tracker',
         short_name: 'Stop Biting',
