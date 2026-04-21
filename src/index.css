@@ -11,7 +11,7 @@ body {
   margin: 0;
   background-color: oklch(97% 0.012 80); /* warm cream */
   color: oklch(22% 0.012 120);           /* deep warm stone */
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
