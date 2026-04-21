@@ -45,6 +45,8 @@ export function CameraView({ videoRef }: Props) {
 
   const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
   const isAlerting = status === 'alert';
+  // When PiP is active the floating window already shows the feed — hide it in the main view
+  const effectiveShowFeed = showCameraFeed && !pipActive;
 
   return (
     <>
@@ -64,13 +66,13 @@ export function CameraView({ videoRef }: Props) {
           playsInline
           muted
           className={`w-full aspect-video object-cover ${
-            !cameraEnabled ? 'hidden' : showCameraFeed ? 'block' : 'invisible absolute inset-0'
+            !cameraEnabled ? 'hidden' : effectiveShowFeed ? 'block' : 'invisible absolute inset-0'
           }`}
           style={{ transform: 'scaleX(-1)' }}
         />
 
         {/* Hidden feed placeholder — detection is active, wave shows real events */}
-        {cameraEnabled && !showCameraFeed && (
+        {cameraEnabled && !effectiveShowFeed && (
           <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 px-6">
             <DetectionWave detectionStatus={status} />
           </div>
@@ -92,14 +94,15 @@ export function CameraView({ videoRef }: Props) {
         {cameraEnabled && pipSupported && (
           <button
             onClick={togglePiP}
-            className={`absolute top-3 right-3 p-1.5 rounded-lg transition-all duration-150 ${
+            title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window — detection keeps running when you switch apps'}
+            className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
               pipActive
-                ? 'bg-forest-600 text-cream-100 shadow-sm'
-                : 'bg-stone-900/60 text-stone-300 hover:bg-stone-800/80 hover:text-stone-100'
+                ? 'bg-forest-600 text-cream-100 shadow-md ring-1 ring-forest-400/40'
+                : 'bg-stone-900/75 text-stone-200 hover:bg-stone-800 hover:text-white border border-white/10'
             }`}
-            title={pipActive ? 'Exit Picture-in-Picture' : 'Picture-in-Picture — keeps detection active when minimized'}
           >
-            <PictureInPicture2 size={16} />
+            <PictureInPicture2 size={13} />
+            {pipActive ? 'Exit PiP' : 'Minimize'}
           </button>
         )}
       </div>
