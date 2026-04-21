@@ -54,7 +54,7 @@ export function CameraToggle() {
 
   // Active / ON state
   return (
-    <div className="w-full rounded-2xl overflow-hidden bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800">
+    <div data-tour="camera-toggle" className="w-full rounded-2xl overflow-hidden bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800">
       {/* Status row */}
       <div className="flex items-center justify-between px-5 py-4">
         <div className="flex items-center gap-3.5">
@@ -83,7 +83,7 @@ export function CameraToggle() {
       </div>
 
       {/* Show feed sub-toggle */}
-      <div className="flex items-center justify-between px-5 py-3 border-t border-forest-200/60 dark:border-forest-800/60">
+      <div data-tour="hide-feed" className="flex items-center justify-between px-5 py-3 border-t border-forest-200/60 dark:border-forest-800/60">
         <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400">
           {showCameraFeed ? <Eye size={13} /> : <EyeOff size={13} />}
           <span className="text-[12px]">Show camera feed</span>

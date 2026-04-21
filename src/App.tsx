@@ -16,6 +16,7 @@ import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { PWAGuideModal } from './components/PWAGuideModal';
+import { OnboardingTour } from './components/onboarding/OnboardingTour';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -84,6 +85,7 @@ function AppRouter() {
           {activeTab === 'settings' && <Settings onUpgrade={() => setShowPaywall(true)} />}
         </main>
       </div>
+      <OnboardingTour />
       <PWAGuideModal />
     </>
   );
