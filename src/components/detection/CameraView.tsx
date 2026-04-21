@@ -5,6 +5,7 @@ import { useDetection } from '../../hooks/useDetection';
 import { usePictureInPicture } from '../../hooks/usePictureInPicture';
 import { DetectionStatus } from './DetectionStatus';
 import { AlertOverlay } from './AlertOverlay';
+import { PiPWindow } from './PiPWindow';
 import { useAppStore } from '../../store/useAppStore';
 import type { DetectionSensitivity } from '../../types';
 
@@ -24,7 +25,7 @@ export function CameraView({ videoRef }: Props) {
   } = useAppStore();
 
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { pipActive, pipSupported, togglePiP } = usePictureInPicture(videoRef);
+  const { pipActive, pipWindow, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
   const handleAlert = () => logIncident('auto-detected', true);
 
@@ -106,6 +107,11 @@ export function CameraView({ videoRef }: Props) {
           </button>
         )}
       </div>
+
+      {/* Document PiP content — custom UI rendered into the floating window */}
+      {pipActive && pipWindow && (
+        <PiPWindow pipWindow={pipWindow} status={status} />
+      )}
     </>
   );
 }
