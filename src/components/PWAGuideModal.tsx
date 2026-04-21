@@ -51,7 +51,10 @@ export function PWAGuideModal() {
     return () => cancelAnimationFrame(raf);
   }, [visible]);
 
-  if (!visible) return null;
+  // For Chromium, only show when the browser has actually offered the install prompt.
+  // The 4-second timer fires before beforeinstallprompt in many sessions — showing
+  // the modal with a disabled button is confusing and looks broken.
+  if (!visible || (platform === 'chromium' && !canInstall)) return null;
 
   const handleInstall = async () => {
     const accepted = await triggerInstall();
