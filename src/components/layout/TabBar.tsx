@@ -41,14 +41,21 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
         {/* Brand */}
         <div className="px-5 py-5 border-b border-stone-200 dark:border-ink-400">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.svg" alt="Stop Biting logo" className="w-8 h-8 flex-shrink-0" />
-            <p className="text-sm font-semibold tracking-tight text-stone-800 dark:text-stone-100">Stop Biting</p>
+            <div className="w-[26px] h-[26px] rounded-lg bg-forest-500 flex items-center justify-center flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 1.5l5 1.5v5c0 3-2.5 5.5-5 6.5-2.5-1-5-3.5-5-6.5v-5l5-1.5z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-[13.5px] font-semibold tracking-[-0.1px] text-stone-800 dark:text-stone-100">Stop Biting</p>
+              <p className="text-[10.5px] text-stone-400 dark:text-stone-500 mt-[1px] tracking-[0.2px]">on-device · v2</p>
+            </div>
           </div>
-          <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-0.5 tracking-wide">AI nail biting detector</p>
         </div>
 
         {/* Nav items */}
         <nav className="flex-1 p-3 space-y-0.5" aria-label="Main navigation">
+          <p className="text-[10px] font-semibold tracking-[1.2px] uppercase text-stone-400 dark:text-stone-500 mb-2 px-1">Navigate</p>
           {tabs.map(({ id, label, icon: Icon }) => {
             const isActive = active === id;
             return (
@@ -56,17 +63,12 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
                 key={id}
                 data-tour={id === 'log' ? 'history-tab' : undefined}
                 onClick={() => onChange(id)}
-                className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 text-left overflow-hidden ${
+                className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150 text-left overflow-hidden ${
                   isActive
-                    ? 'bg-forest-50 dark:bg-forest-900/40 text-forest-700 dark:text-forest-300 font-medium shadow-sm'
-                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50'
+                    ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.06)] border border-stone-200 dark:border-ink-400'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100/70 dark:hover:bg-ink-50/60'
                 }`}
               >
-                <span
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-forest-500 transition-all duration-200 ${
-                    isActive ? 'h-5 opacity-100' : 'h-0 opacity-0'
-                  }`}
-                />
                 <Icon size={15} />
                 {label}
               </button>
