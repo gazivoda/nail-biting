@@ -4,6 +4,8 @@ import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
 import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval } from '../types';
+import { PageHeader } from '../components/layout/PageHeader';
+import { SegmentedControl } from '../components/ui/SegmentedControl';
 
 function Section({ title, icon: Icon, children, fullWidth }: {
   title: string;
@@ -335,8 +337,8 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
   };
 
   return (
-    <div className="p-8 max-w-5xl">
-      <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-8 tracking-tight">Settings</h1>
+    <div className="p-8 pb-10 max-w-5xl">
+      <PageHeader eyebrow="Settings" title="Tune detection to your rhythm" />
       <div className="grid grid-cols-2 gap-4">
 
       {/* Plan */}
@@ -358,7 +360,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       {/* Detection */}
       <Section title="Detection" icon={Sliders}>
         <Row label="Sensitivity" description="How close hand must be to trigger alert">
-          <Pills
+          <SegmentedControl
             value={detectionSensitivity}
             onChange={(v) => setSensitivity(v as DetectionSensitivity)}
             options={[
@@ -369,7 +371,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           />
         </Row>
         <Row label="Alert type">
-          <Pills
+          <SegmentedControl
             value={alertType}
             onChange={(v) => setAlertType(v as AlertType)}
             options={[
@@ -399,7 +401,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         )}
         {remindersEnabled && (
           <Row label="Interval">
-            <Pills
+            <SegmentedControl
               value={String(reminderIntervalMinutes) as any}
               onChange={(v) => setReminderInterval(Number(v) as ReminderInterval)}
               options={[
