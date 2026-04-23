@@ -4,6 +4,7 @@ import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
+import { PageHeader } from '../components/layout/PageHeader';
 
 const TAG_COLORS: Record<string, string> = {
   'auto-detected': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
@@ -127,7 +128,9 @@ export function Log() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-8 pb-10">
+      <PageHeader eyebrow="Progress" title="Patterns & milestones" />
+
       {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
