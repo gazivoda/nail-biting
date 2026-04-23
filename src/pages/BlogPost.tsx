@@ -256,7 +256,7 @@ export function BlogPost({ slug }: Props) {
           {/* CTA */}
           <div className="mt-14 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
             <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">Ready to start tracking?</p>
-            <p className="text-stone-800 dark:text-stone-100 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
+            <p className="text-stone-900 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
             <a
               href="/"
               className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
