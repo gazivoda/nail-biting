@@ -8,8 +8,9 @@ export default {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       fontFamily: {
-        sans: ['"DM Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+        sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
         display: ['"Instrument Serif"', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', '"SF Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
         'card': '0 1px 3px oklch(0% 0 0 / 0.06), 0 1px 2px oklch(0% 0 0 / 0.04)',
@@ -25,6 +26,8 @@ export default {
           200: 'oklch(93%   0.016 80)',
           300: 'oklch(88%   0.018 80)',
         },
+        paper: 'oklch(99% 0.005 80)',
+        cream2: 'oklch(95% 0.013 80)',
         // ── Light mode: Warm stone neutrals (green-tinted) ────────────────
         stone: {
           100: 'oklch(94%   0.010 120)',
