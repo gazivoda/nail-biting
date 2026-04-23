@@ -1,67 +1,48 @@
 import { ShieldCheck } from 'lucide-react';
-import { CameraView } from '../components/detection/CameraView';
-import { StreakCard } from '../components/dashboard/StreakCard';
-import { StatsRow } from '../components/dashboard/StatsRow';
+import { PageHeader } from '../components/layout/PageHeader';
+import { StreakHero } from '../components/dashboard/StreakHero';
+import { CameraPanel } from '../components/dashboard/CameraPanel';
+import { TodayStats } from '../components/dashboard/TodayStats';
+import { SessionGoal } from '../components/dashboard/SessionGoal';
+import { ReplacementPrompt } from '../components/dashboard/ReplacementPrompt';
 import { PanicButton } from '../components/dashboard/PanicButton';
-import { CameraToggle } from '../components/dashboard/CameraToggle';
-import { useCamera } from '../hooks/useCamera';
-import { useAppStore } from '../store/useAppStore';
-
-function FirstRunHint() {
-  return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none select-none">
-      <p className="text-stone-500 dark:text-stone-400 text-xs text-center px-6">
-        Tap <span className="font-medium text-stone-600 dark:text-stone-300">Start AI Detection</span> above to begin
-      </p>
-    </div>
-  );
-}
+import { useAuth } from '../contexts/AuthContext';
 
 export function Dashboard() {
-  const { cameraEnabled, incidents } = useAppStore();
-  const { videoRef } = useCamera(cameraEnabled);
+  const { user } = useAuth();
+  const firstName = user?.name?.split(' ')[0] ?? 'there';
 
-  const isFirstRun = !cameraEnabled && incidents.length === 0;
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
   return (
-    <div className="p-8">
+    <div className="p-8 pb-10">
+      <PageHeader
+        eyebrow="Today"
+        title={`${greeting}, ${firstName}.`}
+        right={
+          <div className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-[11.5px] py-1.5 px-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full">
+            <ShieldCheck size={12} />
+            <span>On-device</span>
+          </div>
+        }
+      />
 
-      {/* Privacy badge */}
-      <div
-        className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full mb-6 w-fit animate-fade-up"
-        style={{ animationDelay: '0ms' }}
-      >
-        <ShieldCheck size={12} />
-        <span>All processing on-device — camera feed never leaves this app</span>
-      </div>
-
-      {/* AI Detection — hero, full-width, primary action */}
-      <div className="mb-8 animate-fade-up" style={{ animationDelay: '60ms' }}>
-        <CameraToggle />
-      </div>
-
-      {/* Two-column: camera left, controls right */}
-      <div className="grid grid-cols-5 gap-8 items-start">
-        {/* Camera — takes 3/5 */}
-        <div
-          className="col-span-3 relative animate-fade-up"
-          style={{ animationDelay: '120ms' }}
-        >
-          <CameraView videoRef={videoRef} />
-          {isFirstRun && <FirstRunHint />}
+      {/* Split grid: left 1.35fr, right 1fr */}
+      <div className="grid gap-5 items-start" style={{ gridTemplateColumns: '1.35fr 1fr' }}>
+        {/* Left column */}
+        <div className="flex flex-col gap-5">
+          <StreakHero />
+          <CameraPanel />
         </div>
 
-        {/* Stats + controls — takes 2/5, staggered children */}
-        <div className="col-span-2 flex flex-col gap-4">
-          <div className="animate-fade-up" style={{ animationDelay: '160ms' }}>
-            <StreakCard />
-          </div>
-          <div className="animate-fade-up" style={{ animationDelay: '200ms' }}>
-            <StatsRow />
-          </div>
-          <div className="animate-fade-up" style={{ animationDelay: '240ms' }}>
-            <PanicButton />
-          </div>
+        {/* Right column */}
+        <div className="flex flex-col gap-5">
+          <SessionGoal />
+          <TodayStats />
+          <ReplacementPrompt />
+          <PanicButton />
         </div>
       </div>
     </div>
