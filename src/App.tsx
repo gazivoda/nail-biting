@@ -43,7 +43,7 @@ function AppRouter() {
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-dvh bg-cream-100 dark:bg-ink-100">
+      <div className="flex items-center justify-center min-h-dvh bg-cream-200 dark:bg-ink-100">
         <div className="flex items-center gap-3 text-stone-400">
           <img src="/logo.svg" alt="" className="w-6 h-6 animate-pulse" />
           <span className="text-sm">Loading…</span>
@@ -72,7 +72,7 @@ function AppRouter() {
   // ── App (trial_active or subscribed) ────────────────────────────────────
   return (
     <>
-      <div className="flex bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
+      <div className="flex bg-cream-200 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
         <TabBar
           active={activeTab}
           onChange={setActiveTab}
