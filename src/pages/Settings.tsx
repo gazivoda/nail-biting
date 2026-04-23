@@ -53,29 +53,6 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
   );
 }
 
-function Pills<T extends string>({ options, value, onChange }: {
-  options: { label: string; value: T }[];
-  value: T;
-  onChange: (v: T) => void;
-}) {
-  return (
-    <div className="flex gap-1 flex-wrap justify-end">
-      {options.map(opt => (
-        <button
-          key={opt.value}
-          onClick={() => onChange(opt.value)}
-          className={`px-2.5 py-1 rounded-lg text-xs transition-colors duration-150 ${
-            value === opt.value
-              ? 'bg-forest-600 text-white'
-              : 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-ink-200'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 // --------------------------------------------------------------------------
 // Web Audio preview — fires a one-shot preview of a sound
