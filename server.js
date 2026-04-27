@@ -53,10 +53,10 @@ app.use(helmet({
       defaultSrc:  ["'self'"],
       scriptSrc:   ["'self'", "'wasm-unsafe-eval'", "'unsafe-inline'", 'https://*.paddle.com', 'https://cdn.paddle.com', 'https://public.profitwell.com', 'https://www.googletagmanager.com'],
       frameSrc:    ["'self'", 'https://*.paddle.com'],
-      connectSrc:  ["'self'", 'https://*.paddle.com', 'https://checkout.paddle.com', 'https://checkout-service.paddle.com', 'https://public.profitwell.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com'],
+      connectSrc:  ["'self'", 'https://*.paddle.com', 'https://checkout.paddle.com', 'https://checkout-service.paddle.com', 'https://public.profitwell.com', 'https://www.google.com', 'https://www.googletagmanager.com', 'https://www.google-analytics.com', 'https://analytics.google.com', 'https://region1.google-analytics.com', 'https://formspree.io'],
       imgSrc:      ["'self'", 'data:', 'https://lh3.googleusercontent.com', 'https://*.paddle.com'],
-      styleSrc:    ["'self'", "'unsafe-inline'", 'https://cdn.paddle.com'],  // Tailwind + Paddle CSS
-      fontSrc:     ["'self'", 'data:'],
+      styleSrc:    ["'self'", "'unsafe-inline'", 'https://cdn.paddle.com', 'https://fonts.googleapis.com'],
+      fontSrc:     ["'self'", 'data:', 'https://fonts.gstatic.com'],
       workerSrc:   ["'self'"],  // PWA service worker registration
     },
   },
