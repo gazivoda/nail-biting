@@ -16,6 +16,23 @@ COPY public ./public
 COPY index.html tsconfig.json tsconfig.app.json tsconfig.node.json ./
 COPY vite.config.ts tailwind.config.js postcss.config.js ./
 
+# Build-time env vars — declared as ARG so Coolify can pass them via --build-arg,
+# then promoted to ENV so Vite sees them during the build step.
+ARG VITE_FORMSPREE_FORM_ID
+ENV VITE_FORMSPREE_FORM_ID=$VITE_FORMSPREE_FORM_ID
+
+ARG VITE_PADDLE_CLIENT_TOKEN
+ENV VITE_PADDLE_CLIENT_TOKEN=$VITE_PADDLE_CLIENT_TOKEN
+
+ARG VITE_PADDLE_PRICE_ID_MONTHLY
+ENV VITE_PADDLE_PRICE_ID_MONTHLY=$VITE_PADDLE_PRICE_ID_MONTHLY
+
+ARG VITE_PADDLE_PRICE_ID_YEARLY
+ENV VITE_PADDLE_PRICE_ID_YEARLY=$VITE_PADDLE_PRICE_ID_YEARLY
+
+ARG VITE_PADDLE_ENV
+ENV VITE_PADDLE_ENV=$VITE_PADDLE_ENV
+
 # Build with web base path (/ not ./ which is for Electron file://)
 # Call vite directly — skip tsc which fails on Electron-specific types in CI
 RUN VITE_BUILD_TARGET=web npx vite build --mode production
