@@ -1,38 +1,55 @@
 # Stop Biting
-> An app that uses on-device AI (MediaPipe/WebAssembly) to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. 100% private — no camera data ever leaves your device. Available as a native desktop app for Mac and Windows, and as a web app.
+> An app that uses on-device AI (MediaPipe/WebAssembly) to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. 100% private — no camera data ever leaves your device. Available as a native desktop app for Mac and Windows, and as a web app (PWA).
 
 ## Key pages
 
-- [Home](https://stopbiting.today/): Landing page — download, features, privacy commitment
+- [Home](https://stopbiting.today/): Landing page — download, features, pricing, privacy commitment
 - [Blog](https://stopbiting.today/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
 - [Privacy Policy](https://stopbiting.today/privacy): Data handling and privacy commitment
 - [Contact](https://stopbiting.today/#contact): Contact form for support and feedback
 
 ## Blog articles
 
-- [Why Do People Bite Their Nails?](https://stopbiting.today/blog/why-do-people-bite-their-nails): Causes, triggers, and the psychology behind onychophagia
-- [Habit Reversal Training: The Complete Guide](https://stopbiting.today/blog/habit-reversal-training-guide): Evidence-based HRT technique for stopping nail biting — reduces frequency 70–90%
-- [The Real Health Risks of Nail Biting](https://stopbiting.today/blog/nail-biting-health-risks): Dental damage, infections, pathogen transfer, and long-term consequences
-- [Nail Biting in Children: What Parents Should Know](https://stopbiting.today/blog/nail-biting-in-children): Age-appropriate strategies and when to seek professional help
-- [Best Remedies to Stop Nail Biting](https://stopbiting.today/blog/best-nail-biting-remedies): Every method ranked by evidence — from bitter polish to AI detection
-- [The Stress–Nail Biting Connection](https://stopbiting.today/blog/stress-and-nail-biting): Why anxiety drives the habit and how to break the loop
-- [Onychophagia and OCD: Understanding the Link](https://stopbiting.today/blog/onychophagia-ocd-connection): BFRB classification, OCD-spectrum overlap, and treatment implications
+- [Why Do People Bite Their Nails?](https://stopbiting.today/blog/why-do-people-bite-their-nails): Causes, triggers, and the psychology behind onychophagia — affects 20–30% of adults
+- [Habit Reversal Training: The Complete Guide](https://stopbiting.today/blog/habit-reversal-training-guide): Evidence-based HRT technique — reduces nail biting frequency 70–90% in clinical studies
+- [The Real Health Risks of Nail Biting](https://stopbiting.today/blog/nail-biting-health-risks): Dental damage, nail infections, pathogen transfer, and long-term physical consequences
+- [Nail Biting in Children: What Parents Should Know](https://stopbiting.today/blog/nail-biting-in-children): Age-appropriate strategies and when professional help is warranted
+- [Best Remedies to Stop Nail Biting](https://stopbiting.today/blog/best-nail-biting-remedies): Every method ranked by clinical evidence — from bitter polish to AI detection
+- [The Stress–Nail Biting Connection](https://stopbiting.today/blog/stress-and-nail-biting): Why anxiety drives the habit and how to break the stress–bite loop
+- [Nail Biting and OCD: Understanding the Link](https://stopbiting.today/blog/nail-biting-ocd-connection): BFRB classification, OCD-spectrum overlap, and treatment implications
 - [How AI Can Help You Stop Biting Your Nails](https://stopbiting.today/blog/how-ai-can-help-stop-nail-biting): Real-time webcam detection and the HRT awareness mechanism it automates
 - [Nail Biting at Work: The Focus–Habit Loop](https://stopbiting.today/blog/nail-biting-during-focus-and-work): Why deep concentration triggers biting and how to interrupt it without losing flow
-- [The Science of Breaking Any Habit](https://stopbiting.today/blog/breaking-any-habit-science): Neuroscience of habit loops and extinction applied specifically to nail biting
+- [The Science of Breaking Any Habit](https://stopbiting.today/blog/breaking-any-habit-science): Neuroscience of habit loops and extinction applied to nail biting
 - [Nail Biting vs Skin Picking: BFRB Comparison](https://stopbiting.today/blog/nail-biting-vs-skin-picking): How the two most common BFRBs differ in triggers, mechanism, and treatment
 - [Stopping Nail Biting for Good: Relapse Prevention](https://stopbiting.today/blog/stopping-nail-biting-for-good): Why relapse is neurologically expected and how to build lasting change
 - [Nail Biting and Anxiety: Treating the Root Cause](https://stopbiting.today/blog/nail-biting-anxiety-treatment): When anxiety is the primary driver and how treating it directly reduces biting
 - [How Long Does It Take to Stop Nail Biting?](https://stopbiting.today/blog/how-long-to-stop-nail-biting): Research-based realistic timeline — week-by-week what to expect
-- [Why Nail Biting Persists into Adulthood](https://stopbiting.today/blog/nail-biting-adults-why-persists): Why adult habits are harder to break than childhood habits
-- [Webcam App Privacy for Nail Biting](https://stopbiting.today/blog/webcam-privacy-nail-biting-app): On-device AI explained — why no camera data leaves your device
-- [Nail Biting During Sleep](https://stopbiting.today/blog/nail-biting-during-sleep): Does sleep nail biting happen, how to detect it, and how to stop it
-- [Bitter Nail Polish Review: Does It Work?](https://stopbiting.today/blog/bitter-nail-polish-review): Evidence review of Mavala Stop and denatonium benzoate products
-- [Is Nail Biting Genetic?](https://stopbiting.today/blog/nail-biting-genetics): Twin studies and BFRB heritability research — 30–45% heritable
-- [How MediaPipe AI Detection Works](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Technical explainer of WebAssembly hand/face landmark detection
-- [You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.](https://stopbiting.today/blog/nail-biting-laptop-working-from-home): Humorous look at why laptops trigger nail biting and how AI detection breaks the cycle
+- [Why Nail Biting Persists into Adulthood](https://stopbiting.today/blog/nail-biting-adults-why-persists): Why adult habits are harder to break and what works for long-established patterns
+- [Webcam App Privacy for Nail Biting](https://stopbiting.today/blog/webcam-privacy-nail-biting-app): On-device AI explained — why no camera data leaves your device, independently verifiable
+- [Nail Biting During Sleep](https://stopbiting.today/blog/nail-biting-during-sleep): Does sleep nail biting happen, how to detect it, and how to address it
+- [Bitter Nail Polish Review: Does It Work?](https://stopbiting.today/blog/bitter-nail-polish-review): Evidence review of Mavala Stop and denatonium benzoate products — when they work and when they don't
+- [Is Nail Biting Genetic?](https://stopbiting.today/blog/nail-biting-genetics): Twin studies and BFRB heritability research — 30–45% heritable, with practical implications
+- [How MediaPipe AI Detection Works](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Technical explainer of WebAssembly hand/face landmark detection at 30+ fps
+- [You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.](https://stopbiting.today/blog/nail-biting-laptop-working-from-home): Why laptops trigger nail biting and how AI detection breaks the cycle
 - [5 Best Tools to Stop Nail Biting in 2026](https://stopbiting.today/blog/best-apps-to-stop-nail-biting): Ranked comparison of AI detection, bitter polish, HRT, and other methods by clinical evidence
-- [Stop Biting vs Mavala Stop](https://stopbiting.today/blog/stop-biting-vs-mavala-stop): Head-to-head comparison of AI webcam detection vs bitter nail polish
+- [Stop Biting vs Mavala Stop](https://stopbiting.today/blog/stop-biting-vs-mavala-stop): Head-to-head comparison of AI webcam detection vs bitter nail polish — mechanism, evidence, and when to use each
+- [Nail Biting and ADHD: Why It's Harder to Stop](https://stopbiting.today/blog/nail-biting-adhd): Why ADHD nearly doubles nail biting rates and what actually works for ADHD brains
+- [Nail Biting as Stimming: Sensory Regulation](https://stopbiting.today/blog/nail-biting-stimming): When nail biting serves a sensory regulatory function and what substitutes actually work
+- [How to Stop Nail Biting Fast](https://stopbiting.today/blog/stop-nail-biting-fast): Fastest-working methods ranked by evidence — what's achievable in week one
+- [Does Hypnotherapy for Nail Biting Work?](https://stopbiting.today/blog/nail-biting-hypnosis): Honest evidence review — what the research shows about suggestibility, and when it may help
+- [NAC for Nail Biting: What N-Acetylcysteine Can and Can't Do](https://stopbiting.today/blog/nac-nail-biting): Clinical evidence for NAC in BFRBs, dosing, and who is most likely to benefit
+- [What to Do Instead of Biting Your Nails: 12 Alternatives](https://stopbiting.today/blog/nail-biting-alternatives): Evidence-based competing responses organized by trigger type (stress, focus, boredom)
+- [Nail Biting During Pregnancy: Risks and How to Stop](https://stopbiting.today/blog/nail-biting-pregnancy): Pathogen risks, treatment restrictions, and safe approaches during pregnancy
+- [Nail Biting Statistics: How Common Is It Really?](https://stopbiting.today/blog/nail-biting-statistics): Comprehensive prevalence data, demographics, co-occurring conditions, and treatment outcomes
+- [How to Grow Nails After Nail Biting](https://stopbiting.today/blog/grow-nails-after-nail-biting): Realistic timeline, what damage is reversible, and care tips that speed recovery
+- [Why Nail Biting Feels Calming: Emotional Regulation Explained](https://stopbiting.today/blog/nail-biting-emotional-regulation): Why nail biting genuinely reduces anxiety short-term — and what this means for treatment
+- [Can Acrylic Nails Stop Nail Biting?](https://stopbiting.today/blog/acrylics-to-stop-nail-biting): What evidence shows about gel and acrylic extensions as a habit treatment — when they work and when they don't
+- [Is There a Permanent Cure for Nail Biting?](https://stopbiting.today/blog/nail-biting-cure): What "cured" means neurologically, long-term remission data, and the fastest path to lasting change
+- [What Lives Under Your Fingernails: Germ Risks of Nail Biting](https://stopbiting.today/blog/nail-biting-bacteria-parasites): Bacteria, viruses, HPV, and parasite transmission risks — with specific pathogen data
+- [The Social Cost of Nail Biting: Confidence and Shame](https://stopbiting.today/blog/nail-biting-social-confidence): How stopping changes more than just your nails — the social and professional impact
+- [Nail Biting in Teenagers: Why It Peaks at 15](https://stopbiting.today/blog/nail-biting-teenagers): Why adolescence is peak nail biting age and what approaches work specifically for teens
+- [How to Stop Nail Biting at Work and in Meetings](https://stopbiting.today/blog/nail-biting-at-work-meetings): Professional contexts, video calls, competing responses for desk workers
+- [Nail Biting and Perfectionism](https://stopbiting.today/blog/nail-biting-and-perfectionism): The perfectionism-BFRB link, frustration tolerance, and treatment adaptations for perfectionists
 
 ## Pricing
 
@@ -43,10 +60,11 @@
 
 ## Key facts
 
-- Nail biting (onychophagia) affects 20–30% of adults and up to 45% of children
-- Habit Reversal Training (HRT) reduces biting frequency by 70–90% in consistent practitioners
+- Nail biting (onychophagia) affects 20–30% of adults and up to 45% of adolescents
+- Habit Reversal Training (HRT) reduces biting frequency by 70–90% in consistent practitioners (Cochrane review, 2012)
 - BFRBs (body-focused repetitive behaviors) are classified in the DSM-5 under OCD-related disorders
 - Stop Biting uses MediaPipe running in WebAssembly — zero network requests during detection
 - Detection works fully offline after initial load; no camera data is transmitted or stored
 - The app detects nail biting using hand landmark (21 keypoints) + face mesh (468 landmarks) models
 - Free 3-day trial — available for macOS 12+, Windows 10+, and in the browser as a PWA
+- On-device AI: camera feed never leaves the device — independently verifiable via network monitoring

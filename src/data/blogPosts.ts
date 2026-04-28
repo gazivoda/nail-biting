@@ -227,7 +227,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 
   {
-    slug: 'nail biting-ocd-connection',
+    slug: 'nail-biting-ocd-connection',
     title: 'Nail biting and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder',
     description: 'Nail biting sits at the intersection of habit, anxiety, and OCD-spectrum disorders. This article explains the habit classification, diagnostic differences, and treatment implications.',
     tag: 'Clinical',
