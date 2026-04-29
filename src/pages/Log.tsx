@@ -1,21 +1,30 @@
 import { useState } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Trash2, CheckCircle } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
+import type { Incident } from '../types';
 
-const TAG_COLORS: Record<string, string> = {
+// Incidents = auto-detected & not yet confirmed as a bite (amber)
+// Bites = manually logged OR confirmed auto-detected (red)
+function isConfirmedBite(inc: Incident) {
+  return !inc.autoDetected || inc.confirmed === true;
+}
+
+const BITE_TAG_COLORS: Record<string, string> = {
   'auto-detected': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-  'stress': 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700',
-  'focus': 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700',
-  'boredom': 'text-stone-500 dark:text-stone-400 bg-stone-100 dark:bg-ink-300 border-stone-300 dark:border-ink-400',
-  'unknown': 'text-stone-400 dark:text-stone-500 bg-stone-100 dark:bg-ink-300 border-stone-200 dark:border-ink-400',
+  'stress': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
+  'focus': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
+  'boredom': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
+  'unknown': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
 };
 
-const TAG_LABELS: Record<string, string> = {
-  'auto-detected': '📷 Detected',
+const INCIDENT_TAG_COLOR = 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
+
+const BITE_TAG_LABELS: Record<string, string> = {
+  'auto-detected': '✓ Bite',
   'stress': '😰 Stress',
   'focus': '🧠 Focus',
   'boredom': '😐 Boredom',
@@ -46,7 +55,7 @@ function WeekChart() {
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card dark:shadow-card-dark">
       <p className="text-stone-700 dark:text-stone-200 font-semibold mb-1">Last 7 days</p>
-      <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">Bites per day</p>
+      <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">Incidents per day</p>
       <ResponsiveContainer width="100%" height={160}>
         <BarChart data={days} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
           <XAxis dataKey="day" tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} />
@@ -57,7 +66,7 @@ function WeekChart() {
             itemStyle={{ color: isDark ? '#f87171' : '#dc2626' }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
-          <Bar dataKey="count" name="bites" radius={[4, 4, 0, 0]}>
+          <Bar dataKey="count" name="incidents" radius={[4, 4, 0, 0]}>
             {days.map((entry, index) => {
               const intensity = max > 0 ? entry.count / max : 0;
               const color = intensity === 0
@@ -112,7 +121,7 @@ function ClearAllButton() {
 }
 
 export function Log() {
-  const { incidents, deleteIncident } = useAppStore();
+  const { incidents, deleteIncident, confirmIncident } = useAppStore();
 
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
@@ -143,19 +152,15 @@ export function Log() {
               <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 font-medium">Summary</p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-stone-500 dark:text-stone-400">Total incidents</span>
-                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">{incidents.length}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-stone-500 dark:text-stone-400">Auto-detected</span>
+                  <span className="text-amber-600 dark:text-amber-400">Incidents (unconfirmed)</span>
                   <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
-                    {incidents.filter(i => i.autoDetected).length}
+                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-stone-500 dark:text-stone-400">Manually logged</span>
+                  <span className="text-alert-600 dark:text-alert-400">Confirmed bites</span>
                   <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
-                    {incidents.filter(i => !i.autoDetected).length}
+                    {incidents.filter(isConfirmedBite).length}
                   </span>
                 </div>
               </div>
@@ -176,7 +181,7 @@ export function Log() {
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between px-1">
                 <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest font-medium">
-                  {incidents.length} incident{incidents.length !== 1 ? 's' : ''}
+                  {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />
               </div>
@@ -185,26 +190,44 @@ export function Log() {
                 <div key={date}>
                   <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 px-1 font-medium">{date}</p>
                   <div className="space-y-2">
-                    {items.map(inc => (
-                      <div
-                        key={inc.id}
-                        className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card dark:shadow-card-dark"
-                      >
-                        <span className="text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
-                        <div className="flex items-center gap-3">
-                          <span className={`text-xs px-2.5 py-1 rounded-full border ${TAG_COLORS[inc.tag]}`}>
-                            {TAG_LABELS[inc.tag]}
-                          </span>
-                          <button
-                            onClick={() => deleteIncident(inc.id)}
-                            aria-label="Delete incident"
-                            className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 text-stone-300 dark:text-stone-600 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
-                          >
-                            <Trash2 size={14} />
-                          </button>
+                    {items.map(inc => {
+                      const bite = isConfirmedBite(inc);
+                      const tagColor = bite ? BITE_TAG_COLORS[inc.tag] : INCIDENT_TAG_COLOR;
+                      const tagLabel = bite
+                        ? (inc.confirmed ? '✓ Bite (confirmed)' : BITE_TAG_LABELS[inc.tag])
+                        : '📷 Incident';
+                      return (
+                        <div
+                          key={inc.id}
+                          className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card dark:shadow-card-dark"
+                        >
+                          <span className="text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
+                              {tagLabel}
+                            </span>
+                            {inc.autoDetected && !inc.confirmed && (
+                              <button
+                                onClick={() => confirmIncident(inc.id)}
+                                aria-label="Confirm as bite"
+                                title="This was an actual bite"
+                                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
+                              >
+                                <CheckCircle size={13} />
+                                <span>Bite</span>
+                              </button>
+                            )}
+                            <button
+                              onClick={() => deleteIncident(inc.id)}
+                              aria-label="Delete"
+                              className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 text-stone-300 dark:text-stone-600 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}

@@ -2,6 +2,15 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme } from '../types';
 
+function isBite(inc: Incident): boolean {
+  return !inc.autoDetected || inc.confirmed === true;
+}
+
+function latestBiteTime(incidents: Incident[]): number | null {
+  const bites = incidents.filter(isBite);
+  return bites.length > 0 ? bites[0].timestamp : null;
+}
+
 const initialState: AppState = {
   incidents: [],
   firstOpenTime: Date.now(),
@@ -25,9 +34,6 @@ export const useAppStore = create<AppState & AppActions>()(
       logIncident: (tag: TriggerTag, autoDetected = false) => {
         const { lastBiteTime, firstOpenTime, bestStreakMs, incidents } = get();
         const now = Date.now();
-        const streakStart = lastBiteTime ?? firstOpenTime;
-        const currentStreakMs = now - streakStart;
-        const newBest = Math.max(bestStreakMs, currentStreakMs);
 
         const incident: Incident = {
           id: crypto.randomUUID(),
@@ -36,22 +42,37 @@ export const useAppStore = create<AppState & AppActions>()(
           autoDetected,
         };
 
-        set({
-          incidents: [incident, ...incidents],
-          lastBiteTime: now,
-          bestStreakMs: newBest,
-        });
+        const next = [incident, ...incidents];
+
+        // Only confirmed bites (manual or confirmed auto-detected) break the streak
+        if (!autoDetected) {
+          const streakStart = lastBiteTime ?? firstOpenTime;
+          const currentStreakMs = now - streakStart;
+          const newBest = Math.max(bestStreakMs, currentStreakMs);
+          set({ incidents: next, lastBiteTime: now, bestStreakMs: newBest });
+        } else {
+          set({ incidents: next });
+        }
+      },
+
+      confirmIncident: (id: string) => {
+        const { incidents, lastBiteTime, firstOpenTime, bestStreakMs } = get();
+        const target = incidents.find(i => i.id === id);
+        if (!target) return;
+
+        const next = incidents.map(i => i.id === id ? { ...i, confirmed: true } : i);
+        const newLastBite = latestBiteTime(next);
+        const streakStart = lastBiteTime ?? firstOpenTime;
+        const currentStreakMs = target.timestamp - streakStart;
+        const newBest = currentStreakMs > 0 ? Math.max(bestStreakMs, currentStreakMs) : bestStreakMs;
+
+        set({ incidents: next, lastBiteTime: newLastBite, bestStreakMs: newBest });
       },
 
       deleteIncident: (id: string) => {
-        const { incidents, lastBiteTime } = get();
+        const { incidents } = get();
         const next = incidents.filter(i => i.id !== id);
-        // If we deleted the most recent incident, roll lastBiteTime back to the new most recent
-        const mostRecent = next[0]?.timestamp ?? null;
-        const newLastBite = lastBiteTime === incidents.find(i => i.id === id)?.timestamp
-          ? mostRecent
-          : lastBiteTime;
-        set({ incidents: next, lastBiteTime: newLastBite });
+        set({ incidents: next, lastBiteTime: latestBiteTime(next) });
       },
 
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),

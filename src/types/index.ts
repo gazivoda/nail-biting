@@ -7,6 +7,7 @@ export interface Incident {
   timestamp: number;
   tag: TriggerTag;
   autoDetected: boolean;
+  confirmed?: boolean; // auto-detected incident confirmed as an actual bite
 }
 
 export type DetectionSensitivity = 'low' | 'medium' | 'high';
@@ -38,6 +39,7 @@ export interface AppState {
 
 export interface AppActions {
   logIncident: (tag: TriggerTag, autoDetected?: boolean) => void;
+  confirmIncident: (id: string) => void;
   deleteIncident: (id: string) => void;
   setCameraEnabled: (enabled: boolean) => void;
   setShowCameraFeed: (show: boolean) => void;
