@@ -1152,16 +1152,19 @@ if (!existsSync(distPath)) {
   }
 
   // Helper: inject page-specific <title>, <meta description>, <link canonical>,
-  // and Open Graph tags into the SPA index.html shell before sending it.
+  // Open Graph, and Twitter Card tags into the SPA index.html shell before sending it.
   // This makes critical SEO elements visible to Googlebot and AI crawlers.
-  function injectMeta(html, { title, description, canonical }) {
+  function injectMeta(html, { title, description, canonical, ogType = 'website' }) {
     return html
       .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
       .replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="${description}"`)
       .replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonical}"`)
+      .replace(/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="${ogType}"`)
       .replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${title}"`)
       .replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${description}"`)
-      .replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${canonical}"`);
+      .replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${canonical}"`)
+      .replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${title}"`)
+      .replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${description}"`);
   }
 
   // Helper: inject BlogPosting + BreadcrumbList JSON-LD schemas into the <head>.
@@ -1194,6 +1197,12 @@ if (!existsSync(distPath)) {
       },
       inLanguage: 'en',
       isAccessibleForFree: true,
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://stopbiting.today/og-image.png',
+        width: 1200,
+        height: 630,
+      },
     };
 
     const breadcrumb = {
@@ -1267,8 +1276,8 @@ if (!existsSync(distPath)) {
     const meta = BLOG_META[slug];
     if (!indexHtml) return res.sendFile(indexPath);
     if (!meta) {
-      // Unknown slug — serve shell with default meta (React will show 404)
-      return res.type('html').send(indexHtml);
+      // Unknown slug — return 404 so Googlebot doesn't treat it as a soft-404 duplicate
+      return res.status(404).type('html').send(indexHtml);
     }
     const canonical = `https://stopbiting.today/blog/${slug}`;
     const pageTitle = `${meta.title} | Stop Biting`;
@@ -1276,6 +1285,7 @@ if (!existsSync(distPath)) {
       title: pageTitle,
       description: meta.description,
       canonical,
+      ogType: 'article',
     });
     injected = injectBlogSchemas(injected, {
       slug,
@@ -1359,6 +1369,37 @@ if (!existsSync(distPath)) {
 
   // Remaining static assets (icons, WASM, models, etc.)
   app.use(express.static(distPath));
+
+  // Core app pages — each needs its own canonical and meta so they can be indexed separately
+  app.get('/about', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'About Stop Biting | Stop Biting',
+      description: 'Stop Biting is an on-device AI app that detects nail biting in real-time using your webcam. 100% private — no camera data ever leaves your device.',
+      canonical: 'https://stopbiting.today/about',
+    });
+    res.type('html').send(injected);
+  });
+
+  app.get('/pricing', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Pricing — Stop Nail Biting App | Stop Biting',
+      description: 'Stop Biting costs $2.99/month or $29/year. Start with a free 3-day trial — no credit card required. Cancel anytime.',
+      canonical: 'https://stopbiting.today/pricing',
+    });
+    res.type('html').send(injected);
+  });
+
+  app.get('/faq', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Frequently Asked Questions | Stop Biting',
+      description: 'Common questions about Stop Biting — how the AI detection works, privacy, pricing, supported platforms, and habit reversal training.',
+      canonical: 'https://stopbiting.today/faq',
+    });
+    res.type('html').send(injected);
+  });
 
   // SPA fallback — all other routes serve index.html with default meta
   app.get('/{*path}', (_req, res) => res.sendFile(indexPath));
