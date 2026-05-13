@@ -1394,10 +1394,30 @@ if (!existsSync(distPath)) {
 
   // Read index.html once at startup (it's static after build)
   let indexHtml = null;
+  let indexHtmlWithFaq = null;  // homepage-only copy that retains the FAQPage schema
   const indexPath = join(distPath, 'index.html');
   if (existsSync(indexPath)) {
-    indexHtml = readFileSync(indexPath, 'utf-8');
+    const raw = readFileSync(indexPath, 'utf-8');
+    indexHtmlWithFaq = raw;
+    // Strip the FAQPage schema block from the shared shell so it is only emitted
+    // for the homepage (see app.get('/') below). All other routes use indexHtml
+    // and must not carry FAQPage structured data.
+    indexHtml = raw.replace(
+      /\n\n[ \t]*<!-- Structured Data: FAQPage -->[\s\S]*?<\/script>/,
+      '',
+    );
   }
+
+  // Homepage — serve with FAQPage schema (only this route should have it)
+  app.get('/', (_req, res) => {
+    if (!indexHtmlWithFaq) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtmlWithFaq, {
+      title: 'Stop Nail Biting with AI | Stop Biting',
+      description: 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.',
+      canonical: 'https://stopbiting.today/',
+    });
+    res.type('html').send(injected);
+  });
 
   // Blog post pages — inject per-post meta + structured data before serving the SPA shell
   app.get('/blog/:slug', (req, res) => {
