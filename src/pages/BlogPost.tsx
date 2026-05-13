@@ -263,6 +263,14 @@ export function BlogPost({ slug }: Props) {
             >
               Launch App
             </a>
+            <div className="flex items-center justify-center gap-5 mt-4">
+              <a href="/how-it-works" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
+                How it works →
+              </a>
+              <a href="/pricing" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
+                See pricing →
+              </a>
+            </div>
           </div>
 
           {/* Related articles — internal linking for SEO */}
