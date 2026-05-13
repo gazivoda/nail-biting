@@ -565,6 +565,29 @@ export function Landing(_props: Props) {
             </div>
           </section>
 
+          {/* ── FEATURED GUIDES ───────────────────────────────────────────── */}
+          <section aria-labelledby="featured-guides-heading">
+            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Guides</p>
+            <h2 id="featured-guides-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Featured Guides</h2>
+            <div className="reveal mt-6 flex flex-col gap-3 max-w-2xl mx-auto">
+              {[
+                { href: '/how-it-works', label: 'How the AI nail biting detection works' },
+                { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the science behind stopping nail biting' },
+                { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best apps to stop nail biting (2026)' },
+                { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
+              ].map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="group flex items-center justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-0.5 hover:shadow-card transition-all duration-200"
+                >
+                  <span className="text-sm text-stone-700 dark:text-stone-200 group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{link.label}</span>
+                  <ArrowRight size={14} className="text-stone-400 group-hover:text-forest-500 shrink-0 transition-colors" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </section>
+
           {/* ── BLOG PREVIEW ──────────────────────────────────────────────── */}
           <section aria-labelledby="blog-preview-heading">
             <div className="reveal flex items-center justify-between mb-6">
