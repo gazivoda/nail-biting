@@ -11,6 +11,9 @@ import { BlogPost } from './pages/BlogPost';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
+import { About } from './pages/About';
+import { HowItWorks } from './pages/HowItWorks';
+import { ComparePage } from './pages/ComparePage';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
@@ -103,6 +106,21 @@ export default function App() {
   if (path.startsWith('/blog/')) {
     const slug = path.slice(6).replace(/\/$/, '');
     return <BlogPost slug={slug} />;
+  }
+
+  // About page
+  if (path === '/about') {
+    return <About />;
+  }
+
+  // How it works
+  if (path === '/how-it-works') {
+    return <HowItWorks />;
+  }
+
+  // Compare pages
+  if (path.startsWith('/compare/') || path.startsWith('/solutions/')) {
+    return <ComparePage path={path} />;
   }
 
   // Privacy policy
