@@ -145,6 +145,62 @@ html.dark {
   50%       { box-shadow: 0 0 0 6px oklch(55% 0.22 25 / 0.15); }
 }
 
+/* ── Blog HTML blocks (feature comparison tables, etc.) ─────────────────── */
+
+.blog-html-block table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: oklch(40% 0.012 120);
+}
+
+html.dark .blog-html-block table {
+  color: oklch(72% 0.012 120);
+}
+
+.blog-html-block th,
+.blog-html-block td {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid oklch(88% 0.012 80);
+  text-align: left;
+  vertical-align: top;
+}
+
+html.dark .blog-html-block th,
+html.dark .blog-html-block td {
+  border-color: oklch(28% 0.010 200);
+}
+
+.blog-html-block th {
+  background-color: oklch(94% 0.012 80);
+  font-weight: 600;
+  color: oklch(30% 0.012 120);
+}
+
+html.dark .blog-html-block th {
+  background-color: oklch(22% 0.010 200);
+  color: oklch(85% 0.012 120);
+}
+
+.blog-html-block tr:nth-child(even) td {
+  background-color: oklch(97% 0.008 80);
+}
+
+html.dark .blog-html-block tr:nth-child(even) td {
+  background-color: oklch(18% 0.008 200);
+}
+
+.blog-html-block td a {
+  color: oklch(42% 0.14 148);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+html.dark .blog-html-block td a {
+  color: oklch(62% 0.14 148);
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,

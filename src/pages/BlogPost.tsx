@@ -249,6 +249,13 @@ export function BlogPost({ slug }: Props) {
                     ))}
                   </ul>
                 )}
+
+                {section.html && (
+                  <div
+                    className="mt-4 overflow-x-auto blog-html-block"
+                    dangerouslySetInnerHTML={{ __html: section.html }}
+                  />
+                )}
               </section>
             ))}
           </article>
