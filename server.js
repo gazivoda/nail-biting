@@ -750,7 +750,7 @@ if (!existsSync(distPath)) {
       description: "Nail biting during pregnancy raises legitimate concerns about pathogen transfer and dental health. Here's what the risks actually are, how pregnancy changes the habit, and how to reduce it.",
     },
     'nail-biting-statistics': {
-      title: 'Nail Biting Statistics: How Common Is It, Really? (2025 Research Data)',
+      title: 'Nail Biting Statistics: How Common Is It, Really? (2026 Data)',
       description: "Comprehensive statistics on nail biting prevalence, demographics, co-occurring conditions, and treatment outcomes. Data drawn from peer-reviewed research as of 2025.",
     },
     'grow-nails-after-nail-biting': {
@@ -1409,7 +1409,11 @@ if (!existsSync(distPath)) {
       return res.status(404).type('html').send(indexHtml);
     }
     const canonical = `https://stopbiting.today/blog/${slug}`;
-    const pageTitle = `${meta.title} | Stop Biting`;
+    const MAX_TITLE = 45;
+    const baseTitle = meta.title.length > MAX_TITLE
+      ? meta.title.substring(0, MAX_TITLE).trim() + '…'
+      : meta.title;
+    const pageTitle = `${baseTitle} | Stop Biting`;
     let injected = injectMeta(indexHtml, {
       title: pageTitle,
       description: meta.description,
@@ -1502,21 +1506,63 @@ if (!existsSync(distPath)) {
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
   app.get('/about', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath);
-    const injected = injectMeta(indexHtml, {
-      title: 'About Stop Biting | Stop Biting',
-      description: 'Stop Biting is an on-device AI app that detects nail biting in real-time using your webcam. 100% private — no camera data ever leaves your device.',
+    let injected = injectMeta(indexHtml, {
+      title: 'About Stop Biting | Built by Igor Gazivoda',
+      description: 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.',
       canonical: 'https://stopbiting.today/about',
     });
+    const personSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Igor Gazivoda',
+      url: 'https://stopbiting.today/about',
+      jobTitle: 'Founder',
+      worksFor: { '@type': 'Organization', name: 'Stop Biting', url: 'https://stopbiting.today' },
+      knowsAbout: ['nail biting', 'onychophagia', 'habit reversal training', 'MediaPipe', 'WebAssembly', 'on-device AI'],
+      description: 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
+    };
+    injected = injected.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(personSchema)}</script>\n  </head>`);
     res.type('html').send(injected);
   });
 
   app.get('/pricing', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath);
-    const injected = injectMeta(indexHtml, {
-      title: 'Pricing — Stop Nail Biting App | Stop Biting',
+    let injected = injectMeta(indexHtml, {
+      title: 'Pricing — $2.99/mo or $29/yr | Stop Biting',
       description: 'Stop Biting costs $2.99/month or $29/year. Start with a free 3-day trial — no credit card required. Cancel anytime.',
       canonical: 'https://stopbiting.today/pricing',
     });
+    const pricingSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'Stop Biting',
+      applicationCategory: 'HealthApplication',
+      operatingSystem: 'Web, macOS, Windows',
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Free Trial',
+          price: '0',
+          priceCurrency: 'USD',
+          description: '3-day free trial — no credit card required',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Monthly',
+          price: '2.99',
+          priceCurrency: 'USD',
+          billingIncrement: 'P1M',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Annual',
+          price: '29.00',
+          priceCurrency: 'USD',
+          billingIncrement: 'P1Y',
+        },
+      ],
+    };
+    injected = injected.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(pricingSchema)}</script>\n  </head>`);
     res.type('html').send(injected);
   });
 
@@ -1530,8 +1576,105 @@ if (!existsSync(distPath)) {
     res.type('html').send(injected);
   });
 
-  // SPA fallback — all other routes serve index.html with default meta
-  app.get('/{*path}', (_req, res) => res.sendFile(indexPath));
+  // How it works page
+  app.get('/how-it-works', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    let injected = injectMeta(indexHtml, {
+      title: 'How AI Nail Biting Detection Works | Stop Biting',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
+      canonical: 'https://stopbiting.today/how-it-works',
+    });
+    const howToSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: 'How to Use Stop Biting for Nail Biting Detection',
+      description: 'Set up real-time AI nail biting detection in under 2 minutes using your webcam.',
+      totalTime: 'PT2M',
+      step: [
+        { '@type': 'HowToStep', position: 1, name: 'Open the app', text: 'Visit stopbiting.today in Chrome, Edge, or Firefox — or download the macOS/Windows desktop app.' },
+        { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally — nothing is ever transmitted.' },
+        { '@type': 'HowToStep', position: 3, name: 'Position your webcam', text: 'Make sure your face and hands are visible in the camera view. The AI tracks hand-to-mouth movements.' },
+        { '@type': 'HowToStep', position: 4, name: 'Work normally', text: 'The app runs in the background. When it detects nail biting, an audible alarm fires immediately.' },
+        { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, press both palms flat on your desk for 60 seconds — the physical incompatibility breaks the habit chain.' },
+      ],
+    };
+    injected = injected.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(howToSchema)}</script>\n  </head>`);
+    res.type('html').send(injected);
+  });
+
+  // Comparison pages
+  app.get('/compare/bitter-polish-alternative', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Stop Biting vs Bitter Nail Polish: Which Works?',
+      description: 'AI detection solves the problem bitter nail polish can\'t: unconscious nail biting. Compare mechanisms, evidence, and who each approach works for.',
+      canonical: 'https://stopbiting.today/compare/bitter-polish-alternative',
+      ogType: 'article',
+    });
+    res.type('html').send(injected);
+  });
+
+  app.get('/compare/habit-tracking-apps', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Why Habit Apps Don\'t Work for Nail Biting | Stop Biting',
+      description: 'Manual habit trackers require you to log episodes you didn\'t notice. Stop Biting catches them automatically. Here\'s why automation changes outcomes.',
+      canonical: 'https://stopbiting.today/compare/habit-tracking-apps',
+      ogType: 'article',
+    });
+    res.type('html').send(injected);
+  });
+
+  // Solutions pages
+  app.get('/solutions/for-desk-workers', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Stop Nail Biting at Your Desk | Stop Biting',
+      description: 'Desk workers bite their nails during deep focus — unconsciously. Stop Biting\'s AI detection runs in the background and catches every episode.',
+      canonical: 'https://stopbiting.today/solutions/for-desk-workers',
+    });
+    res.type('html').send(injected);
+  });
+
+  app.get('/solutions/for-adhd', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Nail Biting and ADHD: AI Detection That Works | Stop Biting',
+      description: 'ADHD makes nail biting harder to stop — executive function gaps and dopamine-seeking make awareness nearly impossible. Real-time AI detection compensates.',
+      canonical: 'https://stopbiting.today/solutions/for-adhd',
+    });
+    res.type('html').send(injected);
+  });
+
+  app.get('/solutions/for-gamers', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath);
+    const injected = injectMeta(indexHtml, {
+      title: 'Stop Nail Biting While Gaming | Stop Biting',
+      description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm — without interrupting your session.',
+      canonical: 'https://stopbiting.today/solutions/for-gamers',
+    });
+    res.type('html').send(injected);
+  });
+
+  // Known valid routes for soft-404 protection
+  const KNOWN_ROUTES = new Set([
+    '/', '/blog', '/about', '/pricing', '/faq', '/how-it-works', '/privacy',
+    '/terms-and-conditions', '/refund-policy',
+    '/compare/bitter-polish-alternative', '/compare/habit-tracking-apps',
+    '/solutions/for-desk-workers', '/solutions/for-adhd', '/solutions/for-gamers',
+    ...Object.keys(BLOG_META).map(slug => `/blog/${slug}`),
+  ]);
+
+  // SPA fallback — serve the SPA shell for known routes; 404 for everything else
+  app.get('/{*path}', (req, res) => {
+    if (!KNOWN_ROUTES.has(req.path)) {
+      return res.status(404).type('html').send(
+        '<!doctype html><html lang="en"><head><title>404 — Page Not Found | Stop Biting</title></head>' +
+        '<body><h1>404 — Page not found</h1><p><a href="/">Return home</a></p></body></html>',
+      );
+    }
+    res.sendFile(indexPath);
+  });
 }
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

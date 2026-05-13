@@ -1102,7 +1102,7 @@ BLOG_POSTS.push({
 
 BLOG_POSTS.push({
   slug: 'nail-biting-statistics',
-  title: "Nail Biting Statistics: How Common Is It, Really? (2025 Research Data)",
+  title: "Nail Biting Statistics: How Common Is It, Really? (2026 Data)",
   description: "Comprehensive statistics on nail biting prevalence, demographics, co-occurring conditions, and treatment outcomes. Data drawn from peer-reviewed research as of 2025.",
   tag: 'Science',
   readingMinutes: 7,

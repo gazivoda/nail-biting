@@ -20,9 +20,7 @@ User-agent: PerplexityBot
 Allow: /
 
 # Block AI training crawlers (not search/citations)
-User-agent: CCBot
-Disallow: /
-
+# Note: CCBot is unblocked — blog content is public and we want Common Crawl indexing
 User-agent: Bytespider
 Disallow: /
 
