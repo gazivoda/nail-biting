@@ -122,26 +122,26 @@ export function Landing(_props: Props) {
               className="animate-fade-up text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6"
               style={{ animationDelay: '0ms' }}
             >
-              AI-powered · On-device · 3-day free trial
+              For everyone who's tried to quit — and couldn't
             </p>
 
             <h1
               className="animate-fade-up font-display text-5xl sm:text-6xl font-normal text-stone-800 dark:text-stone-100 leading-tight"
               style={{ animationDelay: '80ms' }}
             >
-              Stop nail biting with<br />
-              <em className="not-italic text-forest-600 dark:text-forest-400">real-time AI detection.</em>
+              Stop biting your nails.<br />
+              <em className="not-italic text-forest-600 dark:text-forest-400">For good, this time.</em>
             </h1>
 
             <p
               className="animate-fade-up text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6"
               style={{ animationDelay: '160ms' }}
             >
-              The Stop Biting app uses your webcam and on-device AI to catch nail biting the moment it starts —
-              then sounds an alarm.{' '}
-              <span className="text-stone-700 dark:text-stone-200 font-medium">No cloud processing.</span>{' '}
-              <span className="text-stone-700 dark:text-stone-200 font-medium">No camera data sent anywhere.</span>{' '}
-              Works right in your browser — no install needed.
+              You've probably tried bitter polish, gloves, sheer willpower. None of it stuck — because biting
+              your nails was never about willpower. It happens on autopilot, before you even notice.{' '}
+              <span className="text-stone-700 dark:text-stone-200 font-medium">Stop Biting catches that exact moment</span>{' '}
+              with on-device AI and gently snaps you out of it — so you finally notice the habit you can't catch
+              yourself. Your camera never leaves your device.
             </p>
 
             <div
@@ -216,9 +216,10 @@ export function Landing(_props: Props) {
               <h2 id="privacy-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Your camera never leaves this app.</h2>
               <p className="text-forest-600 dark:text-forest-400 text-lg font-medium mt-1">Not even for a millisecond.</p>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-4 max-w-sm mx-auto">
-                MediaPipe runs entirely in WebAssembly inside this app. Every frame of video is processed
-                locally on your CPU or GPU. Zero bytes of camera data are transmitted to any server —
-                because there is no server involved in detection.
+                A camera pointed at your face all day is a lot to trust an app with. So we built it the only
+                way that felt right: the AI runs entirely on your own device. Every frame is processed locally
+                on your CPU or GPU, and not one byte of camera data is ever sent to a server — because there's
+                no server involved in detection at all.
               </p>
               <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700">
                 Disconnect from the internet and the app works exactly the same.
@@ -365,6 +366,41 @@ export function Landing(_props: Props) {
             </article>
 
           </div>
+
+          {/* ── WHY WE BUILT THIS ─────────────────────────────────────────── */}
+          <section aria-labelledby="why-built-heading" className="reveal">
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-8 sm:p-10 shadow-card max-w-2xl mx-auto">
+              <p className="text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 font-semibold text-center">Why we built this</p>
+              <h2 id="why-built-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">
+                Made by people who bite their nails too.
+              </h2>
+
+              {/*
+                PERSONALIZE ME → Hands Off's most appealing element is a genuine founder note with a face.
+                To make this yours: replace the copy below with your real story, change the signature to your
+                name, and drop a photo in above the text, e.g.:
+                  <img src="/founder.jpg" alt="Founder" className="w-16 h-16 rounded-full mx-auto mt-6 object-cover" />
+              */}
+              <div className="text-stone-500 dark:text-stone-400 text-sm sm:text-base leading-relaxed mt-6 space-y-4">
+                <p>
+                  Every other tool we tried fought the symptom. Bitter polish makes your nails taste bad. Gloves
+                  and fidget toys put something in the way. None of them touched the real problem: by the time
+                  you notice you're biting, you've already been at it for minutes. The habit is simply faster
+                  than your awareness.
+                </p>
+                <p>
+                  So we built the one thing that closes that gap — something that notices the instant your hand
+                  moves and hands the awareness back to you, the way habit reversal therapy does, but without an
+                  appointment. And because it's pointed at your face all day, we made it a hard rule that not a
+                  single frame of video ever leaves your device.
+                </p>
+                <p className="text-stone-700 dark:text-stone-200 font-medium">
+                  No data harvesting. No engagement tricks. Just the one thing that actually helps you stop.
+                </p>
+              </div>
+              <p className="text-stone-400 dark:text-stone-500 text-sm text-center mt-6">— The Stop Biting team</p>
+            </div>
+          </section>
 
           {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
           <section aria-labelledby="testimonials-heading">

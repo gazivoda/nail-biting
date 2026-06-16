@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stop Biting">
+  <!-- Brand forest-green app tile -->
+  <rect width="512" height="512" rx="112" fill="#1B6B43"/>
+  <!-- Nail mark (matches /logo.svg), drawn in cream as an outline on the tile -->
+  <g transform="translate(89,89) scale(0.85)" fill="none" stroke="#EAF7EE" stroke-linecap="round">
+    <path d="M77 324V174C77 107.726 130.726 54 197 54C263.274 54 317 107.726 317 174V324" stroke-width="22"/>
+    <path d="M107 174C107 124.294 147.294 84 197 84C246.706 84 287 124.294 287 174V249C287 282.136 260.136 309 227 309H167C133.863 309 107 282.136 107 249V174Z" fill="#1B6B43" stroke-width="16"/>
+  </g>
+</svg>
