@@ -99,7 +99,7 @@ function dist2d(a: { x: number; y: number }, b: { x: number; y: number }) {
 
 // Starts a repeating alert sound based on the selected AlertSound profile.
 // Returns a stop function.
-function startAlarm(sound: AlertSound): (() => void) {
+function startAlarm(sound: AlertSound, volume: number): (() => void) {
   let ctx: AudioContext;
   let intervalId: ReturnType<typeof setInterval>;
   let stopFn: (() => void) | null = null;
@@ -115,7 +115,7 @@ function startAlarm(sound: AlertSound): (() => void) {
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.frequency.value = ctx.currentTime % 0.6 < 0.3 ? 1000 : 800;
-        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+        gain.gain.setValueAtTime(0.5 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.15);
@@ -131,7 +131,7 @@ function startAlarm(sound: AlertSound): (() => void) {
         osc.frequency.value = 880;
         osc.connect(gain);
         gain.connect(ctx.destination);
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.setValueAtTime(0.4 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 1.2);
@@ -147,7 +147,7 @@ function startAlarm(sound: AlertSound): (() => void) {
         osc.frequency.value = 120;
         osc.connect(gain);
         gain.connect(ctx.destination);
-        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.setValueAtTime(0.35 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.18);
@@ -164,7 +164,7 @@ function startAlarm(sound: AlertSound): (() => void) {
         osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
         osc.connect(gain);
         gain.connect(ctx.destination);
-        gain.gain.setValueAtTime(0.45, ctx.currentTime);
+        gain.gain.setValueAtTime(0.45 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.2);
@@ -181,7 +181,7 @@ function startAlarm(sound: AlertSound): (() => void) {
         osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
         osc.connect(gain);
         gain.connect(ctx.destination);
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.setValueAtTime(0.4 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.3);
@@ -230,6 +230,7 @@ export function useDetection(
   sensitivity: DetectionSensitivity,
   alertType: 'sound' | 'flash' | 'both',
   alertSound: AlertSound,
+  alertVolume: number,
   onAlert: () => void,
 ) {
   const [status, setStatus] = useState<DetectionStatus>('idle');
@@ -241,6 +242,8 @@ export function useDetection(
   alertTypeRef.current = alertType;
   const alertSoundRef = useRef(alertSound);
   alertSoundRef.current = alertSound;
+  const alertVolumeRef = useRef(alertVolume);
+  alertVolumeRef.current = alertVolume;
   const onAlertRef = useRef(onAlert);
   onAlertRef.current = onAlert;
 
@@ -255,7 +258,7 @@ export function useDetection(
     isBitingRef.current = true;
     const type = alertTypeRef.current;
     if (type === 'sound' || type === 'both') {
-      stopAlarmRef.current = startAlarm(alertSoundRef.current);
+      stopAlarmRef.current = startAlarm(alertSoundRef.current, alertVolumeRef.current);
     }
     setStatus('alert');
     onAlertRef.current(); // log the incident once when biting starts

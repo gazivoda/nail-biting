@@ -20,6 +20,7 @@ export function CameraView({ videoRef }: Props) {
     detectionSensitivity,
     alertType,
     alertSound,
+    alertVolume,
     logIncident,
     setCameraEnabled,
   } = useAppStore();
@@ -41,6 +42,7 @@ export function CameraView({ videoRef }: Props) {
     detectionSensitivity as DetectionSensitivity,
     alertType,
     alertSound,
+    alertVolume,
     handleAlert,
   );
 

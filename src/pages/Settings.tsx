@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Bell, ShieldCheck, Sliders, Trash2, Volume2, CreditCard, ExternalLink, Zap, RefreshCw } from 'lucide-react';
+import { Bell, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
@@ -57,7 +57,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
 // --------------------------------------------------------------------------
 // Web Audio preview — fires a one-shot preview of a sound
 // --------------------------------------------------------------------------
-function previewSound(sound: AlertSound) {
+function previewSound(sound: AlertSound, volume: number) {
   try {
     const ctx = new AudioContext();
     const osc = ctx.createOscillator();
@@ -69,7 +69,7 @@ function previewSound(sound: AlertSound) {
       case 'alarm':
         osc.type = 'square';
         osc.frequency.value = 1000;
-        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+        gain.gain.setValueAtTime(0.5 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.15);
@@ -77,7 +77,7 @@ function previewSound(sound: AlertSound) {
       case 'chime':
         osc.type = 'sine';
         osc.frequency.value = 880;
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.setValueAtTime(0.4 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 1.2);
@@ -85,7 +85,7 @@ function previewSound(sound: AlertSound) {
       case 'buzz':
         osc.type = 'sawtooth';
         osc.frequency.value = 120;
-        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.setValueAtTime(0.35 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.18);
@@ -94,7 +94,7 @@ function previewSound(sound: AlertSound) {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(400, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
-        gain.gain.setValueAtTime(0.45, ctx.currentTime);
+        gain.gain.setValueAtTime(0.45 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.2);
@@ -103,7 +103,7 @@ function previewSound(sound: AlertSound) {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1400, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.3);
-        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.setValueAtTime(0.4 * volume, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
         osc.start(ctx.currentTime);
         osc.stop(ctx.currentTime + 0.3);
@@ -127,13 +127,13 @@ const SOUND_OPTIONS: {
   { value: 'whistle', label: 'Whistle', description: 'Descending pure tone',       emoji: '🎶' },
 ];
 
-function SoundPicker({ value, onChange }: { value: AlertSound; onChange: (s: AlertSound) => void }) {
+function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange: (s: AlertSound) => void; volume: number }) {
   const [previewing, setPreviewing] = useState<AlertSound | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function handlePreview(sound: AlertSound, e: React.MouseEvent) {
     e.stopPropagation();
-    previewSound(sound);
+    previewSound(sound, volume);
     setPreviewing(sound);
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setPreviewing(null), 700);
@@ -177,6 +177,118 @@ function SoundPicker({ value, onChange }: { value: AlertSound; onChange: (s: Ale
         );
       })}
     </div>
+  );
+}
+
+// --------------------------------------------------------------------------
+// Volume slider — controls alarm loudness, previews at the current sound
+// --------------------------------------------------------------------------
+function VolumeSlider({ value, onChange, sound }: { value: number; onChange: (v: number) => void; sound: AlertSound }) {
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const v = Number(e.target.value) / 100;
+    onChange(v);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => previewSound(sound, v), 120);
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      {value === 0 ? (
+        <VolumeX size={15} className="text-stone-400 dark:text-stone-500 flex-shrink-0" />
+      ) : (
+        <Volume2 size={15} className="text-stone-400 dark:text-stone-500 flex-shrink-0" />
+      )}
+      <input
+        type="range"
+        min={0}
+        max={100}
+        step={1}
+        value={Math.round(value * 100)}
+        onChange={handleChange}
+        aria-label="Alert volume"
+        className="flex-1 accent-forest-500 h-1.5"
+      />
+      <span className="text-xs tabular-nums text-stone-500 dark:text-stone-400 w-9 text-right">
+        {Math.round(value * 100)}%
+      </span>
+    </div>
+  );
+}
+
+// --------------------------------------------------------------------------
+// Custom bite reasons — user-defined tags shown alongside the built-in presets
+// --------------------------------------------------------------------------
+function ReasonsSection() {
+  const { customTags, addCustomTag, removeCustomTag } = useAppStore();
+  const [label, setLabel] = useState('');
+  const [emoji, setEmoji] = useState('');
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!label.trim()) return;
+    addCustomTag(label, emoji);
+    setLabel('');
+    setEmoji('');
+  };
+
+  return (
+    <Section title="Bite reasons" icon={Tag} fullWidth>
+      <p className="text-xs text-stone-400 dark:text-stone-500 -mt-1">
+        Add your own reasons to choose from when logging a bite, alongside the built-in options (stress, focus, boredom, not sure).
+      </p>
+
+      {customTags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {customTags.map(tag => (
+            <span
+              key={tag.id}
+              className="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1.5 rounded-full text-xs bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
+            >
+              <span>{tag.emoji}</span>
+              <span>{tag.label}</span>
+              <button
+                onClick={() => removeCustomTag(tag.id)}
+                aria-label={`Remove ${tag.label}`}
+                className="p-0.5 rounded-full text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
+              >
+                <X size={12} />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      <form onSubmit={handleAdd} className="flex items-center gap-2">
+        <input
+          type="text"
+          value={emoji}
+          onChange={(e) => setEmoji(e.target.value)}
+          placeholder="🏷️"
+          maxLength={4}
+          aria-label="Emoji"
+          className="w-12 text-center bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-2 py-2 text-sm placeholder:text-stone-300 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+        />
+        <input
+          type="text"
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          placeholder="e.g. Tiredness"
+          maxLength={30}
+          aria-label="Reason label"
+          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-2 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-300 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+        />
+        <button
+          type="submit"
+          disabled={!label.trim()}
+          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-forest-600 hover:bg-forest-500 disabled:opacity-40 disabled:hover:bg-forest-600 text-cream-100 font-semibold rounded-xl px-3 py-2 text-xs transition-colors"
+        >
+          <Plus size={13} />
+          Add
+        </button>
+      </form>
+    </Section>
   );
 }
 
@@ -293,6 +405,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
     detectionSensitivity, setSensitivity,
     alertType, setAlertType,
     alertSound, setAlertSound,
+    alertVolume, setAlertVolume,
     remindersEnabled, setRemindersEnabled,
     reminderIntervalMinutes, setReminderInterval,
     clearAllData,
@@ -363,8 +476,16 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       {/* Alert sound — full width */}
       <Section title="Alert sound" icon={Volume2} fullWidth>
         <p className="text-xs text-stone-400 dark:text-stone-500 -mt-1">Choose the sound played when nail-biting is detected. Click Preview to hear each option.</p>
-        <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} />
+        <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
+        <Row label="Volume" description="How loud the alarm plays">
+          <div className="w-40">
+            <VolumeSlider value={alertVolume} onChange={setAlertVolume} sound={alertSound} />
+          </div>
+        </Row>
       </Section>
+
+      {/* Bite reasons — full width */}
+      <ReasonsSection />
 
       {/* Reminders */}
       <Section title="Periodic reminders" icon={Bell}>

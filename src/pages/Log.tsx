@@ -5,7 +5,8 @@ import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
-import type { Incident } from '../types';
+import { SegmentedControl } from '../components/ui/SegmentedControl';
+import type { CustomTag, Incident, StatsMetric } from '../types';
 
 // Incidents = auto-detected & not yet confirmed as a bite (amber)
 // Bites = manually logged OR confirmed auto-detected (red)
@@ -13,13 +14,8 @@ function isConfirmedBite(inc: Incident) {
   return !inc.autoDetected || inc.confirmed === true;
 }
 
-const BITE_TAG_COLORS: Record<string, string> = {
-  'auto-detected': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-  'stress': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-  'focus': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-  'boredom': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-  'unknown': 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
-};
+// Every confirmed-bite tag shares the same styling — preset or custom.
+const BITE_TAG_COLOR = 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800';
 
 const INCIDENT_TAG_COLOR = 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
 
@@ -31,14 +27,25 @@ const BITE_TAG_LABELS: Record<string, string> = {
   'unknown': '🤷 Unknown',
 };
 
+function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
+  const preset = BITE_TAG_LABELS[inc.tag];
+  if (preset) return preset;
+  const custom = customTags.find(t => t.id === inc.tag);
+  return custom ? `${custom.emoji} ${custom.label}` : '🏷️ Other';
+}
+
 function WeekChart() {
-  const { incidents, theme } = useAppStore();
+  const { incidents, theme, weekChartMetric, setWeekChartMetric } = useAppStore();
   const isDark = theme === 'dark' ||
     (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
+  const relevantIncidents = weekChartMetric === 'confirmed'
+    ? incidents.filter(isConfirmedBite)
+    : incidents;
+
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = startOfDay(subDays(new Date(), 6 - i));
-    const count = incidents.filter(inc => {
+    const count = relevantIncidents.filter(inc => {
       const d = startOfDay(new Date(inc.timestamp));
       return d.getTime() === date.getTime();
     }).length;
@@ -54,8 +61,20 @@ function WeekChart() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card dark:shadow-card-dark">
-      <p className="text-stone-700 dark:text-stone-200 font-semibold mb-1">Last 7 days</p>
-      <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">Incidents per day</p>
+      <div className="flex items-center justify-between mb-1">
+        <p className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</p>
+        <SegmentedControl<StatsMetric>
+          value={weekChartMetric}
+          onChange={setWeekChartMetric}
+          options={[
+            { label: 'Incidents', value: 'incidents' },
+            { label: 'Confirmed', value: 'confirmed' },
+          ]}
+        />
+      </div>
+      <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">
+        {weekChartMetric === 'confirmed' ? 'Confirmed bites per day' : 'Incidents per day'}
+      </p>
       <ResponsiveContainer width="100%" height={160}>
         <BarChart data={days} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
           <XAxis dataKey="day" tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} />
@@ -66,7 +85,7 @@ function WeekChart() {
             itemStyle={{ color: isDark ? '#f87171' : '#dc2626' }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
-          <Bar dataKey="count" name="incidents" radius={[4, 4, 0, 0]}>
+          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'confirmed bites' : 'incidents'} radius={[4, 4, 0, 0]}>
             {days.map((entry, index) => {
               const intensity = max > 0 ? entry.count / max : 0;
               const color = intensity === 0
@@ -121,7 +140,7 @@ function ClearAllButton() {
 }
 
 export function Log() {
-  const { incidents, deleteIncident, confirmIncident } = useAppStore();
+  const { incidents, deleteIncident, confirmIncident, customTags } = useAppStore();
 
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
@@ -192,9 +211,9 @@ export function Log() {
                   <div className="space-y-2">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
-                      const tagColor = bite ? BITE_TAG_COLORS[inc.tag] : INCIDENT_TAG_COLOR;
+                      const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
                       const tagLabel = bite
-                        ? (inc.confirmed ? '✓ Bite (confirmed)' : BITE_TAG_LABELS[inc.tag])
+                        ? (inc.confirmed ? '✓ Bite (confirmed)' : biteTagLabel(inc, customTags))
                         : '📷 Incident';
                       return (
                         <div

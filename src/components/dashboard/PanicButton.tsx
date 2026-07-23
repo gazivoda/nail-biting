@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import type { TriggerTag } from '../../types';
 
-const tags: { id: TriggerTag; label: string; emoji: string }[] = [
+const PRESET_TAGS: { id: TriggerTag; label: string; emoji: string }[] = [
   { id: 'stress', label: 'Stress', emoji: '😰' },
   { id: 'focus', label: 'Deep focus', emoji: '🧠' },
   { id: 'boredom', label: 'Boredom', emoji: '😐' },
@@ -10,7 +10,8 @@ const tags: { id: TriggerTag; label: string; emoji: string }[] = [
 ];
 
 export function PanicButton() {
-  const { logIncident } = useAppStore();
+  const { logIncident, customTags } = useAppStore();
+  const tags = [...PRESET_TAGS, ...customTags];
   const [showTags, setShowTags] = useState(false);
   const [logged, setLogged] = useState<string | null>(null);
   const [pressing, setPressing] = useState(false);

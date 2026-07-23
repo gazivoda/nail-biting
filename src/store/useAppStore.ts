@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme } from '../types';
+import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme, StatsMetric } from '../types';
 
 function isBite(inc: Incident): boolean {
   return !inc.autoDetected || inc.confirmed === true;
@@ -21,9 +21,12 @@ const initialState: AppState = {
   detectionSensitivity: 'medium',
   alertType: 'both',
   alertSound: 'alarm',
+  alertVolume: 0.8,
   remindersEnabled: false,
   reminderIntervalMinutes: 15,
   theme: 'system',
+  customTags: [],
+  weekChartMetric: 'incidents',
 };
 
 export const useAppStore = create<AppState & AppActions>()(
@@ -80,9 +83,25 @@ export const useAppStore = create<AppState & AppActions>()(
       setSensitivity: (s: DetectionSensitivity) => set({ detectionSensitivity: s }),
       setAlertType: (t: AlertType) => set({ alertType: t }),
       setAlertSound: (s: AlertSound) => set({ alertSound: s }),
+      setAlertVolume: (v: number) => set({ alertVolume: Math.min(1, Math.max(0, v)) }),
       setRemindersEnabled: (enabled) => set({ remindersEnabled: enabled }),
       setReminderInterval: (minutes: ReminderInterval) => set({ reminderIntervalMinutes: minutes }),
       setTheme: (theme: Theme) => set({ theme }),
+
+      addCustomTag: (label: string, emoji: string) => {
+        const trimmed = label.trim();
+        if (!trimmed) return;
+        const { customTags } = get();
+        const id = `custom-${crypto.randomUUID().slice(0, 8)}`;
+        set({ customTags: [...customTags, { id, label: trimmed, emoji: emoji.trim() || '🏷️' }] });
+      },
+
+      removeCustomTag: (id: string) => {
+        const { customTags } = get();
+        set({ customTags: customTags.filter(t => t.id !== id) });
+      },
+
+      setWeekChartMetric: (m: StatsMetric) => set({ weekChartMetric: m }),
 
       clearAllData: () => set({
         ...initialState,
