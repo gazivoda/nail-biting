@@ -9,6 +9,46 @@ import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
 import { ContactForm } from '../components/ContactForm';
+import { BLOG_POSTS } from '../data/blogPosts';
+
+// Pulled from the real post data so titles and reading times can't drift.
+const FEATURED_SLUGS = [
+  'habit-reversal-training-guide',
+  'nail-biting-health-risks',
+  'how-ai-can-help-stop-nail-biting',
+];
+const FEATURED_POSTS = FEATURED_SLUGS
+  .map(slug => BLOG_POSTS.find(p => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => p !== undefined);
+
+// Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
+// to have a visible on-page counterpart, so these two must stay in step.
+const FAQS: { q: string; a: string }[] = [
+  {
+    q: 'Why do people bite their nails?',
+    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults. Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic — happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
+  },
+  {
+    q: 'What are the best remedies to stop nail biting?',
+    a: 'The evidence-based options are habit reversal training (the strongest by some margin), bitter-taste polishes like Mavala Stop, real-time awareness tools such as AI detection, competing response training, and stress reduction. Most people do best combining an awareness method with a competing response rather than relying on any single remedy.',
+  },
+  {
+    q: 'What is habit reversal training for nail biting?',
+    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. Studies report 70–90% reductions in biting frequency among people who practise it consistently.',
+  },
+  {
+    q: 'Is nail biting harmful?',
+    a: 'Yes. Chronic nail biting causes dental damage including chipped teeth and jaw strain, nail fold infections, transfer of pathogens from fingers to mouth, and permanent nail deformity in severe cases. The visible damage also drives shame and social anxiety, which increases biting — a self-reinforcing cycle.',
+  },
+  {
+    q: 'Does Stop Biting send my camera feed to the internet?',
+    a: 'No. Detection uses MediaPipe — Google\'s WebAssembly vision framework — running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. There are zero network requests during detection: you can disconnect from the internet and the app works identically.',
+  },
+  {
+    q: 'How long does it take to stop biting your nails?',
+    a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. Frequency typically starts dropping meaningfully between weeks two and four, and the competing response starts feeling natural around weeks six to eight. Habit-formation research suggests a median of roughly two months for a new response to become automatic.',
+  },
+];
 
 // Activates scroll-reveal on all .reveal and .reveal-card elements
 function useScrollReveal() {
@@ -137,11 +177,11 @@ export function Landing(_props: Props) {
               className="animate-fade-up text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6"
               style={{ animationDelay: '160ms' }}
             >
-              You've probably tried bitter polish, gloves, sheer willpower. None of it stuck — because biting
-              your nails was never about willpower. It happens on autopilot, before you even notice.{' '}
-              <span className="text-stone-700 dark:text-stone-200 font-medium">Stop Biting catches that exact moment</span>{' '}
-              with on-device AI and gently snaps you out of it — so you finally notice the habit you can't catch
-              yourself. Your camera never leaves your device.
+              Bitter polish, gloves, sheer willpower — none of it stuck, because nail biting was never a
+              willpower problem. It runs on autopilot, and by the time you notice, you're already doing it.{' '}
+              <span className="text-stone-700 dark:text-stone-200 font-medium">Stop Biting catches the exact moment your hand reaches your mouth</span>{' '}
+              and interrupts it — which is the active ingredient in habit reversal training, the only approach
+              with real clinical evidence behind it. Every frame is processed on your own device.
             </p>
 
             <div
@@ -609,7 +649,13 @@ export function Landing(_props: Props) {
               {[
                 { href: '/how-it-works', label: 'How the AI nail biting detection works' },
                 { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the science behind stopping nail biting' },
+                { href: '/blog/how-to-stop-nail-biting', label: 'How to stop nail biting: the complete guide' },
+                { href: '/blog/nail-biting-30-day-plan', label: 'The 30-day plan to stop biting your nails' },
+                { href: '/blog/nail-biting-trigger-mapping', label: 'Trigger mapping: find out when you actually bite' },
                 { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best apps to stop nail biting (2026)' },
+                { href: '/blog/best-nail-biting-remedies', label: 'Every nail biting remedy, ranked by evidence' },
+                { href: '/blog/nail-biting-health-risks', label: 'The real health risks of nail biting' },
+                { href: '/blog/nail-biting-in-children', label: 'Nail biting in children: a guide for parents' },
                 { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
               ].map((link) => (
                 <a
@@ -634,23 +680,54 @@ export function Landing(_props: Props) {
               </a>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {[
-                { slug: 'habit-reversal-training-guide', title: 'Habit Reversal Training: The Complete Guide', tag: 'Treatment', mins: 9 },
-                { slug: 'nail-biting-health-risks', title: 'The Real Health Risks of Nail Biting', tag: 'Health', mins: 6 },
-                { slug: 'how-ai-can-help-stop-nail-biting', title: 'How AI Can Help You Stop Biting Your Nails', tag: 'Technology', mins: 7 },
-              ].map(({ slug, title, tag, mins }, i) => (
+              {FEATURED_POSTS.map((post, i) => (
                 <a
-                  key={slug}
-                  href={`/blog/${slug}`}
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
                   className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 group shadow-card"
                   style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                  <span className="text-xs text-forest-600 dark:text-forest-400 font-semibold uppercase tracking-wider">{tag}</span>
-                  <h3 className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-2 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{title}</h3>
-                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-3">{mins} min read</p>
+                  <span className="text-xs text-forest-600 dark:text-forest-400 font-semibold uppercase tracking-wider">{post.tag}</span>
+                  <h3 className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-2 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{post.title}</h3>
+                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-3">{post.readingMinutes} min read</p>
                 </a>
               ))}
             </div>
+          </section>
+
+          {/* ── FAQ ───────────────────────────────────────────────────────── */}
+          <section id="faq" aria-labelledby="faq-heading">
+            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">FAQ</p>
+            <h2 id="faq-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">
+              Questions people ask about nail biting
+            </h2>
+
+            <div className="reveal mt-8 flex flex-col gap-3 max-w-2xl mx-auto">
+              {FAQS.map(({ q, a }) => (
+                <details
+                  key={q}
+                  className="group rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-5 py-4 shadow-card open:shadow-card-md transition-shadow"
+                >
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 text-sm font-semibold text-stone-800 dark:text-stone-100 marker:content-none [&::-webkit-details-marker]:hidden">
+                    {q}
+                    <ChevronDown
+                      size={16}
+                      aria-hidden="true"
+                      className="shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-180"
+                    />
+                  </summary>
+                  <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">{a}</p>
+                </details>
+              ))}
+            </div>
+
+            <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center mt-6">
+              More on all of this in the{' '}
+              <a href="/blog" className="text-forest-600 dark:text-forest-400 hover:underline">
+                nail biting guides
+              </a>{' '}
+              — {BLOG_POSTS.length} evidence-based articles.
+            </p>
           </section>
 
           {/* ── FINAL CTA ─────────────────────────────────────────────────── */}

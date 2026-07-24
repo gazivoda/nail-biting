@@ -19,6 +19,7 @@ const TAG_COLORS: Record<string, string> = {
   Science:     'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800',
   Comparison:  'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border-teal-200 dark:border-teal-800',
   Humor:       'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800',
+  Products:    'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800',
 };
 
 function tagClass(tag: string) {
@@ -274,7 +275,7 @@ export function BlogPost({ slug }: Props) {
               <a href="/how-it-works" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
                 How it works →
               </a>
-              <a href="/pricing" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
+              <a href="/#pricing" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
                 See pricing →
               </a>
             </div>

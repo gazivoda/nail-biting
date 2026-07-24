@@ -10,6 +10,8 @@
     "build:web": "tsc -b && VITE_BUILD_TARGET=web vite build",
     "start": "node server.js",
     "lint": "eslint .",
+    "seo:sync": "node scripts/sync-seo.mjs",
+    "seo:check": "node scripts/sync-seo.mjs --check",
     "preview": "vite preview",
     "electron:build-main": "vite build --config vite.electron.config.ts",
     "electron:dev": "concurrently \"vite\" \"node server.js\" \"wait-on http://localhost:5173 && electron .\"",
