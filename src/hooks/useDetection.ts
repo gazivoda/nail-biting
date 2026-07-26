@@ -107,6 +107,12 @@ function startAlarm(sound: AlertSound, volume: number): (() => void) {
   try {
     ctx = new AudioContext();
 
+    // The alarm starts from a detection event, not a click. If the browser's
+    // autoplay policy leaves the context suspended, every beep below is
+    // scheduled into a dead context and the user gets no alert at all —
+    // silently, which is the worst possible failure for an alarm.
+    if (ctx.state === 'suspended') ctx.resume().catch(() => { /* ignore */ });
+
     // ── alarm: rapid alternating 1000/800 Hz beep (original) ──────────────
     function playAlarm() {
       try {
@@ -323,12 +329,33 @@ export function useDetection(
         let consecutiveHits = 0;
         let missedFrames = 0; // consecutive frames with no fingertip near mouth
 
+        function registerHit() {
+          missedFrames = 0;
+          consecutiveHits++;
+          if (consecutiveHits >= REQUIRED_CONSECUTIVE_FRAMES) {
+            startBiting();
+          }
+        }
+
+        function registerMiss() {
+          consecutiveHits = 0;
+          missedFrames++;
+          if (missedFrames >= 2) {
+            stopBiting();
+            missedFrames = 0;
+          }
+        }
+
         function runInference() {
           const now = performance.now();
           lastInferenceTs = now;
 
           const video = videoRef.current;
-          if (!video || video.readyState < 2) return;
+          // No usable frame — the stream stalled, ended, or the camera was
+          // preempted by another app. Count it as a miss instead of returning:
+          // an early return skips the miss accounting entirely, so an alarm
+          // that was already firing would never be told to stop.
+          if (!video || video.readyState < 2) return registerMiss();
 
           try {
             const handResult = hand.detectForVideo(video, now);
@@ -355,22 +382,12 @@ export function useDetection(
               }
             }
 
-            if (fingertipNearMouth) {
-              missedFrames = 0;
-              consecutiveHits++;
-              if (consecutiveHits >= REQUIRED_CONSECUTIVE_FRAMES) {
-                startBiting();
-              }
-            } else {
-              consecutiveHits = 0;
-              missedFrames++;
-              if (missedFrames >= 2) {
-                stopBiting();
-                missedFrames = 0;
-              }
-            }
+            if (fingertipNearMouth) registerHit();
+            else registerMiss();
           } catch {
-            // Skip frames with transient errors silently
+            // Transient inference error. Still count it as a miss — swallowing
+            // it outright would wedge a firing alarm on indefinitely.
+            registerMiss();
           }
         }
 
