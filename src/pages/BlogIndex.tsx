@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, BookOpen } from 'lucide-react';
-import { BLOG_POSTS } from '../data/blogPosts';
+import { BLOG_INDEX } from '../data/blogIndex';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 
-const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_POSTS.map(p => p.tag)))];
+const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_INDEX.map(p => p.tag)))];
 
 const TAG_COLORS: Record<string, string> = {
   Psychology:  'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800',
@@ -46,8 +46,8 @@ export function BlogIndex() {
   const [activeTag, setActiveTag] = useState('All');
 
   const posts = activeTag === 'All'
-    ? BLOG_POSTS
-    : BLOG_POSTS.filter(p => p.tag === activeTag);
+    ? BLOG_INDEX
+    : BLOG_INDEX.filter(p => p.tag === activeTag);
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">

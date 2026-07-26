@@ -9,7 +9,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
 import { ContactForm } from '../components/ContactForm';
-import { BLOG_POSTS } from '../data/blogPosts';
+import { BLOG_INDEX } from '../data/blogIndex';
 
 // Pulled from the real post data so titles and reading times can't drift.
 const FEATURED_SLUGS = [
@@ -18,7 +18,7 @@ const FEATURED_SLUGS = [
   'how-ai-can-help-stop-nail-biting',
 ];
 const FEATURED_POSTS = FEATURED_SLUGS
-  .map(slug => BLOG_POSTS.find(p => p.slug === slug))
+  .map(slug => BLOG_INDEX.find(p => p.slug === slug))
   .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
 // Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
@@ -726,7 +726,7 @@ export function Landing(_props: Props) {
               <a href="/blog" className="text-forest-600 dark:text-forest-400 hover:underline">
                 nail biting guides
               </a>{' '}
-              — {BLOG_POSTS.length} evidence-based articles.
+              — {BLOG_INDEX.length} evidence-based articles.
             </p>
           </section>
 

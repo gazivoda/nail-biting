@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { TabBar } from './components/layout/TabBar';
 import { Dashboard } from './pages/Dashboard';
@@ -7,7 +7,12 @@ import { Settings } from './pages/Settings';
 import { Landing } from './pages/Landing';
 import { PaywallPage } from './components/auth/PaywallPage';
 import { BlogIndex } from './pages/BlogIndex';
-import { BlogPost } from './pages/BlogPost';
+// BlogPost is the only route that renders article bodies, and blogPosts.ts is a
+// single ~700KB array literal that no bundler can tree-shake. Splitting it out
+// keeps every other route — the landing page above all — from paying for it.
+const BlogPost = lazy(() =>
+  import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
+);
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
@@ -105,7 +110,13 @@ export default function App() {
   // Blog post — /blog/:slug
   if (path.startsWith('/blog/')) {
     const slug = path.slice(6).replace(/\/$/, '');
-    return <BlogPost slug={slug} />;
+    // The server injects the article body and meta tags into the HTML shell, so
+    // crawlers never depend on this chunk resolving.
+    return (
+      <Suspense fallback={null}>
+        <BlogPost slug={slug} />
+      </Suspense>
+    );
   }
 
   // About page
