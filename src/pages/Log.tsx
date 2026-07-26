@@ -7,6 +7,14 @@ import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import type { CustomTag, Incident, StatsMetric } from '../types';
+import { severityForCount, type Severity } from '../utils/severity';
+
+const SEVERITY_FILL: Record<Severity, { light: string; dark: string }> = {
+  none:   { light: '#e7e5e4', dark: '#374151' },
+  low:    { light: '#86efac', dark: '#166534' },
+  medium: { light: '#f59e0b', dark: '#f59e0b' },
+  high:   { light: '#ef4444', dark: '#ef4444' },
+};
 
 // Incidents = auto-detected & not yet confirmed as a bite (amber)
 // Bites = manually logged OR confirmed auto-detected (red)
@@ -52,8 +60,6 @@ function WeekChart() {
     return { day: format(date, 'EEE'), count, date };
   });
 
-  const max = Math.max(...days.map(d => d.count), 1);
-
   const tickColor = isDark ? '#6b7280' : '#78716c';
   const tooltipBg = isDark ? 'oklch(18% 0.010 200)' : '#fafaf9';
   const tooltipBorder = isDark ? 'oklch(9% 0.005 200)' : '#e7e5e4';
@@ -86,17 +92,9 @@ function WeekChart() {
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
           <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'confirmed bites' : 'incidents'} radius={[4, 4, 0, 0]}>
-            {days.map((entry, index) => {
-              const intensity = max > 0 ? entry.count / max : 0;
-              const color = intensity === 0
-                ? (isDark ? '#374151' : '#e7e5e4')
-                : intensity < 0.4
-                ? (isDark ? '#166534' : '#86efac')
-                : intensity < 0.7
-                ? '#f59e0b'
-                : '#ef4444';
-              return <Cell key={index} fill={color} />;
-            })}
+            {days.map((entry, index) => (
+              <Cell key={index} fill={SEVERITY_FILL[severityForCount(entry.count)][isDark ? 'dark' : 'light']} />
+            ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
