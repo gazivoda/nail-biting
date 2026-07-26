@@ -5,6 +5,7 @@ import {
   FilesetResolver,
 } from '@mediapipe/tasks-vision';
 import type { DetectionSensitivity, AlertSound } from '../types';
+import { createBiteDetector } from './biteDetector';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -79,23 +80,8 @@ async function getModels() {
 // 5fps — plenty for nail-biting detection, ~12x less CPU than 60fps
 const INFERENCE_INTERVAL_MS = 200;
 
-// Only check fingertip landmarks — wrist/palm near the face shouldn't count
-// MediaPipe hand landmark indices: 4=thumb, 8=index, 12=middle, 16=ring, 20=pinky
-const FINGERTIP_INDICES = [4, 8, 12, 16, 20];
-
-// How many consecutive positive frames required before alerting.
-// At 5fps, 3 frames = 600ms dwell time — eliminates brief pass-by false positives.
-const REQUIRED_CONSECUTIVE_FRAMES = 3;
-
-const THRESHOLDS: Record<DetectionSensitivity, number> = {
-  low: 0.18,
-  medium: 0.12,
-  high: 0.08,
-};
-
-function dist2d(a: { x: number; y: number }, b: { x: number; y: number }) {
-  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
-}
+// The per-frame detection logic lives in ./biteDetector so it can be tested
+// without a camera or MediaPipe.
 
 // Starts a repeating alert sound based on the selected AlertSound profile.
 // Returns a stop function.
@@ -243,15 +229,22 @@ export function useDetection(
 
   // Refs for values that change without needing inference restart
   const sensitivityRef = useRef(sensitivity);
-  sensitivityRef.current = sensitivity;
   const alertTypeRef = useRef(alertType);
-  alertTypeRef.current = alertType;
   const alertSoundRef = useRef(alertSound);
-  alertSoundRef.current = alertSound;
   const alertVolumeRef = useRef(alertVolume);
-  alertVolumeRef.current = alertVolume;
   const onAlertRef = useRef(onAlert);
-  onAlertRef.current = onAlert;
+
+  // Writing to a ref during render is not allowed. No dep array, so this runs
+  // after every render — same cadence as the old inline assignments. These
+  // values are only ever read from the rAF/interval loop, which cannot observe
+  // the difference between "during render" and "immediately after commit".
+  useEffect(() => {
+    sensitivityRef.current = sensitivity;
+    alertTypeRef.current = alertType;
+    alertSoundRef.current = alertSound;
+    alertVolumeRef.current = alertVolume;
+    onAlertRef.current = onAlert;
+  });
 
   const stopAlarmRef = useRef<(() => void) | null>(null);
   const isBitingRef = useRef(false);
@@ -326,69 +319,24 @@ export function useDetection(
         setStatus('watching');
 
         let lastInferenceTs = 0;
-        let consecutiveHits = 0;
-        let missedFrames = 0; // consecutive frames with no fingertip near mouth
 
-        function registerHit() {
-          missedFrames = 0;
-          consecutiveHits++;
-          if (consecutiveHits >= REQUIRED_CONSECUTIVE_FRAMES) {
-            startBiting();
-          }
-        }
-
-        function registerMiss() {
-          consecutiveHits = 0;
-          missedFrames++;
-          if (missedFrames >= 2) {
-            stopBiting();
-            missedFrames = 0;
-          }
-        }
+        const detector = createBiteDetector({
+          getVideo: () => videoRef.current,
+          getSensitivity: () => sensitivityRef.current,
+          source: {
+            detectHands: (video, ts) =>
+              hand.detectForVideo(video as HTMLVideoElement, ts).landmarks ?? [],
+            detectFace: (video, ts) =>
+              face.detectForVideo(video as HTMLVideoElement, ts).faceLandmarks ?? [],
+          },
+          onBiteStart: startBiting,
+          onBiteEnd: stopBiting,
+        });
 
         function runInference() {
           const now = performance.now();
           lastInferenceTs = now;
-
-          const video = videoRef.current;
-          // No usable frame — the stream stalled, ended, or the camera was
-          // preempted by another app. Count it as a miss instead of returning:
-          // an early return skips the miss accounting entirely, so an alarm
-          // that was already firing would never be told to stop.
-          if (!video || video.readyState < 2) return registerMiss();
-
-          try {
-            const handResult = hand.detectForVideo(video, now);
-            const faceResult = face.detectForVideo(video, now + 0.1);
-
-            const hands = handResult.landmarks ?? [];
-            const faces = faceResult.faceLandmarks ?? [];
-
-            let fingertipNearMouth = false;
-            if (hands.length > 0 && faces.length > 0) {
-              const facePoints = faces[0];
-              const mouth = {
-                x: (facePoints[13].x + facePoints[14].x) / 2,
-                y: (facePoints[13].y + facePoints[14].y) / 2,
-              };
-              const threshold = THRESHOLDS[sensitivityRef.current];
-              outer: for (const handPoints of hands) {
-                for (const idx of FINGERTIP_INDICES) {
-                  if (dist2d(handPoints[idx], mouth) < threshold) {
-                    fingertipNearMouth = true;
-                    break outer;
-                  }
-                }
-              }
-            }
-
-            if (fingertipNearMouth) registerHit();
-            else registerMiss();
-          } catch {
-            // Transient inference error. Still count it as a miss — swallowing
-            // it outright would wedge a firing alarm on indefinitely.
-            registerMiss();
-          }
+          detector.step(now);
         }
 
         function processFrame() {
