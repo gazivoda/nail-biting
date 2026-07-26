@@ -156,7 +156,7 @@ export function Log() {
   }
 
   return (
-    <div className="p-8 pb-10">
+    <div className="p-5 sm:p-8 pb-10">
       <PageHeader eyebrow="Progress" title="Patterns & milestones" />
 
       {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}

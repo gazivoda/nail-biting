@@ -17,7 +17,7 @@ export function Dashboard() {
     hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
   return (
-    <div className="p-8 pb-10">
+    <div className="p-5 sm:p-8 pb-10">
       <PageHeader
         eyebrow="Today"
         title={`${greeting}, ${firstName}.`}
@@ -29,8 +29,8 @@ export function Dashboard() {
         }
       />
 
-      {/* Split grid: left 1.35fr, right 1fr */}
-      <div className="grid gap-5 items-start" style={{ gridTemplateColumns: '1.35fr 1fr' }}>
+      {/* Single column on phones/tablets; split 1.35fr / 1fr from md up */}
+      <div className="grid gap-5 items-start grid-cols-1 md:grid-cols-[1.35fr_1fr]">
         {/* Left column */}
         <div className="flex flex-col gap-5">
           <StreakHero />

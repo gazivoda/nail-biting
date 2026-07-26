@@ -427,9 +427,9 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
   };
 
   return (
-    <div className="p-8 pb-10 max-w-5xl">
+    <div className="p-5 sm:p-8 pb-10 max-w-5xl">
       <PageHeader eyebrow="Settings" title="Tune detection to your rhythm" />
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
       {/* Plan */}
       <PlanSection onUpgrade={onUpgrade} />

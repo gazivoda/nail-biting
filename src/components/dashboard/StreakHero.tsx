@@ -3,8 +3,8 @@ import { useStreak } from '../../hooks/useStreak';
 
 function Segment({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col items-center min-w-[64px]">
-      <span className="font-mono text-[56px] font-medium leading-none tracking-[-2px] tabular-nums text-forest-700 dark:text-forest-300">
+    <div className="flex flex-col items-center min-w-[52px] sm:min-w-[64px]">
+      <span className="font-mono text-[44px] sm:text-[56px] font-medium leading-none tracking-[-2px] tabular-nums text-forest-700 dark:text-forest-300">
         {String(value).padStart(2, '0')}
       </span>
       <span className="text-[10.5px] font-medium tracking-[1.5px] uppercase text-stone-400 dark:text-stone-500 mt-1.5">
@@ -16,7 +16,7 @@ function Segment({ value, label }: { value: number; label: string }) {
 
 function Colon() {
   return (
-    <span className="font-mono text-[40px] font-light text-stone-300 dark:text-stone-600 leading-none self-start mt-1 select-none">
+    <span className="font-mono text-[32px] sm:text-[40px] font-light text-stone-300 dark:text-stone-600 leading-none self-start mt-1 select-none">
       :
     </span>
   );
@@ -31,7 +31,7 @@ export function StreakHero() {
 
   return (
     <div
-      className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-9 shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}
+      className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 sm:p-9 shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}
       data-tour="streak-card"
     >
       {/* Overline */}
@@ -43,7 +43,7 @@ export function StreakHero() {
       </div>
 
       {/* Mono ticker */}
-      <div className="flex items-start gap-4">
+      <div className="flex items-start gap-3 sm:gap-4">
         {streakDays > 0 && (
           <>
             <Segment value={streakDays} label="days" />
