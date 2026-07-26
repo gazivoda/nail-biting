@@ -26,8 +26,19 @@ export type ReminderInterval = 5 | 10 | 15 | 30 | 60;
 export interface AppState {
   incidents: Incident[];
   firstOpenTime: number;
+  /**
+   * Point from which `incidents` is a complete record. Equals firstOpenTime
+   * until retention pruning drops the oldest entries, then advances to the
+   * newest dropped bite so streak maths stays anchored correctly.
+   */
+  historyStartTime: number;
   lastBiteTime: number | null;
   bestStreakMs: number;
+  /**
+   * High-water mark for streaks that happened inside the pruned-away range and
+   * can no longer be recomputed from `incidents`.
+   */
+  bestStreakFloorMs: number;
 
   // Camera/detection
   cameraEnabled: boolean;
