@@ -2721,13 +2721,91 @@ if (!existsSync(distPath)) {
     ...Object.keys(BLOG_META).map(slug => `/blog/${slug}`),
   ]);
 
-  // SPA fallback — serve the SPA shell for known routes; 404 for everything else
+  // Branded 404. Self-contained — the SPA's stylesheet is content-hashed, so a
+  // static error page cannot link to it without going stale on every build.
+  // Palette mirrors tailwind.config.js (cream/ink surfaces, forest accent).
+  const NOT_FOUND_HTML = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Page not found | Stop Biting</title>
+  <style>
+    :root {
+      --bg: oklch(93% 0.016 80); --card: oklch(99% 0.005 80);
+      --border: oklch(88% 0.014 120); --text: oklch(22% 0.012 120);
+      --muted: oklch(50% 0.018 120); --accent: oklch(46% 0.130 148);
+      --accent-contrast: oklch(97% 0.012 80);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: oklch(15% 0.010 200); --card: oklch(18% 0.010 200);
+        --border: oklch(9% 0.005 200); --text: oklch(94% 0.010 120);
+        --muted: oklch(62% 0.018 120); --accent: oklch(58% 0.130 148);
+        --accent-contrast: oklch(15% 0.010 200);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; padding: 24px; background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      padding: 40px 32px; max-width: 460px; width: 100%; text-align: center;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+    }
+    .mark {
+      width: 40px; height: 40px; border-radius: 11px; background: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .code {
+      font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--muted); margin: 0 0 8px;
+    }
+    h1 { font-size: 24px; letter-spacing: -0.4px; margin: 0 0 10px; }
+    p { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    a {
+      text-decoration: none; font-size: 13.5px; font-weight: 500;
+      padding: 10px 18px; border-radius: 11px; transition: opacity .15s;
+    }
+    a:hover { opacity: .85; }
+    .primary { background: var(--accent); color: var(--accent-contrast); }
+    .secondary { color: var(--muted); border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="#fff"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 1.5l5 1.5v5c0 3-2.5 5.5-5 6.5-2.5-1-5-3.5-5-6.5v-5l5-1.5z"/>
+      </svg>
+    </div>
+    <p class="code">Error 404</p>
+    <h1>This page doesn't exist</h1>
+    <p>The link may be broken or the page may have moved. Everything else is still here.</p>
+    <div class="actions">
+      <a class="primary" href="/">Go to the app</a>
+      <a class="secondary" href="/blog">Read the guides</a>
+    </div>
+  </main>
+</body>
+</html>`;
+
+  // SPA fallback. Every entry in KNOWN_ROUTES already has its own handler above,
+  // so in practice this only ever 404s — the sendFile is a safety net for a
+  // client-side route added without a matching server route, which would
+  // otherwise become a hard 404 instead of rendering.
   app.get('/{*path}', (req, res) => {
     if (!KNOWN_ROUTES.has(req.path)) {
-      return res.status(404).type('html').send(
-        '<!doctype html><html lang="en"><head><title>404 — Page Not Found | Stop Biting</title></head>' +
-        '<body><h1>404 — Page not found</h1><p><a href="/">Return home</a></p></body></html>',
-      );
+      return res.status(404).type('html').send(NOT_FOUND_HTML);
     }
     res.sendFile(indexPath);
   });
