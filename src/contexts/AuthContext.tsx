@@ -1,26 +1,11 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { computeAccessStatus } from '../utils/access';
+import type { UserProfile, AccessStatus } from '../types/access';
+
+export type { UserProfile, AccessStatus };
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export interface UserProfile {
-  id: string;
-  email: string;
-  name: string;
-  avatar: string | null;
-  trial_end_date: string | null;
-  subscription_status: 'trial' | 'active' | 'paused' | 'cancelled' | 'expired';
-  subscription_plan: 'monthly' | 'yearly' | null;
-  subscription_end_date: string | null;
-  paddle_subscription_id: string | null;
-  paddle_customer_id: string | null;
-}
-
-// 'loading'       — checking session on app start
-// 'no_auth'       — not signed in
-// 'trial_active'  — signed in, within 7-day trial
-// 'subscribed'    — signed in, active paid subscription
-// 'paywall'       — trial expired, no active subscription
-export type AccessStatus = 'loading' | 'no_auth' | 'trial_active' | 'subscribed' | 'paywall';
 
 interface AuthContextType {
   user: UserProfile | null;
@@ -41,28 +26,6 @@ function isElectron(): boolean {
   return typeof window !== 'undefined' && !!window.electronAPI;
 }
 
-function computeAccessStatus(user: UserProfile): Exclude<AccessStatus, 'loading'> {
-  const now = Date.now();
-
-  if (
-    (user.subscription_status === 'active' || user.subscription_status === 'paused') &&
-    user.subscription_end_date &&
-    new Date(user.subscription_end_date).getTime() > now
-  ) {
-    return 'subscribed';
-  }
-
-  if (
-    user.trial_end_date &&
-    new Date(user.trial_end_date).getTime() > now &&
-    user.subscription_status !== 'expired' &&
-    user.subscription_status !== 'cancelled'
-  ) {
-    return 'trial_active';
-  }
-
-  return 'paywall';
-}
 
 // apiFetch:
 // - Web: credentials: 'include' sends the HttpOnly session cookie automatically.
