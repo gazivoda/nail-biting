@@ -11,6 +11,24 @@ function latestBiteTime(incidents: Incident[]): number | null {
   return bites.length > 0 ? bites[0].timestamp : null;
 }
 
+// Longest completed gap between the start of tracking and each successive bite.
+// An in-progress streak is deliberately excluded — it only counts once a bite
+// ends it, which is what the ticker on the dashboard shows separately.
+//
+// Derived from the incident list rather than tracked incrementally so that
+// editing history (deleting a mislogged bite, confirming an old incident)
+// produces a best streak that actually matches the visible log.
+function computeBestStreak(incidents: Incident[], firstOpenTime: number): number {
+  const biteTimes = incidents.filter(isBite).map(i => i.timestamp).sort((a, b) => a - b);
+  let best = 0;
+  let prev = firstOpenTime;
+  for (const t of biteTimes) {
+    best = Math.max(best, t - prev);
+    prev = t;
+  }
+  return best;
+}
+
 const initialState: AppState = {
   incidents: [],
   firstOpenTime: Date.now(),
@@ -35,7 +53,7 @@ export const useAppStore = create<AppState & AppActions>()(
       ...initialState,
 
       logIncident: (tag: TriggerTag, autoDetected = false) => {
-        const { lastBiteTime, firstOpenTime, bestStreakMs, incidents } = get();
+        const { firstOpenTime, incidents } = get();
         const now = Date.now();
 
         const incident: Incident = {
@@ -49,33 +67,36 @@ export const useAppStore = create<AppState & AppActions>()(
 
         // Only confirmed bites (manual or confirmed auto-detected) break the streak
         if (!autoDetected) {
-          const streakStart = lastBiteTime ?? firstOpenTime;
-          const currentStreakMs = now - streakStart;
-          const newBest = Math.max(bestStreakMs, currentStreakMs);
-          set({ incidents: next, lastBiteTime: now, bestStreakMs: newBest });
+          set({
+            incidents: next,
+            lastBiteTime: now,
+            bestStreakMs: computeBestStreak(next, firstOpenTime),
+          });
         } else {
           set({ incidents: next });
         }
       },
 
       confirmIncident: (id: string) => {
-        const { incidents, lastBiteTime, firstOpenTime, bestStreakMs } = get();
-        const target = incidents.find(i => i.id === id);
-        if (!target) return;
+        const { incidents, firstOpenTime } = get();
+        if (!incidents.some(i => i.id === id)) return;
 
         const next = incidents.map(i => i.id === id ? { ...i, confirmed: true } : i);
-        const newLastBite = latestBiteTime(next);
-        const streakStart = lastBiteTime ?? firstOpenTime;
-        const currentStreakMs = target.timestamp - streakStart;
-        const newBest = currentStreakMs > 0 ? Math.max(bestStreakMs, currentStreakMs) : bestStreakMs;
-
-        set({ incidents: next, lastBiteTime: newLastBite, bestStreakMs: newBest });
+        set({
+          incidents: next,
+          lastBiteTime: latestBiteTime(next),
+          bestStreakMs: computeBestStreak(next, firstOpenTime),
+        });
       },
 
       deleteIncident: (id: string) => {
-        const { incidents } = get();
+        const { incidents, firstOpenTime } = get();
         const next = incidents.filter(i => i.id !== id);
-        set({ incidents: next, lastBiteTime: latestBiteTime(next) });
+        set({
+          incidents: next,
+          lastBiteTime: latestBiteTime(next),
+          bestStreakMs: computeBestStreak(next, firstOpenTime),
+        });
       },
 
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),
