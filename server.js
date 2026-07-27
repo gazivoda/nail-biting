@@ -2499,6 +2499,32 @@ if (!existsSync(distPath)) {
     res.type('html').send(injected);
   });
 
+  // Google renders roughly 600px of title text, about 60 characters.
+  //
+  // This used to hard-cut the title at 45 characters and append an ellipsis,
+  // which sliced words in half ("The Psycholog…") on 105 of 140 posts and threw
+  // away the term the page actually ranks for. Two rules fix that: never cut
+  // mid-word, and treat the brand suffix as the first thing to sacrifice — a
+  // recognisable brand is worth less than the keywords it pushes out, and
+  // Google appends the site name itself when it wants to.
+  //
+  // Posts can still opt out entirely by setting `seoTitle` in blogPosts.ts,
+  // which sync-seo.mjs prefers when it writes BLOG_META.
+  const TITLE_BUDGET = 60;
+  const BRAND_SUFFIX = ' | Stop Biting';
+
+  function buildPageTitle(rawTitle) {
+    const title = (rawTitle || '').trim();
+    if (title.length + BRAND_SUFFIX.length <= TITLE_BUDGET) return title + BRAND_SUFFIX;
+    if (title.length <= TITLE_BUDGET) return title;
+
+    const clipped = title.slice(0, TITLE_BUDGET - 1);
+    const lastSpace = clipped.lastIndexOf(' ');
+    // Only honour the word boundary if it still leaves a meaningful title.
+    const trimmed = lastSpace > 30 ? clipped.slice(0, lastSpace) : clipped;
+    return trimmed.replace(/[\s,;:.\-–—]+$/, '') + '…';
+  }
+
   // Blog post pages — inject per-post meta + structured data before serving the SPA shell
   app.get('/blog/:slug', (req, res) => {
     const { slug } = req.params;
@@ -2509,11 +2535,7 @@ if (!existsSync(distPath)) {
       return res.status(404).type('html').send(indexHtml);
     }
     const canonical = `https://stopbiting.today/blog/${slug}`;
-    const MAX_TITLE = 45;
-    const baseTitle = meta.title.length > MAX_TITLE
-      ? meta.title.substring(0, MAX_TITLE).trim() + '…'
-      : meta.title;
-    const pageTitle = `${baseTitle} | Stop Biting`;
+    const pageTitle = buildPageTitle(meta.title);
     let injected = injectMeta(indexHtml, {
       title: pageTitle,
       description: meta.description,

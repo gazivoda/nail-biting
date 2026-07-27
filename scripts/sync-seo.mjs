@@ -68,10 +68,11 @@ function checkMetaLength(post) {
   if (post.description.length > 165) {
     problems.push(`meta description ${post.description.length} chars (>165, truncated in SERPs): ${post.slug}`);
   }
-  // server.js hard-truncates titles at 45 chars before appending " | Stop Biting",
-  // so anything longer gets an ellipsis mid-phrase in the SERP.
-  if (title.length > 45) {
-    problems.push(`meta title ${title.length} chars (>45, server truncates it): ${post.slug} — set seoTitle`);
+  // server.js keeps titles inside a 60-char budget, dropping the " | Stop Biting"
+  // suffix before it will cut any words. Under 46 chars keeps the brand; over 60
+  // still loses the tail, so flag that as worth an explicit seoTitle.
+  if (title.length > 60) {
+    problems.push(`meta title ${title.length} chars (>60, server trims the tail): ${post.slug} — set seoTitle`);
   }
 }
 
