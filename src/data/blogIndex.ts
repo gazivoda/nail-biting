@@ -36,7 +36,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-health-risks",
-    title: "The Real Health Risks of Nail Biting: What Nail biting Actually Does to Your Body",
+    title: "The Real Health Risks of Nail Biting: What Nail Biting Actually Does to Your Body",
     description: "Nail biting causes dental damage, nail infections, pathogen transfer, and social anxiety. This article details the real health risks of chronic nail biting.",
     tag: "Health",
     readingMinutes: 6,
@@ -72,7 +72,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-ocd-connection",
-    title: "Nail biting and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder",
+    title: "Nail Biting and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder",
     description: "Nail biting sits at the intersection of habit, anxiety, and OCD-spectrum disorders. This article explains the habit classification, diagnostic differences, and treatment implications.",
     tag: "Clinical",
     readingMinutes: 7,
@@ -108,7 +108,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-vs-skin-picking",
-    title: "Nail Biting vs Skin Picking: How these habits Compare and What Works for Each",
+    title: "Nail Biting vs Skin Picking: How These Habits Compare and What Works for Each",
     description: "Nail biting and skin picking are both these habits but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.",
     tag: "Clinical",
     readingMinutes: 7,
@@ -180,7 +180,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-genetics",
-    title: "Is Nail Biting Genetic? What the Research Says About Hereditary habit Risk",
+    title: "Is Nail Biting Genetic? What the Research Says About Hereditary Habit Risk",
     description: "Studies show nail biting runs in families, but is it genetic or learned? This article reviews twin studies and genetic research on habit heritability and what it means for treatment.",
     tag: "Science",
     readingMinutes: 6,
