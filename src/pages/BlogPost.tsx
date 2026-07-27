@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
+import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 
@@ -123,7 +124,9 @@ export function BlogPost({ slug }: Props) {
     document.head.appendChild(crumbScript);
 
     const prevTitle = document.title;
-    document.title = `${post.title} | Stop Biting`;
+    // Must match what server.js put in the HTML. Google indexes the rendered
+    // title, so setting an unbudgeted one here would undo the server's work.
+    document.title = buildPageTitle(post.seoTitle ?? post.title);
 
     let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     const prevCanonical = canonicalEl?.href ?? '';
@@ -139,6 +142,15 @@ export function BlogPost({ slug }: Props) {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [slug]);
+
+  // server.js injects an off-screen copy of the article so crawlers that never
+  // run this script still get the text. Once React has rendered the real thing
+  // that copy is a duplicate sitting in the DOM — a second <h1> carrying
+  // different wording from the visible one, plus the whole body again. Remove
+  // it now that it has done its job; the raw HTML crawlers receive is unchanged.
+  useEffect(() => {
+    document.getElementById('ssr-blog-content')?.remove();
   }, [slug]);
 
   return (
