@@ -2364,16 +2364,29 @@ if (!existsSync(distPath)) {
   // Open Graph, and Twitter Card tags into the SPA index.html shell before sending it.
   // This makes critical SEO elements visible to Googlebot and AI crawlers.
   function injectMeta(html, { title, description, canonical, ogType = 'website' }) {
+    // Every value below is interpolated into an HTML attribute, so it must be
+    // escaped. A description containing a quoted phrase — a "nail biting cure"
+    // — otherwise closes the content attribute on its own first quote, and the
+    // tag silently truncates to a few words while the rest of the sentence
+    // becomes stray attributes.
+    //
+    // The replacements are functions, not strings: String.prototype.replace
+    // treats $&, $', $` and $1 inside a string replacement as substitution
+    // patterns, so copy containing them would come out mangled.
+    const t = escapeHtml(title);
+    const d = escapeHtml(description);
+    const c = escapeHtml(canonical);
+    const o = escapeHtml(ogType);
     return html
-      .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
-      .replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="${description}"`)
-      .replace(/<link rel="canonical" href="[^"]*"/, `<link rel="canonical" href="${canonical}"`)
-      .replace(/<meta property="og:type" content="[^"]*"/, `<meta property="og:type" content="${ogType}"`)
-      .replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${title}"`)
-      .replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${description}"`)
-      .replace(/<meta property="og:url" content="[^"]*"/, `<meta property="og:url" content="${canonical}"`)
-      .replace(/<meta name="twitter:title" content="[^"]*"/, `<meta name="twitter:title" content="${title}"`)
-      .replace(/<meta name="twitter:description" content="[^"]*"/, `<meta name="twitter:description" content="${description}"`);
+      .replace(/<title>[^<]*<\/title>/, () => `<title>${t}</title>`)
+      .replace(/<meta name="description" content="[^"]*"/, () => `<meta name="description" content="${d}"`)
+      .replace(/<link rel="canonical" href="[^"]*"/, () => `<link rel="canonical" href="${c}"`)
+      .replace(/<meta property="og:type" content="[^"]*"/, () => `<meta property="og:type" content="${o}"`)
+      .replace(/<meta property="og:title" content="[^"]*"/, () => `<meta property="og:title" content="${t}"`)
+      .replace(/<meta property="og:description" content="[^"]*"/, () => `<meta property="og:description" content="${d}"`)
+      .replace(/<meta property="og:url" content="[^"]*"/, () => `<meta property="og:url" content="${c}"`)
+      .replace(/<meta name="twitter:title" content="[^"]*"/, () => `<meta name="twitter:title" content="${t}"`)
+      .replace(/<meta name="twitter:description" content="[^"]*"/, () => `<meta name="twitter:description" content="${d}"`);
   }
 
   // Helper: inject BlogPosting + BreadcrumbList JSON-LD schemas into the <head>.
