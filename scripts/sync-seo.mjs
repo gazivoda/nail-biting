@@ -117,6 +117,49 @@ function checkMetaLength(post) {
   writeIfChanged(join(ROOT, 'public/sitemap.xml'), xml, `sitemap.xml (${urls.length} URLs)`);
 }
 
+// ─── server.js COMPARE_CONTENT — full regeneration ───────────────────────────
+// The /compare/* and /solutions/* pages render their body from
+// src/data/comparePages.ts once React boots. Crawlers that never run JS saw
+// only a <title> and meta description. This mirrors the same data into
+// server.js so it can inject the body, and is fully regenerated rather than
+// appended to, so the two cannot drift.
+{
+  const { PAGE_MAP } = await import('../src/data/comparePages.ts');
+
+  const entries = Object.entries(PAGE_MAP).map(([path, get]) => {
+    const c = get();
+    const sections = c.sections
+      .map(s => `        { heading: ${js(s.heading)}, body: ${js(s.body)} },`)
+      .join('\n');
+    return [
+      `    '${path}': {`,
+      `      title: ${js(c.title)},`,
+      `      subtitle: ${js(c.subtitle)},`,
+      `      intro: ${js(c.intro)},`,
+      '      sections: [',
+      sections,
+      '      ],',
+      '    },',
+    ].join('\n');
+  }).join('\n');
+
+  const block = `  const COMPARE_CONTENT = {\n${entries}\n  };\n`;
+
+  const source = safeRead(join(ROOT, 'server.js'));
+  if (source === null) {
+    problems.push('server.js: could not read — COMPARE_CONTENT skipped');
+  } else {
+    const re = /  const COMPARE_CONTENT = \{[\s\S]*?\n  \};\n/;
+    if (!re.test(source)) {
+      problems.push('server.js: could not locate "const COMPARE_CONTENT = {" — skipped');
+    } else {
+      const next = source.replace(re, () => block);
+      writeIfChanged(join(ROOT, 'server.js'), next,
+        `server.js COMPARE_CONTENT (${Object.keys(PAGE_MAP).length} pages)`);
+    }
+  }
+}
+
 // ─── src/data/blogIndex.ts — full regeneration ───────────────────────────────
 // blogPosts.ts carries every article body — ~700KB of source. The landing page
 // and the blog index only ever read titles, tags, descriptions and reading
