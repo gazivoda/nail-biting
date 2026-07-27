@@ -30,6 +30,15 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('@mediapipe')) return 'mediapipe';
+          // Split the libraries only the signed-in app touches into their own
+          // chunks. Lumping every node_modules file into one `vendor` chunk
+          // undoes route-level code splitting: React lives there too, so the
+          // landing page pulls the whole thing in and gets recharts and the
+          // Paddle SDK along for the ride.
+          if (id.includes('recharts') || id.includes('victory-vendor') || /node_modules[\\/]d3-/.test(id)) {
+            return 'charts';
+          }
+          if (id.includes('@paddle')) return 'paddle';
           if (id.includes('node_modules')) return 'vendor';
         },
       },
