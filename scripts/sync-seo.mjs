@@ -273,6 +273,59 @@ function checkMetaLength(post) {
   }
 }
 
+// ─── server.js BLOG_META vs client titles — report only ──────────────────────
+// server.js puts BLOG_META's title in the HTML, then BlogPost overwrites
+// document.title with `seoTitle ?? title` from blogPosts.ts on mount. Google
+// indexes the *rendered* title, so wherever these two disagree the hand-tuned
+// server title is the one that loses. Reported rather than reconciled: which
+// wording should win is a content call.
+{
+  const source = safeRead(join(ROOT, 'server.js')) ?? '';
+  const start = source.indexOf('  const BLOG_META = {');
+  const end = source.indexOf('\n  };\n', start);
+  const block = start === -1 ? '' : source.slice(start, end);
+
+  // Slice the block at each slug key, then read the title out of that entry
+  // alone. Entries are hand-edited and use all three quote styles — single,
+  // double and backtick — so the quote character has to be captured, not
+  // assumed, and the entry boundary comes from the next key rather than from
+  // guessing at indentation.
+  const keys = [...block.matchAll(/^ {4}['"`]([a-z0-9-]+)['"`]:/gm)]
+    .map(m => ({ slug: m[1], at: m.index }));
+
+  const serverTitles = new Map();
+  keys.forEach(({ slug, at }, i) => {
+    const entry = block.slice(at, i + 1 < keys.length ? keys[i + 1].at : block.length);
+    const t = /title:\s*(['"`])((?:\\.|(?!\1)[\s\S])*)\1/.exec(entry);
+    if (t) serverTitles.set(slug, t[2].replace(/\\(['"`\\])/g, '$1'));
+  });
+
+  const serverTitleFor = slug => serverTitles.get(slug) ?? null;
+
+  const diverging = [];
+  let unreadable = 0;
+  for (const post of BLOG_POSTS) {
+    const serverTitle = serverTitleFor(post.slug);
+    if (serverTitle === null) { unreadable++; continue; }
+    const clientTitle = post.seoTitle ?? post.title;
+    if (serverTitle !== clientTitle) diverging.push({ slug: post.slug, serverTitle, clientTitle });
+  }
+
+  if (unreadable) {
+    problems.push(`BLOG_META: could not read a title for ${unreadable} slug(s)`);
+  }
+  if (diverging.length) {
+    problems.push(
+      `${diverging.length} post(s) where the rendered title differs from BLOG_META — ` +
+      'the server title is discarded on hydration. Align blogPosts.ts seoTitle ' +
+      'with BLOG_META, or drop the BLOG_META override:',
+    );
+    for (const d of diverging) {
+      problems.push(`    ${d.slug}\n        server: ${d.serverTitle}\n        client: ${d.clientTitle}`);
+    }
+  }
+}
+
 // ─── Report ──────────────────────────────────────────────────────────────────
 if (problems.length) {
   console.error('\nProblems found:');
