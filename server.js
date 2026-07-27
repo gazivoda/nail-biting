@@ -2474,9 +2474,12 @@ if (!existsSync(distPath)) {
       ],
     };
 
+    // Tagged so BlogPost can drop these once it renders its own copy. Without
+    // the tag the page ends up advertising two BlogPosting entities under one
+    // @id, with different headlines — see the note in BlogPost.tsx.
     const schemaBlocks = [
-      `<script type="application/ld+json">${JSON.stringify(blogPosting)}</script>`,
-      `<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`,
+      `<script type="application/ld+json" data-ssr-schema>${JSON.stringify(blogPosting)}</script>`,
+      `<script type="application/ld+json" data-ssr-schema>${JSON.stringify(breadcrumb)}</script>`,
     ];
 
     if (slug === 'habit-reversal-training-guide') {
@@ -2513,6 +2516,9 @@ if (!existsSync(distPath)) {
           },
         ],
       };
+      // Deliberately NOT tagged data-ssr-schema: BlogPost replaces the two
+      // blocks above with its own, but has no HowTo of its own to put back, so
+      // tagging this one would strip it from the rendered DOM entirely.
       schemaBlocks.push(`<script type="application/ld+json">${JSON.stringify(howTo)}</script>`);
     }
 

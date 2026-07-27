@@ -76,6 +76,14 @@ export function BlogPost({ slug }: Props) {
         '@type': 'WebPage',
         '@id': canonicalUrl,
       },
+      // Matches the server's copy — an article without an image is ineligible
+      // for most rich results.
+      image: {
+        '@type': 'ImageObject',
+        url: 'https://stopbiting.today/og-image.png',
+        width: 1200,
+        height: 630,
+      },
       url: canonicalUrl,
       keywords: post.tag,
       timeRequired: `PT${post.readingMinutes}M`,
@@ -108,6 +116,12 @@ export function BlogPost({ slug }: Props) {
       ],
     };
 
+    // server.js injects BlogPosting/BreadcrumbList for crawlers that never run
+    // this script. Appending ours on top left two BlogPosting entities sharing
+    // one @id with different headlines — ambiguous structured data that can
+    // cost the rich result outright. Drop the server's; ours is current for
+    // whichever post is actually on screen, including after popstate.
+    document.querySelectorAll('script[data-ssr-schema]').forEach(el => el.remove());
     document.getElementById('blog-post-schema')?.remove();
     document.getElementById('blog-breadcrumb-schema')?.remove();
 
