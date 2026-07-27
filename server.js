@@ -2360,6 +2360,43 @@ if (!existsSync(distPath)) {
     return html.replace('<div id="root">', `${article}<div id="root">`);
   }
 
+  // The SPA shell contains no anchors, so the raw HTML of every page has zero
+  // internal links. Googlebot renders JS and eventually finds them; GPTBot,
+  // PerplexityBot and ClaudeBot — all of which robots.txt explicitly welcomes,
+  // and for whom llms.txt exists — do not, leaving sitemap.xml as the only
+  // discovery path and no anchor text or topical clustering anywhere.
+  //
+  // This mirrors the navigation the app renders once React boots. It lives in
+  // <noscript> deliberately: that is precisely what a client without JS gets,
+  // so it is a fallback rather than anything hidden, and it costs JS clients
+  // nothing. Keep it in step with the links in Landing.tsx and LegalPage.tsx.
+  const SITE_NAV = [
+    ['/', 'Stop Biting — AI nail biting detection'],
+    ['/blog', 'Nail biting guides and research'],
+    ['/how-it-works', 'How AI nail biting detection works'],
+    ['/about', 'About Stop Biting'],
+    ['/compare/bitter-polish-alternative', 'Stop Biting vs bitter nail polish'],
+    ['/compare/habit-tracking-apps', 'Why habit tracking apps do not work for nail biting'],
+    ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
+    ['/solutions/for-adhd', 'Nail biting and ADHD'],
+    ['/solutions/for-gamers', 'Stop nail biting while gaming'],
+    ['/privacy', 'Privacy policy'],
+    ['/terms-and-conditions', 'Terms of service'],
+    ['/refund-policy', 'Refund policy'],
+  ];
+
+  function injectNoscriptNav(html, extraLinks = []) {
+    const link = ([href, label]) =>
+      `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`;
+    const extra = extraLinks.length
+      ? `<h2>Articles</h2><ul>${extraLinks.map(link).join('')}</ul>`
+      : '';
+    const nav =
+      `<noscript><nav aria-label="Site"><h2>Stop Biting</h2><ul>` +
+      `${SITE_NAV.map(link).join('')}</ul>${extra}</nav></noscript>`;
+    return html.replace('</body>', `    ${nav}\n  </body>`);
+  }
+
   // Helper: inject page-specific <title>, <meta description>, <link canonical>,
   // Open Graph, and Twitter Card tags into the SPA index.html shell before sending it.
   // This makes critical SEO elements visible to Googlebot and AI crawlers.
@@ -2509,7 +2546,7 @@ if (!existsSync(distPath)) {
       description: 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.',
       canonical: 'https://stopbiting.today/',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Google renders roughly 600px of title text, about 60 characters.
@@ -2565,7 +2602,7 @@ if (!existsSync(distPath)) {
     if (sections) {
       injected = injectBlogContent(injected, { title: meta.title, sections });
     }
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Blog index page
@@ -2599,7 +2636,10 @@ if (!existsSync(distPath)) {
 
     const schemaTag = `<script type="application/ld+json">${JSON.stringify(collectionSchema)}</script>`;
     injected = injected.replace('</head>', `    ${schemaTag}\n  </head>`);
-    res.type('html').send(injected);
+    // The index is the hub: listing every article here is what makes all of
+    // them reachable by a crawler that never runs the JS, in one hop from /.
+    const postLinks = Object.entries(BLOG_META).map(([slug, m]) => [`/blog/${slug}`, m.title]);
+    res.type('html').send(injectNoscriptNav(injected, postLinks));
   });
 
   // Privacy policy page
@@ -2610,7 +2650,7 @@ if (!existsSync(distPath)) {
       description: 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.',
       canonical: 'https://stopbiting.today/privacy',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Terms of Service page
@@ -2621,7 +2661,7 @@ if (!existsSync(distPath)) {
       description: 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.',
       canonical: 'https://stopbiting.today/terms-and-conditions',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Refund Policy page
@@ -2632,7 +2672,7 @@ if (!existsSync(distPath)) {
       description: 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.',
       canonical: 'https://stopbiting.today/refund-policy',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Remaining static assets (icons, WASM, models, etc.)
@@ -2657,7 +2697,7 @@ if (!existsSync(distPath)) {
       description: 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
     };
     injected = injected.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(personSchema)}</script>\n  </head>`);
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // /pricing and /faq have no client-side route — App.tsx falls through to the
@@ -2690,7 +2730,7 @@ if (!existsSync(distPath)) {
       ],
     };
     injected = injected.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(howToSchema)}</script>\n  </head>`);
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Comparison pages
@@ -2702,7 +2742,7 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/compare/bitter-polish-alternative',
       ogType: 'article',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   app.get('/compare/habit-tracking-apps', (_req, res) => {
@@ -2713,7 +2753,7 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/compare/habit-tracking-apps',
       ogType: 'article',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Solutions pages
@@ -2724,7 +2764,7 @@ if (!existsSync(distPath)) {
       description: 'Desk workers bite their nails during deep focus — unconsciously. Stop Biting\'s AI detection runs in the background and catches every episode.',
       canonical: 'https://stopbiting.today/solutions/for-desk-workers',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   app.get('/solutions/for-adhd', (_req, res) => {
@@ -2734,7 +2774,7 @@ if (!existsSync(distPath)) {
       description: 'ADHD makes nail biting harder to stop — executive function gaps and dopamine-seeking make awareness nearly impossible. Real-time AI detection compensates.',
       canonical: 'https://stopbiting.today/solutions/for-adhd',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   app.get('/solutions/for-gamers', (_req, res) => {
@@ -2744,7 +2784,7 @@ if (!existsSync(distPath)) {
       description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm — without interrupting your session.',
       canonical: 'https://stopbiting.today/solutions/for-gamers',
     });
-    res.type('html').send(injected);
+    res.type('html').send(injectNoscriptNav(injected));
   });
 
   // Known valid routes for soft-404 protection
