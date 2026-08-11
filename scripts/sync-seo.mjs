@@ -41,6 +41,12 @@ const CORE_PAGES = [
   { path: '/about',                             changefreq: 'monthly', priority: '0.6' },
   { path: '/compare/bitter-polish-alternative', changefreq: 'monthly', priority: '0.8' },
   { path: '/compare/habit-tracking-apps',       changefreq: 'monthly', priority: '0.8' },
+  // Competitor comparison pages — lastmod must match the `date` these pages
+  // declare in COMPARE_META (server.js). Bump it when re-verifying facts.
+  { path: '/compare/ai-detection-apps',         changefreq: 'monthly', priority: '0.8', lastmod: '2026-08-11' },
+  { path: '/compare/stop-biting-vs-hands-off',  changefreq: 'monthly', priority: '0.8', lastmod: '2026-08-11' },
+  { path: '/compare/stop-biting-vs-nailed',     changefreq: 'monthly', priority: '0.8', lastmod: '2026-08-11' },
+  { path: '/compare/stop-biting-vs-smartbehavior', changefreq: 'monthly', priority: '0.8', lastmod: '2026-08-11' },
   { path: '/solutions/for-desk-workers',        changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-adhd',                changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-gamers',              changefreq: 'monthly', priority: '0.7' },
@@ -84,7 +90,7 @@ function checkMetaLength(post) {
     ...CORE_PAGES.map(p => ({
       loc: `${ORIGIN}${p.path}`,
       // Hub pages gain freshness whenever any article is updated.
-      lastmod: p.path === '/' || p.path === '/blog' ? newest : '2026-04-28',
+      lastmod: p.path === '/' || p.path === '/blog' ? newest : (p.lastmod ?? '2026-04-28'),
       changefreq: p.changefreq,
       priority: p.priority,
     })),

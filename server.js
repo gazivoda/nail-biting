@@ -740,8 +740,11 @@ if (!existsSync(distPath)) {
   }
 
   function compareArticleHtml(content) {
+    // `s.html` is authored markup (comparison tables) that the client renders
+    // with dangerouslySetInnerHTML, so it is emitted verbatim — same contract
+    // as blog sections in renderSectionsHtml above.
     const body = content.sections.map(s =>
-      `<section><h2>${escapeHtml(s.heading)}</h2>${s.body.split('\n\n').map(t => `<p>${escapeHtml(t)}</p>`).join('')}</section>`,
+      `<section><h2>${escapeHtml(s.heading)}</h2>${s.body.split('\n\n').map(t => `<p>${escapeHtml(t)}</p>`).join('')}${s.html ?? ''}</section>`,
     ).join('');
     const related = content.relatedPosts?.length
       ? `<section><h2>Related reading</h2><ul>${content.relatedPosts.map(r =>
@@ -769,6 +772,10 @@ if (!existsSync(distPath)) {
     ['/about', 'About Stop Biting'],
     ['/compare/bitter-polish-alternative', 'Stop Biting vs bitter nail polish'],
     ['/compare/habit-tracking-apps', 'Why habit tracking apps do not work for nail biting'],
+    ['/compare/ai-detection-apps', 'AI apps that detect nail biting compared'],
+    ['/compare/stop-biting-vs-hands-off', 'Stop Biting vs Hands Off'],
+    ['/compare/stop-biting-vs-nailed', 'Stop Biting vs Nailed'],
+    ['/compare/stop-biting-vs-smartbehavior', 'Stop Biting vs SmartBehavior'],
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
@@ -1411,6 +1418,47 @@ if (!existsSync(distPath)) {
       title: 'Stop Nail Biting While Gaming | Stop Biting',
       description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm — without interrupting your session.',
     },
+    // Competitor comparison pages. All competitor facts in the page bodies
+    // (src/data/comparePages.ts) were verified against the competitors' own
+    // sites on 2026-08-11 — see the FACT-CHECK LOG comment there. `date` is
+    // the publish date; it must match the page's lastmod in CORE_PAGES
+    // (scripts/sync-seo.mjs).
+    '/compare/stop-biting-vs-hands-off': {
+      title: 'Stop Biting vs Hands Off: AI Nail Biting Apps Compared',
+      description: 'Honest 2026 comparison of Stop Biting and Hands Off — two on-device AI apps that catch nail biting via webcam. Platforms, price, privacy, which to pick.',
+      date: '2026-08-11',
+    },
+    '/compare/stop-biting-vs-nailed': {
+      title: 'Stop Biting vs Nailed: Subscription vs One-Time Mac App',
+      description: 'Nailed is a $4.99 one-time macOS menu bar app. Stop Biting adds Windows, web, tracking, and a free trial. An honest comparison of two on-device detectors.',
+      date: '2026-08-11',
+    },
+    '/compare/stop-biting-vs-smartbehavior': {
+      title: 'Stop Biting vs SmartBehavior: Desktop and Web vs Mobile',
+      description: 'SmartBehavior puts AI nail biting detection on iPhone and Android. Stop Biting covers Mac, Windows, and the browser. An honest look at which fits your habit.',
+      date: '2026-08-11',
+    },
+    '/compare/ai-detection-apps': {
+      title: 'Best AI Apps to Stop Nail Biting: 2026 Comparison',
+      description: 'Every AI webcam app that detects nail biting in 2026 — Stop Biting, Hands Off, Nailed, and SmartBehavior — compared on platforms, price, and privacy.',
+      date: '2026-08-11',
+    },
+  };
+
+  // The roundup hub also carries ItemList schema (comparison-schema.json) so
+  // AI crawlers read it as a ranked list of the named apps it compares.
+  const AI_APPS_ITEMLIST = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'AI Apps That Detect Nail Biting (2026)',
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: 4,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Stop Biting', url: 'https://stopbiting.today/' },
+      { '@type': 'ListItem', position: 2, name: 'Hands Off', url: 'https://handsoffapp.com/' },
+      { '@type': 'ListItem', position: 3, name: 'Nailed', url: 'https://nailedapp.io/' },
+      { '@type': 'ListItem', position: 4, name: 'SmartBehavior', url: 'https://smart-behavior.com/en/' },
+    ],
   };
 
   for (const [pagePath, meta] of Object.entries(COMPARE_META)) {
@@ -1433,8 +1481,8 @@ if (!existsSync(distPath)) {
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
         // Matches the lastmod these pages declare in sitemap.xml
         // (CORE_PAGES in scripts/sync-seo.mjs).
-        datePublished: '2026-04-28',
-        dateModified: '2026-04-28',
+        datePublished: meta.date ?? '2026-04-28',
+        dateModified: meta.date ?? '2026-04-28',
         author: SCHEMA_AUTHOR,
         publisher: SCHEMA_PUBLISHER,
         inLanguage: 'en',
@@ -1445,7 +1493,8 @@ if (!existsSync(distPath)) {
         ['Home', 'https://stopbiting.today/'],
         [content?.title ?? meta.title, canonical],
       ]);
-      injected = injected.replace('</head>', `    ${schemaTag(article)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+      const extraSchemas = pagePath === '/compare/ai-detection-apps' ? `\n    ${schemaTag(AI_APPS_ITEMLIST)}` : '';
+      injected = injected.replace('</head>', `    ${schemaTag(article)}\n    ${schemaTag(breadcrumb)}${extraSchemas}\n  </head>`);
       if (content) injected = injectSsrArticle(injected, compareArticleHtml(content));
       sendHtml(res, injectNoscriptNav(injected));
     });

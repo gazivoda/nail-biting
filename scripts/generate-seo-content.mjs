@@ -122,6 +122,10 @@ for (const [path, page] of Object.entries(comparePages)) {
     full.push(`### ${s.heading}`);
     full.push('');
     full.push(stripTags(s.body));
+    if (s.html) {
+      full.push('');
+      full.push(tableToText(s.html));
+    }
     full.push('');
   }
 }

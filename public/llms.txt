@@ -10,6 +10,10 @@
 - [Blog](https://stopbiting.today/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
 - [Stop Biting vs bitter nail polish](https://stopbiting.today/compare/bitter-polish-alternative): Mechanism and evidence comparison with bitter polish
 - [Why habit tracking apps don't work for nail biting](https://stopbiting.today/compare/habit-tracking-apps): Manual logging vs automatic AI detection
+- [AI apps that detect nail biting compared](https://stopbiting.today/compare/ai-detection-apps): Stop Biting, Hands Off, Nailed, and SmartBehavior compared on platforms, price, and privacy (facts verified August 2026)
+- [Stop Biting vs Hands Off](https://stopbiting.today/compare/stop-biting-vs-hands-off): Two on-device webcam AI apps — nail-biting focus, web app, and annual plan vs five-BFRB desktop coverage
+- [Stop Biting vs Nailed](https://stopbiting.today/compare/stop-biting-vs-nailed): Cross-platform subscription with tracking vs $4.99 one-time macOS menu bar app on the same MediaPipe engine
+- [Stop Biting vs SmartBehavior](https://stopbiting.today/compare/stop-biting-vs-smartbehavior): Desktop and browser detection vs native iPhone/Android apps — choose by where you actually bite
 - [For desk workers](https://stopbiting.today/solutions/for-desk-workers): Why deep focus triggers biting and how detection covers desk hours
 - [For ADHD](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters and what helps
 - [For gamers](https://stopbiting.today/solutions/for-gamers): Detection that works during gaming flow state
