@@ -1,20 +1,18 @@
 #!/usr/bin/env node
-// Regenerates every place blog metadata is duplicated, from the single source of
-// truth in src/data/blogPosts.ts.
+// Regenerates the committed artifacts that mirror blog metadata, from the
+// single source of truth in src/data/blogPosts.ts.
 //
 //   node scripts/sync-seo.mjs [--check]
 //
 // Targets:
 //   public/sitemap.xml       — fully regenerated
 //   public/llms.txt          — "## Blog articles" section, missing entries appended
-//   server.js BLOG_META      — missing entries appended (title/description for <head>)
-//   server.js BLOG_DATES     — missing entries appended (BlogPosting schema dates)
-//   server.js BLOG_SECTIONS_DATA — missing entries appended (raw HTML body for non-JS crawlers)
+//   src/data/blogIndex.ts    — fully regenerated (metadata-only mirror)
 //
-// server.js blocks are *appended to*, never rewritten: several existing entries
-// have hand-tuned SEO titles and bodies that deliberately differ from the client
-// copy, and silently overwriting them would churn 110 live URLs. New posts get
-// their entries generated; drift on existing ones is reported, not "fixed".
+// server.js no longer carries ANY content mirror: it reads
+// dist/seo-content.json, which scripts/generate-seo-content.mjs regenerates
+// from blogPosts.ts/comparePages.ts inside every vite build (see
+// vite.config.ts), so the crawler HTML cannot drift from the rendered app.
 //
 // Run with --check to fail (exit 1) instead of writing — useful in CI.
 
@@ -38,6 +36,7 @@ const CORE_PAGES = [
   { path: '/',                                  changefreq: 'weekly',  priority: '1.0' },
   { path: '/blog',                              changefreq: 'weekly',  priority: '0.9' },
   { path: '/how-it-works',                      changefreq: 'monthly', priority: '0.8' },
+  { path: '/pricing',                           changefreq: 'monthly', priority: '0.8' },
   { path: '/about',                             changefreq: 'monthly', priority: '0.6' },
   { path: '/compare/bitter-polish-alternative', changefreq: 'monthly', priority: '0.8' },
   { path: '/compare/habit-tracking-apps',       changefreq: 'monthly', priority: '0.8' },
@@ -58,11 +57,11 @@ for (const post of BLOG_POSTS) {
   if (post.dateModified < post.datePublished) {
     problems.push(`dateModified precedes datePublished: ${post.slug}`);
   }
+  checkMetaLength(post);
 }
 
-// `description` doubles as the on-page standfirst and, for posts generated into
-// server.js, as the meta description. Only the latter has a length budget — so
-// this is checked below, against the entries actually written to BLOG_META.
+// `description` doubles as the on-page standfirst and as the meta description
+// the server injects. Only the latter has a length budget.
 function checkMetaLength(post) {
   const title = post.seoTitle ?? post.title;
   if (post.description.length > 165) {
@@ -117,49 +116,6 @@ function checkMetaLength(post) {
   writeIfChanged(join(ROOT, 'public/sitemap.xml'), xml, `sitemap.xml (${urls.length} URLs)`);
 }
 
-// ─── server.js COMPARE_CONTENT — full regeneration ───────────────────────────
-// The /compare/* and /solutions/* pages render their body from
-// src/data/comparePages.ts once React boots. Crawlers that never run JS saw
-// only a <title> and meta description. This mirrors the same data into
-// server.js so it can inject the body, and is fully regenerated rather than
-// appended to, so the two cannot drift.
-{
-  const { PAGE_MAP } = await import('../src/data/comparePages.ts');
-
-  const entries = Object.entries(PAGE_MAP).map(([path, get]) => {
-    const c = get();
-    const sections = c.sections
-      .map(s => `        { heading: ${js(s.heading)}, body: ${js(s.body)} },`)
-      .join('\n');
-    return [
-      `    '${path}': {`,
-      `      title: ${js(c.title)},`,
-      `      subtitle: ${js(c.subtitle)},`,
-      `      intro: ${js(c.intro)},`,
-      '      sections: [',
-      sections,
-      '      ],',
-      '    },',
-    ].join('\n');
-  }).join('\n');
-
-  const block = `  const COMPARE_CONTENT = {\n${entries}\n  };\n`;
-
-  const source = safeRead(join(ROOT, 'server.js'));
-  if (source === null) {
-    problems.push('server.js: could not read — COMPARE_CONTENT skipped');
-  } else {
-    const re = /  const COMPARE_CONTENT = \{[\s\S]*?\n  \};\n/;
-    if (!re.test(source)) {
-      problems.push('server.js: could not locate "const COMPARE_CONTENT = {" — skipped');
-    } else {
-      const next = source.replace(re, () => block);
-      writeIfChanged(join(ROOT, 'server.js'), next,
-        `server.js COMPARE_CONTENT (${Object.keys(PAGE_MAP).length} pages)`);
-    }
-  }
-}
-
 // ─── src/data/blogIndex.ts — full regeneration ───────────────────────────────
 // blogPosts.ts carries every article body — ~700KB of source. The landing page
 // and the blog index only ever read titles, tags, descriptions and reading
@@ -209,36 +165,6 @@ function checkMetaLength(post) {
   );
 }
 
-// ─── server.js — append entries for slugs that are missing ───────────────────
-{
-  const serverPath = join(ROOT, 'server.js');
-  let server = readFileSync(serverPath, 'utf8');
-
-  server = appendToBlock(server, 'BLOG_META', post => {
-    checkMetaLength(post);
-    const title = post.seoTitle ?? post.title;
-    return `    ${js(post.slug)}: {\n`
-      + `      title: ${js(title)},\n`
-      + `      description: ${js(post.description)},\n`
-      + `    },`;
-  });
-
-  server = appendToBlock(server, 'BLOG_DATES', post =>
-    `    ${js(post.slug)}: { datePublished: ${js(post.datePublished)}, dateModified: ${js(post.dateModified)} },`);
-
-  server = appendToBlock(server, 'BLOG_SECTIONS_DATA', post => {
-    const sections = post.sections.map(s => {
-      const parts = [`heading: ${js(s.heading)}`, `body: ${js(s.body)}`];
-      if (s.list?.length) parts.push(`list: [${s.list.map(js).join(', ')}]`);
-      if (s.html) parts.push(`html: ${js(s.html)}`);
-      return `      { ${parts.join(', ')} },`;
-    });
-    return `    ${js(post.slug)}: [\n${sections.join('\n')}\n    ],`;
-  });
-
-  writeIfChanged(serverPath, server, 'server.js');
-}
-
 // ─── public/llms.txt — append missing blog entries ───────────────────────────
 {
   const llmsPath = join(ROOT, 'public/llms.txt');
@@ -273,59 +199,6 @@ function checkMetaLength(post) {
   }
 }
 
-// ─── server.js BLOG_META vs client titles — report only ──────────────────────
-// server.js puts BLOG_META's title in the HTML, then BlogPost overwrites
-// document.title with `seoTitle ?? title` from blogPosts.ts on mount. Google
-// indexes the *rendered* title, so wherever these two disagree the hand-tuned
-// server title is the one that loses. Reported rather than reconciled: which
-// wording should win is a content call.
-{
-  const source = safeRead(join(ROOT, 'server.js')) ?? '';
-  const start = source.indexOf('  const BLOG_META = {');
-  const end = source.indexOf('\n  };\n', start);
-  const block = start === -1 ? '' : source.slice(start, end);
-
-  // Slice the block at each slug key, then read the title out of that entry
-  // alone. Entries are hand-edited and use all three quote styles — single,
-  // double and backtick — so the quote character has to be captured, not
-  // assumed, and the entry boundary comes from the next key rather than from
-  // guessing at indentation.
-  const keys = [...block.matchAll(/^ {4}['"`]([a-z0-9-]+)['"`]:/gm)]
-    .map(m => ({ slug: m[1], at: m.index }));
-
-  const serverTitles = new Map();
-  keys.forEach(({ slug, at }, i) => {
-    const entry = block.slice(at, i + 1 < keys.length ? keys[i + 1].at : block.length);
-    const t = /title:\s*(['"`])((?:\\.|(?!\1)[\s\S])*)\1/.exec(entry);
-    if (t) serverTitles.set(slug, t[2].replace(/\\(['"`\\])/g, '$1'));
-  });
-
-  const serverTitleFor = slug => serverTitles.get(slug) ?? null;
-
-  const diverging = [];
-  let unreadable = 0;
-  for (const post of BLOG_POSTS) {
-    const serverTitle = serverTitleFor(post.slug);
-    if (serverTitle === null) { unreadable++; continue; }
-    const clientTitle = post.seoTitle ?? post.title;
-    if (serverTitle !== clientTitle) diverging.push({ slug: post.slug, serverTitle, clientTitle });
-  }
-
-  if (unreadable) {
-    problems.push(`BLOG_META: could not read a title for ${unreadable} slug(s)`);
-  }
-  if (diverging.length) {
-    problems.push(
-      `${diverging.length} post(s) where the rendered title differs from BLOG_META — ` +
-      'the server title is discarded on hydration. Align blogPosts.ts seoTitle ' +
-      'with BLOG_META, or drop the BLOG_META override:',
-    );
-    for (const d of diverging) {
-      problems.push(`    ${d.slug}\n        server: ${d.serverTitle}\n        client: ${d.clientTitle}`);
-    }
-  }
-}
-
 // ─── Report ──────────────────────────────────────────────────────────────────
 if (problems.length) {
   console.error('\nProblems found:');
@@ -350,41 +223,6 @@ function js(str) {
 function firstSentence(text) {
   const m = text.match(/^.*?[.!?](?=\s|$)/);
   return (m ? m[0] : text).trim();
-}
-
-// Finds `  const NAME = {` … matching `  };` and appends entries for any post
-// whose slug is not already a key. Existing entries are left untouched.
-function appendToBlock(source, name, render) {
-  const startMarker = `  const ${name} = {\n`;
-  const startIdx = source.indexOf(startMarker);
-  if (startIdx === -1) {
-    problems.push(`server.js: could not locate "const ${name} = {" — skipped`);
-    return source;
-  }
-
-  const bodyStart = startIdx + startMarker.length;
-  const endIdx = source.indexOf('\n  };\n', bodyStart);
-  if (endIdx === -1) {
-    problems.push(`server.js: could not locate the end of ${name} — skipped`);
-    return source;
-  }
-
-  const body = source.slice(bodyStart, endIdx);
-  const present = new Set([...body.matchAll(/^ {4}'([a-z0-9-]+)':|^ {4}"([a-z0-9-]+)":/gm)]
-    .map(m => m[1] ?? m[2]));
-
-  for (const slug of present) {
-    if (!seenSlugs.has(slug)) {
-      problems.push(`server.js ${name}: entry for "${slug}" has no matching post in blogPosts.ts (stale?)`);
-    }
-  }
-
-  const missing = BLOG_POSTS.filter(p => !present.has(p.slug));
-  if (!missing.length) return source;
-
-  const addition = '\n' + missing.map(render).join('\n');
-  changes.push(`server.js ${name}: +${missing.length} entries`);
-  return source.slice(0, endIdx) + addition + source.slice(endIdx);
 }
 
 function writeIfChanged(path, content, label) {

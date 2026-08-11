@@ -1,7 +1,28 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { execFileSync } from 'child_process'
 import { VitePWA } from 'vite-plugin-pwa'
+
+// Regenerates dist/seo-content.json + dist/llms-full.txt from
+// src/data/blogPosts.ts and src/data/comparePages.ts after every build.
+// server.js reads seo-content.json at startup and derives all crawler-visible
+// article HTML and schema data from it — the server carries no copy of any
+// content, so the crawler HTML cannot drift from what React renders.
+// An error here fails the build, which is the point.
+function generateSeoContent(): Plugin {
+  return {
+    name: 'generate-seo-content',
+    apply: 'build',
+    closeBundle() {
+      execFileSync(
+        process.execPath,
+        [path.resolve(__dirname, 'scripts/generate-seo-content.mjs')],
+        { stdio: 'inherit' },
+      )
+    },
+  }
+}
 
 const isWeb = process.env.VITE_BUILD_TARGET === 'web'
 
@@ -46,6 +67,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    generateSeoContent(),
     // PWA only for web builds — Electron handles its own install/update flow.
     ...(isWeb ? [VitePWA({
       registerType: 'autoUpdate',

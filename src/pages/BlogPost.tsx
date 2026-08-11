@@ -44,111 +44,27 @@ export function BlogPost({ slug }: Props) {
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
   const related = post ? getRelated(slug, post.tag) : [];
 
-  // Inject JSON-LD BlogPosting + BreadcrumbList schemas + update meta tags client-side
-  // (server already injects correct title/description/canonical in initial HTML)
+  // Keep <title> and canonical current across client-side navigation.
+  //
+  // JSON-LD is deliberately NOT injected here: server.js already puts the
+  // canonical BlogPosting + BreadcrumbList blocks (with dates and author from
+  // blogPosts.ts) into the raw HTML, which is the copy crawlers actually read.
+  // A second client-side copy previously advertised two BlogPosting entities
+  // under one @id with different headlines — ambiguous structured data that
+  // can cost the rich result outright.
   useEffect(() => {
     if (!post) return;
-
-    const blogPosting = {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: post.title,
-      description: post.description,
-      datePublished: post.datePublished,
-      dateModified: post.dateModified,
-      author: {
-        '@type': 'Organization',
-        name: 'Stop Biting Editorial Team',
-        url: 'https://stopbiting.today',
-        description: 'Science-based editorial team covering onychophagia, body-focused repetitive behaviors (BFRBs), and habit reversal training.',
-        knowsAbout: ['onychophagia', 'nail biting', 'body-focused repetitive behaviors', 'habit reversal training', 'BFRB treatment'],
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: 'Stop Biting',
-        url: 'https://stopbiting.today',
-        logo: {
-          '@type': 'ImageObject',
-          url: 'https://stopbiting.today/icons/icon-512x512.png',
-        },
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': canonicalUrl,
-      },
-      // Matches the server's copy — an article without an image is ineligible
-      // for most rich results.
-      image: {
-        '@type': 'ImageObject',
-        url: 'https://stopbiting.today/og-image.png',
-        width: 1200,
-        height: 630,
-      },
-      url: canonicalUrl,
-      keywords: post.tag,
-      timeRequired: `PT${post.readingMinutes}M`,
-      inLanguage: 'en',
-      isAccessibleForFree: true,
-    };
-
-    const breadcrumb = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item: 'https://stopbiting.today/',
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Blog',
-          item: 'https://stopbiting.today/blog',
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: post.title,
-          item: canonicalUrl,
-        },
-      ],
-    };
-
-    // server.js injects BlogPosting/BreadcrumbList for crawlers that never run
-    // this script. Appending ours on top left two BlogPosting entities sharing
-    // one @id with different headlines — ambiguous structured data that can
-    // cost the rich result outright. Drop the server's; ours is current for
-    // whichever post is actually on screen, including after popstate.
-    document.querySelectorAll('script[data-ssr-schema]').forEach(el => el.remove());
-    document.getElementById('blog-post-schema')?.remove();
-    document.getElementById('blog-breadcrumb-schema')?.remove();
-
-    const postScript = document.createElement('script');
-    postScript.id = 'blog-post-schema';
-    postScript.type = 'application/ld+json';
-    postScript.textContent = JSON.stringify(blogPosting);
-    document.head.appendChild(postScript);
-
-    const crumbScript = document.createElement('script');
-    crumbScript.id = 'blog-breadcrumb-schema';
-    crumbScript.type = 'application/ld+json';
-    crumbScript.textContent = JSON.stringify(breadcrumb);
-    document.head.appendChild(crumbScript);
 
     const prevTitle = document.title;
     // Must match what server.js put in the HTML. Google indexes the rendered
     // title, so setting an unbudgeted one here would undo the server's work.
     document.title = buildPageTitle(post.seoTitle ?? post.title);
 
-    let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    const canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     const prevCanonical = canonicalEl?.href ?? '';
     if (canonicalEl) canonicalEl.href = canonicalUrl;
 
     return () => {
-      document.getElementById('blog-post-schema')?.remove();
-      document.getElementById('blog-breadcrumb-schema')?.remove();
       document.title = prevTitle;
       if (canonicalEl) canonicalEl.href = prevCanonical;
     };
@@ -158,14 +74,10 @@ export function BlogPost({ slug }: Props) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [slug]);
 
-  // server.js injects an off-screen copy of the article so crawlers that never
-  // run this script still get the text. Once React has rendered the real thing
-  // that copy is a duplicate sitting in the DOM — a second <h1> carrying
-  // different wording from the visible one, plus the whole body again. Remove
-  // it now that it has done its job; the raw HTML crawlers receive is unchanged.
-  useEffect(() => {
-    document.getElementById('ssr-blog-content')?.remove();
-  }, [slug]);
+  // Note: server.js injects an in-flow copy of the article (#ssr-page-content)
+  // inside #root for crawlers and no-JS visitors. No cleanup is needed here —
+  // React's createRoot().render() removes all existing children of #root when
+  // the app mounts.
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">

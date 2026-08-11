@@ -28,7 +28,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "habit-reversal-training-guide",
     title: "Habit Reversal Training for Nail Biting: What It Is and How to Actually Do It",
-    description: "Habit Reversal Training is the most effective method for stopping nail biting — studies show 70–90% reductions in biting frequency. Here's how it works and how to use it.",
+    description: "Habit Reversal Training is the best-studied method for stopping nail biting — the landmark trial cut biting by ~99%. Here's how it works and how to use it.",
     tag: "Treatment",
     readingMinutes: 8,
     datePublished: "2026-04-03",
@@ -109,7 +109,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-vs-skin-picking",
     title: "Nail Biting vs Skin Picking: How These Habits Compare and What Works for Each",
-    description: "Nail biting and skin picking are both these habits but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.",
+    description: "Nail biting and skin picking are both body-focused repetitive behaviours but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.",
     tag: "Clinical",
     readingMinutes: 7,
     datePublished: "2026-04-07",
@@ -226,7 +226,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-adhd",
     title: "Nail Biting and ADHD: Why the Habit Is Harder to Stop — and What Actually Helps",
-    description: "Adults with ADHD bite their nails at nearly double the general population rate. Here's why ADHD makes the habit harder to break, and what approaches actually work for ADHD brains.",
+    description: "Nail biting and ADHD frequently travel together. Here's why ADHD makes the habit harder to break, and what approaches actually work for ADHD brains.",
     tag: "Psychology",
     readingMinutes: 8,
     datePublished: "2026-04-21",

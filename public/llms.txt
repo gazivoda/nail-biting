@@ -4,9 +4,18 @@
 ## Key pages
 
 - [Home](https://stopbiting.today/): Landing page — download, features, pricing, privacy commitment
+- [How it works](https://stopbiting.today/how-it-works): MediaPipe/WebAssembly detection explained — setup steps, technical specs, and FAQ
+- [Pricing](https://stopbiting.today/pricing): 3-day free trial, then $2.99/month or $29/year — plan details and what's included
+- [About](https://stopbiting.today/about): Founder story (Igor Gazivoda), the technology, and the privacy design
 - [Blog](https://stopbiting.today/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
+- [Stop Biting vs bitter nail polish](https://stopbiting.today/compare/bitter-polish-alternative): Mechanism and evidence comparison with bitter polish
+- [Why habit tracking apps don't work for nail biting](https://stopbiting.today/compare/habit-tracking-apps): Manual logging vs automatic AI detection
+- [For desk workers](https://stopbiting.today/solutions/for-desk-workers): Why deep focus triggers biting and how detection covers desk hours
+- [For ADHD](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters and what helps
+- [For gamers](https://stopbiting.today/solutions/for-gamers): Detection that works during gaming flow state
 - [Privacy Policy](https://stopbiting.today/privacy): Data handling and privacy commitment
 - [Contact](https://stopbiting.today/#contact): Contact form for support and feedback
+- [Full content](https://stopbiting.today/llms-full.txt): Complete article text of every guide and comparison page, generated from the same source the site renders
 
 ## Blog articles
 
