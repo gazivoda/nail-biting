@@ -666,6 +666,9 @@ if (!existsSync(distPath)) {
   }
   // slug → { title, seoTitle?, description, tag, readingMinutes, datePublished, dateModified, sections }
   const BLOG_POSTS = SEO_CONTENT.posts ?? {};
+  // When the content file is absent/corrupt we must not 404 every real post —
+  // unknown-slug detection is only trustworthy when the content actually loaded.
+  const SEO_CONTENT_LOADED = Object.keys(BLOG_POSTS).length > 0;
   // path → { title, subtitle, intro, sections, relatedPosts }
   const COMPARE_CONTENT = SEO_CONTENT.comparePages ?? {};
 
@@ -887,7 +890,7 @@ if (!existsSync(distPath)) {
         '@context': 'https://schema.org',
         '@type': 'HowTo',
         name: 'How to Stop Nail Biting Using Habit Reversal Training',
-        description: 'A three-step evidence-based protocol (HRT) proven to reduce nail biting frequency by 70–90% in consistent practitioners over 4–8 weeks.',
+        description: 'A three-step evidence-based protocol (HRT) shown in controlled trials to substantially reduce nail biting with consistent practice over 4–8 weeks.',
         totalTime: 'P8W',
         step: [
           {
@@ -912,7 +915,7 @@ if (!existsSync(distPath)) {
             '@type': 'HowToStep',
             position: 4,
             name: 'Maintain practice for 4–8 weeks',
-            text: 'Biting frequency typically decreases significantly between weeks 2 and 6. A 12-month follow-up study found 87% of HRT responders maintained their improvements at one year — the competing response becomes self-sustaining once established. Continue daily monitoring during high-stress periods to prevent relapse.',
+            text: 'Biting frequency typically decreases significantly between weeks 2 and 6, and the competing response becomes more automatic the longer it is practised. Continue daily monitoring during high-stress periods to prevent relapse.',
           },
         ],
       };
@@ -1039,6 +1042,9 @@ if (!existsSync(distPath)) {
     const post = BLOG_POSTS[slug];
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     if (!post) {
+      // Content file failed to load — serve the shell and let React render the
+      // post rather than 404ing all 140 real posts.
+      if (!SEO_CONTENT_LOADED) return sendHtml(res, indexHtml, 200);
       // Unknown slug — return 404 so Googlebot doesn't treat it as a soft-404 duplicate
       return sendHtml(res, indexHtml, 404);
     }

@@ -67,7 +67,15 @@ for (const p of BLOG_POSTS) {
 
 const comparePages = {};
 for (const [path, get] of Object.entries(PAGE_MAP)) {
-  comparePages[path] = get();
+  const page = get();
+  if (!page?.title) problems.push(`compare page missing title: ${path}`);
+  if (!page?.sections?.length) problems.push(`compare page has no sections: ${path}`);
+  comparePages[path] = page;
+}
+if (problems.length) {
+  console.error('generate-seo-content: structural problems in src/data/comparePages.ts:');
+  for (const p of problems) console.error(`  ! ${p}`);
+  process.exit(1);
 }
 
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
