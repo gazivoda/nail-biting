@@ -35,6 +35,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'why-do-people-bite-their-nails',
     title: 'Why Do People Bite Their Nails — And Why Is It So Hard to Stop?',
+    seoTitle: 'Why Do People Bite Their Nails?',
     description: "About 1 in 4 adults bites their nails chronically. Here\'s what actually drives the habit, why willpower rarely works, and what the research says about breaking it.",
     tag: 'Psychology',
     readingMinutes: 3,
@@ -73,6 +74,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'habit-reversal-training-guide',
     title: 'Habit Reversal Training for Nail Biting: What It Is and How to Actually Do It',
+    seoTitle: 'Habit Reversal Training for Nail Biting',
     description: "Habit Reversal Training is the best-studied method for stopping nail biting — the landmark trial cut biting by ~99%. Here\'s how it works and how to use it.",
     tag: 'Treatment',
     readingMinutes: 3,
@@ -106,6 +108,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-health-risks',
     title: 'The Real Health Risks of Nail Biting: What Nail Biting Actually Does to Your Body',
+    seoTitle: 'Nail Biting Health Risks: What It Does to You',
     description: 'Nail biting causes dental damage, nail infections, pathogen transfer, and social anxiety. This article details the real health risks of chronic nail biting.',
     tag: 'Health',
     readingMinutes: 3,
@@ -139,6 +142,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-in-children',
     title: "Nail Biting in Kids: When It's Normal, When to Step In, and What Actually Helps",
+    seoTitle: 'Nail Biting in Children: When to Step In',
     description: "Up to 45% of kids bite their nails at some point. Most grow out of it. Here's how to tell the difference, and what to do if they don't.",
     tag: 'Parenting',
     readingMinutes: 4,
@@ -180,6 +184,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'best-nail-biting-remedies',
     title: 'Best Remedies to Stop Nail Biting: Every Method Ranked by Evidence',
+    seoTitle: 'Best Nail Biting Remedies, Ranked by Evidence',
     description: 'From bitter nail polish to AI detection apps — a ranked review of every method to stop nail biting, with the evidence for each and who each approach suits best.',
     tag: 'Treatment',
     readingMinutes: 4,
@@ -213,6 +218,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'stress-and-nail-biting',
     title: 'The Stress–Nail Biting Connection: Why Anxiety Drives the Habit and How to Break the Loop',
+    seoTitle: 'Stress and Nail Biting: Breaking the Loop',
     description: 'Stress is the most cited nail biting trigger. This article explains the neuroscience of anxiety-driven nail biting and evidence-based strategies to interrupt the stress–bite cycle.',
     tag: 'Psychology',
     readingMinutes: 3,
@@ -251,6 +257,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-ocd-connection',
     title: 'Nail Biting and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder',
+    seoTitle: 'Nail Biting and OCD: Understanding the Link',
     description: 'Nail biting sits at the intersection of habit, anxiety, and OCD-spectrum disorders. This article explains the habit classification, diagnostic differences, and treatment implications.',
     tag: 'Clinical',
     readingMinutes: 4,
@@ -284,6 +291,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'how-ai-can-help-stop-nail-biting',
     title: 'How AI Can Help You Stop Biting Your Nails: The Technology Behind Real-Time Detection',
+    seoTitle: 'How AI Helps You Stop Biting Your Nails',
     description: 'Real-time AI detection solves the awareness problem at the core of nail biting. This article explains how webcam-based AI works, the HRT mechanism it automates, and what to expect.',
     tag: 'Technology',
     readingMinutes: 4,
@@ -316,6 +324,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-during-focus-and-work',
     title: 'Nail Biting at Work: Why Deep Focus and Concentration Trigger the Habit',
+    seoTitle: 'Nail Biting During Deep Focus: Why It Happens',
     description: 'Many people bite their nails specifically during focused work — coding, reading, meetings. This article explains the focus-habit loop and how to interrupt it without breaking your flow state.',
     tag: 'Productivity',
     readingMinutes: 3,
@@ -354,6 +363,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'breaking-any-habit-science',
     title: 'Why Habits Are So Hard to Break — and What That Means for Nail Biting',
+    seoTitle: 'Why Habits Are Hard to Break: The Science',
     description: 'Why habits are hard to break — and why nail biting is harder than most and extinction, and how those mechanisms apply to stopping nail biting.',
     tag: 'Science',
     readingMinutes: 4,
@@ -394,6 +404,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-vs-skin-picking',
     title: 'Nail Biting vs Skin Picking: How These Habits Compare and What Works for Each',
+    seoTitle: 'Nail Biting vs Skin Picking: Key Differences',
     description: 'Nail biting and skin picking are both body-focused repetitive behaviours but have different triggers and treatments. This article explains the key differences and what intervention approaches work best for each.',
     tag: 'Clinical',
     readingMinutes: 4,
@@ -426,6 +437,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'stopping-nail-biting-for-good',
     title: 'Stopping Nail Biting for Good: What Relapses Mean and How to Build Lasting Change',
+    seoTitle: 'How to Stop Nail Biting for Good',
     description: 'Most people who stop nail biting relapse at least once. This article explains why relapse is neurologically expected, what it tells you, and the evidence-based path to lasting change.',
     tag: 'Treatment',
     readingMinutes: 4,
@@ -458,6 +470,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-anxiety-treatment',
     title: 'Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit',
+    seoTitle: 'Nail Biting and Anxiety: Treatment Options',
     description: 'For some nail biters, anxiety is the root cause — not just a trigger. This article explains how to identify anxiety-driven biting and when treating anxiety directly is the right approach.',
     tag: 'Psychology',
     readingMinutes: 3,
@@ -497,6 +510,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'how-long-to-stop-nail-biting',
     title: 'How Long Does It Take to Stop Nail Biting? A Realistic Timeline',
+    seoTitle: 'How Long Does It Take to Stop Nail Biting?',
     description: 'Most people want to know how long it takes to stop nail biting. The honest answer depends on habit severity and method. This article gives a research-based realistic timeline.',
     tag: 'Treatment',
     readingMinutes: 3,
@@ -529,6 +543,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-adults-why-persists',
     title: 'Why Nail Biting Persists into Adulthood — and What Makes It Different to Childhood Habits',
+    seoTitle: 'Nail Biting in Adults: Why It Persists',
     description: 'Nail biting that persists into adulthood is fundamentally different from childhood nail biting. This article explains why adult habits are harder to break and what approaches work best.',
     tag: 'Psychology',
     readingMinutes: 3,
@@ -557,6 +572,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'webcam-privacy-nail-biting-app',
     title: 'Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained',
+    seoTitle: 'Webcam Nail Biting App Privacy: Is It Safe?',
     description: 'Using a webcam app to track nail biting raises legitimate privacy questions. This article explains exactly what data is collected, how on-device AI works, and why no camera data leaves your device.',
     tag: 'Technology',
     readingMinutes: 3,
@@ -589,6 +605,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-during-sleep',
     title: 'Nail Biting During Sleep: Does It Happen and What Can You Do?',
+    seoTitle: 'Nail Biting During Sleep: What You Can Do',
     description: "Some people bite their nails during sleep without knowing it. This article explains sleep-related nail biting, how to tell if it\'s happening, and evidence-based approaches to stop it.",
     tag: 'Health',
     readingMinutes: 3,
@@ -617,6 +634,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'bitter-nail-polish-review',
     title: 'Bitter Nail Polish for Nail Biting: Does It Work? A Review of the Evidence',
+    seoTitle: 'Bitter Nail Polish: Does It Actually Work?',
     description: 'Bitter nail polish is one of the most popular nail biting remedies. This article reviews the evidence for products like Mavala Stop, how they work, and when they are and are not effective.',
     tag: 'Treatment',
     readingMinutes: 3,
@@ -645,6 +663,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'nail-biting-genetics',
     title: 'Is Nail Biting Genetic? What the Research Says About Hereditary Habit Risk',
+    seoTitle: 'Is Nail Biting Genetic? What Research Says',
     description: 'Studies show nail biting runs in families, but is it genetic or learned? This article reviews twin studies and genetic research on habit heritability and what it means for treatment.',
     tag: 'Science',
     readingMinutes: 3,
@@ -677,6 +696,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
   {
     slug: 'mediapipe-ai-detection-explained',
     title: 'How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer',
+    seoTitle: 'How MediaPipe AI Nail Biting Detection Works',
     description: "Stop Biting uses Google\'s MediaPipe framework running in WebAssembly to detect nail biting in real time. This article explains the technology stack for technically curious users.",
     tag: 'Technology',
     readingMinutes: 3,
@@ -713,6 +733,7 @@ BLOG_POSTS.push(...ADDITIONAL_POSTS);
 BLOG_POSTS.push({
   slug: 'nail-biting-laptop-working-from-home',
   title: "You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.",
+  seoTitle: 'Stop Nail Biting While Working From Home',
   description: 'A funny, honest look at why working on a laptop turns even calm, rational adults into compulsive nail biters — and how AI detection can finally break the cycle.',
   tag: 'Humor',
   readingMinutes: 6,
@@ -761,6 +782,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'best-apps-to-stop-nail-biting',
   title: '5 Best Tools to Stop Nail Biting in 2026 — Ranked by Evidence',
+  seoTitle: 'Best Apps to Stop Nail Biting in 2026',
   description: "We tested every nail biting remedy — AI detection apps, bitter polishes, habit trackers, and more. Here's what the evidence says actually works in 2026.",
   tag: 'Comparison',
   readingMinutes: 7,
@@ -870,6 +892,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'stop-biting-vs-mavala-stop',
   title: 'Stop Biting vs Mavala Stop: AI Detection vs Bitter Polish (2026)',
+  seoTitle: 'Stop Biting vs Mavala Stop: 2026 Comparison',
   description: "Mavala Stop uses bitter taste to deter nail biting. Stop Biting uses AI to detect it in real-time. Here's an honest comparison — which works for established habits?",
   tag: 'Comparison',
   readingMinutes: 4,
@@ -914,6 +937,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-adhd',
   title: 'Nail Biting and ADHD: Why the Habit Is Harder to Stop — and What Actually Helps',
+  seoTitle: 'Nail Biting and ADHD: What Actually Helps',
   description: "Nail biting and ADHD frequently travel together. Here's why ADHD makes the habit harder to break, and what approaches actually work for ADHD brains.",
   tag: 'Psychology',
   readingMinutes: 6,
@@ -951,6 +975,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-stimming',
   title: 'Nail Biting as Stimming: When the Habit Is Really Sensory Regulation',
+  seoTitle: 'Nail Biting as Stimming: Sensory Regulation',
   description: "Nail biting shares core features with stimming: it's repetitive, sensory, and regulates arousal. This explains why willpower rarely works and what approaches address the underlying sensory need.",
   tag: 'Clinical',
   readingMinutes: 5,
@@ -995,6 +1020,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'stop-nail-biting-fast',
   title: 'How to Stop Nail Biting Fast: The Quickest Methods, Ranked by Evidence',
+  seoTitle: 'How to Stop Nail Biting Fast: Ranked Methods',
   description: "Want to stop nail biting as quickly as possible? This guide ranks the fastest-working methods by evidence, explains realistic timelines, and tells you what actually happens in the first week.",
   tag: 'Treatment',
   readingMinutes: 5,
@@ -1031,6 +1057,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-hypnosis',
   title: "Does Hypnotherapy for Nail Biting Work? What the Research Actually Shows",
+  seoTitle: 'Hypnosis for Nail Biting: Does It Work?',
   description: "Hypnotherapy is one of the most searched treatments for nail biting. Here's an honest look at what the research shows, what conditions it works best under, and what it can't do.",
   tag: 'Treatment',
   readingMinutes: 4,
@@ -1097,6 +1124,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-alternatives',
   title: "What to Do Instead of Biting Your Nails: 12 Evidence-Based Alternatives",
+  seoTitle: 'Nail Biting Alternatives: 12 That Really Work',
   description: "Competing responses work only when they satisfy the same need as nail biting. This guide covers 12 alternatives that actually work — organized by the trigger type they best address.",
   tag: 'Treatment',
   readingMinutes: 4,
@@ -1147,6 +1175,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-pregnancy',
   title: "Nail Biting During Pregnancy: What the Real Risks Are and How to Stop",
+  seoTitle: 'Nail Biting During Pregnancy: Risks and Help',
   description: "Nail biting during pregnancy raises legitimate concerns about pathogen transfer and dental health. Here's what the risks actually are, how pregnancy changes the habit, and how to reduce it.",
   tag: 'Health',
   readingMinutes: 4,
@@ -1180,6 +1209,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-statistics',
   title: "Nail Biting Statistics: How Common Is It, Really? (2026 Data)",
+  seoTitle: 'Nail Biting Statistics: How Common Is It?',
   description: "Comprehensive statistics on nail biting prevalence, demographics, co-occurring conditions, and treatment outcomes. Data drawn from peer-reviewed research as of 2025.",
   tag: 'Science',
   readingMinutes: 5,
@@ -1213,6 +1243,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'grow-nails-after-nail-biting',
   title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
+  seoTitle: 'Grow Nails After Nail Biting: A Timeline',
   description: "After stopping nail biting, how long does it take to grow normal nails? This guide covers the realistic timeline, what damage is reversible, and how to care for nails during recovery.",
   tag: 'Health',
   readingMinutes: 5,
@@ -1252,6 +1283,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-emotional-regulation',
   title: "Why Nail Biting Feels Calming: The Emotional Regulation Mechanism Explained",
+  seoTitle: 'Nail Biting and Emotional Regulation',
   description: "Nail biting genuinely reduces anxiety in the short term — that's not imagined. Understanding why it works as a coping tool is the key to replacing it with something that works better.",
   tag: 'Psychology',
   readingMinutes: 5,
@@ -1288,6 +1320,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'acrylics-to-stop-nail-biting',
   title: 'Can Acrylic Nails Stop Nail Biting? What Actually Happens When You Get Extensions',
+  seoTitle: 'Can Acrylic Nails Stop Nail Biting?',
   description: "Getting acrylics to stop nail biting is one of the most popular strategies. Here's what the evidence shows, when it works, when it doesn't, and what to combine it with for lasting results.",
   tag: 'Treatment',
   readingMinutes: 6,
@@ -1328,6 +1361,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-cure',
   title: 'Is There a Permanent Cure for Nail Biting? An Honest Look at What the Evidence Shows',
+  seoTitle: 'Is There a Permanent Cure for Nail Biting?',
   description: 'People searching for a "nail biting cure" want a permanent solution. Here\'s what the research shows about long-term remission, what "cured" actually means neurologically, and how to get there.',
   tag: 'Treatment',
   readingMinutes: 5,
@@ -1365,6 +1399,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-bacteria-parasites',
   title: 'What Lives Under Your Fingernails: The Real Germ Risk of Nail Biting',
+  seoTitle: "Nail Biting Bacteria: What's Under Your Nails",
   description: 'Nail biting transfers bacteria, viruses, fungi, and in some cases parasites directly into the mouth. This article covers what research shows about pathogen load under nails and the real infection risks.',
   tag: 'Health',
   readingMinutes: 5,
@@ -1402,6 +1437,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-social-confidence',
   title: 'The Social Cost of Nail Biting: How Stopping Changes More Than Just Your Nails',
+  seoTitle: 'Nail Biting and Social Confidence',
   description: 'Nail biting affects handshakes, professional first impressions, and self-confidence in ways most biters don\'t consciously track. This article covers the social dimension — and what changes when you stop.',
   tag: 'Psychology',
   readingMinutes: 4,
@@ -1438,6 +1474,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-teenagers',
   title: 'Nail Biting in Teenagers: Why It Peaks at 15 — and What Actually Helps',
+  seoTitle: 'Nail Biting in Teenagers: What Helps',
   description: 'Nail biting peaks in the pre-teen and teenage years, affecting up to 45% of adolescents. This article explains why, how to tell serious from normal, and what approaches work for teens specifically.',
   tag: 'Psychology',
   readingMinutes: 5,
@@ -1475,6 +1512,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-at-work-meetings',
   title: 'How to Stop Nail Biting at Work and in Meetings: A Practical Professional\'s Guide',
+  seoTitle: 'How to Stop Nail Biting at Work and Meetings',
   description: 'Nail biting during meetings, video calls, and presentations is one of the hardest contexts to address. This guide covers why it happens in professional settings and what actually works.',
   tag: 'Productivity',
   readingMinutes: 4,
@@ -1511,6 +1549,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-and-perfectionism',
   title: 'Nail Biting and Perfectionism: Why High Standards Drive the Habit',
+  seoTitle: 'Nail Biting and Perfectionism: The Link',
   description: 'Research links perfectionism to nail biting more strongly than general anxiety. This article explains the perfectionism-biting connection, why it matters for treatment, and what actually helps.',
   tag: 'Psychology',
   readingMinutes: 5,
@@ -1619,6 +1658,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'stop-biting-app-review',
   title: 'Stop Biting App Review: An Honest Walkthrough From the Team That Built It',
+  seoTitle: 'Stop Biting App Review: An Honest Walkthrough',
   description: "Stop Biting uses on-device AI to catch nail biting in real time. A walkthrough from the makers: how it works, who it's for, and what to expect in the first two weeks.",
   tag: 'Products',
   readingMinutes: 4,
@@ -1723,6 +1763,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-fidget-toys',
   title: "Fidget Toys for Nail Biting: Which Competing Responses Actually Work",
+  seoTitle: 'Fidget Toys for Nail Biting: What Works',
   description: "Fidget toys are popular competing responses for nail biting — but most don't work. Here's which ones do, which don't, and why the match matters.",
   tag: 'Treatment',
   readingMinutes: 3,
@@ -1759,6 +1800,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-interview-anxiety',
   title: 'How to Stop Nail Biting Before Interviews and High-Pressure Situations',
+  seoTitle: 'How to Stop Nail Biting Before Interviews',
   description: "Nail biting spikes before interviews and presentations. Here's how to manage anxiety-triggered biting in high-stakes situations — including same-day techniques.",
   tag: 'Treatment',
   readingMinutes: 4,
@@ -1831,6 +1873,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-men',
   title: "Men and Nail Biting: Why It's Underreported and What Actually Helps",
+  seoTitle: "Nail Biting in Men: Why It's Underreported",
   description: "Men bite their nails as often as women but rarely seek help. Here's what research shows about male nail biting patterns and what approaches actually work.",
   tag: 'Psychology',
   readingMinutes: 4,
@@ -1867,6 +1910,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-screen-time',
   title: 'How Phones and Screens Make Nail Biting Worse — and What to Do',
+  seoTitle: 'Nail Biting and Screen Time: What to Do',
   description: "Screen time and nail biting are directly linked. Phones create the perfect trigger conditions: micro-stress, distraction, and hands near the face.",
   tag: 'Psychology',
   readingMinutes: 4,
@@ -2187,6 +2231,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'bfrb-guide',
   title: `Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide`,
+  seoTitle: 'BFRBs: Body-Focused Repetitive Behaviors Guide',
   description: `BFRBs include nail biting, skin picking, and hair pulling. This guide explains what they have in common, how they differ, and the evidence-based approaches that treat them.`,
   tag: 'Clinical',
   readingMinutes: 3,
@@ -2227,6 +2272,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-new-years-resolution',
   title: `Why 'Stop Biting My Nails' Resolutions Fail — and What Works Instead`,
+  seoTitle: "Why 'Stop Nail Biting' Resolutions Fail",
   description: `Nail biting is a perennial New Year's resolution that rarely sticks. This article explains why willpower-based resolutions fail for habits like this, and what approach actually works.`,
   tag: 'Psychology',
   readingMinutes: 3,
@@ -2420,6 +2466,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-reddit',
   title: `What Actually Worked for People Who Quit Nail Biting, According to Online Communities`,
+  seoTitle: 'What Worked for People Who Quit Nail Biting',
   description: `Online communities are full of nail biting advice, but not all of it holds up against the evidence. This article separates the commonly repeated tips that align with research from the ones that don't.`,
   tag: 'Treatment',
   readingMinutes: 3,
@@ -2452,6 +2499,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-gut-health',
   title: `Nail Biting and Gut Health: What Swallowing Bacteria Does to Your Microbiome`,
+  seoTitle: 'Nail Biting and Gut Health: Microbiome Effects',
   description: `Nail biting introduces bacteria, keratin fragments, and foreign material into the digestive system repeatedly. This article explains what that means for gut health and microbiome balance.`,
   tag: 'Health',
   readingMinutes: 3,
@@ -2524,6 +2572,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-thumb-sucking',
   title: `From Thumb Sucking to Nail Biting: How One Habit Becomes the Other`,
+  seoTitle: 'From Thumb Sucking to Nail Biting',
   description: `Many chronic nail biters were thumb suckers as young children. This article explains the developmental link, why the habit often transfers, and how to break the cycle early.`,
   tag: 'Parenting',
   readingMinutes: 3,
@@ -2664,6 +2713,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-cortisol',
   title: `Nail Biting and Cortisol: The Stress Hormone Connection Explained`,
+  seoTitle: 'Nail Biting and Cortisol: The Stress Link',
   description: `Cortisol, the primary stress hormone, plays a measurable role in triggering nail biting episodes. This article explains the biochemistry behind the stress-bite cycle.`,
   tag: 'Science',
   readingMinutes: 3,
@@ -2733,6 +2783,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-cuticle-damage',
   title: `Cuticle Damage from Nail Biting: What Happens and How to Repair It`,
+  seoTitle: 'Cuticle Damage From Nail Biting: How to Heal',
   description: `Nail biting damages the cuticle and surrounding skin in specific, predictable ways. This article explains the mechanics of cuticle damage and evidence-based repair strategies.`,
   tag: 'Health',
   readingMinutes: 3,
@@ -2765,6 +2816,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-cost',
   title: `The Real Cost of Nail Biting: What Chronic Biting Costs Over Time`,
+  seoTitle: 'The Real Cost of Nail Biting Over Time',
   description: `Nail biting has a real financial cost — dental repairs, manicures, damaged devices, and more. This article adds up what chronic nail biting actually costs over years.`,
   tag: 'Products',
   readingMinutes: 2,
@@ -2870,6 +2922,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-public-speaking',
   title: `Nail Biting Before Public Speaking: Why Performance Anxiety Triggers It`,
+  seoTitle: 'Nail Biting and Public Speaking Anxiety',
   description: `Public speaking and other performance situations are a major nail biting trigger beyond just interviews. This article covers why, and what to do in the minutes before you go on.`,
   tag: 'Psychology',
   readingMinutes: 3,
@@ -3095,6 +3148,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-menopause',
   title: `Nail Biting During Menopause: Why Hormonal Changes Can Trigger It`,
+  seoTitle: 'Nail Biting During Menopause: Why It Starts',
   description: `Hormonal fluctuations during perimenopause and menopause can affect stress reactivity, sleep, and mood — all linked to nail biting. This article explains the connection.`,
   tag: 'Health',
   readingMinutes: 3,
@@ -3160,6 +3214,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'how-to-help-someone-who-bites-their-nails',
   title: `How to Help a Partner or Friend Who Bites Their Nails (Without Nagging)`,
+  seoTitle: 'How to Help Someone Who Bites Their Nails',
   description: `Pointing out someone's nail biting rarely helps and often backfires. This article covers what actually supports a partner, friend, or family member trying to stop.`,
   tag: 'Psychology',
   readingMinutes: 2,
@@ -3224,6 +3279,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'does-nail-biting-cause-permanent-damage',
   title: `Does Nail Biting Cause Permanent Damage? What's Reversible and What Isn't`,
+  seoTitle: 'Does Nail Biting Cause Permanent Damage?',
   description: `Most nail biting damage is reversible once the habit stops. This article explains which changes heal completely and which, in more severe cases, can be permanent.`,
   tag: 'Health',
   readingMinutes: 3,
@@ -3321,6 +3377,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-musicians',
   title: `Nail Biting for Musicians: Why It's a Bigger Problem Than for Most`,
+  seoTitle: 'Nail Biting for Musicians: Why It Matters More',
   description: `For guitarists, pianists, and other instrumentalists, nail biting directly affects technique and tone. This article covers the specific stakes and practical fixes for musicians.`,
   tag: 'Productivity',
   readingMinutes: 2,
@@ -3481,6 +3538,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-magnesium',
   title: `Magnesium for Nail Biting: Can It Help With Anxiety-Driven Biting?`,
+  seoTitle: 'Magnesium for Nail Biting: Does It Help?',
   description: `Magnesium is commonly suggested for stress and anxiety, both nail biting triggers. This article covers what the evidence actually shows and how it compares to NAC.`,
   tag: 'Treatment',
   readingMinutes: 3,
@@ -3514,6 +3572,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-panic-disorder',
   title: `Nail Biting and Panic Disorder: When Biting Clusters Around Panic Attacks`,
+  seoTitle: 'Nail Biting and Panic Disorder: The Link',
   description: `For some people with panic disorder, nail biting clusters specifically around panic attacks rather than general anxiety. This article explains the distinction and what helps.`,
   tag: 'Clinical',
   readingMinutes: 3,
@@ -3547,6 +3606,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-ptsd',
   title: `Nail Biting and PTSD: Understanding the Hypervigilance Connection`,
+  seoTitle: 'Nail Biting and PTSD: The Hypervigilance Link',
   description: `For some people with PTSD, nail biting is tied to hypervigilance and nervous system dysregulation rather than ordinary stress. This article explains the connection.`,
   tag: 'Clinical',
   readingMinutes: 3,
@@ -3580,6 +3640,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-chefs-food-service',
   title: `Nail Biting for Chefs and Food Service Workers: The Hygiene Stakes`,
+  seoTitle: 'Nail Biting for Chefs: The Hygiene Stakes',
   description: `Nail biting carries elevated hygiene and professional risk for chefs and food service workers. This article covers the specific stakes and practical strategies for kitchen environments.`,
   tag: 'Health',
   readingMinutes: 2,
@@ -3612,6 +3673,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-teachers',
   title: `Nail Biting for Teachers: Managing It in Front of a Classroom`,
+  seoTitle: 'Nail Biting for Teachers: Classroom Strategies',
   description: `Teachers face unique nail biting triggers — constant visibility, classroom stress, and little downtime. This article covers practical strategies suited to a teaching schedule.`,
   tag: 'Productivity',
   readingMinutes: 3,
@@ -3644,6 +3706,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-wearable-technology',
   title: `Wearable Technology for Nail Biting: Smartwatches and Motion Detection`,
+  seoTitle: 'Nail Biting Wearables: Smartwatch Detection',
   description: `Beyond webcam-based detection, wrist-worn wearables are an emerging category for catching nail biting through motion sensing. This article explains how they work and their limitations.`,
   tag: 'Technology',
   readingMinutes: 2,
@@ -3805,6 +3868,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-major-life-changes',
   title: `Nail Biting During Major Life Changes: Job Loss, Moving, Breakups, and Grief`,
+  seoTitle: 'Nail Biting During Major Life Changes',
   description: `Major life transitions — job loss, moving, breakups, bereavement — are common periods for nail biting to emerge or intensify. This article covers why, and how to manage it through a difficult stretch.`,
   tag: 'Psychology',
   readingMinutes: 3,
