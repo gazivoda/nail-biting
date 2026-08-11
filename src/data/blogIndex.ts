@@ -23,7 +23,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-17",
+    dateModified: "2026-08-11",
   },
   {
     slug: "habit-reversal-training-guide",
@@ -32,7 +32,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-17",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-health-risks",
@@ -41,7 +41,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-in-children",
@@ -50,7 +50,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-08-11",
   },
   {
     slug: "best-nail-biting-remedies",
@@ -59,7 +59,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-08-11",
   },
   {
     slug: "stress-and-nail-biting",
@@ -68,7 +68,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-ocd-connection",
@@ -77,7 +77,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-08-11",
   },
   {
     slug: "how-ai-can-help-stop-nail-biting",
@@ -113,7 +113,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-08-11",
   },
   {
     slug: "stopping-nail-biting-for-good",
@@ -122,7 +122,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-anxiety-treatment",
@@ -131,7 +131,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-08-11",
   },
   {
     slug: "how-long-to-stop-nail-biting",
@@ -176,7 +176,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-genetics",
@@ -185,7 +185,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-08-11",
   },
   {
     slug: "mediapipe-ai-detection-explained",
@@ -212,7 +212,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 7,
     datePublished: "2026-04-19",
-    dateModified: "2026-04-19",
+    dateModified: "2026-08-11",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
@@ -230,7 +230,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 6,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-stimming",
@@ -239,7 +239,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "stop-nail-biting-fast",
@@ -257,7 +257,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nac-nail-biting",
@@ -266,7 +266,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-alternatives",
@@ -284,7 +284,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-statistics",
@@ -293,7 +293,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "grow-nails-after-nail-biting",
@@ -302,7 +302,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-emotional-regulation",
@@ -320,7 +320,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-cure",
@@ -329,7 +329,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-bacteria-parasites",
@@ -338,7 +338,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-social-confidence",
@@ -347,7 +347,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-teenagers",
@@ -356,7 +356,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-at-work-meetings",
@@ -365,7 +365,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Productivity",
     readingMinutes: 4,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-and-perfectionism",
@@ -374,7 +374,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-04-23",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-gaming",
@@ -401,7 +401,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-personality",
@@ -410,7 +410,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-evening",
@@ -419,7 +419,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-fidget-toys",
@@ -437,7 +437,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-habit-tracking",
@@ -455,7 +455,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-screen-time",
@@ -464,7 +464,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-08-11",
   },
   {
     slug: "how-to-stop-nail-biting",
@@ -473,7 +473,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "onychophagia",
@@ -482,7 +482,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-and-depression",
@@ -491,7 +491,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-quiz",
@@ -509,7 +509,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-during-exams",
@@ -527,7 +527,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-cognitive-behavioral-therapy",
@@ -536,7 +536,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "bfrb-guide",
@@ -545,7 +545,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-new-years-resolution",
@@ -563,7 +563,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-vs-pen-chewing",
@@ -617,7 +617,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "products-to-stop-nail-biting",
@@ -644,7 +644,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "stop-nail-biting-challenge",
@@ -707,7 +707,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-app-vs-therapy",
@@ -752,7 +752,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-caffeine",
@@ -788,7 +788,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "press-on-nails-to-stop-nail-biting",
@@ -824,7 +824,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-women",
@@ -896,7 +896,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-panic-disorder",
@@ -905,7 +905,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-ptsd",
@@ -914,7 +914,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-chefs-food-service",
@@ -977,7 +977,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-major-life-changes",
@@ -1004,7 +1004,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-boredom",
@@ -1076,7 +1076,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-jaw-pain-tmj",
@@ -1085,7 +1085,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-hangnails",
@@ -1103,7 +1103,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-vitamin-deficiency",
@@ -1112,7 +1112,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-dermatophagia",
@@ -1121,7 +1121,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-medication",
@@ -1130,7 +1130,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-finding-a-therapist",
@@ -1139,7 +1139,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-support-groups",
@@ -1148,7 +1148,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-mindfulness",
@@ -1229,7 +1229,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-08-11",
   },
   {
     slug: "nail-biting-vs-cheek-biting",

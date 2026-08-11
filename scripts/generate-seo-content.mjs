@@ -38,6 +38,9 @@ for (const post of BLOG_POSTS) {
     problems.push(`dateModified precedes datePublished: ${post.slug}`);
   }
   if (!post.sections?.length) problems.push(`post has no sections: ${post.slug}`);
+  if (post.ogImage && !/^(\/|https?:\/\/)/.test(post.ogImage)) {
+    problems.push(`ogImage must be a site-absolute path (or full URL): ${post.slug}`);
+  }
 }
 if (problems.length) {
   console.error('generate-seo-content: structural problems in src/data/blogPosts.ts:');
@@ -56,6 +59,7 @@ for (const p of BLOG_POSTS) {
     readingMinutes: p.readingMinutes,
     datePublished: p.datePublished,
     dateModified: p.dateModified,
+    ...(p.ogImage ? { ogImage: p.ogImage } : {}),
     sections: p.sections.map(s => ({
       heading: s.heading,
       body: s.body,

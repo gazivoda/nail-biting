@@ -731,9 +731,11 @@ if (!existsSync(distPath)) {
     const dates = post.dateModified !== post.datePublished
       ? `Published ${post.datePublished} · Updated ${post.dateModified}`
       : `Published ${post.datePublished}`;
+    // The `article-summary` class is a stable hook for the SpeakableSpecification
+    // cssSelector in the JSON-LD (SCHEMA_SPEAKABLE below) — keep them in step.
     return `<h1>${escapeHtml(post.title)}</h1>` +
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
-      `<p>${escapeHtml(post.description)}</p>` +
+      `<p class="article-summary">${escapeHtml(post.description)}</p>` +
       renderSectionsHtml(post.sections);
   }
 
@@ -790,7 +792,7 @@ if (!existsSync(distPath)) {
   // Helper: inject page-specific <title>, <meta description>, <link canonical>,
   // Open Graph, and Twitter Card tags into the SPA index.html shell before sending it.
   // This makes critical SEO elements visible to Googlebot and AI crawlers.
-  function injectMeta(html, { title, description, canonical, ogType = 'website' }) {
+  function injectMeta(html, { title, description, canonical, ogType = 'website', ogImage }) {
     // Every value below is interpolated into an HTML attribute, so it must be
     // escaped. A description containing a quoted phrase — a "nail biting cure"
     // — otherwise closes the content attribute on its own first quote, and the
@@ -804,7 +806,7 @@ if (!existsSync(distPath)) {
     const d = escapeHtml(description);
     const c = escapeHtml(canonical);
     const o = escapeHtml(ogType);
-    return html
+    let out = html
       .replace(/<title>[^<]*<\/title>/, () => `<title>${t}</title>`)
       .replace(/<meta name="description" content="[^"]*"/, () => `<meta name="description" content="${d}"`)
       .replace(/<link rel="canonical" href="[^"]*"/, () => `<link rel="canonical" href="${c}"`)
@@ -814,6 +816,15 @@ if (!existsSync(distPath)) {
       .replace(/<meta property="og:url" content="[^"]*"/, () => `<meta property="og:url" content="${c}"`)
       .replace(/<meta name="twitter:title" content="[^"]*"/, () => `<meta name="twitter:title" content="${t}"`)
       .replace(/<meta name="twitter:description" content="[^"]*"/, () => `<meta name="twitter:description" content="${d}"`);
+    // Per-page OG image (absolute URL). When absent, the shell's shared
+    // /og-image.png tags pass through untouched.
+    if (ogImage) {
+      const img = escapeHtml(ogImage);
+      out = out
+        .replace(/<meta property="og:image" content="[^"]*"/, () => `<meta property="og:image" content="${img}"`)
+        .replace(/<meta name="twitter:image" content="[^"]*"/, () => `<meta name="twitter:image" content="${img}"`);
+    }
+    return out;
   }
 
   // ── JSON-LD helpers ────────────────────────────────────────────────────────
@@ -842,6 +853,29 @@ if (!existsSync(distPath)) {
     width: 1200,
     height: 630,
   };
+  // Speakable (GEO): tells voice assistants and AI crawlers which passages to
+  // read aloud / quote. The selectors MUST match elements in the raw served
+  // HTML — they point at the server-rendered article (#ssr-page-content):
+  // its <h1> and the standfirst paragraph, which carries the article-summary
+  // class in blogArticleHtml()/homeArticleHtml(). Only indexable content pages
+  // (homepage, blog posts) emit this — never legal/noindex pages.
+  const SCHEMA_SPEAKABLE = {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['#ssr-page-content h1', '#ssr-page-content .article-summary'],
+  };
+  // Per-post OG/hero image: posts may set `ogImage` in blogPosts.ts (a
+  // site-absolute path under public/, e.g. "/og/psychology.png", 1200x630).
+  // Falls back to the shared /og-image.png until per-tag images exist.
+  function postImageUrl(post) {
+    if (!post.ogImage) return null;
+    return post.ogImage.startsWith('http')
+      ? post.ogImage
+      : `https://stopbiting.today${post.ogImage}`;
+  }
+  function postSchemaImage(post) {
+    const url = postImageUrl(post);
+    return url ? { '@type': 'ImageObject', url, width: 1200, height: 630 } : SCHEMA_IMAGE;
+  }
 
   function schemaTag(obj) {
     return `<script type="application/ld+json">${JSON.stringify(obj)}</script>`;
@@ -874,7 +908,8 @@ if (!existsSync(distPath)) {
       isAccessibleForFree: true,
       timeRequired: `PT${post.readingMinutes}M`,
       keywords: post.tag,
-      image: SCHEMA_IMAGE,
+      image: postSchemaImage(post),
+      speakable: SCHEMA_SPEAKABLE,
     };
 
     const breadcrumb = breadcrumbSchema([
@@ -976,7 +1011,7 @@ if (!existsSync(distPath)) {
       `<section><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></section>`).join('');
     return (
       '<h1>Stop Nail Biting with AI</h1>' +
-      '<p>Stop Biting uses your webcam and on-device AI to detect nail biting in real time. ' +
+      '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time. ' +
       'The moment your hand moves toward your mouth, an audible alarm fires — catching the automatic episodes ' +
       'you never notice. All detection runs locally via MediaPipe and WebAssembly: no camera data ever leaves your device.</p>' +
       '<section><h2>How it works</h2>' +
@@ -1002,11 +1037,26 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlWithFaq) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
     let injected = injectMeta(indexHtmlWithFaq, {
       title: 'Stop Nail Biting with AI | Stop Biting',
-      description: 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.',
+      description: homeDescription,
       canonical: 'https://stopbiting.today/',
     });
+    // WebPage entity carrying the speakable spec — injected only here, so
+    // legal/noindex routes (which share the same shell) never receive it.
+    // Selectors resolve against the SSR article injected just below.
+    const homeWebPage = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': 'https://stopbiting.today/',
+      url: 'https://stopbiting.today/',
+      name: 'Stop Nail Biting with AI | Stop Biting',
+      description: homeDescription,
+      isPartOf: { '@type': 'WebSite', name: 'Stop Biting', url: 'https://stopbiting.today/' },
+      speakable: SCHEMA_SPEAKABLE,
+    };
+    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n  </head>`);
     injected = injectSsrArticle(injected, homeArticleHtml());
     sendHtml(res, injectNoscriptNav(injected));
   });
@@ -1056,6 +1106,7 @@ if (!existsSync(distPath)) {
       description: post.description,
       canonical,
       ogType: 'article',
+      ogImage: postImageUrl(post),
     });
     injected = injectBlogSchemas(injected, {
       slug,

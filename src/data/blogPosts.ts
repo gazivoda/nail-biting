@@ -18,6 +18,13 @@ export interface BlogPost {
   readingMinutes: number;
   datePublished: string; // YYYY-MM-DD
   dateModified: string;
+  /**
+   * Optional per-post OG/hero image: a site-absolute path under public/
+   * (e.g. "/og/psychology.png", 1200x630). server.js uses it for og:image,
+   * twitter:image and BlogPosting.image, falling back to /og-image.png when
+   * absent — posts without one are unaffected.
+   */
+  ogImage?: string;
   sections: BlogSection[];
 }
 
@@ -40,7 +47,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Psychology',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-17',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'More people do this than you think',
@@ -79,7 +86,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-17',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: "The method that works (and why most people haven\'t tried it)",
@@ -113,7 +120,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Is nail biting actually harmful?',
@@ -147,7 +154,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Parenting',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'How common is nail biting in children?',
@@ -189,7 +196,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Why do most nail biting remedies fail?',
@@ -223,7 +230,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Psychology',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Why does stress cause nail biting?',
@@ -262,7 +269,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'How is nail biting classified in the DSM-5?',
@@ -409,7 +416,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'What do nail biting and skin picking have in common?',
@@ -442,7 +449,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 4,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Why do people relapse after stopping nail biting?',
@@ -475,7 +482,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Psychology',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Is your nail biting driven by anxiety?',
@@ -639,7 +646,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'How does bitter nail polish work?',
@@ -668,7 +675,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Science',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Does nail biting run in families?',
@@ -787,7 +794,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-04-19',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why most habit apps fail for nail biting',
@@ -942,7 +949,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 6,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why nail biting is so common in ADHD',
@@ -980,7 +987,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'What stimming actually is',
@@ -1062,7 +1069,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: "Why people search for hypnosis as a nail biting treatment",
@@ -1095,7 +1102,7 @@ BLOG_POSTS.push({
   tag: 'Science',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'What NAC is and why it matters for BFRBs',
@@ -1180,7 +1187,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: "Does pregnancy make nail biting worse?",
@@ -1214,7 +1221,7 @@ BLOG_POSTS.push({
   tag: 'Science',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: "Prevalence: how common is nail biting?",
@@ -1248,7 +1255,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: "How fast do nails grow after stopping nail biting?",
@@ -1325,7 +1332,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 6,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why people get acrylics to stop nail biting',
@@ -1366,7 +1373,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Is nail biting curable?',
@@ -1404,7 +1411,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'What is actually under your fingernails?',
@@ -1442,7 +1449,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'How nail biting affects social confidence',
@@ -1479,7 +1486,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why nail biting peaks in the teenage years',
@@ -1517,7 +1524,7 @@ BLOG_POSTS.push({
   tag: 'Productivity',
   readingMinutes: 4,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why work and meetings are such high-risk contexts for nail biting',
@@ -1554,7 +1561,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-04-23',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Is there a link between perfectionism and nail biting?',
@@ -1663,7 +1670,7 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'What Stop Biting does',
@@ -1699,7 +1706,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Nail biting is not a personality type — but it correlates with several',
@@ -1735,7 +1742,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'The evening nail biting spike: what surveys show',
@@ -1805,7 +1812,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'Why interviews trigger nail biting so reliably',
@@ -1878,7 +1885,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'How common is nail biting in men?',
@@ -1915,7 +1922,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: 'The screen time-nail biting link',
@@ -1951,7 +1958,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why nail biting is harder to stop than most habits`,
@@ -1991,7 +1998,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `What does "onychophagia" mean?`,
@@ -2024,7 +2031,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Is nail biting linked to depression?`,
@@ -2097,7 +2104,7 @@ BLOG_POSTS.push({
   tag: 'Parenting',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why toddlers bite their nails`,
@@ -2169,7 +2176,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `What a night guard is and why it comes up`,
@@ -2202,7 +2209,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `What CBT is and how it applies to BFRBs`,
@@ -2236,7 +2243,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `What is a BFRB?`,
@@ -2309,7 +2316,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Does nail biting suppress immunity?`,
@@ -2504,7 +2511,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `What actually gets swallowed`,
@@ -2609,7 +2616,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why orthodontists specifically warn against nail biting`,
@@ -2853,7 +2860,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Most nail biting doesn't need a doctor`,
@@ -3023,7 +3030,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `How eczema and nail biting can interact`,
@@ -3153,7 +3160,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why menopause is relevant to a habit like nail biting`,
@@ -3284,7 +3291,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why this is one of the most common questions`,
@@ -3543,7 +3550,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why magnesium comes up for anxiety-driven habits`,
@@ -3577,7 +3584,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `How panic disorder differs from general anxiety`,
@@ -3611,7 +3618,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `How PTSD affects the nervous system`,
@@ -3839,7 +3846,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Why hormonal contraception is relevant here`,
@@ -3937,7 +3944,7 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-08-11',
   sections: [
     {
       heading: `Can nail biting cause a fungal infection?`,
@@ -4244,7 +4251,7 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Warts around the nails are a nail biter problem',
@@ -4284,7 +4291,7 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'An underrated consequence',
@@ -4360,7 +4367,7 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'The most persistent nail myth going',
@@ -4405,7 +4412,7 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'A theory with real appeal',
@@ -4439,7 +4446,7 @@ BLOG_POSTS.push(
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'A different behaviour with a similar appearance',
@@ -4479,7 +4486,7 @@ BLOG_POSTS.push(
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'The short answer',
@@ -4525,7 +4532,7 @@ BLOG_POSTS.push(
     tag: 'Clinical',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Why the general search does not work',
@@ -4571,7 +4578,7 @@ BLOG_POSTS.push(
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'Why community matters more than it seems',
@@ -4927,7 +4934,7 @@ BLOG_POSTS.push(
     tag: 'Parenting',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-08-11',
     sections: [
       {
         heading: 'The most common parental instinct',
