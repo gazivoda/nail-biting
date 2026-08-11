@@ -34,7 +34,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'What is habit reversal training for nail biting?',
-    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. Studies report 70–90% reductions in biting frequency among people who practise it consistently.',
+    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting.',
   },
   {
     q: 'Is nail biting harmful?',
@@ -375,7 +375,7 @@ export function Landing(_props: Props) {
             <article aria-labelledby="hrt-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
               <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">The approach that actually works</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. Studies consistently show 70–90% reductions in biting frequency. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
+                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. In the landmark clinical trial it cut biting episodes by roughly 99%, and a meta-analysis of 18 studies confirmed large effects. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
               </p>
 
               <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">How it works</h3>
@@ -415,12 +415,6 @@ export function Landing(_props: Props) {
                 Made by people who bite their nails too.
               </h2>
 
-              {/*
-                PERSONALIZE ME → Hands Off's most appealing element is a genuine founder note with a face.
-                To make this yours: replace the copy below with your real story, change the signature to your
-                name, and drop a photo in above the text, e.g.:
-                  <img src="/founder.jpg" alt="Founder" className="w-16 h-16 rounded-full mx-auto mt-6 object-cover" />
-              */}
               <div className="text-stone-500 dark:text-stone-400 text-sm sm:text-base leading-relaxed mt-6 space-y-4">
                 <p>
                   Every other tool we tried fought the symptom. Bitter polish makes your nails taste bad. Gloves
@@ -442,54 +436,51 @@ export function Landing(_props: Props) {
             </div>
           </section>
 
-          {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
-          <section aria-labelledby="testimonials-heading">
-            <h2 id="testimonials-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">What people are saying</h2>
+          {/* ── EVIDENCE (honest social proof — no invented testimonials) ─── */}
+          <section aria-labelledby="evidence-heading">
+            <h2 id="evidence-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Built on real habit science</h2>
 
             <div className="mt-8 space-y-4">
-              {/* Featured quote — full width, forest tint */}
-              <blockquote className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
-                <div className="flex gap-0.5 mb-4" aria-label="5 out of 5 stars">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
+              {/* Featured evidence card — full width, forest tint */}
+              <div className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen size={14} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
+                  <p className="text-xs uppercase tracking-wider font-semibold text-forest-600 dark:text-forest-400">The evidence behind the method</p>
                 </div>
                 <p className="text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
-                  "I've tried bitter nail polish, gloves, everything. This is the only thing that actually caught me in the act. Three weeks clean."
+                  The method inside this app isn't ours — it's Habit Reversal Training, the best-studied behavioural
+                  treatment for nail biting. In the landmark clinical trial, habit reversal cut biting episodes by
+                  roughly 99% at five-month follow-up, and a meta-analysis of 18 studies confirmed large effects.
                 </p>
-                <footer className="mt-5">
-                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">Sarah K.</p>
-                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-0.5">Software engineer, 8-year nail biter</p>
+                <footer className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
+                    Azrin, Nunn &amp; Frantz (1980) — Behaviour Research and Therapy
+                  </a>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
+                    Bate et al. (2011) — Clinical Psychology Review meta-analysis
+                  </a>
                 </footer>
-              </blockquote>
+              </div>
 
-              {/* Two smaller quotes side by side */}
+              {/* Two smaller honesty cards side by side */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    quote: "The alarm is jarring at first. That's exactly the point. My brain finally made the connection between the urge and the action.",
-                    name: 'Marcus T.',
-                    context: 'Designer, broke the habit in 6 weeks',
-                  },
-                  {
-                    quote: "I bit during video calls without ever noticing. This caught me every single time. Two months in and the urge is genuinely fading.",
-                    name: 'Priya M.',
-                    context: 'Remote worker, 15-year habit',
-                  },
-                ].map(({ quote, name, context }, i) => (
-                  <blockquote
-                    key={name}
-                    className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
-                    style={{ transitionDelay: `${i * 80}ms` }}
-                  >
-                    <div className="flex gap-0.5 mb-3" aria-label="5 out of 5 stars">
-                      {[...Array(5)].map((_, j) => <Star key={j} size={11} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
-                    </div>
-                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">"{quote}"</p>
-                    <footer className="mt-4">
-                      <p className="text-stone-800 dark:text-stone-200 text-xs font-semibold">{name}</p>
-                      <p className="text-stone-400 dark:text-stone-500 text-xs">{context}</p>
-                    </footer>
-                  </blockquote>
-                ))}
+                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
+                  <ShieldCheck size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
+                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">No fake reviews here</p>
+                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
+                    We don't publish paid or invented testimonials. The free trial exists so the app can prove
+                    itself on your own biting data — usually within the first hour.
+                  </p>
+                </div>
+                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
+                  <Check size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
+                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">An app is not a clinician</p>
+                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
+                    For severe or distressing BFRBs, see a professional. The{' '}
+                    <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">TLC Foundation for Body-Focused Repetitive Behaviors</a>{' '}
+                    maintains a directory of BFRB-informed therapists.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -537,7 +528,7 @@ export function Landing(_props: Props) {
           <section aria-label="Key statistics" className="reveal flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
             {[
               { number: '20–30%', label: 'of adults bite their nails chronically' },
-              { number: '70–90%', label: 'fewer biting incidents after 6 weeks of awareness training' },
+              { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
               { number: '0 bytes', label: 'Of camera data sent to servers' },
             ].map(({ number, label }, i) => (
               <div key={label} className="flex items-center gap-8">
@@ -550,7 +541,7 @@ export function Landing(_props: Props) {
             ))}
           </section>
           <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
-            Biting reduction figures from clinical studies on habit reversal training. Camera privacy is architectural — there's no server to send data to.
+            Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), sustained at five-month follow-up. Camera privacy is architectural — there's no server to send data to.
           </p>
 
           {/* ── PRICING ───────────────────────────────────────────────────── */}
