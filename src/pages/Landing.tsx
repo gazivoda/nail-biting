@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
   Code2, ChevronDown, Camera, Bell, BookOpen,
-  Star, ArrowRight, Check, Shield,
+  ArrowRight, Check,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
 import { ContactForm } from '../components/ContactForm';
+import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
 // Pulled from the real post data so titles and reading times can't drift.
@@ -49,34 +50,6 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. Frequency typically starts dropping meaningfully between weeks two and four, and the competing response starts feeling natural around weeks six to eight. Habit-formation research suggests a median of roughly two months for a new response to become automatic.',
   },
 ];
-
-// Activates scroll-reveal on all .reveal and .reveal-card elements
-function useScrollReveal() {
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      document.querySelectorAll('.reveal, .reveal-card').forEach(el => {
-        el.classList.add('revealed');
-      });
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
-    );
-
-    document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-}
 
 interface Props {}
 
@@ -544,93 +517,8 @@ export function Landing(_props: Props) {
             Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), sustained at five-month follow-up. Camera privacy is architectural — there's no server to send data to.
           </p>
 
-          {/* ── PRICING ───────────────────────────────────────────────────── */}
-          <section id="pricing" aria-labelledby="pricing-heading">
-            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Pricing</p>
-            <h2 id="pricing-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Simple, honest pricing.</h2>
-            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2">Start with a 3-day free trial. No credit card required.</p>
-
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {/* Monthly */}
-              <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
-                    <Zap size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
-                    <p className="text-xs text-stone-400 dark:text-stone-500">Billed monthly</p>
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
-                  <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
-                </div>
-                <ul className="space-y-2.5 mb-7 flex-1">
-                  {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types'].map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                      <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="/api/auth/google"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5"
-                >
-                  Start free trial
-                </a>
-              </div>
-
-              {/* Yearly */}
-              <div className="reveal-card bg-white dark:bg-ink-50 border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-7 flex flex-col shadow-card-md relative hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm whitespace-nowrap">
-                    Best value — save 19%
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
-                    <Star size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-                    <p className="text-xs text-stone-400 dark:text-stone-500">Billed once a year</p>
-                  </div>
-                </div>
-                <div className="mb-1">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-                  <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
-                </div>
-                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just $2.42/month</p>
-                <ul className="space-y-2.5 mb-7 flex-1">
-                  {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                      <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="/api/auth/google"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"
-                >
-                  <Zap size={13} aria-hidden="true" />
-                  Start free trial
-                </a>
-              </div>
-            </div>
-
-            {/* Trust badges */}
-            <div className="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-stone-400 dark:text-stone-500">
-              <div className="flex items-center gap-1.5"><Shield size={11} aria-hidden="true" /><span>Secure payment via Paddle</span></div>
-              <div className="flex items-center gap-1.5"><Check size={11} aria-hidden="true" /><span>Cancel anytime</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>3-day free trial</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>No credit card required to start</span></div>
-            </div>
-          </section>
+          {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
+          <PricingSection />
 
           {/* ── FEATURED GUIDES ───────────────────────────────────────────── */}
           <section aria-labelledby="featured-guides-heading">

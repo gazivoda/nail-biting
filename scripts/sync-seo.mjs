@@ -6,7 +6,8 @@
 //
 // Targets:
 //   public/sitemap.xml       — fully regenerated
-//   public/llms.txt          — "## Blog articles" section, missing entries appended
+//   public/llms.txt          — "## Blog articles" section: existing entries
+//                              refreshed in place, missing entries appended
 //   src/data/blogIndex.ts    — fully regenerated (metadata-only mirror)
 //
 // server.js no longer carries ANY content mirror: it reads
@@ -165,7 +166,12 @@ function checkMetaLength(post) {
   );
 }
 
-// ─── public/llms.txt — append missing blog entries ───────────────────────────
+// ─── public/llms.txt — refresh existing blog entries, append missing ─────────
+// Only the "## Blog articles" section is touched: entries whose slug still
+// exists in BLOG_POSTS are rewritten in place (title + first-sentence blurb,
+// keeping their position), so blurbs track description rewrites instead of
+// fossilising; posts not yet listed are appended. All other sections and any
+// non-entry lines pass through untouched, so the run is idempotent.
 {
   const llmsPath = join(ROOT, 'public/llms.txt');
   const llms = readFileSync(llmsPath, 'utf8');
@@ -178,10 +184,20 @@ function checkMetaLength(post) {
     let end = lines.findIndex((l, i) => i > start && l.startsWith('## '));
     if (end === -1) end = lines.length;
 
+    const bySlug = new Map(BLOG_POSTS.map(p => [p.slug, p]));
+    const entryLine = p => `- [${p.title}](${ORIGIN}/blog/${p.slug}): ${firstSentence(p.description)}`;
+
     const listed = new Set();
+    let refreshed = 0;
     for (let i = start; i < end; i++) {
       const m = lines[i].match(/\/blog\/([a-z0-9-]+)\)/);
-      if (m) listed.add(m[1]);
+      if (!m) continue;
+      listed.add(m[1]);
+      const post = bySlug.get(m[1]);
+      if (post && lines[i] !== entryLine(post)) {
+        lines[i] = entryLine(post);
+        refreshed++;
+      }
     }
 
     const missing = BLOG_POSTS.filter(p => !listed.has(p.slug));
@@ -189,12 +205,12 @@ function checkMetaLength(post) {
       // Trailing blank lines sit between the last entry and the next "## " heading.
       let insertAt = end;
       while (insertAt > start && lines[insertAt - 1].trim() === '') insertAt--;
+      lines.splice(insertAt, 0, ...missing.map(entryLine));
+    }
 
-      const added = missing.map(p =>
-        `- [${p.title}](${ORIGIN}/blog/${p.slug}): ${firstSentence(p.description)}`);
-      lines.splice(insertAt, 0, ...added);
-
-      writeIfChanged(llmsPath, lines.join('\n'), `llms.txt (+${missing.length} entries)`);
+    if (refreshed || missing.length) {
+      writeIfChanged(llmsPath, lines.join('\n'),
+        `llms.txt (${refreshed} refreshed, +${missing.length} entries)`);
     }
   }
 }

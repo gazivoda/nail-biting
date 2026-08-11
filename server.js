@@ -1199,10 +1199,10 @@ if (!existsSync(distPath)) {
   // redirect permanently and let the anchor do the scrolling.
   app.get('/faq', (_req, res) => res.redirect(301, '/#faq'));
 
-  // Pricing — dedicated crawler-readable page. The client renders the landing
-  // page here (App.tsx has no /pricing route), which contains the same pricing
-  // section, so crawler view and user view carry the same figures. Prices in
-  // the prose and the Offer schema below MUST match Landing.tsx exactly:
+  // Pricing — dedicated page. The client renders PricingPage.tsx here, which
+  // reuses the same PricingSection component as the landing page, so crawler
+  // view and user view carry the same figures. Prices in the prose and the
+  // Offer schema below MUST match PricingSection.tsx exactly:
   // $2.99/month, $29.00/year, 3-day free trial.
   app.get('/pricing', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);

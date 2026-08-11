@@ -148,10 +148,10 @@ export function BlogPost({ slug }: Props) {
             {/* Author byline — authority signal for AI crawlers */}
             <div className="flex items-center gap-3 py-4 border-t border-b border-stone-200 dark:border-ink-400">
               <div className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center shrink-0">
-                <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">SB</span>
+                <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">IG</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">Stop Biting Editorial Team</p>
+                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">Igor Gazivoda · Founder, Stop Biting</p>
                 <p className="text-xs text-stone-400 dark:text-stone-500">
                   Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
                   {post.dateModified !== post.datePublished && (
