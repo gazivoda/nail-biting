@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
   Code2, ChevronDown, Camera, Bell, BookOpen,
-  Star, ArrowRight, Check, Shield,
+  ArrowRight, Check,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DetectionWave } from '../components/DetectionWave';
 import { ContactForm } from '../components/ContactForm';
+import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
 // Pulled from the real post data so titles and reading times can't drift.
@@ -34,7 +35,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'What is habit reversal training for nail biting?',
-    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. Studies report 70–90% reductions in biting frequency among people who practise it consistently.',
+    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting.',
   },
   {
     q: 'Is nail biting harmful?',
@@ -49,34 +50,6 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. Frequency typically starts dropping meaningfully between weeks two and four, and the competing response starts feeling natural around weeks six to eight. Habit-formation research suggests a median of roughly two months for a new response to become automatic.',
   },
 ];
-
-// Activates scroll-reveal on all .reveal and .reveal-card elements
-function useScrollReveal() {
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      document.querySelectorAll('.reveal, .reveal-card').forEach(el => {
-        el.classList.add('revealed');
-      });
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
-    );
-
-    document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-}
 
 interface Props {}
 
@@ -375,7 +348,7 @@ export function Landing(_props: Props) {
             <article aria-labelledby="hrt-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
               <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">The approach that actually works</h2>
               <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. Studies consistently show 70–90% reductions in biting frequency. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
+                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. In the landmark clinical trial it cut biting episodes by roughly 99%, and a meta-analysis of 18 studies confirmed large effects. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
               </p>
 
               <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">How it works</h3>
@@ -415,12 +388,6 @@ export function Landing(_props: Props) {
                 Made by people who bite their nails too.
               </h2>
 
-              {/*
-                PERSONALIZE ME → Hands Off's most appealing element is a genuine founder note with a face.
-                To make this yours: replace the copy below with your real story, change the signature to your
-                name, and drop a photo in above the text, e.g.:
-                  <img src="/founder.jpg" alt="Founder" className="w-16 h-16 rounded-full mx-auto mt-6 object-cover" />
-              */}
               <div className="text-stone-500 dark:text-stone-400 text-sm sm:text-base leading-relaxed mt-6 space-y-4">
                 <p>
                   Every other tool we tried fought the symptom. Bitter polish makes your nails taste bad. Gloves
@@ -442,54 +409,51 @@ export function Landing(_props: Props) {
             </div>
           </section>
 
-          {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
-          <section aria-labelledby="testimonials-heading">
-            <h2 id="testimonials-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">What people are saying</h2>
+          {/* ── EVIDENCE (honest social proof — no invented testimonials) ─── */}
+          <section aria-labelledby="evidence-heading">
+            <h2 id="evidence-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Built on real habit science</h2>
 
             <div className="mt-8 space-y-4">
-              {/* Featured quote — full width, forest tint */}
-              <blockquote className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
-                <div className="flex gap-0.5 mb-4" aria-label="5 out of 5 stars">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
+              {/* Featured evidence card — full width, forest tint */}
+              <div className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
+                <div className="flex items-center gap-2 mb-4">
+                  <BookOpen size={14} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
+                  <p className="text-xs uppercase tracking-wider font-semibold text-forest-600 dark:text-forest-400">The evidence behind the method</p>
                 </div>
                 <p className="text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
-                  "I've tried bitter nail polish, gloves, everything. This is the only thing that actually caught me in the act. Three weeks clean."
+                  The method inside this app isn't ours — it's Habit Reversal Training, the best-studied behavioural
+                  treatment for nail biting. In the landmark clinical trial, habit reversal cut biting episodes by
+                  roughly 99% at five-month follow-up, and a meta-analysis of 18 studies confirmed large effects.
                 </p>
-                <footer className="mt-5">
-                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">Sarah K.</p>
-                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-0.5">Software engineer, 8-year nail biter</p>
+                <footer className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
+                    Azrin, Nunn &amp; Frantz (1980) — Behaviour Research and Therapy
+                  </a>
+                  <a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
+                    Bate et al. (2011) — Clinical Psychology Review meta-analysis
+                  </a>
                 </footer>
-              </blockquote>
+              </div>
 
-              {/* Two smaller quotes side by side */}
+              {/* Two smaller honesty cards side by side */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    quote: "The alarm is jarring at first. That's exactly the point. My brain finally made the connection between the urge and the action.",
-                    name: 'Marcus T.',
-                    context: 'Designer, broke the habit in 6 weeks',
-                  },
-                  {
-                    quote: "I bit during video calls without ever noticing. This caught me every single time. Two months in and the urge is genuinely fading.",
-                    name: 'Priya M.',
-                    context: 'Remote worker, 15-year habit',
-                  },
-                ].map(({ quote, name, context }, i) => (
-                  <blockquote
-                    key={name}
-                    className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
-                    style={{ transitionDelay: `${i * 80}ms` }}
-                  >
-                    <div className="flex gap-0.5 mb-3" aria-label="5 out of 5 stars">
-                      {[...Array(5)].map((_, j) => <Star key={j} size={11} className="text-amber-400 fill-amber-400" aria-hidden="true" />)}
-                    </div>
-                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">"{quote}"</p>
-                    <footer className="mt-4">
-                      <p className="text-stone-800 dark:text-stone-200 text-xs font-semibold">{name}</p>
-                      <p className="text-stone-400 dark:text-stone-500 text-xs">{context}</p>
-                    </footer>
-                  </blockquote>
-                ))}
+                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
+                  <ShieldCheck size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
+                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">No fake reviews here</p>
+                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
+                    We don't publish paid or invented testimonials. The free trial exists so the app can prove
+                    itself on your own biting data — usually within the first hour.
+                  </p>
+                </div>
+                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
+                  <Check size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
+                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">An app is not a clinician</p>
+                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
+                    For severe or distressing BFRBs, see a professional. The{' '}
+                    <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">TLC Foundation for Body-Focused Repetitive Behaviors</a>{' '}
+                    maintains a directory of BFRB-informed therapists.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -537,7 +501,7 @@ export function Landing(_props: Props) {
           <section aria-label="Key statistics" className="reveal flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
             {[
               { number: '20–30%', label: 'of adults bite their nails chronically' },
-              { number: '70–90%', label: 'fewer biting incidents after 6 weeks of awareness training' },
+              { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
               { number: '0 bytes', label: 'Of camera data sent to servers' },
             ].map(({ number, label }, i) => (
               <div key={label} className="flex items-center gap-8">
@@ -550,96 +514,11 @@ export function Landing(_props: Props) {
             ))}
           </section>
           <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
-            Biting reduction figures from clinical studies on habit reversal training. Camera privacy is architectural — there's no server to send data to.
+            Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), sustained at five-month follow-up. Camera privacy is architectural — there's no server to send data to.
           </p>
 
-          {/* ── PRICING ───────────────────────────────────────────────────── */}
-          <section id="pricing" aria-labelledby="pricing-heading">
-            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Pricing</p>
-            <h2 id="pricing-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Simple, honest pricing.</h2>
-            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2">Start with a 3-day free trial. No credit card required.</p>
-
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {/* Monthly */}
-              <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
-                    <Zap size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
-                    <p className="text-xs text-stone-400 dark:text-stone-500">Billed monthly</p>
-                  </div>
-                </div>
-                <div className="mb-5">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
-                  <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
-                </div>
-                <ul className="space-y-2.5 mb-7 flex-1">
-                  {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types'].map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                      <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="/api/auth/google"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5"
-                >
-                  Start free trial
-                </a>
-              </div>
-
-              {/* Yearly */}
-              <div className="reveal-card bg-white dark:bg-ink-50 border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-7 flex flex-col shadow-card-md relative hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm whitespace-nowrap">
-                    Best value — save 19%
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-800 flex items-center justify-center">
-                    <Star size={16} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-                    <p className="text-xs text-stone-400 dark:text-stone-500">Billed once a year</p>
-                  </div>
-                </div>
-                <div className="mb-1">
-                  <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-                  <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
-                </div>
-                <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just $2.42/month</p>
-                <ul className="space-y-2.5 mb-7 flex-1">
-                  {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                      <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="/api/auth/google"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"
-                >
-                  <Zap size={13} aria-hidden="true" />
-                  Start free trial
-                </a>
-              </div>
-            </div>
-
-            {/* Trust badges */}
-            <div className="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-stone-400 dark:text-stone-500">
-              <div className="flex items-center gap-1.5"><Shield size={11} aria-hidden="true" /><span>Secure payment via Paddle</span></div>
-              <div className="flex items-center gap-1.5"><Check size={11} aria-hidden="true" /><span>Cancel anytime</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>3-day free trial</span></div>
-              <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>No credit card required to start</span></div>
-            </div>
-          </section>
+          {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
+          <PricingSection />
 
           {/* ── FEATURED GUIDES ───────────────────────────────────────────── */}
           <section aria-labelledby="featured-guides-heading">

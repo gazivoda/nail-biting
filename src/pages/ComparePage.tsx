@@ -41,7 +41,7 @@ export function ComparePage({ path }: Props) {
   }
 
   const breadcrumbLabel = path.startsWith('/compare/') ? 'Compare' : 'Solutions';
-  const breadcrumbHref = path.startsWith('/compare/') ? '/compare/bitter-polish-alternative' : '/solutions/for-desk-workers';
+  const breadcrumbHref = path.startsWith('/compare/') ? '/compare/ai-detection-apps' : '/solutions/for-desk-workers';
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
@@ -132,6 +132,12 @@ export function ComparePage({ path }: Props) {
               {section.body.split('\n\n').map((para, i) => (
                 <p key={i} className="text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed mb-4">{para}</p>
               ))}
+              {section.html && (
+                <div
+                  className="mt-4 overflow-x-auto blog-html-block"
+                  dangerouslySetInnerHTML={{ __html: section.html }}
+                />
+              )}
             </section>
           ))}
         </article>

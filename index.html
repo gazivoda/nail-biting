@@ -52,22 +52,24 @@
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Stop Biting" />
 
+    <!-- Entity graph. Every node that represents *us* carries a stable @id so the
+         same entity is never re-declared as an unlinked duplicate:
+           #organization — the company (referenced by publisher/worksFor everywhere)
+           #website      — this site      #app — the product      #person — the founder
+         server.js reuses these exact @ids (SCHEMA_PUBLISHER / SCHEMA_AUTHOR / the
+         /pricing mainEntity reference), so a consumer merges every mention of an
+         entity into one node instead of seeing three lookalikes per page. -->
+
     <!-- Structured Data: WebSite -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": "https://stopbiting.today/#website",
       "name": "Stop Biting",
       "url": "https://stopbiting.today/",
       "description": "Stop nail biting with on-device AI detection. Real-time webcam monitoring, habit reversal training guidance, and streak tracking — 100% private.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://stopbiting.today/?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
+      "publisher": { "@id": "https://stopbiting.today/#organization" }
     }
     </script>
 
@@ -76,6 +78,7 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": "https://stopbiting.today/#organization",
       "name": "Stop Biting",
       "url": "https://stopbiting.today/",
       "logo": "https://stopbiting.today/icons/icon-512x512.png",
@@ -86,11 +89,14 @@
     }
     </script>
 
-    <!-- Structured Data: SoftwareApplication -->
+    <!-- Structured Data: SoftwareApplication — the single product node for the
+         whole site. /pricing REFERENCES this @id rather than declaring its own
+         copy, so the commercial page describes one product, not two. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
+      "@id": "https://stopbiting.today/#app",
       "name": "Stop Biting",
       "alternateName": ["Stop Nail Biting AI Tracker", "Nail Habit Tracker", "Onychophagia App"],
       "description": "Web and desktop app that uses your webcam and on-device AI (MediaPipe) to detect nail biting (onychophagia) in real-time. Sounds an alarm the moment your hand nears your mouth. Includes streak tracking, incident logging, habit reversal training guidance, and 7-day bite history. Zero data leaves your device.",
@@ -136,7 +142,8 @@
       "keywords": "stop nail biting, onychophagia, habit reversal training, nail biting remedies, nail biting treatment, compulsive habits, BFRB, body-focused repetitive behavior",
       "screenshot": "https://stopbiting.today/og-image.png",
       "softwareVersion": "1.1",
-      "releaseNotes": "PWA support added — install directly from browser"
+      "releaseNotes": "PWA support added — install directly from browser",
+      "publisher": { "@id": "https://stopbiting.today/#organization" }
     }
     </script>
 
@@ -167,7 +174,7 @@
           "name": "What is habit reversal training for nail biting?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. Studies report 70–90% reductions in biting frequency among people who practise it consistently."
+            "text": "Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting."
           }
         },
         {
@@ -215,7 +222,7 @@
         {
           "@type": "MedicalTherapy",
           "name": "Habit Reversal Training (HRT)",
-          "description": "Three-component CBT protocol (awareness training, competing response, social support) proven to reduce nail biting by 70–90% in consistent practitioners."
+          "description": "Three-component CBT protocol (awareness training, competing response, social support) shown in controlled trials to substantially reduce nail biting with consistent practice."
         },
         {
           "@type": "MedicalTherapy",

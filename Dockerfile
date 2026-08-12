@@ -13,6 +13,8 @@ RUN ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci
 # Copy only what vite needs to build the frontend
 COPY src ./src
 COPY public ./public
+# generate-seo-content.mjs runs at vite closeBundle — build fails without it
+COPY scripts ./scripts
 COPY index.html tsconfig.json tsconfig.app.json tsconfig.node.json ./
 COPY vite.config.ts tailwind.config.js postcss.config.js ./
 

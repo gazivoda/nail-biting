@@ -24,6 +24,7 @@ import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
 import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
+import { PricingPage } from './pages/PricingPage';
 import { ComparePage } from './pages/ComparePage';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
@@ -138,6 +139,11 @@ export default function App() {
   // How it works
   if (path === '/how-it-works') {
     return <HowItWorks />;
+  }
+
+  // Pricing
+  if (path === '/pricing') {
+    return <PricingPage />;
   }
 
   // Compare pages

@@ -145,7 +145,42 @@ html.dark {
   50%       { box-shadow: 0 0 0 6px oklch(55% 0.22 25 / 0.15); }
 }
 
-/* ── Blog HTML blocks (feature comparison tables, etc.) ─────────────────── */
+/* ── Blog HTML blocks (feature comparison tables, sources lists, etc.) ──── */
+
+.blog-html-block {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: oklch(40% 0.012 120);
+}
+
+html.dark .blog-html-block {
+  color: oklch(72% 0.012 120);
+}
+
+.blog-html-block a {
+  color: oklch(42% 0.14 148);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+html.dark .blog-html-block a {
+  color: oklch(62% 0.14 148);
+}
+
+.blog-html-block ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.blog-html-block li {
+  margin-bottom: 0.4rem;
+}
+
+.blog-html-block p + p,
+.blog-html-block ul + p {
+  margin-top: 0.75rem;
+}
 
 .blog-html-block table {
   width: 100%;
