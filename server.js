@@ -1218,6 +1218,7 @@ if (!existsSync(distPath)) {
       '@type': 'Person',
       name: 'Igor Gazivoda',
       url: 'https://stopbiting.today/about',
+      sameAs: ['https://github.com/gazivoda/nail-biting'],
       jobTitle: 'Founder',
       worksFor: { '@type': 'Organization', name: 'Stop Biting', url: 'https://stopbiting.today' },
       knowsAbout: ['nail biting', 'onychophagia', 'habit reversal training', 'MediaPipe', 'WebAssembly', 'on-device AI'],
