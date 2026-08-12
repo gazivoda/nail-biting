@@ -163,6 +163,9 @@
 - [How Accurate Is AI Nail Biting Detection? A Straight Answer](https://stopbiting.today/blog/nail-biting-detection-accuracy): What webcam-based nail biting detection can and cannot reliably catch, why false positives happen, and how the trade-off is actually tuned.
 - [Getting Your Camera Setup Right for Nail Biting Detection](https://stopbiting.today/blog/nail-biting-camera-setup): Detection quality depends more on lighting and camera angle than on hardware.
 - [Does Running Nail Biting Detection Slow Down Your Computer?](https://stopbiting.today/blog/nail-biting-app-battery-performance): Running AI detection all day raises fair questions about CPU load and battery life.
+- [How to Choose a Nail Biting Treatment: A Decision Framework](https://stopbiting.today/blog/how-to-choose-nail-biting-treatment): Rankings tell you what works on average.
+- [The 5 Biggest Mistakes People Make When Trying to Stop Nail Biting](https://stopbiting.today/blog/nail-biting-mistakes): Most failed attempts at stopping nail biting fail in the same five ways.
+- [Nail Biting at the Gym and During Sports: What Helps and What Backfires](https://stopbiting.today/blog/nail-biting-gym-sports): Almost nobody bites their nails mid-workout — the risk sits either side of it.
 
 ## Pricing
 
