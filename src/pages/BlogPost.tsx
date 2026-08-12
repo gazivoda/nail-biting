@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
+import { getRelated } from '../data/related';
 import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -31,18 +32,12 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-// Return up to 3 related posts: same tag first, then others, excluding current
-function getRelated(currentSlug: string, currentTag: string) {
-  const sameTag = BLOG_POSTS.filter(p => p.slug !== currentSlug && p.tag === currentTag);
-  const others  = BLOG_POSTS.filter(p => p.slug !== currentSlug && p.tag !== currentTag);
-  return [...sameTag, ...others].slice(0, 3);
-}
 
 export function BlogPost({ slug }: Props) {
   useTheme();
   const post = getPost(slug);
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
-  const related = post ? getRelated(slug, post.tag) : [];
+  const related = post ? getRelated(BLOG_POSTS, slug) : [];
 
   // Keep <title> and canonical current across client-side navigation.
   //

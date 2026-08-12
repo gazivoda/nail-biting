@@ -733,10 +733,17 @@ if (!existsSync(distPath)) {
       : `Published ${post.datePublished}`;
     // The `article-summary` class is a stable hook for the SpeakableSpecification
     // cssSelector in the JSON-LD (SCHEMA_SPEAKABLE below) — keep them in step.
+    // Mirrors the "Related articles" cards React renders, so crawlers that
+    // never run JS still see the same three links a visitor does — without
+    // them, every article is a dead end in the raw HTML.
+    const related = post.related?.length
+      ? `<section><h2>Related articles</h2><ul>${post.related.map(r =>
+          `<li><a href="/blog/${escapeHtml(r.slug)}">${escapeHtml(r.title)}</a></li>`).join('')}</ul></section>`
+      : '';
     return `<h1>${escapeHtml(post.title)}</h1>` +
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
       `<p class="article-summary">${escapeHtml(post.description)}</p>` +
-      renderSectionsHtml(post.sections);
+      renderSectionsHtml(post.sections) + related;
   }
 
   function compareArticleHtml(content) {

@@ -217,7 +217,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Tier 4: Limited evidence — Mindfulness and stress reduction',
         body: `Mindfulness-based approaches — meditation, breathing exercises, body scanning — reduce the anxiety that drives stress-triggered nail biting. Several small studies have found reductions in habit frequency following MBSR (Mindfulness-Based Stress Reduction) programmes, likely through reduced reactivity to the emotional triggers that initiate biting.\n\nHowever, mindfulness does not address the automaticity of the habit and provides no mechanism for interrupting biting in the moment. It is best conceptualised as an upstream intervention that reduces trigger frequency, complementary to but not substitutable for direct habit intervention. Those with anxiety-driven nail biting are the most likely to benefit from adding a mindfulness practice to their HRT protocol.`,
-        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+        html: `<p>Bitter polish is the remedy most people reach for first. <a href="/compare/bitter-polish-alternative">Alternatives to bitter nail polish</a> compares it against the options that outlast it.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
     ],
   },
@@ -363,7 +363,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Should I monitor my work sessions for nail biting frequency?',
         body: `Tracking bite frequency across work sessions provides data that is both therapeutically useful and often surprising. Most people who bite primarily during work estimate their daily frequency at 5–15 bites; systematic monitoring typically reveals 30–60+ biting events per session in chronic cases — most of which were entirely unconscious.\n\nThis data is valuable beyond its shock value: it allows identification of specific work types that trigger the most biting (meetings vs. solo coding vs. email vs. reading), time-of-day patterns, and correlation with workload intensity. With this data, targeted interventions can be deployed in the highest-risk contexts rather than attempting constant vigilance across all activities — a strategy that is both more effective and more sustainable over the weeks required for habit change.`,
-      },
+            html: `<p>Two related reads: our <a href="/solutions/for-desk-workers">guide for desk workers</a> for the setup side, and <a href="/blog/nail-biting-laptop-working-from-home">nail biting while working from home</a> for the day-to-day of it.</p>`,
+    },
     ],
   },
 
@@ -663,7 +664,8 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: 'Why bitter polish alone often fails for established habits',
         body: `For nail biters with established, automatic habits, bitter preparations frequently fail as a standalone treatment for a predictable reason: the behavior is executed below the threshold of conscious awareness, and the aversive taste arrives after the bite has already begun. The automatic habit chain — cue, hand movement, mouth contact, bite — is interrupted only at the last step. This late-stage interruption is less effective than early-stage interruption (catching the urge or the hand movement before mouth contact) because the habit routine has already been initiated.\n\nAdditionally, many nail biters habituate to the bitterness over time, particularly if they are consuming the substance repeatedly throughout the day. Rotating between products (using different bitter preparations on alternate weeks) partially addresses habituation but does not eliminate it. For established habits, bitter preparations are best understood as a supplementary tool rather than a primary intervention.`,
-      },
+            html: `<p>If bitter polish has already failed you, we wrote up <a href="/compare/bitter-polish-alternative">what to try instead of bitter polish</a> and why those approaches hold up better.</p>`,
+    },
     ],
   },
 
@@ -782,6 +784,7 @@ BLOG_POSTS.push({
     {
       heading: 'The part where we get slightly serious for one paragraph',
       body: `Nail biting at a laptop is funny to describe and genuinely frustrating to live with. If you have tried to stop — through bitter polish, through gloves, through sheer willpower — and found that nothing holds, you are not failing. You are running the wrong intervention on the right problem.\n\nThe right intervention works with the architecture of your habit rather than against it. Stop Biting is free to try for three days, requires no installation, and runs entirely on your device. If you're going to be in front of your laptop anyway, you might as well let it do something useful.`,
+          html: `<p>The full desk-based version of this, including what to do in meetings, is in our <a href="/solutions/for-desk-workers">guide for desk workers</a>.</p>`,
     },
   ],
 });
@@ -892,6 +895,7 @@ BLOG_POSTS.push({
     {
       heading: 'Frequently asked questions',
       body: `Are there any free apps to stop nail biting?\nStop Biting offers a free 3-day trial with full AI detection — no credit card required. After the trial it costs $2.99/month. General habit trackers (Habitica, Streaks) are free or low-cost but require manual logging and cannot detect biting automatically.\n\nDo nail biting apps actually work?\nApps using real-time passive detection work by solving the awareness gap — the core obstacle in nail biting cessation. Catching each episode at the moment it happens creates the conscious interruption needed for a competing response to fire. General habit trackers are effective for consciously-performed habits; they are structurally limited for automatic unconscious ones like nail biting.\n\nWhat is the fastest combination to reduce biting?\nFor screen-time biters: AI detection (Stop Biting) combined with a pre-selected competing response targets the awareness gap directly, which is the mechanism the HRT literature identifies as doing the heavy lifting. For biters who need 24/7 coverage, adding bitter polish for off-screen hours covers both contexts at under $15/month combined.`,
+          html: `<p>See also: <a href="/compare/habit-tracking-apps">habit tracking apps compared</a>, and <a href="/compare/ai-detection-apps">AI detection apps compared</a> if you want the camera-based options side by side.</p>`,
     },
   ],
 });
@@ -974,7 +978,7 @@ BLOG_POSTS.push({
     {
       heading: 'Practical starting point for ADHD nail biters',
       body: `If you have ADHD and have found standard nail biting advice unhelpful, here's a realistic starting approach. First, acknowledge that willpower isn't the problem — the issue is an awareness and inhibitory control gap that's neurological, not motivational. Second, choose a competing response that provides real sensory input: chewing gum and fidget rings have the best fit for most ADHD profiles. Third, prioritize external cuing over self-monitoring: an AI detection tool or even a wristband worn as a physical reminder is more reliable than trying to catch yourself consciously.\n\nExpect the timeline to be longer than the 4–8 weeks often cited in HRT literature — executive function differences make consistency harder, so give it 8–12 weeks before judging. Lapses don't mean failure; they mean the competing response isn't yet automatic enough. Each interrupted episode is neurological progress even when it doesn't feel like it.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, et al. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011.</a></li><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul><p><em>This article is general information, not medical advice. Questions about ADHD or its medication belong with your prescribing clinician.</em></p>`,
+      html: `<p>If you have ADHD and want the practical version of all this, we keep an <a href="/solutions/for-adhd">ADHD-specific guide to quitting nail biting</a> that covers the same ground as a plan rather than an explanation.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, et al. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011.</a></li><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul><p><em>This article is general information, not medical advice. Questions about ADHD or its medication belong with your prescribing clinician.</em></p>`,
     },
   ],
 });
@@ -1020,6 +1024,7 @@ BLOG_POSTS.push({
     {
       heading: 'When to consider professional support',
       body: `If nail biting is serving a strong sensory regulatory function and competing responses alone aren't providing adequate relief, it may indicate broader sensory processing differences that benefit from occupational therapy assessment. OTs specializing in sensory integration can provide a comprehensive sensory diet — a set of activities calibrated to your specific sensory needs throughout the day — that reduces the urgency of biting as a regulatory tool.\n\nFor people with ADHD or autism, treating the co-occurring condition concurrently with the habit typically produces better outcomes than addressing the habit in isolation. ADHD medication, sensory accommodation, or autism-informed therapy reduces the baseline regulatory demand that nail biting is compensating for, making competing responses more effective.`,
+          html: `<p>Where the biting is bound up with ADHD stimming, our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> goes further into working with the urge instead of suppressing it.</p>`,
     },
   ],
 });
@@ -1622,6 +1627,7 @@ BLOG_POSTS.push({
     {
       heading: 'Competing responses for gaming contexts',
       body: `The competing response — the behaviour that replaces the biting — needs to work while gaming. That means it cannot require taking hands off the controls for more than a second or two. Useful options include: pressing the non-dominant hand firmly against the desk or thigh for 30 seconds when an alarm fires; clenching the jaw briefly and then consciously relaxing it; or keeping a textured stress ball within reach of the non-dominant hand to grip when an urge arrives.\n\nThe competing response only needs to interrupt the chain long enough for the urge to pass — typically 20–60 seconds. Gaming continues around it. The goal isn't to stop gaming; it's to stop biting while gaming. Stop Biting runs in the background and handles the awareness component so you don't have to.`,
+          html: `<p>We collected the gaming-specific version of these tactics — controller grips, queue-time triggers, streaming setups — in our <a href="/solutions/for-gamers">guide for gamers</a>.</p>`,
     },
   ],
 });
@@ -1873,6 +1879,7 @@ BLOG_POSTS.push({
     {
       heading: 'When the numbers surprise you',
       body: `The most consistent report from people who begin systematic nail biting tracking is surprise at the actual frequency. Most people who haven't tracked estimate 5–15 biting episodes per day. Tracking consistently reveals 30–60 episodes in the first week for people who describe their habit as "moderate."\n\nThis discrepancy is not a failure of self-awareness — it's a feature of automatic habits. The episodes that don't reach consciousness don't register in self-report. Seeing the actual frequency number, particularly when it's significantly higher than expected, produces a qualitative shift in how the habit is understood. It stops feeling like occasional weakness and starts being understood as an automatic behaviour that requires specific systematic intervention. That reframing is often what makes people commit to the treatment rather than continuing with periodic unsuccessful willpower attempts.`,
+          html: `<p>If you would rather not log by hand, <a href="/compare/habit-tracking-apps">our comparison of habit tracking apps</a> covers which ones automate the counting.</p>`,
     },
   ],
 });
@@ -2434,6 +2441,7 @@ BLOG_POSTS.push({
     {
       heading: `Building sustainable habits before it's entrenched further`,
       body: `Because college is often when a mild, occasional habit intensifies into a more consistent, deeply grooved one, addressing it during these years — rather than waiting until after graduation when the pattern has had several more years to consolidate — has real long-term value. Students who establish even a basic awareness-and-competing-response routine during college, however imperfectly, tend to carry that skill forward into the more stable routines of post-college life, rather than starting from zero later on with a habit that's had additional years to deepen.`,
+          html: `<p>Studying is desk work with worse hours. Our <a href="/solutions/for-desk-workers">guide for desk workers</a> applies fairly directly.</p>`,
     },
   ],
 });
@@ -2572,6 +2580,7 @@ BLOG_POSTS.push({
         `Damaged nails that need to heal before other methods can work → a temporary physical barrier while addressing the underlying habit in parallel.`,
         `Long-established, severe habit → combine categories — an awareness tool plus a competing response plus, if needed, professional support — rather than expecting one product alone to be sufficient.`,
       ],
+          html: `<p>Two comparisons worth reading before you buy: <a href="/compare/bitter-polish-alternative">alternatives to bitter polish</a> and <a href="/compare/habit-tracking-apps">how habit tracking apps compare</a>.</p>`,
     },
   ],
 });
@@ -3739,6 +3748,7 @@ BLOG_POSTS.push({
     {
       heading: `Which is right for your situation`,
       body: `If your biting happens predominantly at a desk or in front of a screen — during work, studying, gaming — a webcam-based detection tool is likely to offer more precise, direct detection for the context where most of your episodes actually occur. If your biting happens across a broader range of contexts throughout the day, away from any single screen, a wrist-worn wearable's ability to monitor continuously regardless of location may be more valuable despite somewhat lower precision per detection. Some people find using both, matched to context, provides the most complete coverage — though this is a more involved and costly setup than most people need to get started.`,
+          html: `<p>If your biting happens mostly at a keyboard, a webcam already points at your hands — our <a href="/solutions/for-desk-workers">guide for desk workers</a> covers that setup.</p>`,
     },
   ],
 });
@@ -4519,7 +4529,8 @@ BLOG_POSTS.push(
       {
         heading: 'What to expect from the conversation',
         body: `Be prepared for the possibility that a general practitioner has not fielded this question often. Body-focused repetitive behaviours are common but under-discussed, and referral to someone familiar with them — often a psychiatrist or a psychologist specialising in this area — is a reasonable thing to ask for.\n\nIt also helps to arrive with data rather than impressions. A record of how often the behaviour occurs, in what contexts, and what you have already tried is considerably more useful to a clinician than "I bite my nails a lot." Frequency logs are exactly the sort of thing that turns a vague complaint into an assessable one — and gathering them accurately requires catching the episodes you currently miss, which is where automated detection earns its place regardless of what treatment you end up pursuing.`,
-      },
+            html: `<p>Medication rarely does this on its own. Our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> sets out what to pair it with day to day.</p>`,
+    },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -4684,7 +4695,8 @@ BLOG_POSTS.push(
       {
         heading: 'Turning the map into a plan',
         body: `The point of the exercise is targeting. Instead of trying to not bite your nails in general, which is a vague commitment across all sixteen waking hours, you get two or three specific contexts to address with specific arrangements.\n\nFor each high-frequency context, decide in advance what your hands will do there instead, and make it available before the context begins. A textured object kept in the car. A drink to hold during evening viewing. A rule about where your hands rest while reading.\n\nThen re-map after a month. Two things usually happen: the targeted contexts drop substantially, and a context you had not noticed rises up the list. That is not failure — it is what progress looks like in a habit that redistributes before it disappears.`,
-      },
+            html: `<p>Once the map is done, <a href="/compare/habit-tracking-apps">a habit tracking app</a> is the usual way to keep it current without the notebook.</p>`,
+    },
     ],
   },
 
@@ -5304,7 +5316,7 @@ BLOG_POSTS.push(
       {
         heading: 'Where exercise fits in an actual quit plan',
         body: `Used deliberately, training earns a place in a plan — as displacement and as regulation, not as treatment.\n\nDisplacement is the strong effect: an hour of exercise placed inside your highest-risk window is an hour in which biting is mechanically impossible. For evening biters, a post-work session removes prime biting time outright, which no awareness technique matches. Regulation is the modest effect: the small, real anxiety reduction, useful support for a tension-driven pattern.\n\nWhat exercise does not do is touch the mechanics of the habit. The automatic hand-to-mouth loop is intact and waiting in every other context, which is why the core of any serious attempt remains awareness plus a competing response. Worth stating our own limitation plainly here too: Stop Biting watches through a webcam at your computer, so it covers none of the territory in your gym bag. The two happen to divide the day neatly — detection for the desk hours where most focus-biting lives, training for a chunk of the rest.`,
-        html: `<p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> and <a href="/blog/nail-biting-30-day-plan">the 30-day plan</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25899389/" target="_blank" rel="noopener noreferrer">Ensari I, Greenlee TA, Motl RW, Petruzzello SJ. Meta-analysis of acute exercise effects on state anxiety: an update of randomized controlled trials over the past 25 years. Depress Anxiety. 2015;32(8):624–634.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
+        html: `<p>For biting that clusters around competitive play rather than training, see our <a href="/solutions/for-gamers">guide for gamers</a>.</p><p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> and <a href="/blog/nail-biting-30-day-plan">the 30-day plan</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25899389/" target="_blank" rel="noopener noreferrer">Ensari I, Greenlee TA, Motl RW, Petruzzello SJ. Meta-analysis of acute exercise effects on state anxiety: an update of randomized controlled trials over the past 25 years. Depress Anxiety. 2015;32(8):624–634.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
       },
     ],
   },

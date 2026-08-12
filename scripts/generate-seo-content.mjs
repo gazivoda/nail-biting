@@ -22,6 +22,9 @@ import { fileURLToPath } from 'node:url';
 // Node >= 22.18 strips TypeScript types on import, so the .ts files load directly.
 const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
 const { PAGE_MAP } = await import('../src/data/comparePages.ts');
+// Same function BlogPost.tsx renders from, so the crawler's "Related reading"
+// links are exactly the ones a visitor sees.
+const { getRelated } = await import('../src/data/related.ts');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -60,6 +63,7 @@ for (const p of BLOG_POSTS) {
     datePublished: p.datePublished,
     dateModified: p.dateModified,
     ...(p.ogImage ? { ogImage: p.ogImage } : {}),
+    related: getRelated(BLOG_POSTS, p.slug),
     sections: p.sections.map(s => ({
       heading: s.heading,
       body: s.body,
