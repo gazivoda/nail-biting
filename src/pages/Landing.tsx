@@ -1,16 +1,28 @@
+import { lazy, Suspense, useState } from 'react';
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
   Code2, ChevronDown, Camera, Bell, BookOpen,
-  ArrowRight, Check,
+  ArrowRight, Check, Loader2,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ThemeToggle } from '../components/ThemeToggle';
-import { DetectionWave } from '../components/DetectionWave';
 import { ContactForm } from '../components/ContactForm';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
+
+// The live demo pulls in MediaPipe — 125 KB of WebAssembly glue that the landing
+// page's critical path must never pay for. Lazy so it lands in its own chunk,
+// and mounted only from the visitor's click (see `demoStarted` below) so a page
+// view fetches nothing detection-related at all.
+const HeroDemo = lazy(() =>
+  import('../components/demo/HeroDemo').then(m => ({ default: m.HeroDemo })),
+);
+
+// Verbatim copy of HeroDemo's own loading line: the chunk fetch runs straight
+// into the model download, and the visitor should see one message, not two.
+const DEMO_LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
 
 // Pulled from the real post data so titles and reading times can't drift.
 const FEATURED_SLUGS = [
@@ -57,6 +69,10 @@ export function Landing(_props: Props) {
   useTheme();
   useScrollReveal();
 
+  // Stays false until the visitor asks for the demo — the lazy import is only
+  // ever triggered by this flag, which is what keeps MediaPipe off a page view.
+  const [demoStarted, setDemoStarted] = useState(false);
+
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
@@ -88,7 +104,7 @@ export function Landing(_props: Props) {
       <main>
         <section
           aria-label="Hero"
-          className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16 overflow-hidden"
+          className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16 pb-24 overflow-hidden"
           style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, oklch(92% 0.055 148 / 0.25) 0%, transparent 70%)' }}
         >
           {/* Floating ambient orbs */}
@@ -204,13 +220,65 @@ export function Landing(_props: Props) {
               ))}
             </div>
 
-            {/* Detection waveform animation */}
-            <div
-              className="animate-fade-up mt-10 w-full"
+            {/* ── LIVE DEMO ─────────────────────────────────────────────── */}
+            {/* Heading and paragraph render on page view — they are the
+                crawler-visible copy mirrored in server.js and must not be
+                hidden behind the click. Only the detector itself is deferred. */}
+            <section
+              id="live-demo"
+              aria-labelledby="live-demo-heading"
+              className="animate-fade-up mt-14 w-full max-w-xl mx-auto"
               style={{ animationDelay: '500ms' }}
             >
-              <DetectionWave />
-            </div>
+              <h2
+                id="live-demo-heading"
+                className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight"
+              >
+                Try the detector right now
+              </h2>
+              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">
+                Run the real nail biting detector on your own camera for 60 seconds — no
+                account, no signup. The AI models download once (about 20 MB) and then
+                everything runs on your device: open your browser's network panel and you'll
+                see zero requests while it is watching. Nothing is uploaded and nothing is
+                saved.
+              </p>
+
+              {/* Opaque backgrounds on purpose: the `ink`/`cream` scales are raw
+                  oklch() strings with no <alpha-value> placeholder, so Tailwind
+                  silently drops any `/opacity` variant of them. `bg-white/70`
+                  does generate, so a translucent pair here would leave the card
+                  white in dark mode. Matches the card style in CameraPanel. */}
+              <div className="mt-6 rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark p-5">
+                {demoStarted ? (
+                  <Suspense
+                    fallback={
+                      <p className="flex items-center justify-center gap-2 py-6 text-sm text-stone-500 dark:text-stone-400">
+                        <Loader2
+                          size={14}
+                          className="animate-spin text-forest-500 dark:text-forest-400 flex-shrink-0"
+                          aria-hidden="true"
+                        />
+                        {DEMO_LOADING_LABEL}
+                      </p>
+                    }
+                  >
+                    <HeroDemo autoStart />
+                  </Suspense>
+                ) : (
+                  <div className="flex justify-center py-2">
+                    <button
+                      type="button"
+                      onClick={() => setDemoStarted(true)}
+                      className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
+                    >
+                      <Camera size={15} aria-hidden="true" />
+                      Try the live demo
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
           </div>
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: '600ms' }}>

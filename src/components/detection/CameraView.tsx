@@ -1,10 +1,8 @@
 import { useCallback, useRef } from 'react';
 import { PictureInPicture2 } from 'lucide-react';
-import { DetectionWave } from '../DetectionWave';
 import { useDetection } from '../../hooks/useDetection';
 import { usePictureInPicture } from '../../hooks/usePictureInPicture';
-import { DetectionStatus } from './DetectionStatus';
-import { AlertOverlay } from './AlertOverlay';
+import { DetectionSurface } from './DetectionSurface';
 import { PiPWindow } from './PiPWindow';
 import { useAppStore } from '../../store/useAppStore';
 import type { DetectionSensitivity } from '../../types';
@@ -47,52 +45,19 @@ export function CameraView({ videoRef }: Props) {
   );
 
   const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
-  const isAlerting = status === 'alert';
   // When PiP is active the floating window already shows the feed — hide it in the main view
   const effectiveShowFeed = showCameraFeed && !pipActive;
 
   return (
     <>
-      <AlertOverlay visible={showFlash} />
-
-      <div
-        className={`relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
-          isAlerting
-            ? 'border-alert-400 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
-            : 'border-stone-800 dark:border-ink-400'
-        }`}
+      <DetectionSurface
+        videoRef={videoRef}
+        status={status}
+        cameraEnabled={cameraEnabled}
+        showFeed={effectiveShowFeed}
+        showFlash={showFlash}
+        onRetry={handleRetry}
       >
-        {/* Video element always present for MediaPipe, visibility toggled */}
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          className={`w-full aspect-video object-cover ${
-            !cameraEnabled ? 'hidden' : effectiveShowFeed ? 'block' : 'invisible absolute inset-0'
-          }`}
-          style={{ transform: 'scaleX(-1)' }}
-        />
-
-        {/* Hidden feed placeholder — detection is active, wave shows real events */}
-        {cameraEnabled && !effectiveShowFeed && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 px-6">
-            <DetectionWave detectionStatus={status} />
-          </div>
-        )}
-
-        {/* Offline / idle state — wave runs in demo mode */}
-        {!cameraEnabled && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-950 dark:bg-ink-300 px-6">
-            <DetectionWave />
-          </div>
-        )}
-
-        {/* Status badge */}
-        <div className="absolute bottom-3 left-3">
-          <DetectionStatus status={status} cameraEnabled={cameraEnabled} onRetry={handleRetry} />
-        </div>
-
         {/* PiP button — keeps detection alive when tab is minimized */}
         {cameraEnabled && pipSupported && (
           <button
@@ -108,7 +73,7 @@ export function CameraView({ videoRef }: Props) {
             {pipActive ? 'Exit PiP' : 'Minimize'}
           </button>
         )}
-      </div>
+      </DetectionSurface>
 
       {/* Document PiP content — custom UI rendered into the floating window */}
       {pipActive && pipWindow && (
