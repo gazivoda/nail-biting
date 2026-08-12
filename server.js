@@ -740,8 +740,13 @@ if (!existsSync(distPath)) {
       ? `<section><h2>Related articles</h2><ul>${post.related.map(r =>
           `<li><a href="/blog/${escapeHtml(r.slug)}">${escapeHtml(r.title)}</a></li>`).join('')}</ul></section>`
       : '';
+    // The byline is part of the crawler-visible meta line for the same reason
+    // the FAQ answers are in-flow: BlogPosting names a Person as `author`, and
+    // schema must not assert something the pre-JS page never shows. AUTHOR_BYLINE
+    // is the exact string BlogPost.tsx renders once React mounts.
     return `<h1>${escapeHtml(post.title)}</h1>` +
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
+      `<p>By ${escapeHtml(AUTHOR_BYLINE)}</p>` +
       `<p class="article-summary">${escapeHtml(post.description)}</p>` +
       renderSectionsHtml(post.sections) + related;
   }
@@ -757,8 +762,13 @@ if (!existsSync(distPath)) {
       ? `<section><h2>Related reading</h2><ul>${content.relatedPosts.map(r =>
           `<li><a href="${escapeHtml(r.href)}">${escapeHtml(r.label)}</a></li>`).join('')}</ul></section>`
       : '';
+    // Same contract as blogArticleHtml: these pages' Article schema names a
+    // Person author, so the byline is in the served HTML too. The intro carries
+    // `article-summary` — the hook SCHEMA_SPEAKABLE's cssSelector resolves against.
     return `<h1>${escapeHtml(content.title)}</h1>` +
-      `<p>${escapeHtml(content.subtitle)}</p><p>${escapeHtml(content.intro)}</p>${body}${related}`;
+      `<p>${escapeHtml(content.subtitle)}</p>` +
+      `<p>By ${escapeHtml(AUTHOR_BYLINE)}</p>` +
+      `<p class="article-summary">${escapeHtml(content.intro)}</p>${body}${related}`;
   }
 
   // The SPA shell contains no anchors, so the raw HTML of every page has zero
@@ -846,17 +856,36 @@ if (!existsSync(distPath)) {
   // schemas are injected server-side. The server copy is CANONICAL — the
   // client injects no BlogPosting/BreadcrumbList of its own (it used to, which
   // left two BlogPosting entities under one @id with different headlines).
+  //
+  // Entity @ids are shared with the shell blocks in index.html (#organization,
+  // #website, #app, #person). Nodes that repeat across pages carry the SAME @id,
+  // so a consumer merges them into one entity instead of collecting 153 unlinked
+  // lookalikes. The inline properties are kept alongside the @id (rather than
+  // collapsing author/publisher to a bare reference) because Google requires
+  // `author.name` and `publisher.name` on Article/BlogPosting — the @id adds
+  // identity without removing anything a rich result depends on.
+  const ORG_ID = 'https://stopbiting.today/#organization';
+  const PERSON_ID = 'https://stopbiting.today/#person';
+  const WEBSITE_ID = 'https://stopbiting.today/#website';
+  const APP_ID = 'https://stopbiting.today/#app';
   const SCHEMA_AUTHOR = {
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: 'Igor Gazivoda',
     url: 'https://stopbiting.today/about',
     jobTitle: 'Founder',
     // Same GitHub property the Organization schema in index.html links to.
     sameAs: ['https://github.com/gazivoda/nail-biting'],
     knowsAbout: ['onychophagia', 'nail biting', 'body-focused repetitive behaviors', 'habit reversal training', 'MediaPipe', 'on-device AI'],
+    worksFor: { '@id': ORG_ID },
   };
+  // Rendered byline for the crawler-visible article, verbatim the string
+  // BlogPost.tsx shows a visitor after hydration — so the Person the schema
+  // names is also the byline in the pre-JS HTML, on the same page.
+  const AUTHOR_BYLINE = `${SCHEMA_AUTHOR.name} · Founder, Stop Biting`;
   const SCHEMA_PUBLISHER = {
     '@type': 'Organization',
+    '@id': ORG_ID,
     name: 'Stop Biting',
     url: 'https://stopbiting.today',
     logo: { '@type': 'ImageObject', url: 'https://stopbiting.today/icons/icon-512x512.png' },
@@ -871,8 +900,9 @@ if (!existsSync(distPath)) {
   // read aloud / quote. The selectors MUST match elements in the raw served
   // HTML — they point at the server-rendered article (#ssr-page-content):
   // its <h1> and the standfirst paragraph, which carries the article-summary
-  // class in blogArticleHtml()/homeArticleHtml(). Only indexable content pages
-  // (homepage, blog posts) emit this — never legal/noindex pages.
+  // class in blogArticleHtml()/homeArticleHtml()/compareArticleHtml(). Only
+  // indexable content pages that actually ship that article emit it (homepage,
+  // blog posts, compare & solutions pages) — never legal/noindex pages.
   const SCHEMA_SPEAKABLE = {
     '@type': 'SpeakableSpecification',
     cssSelector: ['#ssr-page-content h1', '#ssr-page-content .article-summary'],
@@ -977,21 +1007,49 @@ if (!existsSync(distPath)) {
     return html.replace('</head>', `    ${schemas}\n  </head>`);
   }
 
-  // Read index.html once at startup (it's static after build)
+  // Read index.html once at startup (it's static after build).
+  //
+  // The shell in index.html carries schema blocks that are NOT true of every
+  // route, so three variants are derived from it and each route picks one:
+  //
+  //   indexHtmlWithFaq     FAQPage + MedicalCondition — the homepage only.
+  //   indexHtmlMedical     MedicalCondition, no FAQPage — pages whose subject is
+  //                        onychophagia as a clinical condition.
+  //   indexHtml            neither — the default shell for every other route.
+  //
+  // MedicalCondition scoping rule: a page may claim it only when the page is
+  // *about* the condition or its treatment. That is the homepage (which
+  // describes onychophagia and the HRT-based remedy in flow), /how-it-works
+  // (the clinical mechanism the product implements), and blog posts tagged
+  // Clinical / Health / Treatment. It is deliberately NOT emitted on the legal
+  // pages, /pricing, /about, /blog, or the compare & solutions pages: YMYL
+  // health markup on a refund policy or a gaming page is a topical mismatch,
+  // and asserting a medical entity on a commercial page is the sort of claim
+  // that gets structured data discounted wholesale.
   let indexHtml = null;
-  let indexHtmlWithFaq = null;  // homepage-only copy that retains the FAQPage schema
+  let indexHtmlWithFaq = null;
+  let indexHtmlMedical = null;
   const indexPath = join(distPath, 'index.html');
+  const stripSchemaBlock = (html, label) => html.replace(
+    new RegExp(`\\n\\n[ \\t]*<!-- Structured Data: ${label}[\\s\\S]*?<\\/script>`),
+    '',
+  );
   if (existsSync(indexPath)) {
     const raw = readFileSync(indexPath, 'utf-8');
     indexHtmlWithFaq = raw;
     // Strip the FAQPage schema block from the shared shell so it is only emitted
     // for the homepage (see app.get('/') below). All other routes use indexHtml
-    // and must not carry FAQPage structured data.
-    indexHtml = raw.replace(
-      /\n\n[ \t]*<!-- Structured Data: FAQPage -->[\s\S]*?<\/script>/,
-      '',
-    );
+    // or indexHtmlMedical and must not carry FAQPage structured data.
+    indexHtmlMedical = stripSchemaBlock(raw, 'FAQPage');
+    indexHtml = stripSchemaBlock(indexHtmlMedical, 'MedicalCondition');
+    if (indexHtml === indexHtmlMedical) {
+      console.error('WARNING: MedicalCondition schema block not found in index.html — it is now served on every route.');
+    }
   }
+  // Blog tags whose posts are about the condition/treatment itself. Anything
+  // else (Psychology, Technology, Productivity, Parenting, Humor, Comparison,
+  // Products, Science) gets the plain shell.
+  const MEDICAL_TAGS = new Set(['Clinical', 'Health', 'Treatment']);
 
   // HTML responses must not be cached: every route's HTML is assembled per
   // build (meta, schemas, article content), and a cached shell would keep
@@ -1067,7 +1125,8 @@ if (!existsSync(distPath)) {
       url: 'https://stopbiting.today/',
       name: 'Stop Nail Biting with AI | Stop Biting',
       description: homeDescription,
-      isPartOf: { '@type': 'WebSite', name: 'Stop Biting', url: 'https://stopbiting.today/' },
+      // Reference, not a re-declaration — the WebSite node ships in the shell.
+      isPartOf: { '@id': WEBSITE_ID },
       speakable: SCHEMA_SPEAKABLE,
     };
     injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n  </head>`);
@@ -1109,13 +1168,19 @@ if (!existsSync(distPath)) {
       // Content file failed to load — serve the shell and let React render the
       // post rather than 404ing all 140 real posts.
       if (!SEO_CONTENT_LOADED) return sendHtml(res, indexHtml, 200);
-      // Unknown slug — return 404 so Googlebot doesn't treat it as a soft-404 duplicate
-      return sendHtml(res, indexHtml, 404);
+      // Unknown slug — the branded 404 page, exactly like the catch-all below.
+      // Serving the SPA shell here returned a 404 status wrapped around a body
+      // that still said `robots: index, follow` and canonicalised to `/`: an
+      // error page asking to be indexed, and pointing its authority at the
+      // homepage. NOT_FOUND_HTML is noindex and declares no canonical at all.
+      return sendHtml(res, NOT_FOUND_HTML, 404);
     }
     const canonical = `https://stopbiting.today/blog/${slug}`;
     // Same title the client sets on mount: buildPageTitle(seoTitle ?? title).
     const metaTitle = post.seoTitle ?? post.title;
-    let injected = injectMeta(indexHtml, {
+    // MedicalCondition only for posts about the condition/treatment (MEDICAL_TAGS).
+    const shell = MEDICAL_TAGS.has(post.tag) ? indexHtmlMedical : indexHtml;
+    let injected = injectMeta(shell, {
       title: buildPageTitle(metaTitle),
       description: post.description,
       canonical,
@@ -1149,11 +1214,8 @@ if (!existsSync(distPath)) {
       name: 'Nail Biting Resources — Evidence-Based Guides',
       description: 'Research-backed articles on onychophagia, habit reversal training, and body-focused repetitive behaviors.',
       url: 'https://stopbiting.today/blog',
-      publisher: {
-        '@type': 'Organization',
-        name: 'Stop Biting',
-        url: 'https://stopbiting.today',
-      },
+      isPartOf: { '@id': WEBSITE_ID },
+      publisher: SCHEMA_PUBLISHER,
       hasPart: Object.entries(BLOG_POSTS).map(([slug, p]) => ({
         '@type': 'BlogPosting',
         headline: p.seoTitle ?? p.title,
@@ -1220,14 +1282,17 @@ if (!existsSync(distPath)) {
       description: 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.',
       canonical: 'https://stopbiting.today/about',
     });
+    // Same @id as SCHEMA_AUTHOR: the founder named on 152 articles and the
+    // founder described here are one node, not two people with one name.
     const personSchema = {
       '@context': 'https://schema.org',
       '@type': 'Person',
+      '@id': PERSON_ID,
       name: 'Igor Gazivoda',
       url: 'https://stopbiting.today/about',
       sameAs: ['https://github.com/gazivoda/nail-biting'],
       jobTitle: 'Founder',
-      worksFor: { '@type': 'Organization', name: 'Stop Biting', url: 'https://stopbiting.today' },
+      worksFor: { '@id': ORG_ID },
       knowsAbout: ['nail biting', 'onychophagia', 'habit reversal training', 'MediaPipe', 'WebAssembly', 'on-device AI'],
       description: 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
     };
@@ -1277,42 +1342,21 @@ if (!existsSync(distPath)) {
       description: 'Stop Biting pricing: 3-day free trial, no credit card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Unlimited AI detection, streak tracking, full incident history. Cancel anytime.',
       canonical: 'https://stopbiting.today/pricing',
     });
+    // This page used to declare its own SoftwareApplication with its own copy of
+    // the three Offers. The shell (index.html) already ships that entity on every
+    // route, so the money page described the product as two unlinked nodes — and
+    // the local copy was the poorer of the two (no billingIncrement). It now
+    // REFERENCES the shell node by @id: one SoftwareApplication on the page,
+    // whose offers ($0 trial / $2.99 monthly / $29.00 yearly) are the ones in
+    // index.html and match the prose below and PricingSection.tsx.
     const pricingSchema = {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
       description: 'Pricing for Stop Biting — 3-day free trial, then $2.99/month or $29/year.',
-      mainEntity: {
-        '@type': 'SoftwareApplication',
-        name: 'Stop Biting',
-        url: 'https://stopbiting.today/',
-        applicationCategory: 'HealthApplication',
-        operatingSystem: 'Web, macOS 12+, Windows 10+',
-        offers: [
-          {
-            '@type': 'Offer',
-            price: '0',
-            priceCurrency: 'USD',
-            name: 'Free trial',
-            description: '3-day free trial with full detection and tracking features — no credit card required',
-          },
-          {
-            '@type': 'Offer',
-            price: '2.99',
-            priceCurrency: 'USD',
-            name: 'Monthly',
-            description: 'Unlimited AI detection, streak and habit tracking, full incident history, all alert types. Billed monthly.',
-          },
-          {
-            '@type': 'Offer',
-            price: '29.00',
-            priceCurrency: 'USD',
-            name: 'Yearly',
-            description: 'Everything in Monthly plus priority support — about $2.42/month, saving 19%. Billed once a year.',
-          },
-        ],
-      },
+      isPartOf: { '@id': WEBSITE_ID },
+      mainEntity: { '@id': APP_ID },
     };
     const breadcrumb = breadcrumbSchema([
       ['Home', 'https://stopbiting.today/'],
@@ -1341,10 +1385,12 @@ if (!existsSync(distPath)) {
     sendHtml(res, injectNoscriptNav(injected));
   });
 
-  // How it works page
+  // How it works page. Uses the MedicalCondition shell: this page's subject is
+  // the clinical mechanism (the awareness component of Habit Reversal Training
+  // for onychophagia), so the condition entity is on-topic here.
   app.get('/how-it-works', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    let injected = injectMeta(indexHtml, {
+    let injected = injectMeta(indexHtmlMedical, {
       title: 'How AI Nail Biting Detection Works | Stop Biting',
       description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
       canonical: 'https://stopbiting.today/how-it-works',
@@ -1496,6 +1542,10 @@ if (!existsSync(distPath)) {
         inLanguage: 'en',
         isAccessibleForFree: true,
         image: SCHEMA_IMAGE,
+        // Only claimed when the SSR article is actually injected below — the
+        // selectors (#ssr-page-content h1 / .article-summary) resolve against
+        // compareArticleHtml()'s <h1> and its `article-summary` intro.
+        ...(content ? { speakable: SCHEMA_SPEAKABLE } : {}),
       };
       const breadcrumb = breadcrumbSchema([
         ['Home', 'https://stopbiting.today/'],
