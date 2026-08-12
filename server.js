@@ -1076,8 +1076,8 @@ if (!existsSync(distPath)) {
   }
 
   // Crawler-visible homepage summary. Keep the copy in step with Landing.tsx
-  // (hero, how-it-works, pricing) — the FAQ block is parsed from the FAQPage
-  // schema above and cannot drift.
+  // (hero, live demo, how-it-works, pricing) — the FAQ block is parsed from the
+  // FAQPage schema above and cannot drift.
   function homeArticleHtml() {
     const faqs = HOME_FAQS.map(f =>
       `<section><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></section>`).join('');
@@ -1086,6 +1086,11 @@ if (!existsSync(distPath)) {
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time. ' +
       'The moment your hand moves toward your mouth, an audible alarm fires — catching the automatic episodes ' +
       'you never notice. All detection runs locally via MediaPipe and WebAssembly: no camera data ever leaves your device.</p>' +
+      '<section><h2>Try the detector right now</h2>' +
+      '<p>Run the real nail biting detector on your own camera for 60 seconds — no account, no signup. ' +
+      'The AI models download once (about 20 MB) and then everything runs on your device: open your ' +
+      'browser\'s network panel and you\'ll see zero requests while it is watching. Nothing is uploaded ' +
+      'and nothing is saved.</p></section>' +
       '<section><h2>How it works</h2>' +
       '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
       'The AI tracks 21 hand landmarks and your face mesh at 30fps, entirely on-device. When it detects your hand ' +

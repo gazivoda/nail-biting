@@ -66,3 +66,31 @@ Audit composite 59/100 (GEO-AUDIT-REPORT.md). Every on-repo Critical/High issue 
 4. Off-site — the biggest remaining score lever (Brand 46/100): Product Hunt launch, AlternativeTo listing, expand Organization sameAs as profiles are created; confirm Google-Extended block is intentional (opts out of Gemini grounding)
 5. Content backlog: 76 meta descriptions >165 chars, 64 titles >60 chars (pre-existing, identical to live; `npm run seo:check` lists them)
 6. Reconcile local main (ahead 128 / behind 152 vs origin) — deliberately untouched by this loop
+
+## Live demo in the landing hero (2026-08-12, branch `live-demo` from origin/main f84ce38)
+
+Spec: `docs/superpowers/specs/2026-08-12-live-demo-design.md`. Built by 4 subagents in 2 waves.
+
+- [x] Extract `DetectionSurface` from `CameraView` (pure presentational split; PiP stays in CameraView)
+- [x] Add typed `CameraError` to `useCamera` (was swallowing every failure into console.error)
+- [x] Pure `demoSession.ts` reducer + 18 unit tests (60s clock, catches ignored outside `running`)
+- [x] `HeroDemo.tsx` — same useCamera/useDetection/createBiteDetector as the paid app
+- [x] Landing hero wiring, lazy-mounted on click (replaces decorative DetectionWave)
+- [x] SSR parity in `server.js` + `featureList` entry in `index.html`
+
+Verified: tsc 0, 71/71 tests, build 0, SSR↔client copy byte-exact (302 chars, U+2014 + U+0027
+on both sides), entry chunk has 0 MediaPipe refs, browser confirms zero mediapipe/wasm/.task
+requests on page view, HeroDemo never touches useAppStore or localStorage.
+
+Fixed during verification: demo card rendered light-grey in dark mode. Root cause is
+pre-existing and site-wide — the `ink`/`cream`/`forest` scales are raw `oklch()` strings with
+no `<alpha-value>` placeholder, so Tailwind silently drops EVERY `bg-{custom}/{opacity}` class
+(`bg-ink-100/90`, `bg-cream-100/90`, `bg-forest-900/20` all generate nothing). Only bit us
+because `bg-white/70` does generate and so won with no dark override. Card switched to the
+opaque `bg-white dark:bg-ink-50` pair. **The site-wide issue is untouched and still latent.**
+
+### Not verified / needs a human
+- End-to-end detection in the demo (needs a real camera and a face) — logic is the shipping
+  detector, but nobody has watched it fire from the landing page.
+- Light mode on the demo card (theme toggle would not respond to automated clicks; the class
+  pair is the one `CameraPanel` already ships).
