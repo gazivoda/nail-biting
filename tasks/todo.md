@@ -166,3 +166,37 @@ Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/1
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/160 URLs 200 ·
 820 JSON-LD nodes, 0 parse failures · MedicalCondition still correctly scoped to 15/160.
+
+### Iteration 3 — E-E-A-T surface, citability, and three false exclusivity claims (4 subagents)
+- [x] **Editorial policy + author surface** (L4 H7, the largest remaining repo-fixable gap): new
+      `/editorial-policy` page, author box on 153 pages, byline now links to `/about`,
+      `<meta name="author">` "Stop Biting" → "Igor Gazivoda" (161/161, now derived from
+      `SCHEMA_AUTHOR.name` so meta/JSON-LD/visible byline cannot drift).
+      The policy documents ONLY practices the repo actually follows — each sentence traced to
+      evidence (the fact-check log, disclaimer coverage, the soften-or-delete rule, the
+      visible-text freshness fingerprint). It states plainly that Igor is a software developer,
+      not a clinician, and that nothing here is medically reviewed. No editorial board, reviewer,
+      cadence or credential was invented.
+- [x] **FAQ answer blocks**: FAQPage 2 → 12 pages, 39 new Q&A pairs, built by reading the `<h3>Q</h3>
+      <p>A</p>` pairs out of the served markup — no hardcoded question text, and a malformed pair is
+      dropped rather than half-marked. Byte-identity verified by an independent HTML parser: 12 pages,
+      0 mismatches. `/pricing` gained a question-form heading + direct answer from its real prices.
+- [x] **Citability**: 10 audit-named posts rewritten to answer their own title question in ≤40 words,
+      plus the corpus lever applied to 22 more. Posts whose FIRST H2 is a question: **30 → 62 of 143**.
+      Zero new factual claims (machine-verified: 0 figures lost, 0 figures added, citation counts
+      unchanged). 47 statement headings → questions across the 9 compare/solutions pages.
+- [x] **Three false exclusivity claims found and fixed** — all understated competitors or overstated us:
+      1. `/compare/bitter-polish-alternative`: "the only app that detects nail biting in real time"
+         — contradicted our own `/compare/ai-detection-apps` ("four products now watch…")
+      2. `best-apps-to-stop-nail-biting`: "the only dedicated AI detection tool for nail biting"
+      3. **`Landing.tsx` hero**: HRT is "the only approach with real clinical evidence behind it" —
+         false by the site's own citations (it cites an NAC RCT and a controlled bitter-polish trial)
+      Six further "only…" claims were checked and left: each is scoped, true, and one of them
+      actually credits a competitor.
+- [x] **Honest `dateModified`**: bumped 31 of the 32 rewritten posts. The 32nd
+      (`nail-biting-medication`) was excluded — its body text is byte-identical to HEAD, only a
+      heading changed. `readingMinutes` recomputed on 4 posts using the rule the corpus itself
+      encodes (reproduces 95 of 111 untouched posts exactly); 4 raised, none lowered, none overstating.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+0 JSON-LD parse failures · MedicalCondition still correctly scoped to 15.

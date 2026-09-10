@@ -32,7 +32,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-health-risks",
@@ -140,7 +140,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-adults-why-persists",
@@ -158,7 +158,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-04-07",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-during-sleep",
@@ -212,7 +212,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 7,
     datePublished: "2026-04-19",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
@@ -248,7 +248,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-hypnosis",
@@ -257,7 +257,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nac-nail-biting",
@@ -275,7 +275,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-04-21",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-pregnancy",
@@ -320,7 +320,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-04-23",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-cure",
@@ -383,7 +383,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-30-day-plan",
@@ -392,7 +392,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-09-10",
   },
   {
     slug: "stop-biting-app-review",
@@ -426,9 +426,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Fidget Toys for Nail Biting: Which Competing Responses Actually Work",
     description: "Fidget toys are popular competing responses for nail biting — but most don't work. Here's which ones do, which don't, and why the match matters.",
     tag: "Treatment",
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-05-12",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-interview-anxiety",
@@ -473,7 +473,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "onychophagia",
@@ -536,7 +536,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "bfrb-guide",
@@ -590,7 +590,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-after-quitting-smoking",
@@ -599,16 +599,16 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-reddit",
     title: "What Actually Worked for People Who Quit Nail Biting, According to Online Communities",
     description: "Online communities are full of nail biting advice, but not all of it holds up. Which commonly repeated tips align with the research — and which don't.",
     tag: "Treatment",
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-gut-health",
@@ -617,7 +617,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "products-to-stop-nail-biting",
@@ -626,7 +626,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-thumb-sucking",
@@ -680,7 +680,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-cuticle-damage",
@@ -689,7 +689,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-cost",
@@ -716,7 +716,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-public-speaking",
@@ -795,9 +795,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Can Press-On Nails Stop Nail Biting? A Practical Look",
     description: "Press-on nails are a cheap, temporary alternative to acrylics for deterring nail biting. This article covers how they compare and whether they actually work.",
     tag: "Treatment",
-    readingMinutes: 2,
+    readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "how-to-help-someone-who-bites-their-nails",
@@ -824,7 +824,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-women",
@@ -887,7 +887,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-magnesium",
@@ -896,7 +896,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-panic-disorder",
@@ -986,7 +986,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-dry-skin-winter",
@@ -1112,7 +1112,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-dermatophagia",
@@ -1164,9 +1164,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Trigger Mapping: Find Out When You Actually Bite Your Nails",
     description: "Most people are wrong about when they bite their nails. A two-week trigger map replaces guesswork with data and makes every other intervention more effective.",
     tag: "Treatment",
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-habit-stacking",
@@ -1202,7 +1202,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-finger-tape",
@@ -1220,7 +1220,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-punishing-children",
@@ -1256,7 +1256,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-10",
   },
   {
     slug: "nail-biting-camera-setup",

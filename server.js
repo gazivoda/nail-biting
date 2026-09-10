@@ -680,6 +680,16 @@ if (!existsSync(distPath)) {
   function pageLastmod(path) {
     return PAGE_UPDATES[path]?.lastmod ?? null;
   }
+  // { name, role, bio } — the author box under every article, and
+  // { title, lastUpdated, standfirst, sections } — the /editorial-policy body.
+  // Both come from src/data/editorialPolicy.ts through seo-content.json, the
+  // same module the React pages import, so the crawler copy and the rendered
+  // copy are one string. Absent on an old build artifact: the author box is
+  // then omitted rather than invented, and /editorial-policy falls back to the
+  // SPA shell (React still has the module).
+  const AUTHOR_BIO = SEO_CONTENT.authorBio ?? null;
+  const EDITORIAL_POLICY = SEO_CONTENT.editorialPolicy ?? null;
+  const EDITORIAL_POLICY_PATH = '/editorial-policy';
 
   // Helper: escape HTML entities for safe server-side content injection.
   function escapeHtml(str) {
@@ -751,13 +761,13 @@ if (!existsSync(distPath)) {
       : '';
     // The byline is part of the crawler-visible meta line for the same reason
     // the FAQ answers are in-flow: BlogPosting names a Person as `author`, and
-    // schema must not assert something the pre-JS page never shows. AUTHOR_BYLINE
-    // is the exact string BlogPost.tsx renders once React mounts.
+    // schema must not assert something the pre-JS page never shows. bylineHtml()
+    // renders the exact string BlogPost.tsx shows once React mounts.
     return `<h1>${escapeHtml(post.title)}</h1>` +
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
-      `<p>By ${escapeHtml(AUTHOR_BYLINE)}</p>` +
+      bylineHtml() +
       `<p class="article-summary">${escapeHtml(post.description)}</p>` +
-      renderSectionsHtml(post.sections) + related;
+      renderSectionsHtml(post.sections) + related + authorBoxHtml();
   }
 
   function compareArticleHtml(content) {
@@ -776,8 +786,39 @@ if (!existsSync(distPath)) {
     // `article-summary` — the hook SCHEMA_SPEAKABLE's cssSelector resolves against.
     return `<h1>${escapeHtml(content.title)}</h1>` +
       `<p>${escapeHtml(content.subtitle)}</p>` +
-      `<p>By ${escapeHtml(AUTHOR_BYLINE)}</p>` +
-      `<p class="article-summary">${escapeHtml(content.intro)}</p>${body}${related}`;
+      bylineHtml() +
+      `<p class="article-summary">${escapeHtml(content.intro)}</p>${body}${related}` +
+      authorBoxHtml();
+  }
+
+  // ── Author surface (E-E-A-T) ───────────────────────────────────────────────
+  // The byline used to be inert text. It now links to the founder's story —
+  // the same URL SCHEMA_AUTHOR already publishes as the Person's `url`, so the
+  // named author, the schema and the page a reader can click all resolve to
+  // one person. The VISIBLE TEXT is unchanged — "By Igor Gazivoda · Founder,
+  // Stop Biting", the same string as before and the same one BlogPost.tsx
+  // renders: this adds an anchor, not a word.
+  function bylineHtml() {
+    return `<p>By <a href="/about">${escapeHtml(SCHEMA_AUTHOR.name)}</a> · ${escapeHtml(AUTHOR_ROLE)}</p>`;
+  }
+
+  // Author box, at the end of every article and comparison page. States what
+  // the author actually is — a developer who bit his nails for 20 years, not a
+  // clinician — and links to the founder's story and to the editorial policy.
+  // Copy lives in src/data/editorialPolicy.ts, which BlogPost.tsx and
+  // ComparePage.tsx render from too, so the two views cannot drift.
+  //
+  // Nothing is fabricated here when the content file is missing: the box is
+  // omitted entirely rather than falling back to invented credentials.
+  function authorBoxHtml({ policyLink = true } = {}) {
+    if (!AUTHOR_BIO) return '';
+    const links = policyLink
+      ? '<p><a href="/about">More about Igor and why he built this</a> · '
+        + `<a href="${EDITORIAL_POLICY_PATH}">Editorial policy and corrections</a></p>`
+      : '<p><a href="/about">More about Igor and why he built this</a></p>';
+    return '<footer class="author-box"><h2>About the author</h2>' +
+      `<p><a href="/about">${escapeHtml(AUTHOR_BIO.name)}</a> — ${escapeHtml(AUTHOR_BIO.role)}. ${escapeHtml(AUTHOR_BIO.bio)}</p>` +
+      `${links}</footer>`;
   }
 
   // The SPA shell contains no anchors, so the raw HTML of every page has zero
@@ -805,6 +846,7 @@ if (!existsSync(distPath)) {
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
+    ['/editorial-policy', 'Editorial policy and corrections'],
     ['/privacy', 'Privacy policy'],
     ['/terms-and-conditions', 'Terms of service'],
     ['/refund-policy', 'Refund policy'],
@@ -848,7 +890,14 @@ if (!existsSync(distPath)) {
       .replace(/<meta property="og:description" content="[^"]*"/, () => `<meta property="og:description" content="${d}"`)
       .replace(/<meta property="og:url" content="[^"]*"/, () => `<meta property="og:url" content="${c}"`)
       .replace(/<meta name="twitter:title" content="[^"]*"/, () => `<meta name="twitter:title" content="${t}"`)
-      .replace(/<meta name="twitter:description" content="[^"]*"/, () => `<meta name="twitter:description" content="${d}"`);
+      .replace(/<meta name="twitter:description" content="[^"]*"/, () => `<meta name="twitter:description" content="${d}"`)
+      // The shell ships `author` = "Stop Biting" — the organisation — while the
+      // JSON-LD `author` on every article, and the visible byline beside it,
+      // name a Person. Three declarations of authorship, one of them a
+      // different kind of entity from the other two. It is rewritten here from
+      // SCHEMA_AUTHOR.name rather than hardcoded in index.html so the meta tag,
+      // the schema and the byline read from one string and cannot drift apart.
+      .replace(/<meta name="author" content="[^"]*"/, () => `<meta name="author" content="${escapeHtml(SCHEMA_AUTHOR.name)}"`);
     // Per-page OG image (absolute URL). When absent, the shell's shared
     // /og-image.png tags pass through untouched.
     if (ogImage) {
@@ -902,10 +951,11 @@ if (!existsSync(distPath)) {
     knowsAbout: PERSON_KNOWS_ABOUT,
     worksFor: { '@id': ORG_ID },
   };
-  // Rendered byline for the crawler-visible article, verbatim the string
-  // BlogPost.tsx shows a visitor after hydration — so the Person the schema
-  // names is also the byline in the pre-JS HTML, on the same page.
-  const AUTHOR_BYLINE = `${SCHEMA_AUTHOR.name} · Founder, Stop Biting`;
+  // Rendered byline for the crawler-visible article, verbatim what BlogPost.tsx
+  // shows a visitor after hydration — so the Person the schema names is also the
+  // byline in the pre-JS HTML, on the same page. See bylineHtml() above; the
+  // visible text is `${SCHEMA_AUTHOR.name} · ${AUTHOR_ROLE}` on both sides.
+  const AUTHOR_ROLE = 'Founder, Stop Biting';
   // MUST stay byte-identical in `url` and `logo` to the Organization block in
   // index.html: both declare @id …/#organization, so a consumer merges them.
   // They used to disagree — `https://stopbiting.today` here vs the shell's
@@ -965,6 +1015,93 @@ if (!existsSync(distPath)) {
       '@type': 'BreadcrumbList',
       itemListElement: trail.map(([name, item], i) =>
         ({ '@type': 'ListItem', position: i + 1, name, item })),
+    };
+  }
+
+  // ── FAQ answer blocks ──────────────────────────────────────────────────────
+  // Question-headed Q&A is the unit AI answer engines extract, and FAQPage is
+  // how they are told where it is. The hard rule, learned expensively: mark up
+  // ONLY pairs that genuinely render, with the answer text byte-identical to
+  // the visible answer. An earlier homepage FAQPage declared six Q&As of which
+  // one was on the page.
+  //
+  // Nothing below hardcodes a question. The pairs are read out of the very
+  // markup the route serves, so schema and page share one source by
+  // construction, and a page with no FAQ section simply gets no FAQPage.
+  const FAQ_HEADING = /\b(faq|frequently asked|common questions)\b/i;
+  const HTML_ENTITIES = {
+    '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': '\'', '&nbsp;': ' ',
+  };
+  // The text an element shows a reader: tags dropped, entities decoded. One
+  // pass, so a decoded `&` is never rescanned into a second entity.
+  function elementText(html) {
+    return html
+      .replace(/<[^>]*>/g, '')
+      .replace(/&amp;|&lt;|&gt;|&quot;|&#39;|&nbsp;/g, m => HTML_ENTITIES[m])
+      .trim();
+  }
+
+  // Every `<h3>question</h3><p>answer</p>` pair in a block of authored markup.
+  //
+  // A pair is emitted only when EVERYTHING between one question and the next is
+  // a paragraph. If a list, a table or any other element sits in between, the
+  // visible answer is not the text of those paragraphs, so the pair is dropped
+  // rather than described by a partial answer.
+  function faqPairsFromHtml(html) {
+    const pairs = [];
+    const chunks = html.split(/<h3\b[^>]*>/i);
+    // chunks[0] precedes the first question and belongs to no answer.
+    for (let i = 1; i < chunks.length; i++) {
+      const close = chunks[i].indexOf('</h3>');
+      if (close < 0) continue;
+      const q = elementText(chunks[i].slice(0, close));
+      const rest = chunks[i].slice(close + '</h3>'.length);
+      const paragraph = /\s*<p\b[^>]*>([\s\S]*?)<\/p>\s*/gi;
+      const answers = [];
+      let consumed = 0;
+      let m;
+      while ((m = paragraph.exec(rest)) !== null) {
+        if (m.index !== consumed) break;   // something that is not a <p> intervened
+        answers.push(elementText(m[1]));
+        consumed = paragraph.lastIndex;
+      }
+      if (consumed !== rest.length || !answers.length || !q) continue;
+      pairs.push({ q, a: answers.join(' ') });
+    }
+    return pairs;
+  }
+
+  // The one FAQ-headed section of a compare/solutions page, if it has one.
+  // Matched on the section's own visible heading, never on a path or a title,
+  // so a page that gains or loses an FAQ needs no change here.
+  function visibleFaqSection(content) {
+    for (const s of content?.sections ?? []) {
+      if (!s.html || !FAQ_HEADING.test(s.heading ?? '')) continue;
+      const pairs = faqPairsFromHtml(s.html);
+      if (pairs.length) return { heading: s.heading, pairs };
+    }
+    return null;
+  }
+
+  // FAQPage node for a page whose primary entity is something else (an Article,
+  // or the pricing WebPage). It takes a `#faq` fragment @id rather than the
+  // canonical: the canonical already identifies that other entity, and two
+  // different types under one @id is exactly the entity collision iteration 2
+  // spent its time merging away.
+  function faqPageSchema(canonical, name, faqs) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      url: canonical,
+      name,
+      isPartOf: { '@id': WEBSITE_ID },
+      publisher: { '@id': ORG_ID },
+      mainEntity: faqs.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
     };
   }
 
@@ -1529,8 +1666,72 @@ if (!existsSync(distPath)) {
       '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which tracks 21 hand landmarks in real time at 30fps. ' +
       'Mouth proximity detection compares hand landmark coordinates to facial landmark coordinates in each frame. ' +
       'The desktop apps (macOS and Windows) are Electron wrappers around the same web app with system-tray background running. ' +
-      'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>');
+      'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>' +
+      '<section><h2>How this site is written</h2>' +
+      '<p>Every article, guide and comparison here is written by me. I&#39;m a developer, not a clinician, and the ' +
+      '<a href="/editorial-policy">editorial policy and corrections page</a> says exactly what that means for what you read: ' +
+      'how claims are sourced, how anything I say about a competing product is checked, and how to tell me when ' +
+      'something on this site is wrong.</p></section>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/about'));
+  });
+
+  // ── Editorial policy and corrections ───────────────────────────────────────
+  // A named author with no published standards is half an authority signal.
+  // This page carries the other half, and it is deliberately short: it states
+  // only practices this repository actually follows. There is no editorial
+  // board, no medical reviewer, no staff and no review cadence, so none is
+  // claimed — see the evidence map at the top of src/data/editorialPolicy.ts,
+  // which is where the copy lives and which EditorialPolicyPage.tsx renders
+  // for visitors from the same strings.
+  app.get(EDITORIAL_POLICY_PATH, (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    // No content file (or one built before this page existed): serve the shell
+    // and let React render it from the module rather than ship a blank page.
+    if (!EDITORIAL_POLICY) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const canonical = `https://stopbiting.today${EDITORIAL_POLICY_PATH}`;
+    const description = 'Who writes Stop Biting’s articles, why he is not a clinician, how claims and competitor '
+      + 'comparisons are sourced and verified, and how to report a mistake.';
+    let injected = injectMeta(indexHtml, {
+      title: 'Editorial Policy and Corrections | Stop Biting',
+      description,
+      canonical,
+    });
+    // The page describes the Person who writes the site, so it points at the
+    // existing #person node rather than declaring a second one.
+    const policyPage = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': canonical,
+      url: canonical,
+      name: EDITORIAL_POLICY.title,
+      description,
+      isPartOf: { '@id': WEBSITE_ID },
+      about: { '@id': PERSON_ID },
+      publisher: { '@id': ORG_ID },
+      // Selectors resolve against the <h1> and the `article-summary`
+      // standfirst in the article injected below.
+      speakable: SCHEMA_SPEAKABLE,
+      ...(pageLastmod(EDITORIAL_POLICY_PATH) ? { dateModified: pageLastmod(EDITORIAL_POLICY_PATH) } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      [EDITORIAL_POLICY.title, canonical],
+    ]);
+    injected = injected.replace('</head>', `    ${schemaTag(policyPage)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    // Same shape LegalPage.tsx renders the sections in: a string is a
+    // paragraph, an array is a list.
+    const sections = EDITORIAL_POLICY.sections.map(s => {
+      const content = Array.isArray(s.content)
+        ? `<ul>${s.content.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+        : `<p>${escapeHtml(s.content)}</p>`;
+      return `<section><h2>${escapeHtml(s.heading)}</h2>${content}</section>`;
+    }).join('');
+    injected = injectSsrArticle(injected,
+      `<h1>${escapeHtml(EDITORIAL_POLICY.title)}</h1>` +
+      `<p>Last updated: ${escapeHtml(EDITORIAL_POLICY.lastUpdated)}</p>` +
+      `<p class="article-summary">${escapeHtml(EDITORIAL_POLICY.standfirst)}</p>` +
+      sections + authorBoxHtml({ policyLink: false }));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(EDITORIAL_POLICY_PATH));
   });
 
   // /faq has no client-side route and its content lives on the homepage —
@@ -1542,6 +1743,31 @@ if (!existsSync(distPath)) {
   // view and user view carry the same figures. Prices in the prose and the
   // Offer schema below MUST match PricingSection.tsx exactly:
   // $2.99/month, $29.00/year, 3-day free trial.
+  // The two questions an AI engine actually resolves against a pricing page,
+  // answered directly and in the page's own first section. Every figure here is
+  // already on the page and in PricingSection.tsx — $2.99/month, $29.00/year,
+  // $2.42/month equivalent, 19% saving, 3-day trial, no credit card. Nothing is
+  // introduced; the page simply never stated it in the shape of an answer, so
+  // "how much does Stop Biting cost" had no extractable passage to lift.
+  //
+  // One source for the visible <h2>/<p> pairs AND for the FAQPage below, the
+  // same contract HOME_FAQS and HOW_IT_WORKS_FAQS enforce: the answer a machine
+  // reads is by construction the answer a reader sees.
+  const PRICING_FAQS = [
+    {
+      q: 'How much does Stop Biting cost?',
+      a: 'Stop Biting costs $2.99 per month, or $29.00 per year — about $2.42 a month, 19% less than paying monthly. '
+        + 'Both plans include unlimited AI detection, streak tracking and full incident history. Every account starts '
+        + 'with a 3-day free trial that needs no credit card, and you can cancel at any time.',
+    },
+    {
+      q: 'Is there a free version of Stop Biting?',
+      a: 'There is no permanently free plan. Every new account gets a 3-day free trial with the full detector, streak '
+        + 'tracking and incident history, and it does not ask for a credit card. After the trial you keep using the app '
+        + 'by choosing the $2.99 monthly or the $29.00 yearly plan.',
+    },
+  ];
+
   app.get('/pricing', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
@@ -1577,10 +1803,19 @@ if (!existsSync(distPath)) {
       ['Home', 'https://stopbiting.today/'],
       ['Pricing', 'https://stopbiting.today/pricing'],
     ]);
-    injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    // FAQPage as its own `#faq` node: pricingSchema is the page's WebPage and
+    // its `mainEntity` is already the SoftwareApplication, so the Q&A cannot
+    // hang off it without displacing the product.
+    const pricingFaq = faqPageSchema(
+      'https://stopbiting.today/pricing', 'Stop Biting pricing questions', PRICING_FAQS);
+    injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(pricingFaq)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
       '<h1>Stop Biting Pricing</h1>' +
       '<p class="article-summary">Simple, honest pricing. Start with a 3-day free trial — no credit card required.</p>' +
+      // Answer target first: the question verbatim as a heading, then the
+      // answer in one self-contained paragraph, before any plan detail.
+      PRICING_FAQS.map(f =>
+        `<section><h2>${escapeHtml(f.q)}</h2><p>${escapeHtml(f.a)}</p></section>`).join('') +
       '<section><h2>Monthly — $2.99/month</h2>' +
       '<p>Billed monthly. Includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types.</p></section>' +
       '<section><h2>Yearly — $29.00/year</h2>' +
@@ -1825,7 +2060,15 @@ if (!existsSync(distPath)) {
         ['Home', 'https://stopbiting.today/'],
         [content?.title ?? meta.title, canonical],
       ]);
-      const extraSchemas = pagePath === '/compare/ai-detection-apps' ? `\n    ${schemaTag(AI_APPS_ITEMLIST)}` : '';
+      // FAQPage, but only for a page that actually renders question-headed
+      // Q&A. The questions and the answer text are read back out of the same
+      // `html` that compareArticleHtml() emits verbatim a few lines below, so
+      // every `acceptedAnswer.text` is byte-identical to the paragraph a reader
+      // sees — nothing here knows what any of the questions say.
+      const faq = content ? visibleFaqSection(content) : null;
+      const extraSchemas =
+        (pagePath === '/compare/ai-detection-apps' ? `\n    ${schemaTag(AI_APPS_ITEMLIST)}` : '') +
+        (faq ? `\n    ${schemaTag(faqPageSchema(canonical, faq.heading, faq.pairs))}` : '');
       injected = injected.replace('</head>', `    ${schemaTag(article)}\n    ${schemaTag(breadcrumb)}${extraSchemas}\n  </head>`);
       if (content) injected = injectSsrArticle(injected, compareArticleHtml(content));
       sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(pagePath));
@@ -1835,7 +2078,7 @@ if (!existsSync(distPath)) {
   // Known valid routes for soft-404 protection
   const KNOWN_ROUTES = new Set([
     '/', '/blog', '/about', '/how-it-works', '/pricing', '/privacy',
-    '/terms-and-conditions', '/refund-policy',
+    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH,
     ...Object.keys(COMPARE_META),
     ...Object.keys(BLOG_POSTS).map(slug => `/blog/${slug}`),
   ]);

@@ -169,8 +169,8 @@ export function Landing(_props: Props) {
               Bitter polish, gloves, sheer willpower — none of it stuck, because nail biting was never a
               willpower problem. It runs on autopilot, and by the time you notice, you're already doing it.{' '}
               <span className="text-stone-700 dark:text-stone-200 font-medium">Stop Biting catches the exact moment your hand reaches your mouth</span>{' '}
-              and interrupts it — which is the active ingredient in habit reversal training, the only approach
-              with real clinical evidence behind it. Every frame is processed on your own device.
+              and interrupts it — which is the active ingredient in habit reversal training, the approach
+              with the strongest clinical evidence behind it. Every frame is processed on your own device.
             </p>
 
             <div
@@ -723,6 +723,7 @@ export function Landing(_props: Props) {
             <a href="/blog" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Blog</a>
             <a href="/#pricing" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Pricing</a>
             <a href="mailto:hello@stopbiting.today" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Contact</a>
+            <a href="/editorial-policy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Editorial Policy</a>
             <a href="/privacy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Privacy Policy</a>
             <a href="/terms-and-conditions" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Terms of Service</a>
             <a href="/refund-policy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Refund Policy</a>

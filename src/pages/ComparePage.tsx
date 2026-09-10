@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Check, X } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { PAGE_MAP } from '../data/comparePages';
+import { AuthorBox } from './EditorialPolicyPage';
 
 interface Props {
   path: string;
@@ -173,6 +174,8 @@ export function ComparePage({ path }: Props) {
             $2.99/month · $29/year · Cancel anytime
           </p>
         </div>
+
+        <AuthorBox />
 
         <div className="mt-10 text-center">
           <a href="/" className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">

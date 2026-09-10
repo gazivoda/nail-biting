@@ -55,6 +55,7 @@ const CORE_PAGES = [
   { path: '/solutions/for-desk-workers',        changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-adhd',                changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-gamers',              changefreq: 'monthly', priority: '0.7' },
+  { path: '/editorial-policy',                  changefreq: 'yearly',  priority: '0.4' },
   { path: '/privacy',                           changefreq: 'yearly',  priority: '0.3' },
   { path: '/terms-and-conditions',              changefreq: 'yearly',  priority: '0.3' },
   { path: '/refund-policy',                     changefreq: 'yearly',  priority: '0.3' },
@@ -402,6 +403,13 @@ const PAGE_SOURCES = {
   '/how-it-works':           [ssrArticle('/how-it-works')],
   '/pricing':                [ssrArticle('/pricing')],
   '/about':                  [ssrArticle('/about')],
+  // /editorial-policy renders from a data module, not from literals in the
+  // handler, so the module IS the page: its title, standfirst, sections,
+  // "last updated" line and the author box it closes with are exactly what a
+  // reader sees there, and nothing else in the file is anything else. (The
+  // meta title and description live in server.js precisely so that editing
+  // them cannot move this date.)
+  '/editorial-policy':       [pageComponent('src/data/editorialPolicy.ts')],
   // The legal routes inject no SSR article: what a reader sees is the React
   // page. Their handlers carry meta and JSON-LD only, so they are not a source.
   '/privacy':                [pageComponent('src/pages/PrivacyPage.tsx')],

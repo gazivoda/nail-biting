@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
 import { getRelated } from '../data/related';
+import { AUTHOR_BIO } from '../data/editorialPolicy';
+import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -146,7 +148,10 @@ export function BlogPost({ slug }: Props) {
                 <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">IG</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">Igor Gazivoda · Founder, Stop Biting</p>
+                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">
+                  <a href="/about" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">{AUTHOR_BIO.name}</a>
+                  {` · ${AUTHOR_BIO.role}`}
+                </p>
                 <p className="text-xs text-stone-400 dark:text-stone-500">
                   Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
                   {post.dateModified !== post.datePublished && (
@@ -241,6 +246,8 @@ export function BlogPost({ slug }: Props) {
               </div>
             </section>
           )}
+
+          <AuthorBox />
 
           {/* Back link */}
           <div className="mt-10 text-center">

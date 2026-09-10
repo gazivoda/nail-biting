@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -11,9 +12,17 @@ interface Props {
   title: string;
   lastUpdated: string;
   sections: Section[];
+  /**
+   * Optional standfirst under the title. Carries `article-summary`, the class
+   * the JSON-LD SpeakableSpecification selector names — server.js puts the same
+   * class on the standfirst of the copy it renders for crawlers.
+   */
+  standfirst?: string;
+  /** Rendered after the sections (the author box on /editorial-policy). */
+  children?: ReactNode;
 }
 
-export function LegalPage({ title, lastUpdated, sections }: Props) {
+export function LegalPage({ title, lastUpdated, sections, standfirst, children }: Props) {
   useTheme();
 
   return (
@@ -36,6 +45,9 @@ export function LegalPage({ title, lastUpdated, sections }: Props) {
       <main className="max-w-2xl mx-auto px-6 pt-28 pb-20">
         <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">{title}</h1>
         <p className="text-stone-400 dark:text-stone-500 text-sm mt-2">Last updated: {lastUpdated}</p>
+        {standfirst && (
+          <p className="article-summary mt-4 text-stone-600 dark:text-stone-300 text-[15px] leading-relaxed">{standfirst}</p>
+        )}
 
         <div className="mt-10 space-y-8">
           {sections.map(({ heading, content }) => (
@@ -57,6 +69,8 @@ export function LegalPage({ title, lastUpdated, sections }: Props) {
           ))}
         </div>
 
+        {children}
+
         <div className="mt-16 pt-8 border-t border-stone-200 dark:border-ink-400 text-xs text-stone-400 dark:text-stone-500 space-y-1">
           <p>Stop Biting · <a href="https://stopbiting.today" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">stopbiting.today</a></p>
           <p>Contact: <a href="mailto:hello@stopbiting.today" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">hello@stopbiting.today</a></p>
@@ -69,6 +83,7 @@ export function LegalPage({ title, lastUpdated, sections }: Props) {
           <a href="/privacy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Privacy Policy</a>
           <a href="/terms-and-conditions" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Terms of Service</a>
           <a href="/refund-policy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Refund Policy</a>
+          <a href="/editorial-policy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Editorial Policy</a>
         </div>
       </footer>
     </div>

@@ -87,11 +87,11 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-08-11',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: "The method that works (and why most people haven\'t tried it)",
-        body: `Habit Reversal Training has been studied since the 1970s and has consistently outperformed every other nail biting intervention — bitter polish, physical barriers, motivation-based approaches. In the landmark trial (Azrin, Nunn & Frantz, 1980), habit reversal reduced nail biting episodes by roughly 99% at five-month follow-up, compared with about 60% for the alternative treatment tested. A 2011 meta-analysis of 18 habit reversal studies (575 participants) confirmed large treatment effects across nail biting and related habits.\n\nMost people haven't tried it because it requires more than deciding to stop. It requires a specific procedure. The good news is that the procedure isn't complicated once you understand what it's actually trying to do.`,
+        heading: "What is Habit Reversal Training, and does it work?",
+        body: `It is a three-step procedure: notice every episode, have a competing response ready, and get an external signal. In the landmark 1980 trial it reduced nail biting episodes by roughly 99% at five-month follow-up.\n\nHabit Reversal Training has been studied since the 1970s and has consistently outperformed every other nail biting intervention — bitter polish, physical barriers, motivation-based approaches. In the landmark trial (Azrin, Nunn & Frantz, 1980), habit reversal reduced nail biting episodes by roughly 99% at five-month follow-up, compared with about 60% for the alternative treatment tested. A 2011 meta-analysis of 18 habit reversal studies (575 participants) confirmed large treatment effects across nail biting and related habits.\n\nMost people haven't tried it because it requires more than deciding to stop. It requires a specific procedure. The good news is that the procedure isn't complicated once you understand what it's actually trying to do.`,
       },
       {
         heading: 'Step 1: Actually notice every time you do it',
@@ -540,11 +540,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'The honest answer: it varies widely',
-        body: `The popular claim that habits take 21 days to break is not supported by research. The actual evidence suggests that for complex, emotionally-loaded behaviors like nail biting, meaningful and durable change takes 6–12 weeks of consistent effort, with the full consolidation of a new automatic response taking 3–6 months. Some individuals — particularly those with long-established habits, high baseline stress, or co-occurring anxiety — may require longer.\n\nThis is not discouraging; it is realistic. Understanding the timeline sets appropriate expectations and prevents the common pattern of abandoning effective treatment because it hasn't produced complete results within two weeks.`,
+        heading: 'How long does it take to stop nail biting?',
+        body: `Six to twelve weeks of consistent effort for meaningful, durable change, with full consolidation of a new automatic response taking three to six months. The popular 21-day claim is not supported by research.\n\nThe popular claim that habits take 21 days to break is not supported by research. The actual evidence suggests that for complex, emotionally-loaded behaviors like nail biting, meaningful and durable change takes 6–12 weeks of consistent effort, with the full consolidation of a new automatic response taking 3–6 months. Some individuals — particularly those with long-established habits, high baseline stress, or co-occurring anxiety — may require longer.\n\nThis is not discouraging; it is realistic. Understanding the timeline sets appropriate expectations and prevents the common pattern of abandoning effective treatment because it hasn't produced complete results within two weeks.`,
       },
       {
         heading: 'Week 1–2: Awareness surge',
@@ -604,11 +604,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-04-07',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'The core privacy concern with webcam habit apps',
-        body: `The idea of running a webcam continuously during work hours raises an obvious and legitimate concern: where does the camera data go? Most people have an intuitive understanding that webcam footage is sensitive — it captures your face, your environment, and potentially other people in your space. Before using any webcam-based application, understanding the data architecture is essential.\n\nThe answer depends entirely on whether the app processes video on-device or sends it to a server. Cloud-based processing — where video frames are transmitted to a server for analysis — creates genuine privacy risks regardless of the app developer's stated policies. On-device processing, where all analysis happens locally on the user's own hardware, eliminates the transmission risk by design.`,
+        heading: 'Is it safe to use a webcam app to stop nail biting?',
+        body: `Yes, if the app processes video entirely on-device — that eliminates the transmission risk by design and means no camera data leaves your machine. Cloud-based processing, where frames go to a server, does not.\n\nThe idea of running a webcam continuously during work hours raises an obvious and legitimate concern: where does the camera data go? Most people have an intuitive understanding that webcam footage is sensitive — it captures your face, your environment, and potentially other people in your space. Before using any webcam-based application, understanding the data architecture is essential.\n\nThe answer depends entirely on whether the app processes video on-device or sends it to a server. Cloud-based processing — where video frames are transmitted to a server for analysis — creates genuine privacy risks regardless of the app developer's stated policies. On-device processing, where all analysis happens locally on the user's own hardware, eliminates the transmission risk by design.`,
       },
       {
         heading: 'How on-device AI processing works',
@@ -821,15 +821,15 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'Why most habit apps fail for nail biting',
-      body: `Most habit-tracking apps — Habitica, Streaks, Finch, generic habit loggers — share a fundamental design assumption: that you know when you performed the habit. You open the app, tap the habit, and mark it done or not done.\n\nNail biting breaks this assumption completely. The habit is unconscious. BFRB research distinguishes "automatic" from "focused" biting, and for many chronic biters a large share of episodes happens entirely outside conscious awareness. The biting happens below the threshold of conscious awareness — during deep focus, while watching something, in meetings. By the time you might think to log it, the moment has passed and you have likely forgotten it happened at all.\n\nThis is the core problem with applying general-purpose habit trackers to nail biting: they require you to consciously observe and record a habit that by definition operates outside conscious observation. The tool is mismatched to the problem.\n\nThe only intervention that can catch an unconscious habit is one that operates without your attention — something that watches passively and fires an alert at the exact moment the behaviour begins. That is what separates AI detection from every other category on this list.`,
+      heading: 'What are the best tools to stop nail biting?',
+      body: `Ranked by evidence: AI detection is the only tool that catches the habit in real time without any input from you. Bitter polish is the best passive option away from a screen. General habit trackers and reminder bands both require awareness the habit removes.\n\nThe rest of this guide works through each category, and the first question is why most habit apps fail here at all.\n\nMost habit-tracking apps — Habitica, Streaks, Finch, generic habit loggers — share a fundamental design assumption: that you know when you performed the habit. You open the app, tap the habit, and mark it done or not done.\n\nNail biting breaks this assumption completely. The habit is unconscious. BFRB research distinguishes "automatic" from "focused" biting, and for many chronic biters a large share of episodes happens entirely outside conscious awareness. The biting happens below the threshold of conscious awareness — during deep focus, while watching something, in meetings. By the time you might think to log it, the moment has passed and you have likely forgotten it happened at all.\n\nThis is the core problem with applying general-purpose habit trackers to nail biting: they require you to consciously observe and record a habit that by definition operates outside conscious observation. The tool is mismatched to the problem.\n\nThe only intervention that can catch an unconscious habit is one that operates without your attention — something that watches passively and fires an alert at the exact moment the behaviour begins. That is what separates AI detection from every other category on this list.`,
     },
     {
       heading: 'Category 1 — AI detection apps (Stop Biting)',
-      body: `Disclosure up front: Stop Biting is our own product — this site is built by the team behind it, so read this section as a maker's explanation rather than an independent review.\n\nStop Biting is currently the only dedicated AI detection tool for nail biting. It uses your existing webcam and Google's MediaPipe framework to run hand-landmark and face-mesh detection locally on your device. When the model detects your hand approaching your mouth with the posture characteristic of nail biting, it fires an immediate alert — before the bite completes.\n\nAll processing is on-device. No video is transmitted anywhere. You can verify this with network monitoring tools — there are zero camera-related outbound requests.\n\nThe clinical mechanism maps directly to awareness training — the primary active ingredient in Habit Reversal Training (HRT). The alert fires at the moment the automatic habit chain begins, creating the conscious interruption that allows a competing response to fire. Without that interruption, the competing response never has a chance to activate because the person is unaware the habit has started.\n\nLimitation: requires a screen-based context (computer with webcam). Does not monitor biting away from the desk. For non-screen biting, combining with bitter polish covers both contexts.\n\nPricing: Free 3-day trial. $2.99/month or $29/year. No credit card required.`,
+      body: `Disclosure up front: Stop Biting is our own product — this site is built by the team behind it, so read this section as a maker's explanation rather than an independent review.\n\nStop Biting is one of several apps that now detect nail biting in real time through a camera. It uses your existing webcam and Google's MediaPipe framework to run hand-landmark and face-mesh detection locally on your device. When the model detects your hand approaching your mouth with the posture characteristic of nail biting, it fires an immediate alert — before the bite completes.\n\nAll processing is on-device. No video is transmitted anywhere. You can verify this with network monitoring tools — there are zero camera-related outbound requests.\n\nThe clinical mechanism maps directly to awareness training — the primary active ingredient in Habit Reversal Training (HRT). The alert fires at the moment the automatic habit chain begins, creating the conscious interruption that allows a competing response to fire. Without that interruption, the competing response never has a chance to activate because the person is unaware the habit has started.\n\nLimitation: requires a screen-based context (computer with webcam). Does not monitor biting away from the desk. For non-screen biting, combining with bitter polish covers both contexts.\n\nPricing: Free 3-day trial. $2.99/month or $29/year. No credit card required.`,
       html: `<p>Related: <a href="/how-it-works">how the detection works</a> · <a href="/compare/bitter-polish-alternative">Stop Biting vs bitter polish</a></p>`,
     },
     {
@@ -1065,11 +1065,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'What "fast" actually means for nail biting',
-      body: `Before getting into methods, it's worth being clear about what kind of progress is realistic in a short timeframe. No intervention stops nail biting completely within days in someone with an established habit. The brain's automatic behavior pathways take time to weaken — that's a biological fact, not a motivational observation.\n\nThat said, a clear drop in frequency is achievable within the first week or two with the right approach. For most people, this is the meaningful milestone: not zero biting, but noticing that they're biting far less and catching themselves more reliably. Full remission (very rare episodes, easily managed) takes considerably longer. "Fast" within that frame means starting the decline in week 1–2 rather than week 4–6. There is no controlled data putting a percentage on that early drop, so treat any specific figure you see quoted — here or anywhere else — with suspicion.`,
+      heading: 'How fast can you stop nail biting?',
+      body: `No intervention stops an established habit within days. A clear drop in frequency is achievable in the first week or two with the right approach; full remission — very rare episodes, easily managed — takes considerably longer.\n\nBefore getting into methods, it's worth being clear about what kind of progress is realistic in a short timeframe. No intervention stops nail biting completely within days in someone with an established habit. The brain's automatic behavior pathways take time to weaken — that's a biological fact, not a motivational observation.\n\nThat said, a clear drop in frequency is achievable within the first week or two with the right approach. For most people, this is the meaningful milestone: not zero biting, but noticing that they're biting far less and catching themselves more reliably. Full remission (very rare episodes, easily managed) takes considerably longer. "Fast" within that frame means starting the decline in week 1–2 rather than week 4–6. There is no controlled data putting a percentage on that early drop, so treat any specific figure you see quoted — here or anywhere else — with suspicion.`,
     },
     {
       heading: 'Fastest: real-time detection + competing response (days 1–7)',
@@ -1103,11 +1103,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: "Why people search for hypnosis as a nail biting treatment",
-      body: `Hypnotherapy appears in nearly every list of nail biting treatments, and a meaningful number of people try it. The appeal is straightforward: it promises change that happens to you rather than requiring sustained daily effort. For a habit that's failed to yield to months of willpower, the idea of a session or two that somehow reconfigures the behavior from the inside is genuinely attractive.\n\nIt's also true that some people report significant improvement after hypnotherapy for nail biting. The question is whether these results are reliable, for whom they work, and whether hypnotherapy is the active ingredient or whether something else is happening.`,
+      heading: "Does hypnotherapy for nail biting work?",
+      body: `Not reliably, on the available evidence. There are no large controlled trials of hypnotherapy for nail biting — only case reports and uncontrolled series. It may help some people, but it is not a first-line treatment.\n\nIt is worth understanding why people search for it anyway. Hypnotherapy appears in nearly every list of nail biting treatments, and a meaningful number of people try it. The appeal is straightforward: it promises change that happens to you rather than requiring sustained daily effort. For a habit that's failed to yield to months of willpower, the idea of a session or two that somehow reconfigures the behavior from the inside is genuinely attractive.\n\nIt's also true that some people report significant improvement after hypnotherapy for nail biting. The question is whether these results are reliable, for whom they work, and whether hypnotherapy is the active ingredient or whether something else is happening.`,
     },
     {
       heading: "What the research actually shows",
@@ -1172,11 +1172,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-04-21',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: "Why most alternatives don't work",
-      body: `The usual advice for what to do instead of biting your nails — paint your nails, put a rubber band around your wrist, use bitter polish — shares a common problem. These approaches either suppress the behavior mechanically or create aversion, but they don't satisfy the underlying need that the biting was filling. When that need goes unmet, the impulse to bite doesn't disappear; it persists until the barrier is removed or the aversion habituates.\n\nHabit Reversal Training research introduced the concept of the competing response: a behavior that directly competes with the habit by occupying the same physical or functional space. A true competing response isn't just something you do when you catch yourself biting — it's something that addresses the same trigger, through the same sensory channel, without causing harm. Selecting the right alternative for your specific pattern is significantly more effective than reaching for a generic substitute.`,
+      heading: "What can you do instead of biting your nails?",
+      body: `Match the alternative to the sensory channel your biting uses. Mouth-and-jaw biting needs an oral alternative like gum; finger-and-nail picking needs a tactile one like a fidget ring; tension-driven biting needs physical tension release.\n\nThat is why most alternatives don't work. The usual advice for what to do instead of biting your nails — paint your nails, put a rubber band around your wrist, use bitter polish — shares a common problem. These approaches either suppress the behavior mechanically or create aversion, but they don't satisfy the underlying need that the biting was filling. When that need goes unmet, the impulse to bite doesn't disappear; it persists until the barrier is removed or the aversion habituates.\n\nHabit Reversal Training research introduced the concept of the competing response: a behavior that directly competes with the habit by occupying the same physical or functional space. A true competing response isn't just something you do when you catch yourself biting — it's something that addresses the same trigger, through the same sensory channel, without causing harm. Selecting the right alternative for your specific pattern is significantly more effective than reaching for a generic substitute.`,
     },
     {
       heading: "For stress and anxiety biting",
@@ -1376,11 +1376,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 6,
   datePublished: '2026-04-23',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'Why people get acrylics to stop nail biting',
-      body: `Acrylic nails, gel extensions, and press-on nails are among the most searched remedies for nail biting — and for understandable reasons. They change the physical experience of biting immediately: the material is hard, synthetic, and doesn't provide the sensory reward of natural nail. They also create a visual change that many people find motivating. For someone who has tried bitter polish, rubber bands, and sheer willpower with no success, a set of acrylics feels like a structural solution rather than another attempt at self-control.\n\nSurveys of nail biting forums and community groups consistently place acrylic and gel nails near the top of self-reported "what finally worked for me" strategies. The mechanism is logical: if you physically can't bite effectively, the habit can't complete its loop. The question is whether this physical interruption produces lasting change, or whether it simply suppresses the behavior while the extensions are in place.`,
+      heading: 'Can acrylic nails stop nail biting?',
+      body: `They interrupt it, and that is a real mechanism, not a gimmick. They work best for sensory-triggered habits combined with behavioural work during the extension period. For deeply automatic, stress-driven biting, acrylics alone rarely produce lasting change.\n\nAcrylic nails, gel extensions, and press-on nails are among the most searched remedies for nail biting — and for understandable reasons. They change the physical experience of biting immediately: the material is hard, synthetic, and doesn't provide the sensory reward of natural nail. They also create a visual change that many people find motivating. For someone who has tried bitter polish, rubber bands, and sheer willpower with no success, a set of acrylics feels like a structural solution rather than another attempt at self-control.\n\nSurveys of nail biting forums and community groups consistently place acrylic and gel nails near the top of self-reported "what finally worked for me" strategies. The mechanism is logical: if you physically can't bite effectively, the habit can't complete its loop. The question is whether this physical interruption produces lasting change, or whether it simply suppresses the behavior while the extensions are in place.`,
     },
     {
       heading: 'How acrylic nails interrupt nail biting',
@@ -1652,32 +1652,52 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'Why gaming is a near-perfect nail biting trigger',
-      body: `Gaming creates a constellation of conditions that are individually nail biting triggers and collectively overwhelming: sustained deep focus, repeated micro-stress moments, a context where hands drift near the face naturally, and an activity compelling enough that self-monitoring is among the first cognitive functions to go offline.\n\nThe flow state that makes gaming enjoyable is the same state that makes nail biting invisible. When you're locked into a raid, a ranked match, or a puzzle, the prefrontal cortex is entirely occupied with the task. The self-monitoring that would normally flag your hand moving toward your mouth isn't running. By the time you notice you've been biting, you're already several minutes in.`,
+      heading: 'Why do I bite my nails while gaming?',
+      body: `Because gaming stacks four triggers at once: sustained deep focus, repeated micro-stress moments, hands that drift near the face naturally, and an activity absorbing enough that self-monitoring goes offline first. The flow state that makes gaming enjoyable makes biting invisible.\n\nWhen you're locked into a raid, a ranked match, or a puzzle, the prefrontal cortex is entirely occupied with the task. The self-monitoring that would normally flag your hand moving toward your mouth isn't running. By the time you notice you've been biting, you're already several minutes in.`,
     },
     {
-      heading: 'The specific gaming moments that spike biting',
-      body: `Not all gaming moments are equal for nail biting. The highest-risk moments tend to be: loading screens and queue waits (boredom + anticipation anxiety); high-stakes moments in competitive games (acute stress without an outlet); frustration after a death or loss (frustration state identical to the perfectionism pattern); and passive spectating of cutscenes or streams.\n\nLoading screens deserve specific attention: they're short enough that nail biting can complete an entire episode before the screen returns, but frequent enough that they add up to dozens of episodes per session. Many gamers report their worst biting happens not during intense gameplay but in the gaps between it.`,
+      heading: 'Which gaming moments spike biting the most?',
+      body: `Not all gaming moments are equal for nail biting. Four are consistently the highest-risk.`,
+      list: [
+        'Loading screens and queue waits — boredom plus anticipation anxiety.',
+        'High-stakes moments in competitive games — acute stress without an outlet.',
+        'Frustration after a death or a loss — a frustration state identical to the perfectionism pattern.',
+        'Passive spectating of cutscenes or streams.',
+      ],
+      html: `<p>Loading screens deserve specific attention: they're short enough that nail biting can complete an entire episode before the screen returns, but frequent enough that they add up to dozens of episodes per session. Many gamers report their worst biting happens not during intense gameplay but in the gaps between it.</p>`,
     },
     {
-      heading: "Why gaming makes the habit harder to catch than almost any other context",
-      body: `The awareness gap in gaming is larger than in most other contexts. Studies of habit reversal training consistently identify awareness as the most critical ingredient — and gaming systematically depletes awareness. You can't keep a habit diary while raiding. You can't notice your hand is at your mouth when you're watching your minimap.\n\nThis is why approaches that depend on self-awareness — reminder bands, periodic check-ins, intention-setting before a session — largely fail for gaming-context nail biting. The habit exploits exactly the cognitive state that makes gaming valuable. Any effective intervention must provide awareness externally, not rely on you generating it internally.`,
+      heading: "Why is gaming-context biting so hard to catch?",
+      body: `Because the awareness gap in gaming is larger than in most other contexts. Studies of habit reversal training consistently identify awareness as the most critical ingredient — and gaming systematically depletes awareness.\n\nYou can't keep a habit diary while raiding. You can't notice your hand is at your mouth when you're watching your minimap.\n\nThis is why approaches that depend on self-awareness — reminder bands, periodic check-ins, intention-setting before a session — largely fail for gaming-context nail biting. The habit exploits exactly the cognitive state that makes gaming valuable. Any effective intervention must provide awareness externally, not rely on you generating it internally.`,
     },
     {
-      heading: "What doesn't work for gamer nail biters",
-      body: `Several common nail biting remedies work poorly in the gaming context specifically. Bitter-tasting nail polish loses effectiveness if you eat or drink during a session — which most gamers do. Physical barriers (gloves, finger wraps) interfere with keyboard and mouse precision, which creates frustration that ironically increases biting. Reminder alarms on a phone are inaudible when headphones are on and create context-switching that breaks flow.\n\nWillpower and intention alone fail even harder here than in other contexts because gaming's attentional demands are precisely calibrated to exclude self-monitoring. The solution needs to work within the gaming context, not require you to step out of it.`,
+      heading: "What doesn't work for gamers?",
+      body: `Several common nail biting remedies work poorly in the gaming context specifically.`,
+      list: [
+        'Bitter-tasting nail polish — loses effectiveness if you eat or drink during a session, which most gamers do.',
+        'Physical barriers such as gloves or finger wraps — they interfere with keyboard and mouse precision, which creates frustration that ironically increases biting.',
+        'Reminder alarms on a phone — inaudible when headphones are on, and they create context-switching that breaks flow.',
+        'Willpower and intention alone — these fail even harder here than in other contexts, because gaming\'s attentional demands are precisely calibrated to exclude self-monitoring.',
+      ],
+      html: `<p>The solution needs to work within the gaming context, not require you to step out of it.</p>`,
     },
     {
-      heading: 'The natural fit: AI detection while you game',
-      body: `If you're gaming on a computer, you have a webcam. That webcam can run real-time nail biting detection that fires an audible alarm the moment your hand approaches your mouth — without interrupting your game, without requiring you to pay attention, without any self-monitoring on your part.\n\nThe alarm is jarring enough to break the automatic chain (which is what makes it effective as an awareness signal) but brief enough that you can immediately return to the game. Over 2–4 weeks of consistent alarm-based interruption during gaming sessions, the habit's automaticity in that context weakens measurably. The AI does the awareness work that your focused brain can't.`,
+      heading: 'Does webcam detection work while gaming?',
+      body: `It is the natural fit, because if you're gaming on a computer you already have a webcam. That webcam can run real-time nail biting detection that fires an audible alarm the moment your hand approaches your mouth — without interrupting your game, without requiring you to pay attention, without any self-monitoring on your part.\n\nThe alarm is jarring enough to break the automatic chain (which is what makes it effective as an awareness signal) but brief enough that you can immediately return to the game. Over 2–4 weeks of consistent alarm-based interruption during gaming sessions, the habit's automaticity in that context weakens measurably. The AI does the awareness work that your focused brain can't.`,
     },
     {
-      heading: 'Competing responses for gaming contexts',
-      body: `The competing response — the behaviour that replaces the biting — needs to work while gaming. That means it cannot require taking hands off the controls for more than a second or two. Useful options include: pressing the non-dominant hand firmly against the desk or thigh for 30 seconds when an alarm fires; clenching the jaw briefly and then consciously relaxing it; or keeping a textured stress ball within reach of the non-dominant hand to grip when an urge arrives.\n\nThe competing response only needs to interrupt the chain long enough for the urge to pass — typically 20–60 seconds. Gaming continues around it. The goal isn't to stop gaming; it's to stop biting while gaming. Stop Biting runs in the background and handles the awareness component so you don't have to.`,
-          html: `<p>We collected the gaming-specific version of these tactics — controller grips, queue-time triggers, streaming setups — in our <a href="/solutions/for-gamers">guide for gamers</a>.</p>`,
+      heading: 'What competing responses work while gaming?',
+      body: `Ones that don't take your hands off the controls for more than a second or two. The competing response — the behaviour that replaces the biting — has to work while gaming, and that constraint rules out most standard options and leaves three.`,
+      list: [
+        'Pressing the non-dominant hand firmly against the desk or thigh for 30 seconds when an alarm fires.',
+        'Clenching the jaw briefly, then consciously relaxing it.',
+        'Keeping a textured stress ball within reach of the non-dominant hand, to grip when an urge arrives.',
+      ],
+      html: `<p>The competing response only needs to interrupt the chain long enough for the urge to pass — typically 20–60 seconds. Gaming continues around it. The goal isn't to stop gaming; it's to stop biting while gaming. Stop Biting runs in the background and handles the awareness component so you don't have to.</p>` +
+        `<p>We collected the gaming-specific version of these tactics — controller grips, queue-time triggers, streaming setups — in our <a href="/solutions/for-gamers">guide for gamers</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1690,11 +1710,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'Why 30 days is the right horizon (but not a magic number)',
-      body: `Clinical HRT protocols span 4–8 weeks, which maps well to a 30-day framework. We could not find published data pinning down which weeks of HRT produce the steepest drop in biting frequency, so treat 30 days as a practical review point rather than a research-derived milestone: long enough to produce measurable change, short enough that an approach that is not working gets corrected early.\n\nThat said, 30 days is a starting point, not a finish line. The goal of a 30-day plan is to establish the competing response habit as automatic and to reduce biting frequency enough that the new pattern is self-sustaining. Some people achieve this in 30 days; others need 6–8 weeks. What 30 days does reliably is produce enough data and progress to know whether your current approach is working.`,
+      heading: 'Can you stop nail biting in 30 days?',
+      body: `Treat 30 days as a review point, not a finish line. It is long enough to establish the competing response and produce measurable change — clinical HRT protocols span 4–8 weeks, and some people need 6–8.\n\nClinical HRT protocols span 4–8 weeks, which maps well to a 30-day framework. We could not find published data pinning down which weeks of HRT produce the steepest drop in biting frequency, so treat 30 days as a practical review point rather than a research-derived milestone: long enough to produce measurable change, short enough that an approach that is not working gets corrected early.\n\nThat said, 30 days is a starting point, not a finish line. The goal of a 30-day plan is to establish the competing response habit as automatic and to reduce biting frequency enough that the new pattern is self-sustaining. Some people achieve this in 30 days; others need 6–8 weeks. What 30 days does reliably is produce enough data and progress to know whether your current approach is working.`,
     },
     {
       heading: 'Before you start: three things to prepare',
@@ -1834,13 +1854,13 @@ BLOG_POSTS.push({
   seoTitle: 'Fidget Toys for Nail Biting: What Works',
   description: "Fidget toys are popular competing responses for nail biting — but most don't work. Here's which ones do, which don't, and why the match matters.",
   tag: 'Treatment',
-  readingMinutes: 3,
+  readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-05-12',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: 'Why fidget toys seem like the obvious solution',
-      body: `The appeal of fidget toys as a nail biting remedy is intuitive: keep the hands occupied and the hands can't reach the mouth. But this logic fails to account for how nail biting actually works. The habit is not primarily about idle hands. It's a specific response to a specific cue state — stress, focus, boredom — that provides a specific type of sensory input. A fidget toy that doesn't match the sensory need the habit is serving will not satisfy the urge. The hand finds its way back to the mouth.`,
+      heading: 'Which fidget toys actually work for nail biting?',
+      body: `The best competing response for most nail biters is not a fidget toy at all — it is pressing both palms flat against a surface for 60 seconds. Toys only work when they match the sensory function the biting serves.\n\nThe appeal of fidget toys as a nail biting remedy is intuitive: keep the hands occupied and the hands can't reach the mouth. But this logic fails to account for how nail biting actually works. The habit is not primarily about idle hands. It's a specific response to a specific cue state — stress, focus, boredom — that provides a specific type of sensory input. A fidget toy that doesn't match the sensory need the habit is serving will not satisfy the urge. The hand finds its way back to the mouth.`,
     },
     {
       heading: 'The three sensory functions of nail biting',
@@ -2026,11 +2046,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why nail biting is harder to stop than most habits`,
-      body: `Nail biting isn't a willpower problem, which is why "just stop" advice fails almost everyone who tries it. The behaviour is encoded as an automatic habit loop in the basal ganglia — a cue (stress, boredom, deep focus) triggers the routine (hand to mouth) before the conscious, decision-making part of the brain gets involved at all. Most nail biters report noticing fewer than half of their daily biting episodes; the bite is often already underway before awareness arrives.\n\nThat's the real obstacle. You can't override a behaviour you don't notice happening, and motivation alone doesn't create noticing. Every method that actually works — across the clinical literature and in practice — solves this awareness problem first, then gives the hands something else to do. Methods that skip straight to willpower or punishment tend to produce short bursts of improvement that don't last.`,
+      heading: `How do you stop nail biting?`,
+      body: `Solve the awareness problem first, then give your hands something else to do. That is Habit Reversal Training, the method with the strongest evidence — and it works because nail biting is automatic, not a willpower failure.\n\nNail biting isn't a willpower problem, which is why "just stop" advice fails almost everyone who tries it. The behaviour is encoded as an automatic habit loop in the basal ganglia — a cue (stress, boredom, deep focus) triggers the routine (hand to mouth) before the conscious, decision-making part of the brain gets involved at all. Most nail biters report noticing fewer than half of their daily biting episodes; the bite is often already underway before awareness arrives.\n\nThat's the real obstacle. You can't override a behaviour you don't notice happening, and motivation alone doesn't create noticing. Every method that actually works — across the clinical literature and in practice — solves this awareness problem first, then gives the hands something else to do. Methods that skip straight to willpower or punishment tend to produce short bursts of improvement that don't last.`,
     },
     {
       heading: `The method with the strongest evidence: Habit Reversal Training`,
@@ -2280,11 +2300,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `What CBT is and how it applies to BFRBs`,
-      body: `Cognitive Behavioral Therapy is a structured, evidence-based therapeutic approach built on the idea that thoughts, feelings, and behaviours are interconnected — changing distorted or unhelpful thought patterns changes the emotional and behavioural responses that follow from them. For body-focused repetitive behaviours like nail biting, CBT typically incorporates behavioural techniques (including elements of Habit Reversal Training) alongside a specific focus on the thoughts and beliefs that maintain the habit — perfectionism, self-criticism, catastrophising about minor imperfections, or beliefs like "I can't tolerate this feeling without doing something with my hands."`,
+      heading: `How does CBT help with nail biting?`,
+      body: `By targeting the thoughts that maintain the habit — perfectionism, self-criticism, catastrophising — alongside behavioural techniques from Habit Reversal Training. For biting that is largely automatic, HRT alone is often enough; for biting entangled with anxious thinking, CBT adds more.\n\nCognitive Behavioral Therapy is a structured, evidence-based therapeutic approach built on the idea that thoughts, feelings, and behaviours are interconnected — changing distorted or unhelpful thought patterns changes the emotional and behavioural responses that follow from them. For body-focused repetitive behaviours like nail biting, CBT typically incorporates behavioural techniques (including elements of Habit Reversal Training) alongside a specific focus on the thoughts and beliefs that maintain the habit — perfectionism, self-criticism, catastrophising about minor imperfections, or beliefs like "I can't tolerate this feeling without doing something with my hands."`,
     },
     {
       heading: `CBT versus HRT: overlapping but distinct`,
@@ -2487,27 +2507,33 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why college is a perfect storm for nail biting`,
-      body: `College concentrates several nail biting risk factors that, individually, are each well established as triggers: elevated and sustained stress (academic performance, social adjustment, financial pressure), long stretches of screen-based, sedentary work (studying, assignments, late-night scrolling), disrupted and often insufficient sleep, and — for many students — the first sustained period of managing their own routine without the structure or oversight of a family household. Any single one of these would be expected to raise biting frequency; college students frequently experience all of them simultaneously, particularly during the first semester.`,
+      heading: `Why does nail biting get worse in college?`,
+      body: `Because college stacks four established triggers at once: sustained academic and social stress, long stretches of screen-based work, disrupted sleep, and — for many students — the first period of self-managed routine. First semester concentrates all four.\n\nEach of those is individually well established as a nail biting trigger. Elevated and sustained stress covers academic performance, social adjustment and financial pressure. Screen-based, sedentary work covers studying, assignments and late-night scrolling. And for many students it is the first sustained period of managing their own routine without the structure or oversight of a family household.\n\nAny single one would be expected to raise biting frequency. College students frequently experience all of them simultaneously, particularly during the first semester.`,
     },
     {
-      heading: `New stressors: academic pressure, homesickness, and sleep`,
-      body: `Academic performance pressure in college differs from earlier schooling in that the stakes feel higher and the support structure is thinner — professors are less individually attentive than high school teachers, and the student is more responsible for managing their own workload without external check-ins. Homesickness and social adjustment add a distinct, less task-focused form of stress that can trigger biting even outside of study contexts specifically.\n\nSleep deprivation compounds both: college students are among the most sleep-deprived demographics studied, and poor sleep independently reduces self-regulatory capacity — meaning the same stress produces more biting when a student is also running on insufficient sleep than it would with adequate rest.`,
+      heading: `How do academic pressure, homesickness and sleep loss feed the habit?`,
+      body: `All three drain the same self-regulatory capacity that keeps an automatic habit in check.\n\nAcademic performance pressure in college differs from earlier schooling in that the stakes feel higher and the support structure is thinner — professors are less individually attentive than high school teachers, and the student is more responsible for managing their own workload without external check-ins.\n\nHomesickness and social adjustment add a distinct, less task-focused form of stress that can trigger biting even outside study contexts specifically.\n\nSleep deprivation compounds both. College students are among the most sleep-deprived demographics studied, and poor sleep independently reduces self-regulatory capacity — meaning the same stress produces more biting on insufficient sleep than it would with adequate rest.`,
     },
     {
-      heading: `Environmental factors: dorm life, screens, all-nighters`,
-      body: `The physical environment of college compounds the psychological stressors. Dorm living often means less privacy and control over environment than a family home, reducing opportunities to set up the kind of environmental modifications (a designated quiet study space, consistent routines) that support habit change. Screen time is essentially unavoidable — coursework, communication, and socialising all run through laptops and phones — concentrating exposure to one of the highest-risk contexts for nail biting.\n\nAll-nighters and irregular sleep schedules, common during midterms and finals, are a particularly high-risk combination: sleep deprivation plus extended, high-stress screen time plus caffeine (which itself increases physiological arousal and restlessness) stacks several biting triggers into the same few-hour window repeatedly through a semester.`,
+      heading: `Why does nail biting spike during midterms and finals?`,
+      body: `Because all-nighters stack sleep deprivation, extended high-stress screen time and caffeine into the same few-hour window, repeatedly, across a semester. Caffeine itself increases physiological arousal and restlessness.\n\nThe physical environment of college compounds the psychological stressors year-round. Dorm living often means less privacy and control over environment than a family home, reducing opportunities to set up the environmental modifications — a designated quiet study space, consistent routines — that support habit change.\n\nScreen time is essentially unavoidable, since coursework, communication and socialising all run through laptops and phones. That concentrates exposure to one of the highest-risk contexts for nail biting.`,
     },
     {
-      heading: `Practical strategies for a student budget and schedule`,
-      body: `Interventions that require significant cost or a stable, controlled routine don't fit college life well; the most realistic approaches are low-cost and flexible. A bitter-tasting polish is inexpensive and portable, reapplied easily in a dorm room. Keeping nails filed short with a small file kept in a backpack removes the physical trigger without requiring any ongoing behaviour change. A free or low-cost habit-tracking app, or a browser-based detection tool used specifically during study sessions at a laptop (the highest-risk context for most students), addresses the awareness gap without requiring a big time or money investment.\n\nProtecting sleep, even imperfectly, tends to have outsized impact — because sleep deprivation independently worsens self-regulation, even a modest improvement in average sleep during a semester often reduces biting frequency more than a habit-specific intervention on its own.`,
+      heading: `What works on a student budget and schedule?`,
+      body: `Low-cost and flexible beats expensive and structured, because interventions that require significant cost or a stable, controlled routine don't fit college life well.`,
+      list: [
+        'A bitter-tasting polish — inexpensive and portable, reapplied easily in a dorm room.',
+        'Keeping nails filed short with a small file kept in a backpack, which removes the physical trigger without requiring any ongoing behaviour change.',
+        'A free or low-cost habit-tracking app, or a browser-based detection tool used specifically during study sessions at a laptop — the highest-risk context for most students. This addresses the awareness gap without a big time or money investment.',
+        'Protecting sleep, even imperfectly. Because sleep deprivation independently worsens self-regulation, a modest improvement in average sleep across a semester often reduces biting frequency more than a habit-specific intervention on its own.',
+      ],
     },
     {
-      heading: `Building sustainable habits before it's entrenched further`,
-      body: `Because college is often when a mild, occasional habit intensifies into a more consistent, deeply grooved one, addressing it during these years — rather than waiting until after graduation when the pattern has had several more years to consolidate — has real long-term value. Students who establish even a basic awareness-and-competing-response routine during college, however imperfectly, tend to carry that skill forward into the more stable routines of post-college life, rather than starting from zero later on with a habit that's had additional years to deepen.`,
+      heading: `Why address it during college rather than after?`,
+      body: `Because college is often when a mild, occasional habit intensifies into a more consistent, deeply grooved one. Addressing it during these years — rather than after graduation, when the pattern has had several more years to consolidate — has real long-term value.\n\nStudents who establish even a basic awareness-and-competing-response routine during college, however imperfectly, tend to carry that skill forward into the more stable routines of post-college life, rather than starting from zero later on with a habit that has had additional years to deepen.`,
           html: `<p>Studying is desk work with worse hours. Our <a href="/solutions/for-desk-workers">guide for desk workers</a> applies fairly directly.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2521,27 +2547,33 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `The oral fixation overlap between smoking and nail biting`,
-      body: `Smoking and nail biting share a meaningful chunk of underlying function: both involve repetitive hand-to-mouth movement, both provide a brief physiological arousal-regulation effect (nicotine directly, biting through proprioceptive and mild stress-discharge mechanisms), and both are frequently used — consciously or not — as a way of managing stress, boredom, and transition moments throughout the day. This overlap is well recognised in addiction and habit literature broadly: oral-motor substitution behaviours are common during smoking cessation precisely because the hand-to-mouth ritual, independent of nicotine itself, is part of what the behaviour was providing.`,
+      heading: `Why does nail biting increase after quitting smoking?`,
+      body: `Nail biting commonly increases after quitting smoking because both behaviours serve the same hand-to-mouth regulatory function. Removing the cigarette leaves the stress, boredom and transition moments it used to cover — and nail biting fills the gap.\n\nThe overlap is specific. Both involve repetitive hand-to-mouth movement. Both provide a brief physiological arousal-regulation effect — nicotine directly, biting through proprioceptive and mild stress-discharge mechanisms. And both are frequently used, consciously or not, to manage stress, boredom and transition moments through the day.\n\nThis is well recognised in addiction and habit literature broadly: oral-motor substitution behaviours are common during smoking cessation precisely because the hand-to-mouth ritual, independent of nicotine itself, is part of what the behaviour was providing.`,
     },
     {
-      heading: `Why quitting smoking can reveal or worsen nail biting`,
-      body: `When someone quits smoking, they lose both the pharmacological effect of nicotine and the physical ritual of the habit — the specific hand-to-mouth motion performed dozens of times a day. For people who already had some tendency toward nail biting, removing smoking as an outlet for stress and idle-hands moments often causes nail biting to fill the resulting gap, sometimes dramatically increasing in frequency during the weeks and months after quitting.\n\nFor people with no prior nail biting habit, quitting smoking can occasionally trigger a new one, as the brain seeks a substitute hand-to-mouth behaviour to fill the same functional role the cigarette previously served, particularly during the identical trigger moments (after meals, during stress, during breaks) that previously cued a cigarette.`,
+      heading: `Can quitting smoking start a new nail biting habit?`,
+      body: `Occasionally, yes. For people with no prior nail biting habit, quitting can trigger a new one, as the brain seeks a substitute hand-to-mouth behaviour to fill the same functional role the cigarette served — particularly during the identical trigger moments (after meals, during stress, during breaks) that previously cued a cigarette.\n\nWhen someone quits, they lose both the pharmacological effect of nicotine and the physical ritual — the specific hand-to-mouth motion performed dozens of times a day.\n\nFor people who already had some tendency toward nail biting, removing smoking as an outlet for stress and idle-hands moments often causes biting to fill the resulting gap, sometimes increasing dramatically in frequency during the weeks and months after quitting.`,
     },
     {
-      heading: `The habit substitution trap`,
-      body: `This pattern is a specific case of a broader, well-documented phenomenon in habit change: removing one behaviour without addressing the underlying need it was meeting tends to produce a substitute behaviour that serves the same function, rather than the need simply disappearing. Because the substitute (nail biting) has its own significant costs — dental damage, infection risk, visible physical damage — it's easy to end up trading one problem for another rather than making net progress, particularly if the substitution happens unconsciously rather than as a deliberate choice.`,
+      heading: `What is the habit substitution trap?`,
+      body: `Removing one behaviour without addressing the underlying need it was meeting tends to produce a substitute behaviour that serves the same function, rather than the need simply disappearing. That is the trap, and it is a well-documented phenomenon in habit change generally.\n\nBecause the substitute — nail biting — has its own significant costs, including dental damage, infection risk and visible physical damage, it's easy to end up trading one problem for another rather than making net progress. That is most likely when the substitution happens unconsciously rather than as a deliberate choice.`,
     },
     {
-      heading: `Choosing a competing response that doesn't create a new problem`,
-      body: `The key to avoiding the substitution trap is choosing a deliberate, lower-cost replacement for the hand-to-mouth ritual before nail biting fills the gap on its own. Effective options include chewing gum (which satisfies the oral-motor component without the tissue damage of nail biting), a designated fidget or stress object for the hands specifically, and structured breathing exercises for the moments that previously prompted a cigarette break, which address the arousal-regulation function directly rather than substituting one oral habit for another.\n\nPlanning this in advance — deciding on a specific replacement before quitting, rather than discovering after the fact that nail biting has quietly taken over — meaningfully reduces the odds of this particular substitution pattern taking hold.`,
+      heading: `What should you substitute instead?`,
+      body: `Choose a deliberate, lower-cost replacement for the hand-to-mouth ritual before nail biting fills the gap on its own. Three options address different parts of what the cigarette was doing.`,
+      list: [
+        'Chewing gum — satisfies the oral-motor component without the tissue damage of nail biting.',
+        'A designated fidget or stress object for the hands specifically — covers the idle-hands moments rather than the oral ones.',
+        'Structured breathing exercises for the moments that previously prompted a cigarette break — these address the arousal-regulation function directly, rather than substituting one oral habit for another.',
+      ],
+      html: `<p>Planning this in advance — deciding on a specific replacement before quitting, rather than discovering after the fact that nail biting has quietly taken over — meaningfully reduces the odds of this particular substitution pattern taking hold.</p>`,
     },
     {
-      heading: `Managing two behaviour changes at once`,
-      body: `If nail biting has already emerged or worsened after quitting smoking, it's worth treating it as its own habit-change project rather than assuming it will resolve on its own once the transition period passes — for many people it doesn't, and instead consolidates into an independent habit that outlasts the original nicotine withdrawal by a wide margin. The same core approach applies: awareness training, a specific competing response, and ideally an external tool that catches the episodes self-monitoring misses, particularly during the early months when both the smoking-cessation adjustment and the emerging nail biting pattern are competing for the same limited self-regulatory resources.`,
+      heading: `How do you manage both changes at once?`,
+      body: `Treat the nail biting as its own habit-change project. If it has already emerged or worsened after quitting smoking, don't assume it will resolve on its own once the transition period passes — for many people it doesn't, and instead consolidates into an independent habit that outlasts the original nicotine withdrawal by a wide margin.\n\nThe same core approach applies: awareness training, a specific competing response, and ideally an external tool that catches the episodes self-monitoring misses. That matters most during the early months, when both the smoking-cessation adjustment and the emerging nail biting pattern are competing for the same limited self-regulatory resources.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2553,29 +2585,36 @@ BLOG_POSTS.push({
   seoTitle: 'What Worked for People Who Quit Nail Biting',
   description: "Online communities are full of nail biting advice, but not all of it holds up. Which commonly repeated tips align with the research — and which don't.",
   tag: 'Treatment',
-  readingMinutes: 3,
+  readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `What people commonly report trying`,
-      body: `Across online forums and communities where people discuss quitting nail biting, a fairly consistent set of approaches comes up again and again: bitter-tasting polish, getting acrylic or gel extensions as a temporary physical barrier, keeping nails filed very short, various fidget objects, and — recurring frequently in more recent discussions — using some form of tracking or accountability, whether a habit-tracking app, a visible tally, or telling other people about the goal to add social accountability.\n\nWhat's notable is how closely this informal, crowd-sourced list overlaps with the clinically studied approaches, even though most people posting arrived at these methods through trial and error rather than reading the research directly.`,
+      heading: `What actually worked for people who quit nail biting?`,
+      body: `What people report working is rarely a single product: an awareness tool plus a specific competing response, sustained for several weeks, with setbacks treated as data rather than failure. Single products used in isolation are what people report abandoning.\n\nAcross online forums and communities where people discuss quitting nail biting, a fairly consistent set of approaches comes up again and again.\n\nWhat's notable is how closely this informal, crowd-sourced list overlaps with the clinically studied approaches, even though most people posting arrived at these methods through trial and error rather than reading the research directly.`,
+      list: [
+        'Bitter-tasting polish — the most commonly named product. The recurring complaint is cost, because it has to be reapplied continually.',
+        'Acrylic or gel extensions — used as a temporary physical barrier. Also a recurring cost complaint, because fills are ongoing.',
+        'Keeping nails filed very short — cheap and repeatedly mentioned, but as one component rather than a standalone fix.',
+        'Fidget objects — squeezing a stress ball or gripping something when the urge hits. This is HRT\'s competing response, arrived at independently.',
+        'Tracking and accountability — a habit-tracking app, a visible tally, or telling other people about the goal. This is HRT\'s awareness training, and it addresses the finding that self-monitoring alone catches fewer than half of biting episodes.',
+      ],
     },
     {
-      heading: `Themes that align with clinical evidence`,
-      body: `A few recurring themes from these communities track closely with what the clinical literature on Habit Reversal Training supports. People frequently describe a "noticing" phase — becoming more aware of when and why they bite — as a turning point, which matches the emphasis HRT places on awareness training as the foundational component. Reports of using a specific replacement action (squeezing a stress ball, gripping something) when the urge hits align directly with the competing-response component of HRT. And a commonly repeated observation — that trying to "just stop" through willpower alone rarely works, while some form of external reminder or accountability does — matches the clinical finding that self-monitoring alone catches fewer than half of biting episodes.`,
+      heading: `Which community advice matches the clinical evidence?`,
+      body: `Three themes track closely with what the clinical literature on Habit Reversal Training supports.\n\nPeople frequently describe a "noticing" phase — becoming more aware of when and why they bite — as a turning point. That matches the emphasis HRT places on awareness training as the foundational component.\n\nReports of using a specific replacement action (squeezing a stress ball, gripping something) when the urge hits align directly with the competing-response component of HRT.\n\nAnd a commonly repeated observation — that trying to "just stop" through willpower alone rarely works, while some form of external reminder or accountability does — matches the clinical finding that self-monitoring alone catches fewer than half of biting episodes.`,
     },
     {
-      heading: `Popular tips with weaker evidence behind them`,
-      body: `Some frequently repeated advice is less well supported. Suggestions to simply "find more willpower" or "just be more disciplined," while common, run against the basic mechanics of how automatic habits work and tend to produce the frustrating short-term-success-then-relapse pattern that's also commonly reported. Extreme aversive methods (some communities discuss things like hot sauce or unpleasant substances beyond commercially formulated bitter polishes) carry more risk of irritation or injury without added benefit over a properly formulated product, and aren't something dermatologists generally recommend.\n\nClaims that a single product or method is a guaranteed fix for everyone should generally be read skeptically — what recurs across genuine success stories is usually a combination of approaches sustained consistently over weeks, not a single silver-bullet product.`,
+      heading: `Which popular tips are weakly supported?`,
+      body: `Some frequently repeated advice is less well supported. Suggestions to simply "find more willpower" or "just be more disciplined," while common, run against the basic mechanics of how automatic habits work, and tend to produce the frustrating short-term-success-then-relapse pattern that's also commonly reported.\n\nExtreme aversive methods — some communities discuss hot sauce or unpleasant substances beyond commercially formulated bitter polishes — carry more risk of irritation or injury without added benefit over a properly formulated product, and aren't something dermatologists generally recommend.\n\nClaims that a single product or method is a guaranteed fix for everyone should generally be read skeptically. What recurs across genuine success stories is usually a combination of approaches sustained consistently over weeks, not a single silver-bullet product.`,
     },
     {
-      heading: `Common frustrations reported`,
-      body: `A recurring frustration in these discussions is relapse — people report stopping successfully for weeks or months and then resuming, often during a stressful period, and describing this as feeling like starting over from failure. This pattern is consistent with what the neuroscience of habit change predicts: the original habit pathway isn't erased by successful behaviour change, only suppressed by a newer competing pathway, and stress can temporarily shift the balance back. Framing a relapse as a data point to learn from, rather than a reset to zero, is a distinction that separates people who eventually succeed from those who give up after a single setback.\n\nCost is another recurring theme — people weighing the ongoing expense of reapplying bitter polish or getting regular acrylic fills against one-time purchases like fidget tools or detection apps.`,
+      heading: `What do people find most frustrating?`,
+      body: `Relapse. People report stopping successfully for weeks or months and then resuming, often during a stressful period, and describe this as feeling like starting over from failure.\n\nThis pattern is consistent with what the neuroscience of habit change predicts: the original habit pathway isn't erased by successful behaviour change, only suppressed by a newer competing pathway, and stress can temporarily shift the balance back.\n\nFraming a relapse as a data point to learn from, rather than a reset to zero, is a distinction that separates people who eventually succeed from those who give up after a single setback.\n\nCost is another recurring theme — people weighing the ongoing expense of reapplying bitter polish or getting regular acrylic fills against one-time purchases like fidget tools or detection apps.`,
     },
     {
-      heading: `What separates people who succeed from those who don't`,
-      body: `Reading across enough of these discussions, a pattern emerges that matches the clinical picture: people who report lasting success tend to combine multiple approaches (an awareness tool plus a specific competing response, rather than relying on just one), tend to treat setbacks as information rather than failure, and tend to stick with an approach for at least several weeks rather than abandoning it after a few days because it didn't produce immediate results. People who report ongoing frustration more often describe trying single products in isolation, expecting fast results, and switching methods frequently rather than giving any one combination sustained time to work.`,
+      heading: `What separates the people who succeed?`,
+      body: `Three habits, reading across enough of these discussions, and they match the clinical picture.\n\nPeople who report lasting success tend to combine multiple approaches — an awareness tool plus a specific competing response, rather than relying on just one. They tend to treat setbacks as information rather than failure. And they tend to stick with an approach for at least several weeks rather than abandoning it after a few days because it didn't produce immediate results.\n\nPeople who report ongoing frustration more often describe trying single products in isolation, expecting fast results, and switching methods frequently rather than giving any one combination sustained time to work.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2589,27 +2628,38 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `What actually gets swallowed`,
-      body: `Nail biting doesn't just transfer bacteria to the mouth — a portion of what's bitten is swallowed, including subungual bacteria, small keratin fragments from the nail itself, and whatever else has accumulated under the nail from daily activity (dirt, residue from surfaces touched throughout the day). This is a distinct pathway from the more commonly discussed oral-transfer risks (infection, HPV transmission) — it's specifically about what continues past the mouth into the digestive tract, where the gut microbiome and immune system have to process it.`,
+      heading: `What does swallowing bitten nails do to your gut?`,
+      body: `Less than you might expect. Stomach acid neutralises a significant portion of what is swallowed, and a healthy gut is not overwhelmed by it. Direct research linking nail biting to measurable microbiome disruption is limited.\n\nNail biting doesn't just transfer bacteria to the mouth — a portion of what's bitten is swallowed. Three things go down with it.`,
+      list: [
+        'Subungual bacteria — the population living under the nail, including certain Staphylococcus and Enterobacteriaceae strains.',
+        'Small keratin fragments from the nail plate itself.',
+        'Whatever else has accumulated under the nail from daily activity — dirt, and residue from surfaces touched through the day.',
+      ],
+      html: `<p>This is a distinct pathway from the more commonly discussed oral-transfer risks such as infection and HPV transmission. It is specifically about what continues past the mouth into the digestive tract, where the gut microbiome and immune system have to process it.</p>`,
     },
     {
-      heading: `How the gut handles repeated bacterial exposure`,
-      body: `The digestive system is well equipped to handle a constant, varied influx of microbes — that's essentially what eating food involves — and stomach acid neutralises a significant portion of ingested bacteria before it reaches the intestines. Occasional or even fairly frequent nail biting doesn't represent an exposure level that overwhelms this system in a healthy gut; it's simply added to the baseline microbial traffic the digestive system processes continuously.\n\nWhat's different about nail biting specifically, compared to general dietary microbial exposure, is the source: subungual bacteria include species (certain Staphylococcus and Enterobacteriaceae strains) that are less commonly present in food in the same concentration, and repeated exposure to the same specific bacterial population, day after day, is a somewhat different pattern than the more varied exposure from diet.`,
+      heading: `How does the gut handle repeated bacterial exposure?`,
+      body: `Well, in most cases. The digestive system is equipped to handle a constant, varied influx of microbes — that's essentially what eating food involves — and stomach acid neutralises a significant portion of ingested bacteria before it reaches the intestines.\n\nOccasional or even fairly frequent nail biting doesn't represent an exposure level that overwhelms this system in a healthy gut. It's simply added to the baseline microbial traffic the digestive system processes continuously.\n\nWhat's different about nail biting specifically, compared to general dietary microbial exposure, is the source. Subungual bacteria include species that are less commonly present in food in the same concentration, and repeated exposure to the same specific bacterial population day after day is a somewhat different pattern than the more varied exposure from diet.`,
     },
     {
-      heading: `Microbiome disruption: what's known and what's speculative`,
-      body: `Direct research connecting nail biting specifically to measurable gut microbiome disruption is limited — this is a genuinely under-studied intersection, and most of what's said about it publicly extrapolates from broader microbiome research rather than resting on dedicated studies of nail biters. What is established more generally is that the gut microbiome is influenced by a wide range of exposures, and that repeated introduction of a non-dietary bacterial population is plausible as a contributing factor to microbiome composition, without this being confirmed as a significant effect specifically from nail biting at typical frequencies.\n\nIt's worth being cautious about overstating this connection — the more solidly evidenced physical health risks of nail biting (dental damage, nail-fold infection, direct pathogen transmission) remain the primary basis for treating it as a health issue, with the gut-microbiome angle representing a plausible but not yet well-quantified additional consideration.`,
+      heading: `Does nail biting disrupt the gut microbiome?`,
+      body: `Not established either way. Direct research connecting nail biting specifically to measurable gut microbiome disruption is limited — a genuinely under-studied intersection, where most of what is said publicly extrapolates from broader microbiome research rather than resting on dedicated studies of nail biters.\n\nWhat is established more generally is that the gut microbiome is influenced by a wide range of exposures, and that repeated introduction of a non-dietary bacterial population is plausible as a contributing factor to microbiome composition. That is not the same as a confirmed effect from nail biting at typical frequencies.\n\nIt's worth being cautious about overstating this connection. The more solidly evidenced physical health risks of nail biting — dental damage, nail-fold infection, direct pathogen transmission — remain the primary basis for treating it as a health issue, with the gut-microbiome angle a plausible but not yet well-quantified addition.`,
     },
     {
-      heading: `Digestive symptoms occasionally linked to nail biting`,
-      body: `Some nail biters, particularly those who bite very frequently or who bite down to the point of consistent minor bleeding, report mild digestive symptoms they attribute to the habit — though this is based on individual reports rather than controlled research establishing a causal link. Parasitic transmission (pinworms in particular) is the pathway with the clearest documented connection between nail biting and a digestive-system health outcome, since pinworm eggs are directly ingested via the same oral route.\n\nFor most nail biters without a specific parasitic exposure, digestive impact from the habit is likely to be minor relative to other, better-established dietary and lifestyle factors that shape gut health.`,
+      heading: `Can nail biting cause digestive symptoms?`,
+      body: `Parasitic transmission — pinworms in particular — is the pathway with the clearest documented connection between nail biting and a digestive-system health outcome, since pinworm eggs are directly ingested via the same oral route.\n\nBeyond that, some nail biters — particularly those who bite very frequently, or who bite down to the point of consistent minor bleeding — report mild digestive symptoms they attribute to the habit. This is based on individual reports rather than controlled research establishing a causal link.\n\nFor most nail biters without a specific parasitic exposure, digestive impact from the habit is likely to be minor relative to other, better-established dietary and lifestyle factors that shape gut health.`,
     },
     {
-      heading: `Reducing the gut-health angle`,
-      body: `If the gut-health dimension is part of your motivation to address nail biting, the practical steps are the same ones that reduce the broader infection risk: frequent hand washing (reducing the bacterial load available to be swallowed in the first place), keeping nails filed short, and reducing overall biting frequency, which is the only intervention that addresses the ingestion pathway directly rather than just reducing the microbial load per episode.`,
+      heading: `How do you reduce the ingestion risk?`,
+      body: `The practical steps are the same ones that reduce the broader infection risk.`,
+      list: [
+        'Frequent hand washing — reduces the bacterial load available to be swallowed in the first place.',
+        'Keeping nails filed short.',
+        'Reducing overall biting frequency — the only intervention that addresses the ingestion pathway directly, rather than just reducing the microbial load per episode.',
+      ],
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2622,8 +2672,12 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
+    {
+      heading: `Which products actually stop nail biting?`,
+      body: `It depends on your pattern. Mild, occasional biting usually needs only a bitter-tasting polish. Biting you rarely catch yourself doing needs a detection or alarm-based tool. A long-established, severe habit needs categories combined, not one product.\n\nThere are four product categories worth knowing before you buy. Each is covered below, and the final section matches them back to patterns.`,
+    },
     {
       heading: `Bitter-taste polishes`,
       body: `Bitter-tasting nail polishes (Mavala Stop, Orly No Bite, Control-It, and similar formulations) contain denatonium benzoate, one of the most bitter compounds known, applied to the nails to produce an immediate aversive taste the moment fingers reach the mouth. They're inexpensive, widely available, and require no special equipment — just reapplication every few days and after hand washing.\n\nThe main limitation is consistency: real-world compliance is imperfect because people forget to reapply, and the polish doesn't address the underlying automatic habit loop on its own. Best used as an adjunct to an awareness-based approach rather than a standalone fix, and particularly effective for milder or newly-formed habits, including in children.`,
@@ -2840,8 +2894,12 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
+    {
+      heading: `Can a gel manicure stop nail biting?`,
+      body: `It deters rather than interrupts. The hard, smooth coating removes the ragged edges that trigger episodes, but gel doesn't taste unpleasant, so it can't stop a bite on contact. Best for milder to moderate biters.`,
+    },
     {
       heading: `What a gel manicure actually is`,
       body: `A gel (or shellac) manicure applies a soak-off polish that's cured under UV or LED light, bonding tightly to the natural nail surface. Unlike acrylics or hard gel extensions, it doesn't add length or significant structural thickness — it's a durable coating over your own nail, typically lasting two to three weeks without chipping, compared to a few days for regular polish.\n\nBecause it's a coating rather than an extension, it's a lower-commitment, generally less expensive option than acrylics, and it's the option most frequently suggested to people whose nails are healthy enough to not need a structural extension but who want a barrier against biting.`,
@@ -2879,27 +2937,46 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why the cuticle takes the brunt of the damage`,
-      body: `The cuticle — the thin layer of skin at the base of the nail — serves a specific protective function: it seals the space between the nail plate and the surrounding skin, blocking bacteria and moisture from entering the nail matrix (the tissue underneath that produces new nail growth). Chronic nail biters frequently bite not just the nail itself but the cuticle and surrounding skin, since the ragged edges of a bitten nail often extend into this area and become an accessible target once the visible nail plate is already short.\n\nThis matters because the cuticle isn't just cosmetic — damaging it repeatedly compromises the seal that protects the nail matrix, which is part of why chronic nail biters see a higher rate of nail-fold infection and irregular nail growth than people who only bite the nail plate itself.`,
+      heading: `How long does cuticle damage from nail biting take to heal?`,
+      body: `Cuticle tissue regenerates on its own, but only once the biting stops — repair cannot outpace an active habit. With daily cuticle oil and moisturising, most damage resolves. Changes still present months after biting has stopped warrant a dermatologist.\n\nWhat follows is the mechanics of how the damage happens, the specific forms it takes, and the repair routine that speeds recovery once biting is under control.`,
     },
     {
-      heading: `The specific damage pattern`,
-      body: `Repeated cuticle biting produces a recognisable pattern: thickened, uneven cuticle tissue from repeated micro-trauma and the body's healing response to it; hangnails, which are small torn pieces of the cuticle or surrounding skin that themselves become a trigger for further biting (a self-perpetuating cycle many nail biters describe — biting creates a hangnail, the hangnail feels irritating, biting it off creates another); and, in more severe cases, bleeding and visible open skin around the nail base that increases infection risk substantially compared to nail-plate biting alone.`,
+      heading: `Why does the cuticle take the brunt of the damage?`,
+      body: `Because it is the seal, and it sits where a bitten nail runs out of nail. The cuticle — the thin layer of skin at the base of the nail — serves a specific protective function: it seals the space between the nail plate and the surrounding skin, blocking bacteria and moisture from entering the nail matrix, the tissue underneath that produces new nail growth.\n\nChronic nail biters frequently bite not just the nail itself but the cuticle and surrounding skin, since the ragged edges of a bitten nail often extend into this area and become an accessible target once the visible nail plate is already short.\n\nThis matters because the cuticle isn't just cosmetic. Damaging it repeatedly compromises the seal that protects the nail matrix, which is part of why chronic nail biters see a higher rate of nail-fold infection and irregular nail growth than people who only bite the nail plate itself.`,
     },
     {
-      heading: `The hangnail-biting feedback loop`,
-      body: `Hangnails deserve specific attention because they create their own mini feedback loop independent of the broader nail biting habit. A small torn piece of skin is physically irritating in a way that draws attention and creates an urge to remove it — often with teeth, since that's the most immediately accessible tool. Removing it with teeth frequently tears the skin further rather than cleanly, creating a new, larger hangnail or a small wound, which restarts the cycle.\n\nBreaking this specific loop benefits from a different tool than general nail-biting competing responses: keeping small, clean nail clippers or a cuticle trimmer accessible so hangnails can be removed properly rather than bitten, interrupting the cycle at its source.`,
+      heading: `What does the damage actually look like?`,
+      body: `Repeated cuticle biting produces a recognisable pattern, in roughly increasing order of severity.`,
+      list: [
+        'Thickened, uneven cuticle tissue — the result of repeated micro-trauma and the body\'s healing response to it.',
+        'Hangnails — small torn pieces of the cuticle or surrounding skin that themselves become a trigger for further biting. Biting creates a hangnail, the hangnail feels irritating, biting it off creates another.',
+        'Bleeding and visible open skin around the nail base — in more severe cases. This increases infection risk substantially compared to nail-plate biting alone.',
+      ],
     },
     {
-      heading: `How to repair cuticle damage`,
-      body: `Cuticle tissue does regenerate, but healing is slower when it's repeatedly disrupted by ongoing biting — repair essentially can't outpace an active habit. Once biting has stopped or significantly reduced, a consistent cuticle care routine speeds recovery: a nourishing cuticle oil applied daily (look for ingredients like jojoba oil or vitamin E, which support skin barrier repair) softens tissue and reduces the cracking that leads to hangnails in the first place; gently pushing back (never cutting) softened cuticle after a shower, when tissue is more pliable, maintains a clean edge without the trauma of cutting; and keeping hands moisturised generally reduces the dryness that makes cuticles prone to cracking and catching.`,
+      heading: `Why do hangnails keep the cycle going?`,
+      body: `Because a hangnail is its own trigger, independent of the broader nail biting habit. A small torn piece of skin is physically irritating in a way that draws attention and creates an urge to remove it — often with teeth, since that's the most immediately accessible tool.\n\nRemoving it with teeth frequently tears the skin further rather than cleanly, creating a new, larger hangnail or a small wound, which restarts the cycle.\n\nBreaking this specific loop benefits from a different tool than general nail-biting competing responses: keeping small, clean nail clippers or a cuticle trimmer accessible, so hangnails can be removed properly rather than bitten, interrupting the cycle at its source.`,
     },
     {
-      heading: `When cuticle damage needs professional attention`,
-      body: `Most cuticle damage from nail biting resolves with time and basic care once the biting itself is under control. It's worth seeing a dermatologist if there's persistent redness, warmth, swelling, or pus around the nail fold (signs of an active infection rather than simple mechanical damage), if the same area keeps getting reinjured despite reduced biting (which can indicate a slow-healing infection or a habit that's shifted to a related behaviour like skin picking), or if cuticle changes persist for months after biting has genuinely stopped, which occasionally indicates a fungal infection that's taken hold in the compromised tissue and needs targeted treatment.`,
+      heading: `How do you repair cuticle damage?`,
+      body: `Stop the biting first, then run a consistent care routine. Cuticle tissue does regenerate, but healing is slower when it's repeatedly disrupted by ongoing biting — repair essentially can't outpace an active habit. Once biting has stopped or significantly reduced, three things speed recovery.`,
+      list: [
+        'A nourishing cuticle oil applied daily — look for ingredients like jojoba oil or vitamin E, which support skin barrier repair. It softens tissue and reduces the cracking that leads to hangnails in the first place.',
+        'Gently pushing back softened cuticle after a shower, when tissue is more pliable — never cutting it. This maintains a clean edge without the trauma of cutting.',
+        'Keeping hands moisturised generally, which reduces the dryness that makes cuticles prone to cracking and catching.',
+      ],
+    },
+    {
+      heading: `When does cuticle damage need a doctor?`,
+      body: `Most cuticle damage from nail biting resolves with time and basic care once the biting itself is under control. Three situations are worth taking to a dermatologist.`,
+      list: [
+        'Persistent redness, warmth, swelling, or pus around the nail fold — signs of an active infection rather than simple mechanical damage.',
+        'The same area getting reinjured despite reduced biting, which can indicate a slow-healing infection or a habit that has shifted to a related behaviour like skin picking.',
+        'Cuticle changes that persist for months after biting has genuinely stopped, which occasionally indicates a fungal infection that has taken hold in the compromised tissue and needs targeted treatment.',
+      ],
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2986,27 +3063,34 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Two different levels of intervention`,
-      body: `A nail biting app and formal therapy aren't strictly competing options — they sit at different points on an intervention-intensity spectrum, and for many people the right answer involves one, the other, or both in sequence rather than a single exclusive choice. Understanding what each is actually built to do makes the comparison more useful than treating it as a simple either-or decision.`,
+      heading: `Nail biting app vs therapy: which is right for you?`,
+      body: `Start with an app if biting is moderate and not tied to significant anxiety or depression. Move to therapy if a structured self-directed approach has failed for 8–10 weeks, or if distress affects daily functioning. Neither excludes the other.\n\nAn app is not a substitute for professional care, and this page is not a recommendation to skip it. The two sit at different points on an intervention-intensity spectrum, and for many people the right answer involves one, the other, or both in sequence rather than a single exclusive choice.`,
+      html: `<table><thead><tr><th></th><th>Detection or tracking app</th><th>Therapy with a BFRB-experienced clinician</th></tr></thead><tbody>` +
+        `<tr><td>Cost</td><td>Typically an inexpensive monthly or annual subscription, usable indefinitely at the same low cost</td><td>Substantially more per session; often requires insurance navigation or significant out-of-pocket expense</td></tr>` +
+        `<tr><td>Access</td><td>Immediately accessible without a referral or appointment; usable entirely privately, without discussing the habit with another person</td><td>Bounded by session availability and scheduling; may require a referral or appointment</td></tr>` +
+        `<tr><td>Wait time</td><td>None — no scheduling and no waiting list</td><td>May involve a waiting list for a therapist with specific BFRB experience</td></tr>` +
+        `<tr><td>What it treats</td><td>Specific components of Habit Reversal Training: awareness through logging or detection, and — for detection-based tools — the external-feedback component that catches episodes self-monitoring misses</td><td>The cognitive and emotional layer: why the habit developed, co-occurring anxiety or perfectionism, an underlying mood disorder that needs its own treatment, and real-time troubleshooting when a standard competing response isn't working</td></tr>` +
+        `<tr><td>Best for</td><td>Moderate nail biting that isn't tied to significant anxiety or depression, where a structured approach hasn't yet had a genuine multi-week try</td><td>Severe cases, co-occurring BFRBs, or nail biting tied closely to significant psychological distress</td></tr>` +
+        `</tbody></table>`,
     },
     {
-      heading: `What a detection or tracking app provides`,
-      body: `Apps built around real-time detection or habit tracking directly automate specific components of Habit Reversal Training: awareness (through logging or detection) and, for detection-based tools, the external-feedback component that catches episodes self-monitoring misses. They're available immediately, don't require scheduling or waiting lists, cost a fraction of therapy (typically a small monthly subscription versus per-session therapy rates), and can be used entirely privately without discussing the habit with another person.\n\nWhat they don't provide is the cognitive and emotional layer that therapy adds — exploring why the habit developed, addressing co-occurring anxiety or perfectionism, or adapting the approach in real time based on a trained clinician's assessment of what's and isn't working for your specific case.`,
+      heading: `What does a detection or tracking app provide?`,
+      body: `It automates specific components of Habit Reversal Training: awareness, through logging or detection, and — for detection-based tools — the external-feedback component that catches episodes self-monitoring misses.\n\nThey're available immediately, don't require scheduling or waiting lists, cost a fraction of therapy (typically a small monthly subscription versus per-session therapy rates), and can be used entirely privately without discussing the habit with another person.\n\nWhat they don't provide is the cognitive and emotional layer that therapy adds — exploring why the habit developed, addressing co-occurring anxiety or perfectionism, or adapting the approach in real time based on a trained clinician's assessment of what is and isn't working for your specific case.`,
     },
     {
-      heading: `What therapy provides that an app can't`,
-      body: `A therapist experienced in BFRBs brings clinical judgment that adapts to complexity an app can't — identifying when nail biting is secondary to an underlying anxiety or mood disorder that needs its own treatment, working through the specific cognitive patterns (perfectionism, self-criticism) that maintain the habit for a given individual, and providing real-time troubleshooting when a standard competing response isn't working for a particular person's specific triggers. For severe cases, co-occurring BFRBs, or nail biting tied closely to significant psychological distress, this level of individualised support tends to produce better outcomes than a standalone tool.`,
+      heading: `What does therapy provide that an app can't?`,
+      body: `Clinical judgment that adapts to complexity. A therapist experienced in BFRBs can identify when nail biting is secondary to an underlying anxiety or mood disorder that needs its own treatment.\n\nThey can also work through the specific cognitive patterns — perfectionism, self-criticism — that maintain the habit for a given individual, and provide real-time troubleshooting when a standard competing response isn't working for a particular person's triggers.\n\nFor severe cases, co-occurring BFRBs, or nail biting tied closely to significant psychological distress, this level of individualised support tends to produce better outcomes than a standalone tool.`,
     },
     {
-      heading: `Cost and access comparison`,
-      body: `Apps are typically priced as an inexpensive monthly or annual subscription, immediately accessible without a referral or appointment, and usable indefinitely at the same low cost. Therapy costs substantially more per session, often requires insurance navigation or significant out-of-pocket expense, may involve a waiting list for a therapist with specific BFRB experience, and is bounded by session availability and scheduling. For straightforward, moderate-severity nail biting without significant co-occurring psychological factors, this cost and access gap alone makes an app the more practical first step for most people.`,
+      heading: `How do cost and access compare?`,
+      body: `The gap is wide enough to decide the first step on its own for most people. Apps are typically priced as an inexpensive monthly or annual subscription, immediately accessible without a referral or appointment, and usable indefinitely at the same low cost.\n\nTherapy costs substantially more per session, often requires insurance navigation or significant out-of-pocket expense, may involve a waiting list for a therapist with specific BFRB experience, and is bounded by session availability and scheduling.\n\nFor straightforward, moderate-severity nail biting without significant co-occurring psychological factors, this cost and access gap alone makes an app the more practical first step. It does not make it the better treatment for every case.`,
     },
     {
-      heading: `A reasonable decision framework`,
-      body: `Start with an app or self-directed method if your nail biting is moderate, isn't tied to significant anxiety or depression, and you haven't yet given a structured approach a genuine multi-week try. Move to therapy if you've tried a structured self-directed approach consistently for 8–10 weeks without meaningful improvement, if the habit is closely entangled with anxiety, perfectionism, or another BFRB that itself needs attention, or if the distress around the habit has become significant enough to affect daily functioning. The two aren't mutually exclusive — many people use an app for ongoing daily awareness and tracking while also working with a therapist on the underlying psychological drivers, getting the immediate practical support of one and the deeper clinical work of the other.`,
+      heading: `When should you switch from an app to therapy?`,
+      body: `Start with an app or self-directed method if your nail biting is moderate, isn't tied to significant anxiety or depression, and you haven't yet given a structured approach a genuine multi-week try.\n\nMove to therapy if you have tried a structured self-directed approach consistently for 8–10 weeks without meaningful improvement, if the habit is closely entangled with anxiety, perfectionism or another BFRB that itself needs attention, or if the distress around the habit has become significant enough to affect daily functioning.\n\nThe two aren't mutually exclusive. Many people use an app for ongoing daily awareness and tracking while also working with a therapist on the underlying psychological drivers, getting the immediate practical support of one and the deeper clinical work of the other.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3283,13 +3367,13 @@ BLOG_POSTS.push({
   title: `Can Press-On Nails Stop Nail Biting? A Practical Look`,
   description: `Press-on nails are a cheap, temporary alternative to acrylics for deterring nail biting. This article covers how they compare and whether they actually work.`,
   tag: 'Treatment',
-  readingMinutes: 2,
+  readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `What press-on nails are and why they come up`,
-      body: `Press-on nails are pre-shaped, pre-designed artificial nails applied at home with adhesive tabs or glue, requiring no salon visit, no curing light, and no professional application. They've improved significantly in quality in recent years — modern press-ons can look close to a professional set and last one to two weeks with proper application — which has made them a more frequently mentioned option for nail biting management than they were previously, largely because they solve the cost and accessibility limitations of salon-based acrylics.`,
+      heading: `Can press-on nails stop nail biting?`,
+      body: `They deter it the same way acrylics do — a hard, structured nail is harder to bite through, and the changed sensation interrupts the automatic motion. They cost a fraction of salon acrylics, but are less durable and pop off more.\n\nPress-on nails are pre-shaped, pre-designed artificial nails applied at home with adhesive tabs or glue, requiring no salon visit, no curing light, and no professional application. They've improved significantly in quality in recent years — modern press-ons can look close to a professional set and last one to two weeks with proper application — which has made them a more frequently mentioned option for nail biting management than they were previously, largely because they solve the cost and accessibility limitations of salon-based acrylics.`,
     },
     {
       heading: `How they compare to acrylics as a deterrent`,
@@ -3386,27 +3470,32 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why this is one of the most common questions`,
-      body: `For many nail biters, whether the damage is permanent is a bigger motivator to stop than any other single factor — the fear that years of biting have caused irreversible change is common, and often more or less severe than reality depending on the specific type of damage involved. The honest answer is nuanced: most nail biting damage is fully reversible, some is slowly and partially reversible, and a smaller category of more severe damage can leave lasting change.`,
+      heading: `Does nail biting cause permanent damage?`,
+      body: `Usually not. The nail plate regrows completely from the matrix in roughly three to six months once biting stops, and cuticle tissue regenerates with basic care. Permanent change is limited to repeated, severe injury to the nail matrix itself.\n\nFor many nail biters, whether the damage is permanent is a bigger motivator to stop than any other single factor. The fear that years of biting have caused irreversible change is common, and often more or less severe than reality depending on the specific type of damage involved.\n\nThe honest answer is nuanced: most nail biting damage is fully reversible, some is slowly and partially reversible, and a smaller category of more severe damage can leave lasting change.`,
+      list: [
+        'Fully reversible — the nail plate itself, cuticle tissue, and most nail-fold skin irritation, provided no infection is lingering.',
+        'Slowly or partially reversible — nail plate ridging, unevenness or thickening from matrix trauma, and cuticle tissue thickened by years of micro-trauma.',
+        'Potentially permanent — a nail that grows back altered in shape or texture after significant, repeated trauma to the nail matrix. This is the exception, not the typical outcome.',
+      ],
     },
     {
-      heading: `What reliably heals completely`,
-      body: `The nail plate itself is fully regenerative — a nail grows out completely from the matrix (the tissue at the base that produces new nail) over roughly three to six months for fingernails, meaning even severely short, bitten nails will regrow to a normal length and typically normal shape once biting stops, following the standard regrowth timeline. Cuticle tissue also regenerates well with basic care, as does most nail-fold skin irritation, provided it isn't complicated by a lingering infection. For the large majority of nail biters — even long-term ones — stopping the habit results in essentially complete physical recovery within several months.`,
+      heading: `What heals completely?`,
+      body: `The nail plate itself is fully regenerative. A nail grows out completely from the matrix — the tissue at the base that produces new nail — over roughly three to six months for fingernails. Even severely short, bitten nails will regrow to a normal length and typically normal shape once biting stops, following the standard regrowth timeline.\n\nCuticle tissue also regenerates well with basic care, as does most nail-fold skin irritation, provided it isn't complicated by a lingering infection.\n\nFor the large majority of nail biters — even long-term ones — stopping the habit results in essentially complete physical recovery within several months.`,
     },
     {
-      heading: `What heals more slowly or partially`,
-      body: `Nail plate texture changes — ridging, unevenness, or thickening that developed from repeated matrix trauma — often improve substantially but may not return to a perfectly smooth baseline for a longer period, sometimes over a year or more of consistent regrowth cycles, since matrix tissue that's been repeatedly disrupted needs multiple full regrowth cycles to fully normalise its output. Similarly, cuticle tissue that's been chronically thickened through years of repeated micro-trauma can take an extended period of consistent care to return to a thin, healthy baseline, even though it will improve steadily throughout that period.`,
+      heading: `What heals slowly or only partially?`,
+      body: `Nail plate texture changes — ridging, unevenness, or thickening that developed from repeated matrix trauma — often improve substantially, but may not return to a perfectly smooth baseline for a longer period, sometimes over a year or more of consistent regrowth cycles. Matrix tissue that's been repeatedly disrupted needs multiple full regrowth cycles to fully normalise its output.\n\nSimilarly, cuticle tissue that's been chronically thickened through years of repeated micro-trauma can take an extended period of consistent care to return to a thin, healthy baseline, even though it will improve steadily throughout that period.`,
     },
     {
-      heading: `What can be genuinely permanent`,
-      body: `The clearest case of permanent damage is significant, repeated trauma to the nail matrix itself — the tissue that produces the nail. Severe, chronic damage to this specific tissue (more common with very severe, long-term biting that extends beyond the nail plate into the matrix area, or with co-occurring compulsive picking at the nail bed) can, in some cases, result in a nail that grows back permanently altered in shape or texture rather than returning to its original baseline, since matrix tissue has more limited regenerative capacity than the nail plate itself once significantly scarred. This is the exception rather than the typical outcome, and is more associated with the most severe end of the nail biting severity spectrum than with typical chronic biting.`,
+      heading: `What can be genuinely permanent?`,
+      body: `The clearest case of permanent damage is significant, repeated trauma to the nail matrix itself — the tissue that produces the nail. This is more common with very severe, long-term biting that extends beyond the nail plate into the matrix area, or with co-occurring compulsive picking at the nail bed.\n\nSevere, chronic damage to that specific tissue can, in some cases, result in a nail that grows back permanently altered in shape or texture rather than returning to its original baseline, since matrix tissue has more limited regenerative capacity than the nail plate itself once significantly scarred.\n\nThis is the exception rather than the typical outcome, and is more associated with the most severe end of the nail biting severity spectrum than with typical chronic biting.`,
     },
     {
-      heading: `What this means practically`,
-      body: `For the substantial majority of nail biters, the physical damage — however alarming it looks at its worst — is not a permanent state, and stopping at any point, even after many years, allows for essentially full nail and cuticle recovery over a period of months. This is worth knowing both as reassurance (the damage you're looking at right now is very likely reversible) and as motivation (the sooner biting stops, the less cumulative matrix trauma accumulates, keeping you further from the less common but real threshold where damage does become harder to fully reverse).`,
+      heading: `Is it too late to stop?`,
+      body: `No. For the substantial majority of nail biters, the physical damage — however alarming it looks at its worst — is not a permanent state. Stopping at any point, even after many years, allows for essentially full nail and cuticle recovery over a period of months.\n\nThis is worth knowing both as reassurance (the damage you're looking at right now is very likely reversible) and as motivation (the sooner biting stops, the less cumulative matrix trauma accumulates, keeping you further from the less common but real threshold where damage does become harder to fully reverse).`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3616,11 +3705,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why people reach for DIY over commercial polish`,
-      body: `Commercial bitter-tasting nail polishes (Mavala Stop, Orly No Bite) work through denatonium benzoate, a synthetic bittering agent. Some people prefer a DIY, essential-oil-based alternative — often citing a preference for "natural" ingredients, sensitivity to synthetic polish formulations, or simply working with what's already in the house. The most commonly used DIY options include neem oil (which has a naturally strong, bitter, somewhat medicinal taste and smell), bitter melon extract, and occasionally cayenne or other spice-infused oil blends.`,
+      heading: `Do DIY bitter remedies for nail biting work?`,
+      body: `Neem oil can work through the same aversive-conditioning principle as commercial bitter polish. The difference is durability: DIY oil applications wear off faster with hand washing and need more frequent reapplication to maintain the deterrent.\n\nCommercial bitter-tasting nail polishes (Mavala Stop, Orly No Bite) work through denatonium benzoate, a synthetic bittering agent. Some people prefer a DIY, essential-oil-based alternative — often citing a preference for "natural" ingredients, sensitivity to synthetic polish formulations, or simply working with what's already in the house. The most commonly used DIY options include neem oil (which has a naturally strong, bitter, somewhat medicinal taste and smell), bitter melon extract, and occasionally cayenne or other spice-infused oil blends.`,
     },
     {
       heading: `Do they actually taste bad enough to work?`,
@@ -3650,11 +3739,11 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why magnesium comes up for anxiety-driven habits`,
-      body: `Magnesium is an essential mineral involved in several biological processes relevant to stress regulation, including regulation of the HPA axis (the same stress-hormone system involved in cortisol release) and neurotransmitter function related to calming, inhibitory brain signalling (GABA pathways). Low magnesium status has been associated in some research with increased anxiety symptoms and impaired stress resilience, which is the basis for its common recommendation as a general anxiety-support supplement — and, by extension, for anxiety-driven nail biting specifically, given how strongly stress and anxiety are linked to biting frequency.`,
+      heading: `Can magnesium help with nail biting?`,
+      body: `Only indirectly, and only maybe. There is no dedicated clinical research on magnesium for nail biting. Any benefit would come via its effect on general anxiety and stress reactivity, and that evidence is stronger in people who are actually deficient.\n\nMagnesium is an essential mineral involved in several biological processes relevant to stress regulation, including regulation of the HPA axis (the same stress-hormone system involved in cortisol release) and neurotransmitter function related to calming, inhibitory brain signalling (GABA pathways). Low magnesium status has been associated in some research with increased anxiety symptoms and impaired stress resilience, which is the basis for its common recommendation as a general anxiety-support supplement — and, by extension, for anxiety-driven nail biting specifically, given how strongly stress and anxiety are linked to biting frequency.`,
     },
     {
       heading: `What the evidence actually supports`,
@@ -3985,27 +4074,27 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-10',
   sections: [
     {
-      heading: `Why transitions are a common trigger period`,
-      body: `Major life transitions — losing a job, moving to a new home, the end of a relationship, the death of someone close — share a common underlying feature relevant to nail biting: they represent periods of elevated, sustained stress combined with genuine uncertainty and disrupted routine, all layered on top of whatever emotional processing the specific situation requires. This combination is a particularly potent trigger environment, often producing noticeably increased nail biting even in people who've had the habit well under control for years, or triggering its emergence in people who've never had a significant issue with it before.`,
+      heading: `Why does nail biting get worse during major life changes?`,
+      body: `Because transitions combine three things at once: elevated, sustained stress, genuine uncertainty, and disrupted routine — layered on top of whatever emotional processing the situation itself demands. That combination can restart the habit even after years of control.\n\nLosing a job, moving to a new home, the end of a relationship, the death of someone close: all four share that underlying feature. It is a particularly potent trigger environment, and it also triggers the habit's emergence in people who have never had a significant issue with it before.`,
     },
     {
-      heading: `Job loss and financial uncertainty`,
-      body: `Job loss combines acute stress (the immediate disruption and financial concern) with a specific kind of unstructured time that removes the routine many people rely on, intentionally or not, to keep hands and attention occupied throughout the day. The uncertainty component — not knowing how long a job search will take, financial planning under ambiguity — creates a sustained, low-resolution stress that's harder to manage than an acute, time-limited stressor, since there's no clear endpoint to work toward, which can make the associated nail biting feel similarly open-ended and hard to address with typical short-term coping strategies.`,
+      heading: `Why does job loss make nail biting worse?`,
+      body: `Because it removes structure and adds open-ended uncertainty at the same time. The acute stress is the immediate disruption and financial concern. The subtler part is the unstructured time, which removes the routine many people rely on — intentionally or not — to keep hands and attention occupied through the day.\n\nThe uncertainty component matters on its own. Not knowing how long a job search will take, or planning finances under ambiguity, creates a sustained, low-resolution stress that is harder to manage than an acute, time-limited stressor, because there is no clear endpoint to work toward. That can make the associated nail biting feel similarly open-ended, and hard to address with typical short-term coping strategies.`,
     },
     {
-      heading: `Moving and environmental disruption`,
-      body: `Moving disrupts nearly every environmental factor that supports habit management — familiar surroundings, established routines, easy access to whatever competing-response tools or reminders were part of a previous management strategy. The logistics stress of moving itself (packing, financial cost, unfamiliarity with a new area) adds to this, and it's common for nail biting to spike specifically during the weeks immediately before and after a move, then gradually settle as routine re-establishes in the new environment.`,
+      heading: `Why does moving make nail biting spike?`,
+      body: `Because it disrupts nearly every environmental factor that supports habit management — familiar surroundings, established routines, and easy access to whatever competing-response tools or reminders were part of a previous strategy.\n\nThe logistics stress of moving itself adds to this: packing, financial cost, unfamiliarity with a new area. It's common for nail biting to spike specifically during the weeks immediately before and after a move, then gradually settle as routine re-establishes in the new environment.`,
     },
     {
-      heading: `Breakups and bereavement`,
-      body: `The end of a significant relationship and the death of someone close both involve genuine grief processing, which is emotionally and physically taxing in ways that deplete the same self-regulatory resources that habit management depends on — similar to the mechanism discussed for depression more broadly, where reduced capacity for sustained effort makes existing habits harder to manage, independent of motivation. These situations often also involve disrupted sleep, appetite changes, and social withdrawal, each of which independently affects self-regulation and, by extension, habit-driven behaviours like nail biting.`,
+      heading: `How do breakups and grief affect nail biting?`,
+      body: `They deplete the same self-regulatory resources that habit management depends on. The end of a significant relationship and bereavement — the death of someone close — both involve genuine grief processing, which is emotionally and physically taxing.\n\nThis is similar to the mechanism discussed for depression more broadly: reduced capacity for sustained effort makes existing habits harder to manage, independent of motivation.\n\nThese situations often also involve disrupted sleep, appetite changes and social withdrawal, each of which independently affects self-regulation and, by extension, habit-driven behaviours like nail biting.`,
     },
     {
-      heading: `A realistic approach during any major transition`,
-      body: `During any of these periods, it's reasonable to lower expectations for habit management specifically — this isn't the moment to expect the same level of consistent, disciplined effort you might manage during a stable period, and treating an increase in biting during a genuinely difficult transition as a personal failure adds unnecessary additional stress on top of an already taxing situation. Low-effort, low-friction tools (keeping nails filed short to reduce physical damage even if biting continues, a passive detection tool rather than one requiring active self-monitoring) tend to fit better during active crisis periods than approaches requiring significant sustained discipline. Once the acute phase of the transition has settled and some routine has re-established, returning to a more structured habit-reversal approach tends to be more effective than trying to force it during the most disrupted stretch itself.`,
+      heading: `What should you actually do during a transition?`,
+      body: `Lower the expectations, and lower the friction. This isn't the moment to expect the same consistent, disciplined effort you might manage during a stable period, and treating an increase in biting during a genuinely difficult transition as a personal failure adds unnecessary stress to an already taxing situation.\n\nLow-effort, low-friction tools fit better during active crisis periods than approaches requiring sustained discipline: keeping nails filed short to reduce physical damage even if biting continues, or a passive detection tool rather than one requiring active self-monitoring.\n\nOnce the acute phase has settled and some routine has re-established, returning to a more structured habit-reversal approach tends to be more effective than trying to force it during the most disrupted stretch itself.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4527,11 +4616,11 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-08-11',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'A theory with real appeal',
-        body: `The idea that nail biting is caused by a nutritional deficiency turns up constantly — usually iron, zinc, magnesium, or B vitamins, depending on who is telling you.\n\nIt is easy to see why it is attractive. It reframes a habit you feel bad about as a physiological need you cannot be blamed for, and it points at a solution that is cheap, available, and requires nothing difficult. That is a much nicer story than "you have a deeply grooved automatic behaviour that will take two months of consistent effort to change."\n\nUnfortunately the evidence does not really support it.`,
+        heading: 'Is nail biting a sign of vitamin deficiency?',
+        body: `The evidence does not support it. Nail biting is a deeply grooved automatic behaviour, not a physiological need. The deficiency story is attractive because it points at a cheap solution, not because it is well evidenced.\n\nThe idea that nail biting is caused by a nutritional deficiency turns up constantly — usually iron, zinc, magnesium, or B vitamins, depending on who is telling you.\n\nIt is easy to see why it is attractive. It reframes a habit you feel bad about as a physiological need you cannot be blamed for, and it points at a solution that is cheap, available, and requires nothing difficult. That is a much nicer story than "you have a deeply grooved automatic behaviour that will take two months of consistent effort to change."\n\nUnfortunately the evidence does not really support it.`,
       },
       {
         heading: 'Where the belief probably comes from',
@@ -4604,7 +4693,7 @@ BLOG_POSTS.push(
     dateModified: '2026-08-11',
     sections: [
       {
-        heading: 'The short answer',
+        heading: 'Is there medication for nail biting?',
         body: `There is no medication approved specifically for the treatment of nail biting. A handful of drugs are used off-label for body-focused repetitive behaviours more broadly, with mixed and generally modest evidence, mostly studied in skin picking and hair pulling rather than nail biting itself.\n\nThat is a less satisfying answer than "take this," but it is the accurate one. Behavioural treatment remains the first-line approach, and medication is generally considered as an adjunct or in more severe cases rather than as a starting point.\n\nEverything below is general information. Prescribing decisions belong to a clinician who knows your history.`,
       },
       {
@@ -4772,16 +4861,22 @@ BLOG_POSTS.push(
     seoTitle: 'How to Map Your Nail Biting Triggers',
     description: 'Most people are wrong about when they bite their nails. A two-week trigger map replaces guesswork with data and makes every other intervention more effective.',
     tag: 'Treatment',
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'You are probably wrong about your own triggers',
-        body: `Ask someone why they bite their nails and you will usually get "stress." Ask them to record every episode for two weeks and the answer frequently changes — often to something like "evenings in front of the television" or "the first hour of work" or "whenever I am reading something long."\n\nThis is not a failure of self-knowledge so much as a predictable feature of memory. You remember the episodes that had something attached to them, and emotional episodes are memorable while automatic ones are not. So recall systematically over-represents stress biting and under-represents everything else — which then sends people toward stress interventions for a habit that may be mostly contextual.`,
+        heading: 'How do you map your nail biting triggers?',
+        body: `Record every episode for two weeks using five narrow fields, log at fixed intervals or use automated detection to beat recall bias, then target the two or three contexts that produce most of your biting.\n\nThe reason to do this at all is that you are probably wrong about your own triggers. Ask someone why they bite their nails and you will usually get "stress." Ask them to record every episode for two weeks and the answer frequently changes — often to something like "evenings in front of the television" or "the first hour of work" or "whenever I am reading something long."\n\nThis is not a failure of self-knowledge so much as a predictable feature of memory. You remember the episodes that had something attached to them, and emotional episodes are memorable while automatic ones are not.\n\nSo recall systematically over-represents stress biting and under-represents everything else — which then sends people toward stress interventions for a habit that may be mostly contextual.`,
+        list: [
+          'Step 1 — Decide what to record. Five fields, no more.',
+          'Step 2 — Collect it without relying on noticing, because most episodes go unnoticed.',
+          'Step 3 — Read the map for concentration, not causes.',
+          'Step 4 — Turn the map into a plan, then re-map after a month.',
+        ],
       },
       {
-        heading: 'What to record',
+        heading: 'Step 1: Decide what to record',
         body: `A useful trigger map is narrow. Recording too much makes it a chore you abandon in four days, which is the most common failure mode.`,
         list: [
           'Time of day. This alone reveals more than most people expect, and it is the field least distorted by interpretation.',
@@ -4792,15 +4887,20 @@ BLOG_POSTS.push(
         ],
       },
       {
-        heading: 'How to actually collect it',
-        body: `The obvious problem is that recording an episode requires noticing an episode, and the whole difficulty is that most go unnoticed. A manual log will therefore capture a biased sample skewed toward the ones you catch — which tends to mean the emotional ones again.\n\nTwo partial fixes. First, log at fixed intervals rather than only on occurrence: a few times a day, note whether you have bitten since the last check and what you were doing. This catches some of what real-time logging misses.\n\nSecond, and more reliably, use something that detects episodes independently of your attention. An automated log removes the recall bias entirely, which matters here more than for most habit tracking, because the whole point of the exercise is to find the pattern you cannot see. This is also why the resulting map so often surprises people — it contains the episodes their own attention has never once registered.`,
+        heading: 'Step 2: Collect it without relying on noticing',
+        body: `The obvious problem is that recording an episode requires noticing an episode, and the whole difficulty is that most go unnoticed. A manual log will therefore capture a biased sample skewed toward the ones you catch — which tends to mean the emotional ones again.\n\nTwo partial fixes.`,
+        list: [
+          '2a. Log at fixed intervals rather than only on occurrence. A few times a day, note whether you have bitten since the last check and what you were doing. This catches some of what real-time logging misses.',
+          '2b. More reliably, use something that detects episodes independently of your attention. An automated log removes the recall bias entirely, which matters here more than for most habit tracking, because the whole point of the exercise is to find the pattern you cannot see.',
+        ],
+        html: `<p>This is also why the resulting map so often surprises people — it contains the episodes their own attention has never once registered.</p>`,
       },
       {
-        heading: 'Reading the map',
+        heading: 'Step 3: Read the map for concentration, not causes',
         body: `After two weeks, look for concentration rather than causes. You are looking for the handful of contexts that account for most episodes, because that is where intervention pays.\n\nMost people find that two or three contexts produce the majority of their biting. Common clusters: the first hour at a desk, evening screen time, driving or commuting, and whatever the person's specific waiting situations are.\n\nAlso look at what is absent. Contexts where you never bite are informative — they usually involve hands that are occupied, and that is a hint about which competing response will work for you.`,
       },
       {
-        heading: 'Turning the map into a plan',
+        heading: 'Step 4: Turn the map into a plan, then re-map',
         body: `The point of the exercise is targeting. Instead of trying to not bite your nails in general, which is a vague commitment across all sixteen waking hours, you get two or three specific contexts to address with specific arrangements.\n\nFor each high-frequency context, decide in advance what your hands will do there instead, and make it available before the context begins. A textured object kept in the car. A drink to hold during evening viewing. A rule about where your hands rest while reading.\n\nThen re-map after a month. Two things usually happen: the targeted contexts drop substantially, and a context you had not noticed rises up the list. That is not failure — it is what progress looks like in a habit that redistributes before it disappears.`,
             html: `<p>Once the map is done, <a href="/compare/habit-tracking-apps">a habit tracking app</a> is the usual way to keep it current without the notebook.</p>`,
     },
@@ -4940,11 +5040,11 @@ BLOG_POSTS.push(
     tag: 'Products',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'The appeal, and the obvious problem',
-        body: `Gloves are the first suggestion many people receive, and the logic is unarguable: you cannot bite a nail you cannot reach.\n\nThe problem is equally obvious and gets glossed over in most recommendations. Gloves are removable, they are removable in about one second, and the removal happens automatically in exactly the situations where you most need them on. A habit that operates below conscious awareness is entirely capable of taking a glove off en route to the nail, and many people report doing precisely that without remembering it.\n\nThat is not a reason to dismiss them. It is a reason to be specific about when they help.`,
+        heading: 'Do gloves stop nail biting?',
+        body: `In four narrow situations, yes: sleep, healing an injury, a defined high-risk block, and holding a topical treatment in place. Outside those, they come off in one second — often automatically, without you remembering.\n\nGloves are the first suggestion many people receive, and the logic is unarguable: you cannot bite a nail you cannot reach.\n\nThe problem is equally obvious and gets glossed over in most recommendations. Gloves are removable, they are removable in about one second, and the removal happens automatically in exactly the situations where you most need them on. A habit that operates below conscious awareness is entirely capable of taking a glove off en route to the nail, and many people report doing precisely that without remembering it.\n\nThat is not a reason to dismiss them. It is a reason to be specific about when they help.`,
       },
       {
         heading: 'Where they genuinely work',
@@ -5019,11 +5119,11 @@ BLOG_POSTS.push(
     tag: 'Products',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'A method that should not work but sometimes does',
-        body: `Regular nail polish contains nothing designed to deter biting. It is not bitter, it is thin enough to bite through without noticing, and it offers no protection to the skin around the nail — which is where a lot of biters do most of their damage.\n\nAnd yet a consistent number of people report that keeping their nails painted reduces their biting. That is worth taking seriously rather than dismissing, because the reasons it happens are informative about how the habit works.`,
+        heading: 'Does regular nail polish help you stop biting?',
+        body: `For some people, yes — but not because it deters anything. Three indirect mechanisms do the work: smoothing the rough spots that prompt episodes, a moment of reluctance to ruin something you paid for, and visible chip damage as crude monitoring.\n\nRegular nail polish contains nothing designed to deter biting. It is not bitter, it is thin enough to bite through without noticing, and it offers no protection to the skin around the nail — which is where a lot of biters do most of their damage.\n\nAnd yet a consistent number of people report that keeping their nails painted reduces their biting. That is worth taking seriously rather than dismissing, because the reasons it happens are informative about how the habit works.`,
       },
       {
         heading: 'The three mechanisms that are probably responsible',
@@ -5179,11 +5279,11 @@ BLOG_POSTS.push(
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: '2026-09-10',
     sections: [
       {
-        heading: 'What is actually being detected',
-        body: `It is worth being precise, because the honest answer to "how accurate is it" depends entirely on what the question means.\n\nStop Biting does not detect biting. It detects a fingertip being close to your mouth. Two models run on each sampled frame — a hand landmark model that locates twenty-one points on the hand, and a face landmark model that locates the mouth. The system measures the distance between each of the five fingertip landmarks and the midpoint of the inner lips, and treats a fingertip inside a threshold distance as a positive.\n\nSo the accurate description is proximity detection used as a proxy for biting. That proxy is good, because the hand-to-mouth position is a necessary precondition for biting and is not a posture most people hold accidentally for long. It is not the same thing as observing teeth on a nail, and any product claiming otherwise from a standard webcam is overstating things.`,
+        heading: 'How accurate is AI nail biting detection?',
+        body: `It is proximity detection used as a proxy for biting, not observation of teeth on a nail. Two on-device models measure the distance from each fingertip to the inner lips, and treat a fingertip inside a threshold as a positive.\n\nIt is worth being precise, because the honest answer to "how accurate is it" depends entirely on what the question means.\n\nStop Biting does not detect biting. It detects a fingertip being close to your mouth. Two models run on each sampled frame — a hand landmark model that locates twenty-one points on the hand, and a face landmark model that locates the mouth. The system measures the distance between each of the five fingertip landmarks and the midpoint of the inner lips, and treats a fingertip inside a threshold distance as a positive.\n\nSo the accurate description is proximity detection used as a proxy for biting. That proxy is good, because the hand-to-mouth position is a necessary precondition for biting and is not a posture most people hold accidentally for long. It is not the same thing as observing teeth on a nail, and any product claiming otherwise from a standard webcam is overstating things.`,
       },
       {
         heading: 'Why a dwell requirement exists',

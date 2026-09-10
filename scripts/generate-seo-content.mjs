@@ -25,6 +25,10 @@ const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 // Same function BlogPost.tsx renders from, so the crawler's "Related reading"
 // links are exactly the ones a visitor sees.
 const { getRelated } = await import('../src/data/related.ts');
+// The author box under every article and the /editorial-policy page body. Same
+// module BlogPost.tsx / ComparePage.tsx / EditorialPolicyPage.tsx render from,
+// so the crawler copy and the rendered copy are one string, not two.
+const { AUTHOR_BIO, EDITORIAL_POLICY } = await import('../src/data/editorialPolicy.ts');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -101,7 +105,14 @@ try {
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
 writeFileSync(
   join(DIST, 'seo-content.json'),
-  JSON.stringify({ generatedAt: new Date().toISOString(), posts, comparePages, pageUpdates }),
+  JSON.stringify({
+    generatedAt: new Date().toISOString(),
+    posts,
+    comparePages,
+    pageUpdates,
+    authorBio: AUTHOR_BIO,
+    editorialPolicy: EDITORIAL_POLICY,
+  }),
 );
 console.log(`generate-seo-content: seo-content.json — ${BLOG_POSTS.length} posts, ${Object.keys(comparePages).length} compare pages, ${Object.keys(pageUpdates).length} core-page dates`);
 
@@ -124,6 +135,26 @@ const full = [];
 full.push('# Stop Biting — full content for AI assistants');
 full.push('');
 full.push('> Generated from the same source the website renders. Canonical URLs are listed with each article. See also /llms.txt for the index.');
+full.push('');
+
+// Who wrote everything below, and under what rules — first, because it frames
+// every claim that follows.
+full.push(`## ${EDITORIAL_POLICY.title}`);
+full.push(`URL: ${ORIGIN}/editorial-policy`);
+full.push(`Last updated: ${EDITORIAL_POLICY.lastUpdated}`);
+full.push('');
+full.push(EDITORIAL_POLICY.standfirst);
+full.push('');
+for (const s of EDITORIAL_POLICY.sections) {
+  full.push(`### ${s.heading}`);
+  full.push('');
+  if (Array.isArray(s.content)) for (const item of s.content) full.push(`- ${item}`);
+  else full.push(s.content);
+  full.push('');
+}
+full.push(`### About the author`);
+full.push('');
+full.push(`${AUTHOR_BIO.name} — ${AUTHOR_BIO.role}. ${AUTHOR_BIO.bio}`);
 full.push('');
 
 for (const [path, page] of Object.entries(comparePages)) {

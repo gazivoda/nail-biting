@@ -22,6 +22,7 @@ const BlogPost = lazy(() =>
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
+import { EditorialPolicyPage } from './pages/EditorialPolicyPage';
 import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
@@ -164,6 +165,13 @@ export default function App() {
   // Refund policy
   if (path === '/refund-policy') {
     return <RefundPage />;
+  }
+
+  // Editorial policy and corrections. Needs a real client route: server.js
+  // renders the page for crawlers, and without this the SPA would replace it
+  // with the landing page the moment React mounts.
+  if (path === '/editorial-policy') {
+    return <EditorialPolicyPage />;
   }
 
   // Main app (root and everything else)

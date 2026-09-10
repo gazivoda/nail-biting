@@ -141,6 +141,21 @@ export function About() {
           </div>
         </section>
 
+        {/* How this site is written — keep in step with the /about SSR copy in server.js */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">How this site is written</h2>
+          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+            <p>
+              Every article, guide and comparison here is written by me. I'm a developer, not a clinician, and the{' '}
+              <a href="/editorial-policy" className="text-forest-600 dark:text-forest-400 hover:underline">
+                editorial policy and corrections page
+              </a>
+              {' '}says exactly what that means for what you read: how claims are sourced, how anything I say about a
+              competing product is checked, and how to tell me when something on this site is wrong.
+            </p>
+          </div>
+        </section>
+
         {/* CTA */}
         <div className="rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
           <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">3-day free trial — no credit card needed</p>
