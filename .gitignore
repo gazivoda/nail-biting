@@ -18,6 +18,8 @@ data/users.db
 data/users.db-wal
 data/users.db-shm
 data/users.json
+# Last-submitted <lastmod> per URL, written by scripts/indexnow-ping.mjs.
+data/indexnow-state.json
 
 # Server secrets
 .env

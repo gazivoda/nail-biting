@@ -94,3 +94,40 @@ opaque `bg-white dark:bg-ink-50` pair. **The site-wide issue is untouched and st
   detector, but nobody has watched it fire from the landing page.
 - Light mode on the demo card (theme toggle would not respond to automated clicks; the class
   pair is the one `CameraPanel` already ships).
+
+## SEO/GEO loop round 2 (2026-09-10) — 10 iterations, 5-min cadence, branch `seo-geo-loop-sept`
+
+Base: main @117bcc6 (rounds 1's work merged via PR #1/#2 and **confirmed live** — `/` 1819
+crawler-readable words, `/blog` 5679). Prior composite 75/100.
+
+### Iteration 1 — audit (4 parallel subagents) + fix (4 parallel subagents, strict file lanes)
+- [x] Audit: platform 58/100, schema 82/100, technical 93/100 held, content integrity swept
+- [x] **Content integrity** (`blogPosts.ts`): 5 unsourced claims deleted, 8 softened, 11 sources
+      re-fetched and verified. Baydaş 2007 citation repointed from a BDJ news digest to
+      PMID 17241163 (figures independently re-verified against the NCBI abstract).
+      Medical disclaimer coverage 32 → 119 posts.
+- [x] **Compare pages** (`comparePages.ts`): tables 4/9 → 9/9 (all cells vendor-verified
+      2026-09-10); uncited first-party "30–60 detected" stat deleted; ADHD stimulant-rebound
+      claims softened; disclaimers on all 9; run-on FAQ split into real `<h3>` pairs
+- [x] **Shell schema + fonts** (`index.html`): unsourced YMYL claims stripped from
+      MedicalCondition (prevalence, epidemiology, DSM-5, recognizingAuthority, cause);
+      invalid `billingIncrement` → nested `UnitPriceSpecification`/`billingDuration`;
+      Google Fonts self-hosted (8 woff2, `font-display:swap`) to unblock a 4.7s LCP render delay
+- [x] **SSR + freshness** (`server.js`, `sync-seo.mjs`): schema `headline` now matches the
+      rendered `<h1>` (97 mismatches → 0); real `dateModified`/`lastmod` from a git-pinned
+      content fingerprint (no "stamp now"); `Last-Modified` on every indexable route;
+      FAQPage on /how-it-works byte-exact to visible text; MedicalCondition gate 71 → 15 pages;
+      robots.txt Google-Extended comment corrected; IndexNow wired + made incremental
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/160 URLs 200 ·
+0 JSON-LD parse failures across 7 sampled routes.
+
+**Owner decisions surfaced (not actioned):**
+1. `Google-Extended: Disallow: /` currently blocks Gemini from *citing* the site, not just
+   from training — the tokens are not separable. Business call, left as-is.
+2. www.stopbiting.today still serves a Traefik default cert + 503, and apex HSTS
+   `includeSubDomains` now makes that failure non-bypassable. Provision the cert or drop the
+   A record.
+3. http→https is a 302; should be 301/308 (Traefik `permanent: true`).
+4. Brotli is not actually served to real browsers (only when `br` is the sole offered encoding).
+5. IndexNow fires only via `npm run seo:indexnow` from a checkout — deliberately not auto-wired.

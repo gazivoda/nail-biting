@@ -671,6 +671,15 @@ if (!existsSync(distPath)) {
   const SEO_CONTENT_LOADED = Object.keys(BLOG_POSTS).length > 0;
   // path → { title, subtitle, intro, sections, relatedPosts }
   const COMPARE_CONTENT = SEO_CONTENT.comparePages ?? {};
+  // path → { lastmod } — the core-page freshness ledger from
+  // src/data/pageUpdates.json, the same dates sitemap.xml carries. Each one is
+  // pinned to a fingerprint of that page's content and only moves when the
+  // content does (see the header comment in scripts/sync-seo.mjs), so it is
+  // safe to publish as `dateModified` and as a `Last-Modified` header.
+  const PAGE_UPDATES = SEO_CONTENT.pageUpdates ?? {};
+  function pageLastmod(path) {
+    return PAGE_UPDATES[path]?.lastmod ?? null;
+  }
 
   // Helper: escape HTML entities for safe server-side content injection.
   function escapeHtml(str) {
@@ -934,11 +943,16 @@ if (!existsSync(distPath)) {
     };
   }
 
-  function injectBlogSchemas(html, { slug, title, description, canonical, post }) {
+  function injectBlogSchemas(html, { slug, description, canonical, post }) {
     const blogPosting = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
-      headline: title,
+      // The article's OWN title — the string blogArticleHtml() renders as the
+      // <h1>. It used to be the SEO meta title (post.seoTitle ?? post.title),
+      // which differed from the visible heading on 97 of 152 articles: AI
+      // engines quote `headline`, so they were quoting a title no reader sees.
+      // `seoTitle` still drives <title> — that is its job, and it is unchanged.
+      headline: post.title,
       description,
       url: canonical,
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
@@ -959,7 +973,9 @@ if (!existsSync(distPath)) {
     const breadcrumb = breadcrumbSchema([
       ['Home', 'https://stopbiting.today/'],
       ['Blog', 'https://stopbiting.today/blog'],
-      [title, canonical],
+      // The trail's leaf names the page as the page names itself, for the same
+      // reason `headline` does.
+      [post.title, canonical],
     ]);
 
     const schemaBlocks = [schemaTag(blogPosting), schemaTag(breadcrumb)];
@@ -1017,18 +1033,23 @@ if (!existsSync(distPath)) {
   //                        onychophagia as a clinical condition.
   //   indexHtml            neither — the default shell for every other route.
   //
-  // MedicalCondition scoping rule: a page may claim it only when the page is
-  // *about* the condition or its treatment. That is the homepage (which
-  // describes onychophagia and the HRT-based remedy in flow), /how-it-works
-  // (the clinical mechanism the product implements), and blog posts tagged
-  // Clinical / Health / Treatment. It is deliberately NOT emitted on the legal
-  // pages, /pricing, /about, /blog, or the compare & solutions pages: YMYL
-  // health markup on a refund policy or a gaming page is a topical mismatch,
-  // and asserting a medical entity on a commercial page is the sort of claim
-  // that gets structured data discounted wholesale.
+  // MedicalCondition scoping rule: a page may carry the condition entity only
+  // when the page's own crawler-visible text discusses the condition the entity
+  // describes. This used to be approximated by the post's tag (Clinical /
+  // Health / Treatment), which put the block on 71 URLs — and on 58 of them the
+  // rendered text contained none of what it asserts. A YMYL medical entity on a
+  // page that never names the condition is exactly the "don't mark up content
+  // that is not visible to readers" case, and it risks the site's other
+  // structured data being discounted with it.
+  //
+  // The gate is derived from the block itself rather than hardcoded here, so it
+  // can never claim more than the block claims: the visible text must name the
+  // condition (`name`) AND at least one therapy it lists as `possibleTreatment`.
+  // See conditionIsVisible() below.
   let indexHtml = null;
   let indexHtmlWithFaq = null;
   let indexHtmlMedical = null;
+  let indexHtmlFaqOnly = null;
   const indexPath = join(distPath, 'index.html');
   const stripSchemaBlock = (html, label) => html.replace(
     new RegExp(`\\n\\n[ \\t]*<!-- Structured Data: ${label}[\\s\\S]*?<\\/script>`),
@@ -1042,21 +1063,68 @@ if (!existsSync(distPath)) {
     // or indexHtmlMedical and must not carry FAQPage structured data.
     indexHtmlMedical = stripSchemaBlock(raw, 'FAQPage');
     indexHtml = stripSchemaBlock(indexHtmlMedical, 'MedicalCondition');
+    indexHtmlFaqOnly = stripSchemaBlock(raw, 'MedicalCondition');
     if (indexHtml === indexHtmlMedical) {
       console.error('WARNING: MedicalCondition schema block not found in index.html — it is now served on every route.');
     }
   }
-  // Blog tags whose posts are about the condition/treatment itself. Anything
-  // else (Psychology, Technology, Productivity, Parenting, Humor, Comparison,
-  // Products, Science) gets the plain shell.
-  const MEDICAL_TAGS = new Set(['Clinical', 'Health', 'Treatment']);
+
+  // Terms the MedicalCondition block itself asserts, read out of the block the
+  // shell ships so the two can never drift: the condition's clinical name, and
+  // the therapies it names under possibleTreatment (each matched by its head
+  // phrase and, where it has one, its parenthesised acronym).
+  let CONDITION_NAME = null;
+  let CONDITION_TREATMENTS = [];
+  if (indexHtmlWithFaq) {
+    const m = indexHtmlWithFaq.match(
+      /<!-- Structured Data: MedicalCondition[\s\S]*?<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
+    );
+    try {
+      const cond = JSON.parse(m[1]);
+      CONDITION_NAME = cond.name.toLowerCase();
+      CONDITION_TREATMENTS = [cond.possibleTreatment ?? []].flat().flatMap(t => {
+        const name = String(t.name).toLowerCase();
+        const acronym = name.match(/\(([^)]+)\)/)?.[1];
+        return [name.replace(/\s*\([^)]*\)/g, '').trim(), ...(acronym ? [acronym] : [])];
+      });
+    } catch {
+      console.error('WARNING: could not parse the MedicalCondition block in index.html — the entity will not be emitted on any route.');
+    }
+  }
+  // True when `articleHtml` — the exact markup this route puts in the served
+  // page — shows a reader both the condition and one of its treatments.
+  function conditionIsVisible(articleHtml) {
+    if (!CONDITION_NAME || !CONDITION_TREATMENTS.length) return false;
+    const text = articleHtml
+      // "Related articles" / "Related reading" are navigation. A link whose
+      // title happens to name the condition is not this page discussing it —
+      // without this, 3 posts qualified purely on a sibling's headline.
+      .replace(/<section><h2>Related [\s\S]*?<\/section>/g, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&#39;/g, '\'')
+      .replace(/&amp;/g, '&')
+      .toLowerCase();
+    if (!text.includes(CONDITION_NAME)) return false;
+    return CONDITION_TREATMENTS.some(t => new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(text));
+  }
 
   // HTML responses must not be cached: every route's HTML is assembled per
   // build (meta, schemas, article content), and a cached shell would keep
   // serving stale titles and content after a deploy. Hashed /assets keep their
   // 1-year immutable cache — the filenames change instead.
   const HTML_SENDFILE_OPTS = { headers: { 'Cache-Control': 'no-cache' } };
-  function sendHtml(res, html, status = 200) {
+  // `lastModified` is a YYYY-MM-DD content date (a post's dateModified, or the
+  // page's entry in the freshness ledger). Every indexable HTML route passes
+  // one: without it a crawler doing a conditional fetch gets no date at all, and
+  // `/`, `/pricing`, `/how-it-works` and `/about` carried no freshness signal
+  // anywhere — no header, no `dateModified`, no `article:modified_time`. It is
+  // the same value sitemap.xml and the JSON-LD publish, so the three agree.
+  // Omitted deliberately on 404s and on any route with no content date.
+  function sendHtml(res, html, status = 200, lastModified = null) {
+    if (lastModified) {
+      const when = new Date(`${lastModified}T00:00:00Z`);
+      if (!Number.isNaN(when.valueOf())) res.set('Last-Modified', when.toUTCString());
+    }
     res.status(status).set('Cache-Control', 'no-cache').type('html').send(html);
   }
 
@@ -1115,7 +1183,11 @@ if (!existsSync(distPath)) {
   app.get('/', (_req, res) => {
     if (!indexHtmlWithFaq) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
-    let injected = injectMeta(indexHtmlWithFaq, {
+    // The homepage FAQ names onychophagia and habit reversal training in flow,
+    // so it earns the MedicalCondition entity — but the gate is applied to the
+    // article it actually renders, never assumed.
+    const article = homeArticleHtml();
+    let injected = injectMeta(conditionIsVisible(article) ? indexHtmlWithFaq : indexHtmlFaqOnly, {
       title: 'Stop Nail Biting with AI | Stop Biting',
       description: homeDescription,
       canonical: 'https://stopbiting.today/',
@@ -1133,10 +1205,12 @@ if (!existsSync(distPath)) {
       // Reference, not a re-declaration — the WebSite node ships in the shell.
       isPartOf: { '@id': WEBSITE_ID },
       speakable: SCHEMA_SPEAKABLE,
+      // Same date sitemap.xml and the Last-Modified header carry.
+      ...(pageLastmod('/') ? { dateModified: pageLastmod('/') } : {}),
     };
     injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n  </head>`);
-    injected = injectSsrArticle(injected, homeArticleHtml());
-    sendHtml(res, injectNoscriptNav(injected));
+    injected = injectSsrArticle(injected, article);
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/'));
   });
 
   // Google renders roughly 600px of title text, about 60 characters.
@@ -1183,8 +1257,10 @@ if (!existsSync(distPath)) {
     const canonical = `https://stopbiting.today/blog/${slug}`;
     // Same title the client sets on mount: buildPageTitle(seoTitle ?? title).
     const metaTitle = post.seoTitle ?? post.title;
-    // MedicalCondition only for posts about the condition/treatment (MEDICAL_TAGS).
-    const shell = MEDICAL_TAGS.has(post.tag) ? indexHtmlMedical : indexHtml;
+    // MedicalCondition only when this post's own rendered text names the
+    // condition and one of its treatments — see conditionIsVisible().
+    const article = blogArticleHtml(post);
+    const shell = conditionIsVisible(article) ? indexHtmlMedical : indexHtml;
     let injected = injectMeta(shell, {
       title: buildPageTitle(metaTitle),
       description: post.description,
@@ -1194,13 +1270,12 @@ if (!existsSync(distPath)) {
     });
     injected = injectBlogSchemas(injected, {
       slug,
-      title: metaTitle,
       description: post.description,
       canonical,
       post,
     });
-    injected = injectSsrArticle(injected, blogArticleHtml(post));
-    sendHtml(res, injectNoscriptNav(injected));
+    injected = injectSsrArticle(injected, article);
+    sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
 
   // Blog index page
@@ -1221,9 +1296,12 @@ if (!existsSync(distPath)) {
       url: 'https://stopbiting.today/blog',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: SCHEMA_PUBLISHER,
+      // Each stub's headline is the article title, which is both the anchor
+      // text in the list below and the <h1> on the article itself — so the stub
+      // and the full node on the article page describe it identically.
       hasPart: Object.entries(BLOG_POSTS).map(([slug, p]) => ({
         '@type': 'BlogPosting',
-        headline: p.seoTitle ?? p.title,
+        headline: p.title,
         description: p.description,
         url: `https://stopbiting.today/blog/${slug}`,
       })),
@@ -1240,7 +1318,7 @@ if (!existsSync(distPath)) {
       '<p>Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
       `<section><h2>All articles</h2><ul>${postList}</ul></section>`;
     injected = injectSsrArticle(injected, articleHtml);
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/blog'));
   });
 
   // Privacy policy page
@@ -1251,7 +1329,7 @@ if (!existsSync(distPath)) {
       description: 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.',
       canonical: 'https://stopbiting.today/privacy',
     });
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/privacy'));
   });
 
   // Terms of Service page
@@ -1262,7 +1340,7 @@ if (!existsSync(distPath)) {
       description: 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.',
       canonical: 'https://stopbiting.today/terms-and-conditions',
     });
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/terms-and-conditions'));
   });
 
   // Refund Policy page
@@ -1273,7 +1351,7 @@ if (!existsSync(distPath)) {
       description: 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.',
       canonical: 'https://stopbiting.today/refund-policy',
     });
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/refund-policy'));
   });
 
   // Remaining static assets (icons, WASM, models, etc.)
@@ -1328,7 +1406,7 @@ if (!existsSync(distPath)) {
       'Mouth proximity detection compares hand landmark coordinates to facial landmark coordinates in each frame. ' +
       'The desktop apps (macOS and Windows) are Electron wrappers around the same web app with system-tray background running. ' +
       'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>');
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/about'));
   });
 
   // /faq has no client-side route and its content lives on the homepage —
@@ -1362,6 +1440,8 @@ if (!existsSync(distPath)) {
       description: 'Pricing for Stop Biting — 3-day free trial, then $2.99/month or $29/year.',
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
+      // Same date sitemap.xml and the Last-Modified header carry.
+      ...(pageLastmod('/pricing') ? { dateModified: pageLastmod('/pricing') } : {}),
     };
     const breadcrumb = breadcrumbSchema([
       ['Home', 'https://stopbiting.today/'],
@@ -1387,19 +1467,35 @@ if (!existsSync(distPath)) {
       'The 3-day free trial includes full detection and tracking features with no credit card required.</p></section>' +
       '<section><h2>Start free</h2>' +
       '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>.</p></section>');
-    sendHtml(res, injectNoscriptNav(injected));
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/pricing'));
   });
 
-  // How it works page. Uses the MedicalCondition shell: this page's subject is
-  // the clinical mechanism (the awareness component of Habit Reversal Training
-  // for onychophagia), so the condition entity is on-topic here.
+  // The three questions this page answers under "Common questions". One source
+  // for the visible <h3>/<p> pairs AND for the FAQPage schema below, so an
+  // answer a machine reads is by construction the answer a reader sees — the
+  // same contract HOME_FAQS enforces on the homepage. The page already shipped
+  // these three Q&As as correctly-structured headings with no schema over them;
+  // this only adds the markup, it does not add or reword a single answer.
+  const HOW_IT_WORKS_FAQS = [
+    {
+      q: 'What happens to my camera data?',
+      a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. '
+        + 'No frames, no thumbnails, no data of any kind is sent to any server — you can verify this by watching your network traffic while the app runs.',
+    },
+    {
+      q: 'Does it work on Mac, Windows, and Linux?',
+      a: 'The web app works on any device with a modern browser and webcam — Mac, Windows, Linux, and Chromebook. '
+        + 'Native desktop apps are available for macOS and Windows for system-tray background running.',
+    },
+    {
+      q: 'Will it false-alarm when I\'m eating or touching my face?',
+      a: 'The detection model distinguishes sustained hand-to-mouth proximity from brief touches, and sensitivity can be adjusted in settings.',
+    },
+  ];
+
+  // How it works page.
   app.get('/how-it-works', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    let injected = injectMeta(indexHtmlMedical, {
-      title: 'How AI Nail Biting Detection Works | Stop Biting',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
-      canonical: 'https://stopbiting.today/how-it-works',
-    });
     const howToSchema = {
       '@context': 'https://schema.org',
       '@type': 'HowTo',
@@ -1414,12 +1510,22 @@ if (!existsSync(distPath)) {
         { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, press both palms flat on your desk for 60 seconds — the physical incompatibility breaks the habit chain.' },
       ],
     };
-    injected = injected.replace('</head>', `    ${schemaTag(howToSchema)}\n  </head>`);
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: HOW_IT_WORKS_FAQS.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    };
     // Crawler-visible summary — keep the copy in step with HowItWorks.tsx
     // (the steps mirror the HowTo schema above).
     const stepsHtml = howToSchema.step.map(s =>
       `<li><strong>${escapeHtml(s.name)}.</strong> ${escapeHtml(s.text)}</li>`).join('');
-    injected = injectSsrArticle(injected,
+    const faqHtml = HOW_IT_WORKS_FAQS.map(f =>
+      `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('');
+    const article =
       '<h1>How AI Nail Biting Detection Works</h1>' +
       '<p>Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. Setup takes under two minutes.</p>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
@@ -1434,22 +1540,24 @@ if (!existsSync(distPath)) {
       '<li>Alarm latency: under 1 second from detection to alarm</li>' +
       '<li>Incident logging: timestamped log stored locally — never transmitted</li>' +
       '</ul></section>' +
-      '<section><h2>Common questions</h2>' +
-      '<h3>What happens to my camera data?</h3>' +
-      '<p>Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. ' +
-      'No frames, no thumbnails, no data of any kind is sent to any server — you can verify this by watching your network traffic while the app runs.</p>' +
-      '<h3>Does it work on Mac, Windows, and Linux?</h3>' +
-      '<p>The web app works on any device with a modern browser and webcam — Mac, Windows, Linux, and Chromebook. ' +
-      'Native desktop apps are available for macOS and Windows for system-tray background running.</p>' +
-      '<h3>Will it false-alarm when I&#39;m eating or touching my face?</h3>' +
-      '<p>The detection model distinguishes sustained hand-to-mouth proximity from brief touches, and sensitivity can be adjusted in settings.</p></section>' +
+      `<section><h2>Common questions</h2>${faqHtml}</section>` +
       '<section><h2>Learn more</h2><ul>' +
       '<li><a href="/blog/habit-reversal-training-guide">Habit Reversal Training: the clinical method behind the app</a></li>' +
       '<li><a href="/blog/webcam-privacy-nail-biting-app">How we verified on-device processing</a></li>' +
       '<li><a href="/compare/bitter-polish-alternative">Stop Biting vs bitter nail polish</a></li>' +
       '<li><a href="/pricing">Pricing — $2.99/month or $29/year, 3-day free trial</a></li>' +
-      '</ul></section>');
-    sendHtml(res, injectNoscriptNav(injected));
+      '</ul></section>';
+    // This page describes the clinical mechanism but its prose never names
+    // onychophagia or a treatment as the MedicalCondition block defines them,
+    // so it does not carry that entity — the gate decides, not the route.
+    let injected = injectMeta(conditionIsVisible(article) ? indexHtmlMedical : indexHtml, {
+      title: 'How AI Nail Biting Detection Works | Stop Biting',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
+      canonical: 'https://stopbiting.today/how-it-works',
+    });
+    injected = injected.replace('</head>', `    ${schemaTag(howToSchema)}\n    ${schemaTag(faqSchema)}\n  </head>`);
+    injected = injectSsrArticle(injected, article);
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/how-it-works'));
   });
 
   // Comparison and solutions pages. Body content comes from COMPARE_CONTENT
@@ -1479,9 +1587,9 @@ if (!existsSync(distPath)) {
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own
-    // sites on 2026-08-11 — see the FACT-CHECK LOG comment there. `date` is
-    // the publish date; it must match the page's lastmod in CORE_PAGES
-    // (scripts/sync-seo.mjs).
+    // sites on 2026-08-11 — see the FACT-CHECK LOG comment there. `date` is the
+    // publish date and is fixed; `dateModified` is not set here at all — it
+    // comes from the freshness ledger (src/data/pageUpdates.json).
     '/compare/stop-biting-vs-hands-off': {
       title: 'Stop Biting vs Hands Off: AI Nail Biting Apps Compared',
       description: 'Honest 2026 comparison of Stop Biting and Hands Off — two on-device AI apps that catch nail biting via webcam. Platforms, price, privacy, which to pick.',
@@ -1538,10 +1646,13 @@ if (!existsSync(distPath)) {
         description: meta.description,
         url: canonical,
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
-        // Matches the lastmod these pages declare in sitemap.xml
-        // (CORE_PAGES in scripts/sync-seo.mjs).
+        // `dateModified` used to be hardcoded equal to `datePublished`, which
+        // froze five of these pages at 2026-04-28 no matter how often the copy
+        // changed. It now comes from the freshness ledger — the same date
+        // sitemap.xml and the Last-Modified header carry — which only advances
+        // when the page's content actually changes.
         datePublished: meta.date ?? '2026-04-28',
-        dateModified: meta.date ?? '2026-04-28',
+        dateModified: pageLastmod(pagePath) ?? meta.date ?? '2026-04-28',
         author: SCHEMA_AUTHOR,
         publisher: SCHEMA_PUBLISHER,
         inLanguage: 'en',
@@ -1559,7 +1670,7 @@ if (!existsSync(distPath)) {
       const extraSchemas = pagePath === '/compare/ai-detection-apps' ? `\n    ${schemaTag(AI_APPS_ITEMLIST)}` : '';
       injected = injected.replace('</head>', `    ${schemaTag(article)}\n    ${schemaTag(breadcrumb)}${extraSchemas}\n  </head>`);
       if (content) injected = injectSsrArticle(injected, compareArticleHtml(content));
-      sendHtml(res, injectNoscriptNav(injected));
+      sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(pagePath));
     });
   }
 

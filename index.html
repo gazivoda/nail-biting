@@ -20,9 +20,18 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icons/icon-192x192.png" type="image/png" />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Fonts are self-hosted. The @font-face rules live in src/index.css and ship
+         inside the app CSS bundle, so there is no third-party stylesheet on the
+         critical path: the fonts.googleapis.com <link> used to be render-blocking
+         on a cross-origin host and accounted for ~894 ms of the mobile LCP render
+         delay. Its two preconnects went with it — there is nothing left to connect
+         to. Preload only the two latin faces needed for first paint (Instrument
+         Serif for the hero <h1>, Inter for the SSR article body); latin-ext,
+         italic and mono resolve on demand through unicode-range. `crossorigin` is
+         required even same-origin — fonts are always fetched in CORS mode, and
+         without it the preload is discarded and fetched a second time. -->
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#020617" />
 
@@ -91,7 +100,21 @@
 
     <!-- Structured Data: SoftwareApplication — the single product node for the
          whole site. /pricing REFERENCES this @id rather than declaring its own
-         copy, so the commercial page describes one product, not two. -->
+         copy, so the commercial page describes one product, not two.
+
+         Billing period: the paid Offers previously carried `billingIncrement`,
+         which is invalid two ways — schema.org declares it on
+         UnitPriceSpecification (not Offer) with a range of Number (not a
+         Duration string), so a conforming parser dropped it and the $2.99 and
+         $29.00 plans became two bare, indistinguishable prices. It is now a
+         nested `priceSpecification` → UnitPriceSpecification → `billingDuration`,
+         which is the combination schema.org actually defines:
+           schema.org/priceSpecification  domain Offer, range PriceSpecification
+           schema.org/UnitPriceSpecification  subClassOf PriceSpecification
+           schema.org/billingDuration     domain UnitPriceSpecification,
+                                          range Duration | Number | QuantitativeValue
+         `price`/`priceCurrency` stay on the Offer as well (both list Offer in
+         their domain) because that is what Google reads for rich results. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -117,16 +140,26 @@
           "price": "2.99",
           "priceCurrency": "USD",
           "name": "Monthly",
-          "billingIncrement": "P1M",
-          "description": "Unlimited AI detection, streak tracking, full incident history and all alert types"
+          "description": "Unlimited AI detection, streak tracking, full incident history and all alert types",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "2.99",
+            "priceCurrency": "USD",
+            "billingDuration": "P1M"
+          }
         },
         {
           "@type": "Offer",
           "price": "29.00",
           "priceCurrency": "USD",
           "name": "Yearly",
-          "billingIncrement": "P1Y",
-          "description": "Everything in Monthly plus priority support — saves 19% versus billing monthly"
+          "description": "Everything in Monthly plus priority support — saves 19% versus billing monthly",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "29.00",
+            "priceCurrency": "USD",
+            "billingDuration": "P1Y"
+          }
         }
       ],
       "featureList": [
@@ -206,38 +239,52 @@
     }
     </script>
 
-    <!-- Structured Data: MedicalCondition — Onychophagia -->
+    <!-- Structured Data: MedicalCondition — Onychophagia.
+         Deliberately minimal, and it must stay that way. Every numeric,
+         epidemiological and authority claim was removed on 2026-09-10:
+           · prevalence "20–30% of adults and up to 45% of children" (description)
+           · `epidemiology` "peaks at 45% in adolescents aged 11–14"
+           · the DSM-5 "Other Specified Obsessive-Compulsive and Related
+             Disorders" classification
+           · `cause` (the basal-ganglia habit-loop mechanism)
+           · `recognizingAuthority` → American Psychiatric Association
+         None of it was sourced anywhere on this site — there are zero outbound
+         citations — and none of it was visible to a reader: across the 71 pages
+         that carry this block the 45% figure appeared on 0 and the 20–30%
+         figure on 1. The two prevalence claims also contradicted each other
+         (45% "of children" vs 45% "in adolescents aged 11–14"). Google's rule
+         is not to mark up content the reader cannot see, and unsourced YMYL
+         medical statistics are the worst case for it: they put every other
+         schema block on the site at risk of being discounted wholesale.
+         What survives is definitional, non-statistical, and mirrored by copy
+         that is actually rendered (see the FAQPage block above, which the
+         homepage renders verbatim). Do not re-add a figure, a classification or
+         a named authority here unless an on-page, visible citation ships with
+         it in the same change. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "MedicalCondition",
       "name": "Onychophagia",
       "alternateName": ["nail biting", "chronic nail biting", "compulsive nail biting"],
-      "description": "Onychophagia is the clinical term for chronic, compulsive nail biting — a body-focused repetitive behaviour (BFRB) classified in the DSM-5 under Other Specified Obsessive-Compulsive and Related Disorders. It affects 20–30% of adults and up to 45% of children.",
+      "description": "Onychophagia is the clinical term for chronic, compulsive nail biting — a body-focused repetitive behaviour (BFRB).",
       "associatedAnatomy": {
         "@type": "AnatomicalStructure",
         "name": "Fingernails"
       },
-      "cause": "Anxiety, stress, boredom, deep focus states, and OCD-spectrum tendencies are the primary drivers. Habit loops in the basal ganglia make the behaviour automatic over time.",
       "possibleTreatment": [
         {
           "@type": "MedicalTherapy",
           "name": "Habit Reversal Training (HRT)",
-          "description": "Three-component CBT protocol (awareness training, competing response, social support) shown in controlled trials to substantially reduce nail biting with consistent practice."
+          "description": "Cognitive-behavioural protocol with three components: awareness training, a competing response, and social support."
         },
         {
           "@type": "MedicalTherapy",
           "name": "Bitter-taste nail polish",
-          "description": "Aversion therapy using denatonium benzoate (Mavala Stop, Orly No Bite) applied to nails as a chemical deterrent."
+          "description": "Aversion therapy using a bitter-tasting polish (Mavala Stop, Orly No Bite) applied to the nails as a deterrent."
         }
       ],
-      "relevantSpecialty": ["Psychiatry", "Psychology"],
-      "epidemiology": "Affects 20–30% of adults globally; prevalence peaks at 45% in adolescents aged 11–14.",
-      "recognizingAuthority": {
-        "@type": "Organization",
-        "name": "American Psychiatric Association",
-        "url": "https://www.psychiatry.org"
-      }
+      "relevantSpecialty": "https://schema.org/Psychiatric"
     }
     </script>
   </head>

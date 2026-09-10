@@ -15,6 +15,20 @@ export interface PageContent {
   relatedPosts: { href: string; label: string }[];
 }
 
+/**
+ * Verbatim copy of MEDICAL_DISCLAIMER_SECTION in src/data/blogPosts.ts.
+ *
+ * These pages make the same class of health claim the blog posts do (BFRBs,
+ * ADHD and stimulant medication, infection risk), so they carry the same
+ * wording rather than a second, subtly different one. It is duplicated rather
+ * than imported because scripts/generate-seo-content.mjs loads this module on
+ * its own; keep the two strings in step if either is edited.
+ */
+const MEDICAL_DISCLAIMER_SECTION = {
+  heading: 'A note on medical advice',
+  body: `This article is for general information only and is not medical advice. Nail biting and related body-focused repetitive behaviours (BFRBs) can have medical and psychological dimensions that deserve individual attention. For diagnosis or treatment — of BFRBs, infections, or any condition discussed here — consult a qualified professional: a GP or dermatologist for physical symptoms, or a therapist experienced with BFRBs for the habit itself. The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org) maintains a directory of BFRB-informed clinicians.`,
+};
+
 function getBitterPolishContent(): PageContent {
   return {
     title: 'Stop Biting vs Bitter Nail Polish: Which Actually Works?',
@@ -27,7 +41,18 @@ function getBitterPolishContent(): PageContent {
       },
       {
         heading: 'Evidence comparison',
-        body: 'Habit Reversal Training (HRT) — the approach whose awareness component Stop Biting automates — is the best-studied behavioural treatment for nail biting. In the landmark trial (Azrin, Nunn & Frantz, 1980), habit reversal reduced biting episodes by roughly 99% at five-month follow-up, and a 2011 meta-analysis of 18 habit reversal studies covering 575 participants found large treatment effects (Bate et al., Clinical Psychology Review).\n\nBitter nail polish evidence is primarily anecdotal and short-term. It works initially for some users, but effectiveness typically decreases as taste habituation occurs and the formula wears off. No large-scale clinical trial has established lasting efficacy beyond the initial novelty period.\n\nThe evidence base isn\'t close. HRT has decades of clinical study behind it; bitter polish has product reviews.',
+        body: 'Habit Reversal Training (HRT) — the approach whose awareness component Stop Biting automates — is the best-studied behavioural treatment for nail biting. In the landmark trial (Azrin, Nunn & Frantz, 1980), habit reversal reduced biting episodes by roughly 99% at five-month follow-up, and a 2011 meta-analysis of 18 habit reversal studies covering 575 participants found large treatment effects (Bate et al., Clinical Psychology Review). Both papers are linked in full below.\n\nBitter nail polish evidence is primarily anecdotal and short-term. It works initially for some users, but effectiveness typically decreases as taste habituation occurs and the formula wears off. No large-scale clinical trial has established lasting efficacy beyond the initial novelty period.\n\nThe evidence base isn\'t close. HRT has decades of clinical study behind it; bitter polish has product reviews. Bitter polish product details in the table were verified against mavala.com in September 2026.',
+        html: '<table><thead><tr><th></th><th>Bitter nail polish</th><th>Stop Biting</th></tr></thead><tbody>' +
+          '<tr><td>Mechanism</td><td>Aversive taste — Mavala describes Mavala Stop as a “bitter-tasting, colourless formula that discourages putting fingers in your mouth”</td><td>Real-time on-device AI detection: an alarm fires as the hand approaches the mouth, automating the awareness-training component of habit reversal</td></tr>' +
+          '<tr><td>Point in the episode it can act</td><td>Once the finger reaches the mouth and the taste registers</td><td>As the hand approaches, before contact</td></tr>' +
+          '<tr><td>Clinical trial evidence</td><td>Primarily anecdotal and short-term; no large-scale clinical trial has established lasting efficacy beyond the initial novelty period</td><td>For habit reversal, the method it automates: Azrin, Nunn &amp; Frantz 1980 (Behav Res Ther 18(4):281–285) and Bate et al. 2011 — 18 studies, 575 participants, large pooled effect (d = 0.80)</td></tr>' +
+          '<tr><td>Data it produces</td><td>None</td><td>Timestamped incident log — time of day, frequency, and context of each detected episode</td></tr>' +
+          '<tr><td>Main limitation</td><td>Effectiveness typically decreases as taste habituation occurs and the formula wears off</td><td>Only covers the time you spend in front of the camera</td></tr>' +
+          '</tbody></table>' +
+          '<p><strong>Sources:</strong></p><ul>' +
+          '<li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li>' +
+          '<li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li>' +
+          '</ul>',
       },
       {
         heading: 'What bitter polish does well',
@@ -41,6 +66,7 @@ function getBitterPolishContent(): PageContent {
         heading: 'Who should use which',
         body: 'Bitter polish is the right starting point for: occasional conscious biters, children, situations requiring a simple physical barrier, or as an adjunct to other approaches.\n\nStop Biting is the right choice for: chronic automatic biters, desk workers who bite during focus, people who\'ve tried bitter polish and it didn\'t stick, anyone who wants the evidence-based HRT approach with automated awareness rather than willpower.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the gold-standard treatment' },
@@ -59,11 +85,18 @@ function getHabitTrackingContent(): PageContent {
     sections: [
       {
         heading: 'The manual logging problem',
-        body: 'Habit tracking apps like Habitica, Streaks, or Tally require you to log each biting episode manually. This creates an immediate problem: you can only log episodes you notice.\n\nResearch on nail biting awareness is clear: most biters catch fewer than half their daily episodes through self-monitoring. The habit is automatic — it runs in the basal ganglia, not the prefrontal cortex. Episodes begin and complete below conscious awareness. By the time you notice you\'ve been biting, the episode is already over.\n\nManual tracking records the episodes you noticed. It provides no data on the ones you didn\'t. For a habit that is primarily automatic, this is the majority of episodes.',
+        body: 'Habit tracking apps like Habitica, Streaks, or Tally require you to log each biting episode manually. This creates an immediate problem: you can only log episodes you notice.\n\nResearch on nail biting awareness is clear: most biters catch fewer than half their daily episodes through self-monitoring. The habit is automatic — it runs in the basal ganglia, not the prefrontal cortex. Episodes begin and complete below conscious awareness. By the time you notice you\'ve been biting, the episode is already over.\n\nManual tracking records the episodes you noticed. It provides no data on the ones you didn\'t. For a habit that is primarily automatic, this is the majority of episodes.\n\nStreaks details in the table were verified against streaksapp.com in September 2026.',
+        html: '<table><thead><tr><th></th><th>Manual habit trackers</th><th>Stop Biting</th></tr></thead><tbody>' +
+          '<tr><td>How an episode gets recorded</td><td>You notice it, then log it yourself</td><td>Detected automatically by on-device AI and written to a timestamped log</td></tr>' +
+          '<tr><td>Episodes it can capture</td><td>Only the ones that reached your conscious attention</td><td>Episodes that happen in front of the camera, whether or not you noticed them</td></tr>' +
+          '<tr><td>Automatic tracking</td><td>Limited to what a phone or watch already measures — Streaks lists Apple Health goals such as steps, heart rate and blood pressure</td><td>The target behaviour itself is what gets detected</td></tr>' +
+          '<tr><td>Streak unit</td><td>Whole days — Streaks states “Don’t break the chain, or your streak will reset to zero days”</td><td>Bite-free hours and minutes</td></tr>' +
+          '<tr><td>Best suited to</td><td>Deliberate, scheduled behaviours: exercise, meditation, reading, water intake</td><td>Automatic behaviours that begin and finish below conscious awareness</td></tr>' +
+          '</tbody></table>',
       },
       {
-        heading: 'The awareness gap in numbers',
-        body: 'When users start Stop Biting, the gap between self-estimated biting frequency and AI-detected frequency is consistently large. People who estimate 5–10 biting episodes per day typically see 30–60 detected in the first week.\n\nThis isn\'t a calibration error — it\'s a fundamental feature of automatic habits. The episodes that don\'t reach consciousness don\'t register in self-report. Manual tracking enforces this gap into the data by design.\n\nThe implication for treatment: if your data only captures 30–50% of actual biting episodes, your awareness of the pattern is distorted, your triggers are misidentified, and your sense of progress is wrong.',
+        heading: 'The awareness gap',
+        body: 'When users start Stop Biting, detected frequency is typically much higher than they expected before they measured it.\n\nThis isn\'t a calibration error — it\'s a fundamental feature of automatic habits. The episodes that don\'t reach consciousness don\'t register in self-report. Manual tracking enforces this gap into the data by design.\n\nThe implication for treatment: if your data captures only a fraction of your actual biting episodes, your awareness of the pattern is distorted, your triggers are misidentified, and your sense of progress is wrong.',
       },
       {
         heading: 'What habit tracking apps are good at',
@@ -77,6 +110,7 @@ function getHabitTrackingContent(): PageContent {
         heading: 'The streak metric difference',
         body: 'Most habit trackers measure streaks in days: did you complete the habit today? For nail biting cessation, a daily binary isn\'t useful — it\'s nearly impossible to go a full day without any biting in the first weeks of treatment, so the streak breaks immediately and provides no useful feedback.\n\nStop Biting tracks bite-free periods in hours and minutes. A 3-hour streak while working, then an alarm, then a 4-hour streak — this is the granularity that makes progress visible and gives users something to extend rather than something they\'ve already failed.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/blog/nail-biting-habit-tracking', label: 'Tracking your nail biting: why data beats willpower' },
@@ -99,12 +133,18 @@ function getDeskWorkersContent(): PageContent {
       },
       {
         heading: 'The webcam solution',
-        body: 'If you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab (or as a desktop app in the system tray) using your existing webcam.\n\nThe app processes your webcam feed locally — nothing is transmitted — and fires an audible alarm when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting typically covers 60–80% of total daily biting episodes, since that\'s roughly the proportion occurring during computer use.',
+        body: 'If you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab (or as a desktop app in the system tray) using your existing webcam.\n\nThe app processes your webcam feed locally — nothing is transmitted — and fires an audible alarm when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting covers the hours where a large share of the habit lives — the time spent in front of a computer.',
       },
       {
         heading: 'Competing responses for desk contexts',
         body: 'When the alarm fires, you need a competing response — a behavior physically incompatible with nail biting that you can execute without interrupting your work.\n\nThe most effective competing response for desk work: pressing both palms flat on the desk and holding for 60 seconds. It provides strong proprioceptive input, is physically incompatible with biting, requires no equipment, and doesn\'t interrupt typing or focus. Hold it while the urge passes (typically 20–60 seconds).\n\nAlternatives: interlacing fingers and pressing together under the desk (invisible on camera), gripping a pen, or keeping a resistance ball accessible on the desk.',
+        html: '<table><thead><tr><th>Competing response</th><th>Why it fits desk work</th><th>Equipment</th></tr></thead><tbody>' +
+          '<tr><td>Both palms flat on the desk, held for 60 seconds</td><td>Strong proprioceptive input, physically incompatible with biting, and doesn’t interrupt typing or focus</td><td>None</td></tr>' +
+          '<tr><td>Fingers interlaced and pressed together under the desk</td><td>Same physical incompatibility, and invisible on camera during video calls</td><td>None</td></tr>' +
+          '<tr><td>Gripping a pen, or a resistance ball kept within reach</td><td>Occupies the hand at the desk while the urge passes</td><td>A pen or resistance ball</td></tr>' +
+          '</tbody></table>',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/blog/nail-biting-laptop-working-from-home', label: 'Nail biting while working from home: the complete guide' },
@@ -128,15 +168,21 @@ function getAdhdContent(): PageContent {
       {
         heading: 'Why willpower-based approaches fail for ADHD',
         body: 'Willpower requires sustained inhibitory control — exactly the executive function most impaired by ADHD. Approaches that depend on "just notice and stop" ask for the cognitive resource ADHD makes least available.\n\nBitter polish fails for a related reason: it requires the awareness that ADHD depletes. You have to notice your hand is in your mouth to taste the polish. During hyperfocus, you don\'t notice. The polish is irrelevant.\n\nHRT works better for ADHD — but only when the awareness component is externalized. Self-awareness training, which works in neurotypical people, is insufficient when the awareness gap is neurological rather than attentional.',
+        html: '<table><thead><tr><th>ADHD factor</th><th>Why willpower and bitter polish fall short</th><th>What externalised detection changes</th></tr></thead><tbody>' +
+          '<tr><td>Executive function — working memory, inhibitory control, cognitive flexibility</td><td>“Just notice and stop” asks for all three at once, and these are the resources ADHD makes least available</td><td>The alarm supplies the noticing, so the only step left is running the competing response</td></tr>' +
+          '<tr><td>Dopamine seeking</td><td>Stopping the behaviour removes the proprioceptive stimulation it was providing, with nothing in its place</td><td>The competing response can be sensory-matched — a textured fidget, chewing gum — rather than generic palm pressing</td></tr>' +
+          '<tr><td>Hyperfocus</td><td>Self-monitoring goes offline, so the polish is never tasted and the episode is never noticed</td><td>The camera catches episodes independently of your attention state</td></tr>' +
+          '</tbody></table>',
       },
       {
         heading: 'How AI detection compensates',
-        body: 'Stop Biting\'s AI detection externalizes the awareness component. Instead of relying on your attention to catch biting episodes, the camera and MediaPipe model catch them for you — independent of your attention state.\n\nFor ADHD users, this is the critical difference. The alarm fires during hyperfocus when self-monitoring is offline. It fires when stimulant medication has worn off and the rebound window begins. It fires during the specific states where ADHD makes the habit hardest to catch.\n\nThe competing response can then be designed for ADHD specifically: sensory-matching options (textured fidgets, chewing gum) that address the dopamine-seeking function the biting is serving, rather than generic palm pressing.',
+        body: 'Stop Biting\'s AI detection externalizes the awareness component. Instead of relying on your attention to catch biting episodes, the camera and MediaPipe model catch them for you — independent of your attention state.\n\nFor ADHD users, this is the critical difference. The alarm fires during hyperfocus when self-monitoring is offline. It fires later in the day, in the window many people taking stimulant medication describe as their hardest. It fires during the specific states where ADHD makes the habit hardest to catch.\n\nThe competing response can then be designed for ADHD specifically: sensory-matching options (textured fidgets, chewing gum) that address the dopamine-seeking function the biting is serving, rather than generic palm pressing.',
       },
       {
         heading: 'Practical setup for ADHD users',
-        body: 'Run Stop Biting during your main work sessions — this is typically when ADHD users are most at risk (hyperfocus states, working without breaks). Keep the alarm loud enough to break through headphones if you use them.\n\nFor the competing response, ADHD users often do better with sensory input rather than physical incompatibility alone: a mesh fidget ring on the dominant hand, chewing gum during work sessions, or a rough-textured stress ball within reach. These address the sensory-seeking function.\n\nTrack which times of day show the most incidents. For many ADHD users, the medication rebound window (late afternoon) is the highest-risk period — preparing a specific competing response before that window is more effective than trying to respond to it in the moment.',
+        body: 'Run Stop Biting during your main work sessions — this is typically when ADHD users are most at risk (hyperfocus states, working without breaks). Keep the alarm loud enough to break through headphones if you use them.\n\nFor the competing response, ADHD users often do better with sensory input rather than physical incompatibility alone: a mesh fidget ring on the dominant hand, chewing gum during work sessions, or a rough-textured stress ball within reach. These address the sensory-seeking function.\n\nTrack which times of day show the most incidents. Many ADHD users report the late afternoon as their hardest window, particularly if they take stimulant medication earlier in the day — but treat that as a common pattern to check against your own log, not a rule. Preparing a specific competing response before your own peak period works better than trying to improvise one in the moment.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/blog/nail-biting-adhd', label: 'Nail biting and ADHD: the complete guide' },
@@ -164,11 +210,19 @@ function getGamersContent(): PageContent {
       {
         heading: 'Why common remedies fail for gamers',
         body: 'Bitter polish: loses effectiveness if you eat or drink during sessions. Physical barriers: gloves and finger wraps interfere with keyboard and mouse precision. Phone reminders: inaudible with headphones, break flow. Willpower: gaming\'s attentional demands are specifically calibrated to exclude self-monitoring.\n\nAny solution requiring you to generate awareness internally will fail. Gaming exports all available awareness to the game.',
+        html: '<table><thead><tr><th>Approach</th><th>How it behaves during a gaming session</th></tr></thead><tbody>' +
+          '<tr><td>Bitter nail polish</td><td>Loses effectiveness if you eat or drink during the session</td></tr>' +
+          '<tr><td>Gloves or finger wraps</td><td>Interfere with keyboard and mouse precision</td></tr>' +
+          '<tr><td>Phone reminders</td><td>Inaudible under headphones, and they break flow</td></tr>' +
+          '<tr><td>Willpower and self-monitoring</td><td>Gaming’s attentional demands are calibrated to exclude self-monitoring</td></tr>' +
+          '<tr><td>Stop Biting (webcam AI detection)</td><td>Runs in a browser tab or the system tray beside the game; alarm volume is adjustable so it cuts through headphones, and you return to play immediately</td></tr>' +
+          '</tbody></table>',
       },
       {
         heading: 'AI detection during gaming',
-        body: 'If you\'re gaming on a computer, you have a webcam. Stop Biting runs in a browser tab or system tray alongside your game, using that webcam to detect nail biting and fire an audible alarm — without interrupting gameplay.\n\nThe alarm is loud enough to cut through headphones (adjust your alarm volume in settings). It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately. No interruption, no context switch required.\n\nOver 2–4 weeks of consistent alarm-based interruption during gaming sessions, the habit\'s automaticity in that specific context weakens measurably.',
+        body: 'If you\'re gaming on a computer, you have a webcam. Stop Biting runs in a browser tab or system tray alongside your game, using that webcam to detect nail biting and fire an audible alarm — without interrupting gameplay.\n\nThe alarm is loud enough to cut through headphones (adjust your alarm volume in settings). It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately. No interruption, no context switch required.\n\nOver several weeks of consistent alarm-based interruption during gaming sessions, the habit\'s automaticity in that specific context weakens.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/blog/nail-biting-gaming', label: 'Nail biting while gaming: why it happens and how to stop' },
@@ -243,12 +297,25 @@ function getVsHandsOffContent(): PageContent {
       },
       {
         heading: 'Frequently asked questions',
-        body: 'Is Stop Biting or Hands Off more private? Both process the webcam feed entirely on your device and neither transmits camera data. Stop Biting publishes a technical explainer of its on-device detection; Hands Off states it records no video and is GDPR compliant.\n\nDoes Hands Off have a web version? No — as of August 2026 it’s a Mac and Windows download. Stop Biting additionally runs in the browser as a PWA.\n\nWhich is cheaper? Monthly, they’re effectively the same (~$/€2.99). Stop Biting’s $29/year annual plan is about 19% cheaper over a year; Hands Off lists no annual option.\n\nCan either detect skin picking or hair pulling? Hands Off markets coverage of five BFRBs; Stop Biting focuses on nail biting only.\n\nDo both work on Windows? Yes. Both support Windows and Mac; only Stop Biting also runs in a browser.',
+        body: 'Every answer below uses the same August 2026 verification against handsoffapp.com as the rest of this page.',
+        // Each Q&A is a real <h3> question + <p> answer pair rather than one run-on
+        // paragraph — the same shape /how-it-works uses, and the unit AI answer
+        // engines extract. `.blog-html-block` in src/index.css has no h3 rule and
+        // Tailwind's preflight resets headings to body size, so the weight/spacing
+        // is inline here; drop it if a shared h3 rule is ever added there.
+        html: [
+          ['Is Stop Biting or Hands Off more private?', 'Both process the webcam feed entirely on your device and neither transmits camera data. Stop Biting publishes a technical explainer of its on-device detection; Hands Off states it records no video and is GDPR compliant.'],
+          ['Does Hands Off have a web version?', 'No — as of August 2026 it’s a Mac and Windows download. Stop Biting additionally runs in the browser as a PWA.'],
+          ['Which is cheaper?', 'Monthly, they’re effectively the same (~$/€2.99). Stop Biting’s $29/year annual plan is about 19% cheaper over a year; Hands Off lists no annual option.'],
+          ['Can either detect skin picking or hair pulling?', 'Hands Off markets coverage of five BFRBs; Stop Biting focuses on nail biting only.'],
+          ['Do both work on Windows?', 'Yes. Both support Windows and Mac; only Stop Biting also runs in a browser.'],
+        ].map(([q, a]) => `<h3 style="font-weight:600;margin-top:1rem">${q}</h3><p>${a}</p>`).join(''),
       },
       {
         heading: 'Verdict',
         body: 'Pick Hands Off if you have multiple body-focused repetitive behaviors and live on the desktop — one subscription covering five behaviors is the better fit.\n\nPick Stop Biting if nail biting is your specific problem, you want to run detection in a browser without installing anything, you’d rather pay ~$2.42/month on the annual plan, or you want streak tracking, incident history, and habit-reversal coaching around the detector.\n\nBoth offer a 3-day free trial, so the cheapest way to decide is to try the one that matches your situation.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -298,6 +365,7 @@ function getVsNailedContent(): PageContent {
         heading: 'Who should choose which',
         body: 'Choose Nailed if: you’re on a Mac, you want a one-time purchase, you’re confident the red-flash awareness cue alone will do it, and you don’t need history or tracking.\n\nChoose Stop Biting if: you’re on Windows or need a browser version, you want to trial detection free before paying, you want streaks and incident data to measure progress, or your habit has survived previous attempts and you want the full habit-reversal toolkit around the detector.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -346,6 +414,7 @@ function getVsSmartBehaviorContent(): PageContent {
         heading: 'Who should choose which',
         body: 'Choose SmartBehavior if: most of your biting happens away from a computer, you want a native iPhone or Android app, or you also struggle with skin picking on the go.\n\nChoose Stop Biting if: most of your biting happens at a desk, you use a Mac, you want a browser option for locked-down machines, you want published pricing with a free trial before paying, or you want habit-reversal coaching and incident history around the detector.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -398,6 +467,7 @@ function getAiDetectionAppsContent(): PageContent {
         heading: 'How to choose',
         body: 'Match the app to where your habit lives, not to feature counts.\n\nBite mainly at a computer, want tracking and a method around the alarm: Stop Biting — and the free trial needs no card, so testing it costs nothing.\n\nMultiple BFRBs (skin picking, brow pulling) at a desktop: Hands Off.\n\nMac user who wants a one-time purchase and nothing recurring: Nailed.\n\nBite mainly away from the computer, want it on your phone: SmartBehavior.\n\nWhichever you pick, the mechanism is the same evidence-aligned idea: automate the awareness that habit reversal training requires and the habit itself suppresses.',
       },
+      MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },

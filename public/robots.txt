@@ -30,7 +30,12 @@ Disallow: /
 User-agent: anthropic-ai
 Disallow: /
 
-# Block Gemini model training (does NOT affect Google Search indexing)
+# Google-Extended controls TWO things, not one. Per Google's crawler docs it
+# governs training of future Gemini models AND grounding — supplying our pages
+# to the model at prompt time in Gemini Apps and Grounding with Google Search on
+# Vertex AI. Disallowing it therefore also opts this site out of being cited in
+# Gemini answers; there is no token that allows grounding while blocking
+# training. Google Search and AI Overviews indexing are unaffected either way.
 User-agent: Google-Extended
 Disallow: /
 

@@ -15,7 +15,7 @@
 //
 // Structural problems in the source data exit non-zero, which fails the build.
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -86,12 +86,24 @@ if (problems.length) {
   process.exit(1);
 }
 
+// Core-page freshness ledger, maintained by scripts/sync-seo.mjs. It rides in
+// seo-content.json because that is the one generated file the runtime image
+// carries (src/ is not copied into it), and because the sitemap, the JSON-LD
+// `dateModified` and the `Last-Modified` header must all read the same dates.
+let pageUpdates = {};
+try {
+  pageUpdates = JSON.parse(readFileSync(join(ROOT, 'src/data/pageUpdates.json'), 'utf8'));
+} catch {
+  console.error('generate-seo-content: src/data/pageUpdates.json missing or invalid — run `npm run seo:sync`.');
+  process.exit(1);
+}
+
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
 writeFileSync(
   join(DIST, 'seo-content.json'),
-  JSON.stringify({ generatedAt: new Date().toISOString(), posts, comparePages }),
+  JSON.stringify({ generatedAt: new Date().toISOString(), posts, comparePages, pageUpdates }),
 );
-console.log(`generate-seo-content: seo-content.json — ${BLOG_POSTS.length} posts, ${Object.keys(comparePages).length} compare pages`);
+console.log(`generate-seo-content: seo-content.json — ${BLOG_POSTS.length} posts, ${Object.keys(comparePages).length} compare pages, ${Object.keys(pageUpdates).length} core-page dates`);
 
 // ─── dist/llms-full.txt — full article text for AI crawlers ──────────────────
 // Cheap textual rendering of everything the SSR articles contain.
