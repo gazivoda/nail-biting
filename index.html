@@ -67,7 +67,20 @@
            #website      — this site      #app — the product      #person — the founder
          server.js reuses these exact @ids (SCHEMA_PUBLISHER / SCHEMA_AUTHOR / the
          /pricing mainEntity reference), so a consumer merges every mention of an
-         entity into one node instead of seeing three lookalikes per page. -->
+         entity into one node instead of seeing three lookalikes per page.
+
+         The same rule now covers the *page* node, not just the entity nodes.
+         The homepage used to be described twice over: the FAQPage block below
+         was anonymous, while server.js injected a separate WebPage claiming
+         @id https://stopbiting.today/ (the homeWebPage const, which carries the
+         speakable spec and dateModified). Two page-level nodes, no link between
+         them. FAQPage is a subClassOf WebPage — verified against
+         https://schema.org/FAQPage — so giving the FAQPage that same @id merges
+         the two into one page entity that is both a WebPage and an FAQPage,
+         rather than leaving a typed-but-unaddressed node beside an addressed
+         one. Safe to hardcode the bare origin here because server.js strips the
+         FAQPage block from every route except `/`, so this @id can never be
+         emitted on a URL it does not describe. -->
 
     <!-- Structured Data: WebSite -->
     <script type="application/ld+json">
@@ -78,11 +91,36 @@
       "name": "Stop Biting",
       "url": "https://stopbiting.today/",
       "description": "Stop nail biting with on-device AI detection. Real-time webcam monitoring, habit reversal training guidance, and streak tracking — 100% private.",
+      "inLanguage": "en",
       "publisher": { "@id": "https://stopbiting.today/#organization" }
     }
     </script>
 
-    <!-- Structured Data: Organization -->
+    <!-- Structured Data: Organization.
+         `url` and `logo` MUST stay byte-identical to SCHEMA_PUBLISHER in
+         server.js. Both declare @id …/#organization, so every JSON-LD consumer
+         merges them into a single entity — and they used to disagree on both
+         properties at once (`https://stopbiting.today` vs the trailing-slash
+         form here; a plain URL string vs an ImageObject there), which left one
+         entity describing itself two contradictory ways on every article page.
+         Pinned shape: `url` keeps the trailing slash (it matches <link rel=
+         canonical> and the WebSite node above); `logo` is the ImageObject form,
+         since schema.org/logo ranges over ImageObject | URL and the richer of
+         the two is the one server.js emits.
+         `width`/`height` are deliberately NOT asserted on the logo: the asset is
+         genuinely 512×512 (verified with sips/file on public/icons/icon-512x512
+         .png), but schema.org/width and /height range over Distance |
+         QuantitativeValue — not Number — so a bare `512` would repeat the exact
+         wrong-range mistake that got `billingIncrement` dropped from the Offers.
+         Google needs only `url` on a logo ImageObject. Omitting them also keeps
+         this node byte-identical to server.js, which is the point.
+         Also deliberately absent: `address`, `foundingDate`, `telephone`. No
+         registered address, incorporation date or support phone number exists
+         anywhere in this repo or on the site, and an omitted recommended
+         property costs nothing while a fabricated one is a trust defect.
+         `contactPoint` IS included because hello@stopbiting.today is real and
+         already published to readers — the Landing.tsx footer links it, and
+         the privacy, terms and refund pages all name it as the contact route. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -90,8 +128,18 @@
       "@id": "https://stopbiting.today/#organization",
       "name": "Stop Biting",
       "url": "https://stopbiting.today/",
-      "logo": "https://stopbiting.today/icons/icon-512x512.png",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://stopbiting.today/icons/icon-512x512.png"
+      },
       "description": "Makers of Stop Biting — an on-device AI tool to stop nail biting using real-time webcam detection and habit reversal training.",
+      "email": "hello@stopbiting.today",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "hello@stopbiting.today",
+        "availableLanguage": "en"
+      },
       "sameAs": [
         "https://github.com/gazivoda/nail-biting"
       ]
@@ -114,7 +162,17 @@
            schema.org/billingDuration     domain UnitPriceSpecification,
                                           range Duration | Number | QuantitativeValue
          `price`/`priceCurrency` stay on the Offer as well (both list Offer in
-         their domain) because that is what Google reads for rich results. -->
+         their domain) because that is what Google reads for rich results.
+
+         The $0 Offer is bounded. It previously carried no duration at all, so
+         the markup advertised a permanently free tier while the visible
+         /pricing copy says "Start with a 3-day free trial — no credit card
+         required". `eligibleDuration` is the property that fixes it —
+         https://schema.org/eligibleDuration declares domain Demand | Offer and
+         range QuantitativeValue, so it belongs directly on the Offer and must
+         be a QuantitativeValue, not a Duration string. "DAY" is the UN/CEFACT
+         Common Code `unitCode` expects. The price stays "0": the trial really
+         is free, it is just no longer open-ended. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -133,7 +191,12 @@
           "price": "0",
           "priceCurrency": "USD",
           "name": "Free trial",
-          "description": "Full detection and tracking features — free 3-day trial, no credit card required"
+          "description": "Full detection and tracking features — free 3-day trial, no credit card required",
+          "eligibleDuration": {
+            "@type": "QuantitativeValue",
+            "value": 3,
+            "unitCode": "DAY"
+          }
         },
         {
           "@type": "Offer",
@@ -186,6 +249,7 @@
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      "@id": "https://stopbiting.today/",
       "mainEntity": [
         {
           "@type": "Question",

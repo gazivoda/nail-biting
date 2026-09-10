@@ -877,6 +877,20 @@ if (!existsSync(distPath)) {
   const PERSON_ID = 'https://stopbiting.today/#person';
   const WEBSITE_ID = 'https://stopbiting.today/#website';
   const APP_ID = 'https://stopbiting.today/#app';
+  // One entity, one topic list. This used to be written out twice — once on the
+  // author node of 152 articles, once on the /about Person node — and the two
+  // copies had already drifted apart (`WebAssembly` on one, `body-focused
+  // repetitive behaviors` on the other), so #person described itself two ways
+  // on the same site. Both routes now read this const; they cannot diverge.
+  const PERSON_KNOWS_ABOUT = [
+    'nail biting',
+    'onychophagia',
+    'body-focused repetitive behaviors',
+    'habit reversal training',
+    'MediaPipe',
+    'WebAssembly',
+    'on-device AI',
+  ];
   const SCHEMA_AUTHOR = {
     '@type': 'Person',
     '@id': PERSON_ID,
@@ -885,18 +899,24 @@ if (!existsSync(distPath)) {
     jobTitle: 'Founder',
     // Same GitHub property the Organization schema in index.html links to.
     sameAs: ['https://github.com/gazivoda/nail-biting'],
-    knowsAbout: ['onychophagia', 'nail biting', 'body-focused repetitive behaviors', 'habit reversal training', 'MediaPipe', 'on-device AI'],
+    knowsAbout: PERSON_KNOWS_ABOUT,
     worksFor: { '@id': ORG_ID },
   };
   // Rendered byline for the crawler-visible article, verbatim the string
   // BlogPost.tsx shows a visitor after hydration — so the Person the schema
   // names is also the byline in the pre-JS HTML, on the same page.
   const AUTHOR_BYLINE = `${SCHEMA_AUTHOR.name} · Founder, Stop Biting`;
+  // MUST stay byte-identical in `url` and `logo` to the Organization block in
+  // index.html: both declare @id …/#organization, so a consumer merges them.
+  // They used to disagree — `https://stopbiting.today` here vs the shell's
+  // trailing-slash form — which left one entity with two contradictory `url`
+  // values on every article page. The logo points at the same icon asset the
+  // shell names, expressed as an ImageObject on both sides.
   const SCHEMA_PUBLISHER = {
     '@type': 'Organization',
     '@id': ORG_ID,
     name: 'Stop Biting',
-    url: 'https://stopbiting.today',
+    url: 'https://stopbiting.today/',
     logo: { '@type': 'ImageObject', url: 'https://stopbiting.today/icons/icon-512x512.png' },
   };
   const SCHEMA_IMAGE = {
@@ -909,9 +929,14 @@ if (!existsSync(distPath)) {
   // read aloud / quote. The selectors MUST match elements in the raw served
   // HTML — they point at the server-rendered article (#ssr-page-content):
   // its <h1> and the standfirst paragraph, which carries the article-summary
-  // class in blogArticleHtml()/homeArticleHtml()/compareArticleHtml(). Only
-  // indexable content pages that actually ship that article emit it (homepage,
-  // blog posts, compare & solutions pages) — never legal/noindex pages.
+  // class in blogArticleHtml()/homeArticleHtml()/compareArticleHtml() and in
+  // the inline articles for /blog, /about, /pricing and /how-it-works. Only
+  // pages that actually ship that article emit it — /privacy,
+  // /terms-and-conditions and /refund-policy inject no SSR article, so the
+  // selectors would resolve against nothing and the spec is omitted there.
+  // A route that adds `speakable` MUST add `class="article-summary"` to its
+  // standfirst in the same change; a selector matching nothing is worse than
+  // no selector at all.
   const SCHEMA_SPEAKABLE = {
     '@type': 'SpeakableSpecification',
     cssSelector: ['#ssr-page-content h1', '#ssr-page-content .article-summary'],
@@ -947,6 +972,13 @@ if (!existsSync(distPath)) {
     const blogPosting = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
+      // The article's identity in the graph. Without it every article was
+      // anonymous, and the stub /blog declares for the same post (see the
+      // CollectionPage below) became a second, unlinked half-entity: one node
+      // with the body, one with the link. Both now carry this @id and merge
+      // into a single article. It is the page canonical, matching
+      // `url`/`mainEntityOfPage` below.
+      '@id': canonical,
       // The article's OWN title — the string blogArticleHtml() renders as the
       // <h1>. It used to be the SEO meta title (post.seoTitle ?? post.title),
       // which differed from the visible heading on 97 of 152 articles: AI
@@ -1208,7 +1240,11 @@ if (!existsSync(distPath)) {
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/') ? { dateModified: pageLastmod('/') } : {}),
     };
-    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n  </head>`);
+    // Single-item trail: the homepage is the root of every other trail on the
+    // site, and this makes that explicit rather than leaving the one page they
+    // all point at as the only one without a BreadcrumbList.
+    const breadcrumb = breadcrumbSchema([['Home', 'https://stopbiting.today/']]);
+    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/'));
   });
@@ -1278,6 +1314,20 @@ if (!existsSync(distPath)) {
     sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
 
+  // `hasPart` on /blog used to stub every post: 143 nodes, 44.6 KB of JSON-LD,
+  // 90% of the page's weight — restating links the SSR list below already
+  // carries in-flow with the same anchor text. The stubs now merge into the
+  // real article nodes by @id, so they are a recency window, not the index:
+  // the newest posts get a machine-readable entry, and the visible list stays
+  // the complete 143-link hub it has always been.
+  const BLOG_FEATURED_COUNT = 20;
+  const BLOG_RECENT = Object.entries(BLOG_POSTS)
+    // Newest first by publication date; slug breaks ties so the block is
+    // byte-stable across restarts.
+    .sort(([aSlug, a], [bSlug, b]) =>
+      (b.datePublished ?? '').localeCompare(a.datePublished ?? '') || aSlug.localeCompare(bSlug))
+    .slice(0, BLOG_FEATURED_COUNT);
+
   // Blog index page
   app.get('/blog', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
@@ -1287,70 +1337,118 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/blog',
     });
 
-    // Inject CollectionPage schema so AI crawlers can discover all blog posts
+    // The page's own node. CollectionPage is a WebPage subtype, so this is the
+    // page entity — hence the @id (it had none, leaving the index anonymous in
+    // a graph where every article it lists is now identified) and the speakable
+    // spec, whose selectors resolve against the SSR <h1> and the
+    // `article-summary` standfirst injected below.
     const collectionSchema = {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
+      '@id': 'https://stopbiting.today/blog',
       name: 'Nail Biting Resources — Evidence-Based Guides',
       description: 'Research-backed articles on onychophagia, habit reversal training, and body-focused repetitive behaviors.',
       url: 'https://stopbiting.today/blog',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: SCHEMA_PUBLISHER,
-      // Each stub's headline is the article title, which is both the anchor
-      // text in the list below and the <h1> on the article itself — so the stub
-      // and the full node on the article page describe it identically.
-      hasPart: Object.entries(BLOG_POSTS).map(([slug, p]) => ({
+      speakable: SCHEMA_SPEAKABLE,
+      // Each stub carries the same @id as the full BlogPosting on the article's
+      // own page, so the two merge into one entity instead of describing the
+      // article twice. `headline` is the article title, which is both the
+      // anchor text in the list below and the <h1> on the article itself.
+      hasPart: BLOG_RECENT.map(([slug, p]) => ({
         '@type': 'BlogPosting',
+        '@id': `https://stopbiting.today/blog/${slug}`,
         headline: p.title,
         description: p.description,
         url: `https://stopbiting.today/blog/${slug}`,
       })),
+      ...(pageLastmod('/blog') ? { dateModified: pageLastmod('/blog') } : {}),
     };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['Blog', 'https://stopbiting.today/blog'],
+    ]);
 
-    injected = injected.replace('</head>', `    ${schemaTag(collectionSchema)}\n  </head>`);
+    injected = injected.replace('</head>', `    ${schemaTag(collectionSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     // The index is the hub: listing every article as a real in-flow link is
     // what makes each one reachable — with anchor text — by crawlers that
-    // never run the JS, in one hop from /.
+    // never run the JS, in one hop from /. This list stays complete even though
+    // `hasPart` above is a window — the links are the discovery path, not the
+    // stubs.
     const postList = Object.entries(BLOG_POSTS).map(([slug, p]) =>
       `<li><a href="/blog/${slug}">${escapeHtml(p.title)}</a><br>${escapeHtml(p.description)}</li>`).join('');
     const articleHtml =
       '<h1>Nail Biting Resources</h1>' +
-      '<p>Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
+      '<p class="article-summary">Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
       `<section><h2>All articles</h2><ul>${postList}</ul></section>`;
     injected = injectSsrArticle(injected, articleHtml);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/blog'));
   });
 
+  // The three legal pages carried no page-level schema at all: indexable URLs
+  // that identified no node of their own, so the only entities on them were the
+  // sitewide shell's. This adds a WebPage keyed by the page's own canonical and
+  // the breadcrumb that places it under the homepage — nothing beyond the title,
+  // description and freshness date the served HTML already carries. No
+  // `speakable`: these routes inject no SSR article, so its selectors would
+  // resolve against nothing.
+  function legalPageSchemas(path, name, description) {
+    const canonical = `https://stopbiting.today${path}`;
+    const webPage = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': canonical,
+      url: canonical,
+      name,
+      description,
+      isPartOf: { '@id': WEBSITE_ID },
+      publisher: { '@id': ORG_ID },
+      ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      [name, canonical],
+    ]);
+    return `    ${schemaTag(webPage)}\n    ${schemaTag(breadcrumb)}\n  </head>`;
+  }
+
   // Privacy policy page
   app.get('/privacy', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const injected = injectMeta(indexHtml, {
+    const description = 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.';
+    let injected = injectMeta(indexHtml, {
       title: 'Privacy Policy | Stop Biting',
-      description: 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.',
+      description,
       canonical: 'https://stopbiting.today/privacy',
     });
+    injected = injected.replace('</head>', legalPageSchemas('/privacy', 'Privacy Policy', description));
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/privacy'));
   });
 
   // Terms of Service page
   app.get('/terms-and-conditions', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const injected = injectMeta(indexHtml, {
+    const description = 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.';
+    let injected = injectMeta(indexHtml, {
       title: 'Terms of Service | Stop Biting',
-      description: 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.',
+      description,
       canonical: 'https://stopbiting.today/terms-and-conditions',
     });
+    injected = injected.replace('</head>', legalPageSchemas('/terms-and-conditions', 'Terms of Service', description));
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/terms-and-conditions'));
   });
 
   // Refund Policy page
   app.get('/refund-policy', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const injected = injectMeta(indexHtml, {
+    const description = 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.';
+    let injected = injectMeta(indexHtml, {
       title: 'Refund Policy | Stop Biting',
-      description: 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.',
+      description,
       canonical: 'https://stopbiting.today/refund-policy',
     });
+    injected = injected.replace('</head>', legalPageSchemas('/refund-policy', 'Refund Policy', description));
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/refund-policy'));
   });
 
@@ -1360,13 +1458,16 @@ if (!existsSync(distPath)) {
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
   app.get('/about', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const aboutDescription = 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.';
     let injected = injectMeta(indexHtml, {
       title: 'About Stop Biting | Built by Igor Gazivoda',
-      description: 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.',
+      description: aboutDescription,
       canonical: 'https://stopbiting.today/about',
     });
     // Same @id as SCHEMA_AUTHOR: the founder named on 152 articles and the
-    // founder described here are one node, not two people with one name.
+    // founder described here are one node, not two people with one name — which
+    // is also why `knowsAbout` is the shared PERSON_KNOWS_ABOUT const and not a
+    // second hand-written list.
     const personSchema = {
       '@context': 'https://schema.org',
       '@type': 'Person',
@@ -1376,14 +1477,37 @@ if (!existsSync(distPath)) {
       sameAs: ['https://github.com/gazivoda/nail-biting'],
       jobTitle: 'Founder',
       worksFor: { '@id': ORG_ID },
-      knowsAbout: ['nail biting', 'onychophagia', 'habit reversal training', 'MediaPipe', 'WebAssembly', 'on-device AI'],
+      knowsAbout: PERSON_KNOWS_ABOUT,
       description: 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
     };
-    injected = injected.replace('</head>', `    ${schemaTag(personSchema)}\n  </head>`);
+    // The page itself had no page-level node at all — only the Person it
+    // describes. AboutPage is the WebPage subtype for exactly this page, and it
+    // is what carries the speakable spec (selectors resolve against the SSR
+    // <h1> and `article-summary` standfirst below) and the freshness date.
+    const aboutPage = {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      '@id': 'https://stopbiting.today/about',
+      url: 'https://stopbiting.today/about',
+      name: 'About Stop Biting',
+      description: aboutDescription,
+      isPartOf: { '@id': WEBSITE_ID },
+      // The page is about the company; the founder it profiles is the Person
+      // node above, linked from the org side by worksFor.
+      about: { '@id': ORG_ID },
+      publisher: { '@id': ORG_ID },
+      speakable: SCHEMA_SPEAKABLE,
+      ...(pageLastmod('/about') ? { dateModified: pageLastmod('/about') } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['About', 'https://stopbiting.today/about'],
+    ]);
+    injected = injected.replace('</head>', `    ${schemaTag(aboutPage)}\n    ${schemaTag(personSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     // Crawler-visible summary — keep the copy in step with About.tsx.
     injected = injectSsrArticle(injected,
       '<h1>About Stop Biting</h1>' +
-      '<p>Built by a nail biter, for nail biters.</p>' +
+      '<p class="article-summary">Built by a nail biter, for nail biters.</p>' +
       '<section><h2>The founder&#39;s story</h2>' +
       '<p>I&#39;m Igor Gazivoda, a software developer. I bit my nails for over 20 years — constantly, automatically, ' +
       'without noticing until the damage was already done. I tried everything: bitter polish, reminder bands, sheer willpower. ' +
@@ -1435,11 +1559,17 @@ if (!existsSync(distPath)) {
     const pricingSchema = {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
+      // The money page was the one WebPage on the site without an @id, so it
+      // could not be referenced or merged the way `/` and every article can.
+      '@id': 'https://stopbiting.today/pricing',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
       description: 'Pricing for Stop Biting — 3-day free trial, then $2.99/month or $29/year.',
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
+      // Selectors resolve against the SSR <h1> and the `article-summary`
+      // standfirst injected below.
+      speakable: SCHEMA_SPEAKABLE,
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/pricing') ? { dateModified: pageLastmod('/pricing') } : {}),
     };
@@ -1450,7 +1580,7 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
       '<h1>Stop Biting Pricing</h1>' +
-      '<p>Simple, honest pricing. Start with a 3-day free trial — no credit card required.</p>' +
+      '<p class="article-summary">Simple, honest pricing. Start with a 3-day free trial — no credit card required.</p>' +
       '<section><h2>Monthly — $2.99/month</h2>' +
       '<p>Billed monthly. Includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types.</p></section>' +
       '<section><h2>Yearly — $29.00/year</h2>' +
@@ -1510,15 +1640,32 @@ if (!existsSync(distPath)) {
         { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, press both palms flat on your desk for 60 seconds — the physical incompatibility breaks the habit chain.' },
       ],
     };
+    // FAQPage IS a WebPage subtype, so this doubles as the page node rather
+    // than sitting anonymously beside a second one: it carries the canonical as
+    // its @id, the speakable spec (selectors resolve against the SSR <h1> and
+    // the `article-summary` standfirst below) and the freshness date. The route
+    // had no page-level identity at all before.
     const faqSchema = {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
+      '@id': 'https://stopbiting.today/how-it-works',
+      url: 'https://stopbiting.today/how-it-works',
+      name: 'How AI Nail Biting Detection Works',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
+      isPartOf: { '@id': WEBSITE_ID },
+      publisher: { '@id': ORG_ID },
+      speakable: SCHEMA_SPEAKABLE,
+      ...(pageLastmod('/how-it-works') ? { dateModified: pageLastmod('/how-it-works') } : {}),
       mainEntity: HOW_IT_WORKS_FAQS.map(f => ({
         '@type': 'Question',
         name: f.q,
         acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
     };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['How it works', 'https://stopbiting.today/how-it-works'],
+    ]);
     // Crawler-visible summary — keep the copy in step with HowItWorks.tsx
     // (the steps mirror the HowTo schema above).
     const stepsHtml = howToSchema.step.map(s =>
@@ -1527,7 +1674,7 @@ if (!existsSync(distPath)) {
       `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('');
     const article =
       '<h1>How AI Nail Biting Detection Works</h1>' +
-      '<p>Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. Setup takes under two minutes.</p>' +
+      '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. Setup takes under two minutes.</p>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
       '<p>Most nail biters catch fewer than half of their daily biting episodes through self-monitoring alone. ' +
       'The habit is automatic — it runs below the threshold of conscious awareness. ' +
@@ -1555,7 +1702,7 @@ if (!existsSync(distPath)) {
       description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
       canonical: 'https://stopbiting.today/how-it-works',
     });
-    injected = injected.replace('</head>', `    ${schemaTag(howToSchema)}\n    ${schemaTag(faqSchema)}\n  </head>`);
+    injected = injected.replace('</head>', `    ${schemaTag(howToSchema)}\n    ${schemaTag(faqSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/how-it-works'));
   });
@@ -1612,13 +1759,20 @@ if (!existsSync(distPath)) {
     },
   };
 
-  // The roundup hub also carries ItemList schema (comparison-schema.json) so
-  // AI crawlers read it as a ranked list of the named apps it compares.
+  // The roundup hub also carries ItemList schema (comparison-schema.json) so AI
+  // crawlers read it as the set of named apps it compares.
+  //
+  // UNORDERED deliberately. This used to claim ItemListOrderDescending — a
+  // ranking — while the page it describes explicitly refuses to rank: its
+  // standfirst says "including where ours loses" and every H2 segments by use
+  // case ("best for nail biting at a computer", "best for multiple BFRBs on
+  // desktop") rather than by position. The order of the entries is the page's
+  // reading order, not a verdict, and the schema must not say otherwise.
   const AI_APPS_ITEMLIST = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'AI Apps That Detect Nail Biting (2026)',
-    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    itemListOrder: 'https://schema.org/ItemListUnordered',
     numberOfItems: 4,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Stop Biting', url: 'https://stopbiting.today/' },
@@ -1642,6 +1796,10 @@ if (!existsSync(distPath)) {
       const article = {
         '@context': 'https://schema.org',
         '@type': 'Article',
+        // Identity, for the same reason every BlogPosting now carries one:
+        // these 9 nodes were part of the 152 anonymous content entities. The
+        // page canonical, matching `url`/`mainEntityOfPage` below.
+        '@id': canonical,
         headline: content?.title ?? meta.title,
         description: meta.description,
         url: canonical,

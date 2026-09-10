@@ -27,7 +27,8 @@ import { execFileSync } from 'node:child_process';
 // Node >= 22.18 strips TypeScript types on import, so blogPosts.ts loads directly.
 const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
 // Only the route list is used here — the /compare/* and /solutions/* paths that
-// need a freshness entry. Their bodies are fingerprinted from source text.
+// need a freshness entry. Their bodies are read out of the file as text (see
+// PAGE_SOURCES), which is also how they can be read at a historical commit.
 const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -70,8 +71,9 @@ const CORE_PAGES = [
 //
 // The replacement never guesses and never stamps "now" on an unchanged page:
 //
-//   1. Fingerprint each core page from the source that produces its
-//      crawler-visible content (PAGE_SOURCES below).
+//   1. Fingerprint each core page from its RENDERED VISIBLE TEXT — what a
+//      reader sees, tags and attributes stripped, whitespace collapsed
+//      (PAGE_SOURCES below).
 //   2. Fingerprint unchanged since the ledger was written → reuse the recorded
 //      date, unchanged, forever. This is the normal path and needs no git.
 //   3. Fingerprint changed → re-derive the date from git: walk the commits that
@@ -93,40 +95,318 @@ const COMPARE = 'src/data/comparePages.ts';
 const SHELL = 'index.html';
 
 const reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// ─── What the fingerprint is taken OF: the route's rendered visible text ─────
+// A `dateModified` that moves when the page did not is a false freshness
+// signal, and Google discards `lastmod` sitewide once it catches one. So the
+// basis is the text a READER sees — never the source that produced it. Hashing
+// handler source (the first attempt) meant a `speakable` property, a
+// BreadcrumbList or a `class="article-summary"` attribute moved four dates
+// while the rendered prose stayed byte-identical to the live site.
+//
+// Why not read dist/seo-content.json, which does hold the per-route SSR
+// content: it is a build artifact — untracked, absent on a clean checkout, and
+// written by `vite build`, which reads pageUpdates.json. Depending on it would
+// make `seo:sync` depend on its own output, and step 3 above has to recompute
+// the basis at arbitrary historical commits, where nothing but committed source
+// exists. The basis is therefore derived from source — but by RENDERING it to
+// text rather than hashing it.
+//
+// The reduction below is the same one the live-site comparison uses: take the
+// markup the route emits, drop every tag (so attributes and structure go with
+// them), decode entities, collapse whitespace. Sitewide chrome — the <noscript>
+// nav, meta, JSON-LD — is deliberately out of the basis: Google asks that
+// `lastmod` reflect the page's own content, not boilerplate.
+
+// Escape sequences that survive into the rendered string. 'don\'t' and `don't`
+// must reduce identically — otherwise re-quoting a literal reads as an edit.
+const ESCAPES = { n: ' ', t: ' ', r: '' };
+
+// Reads the string or template literal whose opening quote is at src[i].
+// Returns [text, indexAfterClosingQuote]. `${…}` is handed to `resolve`, whose
+// text lands at exactly that position in the sentence.
+function readLiteral(src, i, resolve) {
+  const quote = src[i];
+  let text = '';
+  let j = i + 1;
+  while (j < src.length) {
+    const c = src[j];
+    if (c === '\\') { text += ESCAPES[src[j + 1]] ?? src[j + 1] ?? ''; j += 2; continue; }
+    if (c === quote) return [text, j + 1];
+    if (quote === '`' && c === '$' && src[j + 1] === '{') {
+      const end = skipCode(src, j + 2);
+      text += ` ${resolve(src.slice(j + 2, end - 1))} `;
+      j = end;
+      continue;
+    }
+    text += c;
+    j++;
+  }
+  return [text, j];
+}
+
+// Index just past the `}` closing an interpolation that opened at `i`.
+// Literals are skipped whole, so a `}` inside one does not close it.
+function skipCode(src, i) {
+  let depth = 1;
+  let j = i;
+  while (j < src.length) {
+    const c = src[j];
+    if (c === '\'' || c === '"' || c === '`') { j = readLiteral(src, j, () => '')[1]; continue; }
+    if (c === '{') depth++;
+    else if (c === '}' && --depth === 0) return j + 1;
+    j++;
+  }
+  return j;
+}
+
+// A bare path, URL or fragment is a link TARGET, not text: `href` values sit in
+// the source as their own literal, and nobody reads them off the page.
+const LINK_ONLY = /^\s*(?:[./#][^\s]*|https?:\/\/\S+)\s*$/;
+// A JSX presentation attribute. In HTML these vanish with the tag around them;
+// in a .tsx page they are their own literal, and must vanish the same way — a
+// `className` edit is not a content edit.
+const ATTR_VALUE = /\b(?:className|class|style|id|key|ref|htmlFor|role|(?:aria|data)-[\w-]+)\s*=\s*\{?\s*$/;
+
+// Walks a slice of JS/TS once and returns the contents of every string and
+// template literal, in source order. Comments are skipped (a comment-only edit
+// is invisible), as are object KEYS — `heading:` names a field, it is not copy —
+// and the values of JSON-LD's `@`-prefixed keys, which are machine-only even
+// where schema and page copy share a declaration (`'@type': 'HowToStep'`).
+function literals(src, resolve = () => '') {
+  const out = [];
+  let atKey = false;
+  let i = 0;
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '/' && src[i + 1] === '/') { const e = src.indexOf('\n', i); i = e < 0 ? src.length : e; continue; }
+    if (c === '/' && src[i + 1] === '*') { const e = src.indexOf('*/', i + 2); i = e < 0 ? src.length : e + 2; continue; }
+    if (c === '\'' || c === '"' || c === '`') {
+      const [text, next] = readLiteral(src, i, resolve);
+      if (/^\s*:/.test(src.slice(next, next + 8))) {
+        atKey = text.startsWith('@');
+      } else {
+        const markup = atKey || LINK_ONLY.test(text) || ATTR_VALUE.test(src.slice(Math.max(0, i - 60), i));
+        if (!markup) out.push(text);
+        atKey = false;
+      }
+      i = next;
+      continue;
+    }
+    // `@id: canonical` has no literal value — end the key's reach at the
+    // property boundary so it cannot swallow the next property's copy.
+    if (c === ',' || c === '}' || c === ']') atKey = false;
+    i++;
+  }
+  return out.join(' ');
+}
+
+// The same slice with every literal and comment blanked to spaces, so the code
+// around them can be scanned without seeing copy as identifiers.
+function blankLiterals(src) {
+  let out = '';
+  let i = 0;
+  const blank = n => ' '.repeat(n);
+  while (i < src.length) {
+    const c = src[i];
+    if (c === '/' && src[i + 1] === '/') {
+      const e = src.indexOf('\n', i); const end = e < 0 ? src.length : e;
+      out += blank(end - i); i = end; continue;
+    }
+    if (c === '/' && src[i + 1] === '*') {
+      const e = src.indexOf('*/', i + 2); const end = e < 0 ? src.length : e + 2;
+      out += blank(end - i); i = end; continue;
+    }
+    if (c === '\'' || c === '"' || c === '`') {
+      const [, next] = readLiteral(src, i, () => '');
+      out += blank(next - i); i = next; continue;
+    }
+    out += c;
+    i++;
+  }
+  return out;
+}
+
+const ENTITIES = {
+  '&#39;': '\'', '&amp;': '&', '&quot;': '"', '&lt;': '<', '&gt;': '>',
+  '&nbsp;': ' ', '&mdash;': '—', '&ndash;': '–',
+};
+// Markup → text. `<p class="article-summary">x</p>` and `<p>x</p>` reduce to the
+// same "x", which is the whole point: restructuring markup is not an edit.
+function htmlToText(html) {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&#39;|&amp;|&quot;|&lt;|&gt;|&nbsp;|&mdash;|&ndash;/g, m => ENTITIES[m])
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const visibleText = (src, resolve) => htmlToText(literals(src, resolve));
+
+// ─── Following a route's copy to wherever it is declared ─────────────────────
+// Copy does not all sit in one literal: an article interpolates `${stepsHtml}`,
+// which maps over a const, which may itself name another. Resolving those in
+// place (rather than appending them) is what makes a pure refactor invisible —
+// moving three FAQ answers from inline literals into a mapped const reorders
+// nothing a reader sees, and must not move the date.
+
+const KEYWORDS = new Set([
+  'const', 'let', 'var', 'function', 'return', 'new', 'typeof', 'await', 'async',
+  'if', 'else', 'for', 'of', 'in', 'true', 'false', 'null', 'undefined', 'this',
+]);
+const MAX_DEPTH = 4;
+
+// `const NAME = …;` (to a `;` that ends a line) or `function NAME(…) {…}` (to
+// the `}` at the declaration's own indent — every nested close is deeper).
+function declBody(scope, name) {
+  const assigned = scope.match(new RegExp(`\\n\\s*(?:const|let|var) ${reEscape(name)} =([\\s\\S]*?);$`, 'm'));
+  if (assigned) return assigned[1];
+  return scope.match(new RegExp(`\\n(\\s*)function ${reEscape(name)}\\([\\s\\S]*?\\n\\1\\}`))?.[0] ?? null;
+}
+
+// One property of an object literal — `howToSchema.step` is the array the
+// article renders; the schema fields beside it are not on the page.
+function propBody(body, prop) {
+  const m = body.match(new RegExp(`\\b${reEscape(prop)}:`));
+  if (!m) return null;
+  const code = blankLiterals(body);
+  let depth = 0;
+  let i = m.index + m[0].length;
+  const start = i;
+  for (; i < code.length; i++) {
+    const c = code[i];
+    if ('([{'.includes(c)) depth++;
+    else if (')]}'.includes(c)) { if (depth === 0) break; depth--; }
+    else if (c === ',' && depth === 0) break;
+  }
+  return body.slice(start, i);
+}
+
+// Identifiers a slice READS as content: a bare name (or `name.prop`), or a
+// nullary call. A call WITH arguments is a transform — escapeHtml(), join(),
+// map() never introduce copy of their own — and arrow parameters are locals.
+function codeRefs(src) {
+  const code = blankLiterals(src);
+  const locals = new Set();
+  for (const m of code.matchAll(/(?:\(([^)]*)\)|([A-Za-z_$][\w$]*))\s*=>/g)) {
+    for (const p of (m[1] ?? m[2] ?? '').split(',')) {
+      const n = p.trim().replace(/[:=].*$/s, '').trim();
+      if (n) locals.add(n);
+    }
+  }
+  const refs = [];
+  for (const m of code.matchAll(/\b([A-Za-z_$][\w$]*)\s*(\(\s*\))?\s*(?:\.([A-Za-z_$][\w$]*))?/g)) {
+    const [, name, nullaryCall, prop] = m;
+    const after = code.slice(m.index + m[0].length);
+    if (KEYWORDS.has(name) || locals.has(name)) continue;
+    if (/^\s*:/.test(after)) continue;               // an object key, not a read
+    // `escapeHtml(x)` is a transform; `FAQS.map(f => …)` still READS FAQS, so
+    // only a call directly on the bare name disqualifies it.
+    if (!prop && !nullaryCall && /^\s*\(/.test(after)) continue;
+    refs.push([name, prop]);
+  }
+  return refs;
+}
+
+// Visible text of a declaration, plus of everything it reads, depth-bounded and
+// cycle-safe. `seen` doubles as the depth counter.
+function declText(scope, name, prop, seen) {
+  if (seen.size >= MAX_DEPTH || seen.has(name)) return '';
+  const body = declBody(scope, name);
+  if (body == null) return '';
+  const next = new Set(seen).add(name);
+  const slice = (prop && propBody(body, prop)) ?? body;
+  const own = literals(slice, code => refsText(scope, code, next));
+  return [own, refsText(scope, slice, next)].join(' ');
+}
+
+function refsText(scope, src, seen) {
+  return codeRefs(src)
+    .filter(([name]) => !seen.has(name))
+    .map(([name, prop]) => declText(scope, name, prop, seen))
+    .join(' ');
+}
+
+// ─── PAGE_SOURCES: one visible-text extractor per core page ──────────────────
 // The route handler for `path`, from `app.get('<path>'` to the `});` that closes
 // it at the same indent. Every nested close is indented deeper, so this is exact.
-const route = path => [SERVER, src =>
-  src.match(new RegExp(`\\n  app\\.get\\('${reEscape(path)}',[\\s\\S]*?\\n  \\}\\);\\n`))?.[0]];
-const serverFn = name => [SERVER, src =>
-  src.match(new RegExp(`\\n  function ${reEscape(name)}\\([\\s\\S]*?\\n  \\}\\n`))?.[0]];
-const shellBlock = label => [SHELL, src =>
-  src.match(new RegExp(`<!-- Structured Data: ${reEscape(label)}[\\s\\S]*?<\\/script>`))?.[0]];
-const wholeFile = file => [file, src => src];
-// One /compare/* or /solutions/* page: the getter PAGE_MAP points at, plus any
-// shared const it renders (the medical disclaimer section), so an edit to shared
-// copy still moves the pages that show it.
+const handlerSrc = (src, path) =>
+  src.match(new RegExp(`\\n  app\\.get\\('${reEscape(path)}',[\\s\\S]*?\\n  \\}\\);\\n`))?.[0];
+
+// The second argument of `injectSsrArticle(injected, …)` — the exact markup the
+// route puts in the served page, and the only part of a handler a reader sees.
+function ssrArticleArg(handler) {
+  // Searched in the blanked copy so a mention inside a comment or a string
+  // cannot be mistaken for the call. Indices line up with the original.
+  const code = blankLiterals(handler);
+  const at = code.indexOf('injectSsrArticle(');
+  if (at < 0) return null;
+  let depth = 1;
+  let i = at + 'injectSsrArticle('.length;
+  let comma = -1;
+  for (; i < code.length && depth > 0; i++) {
+    const c = code[i];
+    if ('([{'.includes(c)) depth++;
+    else if (')]}'.includes(c)) depth--;
+    else if (c === ',' && depth === 1 && comma < 0) comma = i;
+  }
+  return comma < 0 ? null : handler.slice(comma + 1, i - 1);
+}
+
+const ssrArticle = path => [SERVER, src => {
+  const handler = handlerSrc(src, path);
+  if (!handler) return undefined;
+  const arg = ssrArticleArg(handler);
+  if (!arg) return undefined;
+  // Handler locals shadow module scope: `const article = …` inside the route
+  // must win over any same-named declaration elsewhere in the file.
+  const scope = `${handler}\n${src}`;
+  const seen = new Set();
+  return htmlToText([literals(arg, code => refsText(scope, code, seen)), refsText(scope, arg, seen)].join(' '));
+}];
+
+// The six homepage FAQ answers. server.js parses them out of the shell's
+// FAQPage schema and renders them in flow, so the answers ARE page copy — but
+// only `name`/`acceptedAnswer.text` are; the rest of the block is machine-only.
+const shellFaqAnswers = () => [SHELL, src => {
+  const m = src.match(/<!-- Structured Data: FAQPage[\s\S]*?<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  if (!m) return undefined;
+  try {
+    return htmlToText(JSON.parse(m[1]).mainEntity.map(q => `${q.name} ${q.acceptedAnswer.text}`).join(' '));
+  } catch {
+    return undefined;
+  }
+}];
+
+// A React page whose copy is a data literal (the three legal pages). Class
+// names and JSX structure reduce away with every other attribute.
+const pageComponent = file => [file, src => visibleText(src)];
+
+// One /compare/* or /solutions/* page: the getter PAGE_MAP points at, rendered
+// to text, plus whatever shared copy it names (the medical disclaimer section),
+// so an edit to shared copy still moves the pages that show it.
 const comparePage = path => [COMPARE, src => {
   const name = src.match(new RegExp(`'${reEscape(path)}':\\s*(\\w+)`))?.[1];
   if (!name) return undefined;
-  let slice = src.match(new RegExp(`\\nfunction ${name}\\([\\s\\S]*?\\n\\}\\n`))?.[0];
+  const slice = src.match(new RegExp(`\\nfunction ${name}\\([\\s\\S]*?\\n\\}\\n`))?.[0];
   if (!slice) return undefined;
-  for (const m of src.matchAll(/\nconst (\w+) = [\s\S]*?\n\};\n/g)) {
-    if (slice.includes(m[1])) slice += m[0];
-  }
-  return slice;
+  const seen = new Set([name]);
+  return htmlToText([literals(slice), refsText(src, slice, seen)].join(' '));
 }];
 
 const PAGE_SOURCES = {
-  // The homepage article is assembled from its handler, homeArticleHtml(), and
-  // the FAQ answers server.js parses out of the shell's FAQPage block.
-  '/':                       [route('/'), serverFn('homeArticleHtml'), shellBlock('FAQPage')],
-  '/how-it-works':           [route('/how-it-works')],
-  '/pricing':                [route('/pricing')],
-  '/about':                  [route('/about')],
-  // Legal pages ship meta only server-side; their body is the React component.
-  '/privacy':                [route('/privacy'), wholeFile('src/pages/PrivacyPage.tsx')],
-  '/terms-and-conditions':   [route('/terms-and-conditions'), wholeFile('src/pages/TermsPage.tsx')],
-  '/refund-policy':          [route('/refund-policy'), wholeFile('src/pages/RefundPage.tsx')],
+  // The homepage article is homeArticleHtml(), which the handler passes to
+  // injectSsrArticle — reached through `const article = homeArticleHtml()` —
+  // plus the FAQ answers it renders from the shell's FAQPage block.
+  '/':                       [ssrArticle('/'), shellFaqAnswers()],
+  '/how-it-works':           [ssrArticle('/how-it-works')],
+  '/pricing':                [ssrArticle('/pricing')],
+  '/about':                  [ssrArticle('/about')],
+  // The legal routes inject no SSR article: what a reader sees is the React
+  // page. Their handlers carry meta and JSON-LD only, so they are not a source.
+  '/privacy':                [pageComponent('src/pages/PrivacyPage.tsx')],
+  '/terms-and-conditions':   [pageComponent('src/pages/TermsPage.tsx')],
+  '/refund-policy':          [pageComponent('src/pages/RefundPage.tsx')],
 };
 for (const p of Object.keys(PAGE_MAP)) PAGE_SOURCES[p] = [comparePage(p)];
 
@@ -137,7 +417,9 @@ function fingerprint(read, path) {
     const src = read(file);
     if (src == null) return null;
     const slice = pick(src);
-    if (slice == null) return null;
+    // Empty is a failure, not "this page has no copy": it means the extractor
+    // no longer recognises the shape of the code that renders the page.
+    if (!slice) return null;
     parts.push(slice);
   }
   return createHash('sha256').update(parts.join(' ')).digest('hex').slice(0, 16);

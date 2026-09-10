@@ -131,3 +131,38 @@ Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/1
 3. http→https is a 302; should be 301/308 (Traefik `permanent: true`).
 4. Brotli is not actually served to real browsers (only when `br` is the sole offered encoding).
 5. IndexNow fires only via `npm run seo:indexnow` from a checkout — deliberately not auto-wired.
+
+### Iteration 2 — Medium/Low tier: entity graph, citation granularity, page weight (5 subagents)
+- [x] **Entity graph** (`index.html` + `server.js`, shape pinned centrally so the two lanes could not
+      disagree): `#organization` had 2 conflicting declarations per page (differing `url` and `logo`
+      type) → now 1 signature, 0 conflicting properties across all 4 `@id` entities sitewide.
+      All 152 Article/BlogPosting nodes were anonymous and `/blog` declared 143 more anonymous stubs
+      for the same articles — every article existed as two unlinked half-entities. `@id` = canonical
+      on both → they merge. `#person.knowsAbout` drift hoisted to a shared const.
+- [x] **Page weight**: `/blog` JSON-LD 48.5 KB → 8.6 KB (`hasPart` 143 → 20); page 104 KB → 64.5 KB.
+      All 143 visible in-flow links preserved (verified).
+- [x] **Schema-vs-content**: `itemListOrder: Descending` → `Unordered` (the page explicitly disclaims
+      ranking); `$0` Offer bounded with a 3-day `eligibleDuration`; FAQPage given the homepage `@id`
+      so it merges with the WebPage node; `speakable` + `.article-summary` landed together on 4
+      templates (314 selectors resolve, 0 dangling); BreadcrumbList 153 → 160 pages.
+- [x] **Citations** (`blogPosts.ts`): M1–M5 + 4 further defects the audit missed, incl. a Lee & Lipner
+      characterisation absent from the paper (full text fetched, 0 hits for its key terms) and a CDC
+      link pointing at a page carrying no nail guidance. Sources blocks split onto the sections whose
+      claims they support. One blocked citation swapped to an open PMC equivalent.
+- [x] **Competitor fairness** (`comparePages.ts`): quarterly re-verification against 10 vendor URLs
+      found **5 places where we understated competitors** — Hands Off ships a stats tracker and a 5th
+      BFRB, Nailed does track and its store price is Free (not $4.99), SmartBehavior does run on Macs.
+      All corrected. "How we verified this page" now visible + dated on all 9 pages.
+
+- [x] **Fixed a defect iteration 1 introduced.** The freshness ledger fingerprinted route-handler
+      *source*, so schema-only edits faked content updates: `seo:sync` moved `/`, `/how-it-works`,
+      `/pricing`, `/about` to today while their visible prose was byte-identical to live (proved by
+      diffing tag-stripped local vs live output). Basis is now the route's rendered *visible text* —
+      markup/schema/class/comment edits no longer move a date; a one-word prose edit does. Both
+      directions proved with negative and positive tests.
+      Side effect: dates corrected to when content actually first appeared (`/how-it-works`,
+      `/pricing`, `/about` → 2026-08-11, the commit that created those SSR articles; legal pages →
+      2026-04-09/04-16, independently corroborated by `PrivacyPage.tsx`'s own `lastUpdated` string).
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/160 URLs 200 ·
+820 JSON-LD nodes, 0 parse failures · MedicalCondition still correctly scoped to 15/160.
