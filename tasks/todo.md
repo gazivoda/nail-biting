@@ -259,3 +259,49 @@ platform/community pillars ≈1.9; the Google-Extended decision ≈0.5; www TLS 
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 837 JSON-LD blocks, 0 parse failures.
+
+### Iteration 5 — verified source libraries, then ~20 more misattributions (5 subagents)
+
+Method deliberately inverted. This site's recurring defect is citations that *resolve but do not
+support the claim*, and the usual cure ("find a source for this sentence") is what produces it. So:
+three agents first built libraries of what specific papers ACTUALLY say — **73 sources fetched and
+read**, each recorded with verbatim quotes, sample details, and a **"DOES NOT SUPPORT"** list naming
+the adjacent claims a careless writer would wrongly attach. Only then were claims matched to sources.
+
+- [x] **~20 further misattributions corrected**, including:
+      · Monzani 2014 (a twin study that ran no treatment) cited for a *treatment-sequencing* claim, and
+        again for "environmental components are modifiable" when it found shared environment negligible
+      · Roberts 2015 cited for perfectionism — it administered no perfectionism scale (n=24, outcome
+        self-reported urge, and its stress induction was an explicit null)
+      · An HPV finger→mouth transmission claim in a second article, sourced to a saliva-bacteria study
+      · Klebsiella/Salmonella "routinely recovered from under fingernails" — neither was isolated in
+        either cited study
+      · Azrin 1980's "99% **at five-month follow-up**" (12 instances) — the design was self-recorded
+        daily counts *for* five months. Now states the duration, the self-report, and cites the one
+        openly-readable source for the figure
+      · "HRT has consistently outperformed every other intervention" — contradicted by Allen 1996 and
+        Koritzky & Yechiam 2011; it has never been tested against physical barriers at all
+      · The dental chain (incisor wear, malocclusion, alveolar destruction) traced to a review with **no
+        dental data** and an opinion piece with no N. Only root resorption has a real measurement.
+        **Otsugu 2023 (n=503) found nail biting significantly NEGATIVELY related to malocclusion** — the
+        opposite of what the site asserted — and is now presented honestly
+- [x] **Derived-figure defects**: "hundreds of thousands vs hundreds to a few thousands" were antilogs
+      the site computed from McGinley's log10 values. Now reports what the paper writes, and says
+      explicitly why it won't convert them into a fold-difference.
+- [x] **Two titles asserted claims their own bodies disown** — "Why It Peaks at 15" (no source locates a
+      peak at any age) and "Why High Standards Drive the Habit". Both retitled; slugs unchanged.
+- [x] **~16 claims softened rather than sourced** — regrowth *time*, handwashing, permanence thresholds,
+      paronychia relative risk, per-day frequency, respiratory spread. Where nothing readable exists, the
+      number is gone, not re-sourced.
+- [x] Stale mirrors closed: `llms.txt` free prose and **`src/pages/Landing.tsx`** both still carried the
+      old Azrin wording. Two meta descriptions still asserted the perfectionism claim their bodies had
+      just disowned. 28 posts' `dateModified` bumped — verified by rendered-text diff, 0 markup-only bumps.
+
+**Empirical correction worth keeping:** the libraries recommended swapping ~23 PubMed links to Europe PMC
+for bot-readability. Measured before acting — `europepmc.org` returns **403 to ClaudeBot, GPTBot,
+PerplexityBot and OAI-SearchBot**, while `pubmed.ncbi.nlm.nih.gov` returns a soft 203. The swap would
+have made citability *worse*. None of the 23 has a PMC deposit, so they stayed; **13 genuinely
+bot-readable PMC/OA sources were added alongside instead.** Citation URLs in the corpus: ~26 → **123**.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+0 JSON-LD parse failures · 0 occurrences of any corrected claim remaining in `dist/`.

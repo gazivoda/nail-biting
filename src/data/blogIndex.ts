@@ -23,7 +23,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "habit-reversal-training-guide",
@@ -32,7 +32,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-10",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-health-risks",
@@ -41,7 +41,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-in-children",
@@ -59,7 +59,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "stress-and-nail-biting",
@@ -68,7 +68,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-ocd-connection",
@@ -113,7 +113,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-04-07",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "stopping-nail-biting-for-good",
@@ -185,7 +185,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "mediapipe-ai-detection-explained",
@@ -257,7 +257,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-10",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nac-nail-biting",
@@ -284,7 +284,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-statistics",
@@ -293,7 +293,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "grow-nails-after-nail-biting",
@@ -302,7 +302,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-emotional-regulation",
@@ -329,7 +329,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-bacteria-parasites",
@@ -338,7 +338,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-social-confidence",
@@ -351,12 +351,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-teenagers",
-    title: "Nail Biting in Teenagers: Why It Peaks at 15 — and What Actually Helps",
-    description: "Nail biting peaks in the teenage years, affecting up to 45% of adolescents. Why it happens, how to tell serious from normal, and what works for teens.",
+    title: "Nail Biting in Teenagers: What the Evidence Actually Shows",
+    description: "No study locates a peak age for nail biting. What the research does show about teenagers, how to tell serious from normal, and what works for teens.",
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-at-work-meetings",
@@ -369,12 +369,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-and-perfectionism",
-    title: "Nail Biting and Perfectionism: Why High Standards Drive the Habit",
-    description: "Research links perfectionism to nail biting more strongly than general anxiety. How the connection works, why it matters for treatment, and what helps.",
+    title: "Nail Biting and Perfectionism: What the Evidence Actually Shows",
+    description: "The perfectionism link rests on one study of 24 people that used no perfectionism scale: boredom and frustration raised urges, and a stress induction did not.",
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-gaming",
@@ -406,11 +406,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-personality",
     title: "What Your Nail Biting Says About Your Personality",
-    description: "Research links nail biting to specific personality traits — perfectionism, sensation seeking, and emotional reactivity. Here's what the studies show.",
+    description: "Nail biting correlates with perfectionism, anxiety sensitivity and sensation seeking — but the perfectionism link rests on one study of 24 people. What holds up.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-evening",
@@ -455,7 +455,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-screen-time",
@@ -473,7 +473,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-10",
+    dateModified: "2026-09-11",
   },
   {
     slug: "onychophagia",
@@ -572,7 +572,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-autism",
@@ -635,7 +635,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-braces",
@@ -698,7 +698,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 2,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-09-11",
   },
   {
     slug: "when-to-see-a-doctor-for-nail-biting",
@@ -824,7 +824,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-10",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-women",
@@ -1040,7 +1040,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-which-fingers",
@@ -1085,7 +1085,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-hangnails",
@@ -1193,7 +1193,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-gloves",
@@ -1283,7 +1283,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-08-12",
-    dateModified: "2026-08-12",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-mistakes",
@@ -1292,7 +1292,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-08-12",
-    dateModified: "2026-08-12",
+    dateModified: "2026-09-11",
   },
   {
     slug: "nail-biting-gym-sports",
@@ -1301,6 +1301,6 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-08-12",
-    dateModified: "2026-08-12",
+    dateModified: "2026-09-11",
   },
 ];

@@ -490,8 +490,9 @@ export function Landing(_props: Props) {
                 </div>
                 <p className="text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
                   The method inside this app isn't ours — it's Habit Reversal Training, the best-studied behavioural
-                  treatment for nail biting. In the landmark clinical trial, habit reversal cut biting episodes by
-                  roughly 99% at five-month follow-up, and a meta-analysis of 18 studies confirmed large effects.
+                  treatment for nail biting. In the landmark clinical trial, participants' own daily episode counts
+                  fell by roughly 99% over the study's five months, and a meta-analysis of 18 studies found a large
+                  pooled post-treatment effect across habit disorders generally.
                 </p>
                 <footer className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs">
                   <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
@@ -582,7 +583,7 @@ export function Landing(_props: Props) {
             ))}
           </section>
           <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
-            Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), sustained at five-month follow-up. Camera privacy is architectural — there's no server to send data to.
+            Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980) — self-recorded episode counts over the trial's five months, not a follow-up after treatment ended. Camera privacy is architectural — there's no server to send data to.
           </p>
 
           {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
