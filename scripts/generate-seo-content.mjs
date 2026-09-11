@@ -117,19 +117,42 @@ writeFileSync(
 console.log(`generate-seo-content: seo-content.json — ${BLOG_POSTS.length} posts, ${Object.keys(comparePages).length} compare pages, ${Object.keys(pageUpdates).length} core-page dates`);
 
 // ─── dist/llms-full.txt — full article text for AI crawlers ──────────────────
-// Cheap textual rendering of everything the SSR articles contain.
-function tableToText(html) {
-  return html
+// Textual rendering of everything the SSR articles contain. Two things this has
+// to get right, because the file exists to be read by a machine that will quote
+// it back to someone:
+//
+//   Block structure. Only `</tr>` used to end a line, so every `faqSection()`
+//   block — `<h3>question</h3><p>answer</p>` repeated — arrived as one
+//   unbroken run of text with the next question welded to the previous answer.
+//   The question/answer pair is the unit an answer engine extracts, and it was
+//   being destroyed on the way out. Every block-level close now ends a line.
+//
+//   Entities. `&amp;` is what a browser shows as "&". Left encoded, "Azrin,
+//   Nunn &amp; Frantz" is not a citation anyone can match to a paper.
+const ENTITIES = {
+  '&amp;': '&', '&#39;': '\'', '&apos;': '\'', '&quot;': '"',
+  '&lt;': '<', '&gt;': '>', '&nbsp;': ' ', '&mdash;': '—', '&ndash;': '–',
+};
+const decodeEntities = text => text.replace(/&(?:#\d+|#x[0-9a-f]+|\w+);/gi, m =>
+  ENTITIES[m] ?? (/^&#x/i.test(m) ? String.fromCodePoint(parseInt(m.slice(3, -1), 16))
+    : /^&#/.test(m) ? String.fromCodePoint(Number(m.slice(2, -1))) : m));
+
+function htmlToText(html) {
+  return decodeEntities(html
     .replace(/<\/t[hd]>/g, ' | ')
-    .replace(/<\/tr>/g, '\n')
-    .replace(/<[^>]+>/g, '')
+    .replace(/<li[^>]*>/g, '- ')
+    .replace(/<br\s*\/?>/g, '\n')
+    .replace(/<\/(?:tr|p|li|ul|ol|div|section|table|h[1-6])>/g, '\n')
+    .replace(/<[^>]+>/g, ''))
+    .replace(/[ \t]+/g, ' ')
     .replace(/[ \t]+\|/g, ' |')
-    .replace(/\n{2,}/g, '\n')
+    .replace(/[ \t]*\n[ \t]*/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
     .trim();
 }
-function stripTags(text) {
-  return text.replace(/<[^>]+>/g, '');
-}
+// Section bodies are plain strings, but they are written next to markup and a
+// stray tag or entity would otherwise ride through untouched.
+const stripTags = text => htmlToText(text);
 
 const full = [];
 full.push('# Stop Biting — full content for AI assistants');
@@ -171,7 +194,7 @@ for (const [path, page] of Object.entries(comparePages)) {
     full.push(stripTags(s.body));
     if (s.html) {
       full.push('');
-      full.push(tableToText(s.html));
+      full.push(htmlToText(s.html));
     }
     full.push('');
   }
@@ -194,7 +217,7 @@ for (const p of BLOG_POSTS) {
     }
     if (s.html) {
       full.push('');
-      full.push(tableToText(s.html));
+      full.push(htmlToText(s.html));
     }
     full.push('');
   }

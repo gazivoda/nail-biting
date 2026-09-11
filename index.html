@@ -172,7 +172,18 @@
          range QuantitativeValue, so it belongs directly on the Offer and must
          be a QuantitativeValue, not a Duration string. "DAY" is the UN/CEFACT
          Common Code `unitCode` expects. The price stays "0": the trial really
-         is free, it is just no longer open-ended. -->
+         is free, it is just no longer open-ended.
+
+         `screenshot` was REMOVED, not repointed. It declared /og-image.png —
+         the social card: a wordmark, a tagline and a URL on a flat background.
+         That is not a picture of the product, and it told a reader nothing
+         about what the app looks like. No genuine capture exists in this repo
+         to point it at either: docs/off-site-kit/product-hunt-launch.md lists
+         all three app screenshots as NEEDS CREATING, and the PWA manifest's
+         `screenshots` array (vite.config.ts) is empty for the same reason. An
+         absent optional property costs nothing; a marketing image filed under
+         `screenshot` is a false statement about the product. Restore it the
+         day a real capture of the detection screen exists. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -237,7 +248,6 @@
         "Free 60-second live demo — try detection in the browser, no signup"
       ],
       "keywords": "stop nail biting, onychophagia, habit reversal training, nail biting remedies, nail biting treatment, compulsive habits, BFRB, body-focused repetitive behavior",
-      "screenshot": "https://stopbiting.today/og-image.png",
       "softwareVersion": "1.1",
       "releaseNotes": "PWA support added — install directly from browser",
       "publisher": { "@id": "https://stopbiting.today/#organization" }

@@ -1,4 +1,5 @@
 import express from 'express';
+import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -58,6 +59,39 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// ─── Compression ─────────────────────────────────────────────────────────────
+// The origin served every byte uncompressed: an HTML route was 27,352 B on the
+// wire with or without an `Accept-Encoding` header. Registered here, above the
+// static mounts and every route, so it covers the per-request HTML too — every
+// content route assembles its own <title>, meta, JSON-LD and server-rendered
+// article, so none of it can be pre-compressed on disk and a build-time
+// .br/.gz sidecar (express-static-gzip and friends) would have missed exactly
+// the responses that matter most.
+//
+// `compression` negotiates br > gzip > deflate and is a no-op for a client
+// that asks for none of them. Brotli quality is the package default of 4 —
+// the balanced setting for content compressed once per request; q11 is for
+// build-time artefacts and costs an order of magnitude more CPU for a few
+// percent of bytes.
+//
+// It only sets Content-Encoding / Vary and drops Content-Length. It does not
+// touch Cache-Control, so `/assets`' `max-age=31536000, immutable` and the
+// `no-cache` on HTML both survive untouched.
+const INCOMPRESSIBLE_PATHS = /^\/(?:og|fonts)\//;
+app.use(compression({
+  // The default filter already declines `image/png` (mime-db marks it
+  // incompressible) and `font/woff2` (mime-db gives it no compressible flag).
+  // Both directories are asserted by path as well: these are the 152 OG cards
+  // and the 8 subsetted WOFF2s, formats that carry their own DEFLATE/Brotli
+  // stream, so a second pass burns CPU to save approximately nothing. Stating
+  // it here means the exclusion is a property of this server rather than of a
+  // transitive dependency's data file.
+  filter(req, res) {
+    if (INCOMPRESSIBLE_PATHS.test(req.path)) return false;
+    return compression.filter(req, res);
+  },
+}));
 
 // Permissions-Policy (helmet does not set it). The app itself needs the
 // camera for detection; everything else is locked down.
@@ -1000,9 +1034,27 @@ if (!existsSync(distPath)) {
       ? post.ogImage
       : `https://stopbiting.today${post.ogImage}`;
   }
-  function postSchemaImage(post) {
-    const url = postImageUrl(post);
+  // One ImageObject shape for every route that has its own card, and the shared
+  // SCHEMA_IMAGE for every route that does not — so `image` in the JSON-LD can
+  // never name a different file from og:image/twitter:image on the same page.
+  function schemaImage(url) {
     return url ? { '@type': 'ImageObject', url, width: 1200, height: 630 } : SCHEMA_IMAGE;
+  }
+  function postSchemaImage(post) {
+    return schemaImage(postImageUrl(post));
+  }
+  // Per-page OG card for a non-blog route. scripts/generate-og-images.mjs
+  // writes public/og/<path, leading slash dropped, / → ->.png for every entry
+  // in COMPARE_META and `vite build` copies public/ verbatim into dist/, so the
+  // served file and this URL are the same bytes. The file is probed rather than
+  // assumed: a route whose card has not been generated yet falls back to the
+  // shell's shared /og-image.png and to SCHEMA_IMAGE, instead of advertising a
+  // social preview that 404s.
+  function routeImageUrl(pagePath) {
+    const file = `${pagePath.replace(/^\//, '').replace(/\//g, '-')}.png`;
+    return existsSync(join(distPath, 'og', file))
+      ? `https://stopbiting.today/og/${file}`
+      : null;
   }
 
   function schemaTag(obj) {
@@ -1195,12 +1247,14 @@ if (!existsSync(distPath)) {
   // Read index.html once at startup (it's static after build).
   //
   // The shell in index.html carries schema blocks that are NOT true of every
-  // route, so three variants are derived from it and each route picks one:
+  // route, so two variants are derived from it and each route picks one:
   //
-  //   indexHtmlWithFaq     FAQPage + MedicalCondition — the homepage only.
-  //   indexHtmlMedical     MedicalCondition, no FAQPage — pages whose subject is
-  //                        onychophagia as a clinical condition.
+  //   indexHtmlFaqOnly     FAQPage, no MedicalCondition — the homepage only.
   //   indexHtml            neither — the default shell for every other route.
+  //
+  // The MedicalCondition block is stripped from BOTH. It is never served as the
+  // shell ships it; the routes that qualify re-emit a per-page copy built by
+  // visibleConditionSchema() below.
   //
   // MedicalCondition scoping rule: a page may carry the condition entity only
   // when the page's own crawler-visible text discusses the condition the entity
@@ -1211,13 +1265,11 @@ if (!existsSync(distPath)) {
   // that is not visible to readers" case, and it risks the site's other
   // structured data being discounted with it.
   //
-  // The gate is derived from the block itself rather than hardcoded here, so it
-  // can never claim more than the block claims: the visible text must name the
-  // condition (`name`) AND at least one therapy it lists as `possibleTreatment`.
-  // See conditionIsVisible() below.
+  // The rule is derived from the block itself rather than hardcoded here, so it
+  // can never claim more than the block claims, and it is applied per therapy
+  // rather than per page — see visibleConditionSchema() below.
   let indexHtml = null;
-  let indexHtmlWithFaq = null;
-  let indexHtmlMedical = null;
+  let indexHtmlRaw = null;
   let indexHtmlFaqOnly = null;
   const indexPath = join(distPath, 'index.html');
   const stripSchemaBlock = (html, label) => html.replace(
@@ -1225,46 +1277,54 @@ if (!existsSync(distPath)) {
     '',
   );
   if (existsSync(indexPath)) {
-    const raw = readFileSync(indexPath, 'utf-8');
-    indexHtmlWithFaq = raw;
-    // Strip the FAQPage schema block from the shared shell so it is only emitted
-    // for the homepage (see app.get('/') below). All other routes use indexHtml
-    // or indexHtmlMedical and must not carry FAQPage structured data.
-    indexHtmlMedical = stripSchemaBlock(raw, 'FAQPage');
-    indexHtml = stripSchemaBlock(indexHtmlMedical, 'MedicalCondition');
-    indexHtmlFaqOnly = stripSchemaBlock(raw, 'MedicalCondition');
-    if (indexHtml === indexHtmlMedical) {
-      console.error('WARNING: MedicalCondition schema block not found in index.html — it is now served on every route.');
+    indexHtmlRaw = readFileSync(indexPath, 'utf-8');
+    // MedicalCondition comes off both shells — it is only ever re-emitted
+    // per page. FAQPage comes off the default shell too, so it survives on the
+    // homepage alone (see app.get('/') below); no other route may carry it.
+    indexHtmlFaqOnly = stripSchemaBlock(indexHtmlRaw, 'MedicalCondition');
+    indexHtml = stripSchemaBlock(indexHtmlFaqOnly, 'FAQPage');
+    if (indexHtmlFaqOnly === indexHtmlRaw) {
+      // Either the block is gone from index.html (nothing to emit anywhere), or
+      // its comment marker changed and the strip silently missed it — in which
+      // case the unfiltered block rides the shell onto every route and the
+      // qualifying ones emit a second, narrowed copy beside it.
+      console.error('WARNING: the MedicalCondition block in index.html did not match the strip pattern — check that it is still present and still introduced by its "Structured Data: MedicalCondition" comment.');
     }
   }
 
-  // Terms the MedicalCondition block itself asserts, read out of the block the
-  // shell ships so the two can never drift: the condition's clinical name, and
-  // the therapies it names under possibleTreatment (each matched by its head
-  // phrase and, where it has one, its parenthesised acronym).
+  // The MedicalCondition entity the shell declares, read out of index.html so
+  // the served copy and the source can never drift, decomposed into what proves
+  // a reader was actually shown each therapy: its parenthesised acronym, and
+  // the words of its name. "Habit Reversal Training (HRT)" yields the acronym
+  // "hrt" and the words habit/reversal/training; "Bitter-taste nail polish"
+  // yields no acronym and bitter/taste/nail/polish.
+  let CONDITION_ENTITY = null;
   let CONDITION_NAME = null;
-  let CONDITION_TREATMENTS = [];
-  if (indexHtmlWithFaq) {
-    const m = indexHtmlWithFaq.match(
+  let CONDITION_THERAPIES = [];
+  if (indexHtmlRaw) {
+    const m = indexHtmlRaw.match(
       /<!-- Structured Data: MedicalCondition[\s\S]*?<script type="application\/ld\+json">([\s\S]*?)<\/script>/,
     );
     try {
       const cond = JSON.parse(m[1]);
+      CONDITION_ENTITY = cond;
       CONDITION_NAME = cond.name.toLowerCase();
-      CONDITION_TREATMENTS = [cond.possibleTreatment ?? []].flat().flatMap(t => {
-        const name = String(t.name).toLowerCase();
-        const acronym = name.match(/\(([^)]+)\)/)?.[1];
-        return [name.replace(/\s*\([^)]*\)/g, '').trim(), ...(acronym ? [acronym] : [])];
+      CONDITION_THERAPIES = [cond.possibleTreatment ?? []].flat().map(therapy => {
+        const name = String(therapy.name).toLowerCase();
+        return {
+          therapy,
+          acronym: name.match(/\(([^)]+)\)/)?.[1] ?? null,
+          words: name.replace(/\s*\([^)]*\)/g, '').split(/[^a-z0-9]+/).filter(Boolean),
+        };
       });
     } catch {
       console.error('WARNING: could not parse the MedicalCondition block in index.html — the entity will not be emitted on any route.');
     }
   }
-  // True when `articleHtml` — the exact markup this route puts in the served
-  // page — shows a reader both the condition and one of its treatments.
-  function conditionIsVisible(articleHtml) {
-    if (!CONDITION_NAME || !CONDITION_TREATMENTS.length) return false;
-    const text = articleHtml
+  // The text a reader of `articleHtml` — the exact markup this route puts in the
+  // served page — actually sees.
+  function visibleArticleText(articleHtml) {
+    return articleHtml
       // "Related articles" / "Related reading" are navigation. A link whose
       // title happens to name the condition is not this page discussing it —
       // without this, 3 posts qualified purely on a sibling's headline.
@@ -1273,8 +1333,55 @@ if (!existsSync(distPath)) {
       .replace(/&#39;/g, '\'')
       .replace(/&amp;/g, '&')
       .toLowerCase();
-    if (!text.includes(CONDITION_NAME)) return false;
-    return CONDITION_TREATMENTS.some(t => new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(text));
+  }
+  const namesWord = (text, term) =>
+    new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(text);
+
+  // Whether a page's visible text shows the reader this therapy: its acronym as
+  // a word, or every word of its name somewhere in the copy.
+  //
+  // Every word, rather than the name as a literal phrase, because the name in
+  // the block is a label and not a quotation the prose has to repeat. The two
+  // pages that review this treatment at length — with brand names, a mechanism
+  // and a verdict — write "bitter nail polish", "bitter taste" and
+  // "bitter-tasting polish", never the block's own "bitter-taste nail polish".
+  // A phrase test would strip the therapy from the only pages that genuinely
+  // document it. Requiring all four words still refuses every page that
+  // discusses none of it, and no synonym is invented here: the vocabulary comes
+  // entirely from the entity.
+  function therapyIsVisible(text, { acronym, words }) {
+    if (acronym && namesWord(text, acronym)) return true;
+    return words.length > 0 && words.every(word => namesWord(text, word));
+  }
+
+  // The MedicalCondition entity for one page, narrowed to the therapies that
+  // page's own visible text actually names — or null when the page never names
+  // the condition, or names none of the therapies.
+  //
+  // The page-level gate alone was not enough. It passed a page on the condition
+  // name plus ANY ONE therapy, then emitted the shell's full possibleTreatment
+  // list: of the pages that qualified, all but two shipped a block asserting
+  // bitter-taste nail polish as a treatment while their copy never mentions it
+  // — they qualified on Habit Reversal Training and carried the polish along
+  // for the ride. Filtering per therapy makes the list a statement about this
+  // page, and a page left with no therapy at all emits no entity rather than an
+  // untreatable condition.
+  function visibleConditionSchema(articleHtml) {
+    if (!CONDITION_ENTITY || !CONDITION_NAME || !CONDITION_THERAPIES.length) return null;
+    const text = visibleArticleText(articleHtml);
+    if (!text.includes(CONDITION_NAME)) return null;
+    const possibleTreatment = CONDITION_THERAPIES
+      .filter(t => therapyIsVisible(text, t))
+      .map(({ therapy }) => therapy);
+    if (!possibleTreatment.length) return null;
+    // Spread first so the narrowed list keeps possibleTreatment's original
+    // position in the entity and every other property passes through verbatim.
+    return { ...CONDITION_ENTITY, possibleTreatment };
+  }
+
+  // Append one JSON-LD block to <head>.
+  function injectSchema(html, obj) {
+    return html.replace('</head>', `    ${schemaTag(obj)}\n  </head>`);
   }
 
   // HTML responses must not be cached: every route's HTML is assembled per
@@ -1301,8 +1408,8 @@ if (!existsSync(distPath)) {
   // which Landing.tsx already mirrors (Google requires the visible counterpart)
   // — so the crawler prose, the schema, and the rendered page share one source.
   let HOME_FAQS = [];
-  if (indexHtmlWithFaq) {
-    const m = indexHtmlWithFaq.match(/<!-- Structured Data: FAQPage -->\s*<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  if (indexHtmlRaw) {
+    const m = indexHtmlRaw.match(/<!-- Structured Data: FAQPage -->\s*<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     if (m) {
       try {
         HOME_FAQS = JSON.parse(m[1]).mainEntity.map(q => ({ q: q.name, a: q.acceptedAnswer.text }));
@@ -1350,17 +1457,19 @@ if (!existsSync(distPath)) {
 
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
-    if (!indexHtmlWithFaq) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
     // The homepage FAQ names onychophagia and habit reversal training in flow,
-    // so it earns the MedicalCondition entity — but the gate is applied to the
-    // article it actually renders, never assumed.
+    // so it earns the MedicalCondition entity — but which therapies it may list
+    // is read off the article it actually renders, never assumed.
     const article = homeArticleHtml();
-    let injected = injectMeta(conditionIsVisible(article) ? indexHtmlWithFaq : indexHtmlFaqOnly, {
+    const condition = visibleConditionSchema(article);
+    let injected = injectMeta(indexHtmlFaqOnly, {
       title: 'Stop Nail Biting with AI | Stop Biting',
       description: homeDescription,
       canonical: 'https://stopbiting.today/',
     });
+    if (condition) injected = injectSchema(injected, condition);
     // WebPage entity carrying the speakable spec — injected only here, so
     // legal/noindex routes (which share the same shell) never receive it.
     // Selectors resolve against the SSR article injected just below.
@@ -1431,10 +1540,11 @@ if (!existsSync(distPath)) {
     // Same title the client sets on mount: buildPageTitle(seoTitle ?? title).
     const metaTitle = post.seoTitle ?? post.title;
     // MedicalCondition only when this post's own rendered text names the
-    // condition and one of its treatments — see conditionIsVisible().
+    // condition, and listing only the therapies that text names — see
+    // visibleConditionSchema().
     const article = blogArticleHtml(post);
-    const shell = conditionIsVisible(article) ? indexHtmlMedical : indexHtml;
-    let injected = injectMeta(shell, {
+    const condition = visibleConditionSchema(article);
+    let injected = injectMeta(indexHtml, {
       title: buildPageTitle(metaTitle),
       description: post.description,
       canonical,
@@ -1447,6 +1557,7 @@ if (!existsSync(distPath)) {
       canonical,
       post,
     });
+    if (condition) injected = injectSchema(injected, condition);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
@@ -1930,13 +2041,15 @@ if (!existsSync(distPath)) {
       '<li><a href="/pricing">Pricing — $2.99/month or $29/year, 3-day free trial</a></li>' +
       '</ul></section>';
     // This page describes the clinical mechanism but its prose never names
-    // onychophagia or a treatment as the MedicalCondition block defines them,
-    // so it does not carry that entity — the gate decides, not the route.
-    let injected = injectMeta(conditionIsVisible(article) ? indexHtmlMedical : indexHtml, {
+    // onychophagia as the MedicalCondition block defines it, so it does not
+    // carry that entity — the rule decides, not the route.
+    const condition = visibleConditionSchema(article);
+    let injected = injectMeta(indexHtml, {
       title: 'How AI Nail Biting Detection Works | Stop Biting',
       description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
       canonical: 'https://stopbiting.today/how-it-works',
     });
+    if (condition) injected = injectSchema(injected, condition);
     injected = injected.replace('</head>', `    ${schemaTag(howToSchema)}\n    ${schemaTag(faqSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/how-it-works'));
@@ -2021,11 +2134,13 @@ if (!existsSync(distPath)) {
     app.get(pagePath, (_req, res) => {
       if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
       const canonical = `https://stopbiting.today${pagePath}`;
+      const ogImage = routeImageUrl(pagePath);
       let injected = injectMeta(indexHtml, {
         title: meta.title,
         description: meta.description,
         canonical,
         ogType: 'article',
+        ogImage,
       });
       const content = COMPARE_CONTENT[pagePath];
       const article = {
@@ -2050,7 +2165,9 @@ if (!existsSync(distPath)) {
         publisher: SCHEMA_PUBLISHER,
         inLanguage: 'en',
         isAccessibleForFree: true,
-        image: SCHEMA_IMAGE,
+        // Same card the og:image/twitter:image tags above carry — one URL per
+        // page, or the shared fallback on both sides when there is no card.
+        image: schemaImage(ogImage),
         // Only claimed when the SSR article is actually injected below — the
         // selectors (#ssr-page-content h1 / .article-summary) resolve against
         // compareArticleHtml()'s <h1> and its `article-summary` intro.

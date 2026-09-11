@@ -200,3 +200,62 @@ Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 160/1
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 0 JSON-LD parse failures · MedicalCondition still correctly scoped to 15.
+
+### Iteration 4 — re-audit + compression, OG images, llms.txt drift (5 subagents)
+
+**Independent re-audit (scratchpad/iter4-reaudit.md), measured on the local build, 161 URLs, crawler UAs:**
+
+| Category | Baseline | Now | Δ |
+|---|---:|---:|---:|
+| AI Citability | 88 | 91 | +3 |
+| Brand Authority | 49 | 49 | 0 |
+| Content E-E-A-T | 75 | 79 | +4 |
+| Technical GEO | 93 | 90 | **−3** |
+| Schema & Structured Data | 78 | 90 | +12 |
+| Platform Optimization | 61 | 65 | +4 |
+| **Composite** | **75** | **77** | **+2** |
+
+Technical fell because the old 93 credited Brotli that was never actually served — a correction to the
+record, not a regression. Every claim from iterations 1–3 was independently re-verified and held:
+first-H2-is-a-question 62/143 exactly; 12 FAQPage / 48 pairs with byte-identity checked on **all 48**;
+MedicalCondition 15/15 with condition + treatment visible; 0 aggregateRating sitewide; 0 conflicting
+`@id` properties; 316/316 speakable selectors resolve; 0 fabricated date bumps.
+
+- [x] **Compression — the origin served none at all.** No middleware, no dependency; `Content-Length`
+      identical across every `Accept-Encoding`. Added Brotli + gzip above the static mounts so
+      per-request HTML is covered. HTML −70% (26.6 KB → 8.1 KB), JS −75%, CSS −83%, MediaPipe wasm
+      11.5 MB → 3.1 MB. `/og/*.png` and `/fonts/*.woff2` explicitly excluded; cache headers preserved.
+- [x] **Per-page OG images**: 152 cards (143 posts + 9 compare/solutions), rendered through Chrome CDP
+      using the site's own self-hosted fonts, palettised to 8-bit with a stdlib re-encoder — 3.27 MB
+      total, max 28.2 KB, no new dependency, byte-deterministic across reruns. `SoftwareApplication.
+      screenshot` pointed at a marketing image; no real screenshot exists in the repo, so it was
+      **removed** rather than repointed.
+- [x] **llms.txt had drifted from the site it describes** — still asserted Nailed is "$4.99 one-time"
+      (corrected in iteration 2) and carried a **fabricated "Cochrane review, 2012"** citation plus the
+      Hands Off vendor marketing figure the fact-check log explicitly refuses to repeat. Root cause
+      fixed: link descriptions now derive from the same strings the pages render, and a tripwire fails
+      `seo:check` when llms.txt asserts a token absent from the rendered corpus (all three failure modes
+      regression-proved). Also fixed two fidelity bugs in `llms-full.txt` generation that welded every
+      FAQ question onto the previous answer.
+- [x] **Seven misattributed citations** found and corrected — the recurring failure mode on this site.
+      "up to 45% of children" was credited to Halteh 2017, which does not contain it (it is Lee & Lipner
+      2022 quoting Gupta & Gupta). Also: Berk 2009 described as a "trial" when it is three case
+      observations; Ghanizadeh & Shekoohi reported as confirming diagnoses when it used no diagnostic
+      interview; an HPV oral-cavity claim absent from its source; McGinley's "100×" figure not in the
+      paper; Monzani's "5,409 adult twins" is female-only. 19 further citations verified as accurate.
+- [x] `possibleTreatment` asserted bitter-taste polish on 14 pages that never mention it — now filtered
+      per page against visible text (15 pages HRT-only, 2 with both).
+
+**Correction to this log:** iteration 1's "`/` 1819 crawler-readable words" was a naive tag-strip that
+counted inline CSS/JS as prose. The real figure is ~623. No regression — the span is unchanged — but the
+number was wrong.
+
+**Highest-value remaining repo action (audit's assessment):** only 26 of 143 posts carry any outbound
+citation across ~153k words of health content, and just 13% of paragraphs contain a number, percentage
+or year. Est. +2.4 composite — more than compression and OG images combined.
+**~10 composite points are locked outside the repo**: off-site presence measures 3/100 (no Wikipedia, no
+AlternativeTo, 0 Reddit threads, and the Product Hunt listing that exists is a *competitor's*), ≈6.8 pts;
+platform/community pillars ≈1.9; the Google-Extended decision ≈0.5; www TLS + the 302 ≈0.45.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+837 JSON-LD blocks, 0 parse failures.

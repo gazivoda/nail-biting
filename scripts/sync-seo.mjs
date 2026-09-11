@@ -6,8 +6,10 @@
 //
 // Targets:
 //   public/sitemap.xml       — fully regenerated
-//   public/llms.txt          — "## Blog articles" section: existing entries
-//                              refreshed in place, missing entries appended
+//   public/llms.txt          — every "## " link section fully regenerated from
+//                              the copy the pages themselves render; the free
+//                              prose above the first "## " is fact-checked
+//                              against the site's own text (see LLMS.TXT below)
 //   src/data/blogIndex.ts    — fully regenerated (metadata-only mirror)
 //   src/data/pageUpdates.json — core-page freshness ledger (see PAGE SOURCES)
 //
@@ -529,6 +531,9 @@ function checkMetaLength(post) {
 }
 
 // ─── public/sitemap.xml — full regeneration ──────────────────────────────────
+// Every canonical URL the site publishes. llms.txt is checked against this set
+// below, so it cannot point at a route the sitemap does not contain.
+const sitemapUrls = new Set();
 {
   const newest = NEWEST_POST;
 
@@ -550,6 +555,8 @@ function checkMetaLength(post) {
       priority: '0.7',
     })),
   ];
+
+  for (const u of urls) sitemapUrls.add(u.loc);
 
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -621,51 +628,259 @@ function checkMetaLength(post) {
   );
 }
 
-// ─── public/llms.txt — refresh existing blog entries, append missing ─────────
-// Only the "## Blog articles" section is touched: entries whose slug still
-// exists in BLOG_POSTS are rewritten in place (title + first-sentence blurb,
-// keeping their position), so blurbs track description rewrites instead of
-// fossilising; posts not yet listed are appended. All other sections and any
-// non-entry lines pass through untouched, so the run is idempotent.
+// ─── LLMS.TXT — public/llms.txt ──────────────────────────────────────────────
+// llms.txt is the file AI assistants read to decide what this site says, so a
+// stale sentence here is repeated to the exact audience a correction was made
+// for. It drifted twice in one month, both times silently:
+//
+//   · the /compare/stop-biting-vs-nailed blurb still called Nailed a "$4.99
+//     one-time" app after the page itself had stopped asserting any single
+//     price (the vendor's site and the store listing it links to disagree);
+//   · the /compare/ai-detection-apps blurb still said "facts verified August
+//     2026" after the 10 September re-verification.
+//
+// Neither was a typo. Both were hand-written prose restating a page — a second
+// copy of a claim, with nothing tying it to the first. The fix is to stop
+// keeping a second copy:
+//
+//   1. EVERY "## " section is a DERIVED link list, regenerated in full.
+//        "## Key pages"     — core routes: the title and description server.js
+//                             injects for that route. /compare/* and
+//                             /solutions/*: the title and subtitle
+//                             ComparePage.tsx renders from comparePages.ts.
+//        "## Blog articles" — title + first sentence of post.description.
+//      The blurb is no longer a description OF the page, it IS the page's own
+//      sentence, so correcting the page corrects llms.txt on the next sync.
+//
+//   2. The free prose above the first "## " (the summary, the pricing block,
+//      the key facts) summarises the whole site rather than restating one page,
+//      so there is nothing to derive it from. It gets a TRIPWIRE instead: every
+//      price, percentage, platform version, distinctive number and citation in
+//      it must still appear in the site's own rendered text, or seo:check fails
+//      naming the token. A "(Cochrane review, 2012)" citation this site has
+//      never published, and a "70–90%" figure it explicitly refuses to repeat,
+//      both sat in that block looking exactly like the facts around them.
+//
+//   3. Every URL must exist in the sitemap generated above — which a link to a
+//      "#contact" anchor that no page defines does not.
 {
   const llmsPath = join(ROOT, 'public/llms.txt');
-  const llms = readFileSync(llmsPath, 'utf8');
-  const lines = llms.split('\n');
+  const lines = (safeRead(llmsPath) ?? '').split('\n');
+  const firstHeading = lines.findIndex(l => l.startsWith('## '));
 
-  const start = lines.findIndex(l => l.trim() === '## Blog articles');
-  if (start === -1) {
-    problems.push('llms.txt: "## Blog articles" section not found — skipped');
+  if (firstHeading === -1) {
+    problems.push('llms.txt: no "## " section found — nothing to derive');
   } else {
-    let end = lines.findIndex((l, i) => i > start && l.startsWith('## '));
-    if (end === -1) end = lines.length;
-
-    const bySlug = new Map(BLOG_POSTS.map(p => [p.slug, p]));
-    const entryLine = p => `- [${p.title}](${ORIGIN}/blog/${p.slug}): ${firstSentence(p.description)}`;
-
-    const listed = new Set();
-    let refreshed = 0;
-    for (let i = start; i < end; i++) {
-      const m = lines[i].match(/\/blog\/([a-z0-9-]+)\)/);
-      if (!m) continue;
-      listed.add(m[1]);
-      const post = bySlug.get(m[1]);
-      if (post && lines[i] !== entryLine(post)) {
-        lines[i] = entryLine(post);
-        refreshed++;
+    // ── 1. Regenerate each link section from its source ──────────────────────
+    const sections = {
+      '## Key pages': keyPageEntries(),
+      '## Blog articles': BLOG_POSTS.map(p => ({
+        href: `${ORIGIN}/blog/${p.slug}`,
+        title: p.title,
+        note: firstSentence(p.description),
+      })),
+    };
+    let out = lines.slice(0, firstHeading);
+    for (const [heading, entries] of Object.entries(sections)) {
+      const at = lines.findIndex(l => l.trim() === heading);
+      if (at === -1) {
+        problems.push(`llms.txt: "${heading}" section not found — cannot regenerate it`);
+        continue;
+      }
+      out = out.concat(heading, '', entries.map(e => `- [${e.title}](${e.href}): ${e.note}`), '');
+    }
+    // Anything after the last generated section (there is nothing today) would
+    // be dropped silently, so say so rather than deleting a reader's section.
+    const known = new Set(Object.keys(sections));
+    for (const l of lines.slice(firstHeading)) {
+      if (l.startsWith('## ') && !known.has(l.trim())) {
+        problems.push(`llms.txt: unknown section "${l.trim()}" — sync-seo.mjs regenerates every "## " section and would drop it`);
       }
     }
+    const next = `${out.join('\n').replace(/\n+$/, '')}\n`;
+    writeIfChanged(llmsPath, next, `llms.txt (${Object.values(sections).flat().length} links, all derived)`);
 
-    const missing = BLOG_POSTS.filter(p => !listed.has(p.slug));
-    if (missing.length) {
-      // Trailing blank lines sit between the last entry and the next "## " heading.
-      let insertAt = end;
-      while (insertAt > start && lines[insertAt - 1].trim() === '') insertAt--;
-      lines.splice(insertAt, 0, ...missing.map(entryLine));
+    // ── 2 + 3. Check the file that WILL be on disk, not the one that was ─────
+    checkFreeTextClaims(next.split('\n').slice(0, firstHeading).join('\n'));
+    checkLlmsUrls(next);
+  }
+}
+
+// The "## Key pages" list. Core routes carry their own one-line description in
+// the `injectMeta` call that serves them; /compare/* and /solutions/* carry
+// theirs as the subtitle ComparePage renders under the h1. Both are the page's
+// own sentence about itself, which is the only kind that cannot go stale
+// without the page going stale with it.
+function keyPageEntries() {
+  const server = readWorkTree(SERVER) ?? '';
+  const entries = [];
+  for (const path of ['/', '/how-it-works', '/pricing', '/about', '/blog', '/editorial-policy']) {
+    const meta = routeMeta(server, path);
+    if (!meta) {
+      problems.push(`llms.txt: cannot read the injectMeta title/description for ${path} in server.js — the extractor no longer matches the handler`);
+      continue;
     }
+    entries.push({ href: `${ORIGIN}${path}`, title: meta.title, note: meta.description });
+  }
+  for (const [path, get] of Object.entries(PAGE_MAP)) {
+    const page = get();
+    entries.push({ href: `${ORIGIN}${path}`, title: page.title, note: page.subtitle });
+  }
+  const privacy = routeMeta(server, '/privacy');
+  if (privacy) entries.push({ href: `${ORIGIN}/privacy`, title: privacy.title, note: privacy.description });
+  // The one entry with no page behind it: llms-full.txt is a build artifact of
+  // scripts/generate-seo-content.mjs, and the note describes how it is produced
+  // rather than making any claim of its own.
+  entries.push({
+    href: `${ORIGIN}/llms-full.txt`,
+    title: 'Full content',
+    note: 'Complete article text of every guide and comparison page, generated from the same source the site renders',
+  });
+  return entries;
+}
 
-    if (refreshed || missing.length) {
-      writeIfChanged(llmsPath, lines.join('\n'),
-        `llms.txt (${refreshed} refreshed, +${missing.length} entries)`);
+// A route is usually registered with its path inline, but not always:
+// /editorial-policy is registered as `app.get(EDITORIAL_POLICY_PATH, …)`. Fall
+// back to the const that holds the path rather than silently losing the page.
+function routeHandler(src, path) {
+  const direct = handlerSrc(src, path);
+  if (direct) return direct;
+  const named = src.match(new RegExp(`\\b(?:const|let|var) (\\w+) = '${reEscape(path)}';`))?.[1];
+  return named
+    ? src.match(new RegExp(`\\n  app\\.get\\(${named},[\\s\\S]*?\\n  \\}\\);\\n`))?.[0] ?? null
+    : null;
+}
+
+// The `title` and `description` server.js injects for a route — the exact two
+// strings a crawler receives for it. Both may be a literal or a local const.
+function routeMeta(src, path) {
+  const handler = routeHandler(src, path);
+  if (!handler) return null;
+  const code = blankLiterals(handler);
+  const at = code.indexOf('injectMeta(');
+  if (at < 0) return null;
+  let depth = 1;
+  let i = at + 'injectMeta('.length;
+  for (; i < code.length && depth > 0; i++) {
+    const c = code[i];
+    if ('([{'.includes(c)) depth++;
+    else if (')]}'.includes(c)) depth--;
+  }
+  const args = handler.slice(at + 'injectMeta('.length, i - 1);
+  // Handler locals shadow module scope, same rule ssrArticle() follows.
+  const scope = `${handler}\n${src}`;
+  const read = name => {
+    const body = propBody(args, name);
+    // `{ description, canonical }` shorthand names a local of the same name.
+    const expr = body?.trim()
+      || (new RegExp(`\\b${reEscape(name)}\\s*[,}]`).test(blankLiterals(args)) ? name : '');
+    const direct = htmlToText(literals(expr));
+    if (direct) return direct;
+    if (!/^[A-Za-z_$][\w$]*$/.test(expr)) return null;
+    const decl = declBody(scope, expr);
+    return decl ? htmlToText(literals(decl)) : null;
+  };
+  const title = read('title');
+  const description = read('description');
+  if (!title || !description) return null;
+  // The shell suffix is site chrome, not part of the page's name.
+  return { title: title.replace(/\s*\|\s*Stop Biting$/, ''), description };
+}
+
+// ─── The tripwire: free prose vs. the site's own text ────────────────────────
+// Normalisation exists so that a figure written "20–30%" in one file and
+// "20-30%" in another is the same figure. Everything is compared lowercased,
+// with every Unicode dash and quote folded to ASCII and runs of space collapsed.
+function foldClaims(s) {
+  return s
+    .replace(/&#39;|&amp;|&quot;|&lt;|&gt;|&nbsp;|&mdash;|&ndash;/g, m => ENTITIES[m])
+    .replace(/[‐-―−]/g, '-')
+    .replace(/[‘’]/g, '\'')
+    .replace(/[“”]/g, '"')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+}
+
+function checkFreeTextClaims(freeText) {
+  // What counts as a checkable claim. Deliberately narrow: things carrying a
+  // unit or a citation, where a silent change is a factual error and not a
+  // rewording. Matched against the folded text, so dashes are already ASCII.
+  const CLAIM_PATTERNS = [
+    /[$€£]\s?\d[\d,]*(?:\.\d+)?/g,                              // prices
+    /\d+(?:\.\d+)?\s?-\s?\d+(?:\.\d+)?%|\d+(?:\.\d+)?%/g,       // percentages and ranges
+    /\b(?:macos|windows|ios|android)\s?\d+(?:\.\d+)?\+?/g,      // platform requirements
+    /\bd\s?=\s?\d*\.\d+/g,                                      // effect sizes
+    /\b\d[\d,]*[- ](?:day|days|keypoints?|minutes?|hours?)\b/g, // counted units
+    /\b\d{3,}\b/g,                                              // 468 landmarks, 575 participants, years
+  ];
+  // Words inside a citation that name nothing — the check is for proper nouns.
+  const CITATION_NOISE = new Set(['the', 'and', 'for', 'with', 'this', 'that', 'from', 'our']);
+
+  const corpus = siteCorpus();
+  const folded = foldClaims(freeText);
+  const unsupported = new Set();
+
+  for (const re of CLAIM_PATTERNS) {
+    for (const m of folded.match(re) ?? []) {
+      if (!corpus.includes(foldClaims(m))) unsupported.add(m);
+    }
+  }
+  // A parenthetical citation — "(Azrin, Nunn & Frantz, 1980)". Every proper
+  // noun in it must be something this site actually publishes; a source name
+  // that appears nowhere in the corpus was either invented or outlived the page
+  // that carried it. Read from the raw text, where the capitals still exist.
+  for (const m of freeText.matchAll(/\(([^()]*\b(?:19|20)\d{2}\b[^()]*)\)/g)) {
+    for (const word of m[1].match(/\b[A-Z][A-Za-z'’-]{2,}\b/g) ?? []) {
+      if (CITATION_NOISE.has(word.toLowerCase())) continue;
+      if (!corpus.includes(foldClaims(word))) unsupported.add(`${word} (in "${m[1]}")`);
+    }
+  }
+
+  for (const token of unsupported) {
+    problems.push(`llms.txt: "${token}" appears in the summary/pricing/key-facts prose but nowhere in the site's own text — correct it or delete it, never restate it`);
+  }
+}
+
+// Everything this site publishes as text, in one folded string: the blog and
+// comparison bodies React renders, the visible text of every core route (the
+// same extractors the freshness ledger fingerprints), and index.html's product
+// schema, which is where the supported OS versions are declared. HTML comments
+// in the shell are stripped — several of them quote claims that were REMOVED,
+// and a corpus that contains the removed claim proves nothing.
+function siteCorpus() {
+  const parts = [];
+  for (const p of BLOG_POSTS) {
+    parts.push(p.title, p.description);
+    for (const s of p.sections) parts.push(s.heading, s.body, (s.list ?? []).join(' '), s.html ?? '');
+  }
+  for (const get of Object.values(PAGE_MAP)) {
+    const page = get();
+    parts.push(page.title, page.subtitle, page.intro);
+    for (const s of page.sections) parts.push(s.heading, s.body, s.html ?? '');
+  }
+  const files = new Map();
+  const cachedRead = f => {
+    if (!files.has(f)) files.set(f, readWorkTree(f));
+    return files.get(f);
+  };
+  for (const sources of Object.values(PAGE_SOURCES)) {
+    for (const [file, pick] of sources) {
+      const src = cachedRead(file);
+      if (src) parts.push(pick(src) ?? '');
+    }
+  }
+  parts.push((cachedRead(SHELL) ?? '').replace(/<!--[\s\S]*?-->/g, ' '));
+  return foldClaims(parts.join(' '));
+}
+
+// Every URL llms.txt points at must be one the sitemap publishes. Generated
+// text artifacts are the exception — they are content, not indexable routes.
+function checkLlmsUrls(text) {
+  for (const m of text.matchAll(/\]\((https:\/\/stopbiting\.today[^)\s]*)\)/g)) {
+    const url = m[1];
+    if (/\.txt$/.test(url)) continue;
+    if (!sitemapUrls.has(url)) {
+      problems.push(`llms.txt: ${url} is not in sitemap.xml — it is either a dead link or a page the sitemap forgot`);
     }
   }
 }

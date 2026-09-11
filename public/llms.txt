@@ -1,24 +1,46 @@
 # Stop Biting
 > An app that uses on-device AI (MediaPipe/WebAssembly) to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. 100% private — no camera data ever leaves your device. Available as a native desktop app for Mac and Windows, and as a web app (PWA).
 
+Every link below carries the page's own description, generated from the same source the page renders — see scripts/sync-seo.mjs. Stop Biting is a paid product and this site exists to sell it; the pages that compare it head-to-head with a competing app say so in their own opening paragraph. One person writes the site: Igor Gazivoda, a software developer, not a clinician.
+
+Pricing:
+
+- Free trial: 3 days, no credit card required — the full detector, streak tracking and incident history
+- Monthly: $2.99/month
+- Yearly: $29.00/year — about $2.42/month, 19% less than paying monthly
+- Every plan includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types (sound and visual)
+- Payment is taken through Paddle, and a plan can be cancelled at any time
+
+Key facts:
+
+- Stop Biting runs MediaPipe models in WebAssembly on your own device — the camera feed never leaves it, detection makes zero network requests, and that is verifiable with a browser network monitor
+- Detection works fully offline after the initial load; no camera data is transmitted or stored
+- It detects nail biting using two MediaPipe models: a hand landmark model tracking 21 keypoints, and a face mesh tracking 468 facial landmarks
+- Supported platforms: macOS 12+, Windows 10+, and any modern browser as a no-install PWA
+- It detects nail biting only. Competing apps cover more behaviours, run on phones, or cost less, and the comparison pages below say where each of them beats us
+- Nail biting (onychophagia) affects an estimated 20–30% of the general population, and up to 45% of children between age 10 and puberty (Lee & Lipner, Int J Environ Res Public Health, 2022)
+- Habit Reversal Training is the best-evidenced treatment: the landmark trial reduced biting episodes by roughly 99% at five-month follow-up (Azrin, Nunn & Frantz, 1980), and a meta-analysis of 18 habit reversal studies covering 575 participants found a large pooled effect, d = 0.80 (Bate et al., Clinical Psychology Review, 2011)
+- The DSM-5 classifies nail biting under "Other Specified Obsessive-Compulsive and Related Disorder" only when it reaches clinical severity; the vast majority of people who bite their nails would not meet the criteria for any disorder
+- Competitor details are re-verified against each vendor's own website — and against the app store listing that site links to, when the two disagree — and every comparison page closes with a dated "How we verified this page" section stating when the check ran. Read the date on the page rather than trusting a date in this file
+
 ## Key pages
 
-- [Home](https://stopbiting.today/): Landing page — download, features, pricing, privacy commitment
-- [How it works](https://stopbiting.today/how-it-works): MediaPipe/WebAssembly detection explained — setup steps, technical specs, and FAQ
-- [Pricing](https://stopbiting.today/pricing): 3-day free trial, then $2.99/month or $29/year — plan details and what's included
-- [About](https://stopbiting.today/about): Founder story (Igor Gazivoda), the technology, and the privacy design
-- [Blog](https://stopbiting.today/blog): Science-backed articles on nail biting, habit reversal, and onychophagia
-- [Stop Biting vs bitter nail polish](https://stopbiting.today/compare/bitter-polish-alternative): Mechanism and evidence comparison with bitter polish
-- [Why habit tracking apps don't work for nail biting](https://stopbiting.today/compare/habit-tracking-apps): Manual logging vs automatic AI detection
-- [AI apps that detect nail biting compared](https://stopbiting.today/compare/ai-detection-apps): Stop Biting, Hands Off, Nailed, and SmartBehavior compared on platforms, price, and privacy (facts verified August 2026)
-- [Stop Biting vs Hands Off](https://stopbiting.today/compare/stop-biting-vs-hands-off): Two on-device webcam AI apps — nail-biting focus, web app, and annual plan vs five-BFRB desktop coverage
-- [Stop Biting vs Nailed](https://stopbiting.today/compare/stop-biting-vs-nailed): Cross-platform subscription with tracking vs $4.99 one-time macOS menu bar app on the same MediaPipe engine
-- [Stop Biting vs SmartBehavior](https://stopbiting.today/compare/stop-biting-vs-smartbehavior): Desktop and browser detection vs native iPhone/Android apps — choose by where you actually bite
-- [For desk workers](https://stopbiting.today/solutions/for-desk-workers): Why deep focus triggers biting and how detection covers desk hours
-- [For ADHD](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters and what helps
-- [For gamers](https://stopbiting.today/solutions/for-gamers): Detection that works during gaming flow state
-- [Privacy Policy](https://stopbiting.today/privacy): Data handling and privacy commitment
-- [Contact](https://stopbiting.today/#contact): Contact form for support and feedback
+- [Stop Nail Biting with AI](https://stopbiting.today/): Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.
+- [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.
+- [Pricing — $2.99/month or $29/year](https://stopbiting.today/pricing): Stop Biting pricing: 3-day free trial, no credit card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Unlimited AI detection, streak tracking, full incident history. Cancel anytime.
+- [About Stop Biting | Built by Igor Gazivoda](https://stopbiting.today/about): Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.
+- [Nail Biting Resources — Evidence-Based Guides](https://stopbiting.today/blog): Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.
+- [Editorial Policy and Corrections](https://stopbiting.today/editorial-policy): Who writes Stop Biting’s articles, why he is not a clinician, how claims and competitor comparisons are sourced and verified, and how to report a mistake.
+- [Stop Biting vs Bitter Nail Polish: Which Actually Works?](https://stopbiting.today/compare/bitter-polish-alternative): Comparing mechanisms, evidence, and who each approach works for
+- [Why Habit Tracking Apps Don't Work for Nail Biting](https://stopbiting.today/compare/habit-tracking-apps): Manual logging vs automatic AI detection — why automation changes outcomes
+- [Stop Biting vs Hands Off: Which Should You Pick?](https://stopbiting.today/compare/stop-biting-vs-hands-off): Two on-device AI apps that catch nail biting through your webcam — compared honestly on platforms, coverage, price, and privacy
+- [Stop Biting vs Nailed: Subscription vs One-Time Mac App](https://stopbiting.today/compare/stop-biting-vs-nailed): Two apps built on the same detection engine, with very different scopes — a minimal Mac menu bar utility vs a cross-platform habit system
+- [Stop Biting vs SmartBehavior: Desktop and Web vs Mobile](https://stopbiting.today/compare/stop-biting-vs-smartbehavior): The clearest split in the category: where do you actually bite your nails — at a computer, or everywhere else?
+- [AI Apps That Detect Nail Biting: Every Option Compared](https://stopbiting.today/compare/ai-detection-apps): Four apps now use on-device AI to catch nail biting in real time. Here’s the honest head-to-head — including where ours loses.
+- [Stop Nail Biting at Your Desk](https://stopbiting.today/solutions/for-desk-workers): Why desk workers bite during deep focus — and how AI detection solves it
+- [Nail Biting and ADHD: AI Detection That Works With Your Brain](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters — and what actually helps
+- [Stop Nail Biting While Gaming](https://stopbiting.today/solutions/for-gamers): Gaming flow state makes the habit invisible — AI detection works in the background
+- [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.
 - [Full content](https://stopbiting.today/llms-full.txt): Complete article text of every guide and comparison page, generated from the same source the site renders
 
 ## Blog articles
@@ -63,6 +85,16 @@
 - [Nail Biting in Teenagers: Why It Peaks at 15 — and What Actually Helps](https://stopbiting.today/blog/nail-biting-teenagers): Nail biting peaks in the teenage years, affecting up to 45% of adolescents.
 - [How to Stop Nail Biting at Work and in Meetings: A Practical Professional's Guide](https://stopbiting.today/blog/nail-biting-at-work-meetings): Nail biting during meetings, video calls, and presentations is hard to control.
 - [Nail Biting and Perfectionism: Why High Standards Drive the Habit](https://stopbiting.today/blog/nail-biting-and-perfectionism): Research links perfectionism to nail biting more strongly than general anxiety.
+- [Nail Biting While Gaming: Why It Happens and How to Stop](https://stopbiting.today/blog/nail-biting-gaming): Gaming is one of the highest-risk nail biting contexts.
+- [Stop Nail Biting in 30 Days: A Week-by-Week Plan](https://stopbiting.today/blog/nail-biting-30-day-plan): A structured 4-week plan to stop nail biting — combining awareness training, competing responses, and real-time detection.
+- [Stop Biting App Review: An Honest Walkthrough From the Team That Built It](https://stopbiting.today/blog/stop-biting-app-review): Stop Biting uses on-device AI to catch nail biting in real time.
+- [What Your Nail Biting Says About Your Personality](https://stopbiting.today/blog/nail-biting-personality): Research links nail biting to specific personality traits — perfectionism, sensation seeking, and emotional reactivity.
+- [Why You Bite Your Nails More at Night: The Science Explained](https://stopbiting.today/blog/nail-biting-evening): Most nail biters report worse biting in the evening.
+- [Fidget Toys for Nail Biting: Which Competing Responses Actually Work](https://stopbiting.today/blog/nail-biting-fidget-toys): Fidget toys are popular competing responses for nail biting — but most don't work.
+- [How to Stop Nail Biting Before Interviews and High-Pressure Situations](https://stopbiting.today/blog/nail-biting-interview-anxiety): Nail biting spikes before interviews and presentations.
+- [Tracking Your Nail Biting: Why Data Beats Willpower](https://stopbiting.today/blog/nail-biting-habit-tracking): Tracking nail biting frequency is one of the most effective awareness interventions.
+- [Men and Nail Biting: Why It's Underreported and What Actually Helps](https://stopbiting.today/blog/nail-biting-men): Men bite their nails as often as women but rarely seek help.
+- [How Phones and Screens Make Nail Biting Worse — and What to Do](https://stopbiting.today/blog/nail-biting-screen-time): Screen time and nail biting are directly linked.
 - [How to Stop Nail Biting: The Complete Guide (2026)](https://stopbiting.today/blog/how-to-stop-nail-biting): How to stop nail biting: the evidence-based method that works, which products actually help, a realistic timeline, and a plan that fits your triggers.
 - [Onychophagia: The Medical Term for Nail Biting, Explained](https://stopbiting.today/blog/onychophagia): Onychophagia is the clinical term for chronic nail biting.
 - [Nail Biting and Depression: Is There a Connection?](https://stopbiting.today/blog/nail-biting-and-depression): Nail biting and depression share emotional-regulation pathways.
@@ -123,16 +155,6 @@
 - [Nail Biting During Major Life Changes: Job Loss, Moving, Breakups, and Grief](https://stopbiting.today/blog/nail-biting-major-life-changes): Major life changes — job loss, moving, breakups, grief — often make nail biting emerge or intensify.
 - [Why Nail Biting Gets Worse in Winter](https://stopbiting.today/blog/nail-biting-dry-skin-winter): Cold, dry air worsens the cuticle damage and rough edges that trigger nail biting.
 - [Nail Biting and Fungal Infections: What to Know](https://stopbiting.today/blog/nail-biting-fungal-infection): Nail biting can raise fungal infection risk and spread an existing infection to other nails or the mouth.
-- [Nail Biting While Gaming: Why It Happens and How to Stop](https://stopbiting.today/blog/nail-biting-gaming): Gaming is one of the highest-risk nail biting contexts.
-- [Stop Nail Biting in 30 Days: A Week-by-Week Plan](https://stopbiting.today/blog/nail-biting-30-day-plan): A structured 4-week plan to stop nail biting — combining awareness training, competing responses, and real-time detection.
-- [Stop Biting App Review: An Honest Walkthrough From the Team That Built It](https://stopbiting.today/blog/stop-biting-app-review): Stop Biting uses on-device AI to catch nail biting in real time.
-- [What Your Nail Biting Says About Your Personality](https://stopbiting.today/blog/nail-biting-personality): Research links nail biting to specific personality traits — perfectionism, sensation seeking, and emotional reactivity.
-- [Why You Bite Your Nails More at Night: The Science Explained](https://stopbiting.today/blog/nail-biting-evening): Most nail biters report worse biting in the evening.
-- [Fidget Toys for Nail Biting: Which Competing Responses Actually Work](https://stopbiting.today/blog/nail-biting-fidget-toys): Fidget toys are popular competing responses for nail biting — but most don't work.
-- [How to Stop Nail Biting Before Interviews and High-Pressure Situations](https://stopbiting.today/blog/nail-biting-interview-anxiety): Nail biting spikes before interviews and presentations.
-- [Tracking Your Nail Biting: Why Data Beats Willpower](https://stopbiting.today/blog/nail-biting-habit-tracking): Tracking nail biting frequency is one of the most effective awareness interventions.
-- [Men and Nail Biting: Why It's Underreported and What Actually Helps](https://stopbiting.today/blog/nail-biting-men): Men bite their nails as often as women but rarely seek help.
-- [How Phones and Screens Make Nail Biting Worse — and What to Do](https://stopbiting.today/blog/nail-biting-screen-time): Screen time and nail biting are directly linked.
 - [Boredom Biting: Why an Empty Moment Sends Your Hand to Your Mouth](https://stopbiting.today/blog/nail-biting-boredom): Not all nail biting is anxiety.
 - [Nail Biting and Dopamine: Why the Habit Rewards Itself](https://stopbiting.today/blog/nail-biting-dopamine): Nail biting persists because it is reinforced, not because you lack discipline.
 - [Is Nail Biting an Oral Fixation? What That Idea Gets Right and Wrong](https://stopbiting.today/blog/nail-biting-oral-fixation): Nail biting is often called an oral fixation.
@@ -166,21 +188,3 @@
 - [How to Choose a Nail Biting Treatment: A Decision Framework](https://stopbiting.today/blog/how-to-choose-nail-biting-treatment): Rankings tell you what works on average.
 - [The 5 Biggest Mistakes People Make When Trying to Stop Nail Biting](https://stopbiting.today/blog/nail-biting-mistakes): Most failed attempts at stopping nail biting fail in the same five ways.
 - [Nail Biting at the Gym and During Sports: What Helps and What Backfires](https://stopbiting.today/blog/nail-biting-gym-sports): Almost nobody bites their nails mid-workout — the risk sits either side of it.
-
-## Pricing
-
-- Free trial: 3 days, no credit card required — full detection and tracking features included
-- Monthly: $2.99/month
-- Yearly: $29.00/year (~$2.42/month, saves 19%)
-- All paid plans include unlimited AI detection, streak tracking, incident history, and all alert types
-
-## Key facts
-
-- Nail biting (onychophagia) affects 20–30% of adults and up to 45% of adolescents
-- Habit Reversal Training (HRT) reduces biting frequency by 70–90% in consistent practitioners (Cochrane review, 2012)
-- BFRBs (body-focused repetitive behaviors) are classified in the DSM-5 under OCD-related disorders
-- Stop Biting uses MediaPipe running in WebAssembly — zero network requests during detection
-- Detection works fully offline after initial load; no camera data is transmitted or stored
-- The app detects nail biting using hand landmark (21 keypoints) + face mesh (468 landmarks) models
-- Free 3-day trial — available for macOS 12+, Windows 10+, and in the browser as a PWA
-- On-device AI: camera feed never leaves the device — independently verifiable via network monitoring

@@ -48,10 +48,11 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/why-do-people-bite-their-nails.png',
     sections: [
       {
         heading: 'More people do this than you think',
-        body: `Somewhere between 20% and 30% of adults bite their nails regularly — not just occasionally, but as a genuine habit. It peaks in teenage years (closer to 45% of adolescents) and then tends to fade for some people and just... stick around for others.\n\nMost people who still bite their nails as adults have been doing it since they were kids. Most have tried to stop at some point. Most found that trying to stop didn't work, or worked briefly before the habit crept back. That's not a character flaw. It's how this type of habit behaves.`,
+        body: `Somewhere between 20% and 30% of adults bite their nails regularly — not just occasionally, but as a genuine habit. It peaks in the pre-teen and teenage years (up to 45% of children between age 10 and puberty) and then tends to fade for some people and just... stick around for others.\n\nMost people who still bite their nails as adults have been doing it since they were kids. Most have tried to stop at some point. Most found that trying to stop didn't work, or worked briefly before the habit crept back. That's not a character flaw. It's how this type of habit behaves.`,
       },
       {
         heading: 'The three situations where it tends to happen',
@@ -73,7 +74,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'So what does work?',
         body: `The approach with the strongest evidence is called Habit Reversal Training, and its core insight is that awareness — real, in-the-moment awareness every single time — is the thing that actually breaks the automatic loop. Not motivation. Not punishment. Not bitter polish. Awareness at the exact moment the habit fires.\n\nThis is hard to achieve alone because the habit is, by definition, something you don't notice. The most effective interventions introduce an external signal at the moment of occurrence — something that catches what your own attention missed. Over weeks, the habit's automaticity weakens because it keeps getting interrupted rather than completed. That's the mechanism. It's not complicated, but it does require consistency.`,
-        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://www.tandfonline.com/doi/full/10.1080/09546634.2016.1200711" target="_blank" rel="noopener noreferrer">Halteh P, Scher RK, Lipner SR. Onychophagia: A nail-biting conundrum for physicians. J Dermatolog Treat. 2017;28(2):166–172.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
+        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://www.tandfonline.com/doi/full/10.1080/09546634.2016.1200711" target="_blank" rel="noopener noreferrer">Halteh P, Scher RK, Lipner SR. Onychophagia: A nail-biting conundrum for physicians. J Dermatolog Treat. 2017;28(2):166–172.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -88,6 +89,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-03',
     dateModified: '2026-09-10',
+    ogImage: '/og/habit-reversal-training-guide.png',
     sections: [
       {
         heading: "What is Habit Reversal Training, and does it work?",
@@ -123,6 +125,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-health-risks.png',
     sections: [
       {
         heading: 'Is nail biting actually harmful?',
@@ -160,10 +163,11 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-in-children.png',
     sections: [
       {
         heading: 'How common is nail biting in children?',
-        body: `Nail biting is one of the most common nervous habits in childhood and adolescence. Clinical reviews put prevalence at roughly 45% of children between age 10 and puberty (Halteh, Scher & Lipner, 2017), with rates climbing through the school years before declining across adulthood. Onset before age 3 is rare; the behaviour most commonly emerges in the early school years, when children encounter new sources of stress and social pressure.\n\nFor many children, nail biting is a transient habit that fades without intervention. But the adult prevalence of 20–30% makes clear that for a large minority the behaviour persists into adulthood — and it tends to become more entrenched over time if not addressed.`,
+        body: `Nail biting is one of the most common nervous habits in childhood and adolescence. Clinical reviews put prevalence at up to 45% of children between age 10 and puberty (Lee & Lipner, 2022), with rates climbing through the school years before declining across adulthood. Onset before age 3 is rare; the behaviour most commonly emerges in the early school years, when children encounter new sources of stress and social pressure.\n\nFor many children, nail biting is a transient habit that fades without intervention. But the adult prevalence of 20–30% makes clear that for a large minority the behaviour persists into adulthood — and it tends to become more entrenched over time if not addressed.`,
       },
       {
         heading: 'Why do children bite their nails?',
@@ -187,7 +191,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'When is professional help appropriate for childhood nail biting?',
         body: `When nail biting meets clinical thresholds — significant physical damage, marked distress, or co-occurring anxiety disorder — referral to a child psychologist or behavioural therapist experienced with body-focused repetitive behaviours is appropriate. The TLC Foundation for Body-Focused Repetitive Behaviors maintains a directory of BFRB-informed clinicians at bfrb.org. Habit Reversal Training adapted for children (which emphasises the awareness and competing response components while reducing the social support component) has good evidence for ages 8 and above.\n\nIt is also worth knowing that in one psychiatrically referred sample of children who bite their nails, ADHD was the most common co-occurring diagnosis (Ghanizadeh, 2008) — a reminder that persistent nail biting sometimes travels with conditions that deserve their own assessment.\n\nFor children with co-occurring OCD or anxiety disorder, treatment of the primary condition — typically CBT for childhood OCD/anxiety — often produces parallel reductions in nail biting without targeting the habit directly. Parents should avoid the common error of treating the nail biting as an isolated behaviour when it may be a symptom of a broader anxiety pattern that warrants its own assessment.`,
-        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011.</a></li><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul>`,
+        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011.</a></li><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -202,6 +206,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/best-nail-biting-remedies.png',
     sections: [
       {
         heading: 'Why do most nail biting remedies fail?',
@@ -238,6 +243,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/stress-and-nail-biting.png',
     sections: [
       {
         heading: 'Why does stress cause nail biting?',
@@ -278,6 +284,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-03',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-ocd-connection.png',
     sections: [
       {
         heading: 'How is nail biting classified in the DSM-5?',
@@ -314,6 +321,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-03',
     dateModified: '2026-04-03',
+    ogImage: '/og/how-ai-can-help-stop-nail-biting.png',
     sections: [
       {
         heading: 'What is the core problem AI solves for nail biting?',
@@ -347,6 +355,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-03',
     dateModified: '2026-04-03',
+    ogImage: '/og/nail-biting-during-focus-and-work.png',
     sections: [
       {
         heading: 'Why does nail biting happen during focused work?',
@@ -387,6 +396,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-03',
     dateModified: '2026-04-03',
+    ogImage: '/og/breaking-any-habit-science.png',
     sections: [
       {
         heading: 'How does the brain form habits?',
@@ -430,6 +440,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-07',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-vs-skin-picking.png',
     sections: [
       {
         heading: 'What do nail biting and skin picking have in common?',
@@ -450,7 +461,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       },
       {
         heading: 'Can someone have both nail biting and skin picking?',
-        body: `Yes — BFRB co-occurrence is common: a substantial proportion of people with one BFRB also engage in at least one other. The most common combinations are nail biting with skin picking, nail biting with cheek biting, and hair pulling with skin picking. Twin modelling of obsessive-compulsive spectrum traits in 5,409 adult twins found that hair pulling and skin picking load onto a genetic factor of their own, separate from the one shared with OCD, body dysmorphic disorder and hoarding — the clearest evidence so far of a heritable component common to BFRBs, although that study did not measure nail biting itself (Monzani et al., 2014).\n\nFor individuals with multiple BFRBs, treatment sequencing matters. Beginning with the most physically damaging or most distressing behavior is generally recommended. Attempting to address multiple BFRBs simultaneously reduces the focus and practice time available for each competing response, typically producing inferior results compared to sequential treatment of individual behaviors.`,
+        body: `Yes — BFRB co-occurrence is common: a substantial proportion of people with one BFRB also engage in at least one other. The most common combinations are nail biting with skin picking, nail biting with cheek biting, and hair pulling with skin picking. Twin modelling of obsessive-compulsive spectrum traits in 5,409 adult female twins found that hair pulling and skin picking load onto a genetic factor of their own, separate from the one shared with OCD, body dysmorphic disorder and hoarding — the clearest evidence so far of a heritable component common to BFRBs, although that study did not measure nail biting itself (Monzani et al., 2014).\n\nFor individuals with multiple BFRBs, treatment sequencing matters. Beginning with the most physically damaging or most distressing behavior is generally recommended. Attempting to address multiple BFRBs simultaneously reduces the focus and practice time available for each competing response, typically producing inferior results compared to sequential treatment of individual behaviors.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/24369376/" target="_blank" rel="noopener noreferrer">Monzani B, Rijsdijk F, Harris J, Mataix-Cols D. The structure of genetic and environmental risk factors for dimensional representations of DSM-5 obsessive-compulsive spectrum disorders. JAMA Psychiatry. 2014;71(2):182–189.</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -466,6 +477,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 4,
     datePublished: '2026-04-07',
     dateModified: '2026-08-11',
+    ogImage: '/og/stopping-nail-biting-for-good.png',
     sections: [
       {
         heading: 'Why do people relapse after stopping nail biting?',
@@ -501,6 +513,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-anxiety-treatment.png',
     sections: [
       {
         heading: 'Is your nail biting driven by anxiety?',
@@ -541,6 +554,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-09-10',
+    ogImage: '/og/how-long-to-stop-nail-biting.png',
     sections: [
       {
         heading: 'How long does it take to stop nail biting?',
@@ -575,6 +589,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-04-07',
+    ogImage: '/og/nail-biting-adults-why-persists.png',
     sections: [
       {
         heading: 'Why does nail biting persist into adulthood?',
@@ -605,6 +620,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-09-10',
+    ogImage: '/og/webcam-privacy-nail-biting-app.png',
     sections: [
       {
         heading: 'Is it safe to use a webcam app to stop nail biting?',
@@ -638,6 +654,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-04-07',
+    ogImage: '/og/nail-biting-during-sleep.png',
     sections: [
       {
         heading: 'Can nail biting happen during sleep?',
@@ -668,6 +685,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-08-11',
+    ogImage: '/og/bitter-nail-polish-review.png',
     sections: [
       {
         heading: 'How does bitter nail polish work?',
@@ -700,6 +718,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-genetics.png',
     sections: [
       {
         heading: 'Does nail biting run in families?',
@@ -707,7 +726,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       },
       {
         heading: 'What twin studies reveal about heritability',
-        body: `Twin studies — which compare the concordance rates of a trait in identical (monozygotic) twins, who share 100% of their genes, versus fraternal (dizygotic) twins, who share 50% — provide the clearest evidence for genetic versus environmental contributions. The largest twin study to cover this territory modelled obsessive-compulsive spectrum traits in 5,409 adult twins and found that hair pulling and skin picking loaded onto their own shared genetic factor, distinct from the one common to OCD, body dysmorphic disorder and hoarding, while shared-environment influences were negligible (Monzani et al., 2014).\n\nTwo caveats matter. That study measured hair pulling and skin picking, not nail biting, so the genetic picture for nail biting is inferred from its closest behavioural relatives rather than measured directly — and no study we can point to puts a percentage on nail-biting heritability specifically. What the evidence supports is a real inherited contribution alongside a large environmental share, not genetic determinism.`,
+        body: `Twin studies — which compare the concordance rates of a trait in identical (monozygotic) twins, who share 100% of their genes, versus fraternal (dizygotic) twins, who share 50% — provide the clearest evidence for genetic versus environmental contributions. The largest twin study to cover this territory modelled obsessive-compulsive spectrum traits in 5,409 adult female twins and found that hair pulling and skin picking loaded onto their own shared genetic factor, distinct from the one common to OCD, body dysmorphic disorder and hoarding, while shared-environment influences were negligible (Monzani et al., 2014).\n\nTwo caveats matter. That study measured hair pulling and skin picking, not nail biting, so the genetic picture for nail biting is inferred from its closest behavioural relatives rather than measured directly — and no study we can point to puts a percentage on nail-biting heritability specifically. What the evidence supports is a real inherited contribution alongside a large environmental share, not genetic determinism.`,
       },
       {
         heading: 'What genes are involved?',
@@ -735,6 +754,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     readingMinutes: 3,
     datePublished: '2026-04-07',
     dateModified: '2026-04-07',
+    ogImage: '/og/mediapipe-ai-detection-explained.png',
     sections: [
       {
         heading: 'What is MediaPipe and why does it matter?',
@@ -772,6 +792,7 @@ BLOG_POSTS.push({
   readingMinutes: 6,
   datePublished: '2026-04-17',
   dateModified: '2026-04-17',
+  ogImage: '/og/nail-biting-laptop-working-from-home.png',
   sections: [
     {
       heading: 'Scene: you, your laptop, and your fingers',
@@ -822,6 +843,7 @@ BLOG_POSTS.push({
   readingMinutes: 7,
   datePublished: '2026-04-19',
   dateModified: '2026-09-10',
+  ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
       heading: 'What are the best tools to stop nail biting?',
@@ -934,6 +956,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-19',
   dateModified: '2026-04-19',
+  ogImage: '/og/stop-biting-vs-mavala-stop.png',
   sections: [
     {
       heading: 'Two tools, one problem',
@@ -980,6 +1003,7 @@ BLOG_POSTS.push({
   readingMinutes: 6,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-adhd.png',
   sections: [
     {
       heading: 'Why nail biting is so common in ADHD',
@@ -1018,6 +1042,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-stimming.png',
   sections: [
     {
       heading: 'What stimming actually is',
@@ -1066,6 +1091,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-09-10',
+  ogImage: '/og/stop-nail-biting-fast.png',
   sections: [
     {
       heading: 'How fast can you stop nail biting?',
@@ -1104,6 +1130,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-21',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-hypnosis.png',
   sections: [
     {
       heading: "Does hypnotherapy for nail biting work?",
@@ -1138,6 +1165,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/nac-nail-biting.png',
   sections: [
     {
       heading: 'What NAC is and why it matters for BFRBs',
@@ -1145,7 +1173,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'What the research shows for BFRBs',
-      body: `The strongest evidence for NAC in BFRBs comes from studies on trichotillomania (hair pulling) and excoriation disorder (skin picking). A landmark 2009 double-blind placebo-controlled trial by Grant and colleagues (Archives of General Psychiatry) found that NAC at 1200–2400mg/day produced significantly greater reductions in hair pulling severity than placebo, with 56% of NAC participants rated as "much improved" or "very much improved" compared to 16% for placebo.\n\nFor excoriation disorder, a 2016 randomised trial by Grant and colleagues (JAMA Psychiatry) found 47% of NAC participants much or very much improved versus 19% on placebo, at doses of 1200–3000mg/day. A 2022 updated literature review covering 33 published reports — including seven randomised controlled trials — concluded that NAC shows consistent promise across the BFRB category, while cautioning that trials remain small and larger studies are needed.\n\nFor nail biting specifically, the evidence is thinner. The main controlled data point is a 2013 double-blind randomised trial in 42 children and adolescents (Ghanizadeh, Derakhshan & Berk): NAC at 800mg/day significantly increased nail length at one month, but the advantage was no longer statistically significant at two months. An earlier small trial by Berk and colleagues (2009) also examined NAC for nail biting. In short: encouraging signals, no definitive adult trial.`,
+      body: `The strongest evidence for NAC in BFRBs comes from studies on trichotillomania (hair pulling) and excoriation disorder (skin picking). A landmark 2009 double-blind placebo-controlled trial by Grant and colleagues (Archives of General Psychiatry) found that NAC at 1200–2400mg/day produced significantly greater reductions in hair pulling severity than placebo, with 56% of NAC participants rated as "much improved" or "very much improved" compared to 16% for placebo.\n\nFor excoriation disorder, a 2016 randomised trial by Grant and colleagues (JAMA Psychiatry) found 47% of NAC participants much or very much improved versus 19% on placebo, at doses of 1200–3000mg/day. A 2022 updated literature review covering 33 published reports — including seven randomised controlled trials — concluded that NAC shows consistent promise across the BFRB category, while cautioning that trials remain small and larger studies are needed.\n\nFor nail biting specifically, the evidence is thinner. The main controlled data point is a 2013 double-blind randomised trial in 42 children and adolescents (Ghanizadeh, Derakhshan & Berk): NAC at 800mg/day significantly increased nail length at one month, but the advantage was no longer statistically significant at two months. An earlier report by Berk and colleagues (2009) described three cases in which NAC appeared to reduce nail biting — case observations made during a bipolar disorder trial, not a controlled test of NAC for nail biting. In short: encouraging signals, no definitive adult trial.`,
     },
     {
       heading: 'Dosing, timing, and what to expect',
@@ -1158,7 +1186,7 @@ BLOG_POSTS.push({
     {
       heading: 'The practical case for trying NAC',
       body: `NAC is inexpensive and widely available without prescription. It is not side-effect free: the 2022 review cited below reports that side effects are dose dependent, with nausea, vomiting, diarrhoea and constipation reported below 2400mg/day and fever, chills, skin rash and headache above it, and advises that NAC "should be used with caution in asthmatics or patients prone to anaphylactic reactions and patients susceptible to fluid overload (e.g., congestive heart failure)". Within those limits, the risk-benefit calculation is reasonable for people who've had limited success with behavioral approaches alone.\n\nThe expectation should be modest: not a cure, but a potential reduction in urge intensity that makes behavioral strategies more manageable. Given the evidence for trichotillomania and skin picking — the closest behavioral relatives to nail biting — the extrapolation is scientifically reasonable, but be clear-eyed that large nail biting-specific trials do not yet exist.\n\nIf you try it, keep a simple log of biting frequency during the trial period. NAC's effects are subtle enough that they can be difficult to notice without a baseline comparison. A week of baseline data before starting, then comparison at weeks 4, 8, and 12, gives you something concrete to evaluate rather than relying on subjective impression.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, et al. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting: a double-blind randomized placebo-controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9180086/" target="_blank" rel="noopener noreferrer">The Potential of N-Acetylcysteine for Treatment of Trichotillomania, Excoriation Disorder, Onychophagia, and Onychotillomania: An Updated Literature Review. 2022.</a></li><li><a href="https://www.bfrb.org/post/n-acetylcysteine-for-hair-pulling-skin-picking-and-nail-biting" target="_blank" rel="noopener noreferrer">TLC Foundation for BFRBs: N-acetylcysteine for Hair Pulling, Skin Picking, and Nail Biting.</a></li></ul><p><em>This article is general information, not medical advice. Talk to a healthcare provider before starting NAC or any supplement, especially if you have existing conditions, take medication, or are pregnant.</em></p>`,
+      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, et al. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting: a double-blind randomized placebo-controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19773711/" target="_blank" rel="noopener noreferrer">Berk M, Jeavons S, Dean OM, et al. Nail-biting stuff? The effect of N-acetyl cysteine on nail-biting. CNS Spectr. 2009;14(7):357–360.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9180086/" target="_blank" rel="noopener noreferrer">The Potential of N-Acetylcysteine for Treatment of Trichotillomania, Excoriation Disorder, Onychophagia, and Onychotillomania: An Updated Literature Review. 2022.</a></li><li><a href="https://www.bfrb.org/post/n-acetylcysteine-for-hair-pulling-skin-picking-and-nail-biting" target="_blank" rel="noopener noreferrer">TLC Foundation for BFRBs: N-acetylcysteine for Hair Pulling, Skin Picking, and Nail Biting.</a></li></ul><p><em>This article is general information, not medical advice. Talk to a healthcare provider before starting NAC or any supplement, especially if you have existing conditions, take medication, or are pregnant.</em></p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1173,6 +1201,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-21',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-alternatives.png',
   sections: [
     {
       heading: "What can you do instead of biting your nails?",
@@ -1225,6 +1254,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-pregnancy.png',
   sections: [
     {
       heading: "Does pregnancy make nail biting worse?",
@@ -1259,6 +1289,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-statistics.png',
   sections: [
     {
       heading: "Prevalence: how common is nail biting?",
@@ -1267,11 +1298,11 @@ BLOG_POSTS.push({
     },
     {
       heading: "Age of onset and developmental trajectory",
-      body: `Nail biting typically begins in childhood — usually in the early school years — and prevalence climbs toward its peak in the pre-teen and teenage window before declining across adulthood.\n\nThe prevalence gap between adolescents (around 45%) and adults (around 20–30%) implies that a substantial share of young biters stop on their own as they mature. But the same numbers show the habit persisting for a large minority — and clinicians consistently observe that the longer nail biting continues into adulthood, the more entrenched and automatic it becomes.\n\nRigorous longitudinal studies tracking individual biters over decades do not really exist, so precise "chance of spontaneously stopping" figures cannot honestly be quoted. The practical implication is simpler: if you are an adult with a long-established habit, waiting for it to fade by itself is not a strategy — active intervention is what the evidence supports.`,
+      body: `Nail biting typically begins in childhood — usually in the early school years — and prevalence climbs toward its peak in the pre-teen and teenage window before declining across adulthood.\n\nThe prevalence gap between the age 10-to-puberty peak (up to 45%) and adults (around 20–30%) implies that a substantial share of young biters stop on their own as they mature. But the same numbers show the habit persisting for a large minority — and clinicians consistently observe that the longer nail biting continues into adulthood, the more entrenched and automatic it becomes.\n\nRigorous longitudinal studies tracking individual biters over decades do not really exist, so precise "chance of spontaneously stopping" figures cannot honestly be quoted. The practical implication is simpler: if you are an adult with a long-established habit, waiting for it to fade by itself is not a strategy — active intervention is what the evidence supports.`,
     },
     {
       heading: "Co-occurrence with other conditions",
-      body: `Nail biting rarely occurs in total isolation. The best co-occurrence data comes from a psychiatrically referred sample of children who bite their nails (Ghanizadeh, 2008). Among those children, the rates of co-occurring diagnoses were:\n\nADHD: 74.6% — by far the most common co-occurring condition. Oppositional defiant disorder: 36%. Separation anxiety disorder: 20.6%. Enuresis: 15.6%. Tic disorder: 12.7%. Obsessive-compulsive disorder: 11.1%.\n\nTwo caveats matter when reading these numbers. First, this was a clinic-referred sample — children already attending psychiatric services — so the rates are far higher than would be found among nail biters in the general population. Second, co-occurrence is not causation: nail biting is common enough that it overlaps with many conditions by base rate alone.\n\nA separate community-sample study by the same author (Ghanizadeh & Shekoohi, 2011) confirmed that nail biting is common in ordinary schoolchildren and is associated with elevated psychological distress in a subset — but most community nail biters do not have a psychiatric diagnosis. Nail biting also frequently co-occurs with other BFRBs such as skin picking and cheek biting. Twin research on the DSM-5 obsessive-compulsive spectrum found a genetic liability factor loading exclusively on hair pulling and skin picking, separate from the factor shared with OCD — evidence of a heritable component specific to the BFRB group, though that study did not measure nail biting itself (Monzani et al., 2014).`,
+      body: `Nail biting rarely occurs in total isolation. The best co-occurrence data comes from a psychiatrically referred sample of children who bite their nails (Ghanizadeh, 2008). Among those children, the rates of co-occurring diagnoses were:\n\nADHD: 74.6% — by far the most common co-occurring condition. Oppositional defiant disorder: 36%. Separation anxiety disorder: 20.6%. Enuresis: 15.6%. Tic disorder: 12.7%. Obsessive-compulsive disorder: 11.1%.\n\nTwo caveats matter when reading these numbers. First, this was a clinic-referred sample — children already attending psychiatric services — so the rates are far higher than would be found among nail biters in the general population. Second, co-occurrence is not causation: nail biting is common enough that it overlaps with many conditions by base rate alone.\n\nA separate community-sample study by the same author (Ghanizadeh & Shekoohi, 2011) found nail biting in 22.3% of ordinary schoolchildren screened. That study used a general mental-health questionnaire rather than diagnostic interviews, so it reports no diagnoses at all: the nail biters scored significantly lower on prosocial behaviour, while the association with emotional problems was only a trend and the association with hyperactivity was absent. Nail biting also frequently co-occurs with other BFRBs such as skin picking and cheek biting. Twin research on the DSM-5 obsessive-compulsive spectrum found a genetic liability factor loading exclusively on hair pulling and skin picking, separate from the factor shared with OCD — evidence of a heritable component specific to the BFRB group, though that study did not measure nail biting itself (Monzani et al., 2014).`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008;2(1):13.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011;4:116.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24369376/" target="_blank" rel="noopener noreferrer">Monzani B, Rijsdijk F, Harris J, Mataix-Cols D. The structure of genetic and environmental risk factors for dimensional representations of DSM-5 obsessive-compulsive spectrum disorders. JAMA Psychiatry. 2014;71(2):182–189.</a></li></ul>`,
     },
     {
@@ -1297,6 +1328,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-08-11',
+  ogImage: '/og/grow-nails-after-nail-biting.png',
   sections: [
     {
       heading: "How fast do nails grow after stopping nail biting?",
@@ -1339,6 +1371,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-21',
   dateModified: '2026-04-21',
+  ogImage: '/og/nail-biting-emotional-regulation.png',
   sections: [
     {
       heading: "Nail biting works — that's why you do it",
@@ -1377,6 +1410,7 @@ BLOG_POSTS.push({
   readingMinutes: 6,
   datePublished: '2026-04-23',
   dateModified: '2026-09-10',
+  ogImage: '/og/acrylics-to-stop-nail-biting.png',
   sections: [
     {
       heading: 'Can acrylic nails stop nail biting?',
@@ -1419,6 +1453,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-cure.png',
   sections: [
     {
       heading: 'Is nail biting curable?',
@@ -1459,10 +1494,11 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-bacteria-parasites.png',
   sections: [
     {
       heading: 'What is actually under your fingernails?',
-      body: `The subungual space — the gap between the nail plate and the nail bed — is one of the most microbe-dense areas of the human body's surface. In the classic study of hand microflora, McGinley, Larson and Leyden (Journal of Clinical Microbiology, 1988) found that the subungual space carried bacterial densities dramatically higher than any other site on the hand — on the order of a hundred times more organisms than adjacent skin. The space is also structurally protected from soap and running water, which is why standard hand washing reduces subungual bacteria far less effectively than it cleans the surrounding skin.\n\nOrganisms recovered from under nails in that study and subsequent work include staphylococci, gram-negative bacilli such as Pseudomonas, coryneforms, and yeasts. In people who work in environments with high pathogen exposure (healthcare, food service, gardening, childcare), the bacterial load under nails can be higher still, with more pathogenic species represented.`,
+      body: `The subungual space — the gap between the nail plate and the nail bed — is one of the most microbe-dense areas of the human body's surface. In the classic study of hand microflora, McGinley, Larson and Leyden (Journal of Clinical Microbiology, 1988) found that the subungual space carried bacterial densities significantly higher than any other site on the hand — the authors recovered hundreds of thousands of bacteria per subungual site, against only hundreds to a few thousands from the other hand sites they sampled. The space is also structurally protected from soap and running water, which is why standard hand washing reduces subungual bacteria far less effectively than it cleans the surrounding skin.\n\nOrganisms recovered from under nails in that study and subsequent work include staphylococci, gram-negative bacilli such as Pseudomonas, coryneforms, and yeasts. In people who work in environments with high pathogen exposure (healthcare, food service, gardening, childcare), the bacterial load under nails can be higher still, with more pathogenic species represented.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC266493/" target="_blank" rel="noopener noreferrer">McGinley KJ, Larson EL, Leyden JJ. Composition and density of microflora in the subungual space of the hand. J Clin Microbiol. 1988;26(5):950–953.</a></li></ul>`,
     },
     {
@@ -1477,7 +1513,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Viral transmission: HPV, HSV, and respiratory viruses',
-      body: `HPV (Human Papillomavirus) — the virus family behind common and periungual warts — is carried on skin and under nails, and nail biting is a recognised route for spreading it: biting seeds warts around damaged nail folds and can carry the virus toward the lips and mouth. Research on HPV detection in fingernail samples supports the hypothesis that fingers and fingernails can serve as a source of transmission or autoinoculation of the virus to other body sites, including the oral cavity.\n\nHerpes simplex virus (HSV-1) presents a relevant risk during active cold sore episodes: touching a cold sore and then biting nails deposits HSV on the fingertips and potentially transmits it to the perioral area or introduces it orally. The reverse is also relevant — existing oral HSV can establish finger infections (herpetic whitlow) via nail biting in the presence of periungual breaks in skin.\n\nRespiratory viruses including influenza, RSV, and SARS-CoV-2 are transmitted via the fomite-to-oral route, and nail biting substantially increases this risk by creating direct contact between frequently contaminated hand surfaces and the mucous membranes of the mouth and nose.`,
+      body: `HPV (Human Papillomavirus) — the virus family behind common and periungual warts — is carried on skin and under nails, and nail biting is a recognised route for spreading it: biting seeds warts around damaged nail folds and can carry the virus toward the lips and mouth. Research detecting HPV DNA in fingernail samples supports the hypothesis that fingers may serve as a source of transmission or autoinoculation of cutaneous HPV to other anatomic sites. That study did not measure finger-to-mouth contact, and its authors note it is unclear whether detecting the DNA represents true infection or deposited material, so treat the oral route as plausible rather than demonstrated.\n\nHerpes simplex virus (HSV-1) presents a relevant risk during active cold sore episodes: touching a cold sore and then biting nails deposits HSV on the fingertips and potentially transmits it to the perioral area or introduces it orally. The reverse is also relevant — existing oral HSV can establish finger infections (herpetic whitlow) via nail biting in the presence of periungual breaks in skin.\n\nRespiratory viruses including influenza, RSV, and SARS-CoV-2 are transmitted via the fomite-to-oral route, and nail biting substantially increases this risk by creating direct contact between frequently contaminated hand surfaces and the mucous membranes of the mouth and nose.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5886955/" target="_blank" rel="noopener noreferrer">Winer RL, Gheit T, Cherne S, et al. Prevalence and correlates of beta human papillomavirus detection in fingernail samples from mid-adult women. Papillomavirus Res. 2018;5:1–5.</a></li></ul>`,
     },
     {
@@ -1502,6 +1538,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-social-confidence.png',
   sections: [
     {
       heading: 'How nail biting affects social confidence',
@@ -1540,10 +1577,12 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-teenagers.png',
   sections: [
     {
       heading: 'Why nail biting peaks in the teenage years',
-      body: `Nail biting is more prevalent in the pre-teen and teenage years than at any other age. Clinical reviews put prevalence at roughly 45% of adolescents around puberty, compared with 20–30% of the general population (Halteh, Scher & Lipner, 2017). This peak isn't arbitrary — it reflects the specific neurological and social pressures of adolescence.\n\nAdolescence involves simultaneous increases in social evaluation anxiety (driven by heightened peer sensitivity), academic performance pressure, and the neurobiological reality of an incomplete prefrontal cortex. The prefrontal cortex — which handles inhibitory control, self-monitoring, and the ability to override automatic behaviors — is not fully developed until approximately age 25. This means the neurological tools required to notice and interrupt an automatic habit like nail biting are genuinely less available to a 15-year-old than to a 25-year-old, independent of motivation or maturity.`,
+      body: `Nail biting is more prevalent in the pre-teen and teenage years than at any other age. Clinical reviews put prevalence at up to 45% of children between age 10 and puberty, compared with 20–30% of the general population (Lee & Lipner, 2022). This peak isn't arbitrary — it reflects the specific neurological and social pressures of adolescence.\n\nAdolescence involves simultaneous increases in social evaluation anxiety (driven by heightened peer sensitivity), academic performance pressure, and the neurobiological reality of an incomplete prefrontal cortex. The prefrontal cortex — which handles inhibitory control, self-monitoring, and the ability to override automatic behaviors — is not fully developed until approximately age 25. This means the neurological tools required to notice and interrupt an automatic habit like nail biting are genuinely less available to a 15-year-old than to a 25-year-old, independent of motivation or maturity.`,
+      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     {
       heading: 'How teenage nail biting differs from adult nail biting',
@@ -1578,6 +1617,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-at-work-meetings.png',
   sections: [
     {
       heading: 'Why work and meetings are such high-risk contexts for nail biting',
@@ -1615,6 +1655,7 @@ BLOG_POSTS.push({
   readingMinutes: 5,
   datePublished: '2026-04-23',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-and-perfectionism.png',
   sections: [
     {
       heading: 'Is there a link between perfectionism and nail biting?',
@@ -1653,6 +1694,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-05-12',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-gaming.png',
   sections: [
     {
       heading: 'Why do I bite my nails while gaming?',
@@ -1711,6 +1753,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-30-day-plan.png',
   sections: [
     {
       heading: 'Can you stop nail biting in 30 days?',
@@ -1749,6 +1792,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/stop-biting-app-review.png',
   sections: [
     {
       heading: 'What Stop Biting does',
@@ -1785,6 +1829,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-personality.png',
   sections: [
     {
       heading: 'Nail biting is not a personality type — but it correlates with several',
@@ -1823,6 +1868,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-evening.png',
   sections: [
     {
       heading: 'The evening nail biting spike: what surveys show',
@@ -1857,6 +1903,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-fidget-toys.png',
   sections: [
     {
       heading: 'Which fidget toys actually work for nail biting?',
@@ -1895,6 +1942,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-interview-anxiety.png',
   sections: [
     {
       heading: 'Why interviews trigger nail biting so reliably',
@@ -1932,6 +1980,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-05-12',
+  ogImage: '/og/nail-biting-habit-tracking.png',
   sections: [
     {
       heading: 'Why tracking reduces biting before you change anything else',
@@ -1971,6 +2020,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-men.png',
   sections: [
     {
       heading: 'How common is nail biting in men?',
@@ -1995,6 +2045,7 @@ BLOG_POSTS.push({
     {
       heading: 'Making the professional case',
       body: `For male nail biters who are primarily motivated by professional rather than personal concerns, it's worth being direct about the return on investment. HRT with consistent practice produces large reductions in biting frequency within weeks — in the landmark clinical trial, biting episodes dropped by roughly 99% (Azrin, Nunn & Frantz, 1980). The combination of lower biting frequency, better nail condition, and reduced habitual hand-to-mouth movement in professional contexts adds up to a measurably improved professional presentation.\n\nHandshakes become unremarkable. Visible nail damage stops being a distraction in meetings. The nervous habit that previously ran visibly during presentations becomes less frequent and less obvious. For men who have been aware of the habit's professional impact for years but haven't found an approach that fit their context, this framing — professional outcome, evidence-based method, no aesthetics required — tends to land differently than generic "stop nail biting" advice.`,
+      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. Behav Res Ther. 1980;18(4):281–285.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2009,6 +2060,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-05-12',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-screen-time.png',
   sections: [
     {
       heading: 'The screen time-nail biting link',
@@ -2047,6 +2099,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/how-to-stop-nail-biting.png',
   sections: [
     {
       heading: `How do you stop nail biting?`,
@@ -2088,6 +2141,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/onychophagia.png',
   sections: [
     {
       heading: `What does "onychophagia" mean?`,
@@ -2121,6 +2175,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-and-depression.png',
   sections: [
     {
       heading: `Is nail biting linked to depression?`,
@@ -2154,6 +2209,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-quiz.png',
   sections: [
     {
       heading: `Why severity matters before you pick a method`,
@@ -2195,6 +2251,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-toddler.png',
   sections: [
     {
       heading: `Why toddlers bite their nails`,
@@ -2228,6 +2285,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-during-exams.png',
   sections: [
     {
       heading: `Why exams spike nail biting`,
@@ -2268,6 +2326,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-night-guard.png',
   sections: [
     {
       heading: `What a night guard is and why it comes up`,
@@ -2301,6 +2360,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-cognitive-behavioral-therapy.png',
   sections: [
     {
       heading: `How does CBT help with nail biting?`,
@@ -2335,6 +2395,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/bfrb-guide.png',
   sections: [
     {
       heading: `What is a BFRB?`,
@@ -2376,6 +2437,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-new-years-resolution.png',
   sections: [
     {
       heading: `Why nail biting is such a common resolution`,
@@ -2409,6 +2471,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-immune-system.png',
   sections: [
     {
       heading: `Does nail biting suppress immunity?`,
@@ -2442,6 +2505,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-vs-pen-chewing.png',
   sections: [
     {
       heading: `What pen chewing and nail biting have in common`,
@@ -2475,6 +2539,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-autism.png',
   sections: [
     {
       heading: `Why nail biting is more common in autistic people`,
@@ -2508,6 +2573,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-college-students.png',
   sections: [
     {
       heading: `Why does nail biting get worse in college?`,
@@ -2548,6 +2614,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-after-quitting-smoking.png',
   sections: [
     {
       heading: `Why does nail biting increase after quitting smoking?`,
@@ -2588,6 +2655,7 @@ BLOG_POSTS.push({
   readingMinutes: 4,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-reddit.png',
   sections: [
     {
       heading: `What actually worked for people who quit nail biting?`,
@@ -2629,6 +2697,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-gut-health.png',
   sections: [
     {
       heading: `What does swallowing bitten nails do to your gut?`,
@@ -2673,6 +2742,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/products-to-stop-nail-biting.png',
   sections: [
     {
       heading: `Which products actually stop nail biting?`,
@@ -2718,6 +2788,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-thumb-sucking.png',
   sections: [
     {
       heading: `The developmental link between thumb sucking and nail biting`,
@@ -2751,6 +2822,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-braces.png',
   sections: [
     {
       heading: `Why orthodontists specifically warn against nail biting`,
@@ -2784,6 +2856,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/stop-nail-biting-challenge.png',
   sections: [
     {
       heading: `Why a day-by-day structure helps`,
@@ -2828,6 +2901,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-vs-hair-pulling.png',
   sections: [
     {
       heading: `Two BFRBs, one underlying mechanism`,
@@ -2862,6 +2936,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-cortisol.png',
   sections: [
     {
       heading: `What cortisol actually does`,
@@ -2895,6 +2970,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-gel-manicure.png',
   sections: [
     {
       heading: `Can a gel manicure stop nail biting?`,
@@ -2938,6 +3014,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-cuticle-damage.png',
   sections: [
     {
       heading: `How long does cuticle damage from nail biting take to heal?`,
@@ -2991,6 +3068,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-cost.png',
   sections: [
     {
       heading: `Why the cost angle is worth thinking about`,
@@ -3023,6 +3101,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/when-to-see-a-doctor-for-nail-biting.png',
   sections: [
     {
       heading: `Most nail biting doesn't need a doctor`,
@@ -3064,6 +3143,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-app-vs-therapy.png',
   sections: [
     {
       heading: `Nail biting app vs therapy: which is right for you?`,
@@ -3105,6 +3185,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-public-speaking.png',
   sections: [
     {
       heading: `Why performance situations trigger biting so reliably`,
@@ -3138,6 +3219,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-fingerprints.png',
   sections: [
     {
       heading: `Why this question comes up`,
@@ -3171,6 +3253,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-nail-technicians.png',
   sections: [
     {
       heading: `It's a routine, not unusual, request`,
@@ -3204,6 +3287,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-eczema.png',
   sections: [
     {
       heading: `How eczema and nail biting can interact`,
@@ -3237,6 +3321,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-caffeine.png',
   sections: [
     {
       heading: `The mechanism: arousal and restlessness`,
@@ -3270,6 +3355,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-alcohol.png',
   sections: [
     {
       heading: `Why alcohol is relevant to an automatic habit`,
@@ -3303,6 +3389,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-parents-modeling.png',
   sections: [
     {
       heading: `How much does modeling actually matter?`,
@@ -3337,6 +3424,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-menopause.png',
   sections: [
     {
       heading: `Why menopause is relevant to a habit like nail biting`,
@@ -3370,6 +3458,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/press-on-nails-to-stop-nail-biting.png',
   sections: [
     {
       heading: `Can press-on nails stop nail biting?`,
@@ -3404,6 +3493,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/how-to-help-someone-who-bites-their-nails.png',
   sections: [
     {
       heading: `Why pointing it out usually backfires`,
@@ -3437,6 +3527,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-healthcare-workers.png',
   sections: [
     {
       heading: `Why occupation changes the risk calculus`,
@@ -3471,6 +3562,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/does-nail-biting-cause-permanent-damage.png',
   sections: [
     {
       heading: `Does nail biting cause permanent damage?`,
@@ -3509,6 +3601,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-women.png',
   sections: [
     {
       heading: `Does nail biting differ by sex?`,
@@ -3542,6 +3635,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-toenails.png',
   sections: [
     {
       heading: `It's more common than the silence around it suggests`,
@@ -3576,6 +3670,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-musicians.png',
   sections: [
     {
       heading: `Why nails matter mechanically for musicians`,
@@ -3608,6 +3703,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-flights-travel.png',
   sections: [
     {
       heading: `Why travel is a concentrated trigger environment`,
@@ -3641,6 +3737,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-contagious.png',
   sections: [
     {
       heading: `Not contagious in a medical sense, but socially transmissible`,
@@ -3674,6 +3771,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-fsa-hsa.png',
   sections: [
     {
       heading: `The general rule for FSA/HSA eligibility`,
@@ -3706,6 +3804,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-essential-oils.png',
   sections: [
     {
       heading: `Do DIY bitter remedies for nail biting work?`,
@@ -3740,6 +3839,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-magnesium.png',
   sections: [
     {
       heading: `Can magnesium help with nail biting?`,
@@ -3774,6 +3874,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-panic-disorder.png',
   sections: [
     {
       heading: `How panic disorder differs from general anxiety`,
@@ -3808,6 +3909,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-ptsd.png',
   sections: [
     {
       heading: `How PTSD affects the nervous system`,
@@ -3842,6 +3944,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-chefs-food-service.png',
   sections: [
     {
       heading: `Why food service raises the stakes`,
@@ -3876,6 +3979,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-teachers.png',
   sections: [
     {
       heading: `Why teaching is a distinct high-risk occupation`,
@@ -3909,6 +4013,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-wearable-technology.png',
   sections: [
     {
       heading: `A different detection approach than webcam-based tools`,
@@ -3942,6 +4047,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-evolutionary-psychology.png',
   sections: [
     {
       heading: `Nail biting isn't uniquely human`,
@@ -3975,6 +4081,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-knuckle-cracking.png',
   sections: [
     {
       heading: `Two hand habits, very different mechanisms`,
@@ -4008,6 +4115,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-seniors-elderly.png',
   sections: [
     {
       heading: `Why this age group is rarely discussed`,
@@ -4041,6 +4149,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-birth-control.png',
   sections: [
     {
       heading: `Why hormonal contraception is relevant here`,
@@ -4075,6 +4184,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-09-10',
+  ogImage: '/og/nail-biting-major-life-changes.png',
   sections: [
     {
       heading: `Why does nail biting get worse during major life changes?`,
@@ -4108,6 +4218,7 @@ BLOG_POSTS.push({
   readingMinutes: 2,
   datePublished: '2026-07-16',
   dateModified: '2026-07-16',
+  ogImage: '/og/nail-biting-dry-skin-winter.png',
   sections: [
     {
       heading: `The seasonal pattern many nail biters notice`,
@@ -4141,6 +4252,7 @@ BLOG_POSTS.push({
   readingMinutes: 3,
   datePublished: '2026-07-16',
   dateModified: '2026-08-11',
+  ogImage: '/og/nail-biting-fungal-infection.png',
   sections: [
     {
       heading: `Can nail biting cause a fungal infection?`,
@@ -4180,6 +4292,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-boredom.png',
     sections: [
       {
         heading: 'The nail biting nobody talks about',
@@ -4220,6 +4333,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-dopamine.png',
     sections: [
       {
         heading: 'A habit that survives because it pays',
@@ -4254,6 +4368,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-oral-fixation.png',
     sections: [
       {
         heading: 'Where the phrase comes from',
@@ -4288,6 +4403,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-myths.png',
     sections: [
       {
         heading: 'Why the myths matter',
@@ -4338,6 +4454,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-which-fingers.png',
     sections: [
       {
         heading: 'Nobody bites all ten equally',
@@ -4372,6 +4489,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-famous-people.png',
     sections: [
       {
         heading: 'A habit that does not discriminate',
@@ -4406,6 +4524,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-paronychia.png',
     sections: [
       {
         heading: 'What paronychia is',
@@ -4455,6 +4574,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-warts.png',
     sections: [
       {
         heading: 'Warts around the nails are a nail biter problem',
@@ -4495,6 +4615,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-jaw-pain-tmj.png',
     sections: [
       {
         heading: 'An underrated consequence',
@@ -4536,6 +4657,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-hangnails.png',
     sections: [
       {
         heading: 'The most under-discussed trigger',
@@ -4572,6 +4694,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-white-spots.png',
     sections: [
       {
         heading: 'The most persistent nail myth going',
@@ -4617,6 +4740,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-09-10',
+    ogImage: '/og/nail-biting-vitamin-deficiency.png',
     sections: [
       {
         heading: 'Is nail biting a sign of vitamin deficiency?',
@@ -4651,6 +4775,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-dermatophagia.png',
     sections: [
       {
         heading: 'A different behaviour with a similar appearance',
@@ -4691,6 +4816,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-medication.png',
     sections: [
       {
         heading: 'Is there medication for nail biting?',
@@ -4738,6 +4864,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-finding-a-therapist.png',
     sections: [
       {
         heading: 'Why the general search does not work',
@@ -4784,6 +4911,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-support-groups.png',
     sections: [
       {
         heading: 'Why community matters more than it seems',
@@ -4824,6 +4952,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-mindfulness.png',
     sections: [
       {
         heading: 'Why mindfulness is a plausible fit',
@@ -4864,6 +4993,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-09-10',
+    ogImage: '/og/nail-biting-trigger-mapping.png',
     sections: [
       {
         heading: 'How do you map your nail biting triggers?',
@@ -4917,6 +5047,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-habit-stacking.png',
     sections: [
       {
         heading: 'What habit stacking is and where it fits',
@@ -4957,6 +5088,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-accountability-partner.png',
     sections: [
       {
         heading: 'The component people leave out',
@@ -5000,6 +5132,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-care-routine-for-nail-biters.png',
     sections: [
       {
         heading: 'Why generic nail advice does not fit',
@@ -5041,6 +5174,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-09-10',
+    ogImage: '/og/nail-biting-gloves.png',
     sections: [
       {
         heading: 'Do gloves stop nail biting?',
@@ -5080,6 +5214,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-finger-tape.png',
     sections: [
       {
         heading: 'The most practical barrier method',
@@ -5120,6 +5255,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-09-10',
+    ogImage: '/og/nail-biting-regular-nail-polish.png',
     sections: [
       {
         heading: 'Does regular nail polish help you stop biting?',
@@ -5158,6 +5294,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-08-11',
+    ogImage: '/og/nail-biting-punishing-children.png',
     sections: [
       {
         heading: 'The most common parental instinct',
@@ -5200,6 +5337,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-vs-cheek-biting.png',
     sections: [
       {
         heading: 'Two habits that trade places',
@@ -5240,6 +5378,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-vs-teeth-grinding.png',
     sections: [
       {
         heading: 'Both are parafunctional, and both load the same joint',
@@ -5280,6 +5419,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-09-10',
+    ogImage: '/og/nail-biting-detection-accuracy.png',
     sections: [
       {
         heading: 'How accurate is AI nail biting detection?',
@@ -5320,6 +5460,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-camera-setup.png',
     sections: [
       {
         heading: 'Setup beats hardware',
@@ -5359,6 +5500,7 @@ BLOG_POSTS.push(
     readingMinutes: 3,
     datePublished: '2026-07-24',
     dateModified: '2026-07-24',
+    ogImage: '/og/nail-biting-app-battery-performance.png',
     sections: [
       {
         heading: 'A reasonable thing to worry about',
@@ -5394,6 +5536,7 @@ BLOG_POSTS.push(
     readingMinutes: 6,
     datePublished: '2026-08-12',
     dateModified: '2026-08-12',
+    ogImage: '/og/how-to-choose-nail-biting-treatment.png',
     sections: [
       {
         heading: 'Two different questions people conflate',
@@ -5450,6 +5593,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-08-12',
     dateModified: '2026-08-12',
+    ogImage: '/og/nail-biting-mistakes.png',
     sections: [
       {
         heading: 'The habit repeats itself. So do the failures.',
@@ -5498,6 +5642,7 @@ BLOG_POSTS.push(
     readingMinutes: 4,
     datePublished: '2026-08-12',
     dateModified: '2026-08-12',
+    ogImage: '/og/nail-biting-gym-sports.png',
     sections: [
       {
         heading: 'The one place chronic biters get a break',
