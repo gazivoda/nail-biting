@@ -305,3 +305,46 @@ bot-readable PMC/OA sources were added alongside instead.** Citation URLs in the
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 0 JSON-LD parse failures · 0 occurrences of any corrected claim remaining in `dist/`.
+
+### Iteration 6 — citation campaign across the uncited corpus (4 subagents + recovery)
+
+Measured baseline: **29 of 143 posts carried any outbound citation**; 87 of the uncited were
+health-adjacent. Three agents produced *patch proposals* (read-only, byte-exact find/replace) against
+their matching library from iteration 5, then one applier landed all three — the only way to let three
+agents work one file safely.
+
+- [x] **301 proposed edits**: 149 CITE · 123 SOFTEN · 13 NO CHANGE. Posts with ≥1 citation:
+      **29 → 100 of 143.** Unique citation URLs: ~26 → **73**.
+- [x] The 43 still uncited are almost entirely the proposals' explicit NO CHANGE calls — Technology,
+      Products, Comparison, Humor, plus 21 health posts where the libraries genuinely cover nothing
+      (sleep, eczema, menopause, autism, panic disorder, dopamine…). Softening beat citing there.
+
+**Three reader-safety escalations, all fixed:**
+1. `nail-biting-healthcare-workers` asserted *"Research on subungual bacterial load has found
+   meaningfully higher counts… under the nails of healthcare workers compared to the general
+   population."* **No such study exists** — a fabricated finding aimed at an occupational audience.
+2. `nail-biting-chefs-food-service` stated a real finding **backwards**: it claimed evidence that
+   artificial nails harbour *more bacteria*. Hedderwick found quantities did **not** differ; what
+   differed was likelihood of harbouring a pathogen (87% vs 43%).
+3. `stop-nail-biting-challenge` claimed self-monitoring alone "produces measurable reductions in
+   frequency". In both controlled nail-biting comparisons self-monitoring **was the control arm** and
+   showed no significant improvement.
+
+Also swept sitewide: "catches fewer than half of biting episodes" (unsourced, 9 occurrences), HRT's
+third component mislabelled "external feedback" (trials say *social support*, 7 occurrences), and the
+unsourced handwashing claim. All now 0. Two surviving uncited first-party "60–80% of daily episodes"
+claims softened — the twin of one iteration 1 already fixed in `comparePages.ts`.
+`nail-biting-warts` retitled: its title and description asserted the HPV finger→mouth route that its
+own corrected body disowns. Third such self-contradicting title found in two iterations.
+
+**Recovery note:** the applier hit a session limit mid-run. The tree was left consistent (tsc 0,
+71/71, `seo:check` clean, 143 posts parsing) and the remaining items were finished directly.
+
+**A swap I measured and rejected.** 8 new `doi.org` links return 403/406 to crawlers, so I tried to
+repoint them at PMC. `elink`'s `linksetdbs[0]` returned the **same PMC ID for two different PMIDs**
+twice over — it yields citation links, not each article's own deposit. Trusting that shape would have
+minted 7 fresh misattributions. The DOIs stay: a DOI is a canonical permanent identifier, and a
+bot-blocked-but-correct link beats a readable wrong one.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+0 JSON-LD parse failures.
