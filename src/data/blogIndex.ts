@@ -100,7 +100,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "breaking-any-habit-science",
     title: "Why Habits Are So Hard to Break — and What That Means for Nail Biting",
-    description: "In Lally's 2010 study, habits took a median 66 days to become automatic — a range of 18 to 254 days across volunteers. Why nail biting is harder than most.",
+    description: "Lally's 2010 study: the 39 whose data fitted the model took a median 66 days to reach 95% of their automaticity plateau, range 18 to 254. Why nail biting is harder.",
     tag: "Science",
     readingMinutes: 4,
     datePublished: "2026-04-03",
@@ -118,7 +118,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stopping-nail-biting-for-good",
     title: "Stopping Nail Biting for Good: What Relapses Mean and How to Build Lasting Change",
-    description: "Time to automaticity ran 18 to 254 days in Lally's 2010 study, median 66 — so lapses are expected. Why relapse happens, and what makes the change hold.",
+    description: "New habits took 18 to 254 days to become automatic in Lally's 2010 study, median 66 — not a nail-biting figure. Why lapses happen, and what makes change hold.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-07",
@@ -163,7 +163,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-during-sleep",
     title: "Nail Biting During Sleep: Does It Happen and What Can You Do?",
-    description: "Nobody has measured sleep nail biting: no prevalence figure, no sleep-stage data, no comparison with waking biting. How to tell if it happens, and what might help.",
+    description: "We could not find a study measuring sleep nail biting: no prevalence figure, no sleep-stage data, no comparison with waking biting. How to tell, and what may help.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -190,7 +190,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "mediapipe-ai-detection-explained",
     title: "How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer",
-    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, on your device at 30–60 frames per second. The detection stack.",
+    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, running on your device five times a second. The detection stack.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -298,7 +298,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "grow-nails-after-nail-biting",
     title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
-    description: "Nails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails is a several-month project.",
+    description: "Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails is a several-month project.",
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
@@ -352,7 +352,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-teenagers",
     title: "Nail Biting in Teenagers: What the Evidence Actually Shows",
-    description: "No study locates a peak age. In a Turkish survey of 3,475 students, 29.2% of high schoolers and 17.6% of university students bit their nails. What helps teens.",
+    description: "No source we could find locates a peak age. In a Turkish survey of 3,475 students, 29.2% of high schoolers and 17.6% of university students bit their nails.",
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-23",
@@ -388,7 +388,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-30-day-plan",
     title: "Stop Nail Biting in 30 Days: A Week-by-Week Plan",
-    description: "No published data pins down which weeks of practice produce the steepest drop, so 30 days is a review point rather than a finish line. The plan, week by week.",
+    description: "We found no published data pinning down which weeks of practice produce the steepest drop, so 30 days is a review point, not a finish line. The plan, week by week.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -460,7 +460,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-screen-time",
     title: "How Phones and Screens Make Nail Biting Worse — and What to Do",
-    description: "Screen time and nail biting have not been studied together directly. What is measured: 15 Android users logged 63.5 notifications a day — scale, not prevalence.",
+    description: "Screen time and nail biting have not been studied together in large-scale research. 15 Android users logged 63.5 notifications a day — scale, not prevalence.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -514,7 +514,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-during-exams",
     title: "Nail Biting During Exams: Why Stress Season Makes It Worse",
-    description: "In a randomised experiment, 40 undergraduate biters bit most when left alone and doing maths problems — frustration and boredom more than stress. Exam-week tactics.",
+    description: "In four conditions, 40 undergraduate biters bit most when left alone and on maths problems — better evidenced triggers than stress. Exam-week tactics.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -559,7 +559,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-immune-system",
     title: "Does Nail Biting Weaken Your Immune System?",
-    description: "No evidence shows nail biting weakens immunity. What was measured: Enterobacteriaceae in the saliva of 76% of 25 biters against 26.5% of 34 non-biters.",
+    description: "No solid evidence that nail biting weakens immunity in a generally healthy person. Enterobacteriaceae in the saliva of 76% of 25 biters, 26.5% of 34 non-biters.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -595,7 +595,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-after-quitting-smoking",
     title: "Why Nail Biting Increases After Quitting Smoking",
-    description: "No study has tracked nail biting before and after quitting smoking. What is measured: 40 undergraduate biters bit most when left alone — the gap a cigarette filled.",
+    description: "We have not found a study tracking nail biting before and after quitting smoking. 40 undergraduate biters bit most when left alone — the gap a cigarette filled.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -604,7 +604,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-reddit",
     title: "What Actually Worked for People Who Quit Nail Biting, According to Online Communities",
-    description: "Four-week completion rates ran 53.5% to 68.6% across three self-help techniques — sticking with one is the hard part. Which community advice matches the research.",
+    description: "Across three BFRB self-help techniques, four-week completion ran 53.5% to 68.6% — sticking with one is the hard part. Which community advice matches the research.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-07-16",
@@ -631,7 +631,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-thumb-sucking",
     title: "From Thumb Sucking to Nail Biting: How One Habit Becomes the Other",
-    description: "In 1,131 pairs of 12-year-old Japanese twins, thumb sucking and nail biting co-occurred in 17.7% of boys and 15.7% of girls. Why one habit becomes the other.",
+    description: "In 1,131 pairs of 12-year-old Japanese twins, finger-sucking and nail biting co-occurred in 17.7% of males and 15.7% of females. Why one habit becomes the other.",
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -667,7 +667,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cortisol",
     title: "Nail Biting and Cortisol: The Stress Hormone Connection Explained",
-    description: "No study has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting and 42% pleasure afterwards.",
+    description: "No study we found has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting and 42% pleasure after.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -676,7 +676,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-gel-manicure",
     title: "Can a Gel Manicure Stop Nail Biting? What to Expect",
-    description: "Gel deters rather than interrupts: a smooth coating removes the ragged edges that start episodes, but it cannot stop a bite on contact. No manicure trial exists.",
+    description: "Gel deters rather than interrupts: a smooth coating removes the ragged edges that start episodes, but not a bite on contact. No controlled manicure trial exists.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -685,7 +685,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cuticle-damage",
     title: "Cuticle Damage from Nail Biting: What Happens and How to Repair It",
-    description: "Cuticle tissue regenerates, but only once biting stops — repair cannot outpace an active habit. Oil and moisturiser are standard advice; no trial gives a timeline.",
+    description: "Cuticle tissue regenerates, but only once biting stops — repair cannot outpace an active habit. Oil and moisturiser are standard; we found no trial with a timeline.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -721,7 +721,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-public-speaking",
     title: "Nail Biting Before Public Speaking: Why Performance Anxiety Triggers It",
-    description: "In 24 people with a BFRB and 23 controls, urges rose under boredom and frustration but not under stress. Before a talk it is the waiting, not the nerves.",
+    description: "In 24 people with a BFRB and 23 controls, urges rose under boredom and frustration but not stress. The better-supported reading is the waiting, not the nerves.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -730,7 +730,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-fingerprints",
     title: "Does Nail Biting Affect Your Fingerprints?",
-    description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary nail biting does not alter them. Damage into the fingertip pad is the rare exception.",
+    description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could theoretically alter them.",
     tag: "Science",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -766,7 +766,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-alcohol",
     title: "Nail Biting and Alcohol: Why Drinking Can Increase the Habit",
-    description: "In a survey of 339 medical students, 92.2% of biters called the habit automatic. Alcohol dampens the oversight that might catch it — nobody has studied the pair.",
+    description: "In a survey of 339 medical students, 92.2% of biters called the habit automatic. Alcohol dampens the oversight that might catch it — we found no study on the pair.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -793,7 +793,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "press-on-nails-to-stop-nail-biting",
     title: "Can Press-On Nails Stop Nail Biting? A Practical Look",
-    description: "Press-ons deter the way acrylics do — harder to bite through, different under the teeth — for a fraction of the cost. No trial has tested artificial nails at all.",
+    description: "Press-ons deter the way acrylics do — harder to bite through, different under the teeth — and cost far less. No controlled trial has tested artificial nails.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -802,7 +802,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "how-to-help-someone-who-bites-their-nails",
     title: "How to Help a Partner or Friend Who Bites Their Nails (Without Nagging)",
-    description: "Reprimand cut biting in the one experiment that tested it — for as long as someone was watching. That is suppression, not change. Here is what actually helps.",
+    description: "In the only experiment we found, 40 undergraduate biters bit least when watched — conversation or reprimand. That is suppression, not change. What actually helps.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -811,7 +811,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-healthcare-workers",
     title: "Nail Biting Risks for Healthcare Workers: What to Know",
-    description: "No study has measured nail biting infection risk in any occupation. In healthcare workers, subungual organisms outnumbered surface ones: mean log10 4.9 against 3.7.",
+    description: "We found no study on nail biting infection risk in any occupation. In healthcare workers, subungual organisms outnumbered surface ones: mean log10 4.9 against 3.7.",
     tag: "Health",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -820,7 +820,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "does-nail-biting-cause-permanent-damage",
     title: "Does Nail Biting Cause Permanent Damage? What's Reversible and What Isn't",
-    description: "Most damage is reversible: the plate regrows 3.47 mm a month. Nobody has measured recovery time in biters, or how often change is permanent.",
+    description: "Most damage is reversible: the plate regrows about 3.47 mm a month for fingernails. We found no study measuring recovery time, or how often change is permanent.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -892,7 +892,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-magnesium",
     title: "Magnesium for Nail Biting: Can It Help With Anxiety-Driven Biting?",
-    description: "No trial has tested magnesium for nail biting. NAC has one: in 42 children and adolescents, nails gained 5.21 mm against 1.18 mm at one month, none at two.",
+    description: "No trial has tested magnesium for nail biting. NAC has one: 42 children and adolescents, 5.21 mm of nail gained against 1.18 mm at one month, no difference at two.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -919,7 +919,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-chefs-food-service",
     title: "Nail Biting for Chefs and Food Service Workers: The Hygiene Stakes",
-    description: "Food codes bar artificial nails: a pathogen grew from 87% of healthcare workers with acrylics against 43% of controls, though the quantities did not differ.",
+    description: "Some food codes bar artificial nails: a potential pathogen grew from 87% of healthcare workers with acrylics against 43% of controls, but not in greater quantity.",
     tag: "Health",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -1009,7 +1009,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-boredom",
     title: "Boredom Biting: Why an Empty Moment Sends Your Hand to Your Mouth",
-    description: "In four randomised conditions, 40 undergraduate nail biters bit most when bored or frustrated, least during conversation. A second study found no rise under stress.",
+    description: "In four conditions, 40 undergraduate biters bit most when bored or frustrated, least in conversation or reprimand. A separate study found urges no higher in stress.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-07-24",
@@ -1027,7 +1027,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-oral-fixation",
     title: "Is Nail Biting an Oral Fixation? What That Idea Gets Right and Wrong",
-    description: "A survey of 281 pediatric patients put the median age of onset at 5 years, range 1 to 13 — well after the proposed oral stage. The oral self-soothing part holds.",
+    description: "A survey of 281 pediatric patients put median onset at 5 years, range 1 to 13 — mostly well after the proposed oral stage. The oral self-soothing part holds.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1035,8 +1035,8 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-myths",
-    title: "Nine Nail Biting Myths That Make It Harder to Stop",
-    description: "Anxiety disorder was found in 22.5% of nail biters against 26.2% of non-biters in one 339-student survey. That myth, the 21-day rule, and five others, corrected.",
+    title: "Ten Nail Biting Myths That Make It Harder to Stop",
+    description: "Anxiety disorder was diagnosed in 22.5% of lifetime nail biters against 26.2% of non-biters in one 339-student survey. That myth, the 21-day rule, and eight others.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1045,7 +1045,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-which-fingers",
     title: "Which Fingers Do Nail Biters Bite Most — And Why It Is Not Random",
-    description: "Nobody has published which fingers get bitten most, so what follows is report, not ranking. Your own distribution is still a usable record of your triggers.",
+    description: "Nobody appears to have published which fingers get bitten most, so what follows is report, not ranking. Your own distribution is still a record of your triggers.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1099,7 +1099,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-white-spots",
     title: "White Spots on Bitten Nails: What They Are and What They Are Not",
-    description: "White marks on bitten nails are matrix trauma, not a calcium or zinc shortfall. They grow out at 3.47 mm a month, measured in 22 adults, and cannot be treated.",
+    description: "White marks are conventionally attributed to matrix trauma, not a calcium or zinc shortfall. They grow out at about 3.47 mm a month and cannot be treated directly.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1126,7 +1126,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-medication",
     title: "Is There Medication for Nail Biting? What the Evidence Says",
-    description: "A 2023 evidence map screened 2,618 psychodermatology trials and found exactly two randomised drug trials for nail biting. No drug is approved for any BFRB.",
+    description: "A 2023 evidence map screened 2,618 psychodermatology studies and found exactly two randomised drug trials for nail biting. No drug is FDA-approved for any BFRB.",
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-07-24",
@@ -1189,7 +1189,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-care-routine-for-nail-biters",
     title: "A Nail Care Routine Built for People Who Bite",
-    description: "Fingernails regrow at 3.47 mm a month, measured in 22 adults, so this routine targets triggers rather than looks: smooth beats short, and the skin settles first.",
+    description: "Fingernails regrow at about 3.47 mm a month, measured in 22 healthy young adults. Smooth beats short, and the skin usually settles before the nails do.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1225,7 +1225,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-punishing-children",
     title: "Why Punishing a Child for Nail Biting Backfires",
-    description: "Reprimand cut biting in the one experiment that measured it — in front of the observer, over one session. That is suppression, and in children it teaches hiding.",
+    description: "In a randomised experiment, 40 undergraduate nail biters bit least in conversation and when reprimanded. That is suppression; punished children learn to hide it.",
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-07-24",

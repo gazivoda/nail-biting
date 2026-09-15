@@ -474,3 +474,65 @@ not broken work.
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 (incl. the new gate) ·
 161/161 URLs 200 · 0 JSON-LD parse failures · 0 pages claiming 30fps.
+
+### Iteration 10 (final) — semantic repairs, a regression I caused, and the handoff
+
+- [x] **31 semantic description defects repaired** (the carried item from iteration 9): 9 materially
+      wrong claims, 12 with hedging dropped, 9 where the previous fix **overshot** into "No study has"
+      where the body supports only "we could not find one", and 1 count error. 33 descriptions changed.
+- [x] **A regression I introduced and the audit caught.** Iteration 9 declared "0 pages claiming 30fps"
+      — but that check was a **literal-string grep**. Two pages still asserted it as
+      *"30–60 frames per second"* and *"30+ frames per second"*, and on
+      `mediapipe-ai-detection-explained` it sat in **five machine-readable slots at once** (meta
+      description, `og:description`, `.article-summary`, JSON-LD description, and the `speakable`
+      target). Fixed by distinguishing what MediaPipe *can* sustain from what this app *does* — it
+      samples five times a second by design. One occurrence was left alone deliberately: the passage
+      contrasting "thirty or sixty times a second" with "Stop Biting runs inference five times a second
+      instead" is correct and is the point of that section.
+      **Note the shape of this bug: the new mirror gate structurally cannot catch it** — description and
+      body agreed with each other, and both were wrong. Body-vs-code has no gate.
+
+## FINAL STATE — branch `seo-geo-loop-sept`, 10 iterations
+
+| Category | Start | End |
+|---|---:|---:|
+| AI Citability | 88 | 92 |
+| Brand Authority | 49 | 50 |
+| Content E-E-A-T | 75 | 82 |
+| Technical GEO | 93 | 93 |
+| Schema & Structured Data | 78 | 92 |
+| Platform Optimization | 61 | 69 |
+| **Composite** | **75** | **80** |
+
+Full handoff with evidence: `scratchpad/iter10-final.md`.
+
+**Ranked repo backlog (~+5–6 composite):** verify the 31 repairs just landed · add a body↔code gate ·
+SSR the three legal pages (74 words of nav, no `h1`) · narrow the therapy gate from word-scatter to
+claim · trim `/` and `/pricing` descriptions (203 chars — the ≤165 gate never covered core pages) ·
+`Content-Signal:` in robots.txt · citations for the 58 pages that still have none.
+
+**Locked outside the repo (~+8–9 composite — more than the repo-fixable headroom):** off-site presence
+measures **4/100**. No Wikipedia article and `exturlusage` returns `[]` for the domain; no Wikidata; no
+AlternativeTo; HN `nbHits: 0` while two competitors have Show HN posts. A Product Hunt listing does
+exist — 2 upvotes, rank 251, against Hands Off's 195 upvotes at rank 5. The sharpest finding of the
+whole audit: **handsoffapp.com serves zero JSON-LD and is still the more citable entity**, because
+corroboration comes from third parties, not from self-description.
+
+**Owner decisions:** `Google-Extended: Disallow` forfeits Gemini citation entirely (~+6–8 on Platform
+alone, and no token separates grounding from training) · `www` serves Traefik's default self-signed
+cert over a `503`, and apex HSTS `includeSubDomains` makes it non-bypassable — do NOT add `preload`
+until fixed · http→https is a 302/307, not a 301.
+
+**Verification debt, stated plainly:** the machine-readable layer is independently verified and strong
+(161/161 URLs 200, 0 parse failures across 835 JSON-LD blocks, 48/48 FAQ answers byte-identical,
+316/316 speakable selectors resolving, MedicalCondition 15/15 evidenced in prose). The semantic layer
+is weaker: the 33 descriptions repaired in this final pass have **not** been independently verified,
+and the ~50 descriptions the rewrite never touched have never been checked at all.
+
+**What a future automated pass must not do** — each learned the hard way here: attach a citation
+without rewriting the claim (17% defect rate vs 5% when rewritten) · trust a self-check that uses
+substring matching (`22` matches inside `2200`; it reported 0 defects on a corpus that had one) ·
+assume an aggregator is more bot-friendly than the source (Europe PMC 403s four AI crawlers; PubMed
+soft-203s) · trust `elink`'s `linksetdbs[0]` (it returned the same PMC id for different PMIDs) ·
+write "no study has" where the body supports only "we could not find one" · or verify a claim with a
+literal-string grep, which is how the 30fps regression survived a pass that declared it fixed.
