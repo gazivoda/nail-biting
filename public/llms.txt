@@ -35,10 +35,10 @@ Key facts:
 - [Stop Biting vs Bitter Nail Polish: Which Actually Works?](https://stopbiting.today/compare/bitter-polish-alternative): Comparing mechanisms, evidence, and who each approach works for
 - [Why Habit Tracking Apps Don't Work for Nail Biting](https://stopbiting.today/compare/habit-tracking-apps): Manual logging vs automatic AI detection — why automation changes outcomes
 - [Stop Biting vs Hands Off: Which Should You Pick?](https://stopbiting.today/compare/stop-biting-vs-hands-off): Two on-device AI apps that catch nail biting through your webcam — compared honestly on platforms, coverage, price, and privacy
-- [Stop Biting vs Nailed: Subscription vs One-Time Mac App](https://stopbiting.today/compare/stop-biting-vs-nailed): Two apps built on the same detection engine, with very different scopes — a minimal Mac menu bar utility vs a cross-platform habit system
-- [Stop Biting vs SmartBehavior: Desktop and Web vs Mobile](https://stopbiting.today/compare/stop-biting-vs-smartbehavior): The clearest split in the category: where do you actually bite your nails — at a computer, or everywhere else?
+- [Stop Biting vs Nailed: Subscription vs Mac Menu Bar App](https://stopbiting.today/compare/stop-biting-vs-nailed): Two apps built on the same detection engine, with very different scopes — a minimal Mac menu bar utility vs a cross-platform habit system
+- [Stop Biting vs SmartBehavior: Which Fits Where You Bite?](https://stopbiting.today/compare/stop-biting-vs-smartbehavior): The clearest split in the category: where do you actually bite your nails — at a computer, or everywhere else?
 - [AI Apps That Detect Nail Biting: Every Option Compared](https://stopbiting.today/compare/ai-detection-apps): Four apps now use on-device AI to catch nail biting in real time. Here’s the honest head-to-head — including where ours loses.
-- [Stop Nail Biting at Your Desk](https://stopbiting.today/solutions/for-desk-workers): Why desk workers bite during deep focus — and how AI detection solves it
+- [Stop Nail Biting at Your Desk](https://stopbiting.today/solutions/for-desk-workers): Why desk workers bite during deep focus — and how webcam detection interrupts it
 - [Nail Biting and ADHD: AI Detection That Works With Your Brain](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters — and what actually helps
 - [Stop Nail Biting While Gaming](https://stopbiting.today/solutions/for-gamers): Gaming flow state makes the habit invisible — AI detection works in the background
 - [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.

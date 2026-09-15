@@ -88,7 +88,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-09-11',
+    dateModified: '2026-09-15',
     ogImage: '/og/habit-reversal-training-guide.png',
     sections: [
       {
@@ -110,7 +110,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: 'What to expect in the first few weeks',
-        body: `Week one is often strange. You'll notice more biting than you thought you were doing — not because you've started doing it more, but because you're actually catching it now. This is the awareness training working. It's supposed to feel like this.\n\nBiting frequency starts dropping meaningfully around weeks 2–4 for most people. By 6–8 weeks, the competing response starts feeling natural and the urge to bite in the first place starts fading. The Azrin and Nunn trial ran for five months, and the reduction in self-recorded episodes held across that period; the study with a genuine post-treatment follow-up is Twohig et al. (2003), where a 22% gain in nail length immediately after treatment was still a 19% gain five months later, against 0% for the placebo group.`,
+        body: `Week one is often strange. You'll notice more biting than you thought you were doing — not because you've started doing it more, but because you're actually catching it now. This is the awareness training working. It's supposed to feel like this.\n\nBiting frequency starts dropping meaningfully around weeks 2–4 for most people. By 6–8 weeks, the competing response starts feeling natural and the urge to bite in the first place starts fading. The Azrin and Nunn trial ran for five months, and the reduction in self-recorded episodes held across that period; the study with a genuine post-treatment follow-up is Twohig et al. (2003), where a 22% gain in nail length immediately after treatment — against a 3% gain in the placebo group — was still a 19% gain five months later, by which point the placebo group was back at 0%.`,
         html: `<p><strong>Sources:</strong></p><ul><li>Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Behav Res Ther. 1980;18(4):281–285</a>. PubMed holds no abstract for this record and the full text is paywalled, so the 99% and 60% figures quoted on this page are taken from Table 1 of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Int J Environ Res Public Health. 2022;19(6):3392</a>, which is open access.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -557,7 +557,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-09-11',
+    dateModified: '2026-09-15',
     ogImage: '/og/how-long-to-stop-nail-biting.png',
     sections: [
       {
@@ -574,7 +574,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       },
       {
         heading: 'Week 6–12: Consolidation',
-        body: `Between weeks 6 and 12, biting frequency continues to decline toward baseline levels (near zero, or episodic rather than constant). The competing response becomes increasingly automatic — requiring less deliberate effort to initiate. Nail regrowth becomes visible for the first time in many cases, which provides its own positive reinforcement.\n\nThe primary risk in this phase is premature discontinuation. Once biting has reduced substantially and the competing response feels habitual, many people relax the monitoring and practice that produced the improvement. Maintaining light-touch monitoring — reviewing biting episodes once per week, continuing to practice the competing response in highest-risk contexts — is the sensible hedge, though no trial has tested tapering schedules for nail biting. What has been tested is whether habit-reversal gains survive after treatment stops: in the one placebo-controlled trial with a genuine post-treatment follow-up, the treated group's nail length was 22% above baseline at the end of treatment and still 19% above it five months later, against 0% for the placebo group.`,
+        body: `Between weeks 6 and 12, biting frequency continues to decline toward baseline levels (near zero, or episodic rather than constant). The competing response becomes increasingly automatic — requiring less deliberate effort to initiate. Nail regrowth becomes visible for the first time in many cases, which provides its own positive reinforcement.\n\nThe primary risk in this phase is premature discontinuation. Once biting has reduced substantially and the competing response feels habitual, many people relax the monitoring and practice that produced the improvement. Maintaining light-touch monitoring — reviewing biting episodes once per week, continuing to practice the competing response in highest-risk contexts — is the sensible hedge, though no trial has tested tapering schedules for nail biting. What has been tested is whether habit-reversal gains survive after treatment stops: in the one placebo-controlled trial with a genuine post-treatment follow-up, the treated group's nail length was 22% above baseline at the end of treatment against a 3% gain for the placebo group, and five months later the treated group was still 19% above baseline while the placebo group was at 0%.`,
       },
       {
         heading: 'What makes the timeline shorter or longer?',
@@ -1810,7 +1810,7 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/stop-biting-app-review.png',
   sections: [
     {
@@ -1922,7 +1922,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/nail-biting-fidget-toys.png',
   sections: [
     {
@@ -1944,11 +1944,12 @@ BLOG_POSTS.push({
     {
       heading: 'The most effective competing response for most nail biters',
       body: `The best competing response for the largest number of nail biters is not a fidget toy at all. It's pressing both palms flat against a surface — a desk, a thigh, a table — and holding for 60 seconds.\n\nThis works because it provides strong proprioceptive input through the hands and wrists, is physically incompatible with nail biting, is available in any context without any object, and can be held for the 60 seconds needed for the urge to pass. It's also socially inconspicuous during meetings and calls. Most fidget toys require holding an object that draws attention; palm pressing requires nothing.\n\nFor boredom-driven biting, keeping a resistance ball or textured fidget accessible adds useful input. No study has compared palm pressing against fidget objects, so the case for it is availability and simplicity rather than measured superiority — and the one randomised test of whether the choice of competing response matters, run in children with oral-digital habits, found similar and dissimilar responses produced the same gains. Having one you will actually use beats optimising which one.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289–300.</a></li></ul>`,
     },
     {
       heading: 'Why any competing response only works with awareness',
-      body: `The critical point about competing responses — fidget toys or otherwise — is that they only activate when you're aware the habit is occurring. Nail biting episodes typically begin automatically, below the threshold of awareness. No competing response, however well-matched, can interrupt a habit episode you don't know is happening.\n\nThis is why the most effective approach combines a competing response with an external awareness signal. The alarm catches the episode; the competing response handles it. Fidget toys placed on your desk as reminders don't solve the awareness problem — they just make the competing response available once awareness arrives through some other means. The sequence matters: awareness first, competing response second.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289–300.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+      body: `The critical point about competing responses — fidget toys or otherwise — is that they only activate when you're aware the habit is occurring. Nail biting episodes typically begin automatically, below the threshold of awareness. No competing response, however well-matched, can interrupt a habit episode you don't know is happening.\n\nThat is the argument for pairing a competing response with something that marks the moment from outside — an alarm, a detection tool, a person who has agreed to signal. It is an argument, not a result: the trials pair the competing response with awareness training and, in the adult nail-biting trial, with social support (Twohig et al., 2003), and none of them tested an automated external signal or ranked one package against another. So treat the pairing as reasoning from the awareness gap rather than as a measured winner. Fidget toys placed on your desk as reminders don't solve the awareness problem — they just make the competing response available once awareness arrives through some other means. The sequence matters: awareness first, competing response second.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1962,7 +1963,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/nail-biting-interview-anxiety.png',
   sections: [
     {
@@ -1987,7 +1988,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The long-term solution',
-      body: `Short-term techniques are useful but are not a substitute for addressing the habit itself. The nail biting that surfaces most visibly before interviews is the same habit that runs throughout your day — the interview context just removes the suppressors that normally keep it less visible.\n\nHabit reversal is the treatment with the strongest evidence here, and it is worth being accurate about its size. In the one placebo-controlled trial with a genuine follow-up, participants' nail length was 22% above baseline at the end of treatment and still 19% above it five months later, against 0% for the placebo group. That is a real, durable and fairly modest effect on an objective measure — enough to lower the baseline that interview stress gets added to, not enough to make a high-stakes situation a non-event. The goal is to arrive at a high-stakes situation with a habit that has already been reduced to low frequency — so that the additional stress of the event doesn't push it past the threshold of causing visible damage. Building that foundation is the actual problem to solve.`,
+      body: `Short-term techniques are useful but are not a substitute for addressing the habit itself. The nail biting that surfaces most visibly before interviews is the same habit that runs throughout your day — the interview context just removes the suppressors that normally keep it less visible.\n\nHabit reversal is the treatment with the strongest evidence here, and it is worth being accurate about its size. In the one placebo-controlled trial with a genuine follow-up, participants' nail length was 22% above baseline at the end of treatment, against a 3% gain in the placebo group; five months later the treated group was still 19% above baseline and the placebo group was at 0%. That is a real, durable and fairly modest effect on an objective measure — enough to lower the baseline that interview stress gets added to, not enough to make a high-stakes situation a non-event. The goal is to arrive at a high-stakes situation with a habit that has already been reduced to low frequency — so that the additional stress of the event doesn't push it past the threshold of causing visible damage. Building that foundation is the actual problem to solve.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2082,7 +2083,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-08-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/nail-biting-screen-time.png',
   sections: [
     {
@@ -2198,12 +2199,13 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/nail-biting-and-depression.png',
   sections: [
     {
       heading: `Is nail biting linked to depression?`,
       body: `Nail biting is most commonly discussed as an anxiety-driven habit, but a meaningful subset of chronic nail biters describe their pattern as connected to low mood rather than stress — biting during flat, numb, or unmotivated states rather than anxious ones. The evidence is thinner than that framing suggests. The study that looked at it most directly assessed 603 adults with OCD at a specialist clinic in Turin and compared the 52 who had onychophagia with those who did not: depressive symptom scores were no different between the groups, and rates of comorbid major depressive disorder were comparable. That is a highly selected sample and does not settle the question for the general population, but it is the opposite of a demonstrated link, and we found no study establishing one in nail biters specifically.\n\nDepression and BFRBs share some underlying territory: both involve difficulties with emotional regulation, and both can involve repetitive self-focused behaviour. Shared reward and impulse-control circuitry is often proposed but we have not found it demonstrated for nail biting, so it belongs in the hypothesis column. Any overlap doesn't mean one causes the other — but it does mean the two conditions are worth considering together rather than treating nail biting as purely a stress issue by default.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12651321/" target="_blank" rel="noopener noreferrer">Pellegrini L, Di Salvo G, Rosso G, Maina G, Albert U. Onychophagia in Obsessive-Compulsive Disorder (OCD): Prevalence and Clinical Characterisation. Brain Sci. 2025;15(11):1228.</a></li></ul>`,
     },
     {
       heading: `Emotional numbing and self-soothing`,
@@ -2219,8 +2221,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `What helps when biting and low mood co-occur`,
-      body: `When depression is present, addressing it — through therapy, medical treatment, or both — often does more for nail biting than habit-specific techniques applied in isolation, because it restores some of the underlying capacity those techniques depend on. That doesn't mean habit techniques are pointless in the meantime; low-effort, low-friction interventions (an alarm-based detection tool that doesn't require sustained self-monitoring, keeping nails filed short to reduce the physical trigger) tend to fit better than approaches requiring significant daily discipline.\n\nIf nail biting is severe, causing real physical damage, or accompanied by other signs of depression — persistent low mood, loss of interest, sleep or appetite changes lasting more than two weeks — it's worth raising both together with a doctor or therapist rather than treating the nail biting as the primary issue to solve alone.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12651321/" target="_blank" rel="noopener noreferrer">Pellegrini L, Di Salvo G, Rosso G, Maina G, Albert U. Onychophagia in Obsessive-Compulsive Disorder (OCD): Prevalence and Clinical Characterisation. Brain Sci. 2025;15(11):1228.</a></li></ul>`,
+      body: `We are not going to tell you which to treat first. No trial we could find has compared addressing the depression against addressing the habit, in nail biting or in any other body-focused repetitive behaviour, so the common advice to "fix the mood and the habit follows" is a reasonable-sounding guess with nothing measured behind it. Low mood is worth treating on its own terms, and that is the whole of the argument for treating it.\n\nWhat the previous section does support is a practical constraint rather than an ordering: during a low period the capacity that habit work demands is genuinely reduced, so pick habit techniques that survive a bad week. Low-effort, low-friction interventions (an alarm-based detection tool that doesn't require sustained self-monitoring, keeping nails filed short to reduce the physical trigger) tend to fit better than approaches requiring significant daily discipline.\n\nIf nail biting is severe, causing real physical damage, or accompanied by other signs of depression — persistent low mood, loss of interest, sleep or appetite changes lasting more than two weeks — it's worth raising both together with a doctor or therapist rather than treating the nail biting as the primary issue to solve alone.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2892,16 +2893,18 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/stop-nail-biting-challenge.png',
   sections: [
     {
       heading: `Why a day-by-day structure helps`,
       body: `A week-by-week habit plan tells you the broad phase you're in; a day-by-day challenge tells you exactly what to do today. For a habit as automatic as nail biting, that level of specificity matters — vague weekly goals ("build awareness this week") are easy to let slide on any individual day, while a concrete daily instruction ("log every episode today, nothing else") is harder to skip without noticing.\n\nThis isn't a different method from Habit Reversal Training — it's the same evidence-based components (awareness training, a competing response, and social support) broken into daily units so there's never a day without a clear, small task.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
     {
       heading: `Days 1–7: Pure observation`,
-      body: `Your only job for the first week is noticing and logging — no attempt to stop yet. Each day, record every biting episode: time, location, what you were doing, and your emotional state. Day 1 will feel awkward because you're paying attention to something you usually do on autopilot. By day 7, patterns should be visible: a dominant time of day, a dominant trigger, a dominant context.\n\nBe careful what you expect from this week. In both controlled nail-biting comparisons that used self-monitoring alone as the control condition, the self-monitoring groups showed no significant improvement in nail length, while the arms that added a competing response or a bitter preparation did. Observation is the foundation the rest of the protocol is built on, not a treatment in itself — so don't skip this phase, but don't judge it by frequency either.`,
+      body: `Your only job for the first week is noticing and logging — no attempt to stop yet. Each day, record every biting episode: time, location, what you were doing, and your emotional state. Day 1 will feel awkward because you're paying attention to something you usually do on autopilot. By day 7, patterns should be visible: a dominant time of day, a dominant trigger, a dominant context.\n\nBe careful what you expect from this week. In both controlled nail-biting comparisons that used self-monitoring alone as the control condition, the self-monitoring groups showed no significant improvement in nail length. Adding something to the monitoring did better, though not uniformly: the bitter-preparation arm gained significantly in both trials, while the competing-response arm reached significance in Silber and Haynes (1992) and just failed to reach it in Allen (1996). Observation is the foundation the rest of the protocol is built on, not a treatment in itself — so don't skip this phase, but don't judge it by frequency either.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li></ul>`,
     },
     {
       heading: `Days 8–14: Introduce the competing response`,
@@ -2925,7 +2928,6 @@ BLOG_POSTS.push({
         `Notice one thing that worked and one thing that didn't — don't just track frequency, track what's helping.`,
         `If today was a bad day, start tomorrow at the same step — don't restart from day 1.`,
       ],
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3896,7 +3898,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-15',
   ogImage: '/og/nail-biting-magnesium.png',
   sections: [
     {
@@ -3909,7 +3911,8 @@ BLOG_POSTS.push({
     },
     {
       heading: `How this compares to NAC`,
-      body: `N-acetylcysteine (NAC) has a more direct evidence base for BFRBs specifically — randomised placebo-controlled trials in adults with hair pulling (56% much or very much improved versus 16% on placebo) and with skin picking (47% versus 19% among completers), working through a proposed mechanism involving glutamate regulation in brain circuits linked to compulsive and repetitive behaviours. For nail biting itself there is exactly one randomised placebo-controlled trial, a pilot in 42 children and adolescents at 800 mg/day: nail length was significantly longer in the NAC group after one month, but there was no difference at two months (P = .59), 40% of participants dropped out, and two withdrew because of adverse effects. Magnesium's rationale is more indirect — supporting general stress physiology rather than targeting BFRB-specific neural pathways the way NAC's proposed mechanism does. For someone considering supplementation specifically for nail biting, NAC has the stronger direct evidence base — though "stronger" here means one short pilot trial in children that lost significance by month two; magnesium is better framed as a general anxiety-support measure that might indirectly help if anxiety is a significant driver of your specific pattern.`,
+      body: `N-acetylcysteine (NAC) has a more direct evidence base for BFRBs specifically — randomised placebo-controlled trials in adults with hair pulling (56% much or very much improved versus 16% on placebo) and with skin picking (47% versus 19% among completers), working through a proposed mechanism involving glutamate regulation in brain circuits linked to compulsive and repetitive behaviours. For nail biting itself there is exactly one randomised placebo-controlled trial, a pilot in 42 children and adolescents at 800 mg/day: nail length increased more in the NAC group over the first month (5.21 mm against 1.18 mm, p < 0.04), and no difference remained at two months. The trial describes its dropout rate as high without putting a figure on it in the abstract, and two children in the NAC group stopped the drug after adverse events. This page previously carried a p-value and a dropout percentage for that trial; the full text is paywalled and neither number appears in the abstract or in the open-access review that summarises the same trial, so we have taken them out rather than ask you to trust figures you cannot check. Magnesium's rationale is more indirect — supporting general stress physiology rather than targeting BFRB-specific neural pathways the way NAC's proposed mechanism does. For someone considering supplementation specifically for nail biting, NAC has the stronger direct evidence base — though "stronger" here means one short pilot trial in children that lost significance by month two; magnesium is better framed as a general anxiety-support measure that might indirectly help if anxiety is a significant driver of your specific pattern.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting, a double blind randomized placebo controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a> (abstract only; full text paywalled)</li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a> — the open-access summary of the same NAC trial, and the source of the p &lt; 0.04 above.</li></ul>`,
     },
     {
       heading: `Forms and typical use`,
@@ -3918,7 +3921,6 @@ BLOG_POSTS.push({
     {
       heading: `Where supplementation fits in an overall plan`,
       body: `If anxiety is a clear driver of your nail biting pattern, magnesium is a low-risk, reasonably evidence-informed thing to discuss with a doctor as one piece of a broader anxiety-management approach — alongside, not instead of, direct behavioural work on the habit itself. It's not a standalone fix for nail biting and shouldn't be expected to produce noticeable habit-frequency change on its own; its plausible value is in supporting the upstream anxiety-reduction side of the equation, similar in role to other stress-management measures like sleep and exercise, rather than functioning as a direct habit-reversal tool the way a competing response or detection tool does.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting, a double blind randomized placebo controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10068402/" target="_blank" rel="noopener noreferrer">Turk T, Liu C, Fujiwara E, et al. Pharmacological Interventions for Primary Psychodermatologic Disorders: An Evidence Mapping and Appraisal of Randomized Controlled Trials. J Cutan Med Surg. 2023;27(2):140–149.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4898,26 +4900,29 @@ BLOG_POSTS.push(
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-11',
+    dateModified: '2026-09-15',
     ogImage: '/og/nail-biting-medication.png',
     sections: [
       {
         heading: 'Is there medication for nail biting?',
         body: `There is no medication approved specifically for the treatment of nail biting — dermatology reviews note that no drug is FDA-approved for any body-focused repetitive behaviour. A handful of drugs are used off-label for BFRBs more broadly, with mixed and generally modest evidence, mostly studied in skin picking and hair pulling rather than nail biting itself. A 2023 systematic evidence map of randomised trials in psychodermatology screened 2,618 studies and found exactly two randomised controlled drug trials for nail biting in the entire literature.\n\nThat is a less satisfying answer than "take this," but it is the accurate one. Behavioural treatment remains the first-line approach; reviews of onychophagia management describe pharmacotherapy explicitly as second-line, used as an adjunct or in more severe cases rather than as a starting point.\n\nEverything below is general information. Prescribing decisions belong to a clinician who knows your history.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10068402/" target="_blank" rel="noopener noreferrer">Turk T, Liu C, Fujiwara E, et al. Pharmacological Interventions for Primary Psychodermatologic Disorders: An Evidence Mapping and Appraisal of Randomized Controlled Trials. J Cutan Med Surg. 2023;27(2):140–149.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
       {
         heading: 'What gets used and why',
         body: `The main categories that appear in the literature, with the caveat that evidence quality varies considerably.`,
         list: [
-          'N-acetylcysteine (NAC), an amino acid derivative available over the counter in many countries. It has the most encouraging trial evidence within this cluster, mainly from adult studies in hair pulling (56% much or very much improved versus 16% on placebo) and skin picking (47% versus 19% among completers), with the proposed mechanism involving glutamate regulation. Evidence specific to nail biting is one pilot trial in 42 children and adolescents at 800 mg/day: significantly longer nails than placebo at one month, no difference at two (P = .59), and 40% dropout.',
+          'N-acetylcysteine (NAC), an amino acid derivative available over the counter in many countries. It has the most encouraging trial evidence within this cluster, mainly from adult studies in hair pulling (56% much or very much improved versus 16% on placebo) and skin picking (47% versus 19% among completers), with the proposed mechanism involving glutamate regulation. Evidence specific to nail biting is one pilot trial in 42 children and adolescents at 800 mg/day: more nail length gained than placebo over the first month (5.21 mm against 1.18 mm, p < 0.04), no difference at two, and a dropout rate the authors call high but do not quantify in the abstract — the full text is paywalled, so we are not going to print a percentage we cannot show you.',
           'SSRIs, sometimes prescribed where significant anxiety, depression, or OCD is present alongside the habit. For nail biting itself the published evidence is single case reports, and reviews add a specific caution: SSRIs should be prescribed carefully here, because exacerbation of impulse-related disorders has been reported.',
           'Clomipramine, a tricyclic, is the subject of the second of the two nail-biting drug trials — a 1991 double-blind crossover study in which it outperformed desipramine. There was no placebo arm, only 14 of the 25 enrolled patients completed, and 11 dropped out on side effects including dry mouth, fatigue, insomnia, constipation, sweating and dizziness. That side effect burden is what limits its use.',
           'Other agents including certain antipsychotics and opioid antagonists appear in the research literature for BFRBs. These are specialist decisions with meaningful trade-offs, not general recommendations.',
         ],
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting, a double blind randomized placebo controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a> (abstract only; full text paywalled)</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1929772/" target="_blank" rel="noopener noreferrer">Leonard HL, Lenane MC, Swedo SE, Rettew DC, Rapoport JL. A double-blind comparison of clomipramine and desipramine treatment of severe onychophagia (nail biting). Arch Gen Psychiatry. 1991;48(9):821–827.</a> (not open access — the completion, dropout and side-effect detail above is taken from Lee &amp; Lipner's summary of this trial, below)</li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8478440/" target="_blank" rel="noopener noreferrer">Hoffman J, Williams T, Rothbart R, Ipser JC, Fineberg N, Chamberlain SR, Stein DJ. Pharmacotherapy for trichotillomania. Cochrane Database Syst Rev. 2021;9(9):CD007662.</a></li></ul>`,
       },
       {
         heading: 'Why medication is not the first move',
         body: `Two reasons, and they are both practical.\n\nFirst, no trial has compared medication against habit reversal training for nail biting, so a direct effect-size comparison is not available. What is available points the same way: the systematic evidence map of psychodermatology drug trials concluded the evidence was inadequate to establish informed guidelines on pharmacological treatment, while habit reversal has a placebo-controlled trial with a five-month follow-up behind it and is classed as a well-established treatment for habit disorders. Starting with the better-evidenced intervention is the straightforward sequencing choice.\n\nSecond, medication does not address the mechanism that keeps the habit running. Even where a drug reduces urge intensity, the cue-triggered automatic pathway is still there — the hand still moves before awareness arrives. People who reduce urges pharmacologically without doing any behavioural work often find the behaviour continues at a lower but persistent rate, because the automaticity was never the target.\n\nThe combination is generally considered more promising than either alone, which is the usual pattern in this area.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10068402/" target="_blank" rel="noopener noreferrer">Turk T, Liu C, Fujiwara E, et al. Pharmacological Interventions for Primary Psychodermatologic Disorders: An Evidence Mapping and Appraisal of Randomized Controlled Trials. J Cutan Med Surg. 2023;27(2):140–149.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
       },
       {
         heading: 'When it is worth raising with a doctor',
@@ -4932,7 +4937,7 @@ BLOG_POSTS.push(
       {
         heading: 'What to expect from the conversation',
         body: `Be prepared for the possibility that a general practitioner has not fielded this question often. Body-focused repetitive behaviours are common but under-discussed, and referral to someone familiar with them — often a psychiatrist or a psychologist specialising in this area — is a reasonable thing to ask for.\n\nIt also helps to arrive with data rather than impressions. A record of how often the behaviour occurs, in what contexts, and what you have already tried is considerably more useful to a clinician than "I bite my nails a lot." Frequency logs are exactly the sort of thing that turns a vague complaint into an assessable one — and gathering them accurately requires catching the episodes you currently miss, which is where automated detection earns its place regardless of what treatment you end up pursuing.`,
-            html: `<p>Medication rarely does this on its own. Our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> sets out what to pair it with day to day.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10068402/" target="_blank" rel="noopener noreferrer">Turk T, Liu C, Fujiwara E, et al. Pharmacological Interventions for Primary Psychodermatologic Disorders: An Evidence Mapping and Appraisal of Randomized Controlled Trials. J Cutan Med Surg. 2023;27(2):140–149.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting, a double blind randomized placebo controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1929772/" target="_blank" rel="noopener noreferrer">Leonard HL, Lenane MC, Swedo SE, Rettew DC, Rapoport JL. A double-blind comparison of clomipramine and desipramine treatment of severe onychophagia (nail biting). Arch Gen Psychiatry. 1991;48(9):821–827.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8478440/" target="_blank" rel="noopener noreferrer">Hoffman J, Williams T, Rothbart R, Ipser JC, Fineberg N, Chamberlain SR, Stein DJ. Pharmacotherapy for trichotillomania. Cochrane Database Syst Rev. 2021;9(9):CD007662.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+            html: `<p>Medication rarely does this on its own. Our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> sets out what to pair it with day to day.</p>`,
     },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5173,12 +5178,13 @@ BLOG_POSTS.push(
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-11',
+    dateModified: '2026-09-15',
     ogImage: '/og/nail-biting-accountability-partner.png',
     sections: [
       {
         heading: 'The component people leave out',
         body: `Habit reversal training has three parts, and the trials name them explicitly: awareness training, competing response training, and social support. The first two get all the attention. The third gets quietly dropped, usually because asking someone to help you stop biting your nails feels embarrassing in a way that using an app does not.\n\nIt was included for a reason. The two functions usually described for a support person — flagging occurrences you missed, and acknowledging the competing response when you use it — both address the same underlying gap: you cannot reliably observe your own automatic behaviour. That is how the component is commonly implemented; the primary reports of the original nail-biting trials are not openly available, so we are not going to claim it as a description of their protocol.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
       {
         heading: 'Why it goes wrong so often',
@@ -5201,8 +5207,7 @@ BLOG_POSTS.push(
       },
       {
         heading: 'Where a human partner cannot help',
-        body: `Even a well-designed arrangement has obvious coverage gaps. Your partner is not present for most of your day. They will not notice most episodes even when present, because they are living their own life rather than watching your hands. And nobody is available during the solo evening screen time that is a top-three context for a large share of biters.\n\nThis is not an argument against the arrangement — the reinforcement side of it is genuinely useful and hard to replicate. It is an argument for not expecting a person to provide continuous detection, which is a job better suited to something that does not get bored, does not feel awkward, and is present for all of your working day rather than a fraction of it.`,
-        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+        body: `Even a well-designed arrangement has obvious coverage gaps. Your partner is not present for most of your day. They will not notice most episodes even when present, because they are living their own life rather than watching your hands. And they are not there at all for the hours you spend alone with a screen in the evening — which matters a great deal if that is where your own log says your biting lives, and not at all if it isn't. We cannot tell you which, because nobody appears to have published a ranking of where nail biting happens; any "top three contexts" list you meet, here or elsewhere, is somebody's impression rather than a measurement.\n\nThis is not an argument against the arrangement — the reinforcement side of it is genuinely useful and hard to replicate. It is an argument for not expecting a person to provide continuous detection, which is a job better suited to something that does not get bored, does not feel awkward, and is present for all of your working day rather than a fraction of it.`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5218,12 +5223,13 @@ BLOG_POSTS.push(
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-11',
+    dateModified: '2026-09-15',
     ogImage: '/og/nail-care-routine-for-nail-biters.png',
     sections: [
       {
         heading: 'Why generic nail advice does not fit',
         body: `Most nail care guidance is written for people with intact nails they want to keep nice. It assumes length to shape, cuticles in reasonable condition, and no ongoing source of trauma.\n\nA nail biter has none of those. The nails are short and irregular, the surrounding skin is damaged, and — crucially — the damage is being renewed continuously. That changes what the routine is for. This is not primarily cosmetic maintenance. It is trigger reduction. Dermatology reviews of onychophagia management make the same point as a practical recommendation: preventative nail filing and trimming reduce the appearance of splintered cuticles and so reduce nail-biting temptations. What share of episodes that removes has not been measured.\n\nRemove the irregularities and you remove some of the episodes. Not all of them, and nobody has put a number on it.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
       {
         heading: 'The core principle: smooth beats short',
@@ -5246,8 +5252,8 @@ BLOG_POSTS.push(
       },
       {
         heading: 'What to expect as things improve',
-        body: `Fingernails grow around 3.5mm a month on average, so visible recovery is slow enough to be discouraging if you are not expecting it. The first genuinely noticeable improvement usually comes from the skin rather than the nails — nail folds settle down within a couple of weeks of consistent moisturising and reduced trauma, well before the nails look different.\n\nThere is also an awkward middle stage where nails are long enough to catch on things and snag, which is a high-risk period for relapse. Filing frequency matters more here than at any other point.\n\nAnd the routine does not address the habit itself. It removes physical triggers, which lowers the baseline rate and makes everything else more effective, but the episodes driven by stress, boredom, and deep focus are unaffected by how smooth your nails are. Those need the awareness work.`,
-        html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+        body: `The rate you are waiting on was measured in 22 healthy young adults who marked their own nails and re-measured one to three months later: about 3.47 mm a month for fingernails, against 1.62 mm for toenails (Yaemsiri et al., 2010). That is slow enough to be discouraging if you are not expecting it, and no study we could find measures how long a bitten nail takes to grow back, so we are not going to turn the rate into a date for you. The first genuinely noticeable improvement usually comes from the skin rather than the nails — nail folds settle down within a couple of weeks of consistent moisturising and reduced trauma, well before the nails look different.\n\nThere is also an awkward middle stage where nails are long enough to catch on things and snag, which is a high-risk period for relapse. Filing frequency matters more here than at any other point.\n\nAnd the routine does not address the habit itself. It removes physical triggers, which lowers the baseline rate and makes everything else more effective, but the episodes driven by stress, boredom, and deep focus are unaffected by how smooth your nails are. Those need the awareness work.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19744178/" target="_blank" rel="noopener noreferrer">Yaemsiri S, Hou N, Slining MM, He K. Growth rate of human fingernails and toenails in healthy American young adults. J Eur Acad Dermatol Venereol. 2010;24(4):420–423.</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],

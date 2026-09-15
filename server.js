@@ -680,6 +680,26 @@ if (!existsSync(distPath)) {
     immutable: true,
   }));
 
+  // The same treatment for the two directories of content-stable binaries.
+  // Their names are not content-hashed, but their bytes only change when a
+  // build regenerates them, and the catch-all express.static(distPath) at the
+  // bottom of this block was serving both with `Cache-Control: public,
+  // max-age=0` — a revalidation round-trip on every visit, on exactly the files
+  // that can least afford one. The 8 WOFF2 subsets were self-hosted to clear a
+  // 4.7 s LCP render delay and sit on the critical rendering path; the 152 OG
+  // cards are 3.6 MB that every crawl and every social unfurl re-fetched.
+  //
+  // Registered here so they win over that catch-all; nothing else about them
+  // changes. Content-Type still comes from the same mime lookup, and the
+  // compression filter above still declines /og/ and /fonts/ by path
+  // (INCOMPRESSIBLE_PATHS), so neither directory gets a second squeeze.
+  for (const dir of ['fonts', 'og']) {
+    app.use(`/${dir}`, express.static(join(distPath, dir), {
+      maxAge: '1y',
+      immutable: true,
+    }));
+  }
+
   // ── Crawler-visible content: single source of truth ────────────────────────
   // dist/seo-content.json is generated at build time by
   // scripts/generate-seo-content.mjs (wired into vite.config.ts) directly from
@@ -1322,13 +1342,40 @@ if (!existsSync(distPath)) {
     }
   }
   // The text a reader of `articleHtml` — the exact markup this route puts in the
-  // served page — actually sees.
+  // served page — actually sees THIS PAGE CLAIM. Two kinds of markup are in the
+  // article but are not the page making a claim, and both are stripped before
+  // any matching: they carry other people's words.
+  //
+  //   1. "Related articles" / "Related reading" are navigation. A link whose
+  //      title happens to name the condition is not this page discussing it —
+  //      without this, 3 posts qualified purely on a sibling's headline.
+  //
+  //   2. A "Sources:" bibliography quotes THE TITLES OF OTHER PEOPLE'S PAPERS.
+  //      Twohig 2003 is titled "Evaluating the efficacy of habit reversal…" and
+  //      Lee & Lipner 2022 "…diagnosis and management of onychophagia and
+  //      onychotillomania". Once citations were added to 102 posts, both the
+  //      condition name and a therapy name were readable on pages whose prose
+  //      says neither, and the entity spread from 15 pages to 42 — asserting
+  //      Habit Reversal Training as a treatment on posts about nail technicians
+  //      and press-on nails, where the words exist only in the reference list.
+  //      Citing a paper about a treatment is not recommending the treatment;
+  //      a YMYL claim the reader is never shown must not reach the schema.
+  //
+  // The bibliography is removed twice over so the next citation campaign cannot
+  // reopen this: by its label (the shape blogPosts.ts emits — "Sources:" and
+  // "Sources for this section:", each followed by its list), and by shape — any
+  // list item carrying an outbound link is a citation wherever it sits and
+  // whatever introduces it. Every citation item in the corpus matches both, and
+  // no list or outbound link exists outside a reference block, so the shape rule
+  // costs nothing today and catches an unlabelled bibliography tomorrow.
+  const CITATION_BLOCK = /<p>\s*<strong>\s*Sources\b[^<]*<\/strong>\s*<\/p>\s*(?:<ul>[\s\S]*?<\/ul>)?/gi;
+  const CITATION_ITEM = /<li>[\s\S]*?<\/li>/g;
+  const isCitationItem = li => /<a [^>]*href="https?:/i.test(li);
   function visibleArticleText(articleHtml) {
     return articleHtml
-      // "Related articles" / "Related reading" are navigation. A link whose
-      // title happens to name the condition is not this page discussing it —
-      // without this, 3 posts qualified purely on a sibling's headline.
       .replace(/<section><h2>Related [\s\S]*?<\/section>/g, ' ')
+      .replace(CITATION_BLOCK, ' ')
+      .replace(CITATION_ITEM, li => (isCitationItem(li) ? ' ' : li))
       .replace(/<[^>]+>/g, ' ')
       .replace(/&#39;/g, '\'')
       .replace(/&amp;/g, '&')
@@ -1349,6 +1396,15 @@ if (!existsSync(distPath)) {
   // document it. Requiring all four words still refuses every page that
   // discusses none of it, and no synonym is invented here: the vocabulary comes
   // entirely from the entity.
+  //
+  // The scatter test is what a paper title in a bibliography exploited, so it
+  // was re-examined when citations were excluded above rather than kept on
+  // faith. With the reference lists out of `text` it stands: the 7 assertions
+  // that rest on it are all real prose — "bitter", "taste", "nail", "polish"
+  // on the four posts that review bitter polish under other names, and
+  // "active habit-reversal work … awareness training" on the gel-manicure post.
+  // Tightening it to a phrase match would cost those and prevent nothing that
+  // excluding citations does not already prevent.
   function therapyIsVisible(text, { acronym, words }) {
     if (acronym && namesWord(text, acronym)) return true;
     return words.length > 0 && words.every(word => namesWord(text, word));
@@ -2059,22 +2115,47 @@ if (!existsSync(distPath)) {
   // (src/data/comparePages.ts via seo-content.json); the meta title/description
   // are the hand-tuned SERP variants. Each page gets Article + BreadcrumbList
   // schema (patterned on comparison-schema.json in the repo root).
+  //
+  // THESE ARE CLAIMS, AND NOTHING ELSE CHECKS THEM. Unlike a blog post, whose
+  // `description` doubles as the on-page standfirst, these strings exist only
+  // here: they are not derived from the page body, they never appear on the
+  // page, and llms.txt quotes the page's `subtitle` instead — so a description
+  // can contradict the body it summarises and every automated gate stays green.
+  // Four corrections in a row have landed in a body while the SERP copy above
+  // it kept the claim the body had just retracted, which is the version most
+  // people actually read. When a competitor fact or a hedge changes in
+  // src/data/comparePages.ts, re-read the matching entry here in the same edit.
   const COMPARE_META = {
     '/compare/bitter-polish-alternative': {
       title: 'Stop Biting vs Bitter Nail Polish: Which Works?',
-      description: 'AI detection solves the problem bitter nail polish can\'t: unconscious nail biting. Compare mechanisms, evidence, and who each approach works for.',
+      // "solves" was a totality claim the body refuses: detection "only covers
+      // the time you spend in front of the camera", and the page's evidence
+      // section now says the trial record "cuts both ways" rather than clearly
+      // favouring either approach.
+      description: 'AI detection catches what bitter nail polish can\'t: unconscious nail biting. Compare mechanisms, the trial evidence on both sides, and who each approach suits.',
     },
     '/compare/habit-tracking-apps': {
       title: 'Why Habit Apps Don\'t Work for Nail Biting | Stop Biting',
-      description: 'Manual habit trackers require you to log episodes you didn\'t notice. Stop Biting catches them automatically. Here\'s why automation changes outcomes.',
+      // The old wording inverted the page's own argument — you cannot log an
+      // episode you didn't notice, which is precisely why manual tracking
+      // undercounts. The body says "you can only log episodes you notice".
+      description: 'You can only log the episodes you notice, and most nail biting isn\'t one of them. Stop Biting logs what the camera sees instead — why that changes the data you get.',
     },
     '/solutions/for-desk-workers': {
       title: 'Stop Nail Biting at Your Desk | Stop Biting',
-      description: 'Desk workers bite their nails during deep focus — unconsciously. Stop Biting\'s AI detection runs in the background and catches every episode.',
+      // "catches every episode" survived the pass that softened the coverage
+      // claims. The body is explicit that webcam detection covers only "the
+      // time you spend in front of the camera" — "a large share of the habit"
+      // for a desk worker, not all of it.
+      description: 'Desk workers bite during deep focus, when self-monitoring goes offline. Stop Biting watches your webcam locally and sounds an alarm as your hand nears your mouth.',
     },
     '/solutions/for-adhd': {
       title: 'Nail Biting and ADHD: AI Detection That Works | Stop Biting',
-      description: 'ADHD makes nail biting harder to stop — executive function gaps and dopamine-seeking make awareness nearly impossible. Real-time AI detection compensates.',
+      // The body names three mechanisms and attributes the awareness gap to
+      // executive function and hyperfocus, not to dopamine-seeking, which it
+      // says reinforces the habit. "Nearly impossible" also overstates the
+      // body's "reduce awareness" — a clinical claim this page does not make.
+      description: 'Executive function gaps, dopamine-seeking and hyperfocus each make ADHD nail biting harder to stop. Real-time AI detection externalises the awareness step.',
     },
     '/solutions/for-gamers': {
       title: 'Stop Nail Biting While Gaming | Stop Biting',
@@ -2091,13 +2172,25 @@ if (!existsSync(distPath)) {
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-nailed': {
-      title: 'Stop Biting vs Nailed: Subscription vs One-Time Mac App',
-      description: 'Nailed is a $4.99 one-time macOS menu bar app. Stop Biting adds Windows, web, tracking, and a free trial. An honest comparison of two on-device detectors.',
+      // Two claims the body had already retracted survived here. The price:
+      // nailedapp.io advertises "$4.99 · macOS only" while the Mac App Store
+      // listing that is its only download button shows the app as Free
+      // (offers.price 0, hasInAppPurchases false), so the page reports both
+      // sources and asserts neither as the price a buyer pays — the title's
+      // "One-Time" asserted it anyway. And tracking: that same listing is
+      // subtitled "Offline nail-biting tracking", so "Stop Biting adds
+      // tracking" understated a competitor that ships it.
+      title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
+      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free — we report both. Stop Biting adds Windows, the browser and deeper tracking. An honest comparison.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-smartbehavior': {
-      title: 'Stop Biting vs SmartBehavior: Desktop and Web vs Mobile',
-      description: 'SmartBehavior puts AI nail biting detection on iPhone and Android. Stop Biting covers Mac, Windows, and the browser. An honest look at which fits your habit.',
+      // SmartBehavior ships a Windows app and its iPad app runs on Apple
+      // Silicon Macs — the correction that removed "no macOS version" as a
+      // differentiator from the body. Framing the split as "Desktop and Web vs
+      // Mobile", and listing Windows only on our side, put that claim back.
+      title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
+      description: 'SmartBehavior has native iPhone, Android and Windows apps; Stop Biting covers Mac, Windows and the browser. An honest look at which fits where you actually bite.',
       date: '2026-08-11',
     },
     '/compare/ai-detection-apps': {

@@ -147,7 +147,10 @@ function getHabitTrackingContent(): PageContent {
 function getDeskWorkersContent(): PageContent {
   return {
     title: 'Stop Nail Biting at Your Desk',
-    subtitle: 'Why desk workers bite during deep focus — and how AI detection solves it',
+    // "solves it" outran the body, which says detection covers "the hours where
+    // a large share of the habit lives" — the time in front of the camera, not
+    // the whole habit. The verb the body actually uses is "interrupts".
+    subtitle: 'Why desk workers bite during deep focus — and how webcam detection interrupts it',
     intro: 'To stop nail biting at your desk, let your webcam do the noticing: Stop Biting fires an alarm as your hand approaches your mouth, and you answer it by pressing both palms flat on the desk. Desk workers have a specific problem: the mental states that make work productive are the same states that make nail biting invisible. Deep focus, meeting fatigue, and long keyboard sessions are among the highest-risk contexts for the habit.',
     sections: [
       {
@@ -294,6 +297,16 @@ function getGamersContent(): PageContent {
 // and the "How we verified this page" section that closes each page — this
 // comment is invisible to readers and to crawlers, so it earns the site
 // nothing on its own. Never write a visible date on which a check did not run.
+//
+// AND UPDATE THE META DESCRIPTION. Each page's SERP/og:/twitter: copy is a
+// hand-written string in COMPARE_META in server.js. It is not derived from
+// anything in this file, it never appears on the page, and llms.txt quotes the
+// `subtitle` below instead — so nothing fails when it contradicts the body it
+// summarises. Four corrections in a row have landed in a body while that copy
+// kept the retracted claim, which is the version most people read: the
+// $4.99-one-time price on /compare/stop-biting-vs-nailed outlived the body's
+// refusal to name a price at all. A correction here is not finished until the
+// matching COMPARE_META entry has been re-read in the same edit.
 //
 // Last full re-verification: 2026-09-10. Previous pass: 2026-08-11.
 //
@@ -487,8 +500,8 @@ function getVsHandsOffContent(): PageContent {
     ],
     relatedPosts: [
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
-      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs one-time Mac app' },
-      { href: '/compare/stop-biting-vs-smartbehavior', label: 'Stop Biting vs SmartBehavior: desktop and web vs mobile' },
+      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
+      { href: '/compare/stop-biting-vs-smartbehavior', label: 'Stop Biting vs SmartBehavior: which fits where you bite' },
       { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best tools to stop nail biting, ranked by evidence' },
       { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
     ],
@@ -497,7 +510,11 @@ function getVsHandsOffContent(): PageContent {
 
 function getVsNailedContent(): PageContent {
   return {
-    title: 'Stop Biting vs Nailed: Subscription vs One-Time Mac App',
+    // Not "One-Time Mac App": the body below refuses to name a single price,
+    // because nailedapp.io advertises $4.99 while the Mac App Store listing
+    // that is its only download button shows the app as Free. A heading must
+    // not assert the one thing the page it heads says cannot be asserted.
+    title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
     subtitle: 'Two apps built on the same detection engine, with very different scopes — a minimal Mac menu bar utility vs a cross-platform habit system',
     intro: 'Choose Nailed if you’re on an Apple Silicon Mac and want nothing recurring; choose Stop Biting if you need Windows, an Intel Mac or a browser version, or you want streaks, incident history and habit-reversal content around the detector. Nailed and Stop Biting share more DNA than any other two apps in this category: both use Google’s MediaPipe machine learning models running via WebAssembly, entirely on-device. The difference is scope. Nailed is a deliberately minimal macOS menu bar app; Stop Biting is a subscription that adds Windows, a browser version, streak tracking, incident history, and a habit-reversal content library. One caveat before any of the comparisons below: nailedapp.io advertises $4.99, but the Mac App Store listing that is its only download link currently shows the app as a free download with no in-app purchases. Check the store page before you assume a price. Disclosure: Stop Biting is our product — we re-verified every Nailed claim here against nailedapp.io and its App Store listing on 10 September 2026 and tried to represent it fairly.',
     sections: [
@@ -556,7 +573,12 @@ function getVsNailedContent(): PageContent {
 
 function getVsSmartBehaviorContent(): PageContent {
   return {
-    title: 'Stop Biting vs SmartBehavior: Desktop and Web vs Mobile',
+    // Not "Desktop and Web vs Mobile": SmartBehavior ships a Windows app and
+    // its iPad app runs on Apple Silicon Macs, so a desktop/mobile split puts
+    // back the flat "no macOS version" differentiator the body already dropped.
+    // The title now states the decision the page actually makes, which no
+    // platform correction can falsify.
+    title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
     subtitle: 'The clearest split in the category: where do you actually bite your nails — at a computer, or everywhere else?',
     intro: 'Choose SmartBehavior if most of your biting happens away from a computer — it’s the only app here with native iPhone and Android apps. Choose Stop Biting if you bite at a desk, on Mac, Windows or in a browser. Stop Biting and SmartBehavior both use on-device AI to catch nail biting through a camera, and both keep processing entirely local. The decision between them is mostly about platform. SmartBehavior has native iPhone and Android apps plus Windows; Stop Biting covers Mac, Windows, and the browser. Disclosure: Stop Biting is our product — this comparison aims to be honest, and every SmartBehavior claim was re-verified against smart-behavior.com and its App Store listing on 10 September 2026.',
     sections: [
@@ -669,8 +691,8 @@ function getAiDetectionAppsContent(): PageContent {
     ],
     relatedPosts: [
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
-      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs one-time Mac app' },
-      { href: '/compare/stop-biting-vs-smartbehavior', label: 'Stop Biting vs SmartBehavior: desktop and web vs mobile' },
+      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
+      { href: '/compare/stop-biting-vs-smartbehavior', label: 'Stop Biting vs SmartBehavior: which fits where you bite' },
       { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best tools to stop nail biting, ranked by evidence' },
       { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the clinical method' },
     ],

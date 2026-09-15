@@ -348,3 +348,54 @@ bot-blocked-but-correct link beats a readable wrong one.
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 0 JSON-LD parse failures.
+
+### Iteration 7 — verify the citation campaign, then fix what it broke (5 subagents)
+
+Rather than add more, this pass audited the last one. Two independent agents: an adversarial
+citation verifier and a full re-audit.
+
+**Re-audit (scratchpad/iter7-reaudit.md), local build, 161 URLs, crawler UAs:**
+
+| Category | Orig | @0ccc121 | Now | Δ |
+|---|---:|---:|---:|---:|
+| AI Citability | 88 | 91 | **93** | +2 |
+| Brand Authority | 49 | 49 | **50** | +1 |
+| Content E-E-A-T | 75 | 79 | **86** | +7 |
+| Technical GEO | 93 | 90 | **94** | +4 |
+| Schema & Structured Data | 78 | 90 | **91** | +1 |
+| Platform Optimization | 61 | 65 | **69** | +4 |
+| **Composite** | **75** | **77** | **81** | **+4** |
+
+Compression, OG cards and citation counts all verified as claimed (citations measured 26→102 posts,
+slightly better than reported). The auditor also documented 5 of its own first-pass findings as false
+positives so nobody re-derives them.
+
+**Adversarial citation verification (scratchpad/iter7-verify.md)** — sampled 52 of the **216**
+(claim, source) pairs the campaign created: 45 SUPPORTED, 4 OVERSTATED, 2 MISATTRIBUTED, 1
+UNVERIFIABLE. **13.5% defect rate, 5.8% hard.** All 7 fixed this pass.
+The actionable pattern: defects cluster at **~17% where a citation was bolted onto prose that was not
+rewritten**, versus ~5% where the prose was rewritten alongside. Bolting on doesn't force you to read
+the claim. Fixes this pass rewrote the surrounding sentence rather than swapping the link.
+
+- [x] **Schema regression the campaign caused, and it was bigger than the audit found.** The
+      `MedicalCondition` gate matches a treatment if every word of its name appears in the page text.
+      Adding bibliographies put *paper titles* into that text — Twohig's "Evaluating the efficacy of
+      **habit reversal**…" and Lee & Lipner's "…of **onychophagia**…". So pages began asserting the
+      condition and its treatments on the strength of a reference list. Surface had grown **15 → 42**
+      pages; the audit caught the treatment half (2 pages), the fix found the condition half too
+      (25 more). Gate now strips Sources blocks by label *and* by shape (any `<li>` with an outbound
+      link). Back to **15 pages / 20 assertions, 0 unevidenced** — proved by an independent checker
+      that keeps only prose containers rather than reusing the gate's own denylist.
+- [x] **The meta descriptions were never in the content file.** All 9 compare/solutions descriptions
+      are hand-written in `COMPARE_META` in `server.js`, derived from nothing — which is why no gate
+      caught that `/compare/stop-biting-vs-nailed` still asserted Nailed is "a $4.99 one-time app"
+      three iterations after the body stopped. Four more corrected-away claims were found in the same
+      block (tracking exclusivity, "catches every episode", the Desktop-vs-Mobile framing, and one
+      logically inverted description). The fact-check log now names `COMPARE_META` as the un-gated mirror.
+- [x] 4 posts had changed text with a stale `dateModified` — the inverse defect. Two were genuine
+      (bumped); **two had not actually changed** and were correctly left alone.
+- [x] `/fonts/*` and `/og/*` were serving `max-age=0` — fonts self-hosted to fix a 4.7s LCP, then
+      paying a revalidation RTT. Both now `immutable`, still uncompressed, still correct content-type.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+0 JSON-LD parse failures · MedicalCondition 15/161 · FAQPage 12 pages, 48 pairs byte-identical.

@@ -32,7 +32,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-health-risks",
@@ -140,7 +140,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-adults-why-persists",
@@ -401,7 +401,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-personality",
@@ -428,7 +428,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-interview-anxiety",
@@ -437,7 +437,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-habit-tracking",
@@ -464,7 +464,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-08-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "how-to-stop-nail-biting",
@@ -491,7 +491,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-quiz",
@@ -653,7 +653,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-vs-hair-pulling",
@@ -896,7 +896,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-panic-disorder",
@@ -1130,7 +1130,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-finding-a-therapist",
@@ -1184,7 +1184,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-care-routine-for-nail-biters",
@@ -1193,7 +1193,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-15",
   },
   {
     slug: "nail-biting-gloves",
