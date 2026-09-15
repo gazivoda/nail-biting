@@ -2,7 +2,7 @@ import { lazy, Suspense, useState } from 'react';
 import {
   ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff, HardDrive,
-  Code2, ChevronDown, Camera, Bell, BookOpen,
+  Code2, ChevronDown, Camera, BookOpen,
   ArrowRight, Check, Loader2,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -77,6 +77,26 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. Frequency typically starts dropping meaningfully between weeks two and four, and the competing response starts feeling natural around weeks six to eight. Habit-formation research suggests a median of roughly two months for a new response to become automatic.',
   },
 ];
+
+// The redesign's signature device. Every numbered body section opens with a
+// full-width hairline carrying its ordinal and its label:
+//
+//     01 ──────────────────────────────────────────────  THE PROBLEM
+//
+// `.reveal` lives on this row, not on an ancestor, for a reason: `.ed-rule-draw`
+// parks the rule at scaleX(0) and is only released by `.revealed .ed-rule-draw`,
+// and useScrollReveal puts `.revealed` on the `.reveal` element itself. Put
+// `.reveal` anywhere that never reveals (e.g. the hero) and the rule stays
+// invisible for ever. Tasks 4–5: reuse this for sections 03–07, don't re-invent it.
+function SectionMark({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="reveal ed-mark text-stone-500 dark:text-stone-400">
+      <span className="ed-mono flex-shrink-0">{n}</span>
+      <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
+      <span className="ed-mono flex-shrink-0">{label}</span>
+    </div>
+  );
+}
 
 interface Props {}
 
@@ -312,6 +332,211 @@ export function Landing(_props: Props) {
           </div>
         </section>
 
+        {/* ── 01 · THE PROBLEM ──────────────────────────────────────────── */}
+        {/* Was the `why-bite-heading` card plus the stats strip that used to
+            sit four sections lower. Both are here now: the argument in the
+            narrative column, the prevalence figures in the margin where a
+            journal would set them. No frame, no bullet dots — the triggers are
+            a definition list ruled with hairlines, and the strip's long source
+            note is now doing its proper job as the figure's <figcaption>.
+            Sections open on the previous block's bottom padding, so there is no
+            top padding and no top rule here: the section mark is the seam. */}
+        <section aria-labelledby="why-bite-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="01" label="The problem" />
+
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="why-bite-heading" className="ed-h2 text-stone-800 dark:text-stone-100">
+                  Why do people bite their nails?
+                </h2>
+
+                <p className="ed-lede ed-measure mt-6 text-stone-600 dark:text-stone-400">
+                  About 1 in 4 adults bites their nails — not occasionally, but chronically. Most have been doing it since childhood. Most have tried to stop more than once. The reason it's so hard isn't weak willpower. It's that the habit runs on autopilot, below the level of conscious thought.
+                </p>
+
+                <h3 className="mt-11 text-[1.0625rem] font-semibold leading-[1.4] text-stone-800 dark:text-stone-100">
+                  When it tends to happen
+                </h3>
+
+                {/* Short terms, so the definition list can run two-up at sm and
+                    above: term in the hanging column, sense beside it. */}
+                <dl className="mt-5 border-t border-stone-200 dark:border-ink-400">
+                  {([
+                    ['Stress', "Your brain reaches for something familiar when anxiety spikes. Biting gives a brief sense of relief, which teaches your brain to reach for it again next time."],
+                    ['Deep focus', "The part of your brain that monitors what your hands are doing goes quiet when you're concentrating hard. This is why you look down and realise you've been biting for the last 20 minutes."],
+                    ['Pure habit', 'After years of repetition, the context itself — laptop open, meeting on, desk — is enough to trigger it. No stress required. The hand just... moves.'],
+                  ] as const).map(([label, text]) => (
+                    <div
+                      key={label}
+                      className="border-b border-stone-200 dark:border-ink-400 py-4 sm:grid sm:grid-cols-[7.5rem_1fr] sm:gap-6"
+                    >
+                      <dt className="text-sm font-semibold leading-[1.7] text-stone-800 dark:text-stone-100">{label}</dt>
+                      <dd className="ed-body ed-measure mt-1 sm:mt-0 text-stone-600 dark:text-stone-400">{text}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <p className="ed-body ed-measure mt-8 text-stone-600 dark:text-stone-400">
+                  Bitter nail polish and physical barriers don't fix this — they fight the symptom. What actually works is catching the moment it starts and building awareness of when and why it happens.
+                </p>
+
+                <a
+                  href="/blog/why-do-people-bite-their-nails"
+                  className="group mt-7 inline-flex items-center gap-1.5 text-sm text-forest-600 dark:text-forest-400 hover:text-forest-500 transition-colors"
+                >
+                  <span className="ed-link">Read the full article</span>
+                  <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                </a>
+              </div>
+
+              {/* Figure 2 — the prevalence and outcome figures, finally set as a
+                  real figure. `aria-label` keeps the strip's old accessible name
+                  ("Key statistics") and matches the visible mono label; the
+                  <figcaption> carries the source note verbatim. Like Figure 1 in
+                  the hero, the caption rule does not draw — the draw is reserved
+                  for section marks, so a figure never mimics a section opener. */}
+              <figure
+                aria-label="Key statistics"
+                className="ed-aside reveal"
+                style={{ transitionDelay: '160ms' }}
+              >
+                <div className="ed-mark text-stone-500 dark:text-stone-400">
+                  <span className="ed-mono flex-shrink-0">Fig. 2</span>
+                  <span className="ed-mark-rule" aria-hidden="true" />
+                  <span className="ed-mono flex-shrink-0">Key statistics</span>
+                </div>
+
+                <dl className="mt-7 border-t border-stone-200 dark:border-ink-400">
+                  {[
+                    { number: '20–30%', label: 'of adults bite their nails chronically' },
+                    { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
+                    { number: '0 bytes', label: 'Of camera data sent to servers' },
+                  ].map(({ number, label }) => (
+                    <div key={label} className="border-b border-stone-200 dark:border-ink-400 py-5">
+                      <dt className="ed-figure text-forest-600 dark:text-forest-400">{number}</dt>
+                      <dd className="ed-mono mt-3 text-stone-500 dark:text-stone-400">{label}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <figcaption className="ed-caption ed-measure mt-5 text-stone-400 dark:text-stone-500">
+                  Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980) — self-recorded episode counts over the trial's five months, not a follow-up after treatment ended. Camera privacy is architectural — there's no server to send data to.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 02 · THE METHOD ───────────────────────────────────────────── */}
+        {/* The `hrt-heading` article and the old "How it works" section, merged:
+            the theory, then the three steps this app implements. The margin is
+            deliberately empty here — there is no data to set in it, and an
+            invented marginal note would be decoration. */}
+        <section aria-labelledby="hrt-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="02" label="The method" />
+
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="hrt-heading" className="ed-h2 text-stone-800 dark:text-stone-100">
+                  The approach that actually works
+                </h2>
+
+                <p className="ed-lede ed-measure mt-6 text-stone-600 dark:text-stone-400">
+                  Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. In the landmark clinical trial it cut biting episodes by roughly 99%, and a meta-analysis of 18 studies confirmed large effects. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
+                </p>
+
+                <h3 className="mt-11 text-[1.0625rem] font-semibold leading-[1.4] text-stone-800 dark:text-stone-100">
+                  How it works
+                </h3>
+
+                {/* HRT's three parts. Titles run long, so these stack rather
+                    than running two-up like the triggers in 01. The rounded
+                    forest bar that used to flag each one is gone — a 3px forest
+                    rule is Task 4's pull-quote device. */}
+                <div className="mt-5 border-t border-stone-200 dark:border-ink-400">
+                  {([
+                    ['Notice it happening', "Most nail biters catch fewer than half their daily biting episodes. Step one is simply becoming aware every single time — which is harder than it sounds when the habit is fully automatic."],
+                    ['Do something else instead', 'The moment you notice it, replace the bite with something your hands can\'t do simultaneously — press your palms flat, clench a fist, grip the desk. Hold it for a minute.'],
+                    ['Get an external signal', 'In clinical settings, a therapist would tap your shoulder. The audio alarm in this app does the same thing: it catches the moment you missed.'],
+                  ] as const).map(([title, text]) => (
+                    <div key={title} className="border-b border-stone-200 dark:border-ink-400 py-4">
+                      <p className="text-sm font-semibold leading-[1.7] text-stone-800 dark:text-stone-100">{title}</p>
+                      <p className="ed-body ed-measure mt-1 text-stone-600 dark:text-stone-400">{text}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="ed-body ed-measure mt-8 text-stone-600 dark:text-stone-400">
+                  Stop Biting handles the awareness and the signal. What you do with your hands instead is up to you.
+                </p>
+
+                <a
+                  href="/blog/habit-reversal-training-guide"
+                  className="group mt-7 inline-flex items-center gap-1.5 text-sm text-forest-600 dark:text-forest-400 hover:text-forest-500 transition-colors"
+                >
+                  <span className="ed-link">Read the full HRT guide</span>
+                  <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                </a>
+
+                {/* The old "How it works" section, folded in as 02's second
+                    half. Its h2 is an h3 now (02's h2 is the HRT heading) and
+                    keeps `id="how-heading"`, so the aria-labelledby on this
+                    nested section still resolves. The eyebrow that used to sit
+                    above it is the label on the divider rule — which keeps the
+                    two "How it works" strings on the page in different
+                    registers: a sub-head above HRT's parts, apparatus here. */}
+                <section aria-labelledby="how-heading" className="reveal mt-16">
+                  <div className="ed-mark text-stone-500 dark:text-stone-400">
+                    <span className="ed-mono flex-shrink-0">How it works</span>
+                    <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
+                  </div>
+
+                  <h3
+                    id="how-heading"
+                    className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800 dark:text-stone-100"
+                  >
+                    Three steps to start stopping nail biting.
+                  </h3>
+
+                  {/* A numbered process, not three cards: the numerals hang in
+                      their own column, hairlines do the separating, and the
+                      badge-and-icon pair each step used to carry is gone —
+                      the numeral already indexes the step. */}
+                  <ol className="mt-7 list-none border-t border-stone-200 dark:border-ink-400">
+                    {[
+                      {
+                        n: '01', heading: 'Allow camera access',
+                        body: 'One-time permission prompt. Revoke it any time from System Preferences. The app never asks for microphone, location, or anything else.',
+                      },
+                      {
+                        n: '02', heading: 'AI loads on your device',
+                        body: 'MediaPipe hand and face landmark models run in WebAssembly — the same technology powering Google Meet\'s background blur. No internet needed after setup.',
+                      },
+                      {
+                        n: '03', heading: 'Get alerted the moment it happens',
+                        body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment — the core of habit reversal training.',
+                      },
+                    ].map(({ n, heading, body }) => (
+                      <li
+                        key={n}
+                        className="border-b border-stone-200 dark:border-ink-400 py-5 sm:grid sm:grid-cols-[3.5rem_1fr] sm:gap-6"
+                      >
+                        <span className="ed-mono block text-forest-600 dark:text-forest-400 sm:pt-1.5">{n}</span>
+                        <div className="mt-2 sm:mt-0">
+                          <h4 className="text-sm font-semibold leading-[1.7] text-stone-800 dark:text-stone-100">{heading}</h4>
+                          <p className="ed-body ed-measure mt-1 text-stone-600 dark:text-stone-400">{body}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div className="max-w-6xl mx-auto px-8 space-y-20 pb-20">
 
           {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
@@ -331,44 +556,6 @@ export function Landing(_props: Props) {
               <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700">
                 Disconnect from the internet and the app works exactly the same.
               </p>
-            </div>
-          </section>
-
-          {/* ── HOW IT WORKS ──────────────────────────────────────────────── */}
-          <section aria-labelledby="how-heading">
-            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">How it works</p>
-            <h2 id="how-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Three steps to start stopping nail biting.</h2>
-
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {[
-                {
-                  n: '01', icon: Camera, heading: 'Allow camera access',
-                  body: 'One-time permission prompt. Revoke it any time from System Preferences. The app never asks for microphone, location, or anything else.',
-                },
-                {
-                  n: '02', icon: Cpu, heading: 'AI loads on your device',
-                  body: 'MediaPipe hand and face landmark models run in WebAssembly — the same technology powering Google Meet\'s background blur. No internet needed after setup.',
-                },
-                {
-                  n: '03', icon: Bell, heading: 'Get alerted the moment it happens',
-                  body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment — the core of habit reversal training.',
-                },
-              ].map(({ n, icon: Icon, heading, body }, i) => (
-                <div
-                  key={n}
-                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
-                  style={{ transitionDelay: `${i * 80}ms` }}
-                >
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-800 border border-forest-200 dark:border-forest-800 flex items-center justify-center text-xs font-bold text-forest-600 dark:text-forest-400 flex-shrink-0">
-                      {n}
-                    </span>
-                    <Icon size={18} className="text-forest-500 dark:text-forest-400" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-stone-800 dark:text-stone-100 font-semibold text-base">{heading}</h3>
-                  <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-2">{body}</p>
-                </div>
-              ))}
             </div>
           </section>
 
@@ -402,77 +589,6 @@ export function Landing(_props: Props) {
               ))}
             </div>
           </section>
-
-          {/* ── WHY / HRT ─────────────────────────────────────────────────── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-            <article aria-labelledby="why-bite-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
-              <h2 id="why-bite-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Why do people bite their nails?</h2>
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                About 1 in 4 adults bites their nails — not occasionally, but chronically. Most have been doing it since childhood. Most have tried to stop more than once. The reason it's so hard isn't weak willpower. It's that the habit runs on autopilot, below the level of conscious thought.
-              </p>
-
-              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">When it tends to happen</h3>
-              <ul className="space-y-3 text-sm">
-                {[
-                  ['Stress', "Your brain reaches for something familiar when anxiety spikes. Biting gives a brief sense of relief, which teaches your brain to reach for it again next time."],
-                  ['Deep focus', "The part of your brain that monitors what your hands are doing goes quiet when you're concentrating hard. This is why you look down and realise you've been biting for the last 20 minutes."],
-                  ['Pure habit', 'After years of repetition, the context itself — laptop open, meeting on, desk — is enough to trigger it. No stress required. The hand just... moves.'],
-                ].map(([label, text]) => (
-                  <li key={label as string} className="flex gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-forest-500 dark:bg-forest-400 flex-shrink-0 mt-1.5" aria-hidden="true" />
-                    <span className="text-stone-500 dark:text-stone-400 leading-relaxed">
-                      <span className="text-stone-700 dark:text-stone-200 font-medium">{label}: </span>
-                      {text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed pt-2 border-t border-stone-200 dark:border-ink-400">
-                Bitter nail polish and physical barriers don't fix this — they fight the symptom. What actually works is catching the moment it starts and building awareness of when and why it happens.
-              </p>
-
-              <a href="/blog/why-do-people-bite-their-nails" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
-                Read the full article{' '}
-                <ArrowRight size={12} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
-            </article>
-
-            <article aria-labelledby="hrt-heading" className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-7 space-y-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
-              <h2 id="hrt-heading" className="text-xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">The approach that actually works</h2>
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                Habit Reversal Training is the most studied method for stopping nail biting — and the one with the best results. In the landmark clinical trial it cut biting episodes by roughly 99%, and a meta-analysis of 18 studies confirmed large effects. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
-              </p>
-
-              <h3 className="text-stone-700 dark:text-stone-300 text-sm font-semibold pt-1">How it works</h3>
-              <div className="space-y-3">
-                {[
-                  ['Notice it happening', "Most nail biters catch fewer than half their daily biting episodes. Step one is simply becoming aware every single time — which is harder than it sounds when the habit is fully automatic."],
-                  ['Do something else instead', 'The moment you notice it, replace the bite with something your hands can\'t do simultaneously — press your palms flat, clench a fist, grip the desk. Hold it for a minute.'],
-                  ['Get an external signal', 'In clinical settings, a therapist would tap your shoulder. The audio alarm in this app does the same thing: it catches the moment you missed.'],
-                ].map(([title, text]) => (
-                  <div key={title as string} className="flex gap-3">
-                    <span className="w-1 rounded-full bg-forest-400 dark:bg-forest-600 flex-shrink-0 self-stretch" aria-hidden="true" />
-                    <div>
-                      <p className="text-stone-700 dark:text-stone-200 text-sm font-semibold">{title as string}</p>
-                      <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-0.5">{text as string}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed pt-2 border-t border-stone-200 dark:border-ink-400">
-                Stop Biting handles the awareness and the signal. What you do with your hands instead is up to you.
-              </p>
-
-              <a href="/blog/habit-reversal-training-guide" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-xs hover:text-forest-500 transition-colors">
-                Read the full HRT guide{' '}
-                <ArrowRight size={12} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
-            </article>
-
-          </div>
 
           {/* ── WHY WE BUILT THIS ─────────────────────────────────────────── */}
           <section aria-labelledby="why-built-heading" className="reveal">
@@ -591,26 +707,6 @@ export function Landing(_props: Props) {
               ))}
             </div>
           </section>
-
-          {/* ── STATS STRIP ───────────────────────────────────────────────── */}
-          <section aria-label="Key statistics" className="reveal flex flex-col sm:flex-row items-center justify-center gap-8 py-4">
-            {[
-              { number: '20–30%', label: 'of adults bite their nails chronically' },
-              { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
-              { number: '0 bytes', label: 'Of camera data sent to servers' },
-            ].map(({ number, label }, i) => (
-              <div key={label} className="flex items-center gap-8">
-                <div className="text-center">
-                  <p className="font-display text-4xl text-forest-600 dark:text-forest-400">{number}</p>
-                  <p className="text-stone-400 dark:text-stone-500 text-xs uppercase tracking-wider mt-1">{label}</p>
-                </div>
-                {i < 2 && <div className="border-l border-stone-200 dark:border-ink-400 h-10 hidden sm:block" aria-hidden="true" />}
-              </div>
-            ))}
-          </section>
-          <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center -mt-12">
-            Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980) — self-recorded episode counts over the trial's five months, not a follow-up after treatment ended. Camera privacy is architectural — there's no server to send data to.
-          </p>
 
           {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
           <PricingSection />
