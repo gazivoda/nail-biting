@@ -399,3 +399,40 @@ the claim. Fixes this pass rewrote the surrounding sentence rather than swapping
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 0 JSON-LD parse failures · MedicalCondition 15/161 · FAQPage 12 pages, 48 pairs byte-identical.
+
+### Iteration 8 — data-led answer blocks, and 25 descriptions that contradicted their own pages (4 subagents)
+
+The prior audit named this the highest-value repo-fixable action: only **17 of 158** `.article-summary`
+blocks contained a digit. That element does triple duty — it is the `<meta name="description">` SERP
+snippet, the **first visible paragraph** of the article, and the target of the `speakable` schema. The
+most extractable slot on every page was its vaguest sentence.
+
+Two agents proposed byte-exact rewrites for the 143 posts; a third handled the 14 compare/solutions and
+core pages; an applier landed them. The safety rule throughout: **a figure may appear in a summary only
+if it already appears in that page's body with the citation the body carries.** No research, no new
+figures, no strengthened claims — verified material moved into a more prominent slot.
+
+- [x] **Answer blocks carrying a figure: 17 → 88 of 158.** Post descriptions with a digit: 12 → 77.
+      All ≤165 chars (max 164). Hedging carried verbatim — "self-recorded … over five months",
+      "measured in 22 adults", "though the quantities did not differ", "inherited from older reviews,
+      not measured".
+- [x] **25 descriptions contradicted their own body** — both proposal agents hit this independently,
+      and it is the real find of the pass. A description promising "evidence-based ways to stop it" on a
+      post whose body says *"nothing below has been tested for this"*; one asserting anxiety is the root
+      cause where the body reports 22.5% of biters vs 26.2% of non-biters and "no correlation at all";
+      one claiming elevated occupational infection risk on the page that explicitly retracts it.
+      Same ungated-mirror defect iteration 7 found in `COMPARE_META`, now at corpus scale.
+- [x] Five rewrites deliberately carry **no** number, because the sourced answer on those pages is
+      "nobody has measured this". A number there would read as authority the evidence doesn't have.
+- [x] Four flagged bugs fixed: an ungrammatical description left by an earlier edit; a "We tested every
+      nail biting remedy" claim with no test behind it; "as of 2025" on a post titled "(2026 Data)"; and
+      a body typo (`someight`) that predates all git history.
+
+**Applier caught 1 defect in 93 entries (1.1%, vs 13.5% on the previous pass)** — a description carrying
+"measured in 22 adults" where n=22 appears only in *sibling* posts. It also caught its own false
+negative: a first automated check used substring matching, so `"22"` matched inside longer numbers and
+reported zero defects; strict boundaries found the real one. The tighter rate is consistent with
+iteration 7's finding that rewriting beats bolting on.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
+0 JSON-LD parse failures · MedicalCondition 15/161 · speakable resolves on 161/161.

@@ -1483,9 +1483,11 @@ if (!existsSync(distPath)) {
       `<section><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></section>`).join('');
     return (
       '<h1>Stop Nail Biting with AI</h1>' +
-      '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time. ' +
-      'The moment your hand moves toward your mouth, an audible alarm fires — catching the automatic episodes ' +
-      'you never notice. All detection runs locally via MediaPipe and WebAssembly: no camera data ever leaves your device.</p>' +
+      '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
+      'it tracks 21 hand landmarks and your face mesh at 30fps, and the moment your hand moves toward your mouth an ' +
+      'audible alarm fires within a second — catching the automatic episodes you never notice. All detection runs ' +
+      'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
+      'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<section><h2>Try the detector right now</h2>' +
       '<p>Run the real nail biting detector on your own camera for 60 seconds — no account, no signup. ' +
       'The AI models download once (about 20 MB) and then everything runs on your device: open your ' +
@@ -1811,7 +1813,9 @@ if (!existsSync(distPath)) {
     // Crawler-visible summary — keep the copy in step with About.tsx.
     injected = injectSsrArticle(injected,
       '<h1>About Stop Biting</h1>' +
-      '<p class="article-summary">Built by a nail biter, for nail biters.</p>' +
+      '<p class="article-summary">Built by a nail biter, for nail biters: Igor Gazivoda bit his nails for over 20 years, ' +
+      'then built the awareness component of Habit Reversal Training into an app — MediaPipe hand tracking, ' +
+      '21 landmarks at 30fps, running entirely on your own device.</p>' +
       '<section><h2>The founder&#39;s story</h2>' +
       '<p>I&#39;m Igor Gazivoda, a software developer. I bit my nails for over 20 years — constantly, automatically, ' +
       'without noticing until the damage was already done. I tried everything: bitter polish, reminder bands, sheer willpower. ' +
@@ -1978,7 +1982,8 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(pricingFaq)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
       '<h1>Stop Biting Pricing</h1>' +
-      '<p class="article-summary">Simple, honest pricing. Start with a 3-day free trial — no credit card required.</p>' +
+      '<p class="article-summary">Simple, honest pricing: start with a 3-day free trial — no credit card required — ' +
+      'then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing.</p>' +
       // Answer target first: the question verbatim as a heading, then the
       // answer in one self-contained paragraph, before any plan detail.
       PRICING_FAQS.map(f =>
@@ -2076,7 +2081,12 @@ if (!existsSync(distPath)) {
       `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('');
     const article =
       '<h1>How AI Nail Biting Detection Works</h1>' +
-      '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. Setup takes under two minutes.</p>' +
+      '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. ' +
+      'The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires under 1 second after it detects your hand approaching your mouth. ' +
+      // "under two minutes" stays spelled out: nothing in this page's visible
+      // body states a setup time, so the one claim here with no counterpart
+      // below does not get made more quotable than the page can support.
+      'Setup takes under two minutes.</p>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
       '<p>Most nail biters catch fewer than half of their daily biting episodes through self-monitoring alone. ' +
       'The habit is automatic — it runs below the threshold of conscious awareness. ' +
@@ -2132,14 +2142,14 @@ if (!existsSync(distPath)) {
       // the time you spend in front of the camera", and the page's evidence
       // section now says the trial record "cuts both ways" rather than clearly
       // favouring either approach.
-      description: 'AI detection catches what bitter nail polish can\'t: unconscious nail biting. Compare mechanisms, the trial evidence on both sides, and who each approach suits.',
+      description: 'AI detection catches what bitter polish can\'t: unconscious biting. Polish has two small trials that disagree; habit reversal has 18 studies across habit disorders.',
     },
     '/compare/habit-tracking-apps': {
       title: 'Why Habit Apps Don\'t Work for Nail Biting | Stop Biting',
       // The old wording inverted the page's own argument — you cannot log an
       // episode you didn't notice, which is precisely why manual tracking
       // undercounts. The body says "you can only log episodes you notice".
-      description: 'You can only log the episodes you notice, and most nail biting isn\'t one of them. Stop Biting logs what the camera sees instead — why that changes the data you get.',
+      description: 'Most biters catch fewer than half their daily episodes, so a manual log is a sample. Stop Biting logs what the camera sees — after 7 days, your real frequency.',
     },
     '/solutions/for-desk-workers': {
       title: 'Stop Nail Biting at Your Desk | Stop Biting',
@@ -2168,7 +2178,7 @@ if (!existsSync(distPath)) {
     // comes from the freshness ledger (src/data/pageUpdates.json).
     '/compare/stop-biting-vs-hands-off': {
       title: 'Stop Biting vs Hands Off: AI Nail Biting Apps Compared',
-      description: 'Honest 2026 comparison of Stop Biting and Hands Off — two on-device AI apps that catch nail biting via webcam. Platforms, price, privacy, which to pick.',
+      description: 'Stop Biting ($2.99/mo, $29/yr) vs Hands Off (€2.99/mo, five BFRBs): an honest comparison of two on-device AI webcam apps — platforms, price, privacy, 3-day trials.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-nailed': {
@@ -2190,7 +2200,7 @@ if (!existsSync(distPath)) {
       // differentiator from the body. Framing the split as "Desktop and Web vs
       // Mobile", and listing Windows only on our side, put that claim back.
       title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
-      description: 'SmartBehavior has native iPhone, Android and Windows apps; Stop Biting covers Mac, Windows and the browser. An honest look at which fits where you actually bite.',
+      description: 'SmartBehavior has native iPhone, Android and Windows apps and showed $0.99 on the US App Store; Stop Biting is $2.99/mo or $29/yr on Mac, Windows and the browser.',
       date: '2026-08-11',
     },
     '/compare/ai-detection-apps': {
