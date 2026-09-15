@@ -436,3 +436,41 @@ iteration 7's finding that rewriting beats bolting on.
 
 Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 · 161/161 URLs 200 ·
 0 JSON-LD parse failures · MedicalCondition 15/161 · speakable resolves on 161/161.
+
+### Iteration 9 — a permanent mirror gate, and a false product spec (3 subagents, 3 more lost to session limits)
+
+- [x] **Mirror-drift tripwire** (`scripts/sync-seo.mjs`, +340 lines). The ungated-mirror defect has now
+      recurred three times — `llms.txt` ($4.99 + a fabricated "Cochrane 2012"), `COMPARE_META` (the same
+      $4.99, surviving **three** iterations after the body was corrected), and 25 blog descriptions
+      contradicting their own articles. Correction passes rewrite *bodies*; nothing re-read the mirrors.
+      Now gated: every numeric token in a post's `description`/`title`/`seoTitle` must appear in that
+      post's own body, and a cited surname must be cited by that body — plus all 9 `COMPARE_META`
+      entries against their page bodies in `comparePages.ts`.
+      Tokenised whole-number matching, not substring: `22` is satisfied by neither `2200` nor `22.5` —
+      the exact bug that made iteration 8's self-check report 0 defects. Ranges decompose, decimals
+      canonicalise, units and currency must match. **0 false positives** on the current tree
+      (401 mirror strings, 199 figures verified, 174-name vocabulary), runtime 129→167 ms.
+      Seven defect classes were injected, proven to exit 1 naming the right token, and reverted.
+      The mirrors it deliberately does *not* cover are documented in-file.
+- [x] **The site advertised a frame rate its own code does not run at.** `useDetection.ts:80-81` sets
+      `INFERENCE_INTERVAL_MS = 200` — **5 fps**, with a source comment saying so — and no `frameRate` is
+      even requested from the camera. Six places claimed "30fps", and iteration 8 promoted it into the
+      `/` and `/about` standfirsts, which are the `speakable` target. Corrected everywhere to "five
+      times a second". The sub-second alarm claims were checked and **are** honest:
+      `REQUIRED_CONSECUTIVE_FRAMES = 3` × 200 ms = ~600 ms, now stated that way on `/how-it-works`.
+
+**Verification of iteration 8 — worse than its self-report.** An adversarial pass over all 93 rewritten
+descriptions found the numeric layer clean (**178/178** figures present in their own body) but the
+*semantic* layer at **33.3% (31/93)**: 9 materially wrong claims (2,618 studies *screened* rendered as
+"2,618 trials"; 40 undergraduates presented as children; thumb-sucking where the body says
+finger-sucking), 12 with hedging dropped, 9 where the fix **overshot** — turning the body's careful
+"we could not find a study" into an absolute "No study has" — and 1 count error. Compare/solutions and
+core standfirsts were clean (0/17) and no competitor correction regressed.
+
+**NOT DONE — carried to iteration 10.** Three agents were killed mid-run by a session limit: the fix for
+those 31 semantic defects, and the final composite re-audit. The 31 are fully enumerated with evidence
+in `scratchpad/iter9-verify.md`. The tree is consistent and every gate passes; this is unfinished work,
+not broken work.
+
+Gates: `tsc -b` 0 · `npm test` 71/71 · `build:web` 0 · `seo:check` 0 (incl. the new gate) ·
+161/161 URLs 200 · 0 JSON-LD parse failures · 0 pages claiming 30fps.

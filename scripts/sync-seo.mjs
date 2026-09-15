@@ -885,6 +885,347 @@ function checkLlmsUrls(text) {
   }
 }
 
+// ─── MIRRORS: a title or description may not out-claim the body it summarises ─
+// llms.txt was the first mirror to get a tripwire (above), and it was not the
+// worst one. Three correction passes in a row rewrote a BODY and left the copy
+// above it still asserting what that body had just retracted:
+//
+//   · the COMPARE_META block in server.js — the meta descriptions for all nine
+//     /compare and /solutions pages — still priced a competitor at "$4.99
+//     one-time" three iterations after the body stopped asserting any single
+//     price, with four more retracted claims sitting beside it;
+//   · 25 blog `description` fields contradicted their own article, and one
+//     carried an "n=22" that appears only in SIBLING posts.
+//
+// All of it was caught by a human re-reading two strings side by side, weeks
+// late. A stale description is worse than a stale body sentence: it is the SERP
+// snippet AND the on-page standfirst AND the `speakable` target, so it is the
+// copy most readers ever see — and nothing tied it to the article underneath.
+//
+// What is gated is deliberately narrow and mechanical, because a gate that has
+// to judge meaning is a gate that gets switched off. Rewording is free. Two
+// things are not:
+//
+//   1. every FIGURE a mirror states must appear in the body it summarises —
+//      matched as whole tokens, so "22" is NOT satisfied by "2200" and a
+//      currency, a percent sign or a unit that the body never attaches to that
+//      number is as much a defect as the number being absent;
+//   2. every CITED SOURCE it names — a surname this site cites in a reference
+//      list somewhere — must be one THAT body actually cites.
+//
+//   post.description / post.title / post.seoTitle  →  that post's own sections
+//   COMPARE_META[path].description / .title        →  PAGE_MAP[path] in
+//                                                     src/data/comparePages.ts
+//
+// Scoping is per page, which is the whole point: a figure lifted from a sibling
+// post fails here even though the site as a whole publishes it. (The llms.txt
+// tripwire checks against the site-WIDE corpus, because llms.txt summarises the
+// whole site; these mirrors each summarise exactly one page.)
+//
+// ── Mirrors this does NOT gate — where drift can still hide ──────────────────
+//   · The free prose at the top of public/llms.txt. Gated, but only against the
+//     site-wide corpus (checkFreeTextClaims): a claim that is true of some
+//     OTHER page passes there, and a rewording no page makes is invisible.
+//   · The injectMeta title/description of the core routes in server.js (/,
+//     /about, /pricing, /how-it-works, the legal pages). Same defect class, and
+//     llms.txt now quotes them verbatim so a stale one propagates. It was
+//     TRIED against the PAGE_SOURCES visible text and rejected: the metas for
+//     /, /how-it-works and /about all say "100% private", and all three bodies
+//     make that claim in words instead — "no camera data ever leaves your
+//     device", "entirely on-device" — without ever writing the figure. The
+//     rule would fail three pages whose copy is not wrong, and a gate that
+//     cries wolf is a gate someone deletes. Re-read them by hand when a core
+//     page changes — or give the figure a home in those bodies and switch this
+//     on (the check is one call to checkMirror per route).
+//   · Duplicated standfirst prose in src/pages/*.tsx — HowItWorks.tsx and
+//     Landing.tsx have each shipped a sentence the SSR body had already
+//     corrected. Nothing in the source says which string mirrors which: the
+//     React copy is a second original, not a derived one, so there is no source
+//     to check it against. The fix is to stop keeping the second copy.
+//   · relatedPosts[].label in comparePages.ts, and the link labels in the
+//     generated llms.txt sections — one page's one-line summary of ANOTHER
+//     page's argument. The body that would verify them is not this page's.
+//   · The titles baked into public/og/*.png. `npm run og:check` verifies the
+//     image matches the title; nothing verifies the title against the body.
+//
+// checkMirrors() runs at the end of this section, once the tables it reads are
+// initialised; everything between here and there is what it reads.
+
+// The body a mirror is checked against: everything the page renders as prose,
+// and nothing else. A post's own title and description are excluded on purpose
+// — a description that cites itself proves nothing. `html` is reduced with
+// htmlToText, so the figures inside a comparison table count as body text while
+// the digits inside an href do not.
+function postBodyText(post) {
+  const parts = [];
+  for (const s of post.sections) {
+    parts.push(s.heading, s.body, (s.list ?? []).join(' '), htmlToText(s.html ?? ''));
+  }
+  return parts.join(' ');
+}
+
+function comparePageText(page) {
+  const parts = [page.title, page.subtitle, page.intro];
+  for (const s of page.sections) parts.push(s.heading, s.body, htmlToText(s.html ?? ''));
+  return parts.join(' ');
+}
+
+// "12 evidence-based alternatives" is a claim about the article's SHAPE, not
+// about the world: the body backs it by containing twelve list items, and no
+// sentence in it writes "12". Counting is the only honest way to verify that,
+// so a figure equal to the length of one of the post's lists (or to their total)
+// is treated as supported by the body it counts.
+function enumeratedCounts(post) {
+  const counts = new Set();
+  let total = 0;
+  for (const s of post.sections) {
+    if (!s.list?.length) continue;
+    counts.add(String(s.list.length));
+    total += s.list.length;
+  }
+  counts.add(String(total));
+  return counts;
+}
+
+// ─── Figures ─────────────────────────────────────────────────────────────────
+// A figure is a number plus whatever makes it a claim: the currency in front of
+// it, a percent sign, and the unit word after it. Everything else about the
+// sentence is free to change.
+//
+// Tokenising both sides — rather than searching the body for the mirror's
+// string — is what makes the match exact. The first attempt used `includes()`,
+// so "22" was satisfied by "2200" and the check reported a clean corpus that in
+// fact contained the "n=22" defect it was written for. A regex with \b would
+// still accept "22" inside "22.5". Here each side is cut into whole numbers, so
+// "22", "2200" and "22.5" are three different figures and only "22" matches
+// "22".
+const MIRROR_UNITS = new Map([
+  ['mm', 'mm'], ['cm', 'cm'],
+  ['second', 'second'], ['seconds', 'second'],
+  ['minute', 'minute'], ['minutes', 'minute'],
+  ['hour', 'hour'], ['hours', 'hour'],
+  ['day', 'day'], ['days', 'day'],
+  ['week', 'week'], ['weeks', 'week'],
+  ['month', 'month'], ['months', 'month'],
+  ['year', 'year'], ['years', 'year'],
+  ['study', 'study'], ['studies', 'study'],
+  ['trial', 'trial'], ['trials', 'trial'],
+  ['participant', 'participant'], ['participants', 'participant'],
+]);
+
+// Read against the FOLDED text, so the en-dash in "20–30%" is already an ASCII
+// hyphen and "3,000" and "3000" are the same number. The optional hyphen before
+// the unit is what makes "3-day trial" carry its unit the way "3 days" does —
+// and it also lets a range fall apart into its two ends, which is the only
+// reading that survives the body writing it out as "between 20% and 30%".
+const FIGURE = /([$€£])?\s?(\d[\d,]*(?:\.\d+)?)\s*(%|per ?cent)?\s*-?\s*([a-z]+)?/g;
+
+function figures(text) {
+  const out = [];
+  for (const m of foldClaims(text).matchAll(FIGURE)) {
+    const unit = (m[4] && MIRROR_UNITS.get(m[4])) ?? null;
+    out.push({
+      // Canonical, so "0.80" and "0.8" are one figure and "2,618" and "2618"
+      // are too. Never a substring: this is the whole number or nothing.
+      n: String(Number(m[2].replace(/,/g, ''))),
+      currency: m[1] ?? null,
+      percent: Boolean(m[3]),
+      unit,
+      // Reassembled rather than taken from the match, so the message quotes the
+      // figure ("$4.99", "3.47 mm") and not the word that happened to follow it.
+      raw: `${m[1] ?? ''}${m[2]}${m[3] ? (m[3] === '%' ? '%' : ' per cent') : ''}${unit ? ` ${m[4]}` : ''}`,
+    });
+  }
+  return out;
+}
+
+// A year in a TITLE is a recency marker, not a claim about the article ("Best
+// Apps to Stop Nail Biting in 2026"), and no body writes its own publication
+// year into a sentence. In a DESCRIPTION a year is exactly the claim that went
+// wrong — a fabricated "(Cochrane review, 2012)" — so it stays checked there.
+const isYear = n => /^(?:19|20)\d{2}$/.test(n);
+
+function checkMirror(where, mirrors, bodyText, sources, enumerated = new Set()) {
+  const body = figures(bodyText);
+  const bodyProse = foldClaims(bodyText);
+
+  for (const [field, text] of mirrors) {
+    if (!text) continue;
+    // Why this matters, in the message, so it is obvious what to do about it.
+    const role = field === 'description'
+      ? 'the description is the SERP snippet, the on-page standfirst and the speakable target'
+      : 'the title is what a SERP and an AI answer quote first';
+
+    for (const f of figures(text)) {
+      if (enumerated.has(f.n) || (field !== 'description' && isYear(f.n))) continue;
+      const same = body.filter(b => b.n === f.n);
+      if (!same.length) {
+        problems.push(`${where}: ${field} asserts "${f.raw}" and the body it summarises never states that figure — ${role}, so a number only the mirror carries is one no reader can check. Correct it against the body, or drop it.`);
+        continue;
+      }
+      if (f.currency && !same.some(b => b.currency === f.currency)) {
+        problems.push(`${where}: ${field} prices something at "${f.raw}" but the body never gives ${f.n} in ${f.currency} — ${role}, and a price the page itself does not state is the claim that outlived three corrections. Correct it against the body, or drop it.`);
+      }
+      if (f.percent && !same.some(b => b.percent)) {
+        problems.push(`${where}: ${field} says "${f.raw}" but the body gives ${f.n} without a percent sign — ${role}, and the same number as a proportion is a different claim. Correct it against the body, or drop it.`);
+      }
+      if (f.unit && !same.some(b => b.unit === f.unit || b.unit === null)) {
+        const has = [...new Set(same.map(b => b.unit))].join('/');
+        problems.push(`${where}: ${field} says "${f.raw}" but the body measures ${f.n} in ${has}, never in ${f.unit} — ${role}, and a unit the body does not use is a claim it does not make. Correct it against the body, or drop it.`);
+      }
+    }
+
+    for (const raw of text.match(/\b[A-Z][a-z][A-Za-z'’-]+\b/g) ?? []) {
+      const name = raw.replace(/['’]s$/, '').toLowerCase();
+      if (!sources.has(name)) continue;
+      if (new RegExp(`\\b${reEscape(name)}\\b`).test(bodyProse)) continue;
+      problems.push(`${where}: ${field} credits "${raw}", a source this site cites elsewhere but that this page's body never cites — ${role}, so a study named only in the mirror is one the page cannot support. Cite it in the body, or drop the name.`);
+    }
+  }
+}
+
+// ─── Cited sources ───────────────────────────────────────────────────────────
+// The vocabulary of surnames this site actually cites, read out of the two
+// shapes a citation takes here: a reference-list author ("Lipner SR,") and an
+// inline parenthetical ("(Azrin, Nunn & Frantz, 1980)"). Only names found in
+// one of those shapes are ever checked, which is what keeps the rule free of
+// false positives — a description may say "Stop Biting", "Windows" or "ADHD"
+// without any of them being a citation.
+//
+// Any name the site ALSO writes as an ordinary lowercase word ("long", "grant",
+// "treatment" — real surnames in the reference lists, ordinary English
+// everywhere else) is dropped: a capitalised "Long" at the start of a sentence
+// is not a citation, and guessing which it is would fail a green page.
+const AUTHOR_INITIALS = /\b([A-Z][a-z][A-Za-z'’-]+)\s+[A-Z]{1,3}\b(?=\s*[,.;)]|\s+et al)/g;
+const PARENTHETICAL_CITE = /\(([^()]*\b(?:19|20)\d{2}\b[^()]*)\)/g;
+const AUTHOR_IN_LIST = /\b([A-Z][a-z][A-Za-z'’-]+)(?=\s*(?:,|&|and\b|et al))/g;
+
+function citedSurnames() {
+  const corpus = [
+    ...BLOG_POSTS.map(postBodyText),
+    ...Object.values(PAGE_MAP).map(get => comparePageText(get())),
+  ].join(' ');
+
+  const names = new Set();
+  for (const m of corpus.matchAll(AUTHOR_INITIALS)) names.add(m[1].toLowerCase());
+  for (const cite of corpus.matchAll(PARENTHETICAL_CITE)) {
+    for (const m of cite[1].matchAll(AUTHOR_IN_LIST)) names.add(m[1].toLowerCase());
+  }
+  for (const word of corpus.match(/\b[a-z][a-z'’-]+\b/g) ?? []) names.delete(word);
+  return names;
+}
+
+// ─── COMPARE_META in server.js ───────────────────────────────────────────────
+// The last hand-written content mirror left in server.js: nine title and
+// description pairs that restate nine pages in src/data/comparePages.ts. They
+// are read as SOURCE TEXT rather than imported, because importing server.js
+// starts a server. Braces are matched in the blanked copy (blankLiterals), so a
+// `{` or a `'/…':` inside a description cannot be mistaken for structure.
+//
+// The blank starts AT the declaration, never at the top of the file:
+// blankLiterals does not know regex literals, and server.js has several with a
+// quote inside (`.replace(/"/g, '&quot;')`) — blanking the whole file reads one
+// as a string opener and everything after it desynchronises. From the
+// declaration to its closing brace there is nothing but strings and comments,
+// which is exactly what has to be blanked, so the scoped blank is exact.
+function compareMetaEntries(server) {
+  const declared = server.search(/\n\s*const COMPARE_META = \{/);
+  if (declared < 0) return null;
+  const open = server.indexOf('{', declared);
+  const code = blankLiterals(server.slice(open));
+  const end = matchBrace(code, 0);
+  if (end < 0) return null;
+
+  const block = server.slice(open, open + end);
+  const blockCode = code.slice(0, end);
+  const entries = [];
+  for (const m of block.matchAll(/'(\/[a-z0-9/-]+)':\s*\{/g)) {
+    const from = m.index + m[0].length - 1;
+    const to = matchBrace(blockCode, from);
+    if (to < 0) continue;
+    const entry = block.slice(from, to);
+    const entryCode = blockCode.slice(from, to);
+    entries.push({
+      path: m[1],
+      title: readProp(entry, entryCode, 'title'),
+      description: readProp(entry, entryCode, 'description'),
+    });
+  }
+  return entries.length ? entries : null;
+}
+
+// Index just past the `}` closing the `{` at `open`, in already-blanked code.
+function matchBrace(code, open) {
+  let depth = 0;
+  for (let i = open; i < code.length; i++) {
+    if (code[i] === '{') depth++;
+    else if (code[i] === '}' && --depth === 0) return i + 1;
+  }
+  return -1;
+}
+
+// One property's string value. The property NAME is located in the blanked
+// copy, so the word "title:" inside a comment — this block is full of comments
+// explaining which claim was corrected — cannot be read as the property.
+function readProp(src, code, prop) {
+  const at = code.search(new RegExp(`\\b${reEscape(prop)}:`));
+  if (at < 0) return null;
+  const from = at + prop.length + 1;
+  let depth = 0;
+  let i = from;
+  for (; i < code.length; i++) {
+    const c = code[i];
+    if ('([{'.includes(c)) depth++;
+    else if (')]}'.includes(c)) { if (depth === 0) break; depth--; }
+    else if (c === ',' && depth === 0) break;
+  }
+  return htmlToText(literals(src.slice(from, i))) || null;
+}
+
+checkMirrors();
+
+function checkMirrors() {
+  const sources = citedSurnames();
+
+  for (const post of BLOG_POSTS) {
+    checkMirror(
+      `blogPosts.ts ${post.slug}`,
+      [['description', post.description], ['title', post.title], ['seoTitle', post.seoTitle]],
+      postBodyText(post),
+      sources,
+      enumeratedCounts(post),
+    );
+  }
+
+  const metas = compareMetaEntries(readWorkTree(SERVER) ?? '');
+  if (!metas) {
+    problems.push('COMPARE_META: cannot read the declaration in server.js — the extractor in sync-seo.mjs no longer matches it, which silently un-gates every hand-written /compare and /solutions meta description');
+    return;
+  }
+  for (const path of Object.keys(PAGE_MAP)) {
+    if (!metas.some(m => m.path === path)) {
+      problems.push(`COMPARE_META: no entry for ${path} — server.js serves that page with meta from somewhere this check cannot see`);
+    }
+  }
+  for (const { path, title, description } of metas) {
+    const page = PAGE_MAP[path]?.();
+    if (!page) {
+      problems.push(`COMPARE_META: ${path} has no page in comparePages.ts — its meta describes a body that does not exist`);
+      continue;
+    }
+    if (!title || !description) {
+      problems.push(`COMPARE_META: cannot read the ${title ? 'description' : 'title'} for ${path} — the extractor no longer matches the entry`);
+      continue;
+    }
+    checkMirror(
+      `server.js COMPARE_META ${path}`,
+      [['description', description], ['title', title]],
+      comparePageText(page),
+      sources,
+    );
+  }
+}
+
 // ─── Report ──────────────────────────────────────────────────────────────────
 if (problems.length) {
   console.error('\nProblems found:');

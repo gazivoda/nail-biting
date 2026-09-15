@@ -125,7 +125,7 @@ export function About() {
               <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
                 Google MediaPipe's Hand Landmarker
               </a>
-              , which tracks 21 hand landmarks in real time at 30fps. The model runs in WebAssembly — a
+              , which locates 21 hand landmarks. Stop Biting runs it five times a second. The model runs in WebAssembly — a
               sandboxed binary execution format supported by all modern browsers — meaning it has no network
               access and cannot read files outside the browser sandbox.
             </p>

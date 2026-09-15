@@ -1484,7 +1484,7 @@ if (!existsSync(distPath)) {
     return (
       '<h1>Stop Nail Biting with AI</h1>' +
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
-      'it tracks 21 hand landmarks and your face mesh at 30fps, and the moment your hand moves toward your mouth an ' +
+      'it checks 21 hand landmarks and your face mesh five times a second, and the moment your hand moves toward your mouth an ' +
       'audible alarm fires within a second — catching the automatic episodes you never notice. All detection runs ' +
       'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
@@ -1495,7 +1495,7 @@ if (!existsSync(distPath)) {
       'and nothing is saved.</p></section>' +
       '<section><h2>How it works</h2>' +
       '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
-      'The AI tracks 21 hand landmarks and your face mesh at 30fps, entirely on-device. When it detects your hand ' +
+      'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +
       'approaching your mouth, the alarm fires within a second — the external awareness signal that Habit Reversal ' +
       'Training identifies as its most critical component. Each detection is logged locally so you can see your real ' +
       'biting frequency and triggers. Read more at <a href="/how-it-works">how it works</a>.</p></section>' +
@@ -1815,7 +1815,7 @@ if (!existsSync(distPath)) {
       '<h1>About Stop Biting</h1>' +
       '<p class="article-summary">Built by a nail biter, for nail biters: Igor Gazivoda bit his nails for over 20 years, ' +
       'then built the awareness component of Habit Reversal Training into an app — MediaPipe hand tracking, ' +
-      '21 landmarks at 30fps, running entirely on your own device.</p>' +
+      '21 landmarks five times a second, running entirely on your own device.</p>' +
       '<section><h2>The founder&#39;s story</h2>' +
       '<p>I&#39;m Igor Gazivoda, a software developer. I bit my nails for over 20 years — constantly, automatically, ' +
       'without noticing until the damage was already done. I tried everything: bitter polish, reminder bands, sheer willpower. ' +
@@ -1834,7 +1834,7 @@ if (!existsSync(distPath)) {
       'not metadata. You can disconnect your internet connection after the app loads and it will function identically. ' +
       'The incident log is stored locally, and there are no analytics on how you use the app.</p></section>' +
       '<section><h2>The technology</h2>' +
-      '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which tracks 21 hand landmarks in real time at 30fps. ' +
+      '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which locates 21 hand landmarks. Stop Biting runs it five times a second — enough to catch a hand on its way to your mouth, and far less CPU than running it on every frame. ' +
       'Mouth proximity detection compares hand landmark coordinates to facial landmark coordinates in each frame. ' +
       'The desktop apps (macOS and Windows) are Electron wrappers around the same web app with system-tray background running. ' +
       'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>' +

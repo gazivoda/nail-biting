@@ -29,7 +29,7 @@ export function HowItWorks() {
     {
       num: '04',
       title: 'Work, game, or study normally',
-      body: 'Stop Biting runs in the background at 30fps. When it detects your hand moving to your mouth, an audible alarm fires within one second.',
+      body: 'Stop Biting runs in the background, checking five times a second. It needs three consecutive frames before it acts, so an alarm fires about six tenths of a second after your hand starts moving to your mouth.',
     },
     {
       num: '05',
