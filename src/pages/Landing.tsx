@@ -34,6 +34,21 @@ const FEATURED_POSTS = FEATURED_SLUGS
   .map(slug => BLOG_INDEX.find(p => p.slug === slug))
   .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
+// The apparatus row under the hero's call to action — what the thing is, in
+// five words or fewer each, set as a mono rule of hairline-separated terms.
+const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud'];
+
+// Margin echoes of the stats strip further down the page: the same three
+// numbers with the same labels, set beside Figure 1 the way a journal sets its
+// key values in the figure margin. The strip itself (and the citation footnote
+// that supports these numbers) remains the canonical statement of them — change
+// both or neither.
+const HERO_FIGURES: { figure: string; label: string }[] = [
+  { figure: '20–30%', label: 'of adults bite their nails chronically' },
+  { figure: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
+  { figure: '0 bytes', label: 'Of camera data sent to servers' },
+];
+
 // Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
 // to have a visible on-page counterpart, so these two must stay in step.
 const FAQS: { q: string; a: string }[] = [
@@ -74,25 +89,30 @@ export function Landing(_props: Props) {
   const [demoStarted, setDemoStarted] = useState(false);
 
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
+    // `ed-page` scopes the editorial focus-visible ring (see index.css). Without
+    // it nothing on this page gets a visible focus outline.
+    <div className="ed-page min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
       {/* ── NAV ─────────────────────────────────────────────────────────── */}
+      {/* Structurally identical to the navs on /blog, /pricing and the legal
+          pages — fixed, full-width, hairline bottom rule, same three items and
+          the same hrefs. Only the typesetting differs here. */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
+        <a href="/" className="flex items-center gap-2.5 text-stone-800 dark:text-stone-100">
           <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-          Stop Biting Nails
+          <span className="font-display text-lg leading-none tracking-[-0.01em]">Stop Biting Nails</span>
         </a>
         <div className="flex items-center gap-6">
           <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
             <BookOpen size={14} aria-hidden="true" />
-            Blog
+            <span className="ed-link">Blog</span>
           </a>
           <ThemeToggle />
           <a
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)]"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-colors duration-150"
           >
             <Zap size={13} aria-hidden="true" />
             Sign in to app
@@ -101,188 +121,194 @@ export function Landing(_props: Props) {
       </nav>
 
       {/* ── HERO ────────────────────────────────────────────────────────── */}
+      {/* Above the fold, so the entrance is a fixed stagger on `animate-fade-up`
+          rather than `.reveal`: an IntersectionObserver would fire on every one
+          of these at once and there would be no stagger left to see. For the
+          same reason nothing in here may use `.ed-rule-draw` — that class parks
+          a rule at scaleX(0) until an ancestor `.reveal` is `.revealed`, which
+          never happens here, and the rule would simply never appear. */}
       <main>
-        <section
-          aria-label="Hero"
-          className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-16 pb-24 overflow-hidden"
-          style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, oklch(92% 0.055 148 / 0.25) 0%, transparent 70%)' }}
-        >
-          {/* Floating ambient orbs */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div
-              className="animate-float-slow absolute rounded-full opacity-30 dark:opacity-20"
-              style={{
-                width: 420, height: 420,
-                top: '8%', left: '-8%',
-                background: 'radial-gradient(circle, oklch(84% 0.080 148) 0%, transparent 70%)',
-                filter: 'blur(60px)',
-                willChange: 'transform',
-                transform: 'translateZ(0)',
-              }}
-            />
-            <div
-              className="animate-float-medium absolute rounded-full opacity-20 dark:opacity-15"
-              style={{
-                width: 320, height: 320,
-                top: '20%', right: '-6%',
-                background: 'radial-gradient(circle, oklch(70% 0.110 148) 0%, transparent 70%)',
-                filter: 'blur(50px)',
-                animationDelay: '1.5s',
-                willChange: 'transform',
-                transform: 'translateZ(0)',
-              }}
-            />
-            <div
-              className="animate-float-slow absolute rounded-full opacity-15 dark:opacity-10"
-              style={{
-                width: 260, height: 260,
-                bottom: '15%', left: '20%',
-                background: 'radial-gradient(circle, oklch(76% 0.155 75) 0%, transparent 70%)',
-                filter: 'blur(45px)',
-                animationDelay: '3s',
-                willChange: 'transform',
-                transform: 'translateZ(0)',
-              }}
-            />
-          </div>
+        <section aria-label="Hero" className="pt-28 pb-20 sm:pt-32 lg:pt-36 lg:pb-28">
+          <div className="ed-container">
+            <div className="ed-grid">
 
-          <div className="max-w-3xl mx-auto relative z-10">
-            <p
-              className="animate-fade-up text-xs tracking-[0.25em] uppercase text-forest-600 dark:text-forest-400 font-semibold mb-6"
-              style={{ animationDelay: '0ms' }}
-            >
-              For everyone who's tried to quit — and couldn't
-            </p>
-
-            <h1
-              className="animate-fade-up font-display text-5xl sm:text-6xl font-normal text-stone-800 dark:text-stone-100 leading-tight"
-              style={{ animationDelay: '80ms' }}
-            >
-              Stop biting your nails.<br />
-              <em className="not-italic text-forest-600 dark:text-forest-400">For good, this time.</em>
-            </h1>
-
-            <p
-              className="animate-fade-up text-stone-500 dark:text-stone-400 text-lg leading-relaxed max-w-xl mx-auto mt-6"
-              style={{ animationDelay: '160ms' }}
-            >
-              Bitter polish, gloves, sheer willpower — none of it stuck, because nail biting was never a
-              willpower problem. It runs on autopilot, and by the time you notice, you're already doing it.{' '}
-              <span className="text-stone-700 dark:text-stone-200 font-medium">Stop Biting catches the exact moment your hand reaches your mouth</span>{' '}
-              and interrupts it — which is the active ingredient in habit reversal training, the approach
-              with the strongest clinical evidence behind it. Every frame is processed on your own device.
-            </p>
-
-            <div
-              className="animate-fade-up flex items-center justify-center gap-1.5 text-forest-600 dark:text-forest-400 text-xs py-1.5 px-4 bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-800 rounded-full mt-6 w-fit mx-auto"
-              style={{ animationDelay: '240ms' }}
-            >
-              <ShieldCheck size={12} aria-hidden="true" />
-              <span>All AI processing on-device — zero network requests during detection</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-forest-500 animate-pulse ml-1" aria-hidden="true" />
-            </div>
-
-            <div
-              className="animate-fade-up mt-10 flex flex-col items-center gap-4"
-              style={{ animationDelay: '320ms' }}
-            >
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <a
-                  href="/api/auth/google"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
+              {/* ── The argument (cols 1–7) ──────────────────────────────── */}
+              <div className="ed-main lg:row-start-1">
+                <p
+                  className="animate-fade-up ed-mono text-forest-600 dark:text-forest-400"
+                  style={{ animationDelay: '0ms' }}
                 >
-                  <Zap size={15} aria-hidden="true" />
-                  Start free trial
-                  <ArrowRight size={14} className="opacity-70 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-                </a>
-                <a
-                  href="/blog"
-                  className="inline-flex items-center gap-2 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 text-sm transition-colors"
+                  For everyone who's tried to quit — and couldn't
+                </p>
+
+                <h1
+                  className="animate-fade-up ed-display mt-6 text-stone-800 dark:text-stone-100"
+                  style={{ animationDelay: '80ms' }}
                 >
-                  <BookOpen size={14} aria-hidden="true" />
-                  Read the science
-                </a>
-              </div>
-            </div>
+                  Stop biting your nails.<br />
+                  <em className="not-italic text-forest-600 dark:text-forest-400">For good, this time.</em>
+                </h1>
 
-            {/* Social proof strip */}
-            <div
-              className="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-400 dark:text-stone-500"
-              style={{ animationDelay: '400ms' }}
-            >
-              {['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud'].map(tag => (
-                <span key={tag} className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-forest-400" aria-hidden="true" />
-                  {tag}
-                </span>
-              ))}
-            </div>
+                <p
+                  className="animate-fade-up ed-lede ed-measure mt-7 text-stone-600 dark:text-stone-400"
+                  style={{ animationDelay: '160ms' }}
+                >
+                  Bitter polish, gloves, sheer willpower — none of it stuck, because nail biting was never a
+                  willpower problem. It runs on autopilot, and by the time you notice, you're already doing it.{' '}
+                  <span className="text-stone-800 dark:text-stone-100 font-medium">Stop Biting catches the exact moment your hand reaches your mouth</span>{' '}
+                  and interrupts it — which is the active ingredient in habit reversal training, the approach
+                  with the strongest clinical evidence behind it. Every frame is processed on your own device.
+                </p>
 
-            {/* ── LIVE DEMO ─────────────────────────────────────────────── */}
-            {/* Heading and paragraph render on page view — they are the
-                crawler-visible copy mirrored in server.js and must not be
-                hidden behind the click. Only the detector itself is deferred. */}
-            <section
-              id="live-demo"
-              aria-labelledby="live-demo-heading"
-              className="animate-fade-up mt-14 w-full max-w-xl mx-auto"
-              style={{ animationDelay: '500ms' }}
-            >
-              <h2
-                id="live-demo-heading"
-                className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight"
-              >
-                Try the detector right now
-              </h2>
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">
-                Run the real nail biting detector on your own camera for 60 seconds — no
-                account, no signup. The AI models download once (about 20 MB) and then
-                everything runs on your device: open your browser's network panel and you'll
-                see zero requests while it is watching. Nothing is uploaded and nothing is
-                saved.
-              </p>
+                {/* The on-device guarantee, set as an instrument reading: ruled
+                    top and bottom, mono, with the live dot still ticking. */}
+                <div
+                  className="animate-fade-up mt-9 flex items-center gap-3 border-y border-stone-200 dark:border-ink-400 py-3 text-forest-600 dark:text-forest-400"
+                  style={{ animationDelay: '240ms' }}
+                >
+                  <ShieldCheck size={14} className="flex-shrink-0" aria-hidden="true" />
+                  <span className="ed-mono">All AI processing on-device — zero network requests during detection</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-forest-500 dark:bg-forest-400 animate-pulse flex-shrink-0" aria-hidden="true" />
+                </div>
 
-              {/* Opaque backgrounds on purpose: the `ink`/`cream` scales are raw
-                  oklch() strings with no <alpha-value> placeholder, so Tailwind
-                  silently drops any `/opacity` variant of them. `bg-white/70`
-                  does generate, so a translucent pair here would leave the card
-                  white in dark mode. Matches the card style in CameraPanel. */}
-              <div className="mt-6 rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark p-5">
-                {demoStarted ? (
-                  <Suspense
-                    fallback={
-                      <p className="flex items-center justify-center gap-2 py-6 text-sm text-stone-500 dark:text-stone-400">
-                        <Loader2
-                          size={14}
-                          className="animate-spin text-forest-500 dark:text-forest-400 flex-shrink-0"
-                          aria-hidden="true"
-                        />
-                        {DEMO_LOADING_LABEL}
-                      </p>
-                    }
+                <div
+                  className="animate-fade-up mt-9 flex flex-wrap items-center gap-x-8 gap-y-4"
+                  style={{ animationDelay: '320ms' }}
+                >
+                  <a
+                    href="/api/auth/google"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-colors duration-150"
                   >
-                    <HeroDemo autoStart />
-                  </Suspense>
-                ) : (
-                  <div className="flex justify-center py-2">
-                    <button
-                      type="button"
-                      onClick={() => setDemoStarted(true)}
-                      className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
-                    >
-                      <Camera size={15} aria-hidden="true" />
-                      Try the live demo
-                    </button>
-                  </div>
-                )}
-              </div>
-            </section>
-          </div>
+                    Start free trial
+                    <ArrowRight
+                      size={14}
+                      className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
+                  <a
+                    href="/blog"
+                    className="ed-link text-sm text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+                  >
+                    Read the science
+                  </a>
+                </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in" style={{ animationDelay: '600ms' }}>
-            <ChevronDown size={20} className="text-stone-300 dark:text-stone-600 animate-bounce" aria-hidden="true" />
+                {/* What it is, in apparatus terms — hairline-separated. */}
+                <ul
+                  className="animate-fade-up mt-10 flex flex-wrap items-center gap-y-2 text-stone-500 dark:text-stone-400"
+                  style={{ animationDelay: '400ms' }}
+                >
+                  {HERO_TAGS.map((tag, i) => (
+                    <li key={tag} className="flex items-center">
+                      <span className="ed-mono">{tag}</span>
+                      {i < HERO_TAGS.length - 1 && (
+                        <span className="mx-3 h-3 w-px bg-stone-300 dark:bg-ink-400" aria-hidden="true" />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* The gutter rule: one hairline down the middle of column 8,
+                  separating argument from apparatus. lg and up only — below
+                  that the two columns stack and a vertical rule would be a
+                  line through the middle of nothing. */}
+              <div
+                aria-hidden="true"
+                className="animate-fade-in hidden lg:block lg:col-start-8 lg:row-start-1 w-px justify-self-center bg-stone-200 dark:bg-ink-400"
+                style={{ animationDelay: '560ms' }}
+              />
+
+              {/* ── Figure 1 (cols 9–12) ─────────────────────────────────── */}
+              <figure
+                className="ed-aside animate-fade-up lg:row-start-1"
+                style={{ animationDelay: '480ms' }}
+              >
+                <figcaption className="text-stone-500 dark:text-stone-400">
+                  <span className="ed-mark">
+                    <span className="ed-mono">Fig. 1</span>
+                    <span className="ed-mark-rule" aria-hidden="true" />
+                  </span>
+                  <span className="ed-mono mt-3 block">The detector, running on your device</span>
+                </figcaption>
+
+                {/* ── LIVE DEMO ───────────────────────────────────────────── */}
+                {/* Heading and paragraph render on page view — they are the
+                    crawler-visible copy mirrored in server.js and must not be
+                    hidden behind the click. Only the detector itself is deferred. */}
+                <section id="live-demo" aria-labelledby="live-demo-heading" className="mt-7">
+                  <h2
+                    id="live-demo-heading"
+                    className="font-display text-2xl leading-[1.1] tracking-[-0.01em] text-stone-800 dark:text-stone-100"
+                  >
+                    Try the detector right now
+                  </h2>
+                  <p className="ed-body mt-3 text-stone-600 dark:text-stone-400">
+                    Run the real nail biting detector on your own camera for 60 seconds — no
+                    account, no signup. The AI models download once (about 20 MB) and then
+                    everything runs on your device: open your browser's network panel and you'll
+                    see zero requests while it is watching. Nothing is uploaded and nothing is
+                    saved.
+                  </p>
+
+                  {/* Opaque backgrounds on purpose: the `ink`/`cream` scales are raw
+                      oklch() strings with no <alpha-value> placeholder, so Tailwind
+                      silently drops any `/opacity` variant of them. `bg-white/70`
+                      does generate, so a translucent pair here would leave the card
+                      white in dark mode. Matches the card style in CameraPanel. */}
+                  <div className="mt-6 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark p-5">
+                    {demoStarted ? (
+                      <Suspense
+                        fallback={
+                          <p className="flex items-center justify-center gap-2 py-6 text-sm text-stone-500 dark:text-stone-400">
+                            <Loader2
+                              size={14}
+                              className="animate-spin text-forest-500 dark:text-forest-400 flex-shrink-0"
+                              aria-hidden="true"
+                            />
+                            {DEMO_LOADING_LABEL}
+                          </p>
+                        }
+                      >
+                        <HeroDemo autoStart />
+                      </Suspense>
+                    ) : (
+                      <div className="flex justify-center py-2">
+                        <button
+                          type="button"
+                          onClick={() => setDemoStarted(true)}
+                          className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-colors duration-150"
+                        >
+                          <Camera size={15} aria-hidden="true" />
+                          Try the live demo
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                {/* Key values in the figure margin. The stats strip lower down
+                    is still the canonical statement of these three numbers and
+                    carries the citation footnote for them. */}
+                <dl aria-label="Key figures" className="mt-10 border-t border-stone-200 dark:border-ink-400">
+                  {HERO_FIGURES.map(({ figure, label }) => (
+                    <div
+                      key={label}
+                      className="flex items-baseline gap-4 border-b border-stone-200 dark:border-ink-400 py-3.5"
+                    >
+                      <dt className="font-display text-2xl leading-none text-forest-600 dark:text-forest-400 w-24 flex-shrink-0">
+                        {figure}
+                      </dt>
+                      <dd className="ed-mono text-stone-500 dark:text-stone-400">{label}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </figure>
+
+            </div>
           </div>
         </section>
 
