@@ -368,12 +368,26 @@ html.dark .blog-html-block td a {
 
 /* ── Editorial system ("Journal" homepage) ──────────────────────────────── */
 
+/* Theme-aware hairline — the one source for every 1px rule on this page.
+   `dark:border-ink-400` (used across the app's cards/dividers) measures
+   1.00:1 against the ink-100 page background: ink-400 sits at 9% L, *darker*
+   than the 15% L surface it's meant to separate, so the "border" disappears
+   in dark mode. ink-400 itself can't move — 113 usages across 31 files, 9 of
+   them `bg-ink-400` surfaces a lighter value would blow out. Scoping a
+   dedicated variable to `.ed-page` fixes the editorial redesign without
+   touching that token or leaking a new color into the rest of the app.
+   32% L (same near-zero-chroma hue as the ink scale) lands at ~1.56:1
+   against ink-100 — inside the 1.5–2.0 band called for: legible as
+   structure, still reads as a hairline rather than a hard divider. */
+.ed-page           { --ed-hairline: oklch(88% 0.014 120); }
+html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
+
 .ed-container { width: 100%; max-width: 1240px; margin-inline: auto;
                 padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
 
 .ed-grid  { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
             column-gap: clamp(1.5rem, 3vw, 2.5rem); row-gap: 2.5rem; }
-.ed-main  { grid-column: 1 / -1; }
+.ed-main  { grid-column: 1 / -1; container-type: inline-size; }
 .ed-aside { grid-column: 1 / -1; }
 @media (min-width: 1024px) {
   .ed-main  { grid-column: 1 / span 7; }
@@ -385,6 +399,21 @@ html.dark .blog-html-block td a {
 .ed-display { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
               font-size: clamp(2.75rem, 7.5vw, 5.25rem); line-height: 0.95;
               letter-spacing: -0.02em; }
+/* `.ed-main` is only a constrained 7/12-column box ≥1024px (538px there,
+   settling to a 660px plateau ≥1333px) — below that breakpoint it's a
+   full-width block and the `vw` rule above has no bug to fix. From exactly
+   1024px, `vw` sizes off the *viewport* instead of that column: the longest
+   hero line ("Stop biting your nails.", 7.446em wide in the shipped
+   Instrument Serif) needs 560px inside a 538px column and wraps to 3 lines
+   continuously up to ~1155px. `cqw` reads `.ed-main`'s own inline size
+   instead, which keeps the ratio of line-width to column-width constant
+   across the whole fluid range: 12.7cqw puts that ratio at ~0.945, i.e.
+   ≈68px (≈510px line, ~28px slack) at the 538px column and ≈84px at the
+   660px plateau — unchanged from today's capped desktop size. Scoped to
+   ≥1024px so the full-width mobile/tablet sizing above is untouched. */
+@media (min-width: 1024px) {
+  .ed-display { font-size: clamp(2.75rem, 12.7cqw, 5.25rem); }
+}
 .ed-h2      { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
               font-size: clamp(1.875rem, 3.6vw, 2.875rem); line-height: 1.05;
               letter-spacing: -0.01em; }
@@ -399,8 +428,7 @@ html.dark .blog-html-block td a {
 
 /* Section mark: 01 ─────────────────── THE PROBLEM */
 .ed-mark      { display: flex; align-items: center; gap: 1rem; }
-.ed-mark-rule { flex: 1 1 auto; height: 1px; background: currentColor;
-                opacity: 0.18; }
+.ed-mark-rule { flex: 1 1 auto; height: 1px; background: var(--ed-hairline); }
 
 /* Signature motion: rules draw themselves left-to-right when their section
    reveals. Driven by the .revealed class useScrollReveal already applies to
@@ -411,7 +439,7 @@ html.dark .blog-html-block td a {
 .ed-rule-draw.revealed  { transform: scaleX(1); }
 
 /* Hairline separator */
-.ed-hr { height: 1px; border: 0; background: currentColor; opacity: 0.14; }
+.ed-hr { height: 1px; border: 0; background: var(--ed-hairline); }
 
 /* Link underline grows from the left. Transform-only. */
 .ed-link          { position: relative; text-decoration: none; }

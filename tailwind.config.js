@@ -49,6 +49,13 @@ export default {
           300: 'oklch(11%   0.006 200 / <alpha-value>)',   // deepest surfaces
           400: 'oklch(9%    0.005 200 / <alpha-value>)',   // borders (subtle)
         },
+        // ── Scoped editorial hairline (src/index.css `--ed-hairline`) ─────
+        // Generates border-hairline / bg-hairline / divide-hairline. No
+        // <alpha-value> here — a var() can't carry the placeholder, so this
+        // token has no opacity modifier (no `border-hairline/50`). The
+        // light/dark flip lives entirely in the CSS variable, so call sites
+        // need no `dark:` variant.
+        hairline: 'var(--ed-hairline)',
         // ── Forest green accent ───────────────────────────────────────────
         forest: {
           50:  'oklch(96%   0.030 148 / <alpha-value>)',
