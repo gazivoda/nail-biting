@@ -141,7 +141,7 @@ body {
   margin: 0;
   background-color: oklch(97% 0.012 80); /* warm cream */
   color: oklch(22% 0.012 120);           /* deep warm stone */
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -366,6 +366,70 @@ html.dark .blog-html-block td a {
   color: oklch(62% 0.14 148);
 }
 
+/* ── Editorial system ("Journal" homepage) ──────────────────────────────── */
+
+.ed-container { width: 100%; max-width: 1240px; margin-inline: auto;
+                padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+
+.ed-grid  { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: clamp(1.5rem, 3vw, 2.5rem); row-gap: 2.5rem; }
+.ed-main  { grid-column: 1 / -1; }
+.ed-aside { grid-column: 1 / -1; }
+@media (min-width: 1024px) {
+  .ed-main  { grid-column: 1 / span 7; }
+  .ed-aside { grid-column: 9 / span 4; }
+}
+
+.ed-measure { max-width: 62ch; }
+
+.ed-display { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+              font-size: clamp(2.75rem, 7.5vw, 5.25rem); line-height: 0.95;
+              letter-spacing: -0.02em; }
+.ed-h2      { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+              font-size: clamp(1.875rem, 3.6vw, 2.875rem); line-height: 1.05;
+              letter-spacing: -0.01em; }
+.ed-lede    { font-size: clamp(1.0625rem, 1.35vw, 1.1875rem); line-height: 1.65; }
+.ed-body    { font-size: 0.9375rem; line-height: 1.7; }
+.ed-caption { font-size: 0.75rem; line-height: 1.55; }
+.ed-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace;
+              font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.18em;
+              text-transform: uppercase; }
+.ed-figure  { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+              font-size: clamp(2rem, 4vw, 3rem); line-height: 1; }
+
+/* Section mark: 01 ─────────────────── THE PROBLEM */
+.ed-mark      { display: flex; align-items: center; gap: 1rem; }
+.ed-mark-rule { flex: 1 1 auto; height: 1px; background: currentColor;
+                opacity: 0.18; }
+
+/* Signature motion: rules draw themselves left-to-right when their section
+   reveals. Driven by the .revealed class useScrollReveal already applies to
+   the ancestor .reveal element — no JS change needed. */
+.ed-rule-draw           { transform: scaleX(0); transform-origin: left;
+                          transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1); }
+.revealed .ed-rule-draw,
+.ed-rule-draw.revealed  { transform: scaleX(1); }
+
+/* Hairline separator */
+.ed-hr { height: 1px; border: 0; background: currentColor; opacity: 0.14; }
+
+/* Link underline grows from the left. Transform-only. */
+.ed-link          { position: relative; text-decoration: none; }
+.ed-link::after   { content: ''; position: absolute; left: 0; right: 0;
+                    bottom: -2px; height: 1px; background: currentColor;
+                    transform: scaleX(0); transform-origin: left;
+                    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.ed-link:hover::after,
+.ed-link:focus-visible::after { transform: scaleX(1); }
+
+/* Visible focus for the editorial page only — scoped so the app UI is
+   unaffected. */
+.ed-page a:focus-visible,
+.ed-page button:focus-visible,
+.ed-page summary:focus-visible {
+  outline: 2px solid oklch(46% 0.130 148); outline-offset: 3px; border-radius: 2px;
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
@@ -387,5 +451,15 @@ html.dark .blog-html-block td a {
   .btn-shimmer::after {
     animation: none;
     display: none;
+  }
+
+  .ed-rule-draw {
+    transform: none;
+    transition: none;
+  }
+
+  .ed-link::after {
+    transform: scaleX(0);
+    transition: none;
   }
 }
