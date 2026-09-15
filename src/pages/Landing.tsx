@@ -1,9 +1,9 @@
 import { lazy, Suspense, useState } from 'react';
 import {
-  ShieldCheck, Lock, Zap, Cpu, BellRing, Trophy,
-  ClipboardList, BarChart2, WifiOff, HardDrive,
-  Code2, ChevronDown, Camera, BookOpen,
-  ArrowRight, Check, Loader2,
+  ShieldCheck, Zap, Cpu, BellRing, Trophy,
+  ClipboardList, BarChart2, WifiOff,
+  ChevronDown, Camera, BookOpen,
+  ArrowRight, Loader2,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -537,176 +537,251 @@ export function Landing(_props: Props) {
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-8 space-y-20 pb-20">
+        {/* ── 03 · THE EVIDENCE ─────────────────────────────────────────── */}
+        {/* The old `evidence-heading` block. The featured claim is out of its
+            tinted card and set as a pull quote against the page's one thick
+            rule (3px forest), with both PubMed citations beneath it as mono
+            source lines. The two honesty cards are margin notes now: same
+            words, hairline top rule, no frame, no hover lift. */}
+        <section aria-labelledby="evidence-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="03" label="The evidence" />
 
-          {/* ── PRIVACY STATEMENT ─────────────────────────────────────────── */}
-          <section aria-labelledby="privacy-heading" className="reveal">
-            <div className="bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-700 rounded-2xl p-8 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-800 border border-forest-200 dark:border-forest-700 flex items-center justify-center mx-auto mb-6">
-                <Lock size={32} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-              </div>
-              <h2 id="privacy-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Your camera never leaves this app.</h2>
-              <p className="text-forest-600 dark:text-forest-400 text-lg font-medium mt-1">Not even for a millisecond.</p>
-              <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-4 max-w-sm mx-auto">
-                A camera pointed at your face all day is a lot to trust an app with. So we built it the only
-                way that felt right: the AI runs entirely on your own device. Every frame is processed locally
-                on your CPU or GPU, and not one byte of camera data is ever sent to a server — because there's
-                no server involved in detection at all.
-              </p>
-              <p className="text-stone-700 dark:text-stone-200 text-sm font-medium mt-4 pt-4 border-t border-forest-200 dark:border-forest-700">
-                Disconnect from the internet and the app works exactly the same.
-              </p>
-            </div>
-          </section>
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="evidence-heading" className="ed-h2 text-stone-800">
+                  Built on real habit science
+                </h2>
 
-          {/* ── FEATURE GRID ──────────────────────────────────────────────── */}
-          <section aria-labelledby="features-heading">
-            <h2 id="features-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Everything you need to build the habit.</h2>
-            <p className="reveal text-stone-500 dark:text-stone-400 text-base text-center mt-1">Nothing you don't.</p>
+                {/* The 3px forest rule is reserved for this one block (Task 3's
+                    note 9). It spans the quote and its citations, because they
+                    are one statement. The old eyebrow is the quote's label. */}
+                <div className="mt-8 border-l-[3px] border-forest-600 pl-6 sm:pl-8">
+                  <p className="ed-mono text-forest-600">The evidence behind the method</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-10">
-              {[
-                { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.', accent: true, color: 'text-forest-500 dark:text-forest-400' },
-                { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.', accent: false, color: 'text-alert-600 dark:text-alert-400' },
-                { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.', accent: false, color: 'text-amber-500' },
-                { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.', accent: false, color: 'text-stone-500 dark:text-stone-400' },
-                { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.', accent: false, color: 'text-forest-500 dark:text-forest-400' },
-                { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.', accent: true, color: 'text-stone-500 dark:text-stone-400' },
-              ].map(({ icon: Icon, name, desc, accent, color }, i) => (
-                <div
-                  key={name}
-                  className={`reveal-card bg-white dark:bg-ink-50 rounded-2xl p-5 border shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 ${
-                    accent
-                      ? 'border-forest-200 dark:border-forest-800'
-                      : 'border-stone-200 dark:border-ink-400'
-                  }`}
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                >
-                  <Icon size={20} className={color} aria-hidden="true" />
-                  <p className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-3">{name}</p>
-                  <p className="text-stone-500 dark:text-stone-400 text-xs leading-relaxed mt-1">{desc}</p>
+                  <p className="ed-lede ed-measure mt-5 text-stone-700">
+                    The method inside this app isn't ours: it's Habit Reversal Training, the best-studied behavioural
+                    treatment for nail biting. In the landmark clinical trial, participants' own daily episode counts
+                    fell by roughly 99% over the study's five months, and a meta-analysis of 18 studies found a large
+                    pooled post-treatment effect across habit disorders generally.
+                  </p>
+
+                  {/* Sources, set the way a journal sets them: ruled, mono, one
+                      per line. Both hrefs are the original PubMed records. */}
+                  <ul className="mt-8 list-none border-t border-hairline">
+                    <li className="border-b border-hairline">
+                      <a
+                        href="https://pubmed.ncbi.nlm.nih.gov/7436976/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block py-3.5 text-stone-500 hover:text-forest-600 transition-colors"
+                      >
+                        <span className="ed-link ed-mono">Azrin, Nunn &amp; Frantz (1980): Behaviour Research and Therapy</span>
+                      </a>
+                    </li>
+                    <li className="border-b border-hairline">
+                      <a
+                        href="https://pubmed.ncbi.nlm.nih.gov/21549664/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block py-3.5 text-stone-500 hover:text-forest-600 transition-colors"
+                      >
+                        <span className="ed-link ed-mono">Bate et al. (2011): Clinical Psychology Review meta-analysis</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </section>
+              </div>
 
-          {/* ── WHY WE BUILT THIS ─────────────────────────────────────────── */}
-          <section aria-labelledby="why-built-heading" className="reveal">
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-8 sm:p-10 shadow-card max-w-2xl mx-auto">
-              <p className="text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 font-semibold text-center">Why we built this</p>
-              <h2 id="why-built-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">
+              {/* The two honesty notes, in the margin where a journal puts its
+                  caveats. Each note's own title is the mono label: no invented
+                  apparatus, no icons, no card. */}
+              <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
+                <div className="border-t border-hairline pt-4">
+                  <p className="ed-mono text-stone-500">No fake reviews here</p>
+                  <p className="ed-body mt-3 text-stone-600">
+                    We don't publish paid or invented testimonials. The free trial exists so the app can prove
+                    itself on your own biting data, usually within the first hour.
+                  </p>
+                </div>
+
+                <div className="mt-9 border-t border-hairline pt-4">
+                  <p className="ed-mono text-stone-500">An app is not a clinician</p>
+                  <p className="ed-body mt-3 text-stone-600">
+                    For severe or distressing BFRBs, see a professional. The{' '}
+                    <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="ed-link text-forest-600 hover:text-forest-500 transition-colors">TLC Foundation for Body-Focused Repetitive Behaviors</a>{' '}
+                    maintains a directory of BFRB-informed therapists.
+                  </p>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 04 · THE INSTRUMENT ───────────────────────────────────────── */}
+        {/* Three old sections argued as one: what the thing refuses to do with
+            your camera (the privacy statement, whose heading is this section's
+            h2), what it is made of (the feature grid, now a hairline-separated
+            specification list, no cards, no hover lift), and how you check the
+            claim for yourself (the privacy deep-dive, in the margin). */}
+        <section aria-labelledby="privacy-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="04" label="The instrument" />
+
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="privacy-heading" className="ed-h2 text-stone-800">
+                  Your camera never leaves this app.
+                </h2>
+                <p className="font-display text-2xl leading-[1.15] tracking-[-0.01em] mt-3 text-forest-600">
+                  Not even for a millisecond.
+                </p>
+
+                <p className="ed-lede ed-measure mt-6 text-stone-600">
+                  A camera pointed at your face all day is a lot to trust an app with. So we built it the only
+                  way that felt right: the AI runs entirely on your own device. Every frame is processed locally
+                  on your CPU or GPU, and not one byte of camera data is ever sent to a server, because there's
+                  no server involved in detection at all.
+                </p>
+
+                {/* The line that settles it, set as an instrument reading like
+                    the hero's on-device guarantee: ruled top and bottom, mono,
+                    nothing else. The rounded lock tile it used to sit under is
+                    gone: it was the most card-shaped object on the page. */}
+                <p className="ed-mono mt-9 border-y border-hairline py-3.5 text-forest-600">
+                  Disconnect from the internet and the app works exactly the same.
+                </p>
+
+                {/* The feature grid, re-set as a specification list: hairline
+                    rows, icon and name hanging in the left column, description
+                    beside it. Same six names and descriptions, verbatim. */}
+                <section aria-labelledby="features-heading" className="reveal mt-16">
+                  <div className="ed-mark text-stone-500">
+                    <span className="ed-mono flex-shrink-0">Specification</span>
+                    <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
+                  </div>
+
+                  <h3
+                    id="features-heading"
+                    className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                  >
+                    Everything you need to build the habit.
+                  </h3>
+                  <p className="ed-body mt-2 text-stone-500">Nothing you don't.</p>
+
+                  <dl className="mt-7 border-t border-hairline">
+                    {[
+                      { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.' },
+                      { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.' },
+                      { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.' },
+                      { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.' },
+                      { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.' },
+                      { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.' },
+                    ].map(({ icon: Icon, name, desc }) => (
+                      <div
+                        key={name}
+                        className="border-b border-hairline py-4 sm:grid sm:grid-cols-[10.5rem_1fr] sm:gap-6"
+                      >
+                        <dt className="flex items-center gap-2.5 text-sm font-semibold leading-[1.7] text-stone-800">
+                          <Icon size={15} aria-hidden="true" className="flex-shrink-0 text-forest-600" />
+                          {name}
+                        </dt>
+                        <dd className="ed-body ed-measure mt-1 sm:mt-0 text-stone-600">{desc}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              </div>
+
+              {/* The privacy deep-dive, in the margin: it is literally a set of
+                  instructions for checking the claim in the main column, which
+                  is what a margin note is for. Its h2 is an h3 now (04's h2 is
+                  the privacy heading) and keeps `id="privacy-details-heading"`,
+                  so the aria-labelledby on this nested section still resolves. */}
+              <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
+                <section aria-labelledby="privacy-details-heading">
+                  <h3
+                    id="privacy-details-heading"
+                    className="font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                  >
+                    Open, honest, verifiable.
+                  </h3>
+                  <p className="ed-body mt-3 text-stone-600">
+                    The privacy claims on this page aren't marketing. You can verify every one of them yourself.
+                  </p>
+
+                  <div className="mt-9">
+                    {[
+                      {
+                        title: 'No network requests during detection',
+                        detail: "Open Activity Monitor and watch network usage while the app runs. You'll see nothing camera-related, because nothing is sent.",
+                      },
+                      {
+                        title: 'Data lives on your device only',
+                        detail: 'Your streak and incident log are stored locally. Uninstall the app and it\'s gone: no server backup, no data retained.',
+                      },
+                      {
+                        title: 'Built on open web technologies',
+                        detail: 'The app runs on React, WebAssembly, and MediaPipe (all inspectable). Camera frames never leave the canvas element.',
+                      },
+                    ].map(({ title, detail }) => (
+                      <div key={title} className="mt-8 border-t border-hairline pt-4 first:mt-0">
+                        <p className="ed-mono text-stone-500">{title}</p>
+                        <p className="ed-body mt-3 text-stone-600">{detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 05 · WHY WE BUILT THIS ────────────────────────────────────── */}
+        {/* The closing note, set as a signed colophon: narrow measure, centred
+            as a block on the page, hairline above and below, no frame. The old
+            eyebrow ("Why we built this") is the section mark's label, so that
+            string keeps its job instead of being repeated. Only the signature
+            is centred: the prose stays ragged-right like every other column
+            on the page. */}
+        <section aria-labelledby="why-built-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="05" label="Why we built this" />
+
+            <div
+              className="reveal ed-measure mx-auto mt-14 border-y border-hairline py-12 lg:mt-20 lg:py-14"
+              style={{ transitionDelay: '80ms' }}
+            >
+              <h2 id="why-built-heading" className="ed-h2 text-stone-800">
                 Made by people who bite their nails too.
               </h2>
 
-              <div className="text-stone-500 dark:text-stone-400 text-sm sm:text-base leading-relaxed mt-6 space-y-4">
-                <p>
+              <div className="mt-7 space-y-5 text-stone-600">
+                <p className="ed-body">
                   Every other tool we tried fought the symptom. Bitter polish makes your nails taste bad. Gloves
                   and fidget toys put something in the way. None of them touched the real problem: by the time
                   you notice you're biting, you've already been at it for minutes. The habit is simply faster
                   than your awareness.
                 </p>
-                <p>
-                  So we built the one thing that closes that gap — something that notices the instant your hand
+                <p className="ed-body">
+                  So we built the one thing that closes that gap: something that notices the instant your hand
                   moves and hands the awareness back to you, the way habit reversal therapy does, but without an
                   appointment. And because it's pointed at your face all day, we made it a hard rule that not a
                   single frame of video ever leaves your device.
                 </p>
-                <p className="text-stone-700 dark:text-stone-200 font-medium">
+                <p className="ed-body font-medium text-stone-800">
                   No data harvesting. No engagement tricks. Just the one thing that actually helps you stop.
                 </p>
               </div>
-              <p className="text-stone-400 dark:text-stone-500 text-sm text-center mt-6">— The Stop Biting team</p>
+
+              {/* The signature. The dash that used to introduce it is gone; a
+                  mono line under the colophon reads as a signature without it. */}
+              <p className="ed-mono mt-10 text-center text-stone-500">The Stop Biting team</p>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ── EVIDENCE (honest social proof — no invented testimonials) ─── */}
-          <section aria-labelledby="evidence-heading">
-            <h2 id="evidence-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Built on real habit science</h2>
-
-            <div className="mt-8 space-y-4">
-              {/* Featured evidence card — full width, forest tint */}
-              <div className="reveal-card bg-forest-50 dark:bg-forest-900/20 border border-forest-100 dark:border-forest-800 rounded-2xl px-8 py-7">
-                <div className="flex items-center gap-2 mb-4">
-                  <BookOpen size={14} className="text-forest-600 dark:text-forest-400" aria-hidden="true" />
-                  <p className="text-xs uppercase tracking-wider font-semibold text-forest-600 dark:text-forest-400">The evidence behind the method</p>
-                </div>
-                <p className="text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
-                  The method inside this app isn't ours — it's Habit Reversal Training, the best-studied behavioural
-                  treatment for nail biting. In the landmark clinical trial, participants' own daily episode counts
-                  fell by roughly 99% over the study's five months, and a meta-analysis of 18 studies found a large
-                  pooled post-treatment effect across habit disorders generally.
-                </p>
-                <footer className="mt-5 flex flex-wrap gap-x-4 gap-y-1 text-xs">
-                  <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
-                    Azrin, Nunn &amp; Frantz (1980) — Behaviour Research and Therapy
-                  </a>
-                  <a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
-                    Bate et al. (2011) — Clinical Psychology Review meta-analysis
-                  </a>
-                </footer>
-              </div>
-
-              {/* Two smaller honesty cards side by side */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200">
-                  <ShieldCheck size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
-                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">No fake reviews here</p>
-                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
-                    We don't publish paid or invented testimonials. The free trial exists so the app can prove
-                    itself on your own biting data — usually within the first hour.
-                  </p>
-                </div>
-                <div className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
-                  <Check size={16} className="text-forest-500 dark:text-forest-400 mb-3" aria-hidden="true" />
-                  <p className="text-stone-800 dark:text-stone-200 text-sm font-semibold">An app is not a clinician</p>
-                  <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed mt-2">
-                    For severe or distressing BFRBs, see a professional. The{' '}
-                    <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">TLC Foundation for Body-Focused Repetitive Behaviors</a>{' '}
-                    maintains a directory of BFRB-informed therapists.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* ── PRIVACY DEEP-DIVE ─────────────────────────────────────────── */}
-          <section aria-labelledby="privacy-details-heading">
-            <h2 id="privacy-details-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center tracking-tight">Open, honest, verifiable.</h2>
-            <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2 max-w-xs mx-auto">
-              The privacy claims on this page aren't marketing. You can verify every one of them yourself.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
-              {[
-                {
-                  icon: WifiOff,
-                  title: 'No network requests during detection',
-                  detail: "Open Activity Monitor and watch network usage while the app runs. You'll see nothing camera-related — because nothing is sent.",
-                },
-                {
-                  icon: HardDrive,
-                  title: 'Data lives on your device only',
-                  detail: 'Your streak and incident log are stored locally. Uninstall the app and it\'s gone — no server backup, no data retained.',
-                },
-                {
-                  icon: Code2,
-                  title: 'Built on open web technologies',
-                  detail: 'The app runs on React, WebAssembly, and MediaPipe — all inspectable. Camera frames never leave the canvas element.',
-                },
-              ].map(({ icon: Icon, title, detail }, i) => (
-                <div
-                  key={title}
-                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl px-5 py-4 flex items-start gap-4 shadow-card hover:-translate-y-1 hover:shadow-card-md transition-all duration-200"
-                  style={{ transitionDelay: `${i * 80}ms` }}
-                >
-                  <Icon size={16} className="text-forest-500 dark:text-forest-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                  <div>
-                    <p className="text-stone-800 dark:text-stone-100 text-sm font-semibold">{title}</p>
-                    <p className="text-stone-500 dark:text-stone-400 text-xs leading-relaxed mt-0.5">{detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+        <div className="max-w-6xl mx-auto px-8 space-y-20 pb-20">
 
           {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
           <PricingSection />
