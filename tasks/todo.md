@@ -656,3 +656,24 @@ post can reach it. It predates this session's changes (verified by running the o
 It does carry 1 manual in-body link, so it is not truly orphaned sitewide. Fixing it properly
 means either retagging the post (an owner content decision) or reworking the fallback for
 undersized groups, which would perturb the whole graph. Flagged rather than forced.
+
+### 2C — cannibalisation: differentiated, NOT merged (deviates from the approved policy)
+The owner approved "merge + 301 the weakest". Applied that test to the proposed merge and it
+failed, so the merge was NOT executed. Evidence:
+- `nail-biting-cure` is **9,896 chars** with four cited sources (Twohig 2003, Azrin 1980,
+  Bate 2011, Lee & Lipner 2022) and owns a distinct query ("is there a cure for nail biting").
+- Its proposed merge target `stopping-nail-biting-for-good` is **6,458 chars** with one source.
+- Real overlap was **one section out of six**, not a thin duplicate.
+Folding the larger, better-sourced page into the smaller one would have destroyed a
+well-sourced asset and surrendered a query no other page targets. Instead: condensed the one
+duplicated section and handed it off by link. No URL removed, nothing de-indexed.
+Also checked the watchlist pair (`stop-nail-biting-fast` 10,567 vs `best-nail-biting-remedies`
+8,226): both substantial, neither weak. No merge candidate found anywhere in the head-term
+cluster — the cannibalisation here is overlapping framing, not thin duplication.
+
+Cross-links added so the cluster reinforces instead of competing (internal blog links 22 -> 29):
+pillar -> best-nail-biting-remedies / best-apps-to-stop-nail-biting / bitter-nail-polish-review
+/ nac-nail-biting / how-long-to-stop-nail-biting / stopping-nail-biting-for-good;
+nail-biting-cure -> stopping-nail-biting-for-good.
+Also added the missing NAC option class to the pillar (Ghanizadeh 2013, 42 children, 800mg/day,
+significant at one month, not at two) — it was absent despite a dedicated cited page existing.

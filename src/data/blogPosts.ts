@@ -1482,7 +1482,8 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Why do some people stop for good and others relapse?',
-      body: `Long-term outcome research identifies several factors that distinguish people who achieve permanent-feeling remission from those who relapse. The most important is whether the competing response habit becomes automatic. If, after 3 months of practice, applying the competing response when biting is detected still requires deliberate effort, the long-term outlook is less favorable. The target is automaticity of the replacement — the replacement should start to feel as reflexive as the original habit.\n\nContextual change is the most common relapse trigger. Moving, starting a new job, having a child, going through a high-stress period — any of these can reactivate the original habit pathway by introducing novel stressors without the established cue-response patterns that supported the competing response. Long-term remission requires recognizing these high-risk periods in advance and actively re-engaging the competing response practice, rather than assuming that past success will persist automatically through major life changes.`,
+      body: `One factor separates remission that holds from remission that does not: whether the competing response has become automatic. If applying it still takes deliberate effort after three months of practice, the outlook is weaker. The target is a replacement that fires as reflexively as the original habit did.\n\nContextual change is the most common trigger for the habit's return. Moving, a new job, a new child, a sustained stretch of stress: each introduces novel cues without the established patterns that supported the competing response.`,
+      html: `<p>Relapse has its own guide on this site. <a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a> covers the lapse versus relapse distinction, what a sustainable strategy looks like, and when to seek professional support, rather than repeating it here.</p>`,
     },
     {
       heading: 'What treatments produce the best long-term results?',
@@ -2142,11 +2143,14 @@ BLOG_POSTS.push({
         `Physical barriers (gloves, bandages, acrylics) — remove the option temporarily while the underlying habit loop is retrained.`,
         `Competing responses (fidget tools, pen gripping, palm pressing) — give the hands something physically incompatible with biting to do.`,
         `Stress and trigger management (breathing exercises, sleep, workload) — reduce how often the urge fires in the first place.`,
+        `Supplements (N-acetylcysteine) — one 2013 double-blind trial in 42 children and adolescents found 800mg/day increased nail length at one month, but the advantage was no longer significant at two.`,
       ],
+      html: `<p>Each category has its own guide here, so this page does not re-argue them: <a href="/blog/best-nail-biting-remedies">every remedy ranked by evidence</a>, <a href="/blog/best-apps-to-stop-nail-biting">the apps compared side by side</a>, <a href="/blog/bitter-nail-polish-review">what bitter polish does and does not do</a>, and <a href="/blog/nac-nail-biting">the NAC trial data in full</a>.</p>`,
     },
     {
       heading: `A realistic timeline`,
       body: `Week one typically feels like it's getting worse — you're not biting more, you're noticing more, which is the awareness training doing its job. No controlled trial has measured week-by-week biting frequency during self-directed Habit Reversal Training, so treat any week-by-week schedule — here or anywhere else — as an expectation rather than a measured trajectory. The best-evidenced anchor is how long a new response takes to become automatic: in Lally et al. (2010), 96 volunteers built a new daily habit and, among the 39 whose data fitted the model, the median time to reach 95% of an automaticity plateau was 66 days, with a range of 18 to 254. That is a general habit-formation figure, not one measured for nail biting specifically.\n\nRelapse during high-stress periods (exams, deadlines, big life changes) is common and doesn't mean the approach has failed — the original habit pathway isn't erased, only suppressed by a newer, competing one, and stress can temporarily tip the balance back. The response is to notice, adjust, and continue, not to start over from zero.`,
+      html: `<p>For the week-by-week version of this, see <a href="/blog/how-long-to-stop-nail-biting">how long it takes to stop nail biting</a>, and <a href="/blog/stopping-nail-biting-for-good">stopping for good</a> for what to do when it comes back.</p>`,
     },
     {
       heading: `Building a plan that fits your pattern`,
