@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { ArrowLeft, BookOpen, Shield, Cpu, Bell, BarChart2, ArrowRight } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 export function HowItWorks() {
-  useTheme();
+  useTheme('light');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -79,7 +78,6 @@ export function HowItWorks() {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/#pricing" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Pricing
           </a>

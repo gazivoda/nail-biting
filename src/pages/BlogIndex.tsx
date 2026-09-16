@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Clock, BookOpen } from 'lucide-react';
 import { BLOG_INDEX } from '../data/blogIndex';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_INDEX.map(p => p.tag)))];
 
@@ -41,7 +40,7 @@ function useScrollReveal() {
 }
 
 export function BlogIndex() {
-  useTheme();
+  useTheme('light');
   useScrollReveal();
   const [activeTag, setActiveTag] = useState('All');
 
@@ -63,7 +62,6 @@ export function BlogIndex() {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Launch App
           </a>

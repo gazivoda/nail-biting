@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 interface Section {
   heading: string;
@@ -23,7 +22,7 @@ interface Props {
 }
 
 export function LegalPage({ title, lastUpdated, sections, standfirst, children }: Props) {
-  useTheme();
+  useTheme('light');
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
@@ -31,7 +30,6 @@ export function LegalPage({ title, lastUpdated, sections, standfirst, children }
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
         <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
         <div className="flex items-center gap-4">
-          <ThemeToggle />
           <a
             href="/"
             className="inline-flex items-center gap-1.5 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors"

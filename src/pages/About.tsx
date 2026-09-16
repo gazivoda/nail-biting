@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 export function About() {
-  useTheme();
+  useTheme('light');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -21,7 +20,6 @@ export function About() {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Launch App
           </a>

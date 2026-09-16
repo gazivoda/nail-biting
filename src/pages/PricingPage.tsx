@@ -2,7 +2,6 @@ import { useEffect, type ReactNode } from 'react';
 import { ArrowLeft, BookOpen, Check, ChevronDown, Zap } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { ThemeToggle } from '../components/ThemeToggle';
 import { PricingSection } from '../components/PricingSection';
 
 // Dedicated /pricing page. The server (server.js) injects the title, meta
@@ -53,7 +52,7 @@ const PLAN_INCLUDES = [
 ];
 
 export function PricingPage() {
-  useTheme();
+  useTheme('light');
   useScrollReveal();
 
   useEffect(() => {
@@ -71,7 +70,6 @@ export function PricingPage() {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Launch App
           </a>

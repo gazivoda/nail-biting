@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Check, X } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 import { PAGE_MAP } from '../data/comparePages';
 import { AuthorBox } from './EditorialPolicyPage';
 
@@ -11,7 +10,7 @@ interface Props {
 
 
 export function ComparePage({ path }: Props) {
-  useTheme();
+  useTheme('light');
 
   const getContent = PAGE_MAP[path];
   const content = getContent?.();
@@ -55,7 +54,6 @@ export function ComparePage({ path }: Props) {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/" className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-all duration-150 hover:-translate-y-0.5">
             Try Free
           </a>

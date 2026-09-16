@@ -6,7 +6,6 @@ import { AUTHOR_BIO } from '../data/editorialPolicy';
 import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
-import { ThemeToggle } from '../components/ThemeToggle';
 
 interface Props {
   slug: string;
@@ -36,7 +35,7 @@ function formatDate(iso: string) {
 
 
 export function BlogPost({ slug }: Props) {
-  useTheme();
+  useTheme('light');
   const post = getPost(slug);
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
   const related = post ? getRelated(BLOG_POSTS, slug) : [];
@@ -87,7 +86,6 @@ export function BlogPost({ slug }: Props) {
             <BookOpen size={14} aria-hidden="true" />
             Blog
           </a>
-          <ThemeToggle />
           <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Launch App
           </a>
