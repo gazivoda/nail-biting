@@ -27,3 +27,42 @@ Adding `<alpha-value>` to tailwind colours fixed the homepage but silently
 activated ~31 previously-dead opacity utilities app-wide, including the
 AlertOverlay's `bg-alert-900/90` — the core "Hands away!" panel, which had been
 rendering with no background at all. Correct fix, but scope-check before landing.
+
+## 2026-09-16 — Head-term SEO/GEO push (nail-habit-app)
+
+**A well-built derived-schema pipeline can be wired to only half the routes.**
+`visibleFaqSection()` derives FAQPage from a page's own rendered `<h3>/<p>` pairs,
+with careful comments about never marking up what does not render. It was only
+ever called on the compare/solutions route, so no blog post could emit FAQPage
+whatever its markup. The quality of a helper says nothing about its coverage.
+Grep for every call site before concluding a feature works sitewide.
+
+**Inserting a key into an object literal that already has it fails silently.**
+Adding `html:` to a section that already had one produced a duplicate key; JS
+takes the later value, so the newly-written FAQ markup was discarded with no
+error and `tsc` stayed green. Count the keys per object after any structural
+insert. The edit "succeeding" is not evidence the value survived.
+
+**The same wrong fact hides in more copies than the first grep finds.**
+Reconciling "how long does it take" took five passes: pillar prose, the homepage
+FAQPage JSON-LD, the hand-mirrored `FAQS` array in Landing.tsx, and — found only
+later, while editing for an unrelated reason — a `HowTo` step inside server.js
+that asserted the same week range as structured data. Search the schema builders,
+not just the content files, and finish by grepping the retired string to zero.
+
+**Verify schema by fetching from a running server, not by reading the source.**
+Boot with `GOOGLE_CLIENT_ID=x GOOGLE_CLIENT_SECRET=x JWT_SECRET=<32 chars>`. Both
+FAQ defects looked fixed in the data file and were still absent from the response.
+
+**A gate that refuses to fire is often right.** `visibleConditionSchema` ignored
+"Onychophagia" appearing in a citation title because `visibleArticleText()` strips
+citation blocks first. The fix was to earn the entity by naming the term in the
+prose, not to loosen the gate. It then withheld one therapy whose exact phrasing
+the page does not use — also correct. Let the schema follow the copy.
+
+**Implementation subagents burned their budget re-researching and shipped nothing.**
+Four in a row: 28-32 tool calls each, zero file edits, stopping mid-investigation.
+The three diagnosis agents were genuinely excellent. Pattern: use subagents for
+research and audit, do precise edits directly. If an implementation agent is used,
+give it the verified finding plus exact file/line targets and tell it to edit
+within its first few tool calls.
