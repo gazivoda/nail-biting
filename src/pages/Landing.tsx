@@ -34,6 +34,52 @@ const FEATURED_POSTS = FEATURED_SLUGS
   .map(slug => BLOG_INDEX.find(p => p.slug === slug))
   .filter((p): p is NonNullable<typeof p> => p !== undefined);
 
+// The ten hand-picked guides. Labels are the page's own copy, not the post
+// titles, because a reading list wants the shortest true description of the
+// destination rather than the article's full SEO headline.
+const FEATURED_GUIDES: { href: string; label: string }[] = [
+  { href: '/how-it-works', label: 'How the AI nail biting detection works' },
+  { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the science behind stopping nail biting' },
+  { href: '/blog/how-to-stop-nail-biting', label: 'How to stop nail biting: the complete guide' },
+  { href: '/blog/nail-biting-30-day-plan', label: 'The 30-day plan to stop biting your nails' },
+  { href: '/blog/nail-biting-trigger-mapping', label: 'Trigger mapping: find out when you actually bite' },
+  { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best apps to stop nail biting (2026)' },
+  { href: '/blog/best-nail-biting-remedies', label: 'Every nail biting remedy, ranked by evidence' },
+  { href: '/blog/nail-biting-health-risks', label: 'The real health risks of nail biting' },
+  { href: '/blog/nail-biting-in-children', label: 'Nail biting in children: a guide for parents' },
+  { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
+];
+
+// Section 06 is one reading list, so the two old lists are merged here rather
+// than in the markup. Two of the guides above point at articles the blog
+// preview also carried (habit-reversal-training-guide and
+// nail-biting-health-risks), so the merge is by href: every destination
+// survives and each one is printed exactly once, under the guide's own label.
+// The kicker is the post's tag wherever the destination is a post and "Guide"
+// where it isn't, and the reading time is read from the post data so it can't
+// drift. The two destinations that aren't articles simply have none.
+type ReadingRow = { href: string; title: string; kicker: string; minutes?: number };
+
+const READING_LIST: ReadingRow[] = (() => {
+  const postFor = (href: string) =>
+    href.startsWith('/blog/')
+      ? BLOG_INDEX.find(p => p.slug === href.slice('/blog/'.length))
+      : undefined;
+
+  const rows: ReadingRow[] = FEATURED_GUIDES.map(({ href, label }) => {
+    const post = postFor(href);
+    return { href, title: label, kicker: post?.tag ?? 'Guide', minutes: post?.readingMinutes };
+  });
+
+  for (const post of FEATURED_POSTS) {
+    const href = `/blog/${post.slug}`;
+    if (rows.some(row => row.href === href)) continue;
+    rows.push({ href, title: post.title, kicker: post.tag, minutes: post.readingMinutes });
+  }
+
+  return rows;
+})();
+
 // The apparatus row under the hero's call to action — what the thing is, in
 // five words or fewer each, set as a mono rule of hairline-separated terms.
 const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud'];
@@ -54,7 +100,7 @@ const HERO_FIGURES: { figure: string; label: string }[] = [
 const FAQS: { q: string; a: string }[] = [
   {
     q: 'Why do people bite their nails?',
-    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults. Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic — happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
+    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults. Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic, happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
   },
   {
     q: 'What are the best remedies to stop nail biting?',
@@ -62,15 +108,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'What is habit reversal training for nail biting?',
-    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training — learning to notice every time you bite; a competing response — an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting.',
+    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training, learning to notice every time you bite; a competing response, an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting.',
   },
   {
     q: 'Is nail biting harmful?',
-    a: 'Yes. Chronic nail biting causes dental damage including chipped teeth and jaw strain, nail fold infections, transfer of pathogens from fingers to mouth, and permanent nail deformity in severe cases. The visible damage also drives shame and social anxiety, which increases biting — a self-reinforcing cycle.',
+    a: 'Yes. Chronic nail biting causes dental damage including chipped teeth and jaw strain, nail fold infections, transfer of pathogens from fingers to mouth, and permanent nail deformity in severe cases. The visible damage also drives shame and social anxiety, which increases biting: a self-reinforcing cycle.',
   },
   {
     q: 'Does Stop Biting send my camera feed to the internet?',
-    a: 'No. Detection uses MediaPipe — Google\'s WebAssembly vision framework — running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. There are zero network requests during detection: you can disconnect from the internet and the app works identically.',
+    a: 'No. Detection uses MediaPipe (Google\'s WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. There are zero network requests during detection: you can disconnect from the internet and the app works identically.',
   },
   {
     q: 'How long does it take to stop biting your nails?',
@@ -781,156 +827,194 @@ export function Landing(_props: Props) {
           </div>
         </section>
 
-        <div className="max-w-6xl mx-auto px-8 space-y-20 pb-20">
-
-          {/* ── PRICING (shared with /pricing — see PricingSection.tsx) ───── */}
+        {/* Pricing keeps the legacy centred wrapper: it is a shared component
+            and has to render here exactly as it renders on /pricing. Everything
+            that used to sit inside that wrapper beside it is an editorial
+            section now, so the wrapper closes again immediately and re-opens
+            further down for the contact form. */}
+        <div className="max-w-6xl mx-auto px-8 pb-20">
+          {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
           <PricingSection />
+        </div>
 
-          {/* ── FEATURED GUIDES ───────────────────────────────────────────── */}
-          <section aria-labelledby="featured-guides-heading">
-            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Guides</p>
-            <h2 id="featured-guides-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Featured Guides</h2>
-            <div className="reveal mt-6 flex flex-col gap-3 max-w-2xl mx-auto">
-              {[
-                { href: '/how-it-works', label: 'How the AI nail biting detection works' },
-                { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the science behind stopping nail biting' },
-                { href: '/blog/how-to-stop-nail-biting', label: 'How to stop nail biting: the complete guide' },
-                { href: '/blog/nail-biting-30-day-plan', label: 'The 30-day plan to stop biting your nails' },
-                { href: '/blog/nail-biting-trigger-mapping', label: 'Trigger mapping: find out when you actually bite' },
-                { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best apps to stop nail biting (2026)' },
-                { href: '/blog/best-nail-biting-remedies', label: 'Every nail biting remedy, ranked by evidence' },
-                { href: '/blog/nail-biting-health-risks', label: 'The real health risks of nail biting' },
-                { href: '/blog/nail-biting-in-children', label: 'Nail biting in children: a guide for parents' },
-                { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
-              ].map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="group flex items-center justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-0.5 hover:shadow-card transition-all duration-200"
-                >
-                  <span className="text-sm text-stone-700 dark:text-stone-200 group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{link.label}</span>
-                  <ArrowRight size={14} className="text-stone-400 group-hover:text-forest-500 shrink-0 transition-colors" aria-hidden="true" />
-                </a>
-              ))}
+        {/* ── 06 · FURTHER READING ──────────────────────────────────────── */}
+        {/* The ten featured guides and the three blog cards, argued as one
+            reading list: mono kicker, title, reading time where the
+            destination is an article. No cards, no chevrons, no hover lift,
+            just hairlines and the link underline growing on hover. "From the
+            blog" keeps its heading and its id in the margin, where it labels
+            the pointer to the full index. */}
+        <section aria-labelledby="featured-guides-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="06" label="Further reading" />
+
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="featured-guides-heading" className="ed-h2 text-stone-800">
+                  Featured Guides
+                </h2>
+
+                <ul className="mt-8 list-none border-t border-hairline">
+                  {READING_LIST.map(({ href, title, kicker, minutes }) => (
+                    <li key={href} className="border-b border-hairline">
+                      <a
+                        href={href}
+                        className="group block py-4 text-stone-700 transition-colors hover:text-forest-600 sm:grid sm:grid-cols-[7.5rem_1fr_auto] sm:items-baseline sm:gap-x-6"
+                      >
+                        <span className="ed-mono block text-stone-500 transition-colors group-hover:text-forest-600">
+                          {kicker}
+                        </span>
+                        <span className="mt-2 block text-sm font-semibold leading-[1.6] sm:mt-0">
+                          <span className="ed-link">{title}</span>
+                        </span>
+                        {minutes !== undefined && (
+                          <span className="ed-mono mt-1.5 block text-stone-400 sm:mt-0 sm:text-right">
+                            {minutes} min read
+                          </span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* The blog preview's heading, in the margin-note form 03 and 04
+                  use. It is an h3 now (06's h2 is the guides heading) and keeps
+                  `id="blog-preview-heading"`, so the aria-labelledby on this
+                  nested section still resolves. */}
+              <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
+                <section aria-labelledby="blog-preview-heading" className="border-t border-hairline pt-4">
+                  <h3 id="blog-preview-heading" className="ed-mono text-stone-500">From the blog</h3>
+                  <a
+                    href="/blog"
+                    className="group mt-3 inline-flex items-center gap-1.5 text-sm text-forest-600 transition-colors hover:text-forest-500"
+                  >
+                    <span className="ed-link">All articles</span>
+                    <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                  </a>
+                </section>
+              </aside>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ── BLOG PREVIEW ──────────────────────────────────────────────── */}
-          <section aria-labelledby="blog-preview-heading">
-            <div className="reveal flex items-center justify-between mb-6">
-              <h2 id="blog-preview-heading" className="text-2xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">From the blog</h2>
-              <a href="/blog" className="group inline-flex items-center gap-1 text-forest-600 dark:text-forest-400 text-sm hover:text-forest-500 transition-colors">
-                All articles{' '}
-                <ArrowRight size={14} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
+        {/* ── 07 · FAQ ──────────────────────────────────────────────────── */}
+        {/* The same six questions and answers, still byte-identical to the
+            FAQPage JSON-LD in index.html: Google requires the structured data
+            to have a visible counterpart, and server.js parses that same block
+            for its crawler prose. Any edit here is an edit there. The card
+            frames are gone and the disclosure is untouched: <details> and
+            <summary> keep this working with no JavaScript at all. */}
+        <section id="faq" aria-labelledby="faq-heading" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <SectionMark n="07" label="FAQ" />
+
+            <div className="ed-grid mt-10 lg:mt-14">
+              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+                <h2 id="faq-heading" className="ed-h2 text-stone-800">
+                  Questions people ask about nail biting
+                </h2>
+
+                <div className="mt-8 border-t border-hairline">
+                  {FAQS.map(({ q, a }) => (
+                    <details key={q} className="group border-b border-hairline">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-sm font-semibold leading-[1.6] text-stone-800 marker:content-none [&::-webkit-details-marker]:hidden">
+                        {q}
+                        <ChevronDown
+                          size={16}
+                          aria-hidden="true"
+                          className="shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-180"
+                        />
+                      </summary>
+                      <p className="ed-body ed-measure pb-5 text-stone-600">{a}</p>
+                    </details>
+                  ))}
+                </div>
+
+                <p className="ed-caption mt-8 text-stone-400">
+                  More on all of this in the{' '}
+                  <a href="/blog" className="ed-link text-forest-600 transition-colors hover:text-forest-500">nail biting guides</a>: {BLOG_INDEX.length} evidence-based articles.
+                </p>
+              </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {FEATURED_POSTS.map((post, i) => (
-                <a
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="reveal-card bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 group shadow-card"
-                  style={{ transitionDelay: `${i * 80}ms` }}
-                >
-                  <span className="text-xs text-forest-600 dark:text-forest-400 font-semibold uppercase tracking-wider">{post.tag}</span>
-                  <h3 className="text-stone-800 dark:text-stone-100 font-semibold text-sm mt-2 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{post.title}</h3>
-                  <p className="text-stone-400 dark:text-stone-500 text-xs mt-3">{post.readingMinutes} min read</p>
-                </a>
-              ))}
-            </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ── FAQ ───────────────────────────────────────────────────────── */}
-          <section id="faq" aria-labelledby="faq-heading">
-            <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">FAQ</p>
-            <h2 id="faq-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">
-              Questions people ask about nail biting
-            </h2>
-
-            <div className="reveal mt-8 flex flex-col gap-3 max-w-2xl mx-auto">
-              {FAQS.map(({ q, a }) => (
-                <details
-                  key={q}
-                  className="group rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-5 py-4 shadow-card open:shadow-card-md transition-shadow"
-                >
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 text-sm font-semibold text-stone-800 dark:text-stone-100 marker:content-none [&::-webkit-details-marker]:hidden">
-                    {q}
-                    <ChevronDown
-                      size={16}
-                      aria-hidden="true"
-                      className="shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-180"
-                    />
-                  </summary>
-                  <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">{a}</p>
-                </details>
-              ))}
-            </div>
-
-            <p className="reveal text-stone-400 dark:text-stone-500 text-xs text-center mt-6">
-              More on all of this in the{' '}
-              <a href="/blog" className="text-forest-600 dark:text-forest-400 hover:underline">
-                nail biting guides
-              </a>{' '}
-              — {BLOG_INDEX.length} evidence-based articles.
-            </p>
-          </section>
-
-          {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
-          <section
-            aria-label="Call to action"
-            className="reveal text-center py-12 rounded-2xl bg-forest-50 dark:bg-forest-900 border border-forest-200 dark:border-forest-800"
-          >
-            <h2 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">Ready to stop nail biting?</h2>
-            <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed max-w-sm mx-auto mt-4">
-              Use the web app directly in your browser — sign in with Google and nail biting detection starts in under ten seconds. No install needed.
-            </p>
-            <div className="mt-8 flex flex-col items-center gap-3">
+        {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
+        {/* The tinted rounded panel is gone: the argument closes between a
+            pair of hairlines, the full width of the container, so it reads as
+            the end of the page rather than as one more card on it. The
+            shimmer is off the button too: it was the last animated ornament
+            left in this file. */}
+        <section aria-label="Call to action" className="pb-20 lg:pb-28">
+          <div className="ed-container">
+            <div className="reveal border-y border-hairline py-14 text-center lg:py-16">
+              <h2 className="ed-h2 text-stone-800">Ready to stop nail biting?</h2>
+              <p className="ed-body ed-measure mx-auto mt-5 text-stone-600">
+                Use the web app directly in your browser: sign in with Google and nail biting detection starts in
+                under ten seconds. No install needed.
+              </p>
               <a
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-8 py-3.5 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
+                className="mt-9 inline-flex items-center gap-2 rounded-2xl bg-forest-600 px-8 py-3.5 text-sm font-semibold text-cream-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-forest-500 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
               >
                 <Zap size={15} aria-hidden="true" />
-                Start free trial — it's free
+                Start free trial (it's free)
               </a>
-              <p className="text-stone-400 dark:text-stone-500 text-xs">3-day free trial · no credit card required</p>
+              <p className="ed-mono mt-7 text-stone-400">3-day free trial · no credit card required</p>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ── CONTACT ───────────────────────────────────────────────────────── */}
+        {/* ── CONTACT ───────────────────────────────────────────────────── */}
+        {/* Shared component, unchanged: it keeps the legacy wrapper for the
+            same reason PricingSection does. */}
+        <div className="max-w-6xl mx-auto px-8 pb-20">
           <ContactForm />
-
         </div>
       </main>
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-10 px-8 bg-cream-200 dark:bg-ink-200">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-              <p className="text-stone-700 dark:text-stone-200 text-sm font-semibold">Stop Biting</p>
+      {/* The colophon of the printed thing: hairline top rule, the wordmark in
+          the display serif, and the eight links set as a mono column rather
+          than a row of small grey text. All eight hrefs, and the copyright
+          line, are the page's own, unchanged. */}
+      <footer className="border-t border-hairline bg-cream-200 py-14">
+        <div className="ed-container">
+          <div className="flex flex-col justify-between gap-10 sm:flex-row sm:gap-16">
+            <div>
+              <div className="flex items-center gap-2.5">
+                <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
+                <span className="font-display text-lg leading-none tracking-[-0.01em] text-stone-800">Stop Biting</span>
+              </div>
+              <p className="ed-body mt-4 max-w-sm text-stone-500">
+                Stop nail biting (onychophagia) using on-device AI. Works in your browser as a Progressive Web App,
+                no install required. Built with MediaPipe, React, and WebAssembly.
+              </p>
             </div>
-            <p className="text-stone-400 dark:text-stone-500 text-xs mt-1 max-w-xs leading-relaxed">
-              Stop nail biting (onychophagia) using on-device AI. Works in your browser as a Progressive Web App — no install required. Built with MediaPipe, React, and WebAssembly.
-            </p>
+
+            {/* Written out one by one rather than mapped over an array: these
+                eight hrefs are the site's whole legal and navigational surface,
+                and spelling them as real attributes keeps them greppable. */}
+            <nav aria-label="Footer navigation" className="flex flex-col items-start gap-3.5">
+              <a href="/" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Home</span></a>
+              <a href="/blog" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Blog</span></a>
+              <a href="/#pricing" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Pricing</span></a>
+              <a href="mailto:hello@stopbiting.today" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Contact</span></a>
+              <a href="/editorial-policy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Editorial Policy</span></a>
+              <a href="/privacy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Privacy Policy</span></a>
+              <a href="/terms-and-conditions" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Terms of Service</span></a>
+              <a href="/refund-policy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Refund Policy</span></a>
+            </nav>
           </div>
-          <nav aria-label="Footer navigation" className="flex flex-col gap-2 text-xs">
-            <a href="/" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Home</a>
-            <a href="/blog" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Blog</a>
-            <a href="/#pricing" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Pricing</a>
-            <a href="mailto:hello@stopbiting.today" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Contact</a>
-            <a href="/editorial-policy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Editorial Policy</a>
-            <a href="/privacy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Privacy Policy</a>
-            <a href="/terms-and-conditions" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Terms of Service</a>
-            <a href="/refund-policy" className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">Refund Policy</a>
-          </nav>
+
+          <p className="ed-caption mt-12 border-t border-hairline pt-8 text-stone-400">
+            © {new Date().getFullYear()} Stop Biting · AI-powered nail biting detection ·{' '}
+            <a href="https://stopbiting.today/" className="ed-link transition-colors hover:text-stone-600">stopbiting.today</a>
+          </p>
         </div>
-        <p className="text-stone-400 dark:text-stone-500 text-xs text-center mt-8">
-          © {new Date().getFullYear()} Stop Biting · AI-powered nail biting detection ·{' '}
-          <a href="https://stopbiting.today/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">stopbiting.today</a>
-        </p>
       </footer>
 
     </div>
