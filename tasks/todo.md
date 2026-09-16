@@ -725,3 +725,42 @@ after a structural insert; tsc will not flag a duplicate literal key here.
       listed only `Habit Reversal Training (HRT)` and withheld `Bitter-taste nail polish`,
       because the page says "bitter-tasting polishes" rather than the entity's exact term.
       Left as-is rather than reworded to match: the schema should follow the copy.
+
+## SHIPPED TO PRODUCTION — 2026-09-16
+
+Merged to `main` as a clean fast-forward (`origin/main` 4f509a3 -> af351d8, 8 commits, no
+force, no history rewrite). The stored warning that local main was "behind 152 and must never
+be pushed" was STALE: origin/main was an ancestor of the branch head. Local main had been a
+stale ref at 117bcc6 and was fast-forwarded afterwards, never pushed. ICM corrected.
+
+Deploy confirmed live (3 consecutive sitemap probes). Verified ON PRODUCTION, not locally:
+- `/blog/how-to-stop-nail-biting` — FAQPage 4 Q&As + MedicalCondition, 8 H2s, timeRequired PT6M
+- `/blog/best-apps-to-stop-nail-biting` — FAQPage 3 Q&As
+- `/blog/stop-biting-vs-mavala-stop` — FAQPage 2 Q&As
+- 0 JSON-LD parse failures; the retired timeline claim returns 0 hits on every page probed
+IndexNow: 5 URLs submitted, HTTP 200 (the 4 changed posts + `/blog`, whose lastmod derives
+from the newest post date). State was seeded from the pre-deploy sitemap at 4f509a3 first —
+without that, a fresh machine has no state and would have resubmitted all 161 URLs, which
+IndexNow explicitly asks publishers not to do.
+
+### Deploy-verification lesson (cost a near-miss this session)
+The first deploy poller matched after 15s and was WRONG — it hit the old container during the
+rolling-deploy window, and the page it declared "deployed" contained none of the changes.
+Never trust a single post-deploy probe. Require N consecutive matches (3 used here), and probe
+a marker that is unambiguous (sitemap `lastmod`), not prose that might appear elsewhere.
+
+### Still open, off-repo, owner's call
+1. **Medically-reviewed byline.** Every ranking competitor carries a named health writer
+   (NYP: Dorothy Cucci; Healthline: Ashley Marcin + review disclosure) or an institutional
+   identity (Cleveland Clinic, AAD). Ours says "Igor Gazivoda, Founder". Needs a real
+   credentialed reviewer — cannot be manufactured.
+2. **App Store presence.** `stop nail biting app` / `app to stop nail biting` are 89-100%
+   App Store/Google Play listings. A PWA cannot occupy that surface. Distribution decision.
+3. **Product screenshots.** The homepage renders 2 `<img>` tags, both the logo. The
+   SoftwareApplication `screenshot` property was deliberately left off because no genuine
+   capture exists (see docs/off-site-kit/product-hunt-launch.md).
+4. **Off-site brand authority** (~11 composite points, unchanged since August): Product Hunt,
+   AlternativeTo, sameAs profiles.
+5. **Measurement.** Nothing here is a ranking guarantee. stopbiting.today was not observed in
+   the top 10 for any of the 13 sampled queries at baseline — re-run that sample in 4-6 weeks
+   against Search Console impressions to see whether the pillar moved.
