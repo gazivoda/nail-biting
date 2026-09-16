@@ -9,6 +9,14 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ContactForm } from '../components/ContactForm';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
+// The figure program (see docs/superpowers/specs/2026-09-16-homepage-figure-program.md).
+// All four are hand-authored inline SVG and cost this page zero JavaScript
+// beyond their own markup: `recharts` is a dependency, but it is code-split
+// into a ~269 KB chunk the landing page never loads, and it must stay that way.
+import { PrevalenceMatrix } from '../components/figures/PrevalenceMatrix';
+import { HabitLoopFigure } from '../components/figures/HabitLoopFigure';
+import { DetectionGeometryFigure } from '../components/figures/DetectionGeometryFigure';
+import { PrivacyArchitectureFigure } from '../components/figures/PrivacyArchitectureFigure';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
 // page's critical path must never pay for. Lazy so it lands in its own chunk,
@@ -478,6 +486,17 @@ export function Landing() {
                   <span className="ed-mono flex-shrink-0">Key statistics</span>
                 </div>
 
+                {/* The prevalence plate. It leads the figure because the first
+                    row of the list below is the number it draws: the list
+                    states 20-30%, the plate makes it countable, and the
+                    figcaption's Halteh citation covers both. Twenty dots are
+                    solid and ten are open because the source reports a range,
+                    not a point estimate: filling twenty-five would be drawing
+                    a figure nobody measured. */}
+                <div className="mt-7">
+                  <PrevalenceMatrix />
+                </div>
+
                 <dl className="mt-7 border-t border-hairline">
                   {[
                     { number: '20-30%', label: 'of adults bite their nails chronically' },
@@ -566,7 +585,34 @@ export function Landing() {
                   above HRT's parts, apparatus here. `.reveal` is on the <aside>
                   so `.revealed .ed-rule-draw` still reaches the divider. */}
               <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
-                <section aria-labelledby="how-heading">
+                {/* Figure 3 leads the margin because it annotates the theory in
+                    the column beside it, and the three steps below annotate the
+                    instrument. Set as a vertical cycle rather than a ring: a
+                    ring's labels have nowhere to go in a four-column margin.
+                    The competing response is the only forest element in the
+                    plate, so the eye lands on the one point in the loop that
+                    can actually be reached. */}
+                <figure>
+                  <div className="ed-mark text-stone-500">
+                    <span className="ed-mono flex-shrink-0">Fig. 3</span>
+                    <span className="ed-mark-rule" aria-hidden="true" />
+                    <span className="ed-mono flex-shrink-0">The habit loop</span>
+                  </div>
+
+                  <div className="mt-7">
+                    <HabitLoopFigure />
+                  </div>
+
+                  <figcaption className="ed-caption ed-measure mt-6 text-stone-500">
+                    Nail biting closes on itself: the relief is brief, and the brevity is what teaches
+                    the loop to run again. Habit reversal training doesn&apos;t fight the bite. It puts a
+                    competing response into the one interval where awareness still arrives before the
+                    hand does, between the urge and the behaviour. A diagram of the method, not
+                    measured data.
+                  </figcaption>
+                </figure>
+
+                <section aria-labelledby="how-heading" className="mt-14">
                   <div className="ed-mark text-stone-500">
                     <span className="ed-mono flex-shrink-0">How it works</span>
                     <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
@@ -728,6 +774,36 @@ export function Landing() {
                 <p className="ed-mono mt-9 border-y border-hairline py-3.5 text-forest-600">
                   Disconnect from the internet and the app works exactly the same.
                 </p>
+
+                {/* Figure 4, and the strongest plate on the page: the section
+                    explains the instrument in one sentence, and this is the
+                    geometry that sentence is about. Everything in it is read
+                    off src/hooks/biteDetector.ts (21 landmarks, fingertips at
+                    4/8/12/16/20, a mouth centre averaged from face landmarks 13
+                    and 14, one distance against one threshold), so it is a
+                    mechanism diagram and needs no source. Hairline is the raw
+                    landmark topology; forest is the small part of it the
+                    detector actually computes on. */}
+                <figure className="mt-14">
+                  <div className="ed-mark text-stone-500">
+                    <span className="ed-mono flex-shrink-0">Fig. 4</span>
+                    <span className="ed-mark-rule" aria-hidden="true" />
+                    <span className="ed-mono flex-shrink-0">Detection geometry</span>
+                  </div>
+
+                  <div className="mt-8">
+                    <DetectionGeometryFigure />
+                  </div>
+
+                  <figcaption className="ed-caption ed-measure mt-7 text-stone-500">
+                    MediaPipe reduces a hand to 21 landmarks and a mouth to the midpoint of two lip
+                    landmarks. The only quantity this app computes is the distance between the five
+                    fingertips and that midpoint, in frame-relative coordinates. The alarm fires when
+                    a fingertip crosses the threshold radius and stays inside it for several
+                    consecutive frames; the sensitivity setting moves the radius and nothing else.
+                    Geometry, not imagery: a diagram of the method, not measured data.
+                  </figcaption>
+                </figure>
               </div>
 
               {/* The privacy deep-dive, in the margin: it is literally a set of
@@ -769,6 +845,31 @@ export function Landing() {
                     ))}
                   </div>
                 </section>
+
+                {/* Figure 5 closes the margin, directly under the three ways to
+                    verify the claim: the notes tell you how to check it, and
+                    this says what you would be checking. The route to a server
+                    is drawn as severed rather than idle, because that is the
+                    actual architecture: there is no upload path to disable. */}
+                <figure className="mt-14">
+                  <div className="ed-mark text-stone-500">
+                    <span className="ed-mono flex-shrink-0">Fig. 5</span>
+                    <span className="ed-mark-rule" aria-hidden="true" />
+                    <span className="ed-mono flex-shrink-0">The detection path</span>
+                  </div>
+
+                  <div className="mt-7">
+                    <PrivacyArchitectureFigure />
+                  </div>
+
+                  <figcaption className="ed-caption ed-measure mt-6 text-stone-500">
+                    Frames go from the camera to the landmark model, and from the model to the alarm.
+                    All three sit inside your device. There is no route out for camera data, which is
+                    why the figure on the cut path is zero rather than small. Signing in and paying
+                    use the network; detection never does. A diagram of the architecture, not
+                    measured data.
+                  </figcaption>
+                </figure>
               </aside>
 
               {/* The feature grid, re-set as a specification list: hairline
