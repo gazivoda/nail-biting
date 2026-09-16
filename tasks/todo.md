@@ -868,3 +868,46 @@ now exits 0.
 Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0 (144 posts), og:check 0.
 
 ### Backlog now: 8 of 10 done. Only item 9 remains, and it is an owner decision.
+
+## LOOP STOPPED — 2026-09-16, after 5 working iterations of a scheduled 20
+
+Stopped deliberately, per the owner's "stop early rather than churn" instruction. The genuine
+backlog is exhausted; the remaining item is not mine to decide.
+
+### Item 9, the only backlog item not done, and why it is being left
+`nail-biting-laptop-working-from-home` receives 0 inbound related-links. Verified cause: it is
+the sole post tagged `Humor`, and `getRelated` links strictly within a tag. It is the **only**
+undersized group in the corpus (every other tag has 4+ members, so every other post gets its
+three). The post is not orphaned sitewide — it carries an in-body inbound link.
+Two possible fixes. Retagging it is an editorial decision about a deliberately humorous post,
+which belongs to the owner. The alternative, a code branch that special-cases one post out of
+144, is precisely the kind of unnecessary special case this project has asked not to accumulate.
+Neither is mine to take unilaterally, so it is documented and left.
+
+### Final verified state (fetched from production, not read from source)
+- 162/162 sitemap URLs return 200. 0 JSON-LD parse failures. 0 pages without schema.
+- 15 pages emit FAQPage (was 12 at session start; blog posts could emit none at all).
+- Link graph: 144 posts, 575 edges, 0 broken targets, 0 dead ends.
+- Pillar `/blog/how-to-stop-nail-biting` inbound related-links: **4 -> 143**.
+- Corpus internal blog links: **22 -> 54**.
+- Retired-claim sweep returns 0 for every one: "between weeks two and six/four", "between weeks
+  2 and 6", "Some/Most/Early users report", "Stop Biting is the only".
+
+### What is left, and all of it is off-repo
+1. **Credentialed medical reviewer.** Every competitor that ranks for the head term carries a
+   named health writer (NYP: Dorothy Cucci; Healthline: Ashley Marcin plus a review disclosure)
+   or institutional authorship (Cleveland Clinic, AAD). Ours reads "Igor Gazivoda, Founder".
+   This cannot be manufactured and is the single largest remaining E-E-A-T gap.
+2. **App Store / Google Play listing.** `stop nail biting app` and `app to stop nail biting` are
+   89-100% native store listings. A PWA cannot occupy that surface at any content quality.
+3. **Product screenshots.** The homepage ships 2 `<img>` tags, both the logo. The
+   SoftwareApplication `screenshot` property is deliberately absent because no genuine capture
+   exists (docs/off-site-kit/product-hunt-launch.md).
+4. **Off-site brand authority** (~11 composite points, unmoved since August): Product Hunt,
+   AlternativeTo, sameAs profiles.
+
+### Measurement, stated plainly
+None of this session's work is a ranking guarantee. The baseline was that stopbiting.today was
+**not observed in the top 10 for any of the 13 sampled queries**. Re-run that same 13-query
+sample in 4-6 weeks alongside Search Console impressions for the pillar. That comparison, not
+the number of commits, is what says whether this worked.
