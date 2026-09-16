@@ -639,3 +639,20 @@ framework first. Watchlist (not called): `stop-nail-biting-fast` vs `best-nail-b
 - Agent-proposed medical-reviewer byline: would require a real credentialed reviewer. Cannot
   be manufactured — flagged to owner as an off-repo decision, not implemented.
 - Product screenshots for `/` and the App Store surface: off-repo asset/distribution work.
+
+### Wave 2 progress
+- [x] 2A Timeline reconciliation (commit 9617dd4, pushed) — four contradictory answers replaced
+      by one Lally-anchored statement; FAQ parity across index.html JSON-LD / server.js
+      HOME_FAQS / Landing.tsx mirror verified mechanically (6/6 verbatim identical).
+- [x] 2B Hierarchy-aware internal linking (`src/data/related.ts`) — pillar inbound **4 -> 142**.
+      Verified against the previous algorithm: 0 posts lost inbound links, orphan count
+      unchanged at 1, 0 broken targets, 0 dead ends, 0 self-links. Crawler build confirms
+      142 posts x 4 links + pillar x 3.
+
+### Known pre-existing defect (diagnosed, deliberately NOT fixed here)
+`nail-biting-laptop-working-from-home` has 0 inbound related-links. Root cause: it is the
+only post tagged `Humor` (group size 1), and `getRelated` links strictly within a tag, so no
+post can reach it. It predates this session's changes (verified by running the old algorithm).
+It does carry 1 manual in-body link, so it is not truly orphaned sitewide. Fixing it properly
+means either retagging the post (an owner content decision) or reworking the fallback for
+undersized groups, which would perturb the whole graph. Flagged rather than forced.
