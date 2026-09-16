@@ -80,7 +80,13 @@ const READING_LIST: ReadingRow[] = (() => {
 
 // The apparatus row under the hero's call to action: what the thing is, in
 // five words or fewer each, set as a mono rule of hairline-separated terms.
-const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud'];
+// The price is a term like any other, and it is here because it used to live
+// only in PricingSection at 61% page depth: a visitor deciding whether to give
+// this thing their camera should not have to scroll two thirds of the page to
+// learn what it costs. It sits last because the end of a rule is its second
+// strongest position. The figure MUST match PricingSection and the Offer schema
+// server.js injects for /pricing ($2.99/month, $29.00/year).
+const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud', '$2.99/month'];
 
 // Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
 // to have a visible on-page counterpart, so these two must stay in step.
@@ -164,14 +170,20 @@ export function Landing() {
             <BookOpen size={14} aria-hidden="true" />
             <span className="ed-link">Blog</span>
           </a>
+          {/* Outlined, not filled. Three solid forest fills used to sit above
+              the fold (here, the hero, the demo) and nothing told the visitor
+              which one to press; the demo is the page's one unique asset, so it
+              keeps the only fill and this drops to a hairline. The label is
+              "Start free trial" because "Sign in to app" reads as members-only
+              to someone who arrived on a search for how to stop biting nails. */}
           <a
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold bg-forest-600 hover:bg-forest-500 text-cream-100 px-4 py-1.5 rounded-xl transition-colors duration-150"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-stone-300 px-4 py-1.5 text-sm font-semibold text-forest-600 transition-colors duration-150 hover:border-forest-600 hover:text-forest-500"
           >
             <Zap size={13} aria-hidden="true" />
-            Sign in to app
+            Start free trial
           </a>
         </div>
       </nav>
@@ -184,12 +196,23 @@ export function Landing() {
           a rule at scaleX(0) until an ancestor `.reveal` is `.revealed`, which
           never happens here, and the rule would simply never appear. */}
       <main>
-        <section aria-label="Hero" className="pt-28 pb-20 sm:pt-32 lg:pt-36 lg:pb-28">
+        <section aria-label="Hero" className="pt-28 pb-20 sm:pt-32 lg:pt-32 lg:pb-28">
           <div className="ed-container">
+            {/* Three grid children, not two. The title block and the argument
+                are separate cells in the same 5-column stack so that the demo
+                can be ordered between them below `lg`: the figure used to be
+                `.ed-aside`, which stacks last on a phone and put the detector
+                under the hero's call to action. `order-*` fixes the small-screen
+                sequence (title, detector, argument) and every child is placed
+                explicitly at `lg`, where `order` is therefore inert. */}
             <div className="ed-grid">
 
-              {/* ── The argument (cols 1-7) ──────────────────────────────── */}
-              <div className="ed-main lg:row-start-1">
+              {/* ── The title (cols 1-5, row 1) ──────────────────────────── */}
+              {/* `container-type: inline-size` is what `.ed-display`'s `cqw`
+                  sizing reads (see index.css): it has to sit on the h1's own
+                  column box, and this block is no longer `.ed-main`, so the
+                  containment is declared here instead. */}
+              <div className="col-span-full order-1 [container-type:inline-size] lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-1">
                 <p
                   className="animate-fade-up ed-mono text-forest-600"
                   style={{ animationDelay: '0ms' }}
@@ -204,10 +227,117 @@ export function Landing() {
                   Stop biting your nails.<br />
                   <em className="not-italic text-forest-600">For good, this time.</em>
                 </h1>
+              </div>
 
+              {/* ── Figure 1: the detector (cols 6-12, rows 1-2) ─────────── */}
+              {/* The wide column, and deliberately so. A live nail biting
+                  detector running in the visitor's own browser is the one thing
+                  no competitor has, and it used to be a 360x101 button inside a
+                  card in the margin. It spans both rows so the argument beside
+                  it can keep its own two-cell stack. The gutter hairline that
+                  used to be a separate column-8 element is this column's
+                  left border: the padding matches `.ed-grid`'s column gap, so
+                  the rule still lands dead centre of the gutter. */}
+              <figure
+                className="animate-fade-up order-2 col-span-full lg:order-none lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:border-l lg:border-hairline lg:pl-[clamp(1.5rem,3vw,2.5rem)]"
+                style={{ animationDelay: '160ms' }}
+              >
+                <figcaption className="text-stone-500">
+                  <span className="ed-mark">
+                    <span className="ed-mono">Fig. 1</span>
+                    <span className="ed-mark-rule" aria-hidden="true" />
+                  </span>
+                  <span className="ed-mono mt-3 block">The detector, running on your device</span>
+                </figcaption>
+
+                {/* ── LIVE DEMO ───────────────────────────────────────────── */}
+                {/* Heading and paragraph render on page view: they are the
+                    crawler-visible copy mirrored in server.js and must not be
+                    hidden behind the click. Only the detector itself is deferred.
+                    The paragraph sits below the plate rather than above it so
+                    nothing pushes the detector down the fold; both still render
+                    unconditionally, which is all the SSR parity requires. */}
+                <section id="live-demo" aria-labelledby="live-demo-heading" className="mt-7">
+                  <h2
+                    id="live-demo-heading"
+                    className="font-display text-2xl leading-[1.1] tracking-[-0.01em] text-stone-800"
+                  >
+                    Try the detector right now
+                  </h2>
+
+                  {/* Square hairline frame, no shadow, no rounded corner and no
+                      fill: the page's one sanctioned frame reads as a plate in
+                      a journal, mounted on the page's own cream rather than on
+                      the white card this used to be. The 16:9 plate inside is
+                      the same shape and the same `bg-stone-900` DetectionSurface
+                      paints once the demo is running, so the click swaps the
+                      contents of the box without moving a pixel of the layout. */}
+                  <div className="mt-6 border border-hairline p-4 sm:p-5">
+                    {demoStarted ? (
+                      <Suspense
+                        fallback={
+                          <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-stone-900 px-6">
+                            <p className="flex items-center gap-2 text-center text-sm text-cream-100">
+                              <Loader2
+                                size={14}
+                                className="animate-spin text-forest-300 flex-shrink-0"
+                                aria-hidden="true"
+                              />
+                              {DEMO_LOADING_LABEL}
+                            </p>
+                          </div>
+                        }
+                      >
+                        <HeroDemo autoStart />
+                      </Suspense>
+                    ) : (
+                      // The click gate. `HeroDemo` is behind `lazy()` and is
+                      // only ever referenced inside the branch above, so a page
+                      // view fetches no chunk, no WebAssembly and no MediaPipe
+                      // model. Nothing here may preload, prefetch or auto-start.
+                      <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-stone-900">
+                        <button
+                          type="button"
+                          onClick={() => setDemoStarted(true)}
+                          className="inline-flex items-center gap-2 rounded-xl bg-forest-600 px-7 py-3.5 text-sm font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
+                        >
+                          <Camera size={15} aria-hidden="true" />
+                          Try the live demo
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="ed-body mt-5 text-stone-600">
+                    Run the real nail biting detector on your own camera for 60 seconds: no
+                    account, no signup. The AI models download once (about 20 MB) and then
+                    everything runs on your device: open your browser's network panel and you'll
+                    see zero requests while it is watching. Nothing is uploaded and nothing is
+                    saved.
+                  </p>
+                </section>
+
+                {/* One key value in the figure margin, and deliberately only
+                    one. Figure 2 in section 01 is the canonical statement of the
+                    three numbers and carries the citation footnote for them, so
+                    setting all three here as well read as a mistake rather than
+                    as an echo. The privacy figure is the one that belongs to this
+                    figure: it is a reading of the detector directly above it. */}
+                <dl aria-label="Key figure" className="mt-8 border-y border-hairline py-3.5">
+                  <div className="flex items-baseline gap-4">
+                    <dt className="font-display text-2xl leading-none text-forest-600 w-24 flex-shrink-0">
+                      0 bytes
+                    </dt>
+                    <dd className="ed-mono text-stone-500">of camera data sent to servers</dd>
+                  </div>
+                </dl>
+              </figure>
+
+              {/* ── The argument (cols 1-5, row 2) ───────────────────────── */}
+              <div className="col-span-full order-3 lg:order-none lg:col-span-5 lg:col-start-1 lg:row-start-2">
                 <p
-                  className="animate-fade-up ed-lede ed-measure mt-7 text-stone-600"
-                  style={{ animationDelay: '160ms' }}
+                  className="animate-fade-up ed-lede ed-measure text-stone-600"
+                  style={{ animationDelay: '240ms' }}
                 >
                   Bitter polish, gloves, sheer willpower: none of it stuck, because nail biting was never a
                   willpower problem. It runs on autopilot, and by the time you notice, you're already doing it.{' '}
@@ -227,6 +357,12 @@ export function Landing() {
                   <span className="w-1.5 h-1.5 rounded-full bg-forest-500 animate-pulse flex-shrink-0" aria-hidden="true" />
                 </div>
 
+                {/* Two text links, no fill. The hero's one filled control is
+                    the detector's, in the figure beside this: the visitor who
+                    just searched for how to stop biting their nails is worth
+                    more inside a 60-second demo than inside a signup form, and
+                    the trial is still one outlined click away in the nav and a
+                    solid forest button at the foot of the page. */}
                 <div
                   className="animate-fade-up mt-9 flex flex-wrap items-center gap-x-8 gap-y-4"
                   style={{ animationDelay: '320ms' }}
@@ -235,14 +371,9 @@ export function Landing() {
                     href="/api/auth/google"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-colors duration-150"
+                    className="ed-link text-sm text-stone-600 hover:text-stone-900 transition-colors"
                   >
                     Start free trial
-                    <ArrowRight
-                      size={14}
-                      className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    />
                   </a>
                   <a
                     href="/blog"
@@ -267,95 +398,6 @@ export function Landing() {
                   ))}
                 </ul>
               </div>
-
-              {/* The gutter rule: one hairline down the middle of column 8,
-                  separating argument from apparatus. lg and up only: below
-                  that the two columns stack and a vertical rule would be a
-                  line through the middle of nothing. */}
-              <div
-                aria-hidden="true"
-                className="animate-fade-in hidden lg:block lg:col-start-8 lg:row-start-1 w-px justify-self-center bg-hairline"
-                style={{ animationDelay: '560ms' }}
-              />
-
-              {/* ── Figure 1 (cols 9-12) ─────────────────────────────────── */}
-              <figure
-                className="ed-aside animate-fade-up lg:row-start-1"
-                style={{ animationDelay: '480ms' }}
-              >
-                <figcaption className="text-stone-500">
-                  <span className="ed-mark">
-                    <span className="ed-mono">Fig. 1</span>
-                    <span className="ed-mark-rule" aria-hidden="true" />
-                  </span>
-                  <span className="ed-mono mt-3 block">The detector, running on your device</span>
-                </figcaption>
-
-                {/* ── LIVE DEMO ───────────────────────────────────────────── */}
-                {/* Heading and paragraph render on page view: they are the
-                    crawler-visible copy mirrored in server.js and must not be
-                    hidden behind the click. Only the detector itself is deferred. */}
-                <section id="live-demo" aria-labelledby="live-demo-heading" className="mt-7">
-                  <h2
-                    id="live-demo-heading"
-                    className="font-display text-2xl leading-[1.1] tracking-[-0.01em] text-stone-800"
-                  >
-                    Try the detector right now
-                  </h2>
-                  <p className="ed-body mt-3 text-stone-600">
-                    Run the real nail biting detector on your own camera for 60 seconds: no
-                    account, no signup. The AI models download once (about 20 MB) and then
-                    everything runs on your device: open your browser's network panel and you'll
-                    see zero requests while it is watching. Nothing is uploaded and nothing is
-                    saved.
-                  </p>
-
-                  <div className="mt-6 rounded-xl border border-hairline bg-white shadow-card p-5">
-                    {demoStarted ? (
-                      <Suspense
-                        fallback={
-                          <p className="flex items-center justify-center gap-2 py-6 text-sm text-stone-500">
-                            <Loader2
-                              size={14}
-                              className="animate-spin text-forest-500 flex-shrink-0"
-                              aria-hidden="true"
-                            />
-                            {DEMO_LOADING_LABEL}
-                          </p>
-                        }
-                      >
-                        <HeroDemo autoStart />
-                      </Suspense>
-                    ) : (
-                      <div className="flex justify-center py-2">
-                        <button
-                          type="button"
-                          onClick={() => setDemoStarted(true)}
-                          className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-colors duration-150"
-                        >
-                          <Camera size={15} aria-hidden="true" />
-                          Try the live demo
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </section>
-
-                {/* One key value in the figure margin, and deliberately only
-                    one. Figure 2 in section 01 is the canonical statement of the
-                    three numbers and carries the citation footnote for them, so
-                    setting all three here as well read as a mistake rather than
-                    as an echo. The privacy figure is the one that belongs to this
-                    figure: it is a reading of the detector directly above it. */}
-                <dl aria-label="Key figure" className="mt-10 border-y border-hairline py-3.5">
-                  <div className="flex items-baseline gap-4">
-                    <dt className="font-display text-2xl leading-none text-forest-600 w-24 flex-shrink-0">
-                      0 bytes
-                    </dt>
-                    <dd className="ed-mono text-stone-500">of camera data sent to servers</dd>
-                  </div>
-                </dl>
-              </figure>
 
             </div>
           </div>
@@ -459,9 +501,14 @@ export function Landing() {
 
         {/* ── 02 · THE METHOD ───────────────────────────────────────────── */}
         {/* The `hrt-heading` article and the old "How it works" section, merged:
-            the theory, then the three steps this app implements. The margin is
-            deliberately empty here: there is no data to set in it, and an
-            invented marginal note would be decoration. */}
+            the theory in the narrative column, the three steps this app
+            implements in the margin beside it. The steps were in the main
+            column and the margin was empty, which left 500px of dead cream
+            running the full 1,408px of the section. They belong in the margin
+            on the argument as well as on the measurement: the main column
+            states what Habit Reversal Training is, and the margin annotates it
+            with how this particular instrument performs it, which is the same
+            relationship 03 and 04 already use their margins for. */}
         <section aria-labelledby="hrt-heading" className="pb-20 lg:pb-28">
           <div className="ed-container">
             <SectionMark n="02" label="The method" />
@@ -508,15 +555,18 @@ export function Landing() {
                   <span className="ed-link">Read the full HRT guide</span>
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
                 </a>
+              </div>
 
-                {/* The old "How it works" section, folded in as 02's second
-                    half. Its h2 is an h3 now (02's h2 is the HRT heading) and
-                    keeps `id="how-heading"`, so the aria-labelledby on this
-                    nested section still resolves. The eyebrow that used to sit
-                    above it is the label on the divider rule, which keeps the
-                    two "How it works" strings on the page in different
-                    registers: a sub-head above HRT's parts, apparatus here. */}
-                <section aria-labelledby="how-heading" className="reveal mt-16">
+              {/* The old "How it works" section, folded in as 02's margin. Its
+                  h2 is an h3 now (02's h2 is the HRT heading) and keeps
+                  `id="how-heading"`, so the aria-labelledby on this nested
+                  section still resolves. The eyebrow that used to sit above it
+                  is the label on the divider rule, which keeps the two "How it
+                  works" strings on the page in different registers: a sub-head
+                  above HRT's parts, apparatus here. `.reveal` is on the <aside>
+                  so `.revealed .ed-rule-draw` still reaches the divider. */}
+              <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
+                <section aria-labelledby="how-heading">
                   <div className="ed-mark text-stone-500">
                     <span className="ed-mono flex-shrink-0">How it works</span>
                     <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
@@ -529,10 +579,13 @@ export function Landing() {
                     Three steps to start stopping nail biting.
                   </h3>
 
-                  {/* A numbered process, not three cards: the numerals hang in
-                      their own column, hairlines do the separating, and the
-                      badge-and-icon pair each step used to carry is gone:
-                      the numeral already indexes the step. */}
+                  {/* A numbered process, not three cards: hairlines do the
+                      separating and the badge-and-icon pair each step used to
+                      carry is gone, because the numeral already indexes the
+                      step. The numeral sits above its step rather than hanging
+                      in its own column: a 3.5rem hanging indent inside a
+                      four-column margin would leave the prose about 30
+                      characters wide. */}
                   <ol className="mt-7 list-none border-t border-hairline">
                     {[
                       {
@@ -548,20 +601,15 @@ export function Landing() {
                         body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment: the core of habit reversal training.',
                       },
                     ].map(({ n, heading, body }) => (
-                      <li
-                        key={n}
-                        className="border-b border-hairline py-5 sm:grid sm:grid-cols-[3.5rem_1fr] sm:gap-6"
-                      >
-                        <span className="ed-mono block text-forest-600 sm:pt-1.5">{n}</span>
-                        <div className="mt-2 sm:mt-0">
-                          <h4 className="text-sm font-semibold leading-[1.7] text-stone-800">{heading}</h4>
-                          <p className="ed-body ed-measure mt-1 text-stone-600">{body}</p>
-                        </div>
+                      <li key={n} className="border-b border-hairline py-5">
+                        <span className="ed-mono block text-forest-600">{n}</span>
+                        <h4 className="mt-2.5 text-sm font-semibold leading-[1.7] text-stone-800">{heading}</h4>
+                        <p className="ed-body mt-1 text-stone-600">{body}</p>
                       </li>
                     ))}
                   </ol>
                 </section>
-              </div>
+              </aside>
             </div>
           </div>
         </section>
@@ -680,46 +728,6 @@ export function Landing() {
                 <p className="ed-mono mt-9 border-y border-hairline py-3.5 text-forest-600">
                   Disconnect from the internet and the app works exactly the same.
                 </p>
-
-                {/* The feature grid, re-set as a specification list: hairline
-                    rows, icon and name hanging in the left column, description
-                    beside it. Same six names and descriptions, verbatim. */}
-                <section aria-labelledby="features-heading" className="reveal mt-16">
-                  <div className="ed-mark text-stone-500">
-                    <span className="ed-mono flex-shrink-0">Specification</span>
-                    <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
-                  </div>
-
-                  <h3
-                    id="features-heading"
-                    className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
-                  >
-                    Everything you need to build the habit.
-                  </h3>
-                  <p className="ed-body mt-2 text-stone-500">Nothing you don't.</p>
-
-                  <dl className="mt-7 border-t border-hairline">
-                    {[
-                      { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.' },
-                      { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.' },
-                      { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.' },
-                      { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.' },
-                      { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.' },
-                      { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.' },
-                    ].map(({ icon: Icon, name, desc }) => (
-                      <div
-                        key={name}
-                        className="border-b border-hairline py-4 sm:grid sm:grid-cols-[10.5rem_1fr] sm:gap-6"
-                      >
-                        <dt className="flex items-center gap-2.5 text-sm font-semibold leading-[1.7] text-stone-800">
-                          <Icon size={15} aria-hidden="true" className="flex-shrink-0 text-forest-600" />
-                          {name}
-                        </dt>
-                        <dd className="ed-body ed-measure mt-1 sm:mt-0 text-stone-600">{desc}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
               </div>
 
               {/* The privacy deep-dive, in the margin: it is literally a set of
@@ -762,6 +770,55 @@ export function Landing() {
                   </div>
                 </section>
               </aside>
+
+              {/* The feature grid, re-set as a specification list: hairline
+                  rows, icon and name hanging in the left column, description
+                  beside it. Same six names and descriptions, verbatim.
+                  It is its own nine-column row rather than the tail of the
+                  seven-column argument above, for two reasons: a specification
+                  wants to be read as a table, and leaving it in the narrow
+                  column left the margin empty for the 500px it ran past the
+                  verification notes beside it. */}
+              <section
+                aria-labelledby="features-heading"
+                className="reveal col-span-full mt-6 lg:col-span-9 lg:col-start-1"
+                style={{ transitionDelay: '240ms' }}
+              >
+                <div className="ed-mark text-stone-500">
+                  <span className="ed-mono flex-shrink-0">Specification</span>
+                  <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
+                </div>
+
+                <h3
+                  id="features-heading"
+                  className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                >
+                  Everything you need to build the habit.
+                </h3>
+                <p className="ed-body mt-2 text-stone-500">Nothing you don't.</p>
+
+                <dl className="mt-7 border-t border-hairline">
+                  {[
+                    { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.' },
+                    { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.' },
+                    { icon: Trophy, name: 'Streak Tracker', desc: 'Current streak and all-time best. Losing the streak is the point.' },
+                    { icon: ClipboardList, name: 'Incident Log', desc: 'Tag each bite by trigger: stress, focus, boredom. Patterns surface fast.' },
+                    { icon: BarChart2, name: '7-Day Chart', desc: 'Visual bite frequency history. Colour-coded by severity.' },
+                    { icon: WifiOff, name: 'Works Offline', desc: 'No internet required after setup. Detection runs entirely on your hardware.' },
+                  ].map(({ icon: Icon, name, desc }) => (
+                    <div
+                      key={name}
+                      className="border-b border-hairline py-4 sm:grid sm:grid-cols-[10.5rem_1fr] sm:gap-6"
+                    >
+                      <dt className="flex items-center gap-2.5 text-sm font-semibold leading-[1.7] text-stone-800">
+                        <Icon size={15} aria-hidden="true" className="flex-shrink-0 text-forest-600" />
+                        {name}
+                      </dt>
+                      <dd className="ed-body ed-measure mt-1 sm:mt-0 text-stone-600">{desc}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
             </div>
           </div>
         </section>
@@ -824,15 +881,26 @@ export function Landing() {
         {/* The ten featured guides and the three blog cards, argued as one
             reading list: mono kicker, title, reading time where the
             destination is an article. No cards, no chevrons, no hover lift,
-            just hairlines and the link underline growing on hover. "From the
-            blog" keeps its heading and its id in the margin, where it labels
-            the pointer to the full index. */}
+            just hairlines and the link underline growing on hover.
+
+            Nine columns wide, not seven plus an empty four. An index is the one
+            thing on the page that genuinely wants width: kicker, title and
+            reading time are three distinct fields and they read as a table when
+            the row is wide enough to separate them. The margin here held
+            twenty-five characters in a 735px box, which is not marginalia, so
+            "From the blog" keeps its heading and its id as a ruled tail under
+            the list instead, where it still labels the pointer to the full
+            index. From here down the page is back matter and runs at this
+            wider measure: 07 does the same. */}
         <section aria-labelledby="featured-guides-heading" className="pb-20 lg:pb-28">
           <div className="ed-container">
             <SectionMark n="06" label="Further reading" />
 
             <div className="ed-grid mt-10 lg:mt-14">
-              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+              <div
+                className="reveal col-span-full lg:col-span-9 lg:col-start-1"
+                style={{ transitionDelay: '80ms' }}
+              >
                 <h2 id="featured-guides-heading" className="ed-h2 text-stone-800">
                   Featured Guides
                 </h2>
@@ -859,14 +927,14 @@ export function Landing() {
                     </li>
                   ))}
                 </ul>
-              </div>
 
-              {/* The blog preview's heading, in the margin-note form 03 and 04
-                  use. It is an h3 now (06's h2 is the guides heading) and keeps
-                  `id="blog-preview-heading"`, so the aria-labelledby on this
-                  nested section still resolves. */}
-              <aside className="ed-aside reveal" style={{ transitionDelay: '160ms' }}>
-                <section aria-labelledby="blog-preview-heading" className="border-t border-hairline pt-4">
+                {/* The blog preview's heading, now the list's ruled tail. It is
+                    an h3 (06's h2 is the guides heading) and keeps
+                    `id="blog-preview-heading"`, so the aria-labelledby on this
+                    nested section still resolves. The last row of the list is
+                    already ruled beneath, so this one needs no rule of its
+                    own: it reads as the note that closes the index. */}
+                <section aria-labelledby="blog-preview-heading" className="mt-8">
                   <h3 id="blog-preview-heading" className="ed-mono text-stone-500">From the blog</h3>
                   <a
                     href="/blog"
@@ -876,7 +944,7 @@ export function Landing() {
                     <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
                   </a>
                 </section>
-              </aside>
+              </div>
             </div>
           </div>
         </section>
@@ -887,13 +955,23 @@ export function Landing() {
             to have a visible counterpart, and server.js parses that same block
             for its crawler prose. Any edit here is an edit there. The card
             frames are gone and the disclosure is untouched: <details> and
-            <summary> keep this working with no JavaScript at all. */}
+            <summary> keep this working with no JavaScript at all.
+
+            Nine columns, like 06 and for the same reason. There is nothing in
+            this section that could annotate it from a margin, so the two-column
+            grid was declaring a column it never filled: 600px of empty cream
+            beside six closed disclosures. A wider row also gives the chevron
+            somewhere to sit, hard right of its question. The answers keep
+            `.ed-measure`, so opening one still sets it at 62 characters. */}
         <section id="faq" aria-labelledby="faq-heading" className="pb-20 lg:pb-28">
           <div className="ed-container">
             <SectionMark n="07" label="FAQ" />
 
             <div className="ed-grid mt-10 lg:mt-14">
-              <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
+              <div
+                className="reveal col-span-full lg:col-span-9 lg:col-start-1"
+                style={{ transitionDelay: '80ms' }}
+              >
                 <h2 id="faq-heading" className="ed-h2 text-stone-800">
                   Questions people ask about nail biting
                 </h2>
