@@ -776,3 +776,21 @@ Backlog items 1, 5, 7 (one coherent unit: strengthen the pillar's inbound contex
   each with its own anchor wording.
 Internal blog links 32 -> 34. dateModified bumped only for the 3 genuinely-changed posts
 (diffed against HEAD, not recalled). Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
+
+## Loop iteration 2 — 2026-09-16
+Backlog item 2 (best-apps rebuilt toward the Comparison page type).
+**What the audit missed and reading the page revealed:** the Comparison-type content the SXO
+agent asked for already exists — on `/compare/ai-detection-apps`, which is genuinely good
+(four apps, vendor-verified 10 Sept 2026, best-for-X segmentation, honest "where ours loses").
+The actual defect was that `/blog/best-apps-to-stop-nail-biting`, the URL matching the query,
+headed its section "Category 1 — AI detection apps (Stop Biting)" and **never named Hands Off,
+Nailed or SmartBehavior**. A page titled "best apps" that names only our own app is weak for
+the query and weak for trust.
+Fixed by reusing the already-verified facts rather than researching afresh: heading no longer
+frames the category as us; all four apps named with platform, scope and price as checked on
+10 Sept 2026, carrying the "confirm before buying" caveat; a four-item best-for-X list added;
+link out to the full head-to-head. No new competitor claim was invented.
+FAQPage still emits 3 pairs. dateModified already 2026-09-16 so no bump (content changed the
+same day it was last dated) — note this means IndexNow will not resubmit this URL, which is
+fine because it was already submitted earlier today.
+Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
