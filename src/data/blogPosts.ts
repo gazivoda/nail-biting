@@ -2133,7 +2133,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Why do people bite their nails?`,
-      body: `Because it works as a short-term regulator, and because it runs without you. Reviews put regular nail biting at roughly 20% to 30% of adults, peaking in the pre-teen and teenage years at up to 45% of children between age 10 and puberty, then persisting into adulthood for a substantial minority (Halteh, Scher & Lipner; Lee & Lipner, 2022).\n\nAlmost every nail biter reports the same three situations, and they call for different fixes:`,
+      body: `Because it works as a short-term regulator, and because it runs without you. Chronic nail biting has a clinical name, onychophagia, and reviews put it at roughly 20% to 30% of adults, peaking in the pre-teen and teenage years at up to 45% of children between age 10 and puberty, then persisting into adulthood for a substantial minority (Halteh, Scher & Lipner; Lee & Lipner, 2022).\n\nAlmost every nail biter reports the same three situations, and they call for different fixes:`,
       list: [
         `Stress or anxiety — the biting gives tension somewhere to go, and the relief is genuine, which is exactly why the brain returns to it.`,
         `Deep concentration — when you are absorbed in work, the monitoring of your own hands drops out, which is why an hour of biting can pass unnoticed.`,

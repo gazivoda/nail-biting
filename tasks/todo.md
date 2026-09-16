@@ -716,3 +716,12 @@ Inserting an `html:` key into a section that already had one produces a duplicat
 object literal, and **the later one silently wins** — the FAQ markup would have been discarded
 with no error. Caught by counting `html:` keys per section after the edit. Always count keys
 after a structural insert; tsc will not flag a duplicate literal key here.
+- [x] 2F Pillar now carries `MedicalCondition`. The gate (`visibleConditionSchema`) is
+      data-driven and strict: it fires only when the post's *visible* text names the condition,
+      and `visibleArticleText()` deliberately strips citation blocks first. Confirmed that
+      behaviour: "Onychophagia" appearing inside a Lee & Lipner source title did NOT trigger it.
+      Naming the clinical term in the prose ("Chronic nail biting has a clinical name,
+      onychophagia") is the honest way to qualify, so that is what was done. The gate then
+      listed only `Habit Reversal Training (HRT)` and withheld `Bitter-taste nail polish`,
+      because the page says "bitter-tasting polishes" rather than the entity's exact term.
+      Left as-is rather than reworded to match: the schema should follow the copy.
