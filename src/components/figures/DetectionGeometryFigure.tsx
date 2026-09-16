@@ -180,7 +180,7 @@ export function DetectionGeometryFigure() {
           x={MOUTH[0]}
           y={MOUTH[1] - THRESHOLD_R - 12}
           textAnchor="middle"
-          fontSize="12"
+          fontSize="11"
           className="fill-forest-600"
         >
           THRESHOLD
@@ -188,18 +188,18 @@ export function DetectionGeometryFigure() {
         <text
           x={round(LEADER_END[0]) + 6}
           y={round(LEADER_END[1]) - 4}
-          fontSize="12"
+          fontSize="11"
           className="fill-forest-600"
         >
           DISTANCE
         </text>
-        <text x={MOUTH[0]} y={MOUTH[1] + THRESHOLD_R + 24} textAnchor="middle" fontSize="12" fill="currentColor">
+        <text x={MOUTH[0]} y={MOUTH[1] + THRESHOLD_R + 24} textAnchor="middle" fontSize="11" fill="currentColor">
           MOUTH CENTRE
         </text>
         <text x={MOUTH[0]} y={MOUTH[1] + THRESHOLD_R + 42} textAnchor="middle" fontSize="11" className="fill-stone-500">
           LIPS 13 &amp; 14
         </text>
-        <text x="414" y="376" textAnchor="end" fontSize="12" fill="currentColor">
+        <text x="414" y="376" textAnchor="end" fontSize="11" fill="currentColor">
           HAND LANDMARKS &middot; 21
         </text>
         <text x="414" y="396" textAnchor="end" fontSize="11" className="fill-stone-500">

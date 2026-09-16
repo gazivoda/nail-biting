@@ -38,7 +38,7 @@ export function HabitLoopFigure() {
   return (
     <svg
       viewBox="0 0 340 400"
-      className="block h-auto w-full max-w-[340px] text-stone-700"
+      className="block h-auto w-full max-w-[340px] text-stone-600"
       role="img"
       aria-labelledby={`${titleId} ${descId}`}
     >
@@ -102,7 +102,7 @@ export function HabitLoopFigure() {
             y={y + 4}
             fontFamily={MONO}
             fontWeight="500"
-            fontSize="12"
+            fontSize="11"
             letterSpacing="0.16em"
             fill="currentColor"
           >
@@ -120,7 +120,7 @@ export function HabitLoopFigure() {
           y={CUT_Y - 4}
           fontFamily={MONO}
           fontWeight="500"
-          fontSize="12"
+          fontSize="11"
           letterSpacing="0.16em"
           fill="currentColor"
         >

@@ -134,7 +134,16 @@ const FAQS: { q: string; a: string }[] = [
 // parks the rule at scaleX(0) and is only released by `.revealed .ed-rule-draw`,
 // and useScrollReveal puts `.revealed` on the `.reveal` element itself. Put
 // `.reveal` anywhere that never reveals (e.g. the hero) and the rule stays
-// invisible for ever. Tasks 4-5: reuse this for sections 03-07, don't re-invent it.
+// invisible for ever.
+//
+// This row is 17px tall, which used to be the whole problem: against the old
+// `threshold: 0.12` only 2px of it had to cross the trigger line, so the rule
+// drew itself against the bottom edge of the window where nobody was looking,
+// and on a fast scroll the observer never delivered at all: five of these
+// stayed at opacity 0 for the rest of the visit. useScrollReveal triggers on
+// margin rather than on a ratio now, and sweeps synchronously with the scroll,
+// so height no longer decides whether a mark animates. Reuse this component for
+// every numbered section; do not re-invent it.
 function SectionMark({ n, label }: { n: string; label: string }) {
   return (
     <div className="reveal ed-mark text-stone-500">
@@ -169,12 +178,12 @@ export function Landing() {
           pages: fixed, full-width, hairline bottom rule, same three items and
           the same hrefs. Only the typesetting differs here. */}
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 backdrop-blur-md border-b border-hairline">
-        <a href="/" className="flex items-center gap-2.5 text-stone-800">
+        <a href="/" className="flex items-center gap-3 text-stone-800">
           <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-          <span className="font-display text-lg leading-none tracking-[-0.01em]">Stop Biting Nails</span>
+          <span className="ed-wordmark">Stop Biting Nails</span>
         </a>
-        <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 hover:text-stone-800 text-sm transition-colors">
+        <div className="flex items-center gap-4 sm:gap-6">
+          <a href="/blog" className="ed-ui flex items-center gap-2 text-stone-500 transition-colors hover:text-stone-800">
             <BookOpen size={14} aria-hidden="true" />
             <span className="ed-link">Blog</span>
           </a>
@@ -188,7 +197,7 @@ export function Landing() {
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-stone-300 px-4 py-1.5 text-sm font-semibold text-forest-600 transition-colors duration-150 hover:border-forest-600 hover:text-forest-500"
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border border-stone-300 px-3 py-2 ed-ui font-semibold text-forest-600 sm:px-4 transition-colors duration-150 hover:border-forest-600 hover:text-forest-500"
           >
             <Zap size={13} aria-hidden="true" />
             Start free trial
@@ -204,7 +213,7 @@ export function Landing() {
           a rule at scaleX(0) until an ancestor `.reveal` is `.revealed`, which
           never happens here, and the rule would simply never appear. */}
       <main>
-        <section aria-label="Hero" className="pt-28 pb-20 sm:pt-32 lg:pt-32 lg:pb-28">
+        <section aria-label="Hero" className="pt-24 pb-16 lg:pt-32 lg:pb-24">
           <div className="ed-container">
             {/* Three grid children, not two. The title block and the argument
                 are separate cells in the same 5-column stack so that the demo
@@ -265,10 +274,10 @@ export function Landing() {
                     The paragraph sits below the plate rather than above it so
                     nothing pushes the detector down the fold; both still render
                     unconditionally, which is all the SSR parity requires. */}
-                <section id="live-demo" aria-labelledby="live-demo-heading" className="mt-7">
+                <section id="live-demo" aria-labelledby="live-demo-heading" className="mt-8">
                   <h2
                     id="live-demo-heading"
-                    className="font-display text-2xl leading-[1.1] tracking-[-0.01em] text-stone-800"
+                    className="ed-h3 text-stone-800"
                   >
                     Try the detector right now
                   </h2>
@@ -280,12 +289,12 @@ export function Landing() {
                       the same shape and the same `bg-stone-900` DetectionSurface
                       paints once the demo is running, so the click swaps the
                       contents of the box without moving a pixel of the layout. */}
-                  <div className="mt-6 border border-hairline p-4 sm:p-5">
+                  <div className="mt-6 border border-hairline p-4 sm:p-6">
                     {demoStarted ? (
                       <Suspense
                         fallback={
                           <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-stone-900 px-6">
-                            <p className="flex items-center gap-2 text-center text-sm text-cream-100">
+                            <p className="ed-ui flex items-center gap-2 text-center text-cream-100">
                               <Loader2
                                 size={14}
                                 className="animate-spin text-forest-300 flex-shrink-0"
@@ -307,7 +316,7 @@ export function Landing() {
                         <button
                           type="button"
                           onClick={() => setDemoStarted(true)}
-                          className="inline-flex items-center gap-2 rounded-xl bg-forest-600 px-7 py-3.5 text-sm font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
+                          className="inline-flex items-center gap-2 rounded-xl bg-forest-600 px-8 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
                         >
                           <Camera size={15} aria-hidden="true" />
                           Try the live demo
@@ -316,7 +325,7 @@ export function Landing() {
                     )}
                   </div>
 
-                  <p className="ed-body mt-5 text-stone-600">
+                  <p className="ed-body mt-6 text-stone-600">
                     Run the real nail biting detector on your own camera for 60 seconds: no
                     account, no signup. The AI models download once (about 20 MB) and then
                     everything runs on your device: open your browser's network panel and you'll
@@ -331,9 +340,9 @@ export function Landing() {
                     setting all three here as well read as a mistake rather than
                     as an echo. The privacy figure is the one that belongs to this
                     figure: it is a reading of the detector directly above it. */}
-                <dl aria-label="Key figure" className="mt-8 border-y border-hairline py-3.5">
+                <dl aria-label="Key figure" className="mt-8 border-y border-hairline py-4">
                   <div className="flex items-baseline gap-4">
-                    <dt className="font-display text-2xl leading-none text-forest-600 w-24 flex-shrink-0">
+                    <dt className="ed-figure text-forest-600 w-24 flex-shrink-0">
                       0 bytes
                     </dt>
                     <dd className="ed-mono text-stone-500">of camera data sent to servers</dd>
@@ -357,7 +366,7 @@ export function Landing() {
                 {/* The on-device guarantee, set as an instrument reading: ruled
                     top and bottom, mono, with the live dot still ticking. */}
                 <div
-                  className="animate-fade-up mt-9 flex items-center gap-3 border-y border-hairline py-3 text-forest-600"
+                  className="animate-fade-up mt-8 flex items-center gap-3 border-y border-hairline py-3 text-forest-600"
                   style={{ animationDelay: '240ms' }}
                 >
                   <ShieldCheck size={14} className="flex-shrink-0" aria-hidden="true" />
@@ -372,20 +381,20 @@ export function Landing() {
                     the trial is still one outlined click away in the nav and a
                     solid forest button at the foot of the page. */}
                 <div
-                  className="animate-fade-up mt-9 flex flex-wrap items-center gap-x-8 gap-y-4"
+                  className="animate-fade-up mt-8 flex flex-wrap items-center gap-x-8 gap-y-4"
                   style={{ animationDelay: '320ms' }}
                 >
                   <a
                     href="/api/auth/google"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ed-link text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    className="ed-link ed-ui text-stone-600 transition-colors hover:text-stone-800"
                   >
                     Start free trial
                   </a>
                   <a
                     href="/blog"
-                    className="ed-link text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                    className="ed-link ed-ui text-stone-600 transition-colors hover:text-stone-800"
                   >
                     Read the science
                   </a>
@@ -393,7 +402,7 @@ export function Landing() {
 
                 {/* What it is, in apparatus terms: hairline-separated. */}
                 <ul
-                  className="animate-fade-up mt-10 flex flex-wrap items-center gap-y-2 text-stone-500"
+                  className="animate-fade-up mt-8 flex flex-wrap items-center gap-y-2 text-stone-500"
                   style={{ animationDelay: '400ms' }}
                 >
                   {HERO_TAGS.map((tag, i) => (
@@ -420,11 +429,11 @@ export function Landing() {
             note is now doing its proper job as the figure's <figcaption>.
             Sections open on the previous block's bottom padding, so there is no
             top padding and no top rule here: the section mark is the seam. */}
-        <section aria-labelledby="why-bite-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="why-bite-heading" className="pb-16 lg:pb-24">
           <div className="ed-container">
             <SectionMark n="01" label="The problem" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
                 <h2 id="why-bite-heading" className="ed-h2 text-stone-800">
                   Why do people bite their nails?
@@ -434,13 +443,13 @@ export function Landing() {
                   About 1 in 4 adults bites their nails: not occasionally, but chronically. Most have been doing it since childhood. Most have tried to stop more than once. The reason it's so hard isn't weak willpower. It's that the habit runs on autopilot, below the level of conscious thought.
                 </p>
 
-                <h3 className="mt-11 text-[1.0625rem] font-semibold leading-[1.4] text-stone-800">
+                <h3 className="ed-subhead mt-12 text-stone-800">
                   When it tends to happen
                 </h3>
 
                 {/* Short terms, so the definition list can run two-up at sm and
                     above: term in the hanging column, sense beside it. */}
-                <dl className="mt-5 border-t border-hairline">
+                <dl className="mt-4 border-t border-hairline">
                   {([
                     ['Stress', "Your brain reaches for something familiar when anxiety spikes. Biting gives a brief sense of relief, which teaches your brain to reach for it again next time."],
                     ['Deep focus', "The part of your brain that monitors what your hands are doing goes quiet when you're concentrating hard. This is why you look down and realise you've been biting for the last 20 minutes."],
@@ -450,7 +459,7 @@ export function Landing() {
                       key={label}
                       className="border-b border-hairline py-4 sm:grid sm:grid-cols-[7.5rem_1fr] sm:gap-6"
                     >
-                      <dt className="text-sm font-semibold leading-[1.7] text-stone-800">{label}</dt>
+                      <dt className="ed-body font-semibold text-stone-800">{label}</dt>
                       <dd className="ed-body ed-measure mt-1 sm:mt-0 text-stone-600">{text}</dd>
                     </div>
                   ))}
@@ -462,7 +471,7 @@ export function Landing() {
 
                 <a
                   href="/blog/why-do-people-bite-their-nails"
-                  className="group mt-7 inline-flex items-center gap-1.5 text-sm text-forest-600 hover:text-forest-500 transition-colors"
+                  className="ed-ui group mt-6 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
                 >
                   <span className="ed-link">Read the full article</span>
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -493,24 +502,24 @@ export function Landing() {
                     solid and ten are open because the source reports a range,
                     not a point estimate: filling twenty-five would be drawing
                     a figure nobody measured. */}
-                <div className="mt-7">
+                <div className="mt-6">
                   <PrevalenceMatrix />
                 </div>
 
-                <dl className="mt-7 border-t border-hairline">
+                <dl className="mt-6 border-t border-hairline">
                   {[
                     { number: '20-30%', label: 'of adults bite their nails chronically' },
                     { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
                     { number: '0 bytes', label: 'Of camera data sent to servers' },
                   ].map(({ number, label }) => (
-                    <div key={label} className="border-b border-hairline py-5">
+                    <div key={label} className="border-b border-hairline py-4">
                       <dt className="ed-figure text-forest-600">{number}</dt>
                       <dd className="ed-mono mt-3 text-stone-500">{label}</dd>
                     </div>
                   ))}
                 </dl>
 
-                <figcaption className="ed-caption ed-measure mt-5 text-stone-500">
+                <figcaption className="ed-caption ed-measure mt-4 text-stone-500">
                   Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), self-recorded episode counts over the trial's five months, not a follow-up after treatment ended. Camera privacy is architectural: there's no server to send data to.
                 </figcaption>
               </figure>
@@ -528,11 +537,11 @@ export function Landing() {
             states what Habit Reversal Training is, and the margin annotates it
             with how this particular instrument performs it, which is the same
             relationship 03 and 04 already use their margins for. */}
-        <section aria-labelledby="hrt-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="hrt-heading" className="pb-16 lg:pb-24">
           <div className="ed-container">
             <SectionMark n="02" label="The method" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
                 <h2 id="hrt-heading" className="ed-h2 text-stone-800">
                   The approach that actually works
@@ -542,7 +551,7 @@ export function Landing() {
                   Habit Reversal Training is the most studied method for stopping nail biting, and the one with the best results. In the landmark clinical trial it cut biting episodes by roughly 99%, and a meta-analysis of 18 studies confirmed large effects. The reason it works when willpower doesn't is that it targets the habit at the automatic level, not the conscious one.
                 </p>
 
-                <h3 className="mt-11 text-[1.0625rem] font-semibold leading-[1.4] text-stone-800">
+                <h3 className="ed-subhead mt-12 text-stone-800">
                   How it works
                 </h3>
 
@@ -550,14 +559,14 @@ export function Landing() {
                     than running two-up like the triggers in 01. The rounded
                     forest bar that used to flag each one is gone: a 3px forest
                     rule is Task 4's pull-quote device. */}
-                <div className="mt-5 border-t border-hairline">
+                <div className="mt-4 border-t border-hairline">
                   {([
                     ['Notice it happening', "Most nail biters catch fewer than half their daily biting episodes. Step one is simply becoming aware every single time, which is harder than it sounds when the habit is fully automatic."],
                     ['Do something else instead', 'The moment you notice it, replace the bite with something your hands can\'t do simultaneously: press your palms flat, clench a fist, grip the desk. Hold it for a minute.'],
                     ['Get an external signal', 'In clinical settings, a therapist would tap your shoulder. The audio alarm in this app does the same thing: it catches the moment you missed.'],
                   ] as const).map(([title, text]) => (
                     <div key={title} className="border-b border-hairline py-4">
-                      <p className="text-sm font-semibold leading-[1.7] text-stone-800">{title}</p>
+                      <p className="ed-body font-semibold text-stone-800">{title}</p>
                       <p className="ed-body ed-measure mt-1 text-stone-600">{text}</p>
                     </div>
                   ))}
@@ -569,7 +578,7 @@ export function Landing() {
 
                 <a
                   href="/blog/habit-reversal-training-guide"
-                  className="group mt-7 inline-flex items-center gap-1.5 text-sm text-forest-600 hover:text-forest-500 transition-colors"
+                  className="ed-ui group mt-6 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
                 >
                   <span className="ed-link">Read the full HRT guide</span>
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -599,11 +608,11 @@ export function Landing() {
                     <span className="ed-mono flex-shrink-0">The habit loop</span>
                   </div>
 
-                  <div className="mt-7">
+                  <div className="mt-6">
                     <HabitLoopFigure />
                   </div>
 
-                  <figcaption className="ed-caption ed-measure mt-6 text-stone-500">
+                  <figcaption className="ed-caption ed-measure mt-4 text-stone-500">
                     Nail biting closes on itself: the relief is brief, and the brevity is what teaches
                     the loop to run again. Habit reversal training doesn&apos;t fight the bite. It puts a
                     competing response into the one interval where awareness still arrives before the
@@ -612,7 +621,7 @@ export function Landing() {
                   </figcaption>
                 </figure>
 
-                <section aria-labelledby="how-heading" className="mt-14">
+                <section aria-labelledby="how-heading" className="mt-16">
                   <div className="ed-mark text-stone-500">
                     <span className="ed-mono flex-shrink-0">How it works</span>
                     <span className="ed-mark-rule ed-rule-draw" aria-hidden="true" />
@@ -620,7 +629,7 @@ export function Landing() {
 
                   <h3
                     id="how-heading"
-                    className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                    className="ed-h3 mt-6 text-stone-800"
                   >
                     Three steps to start stopping nail biting.
                   </h3>
@@ -632,7 +641,7 @@ export function Landing() {
                       in its own column: a 3.5rem hanging indent inside a
                       four-column margin would leave the prose about 30
                       characters wide. */}
-                  <ol className="mt-7 list-none border-t border-hairline">
+                  <ol className="mt-6 list-none border-t border-hairline">
                     {[
                       {
                         n: '01', heading: 'Allow camera access',
@@ -647,9 +656,9 @@ export function Landing() {
                         body: 'The instant your fingers approach your mouth, an audible alarm fires and the incident is logged locally. Awareness at the exact moment: the core of habit reversal training.',
                       },
                     ].map(({ n, heading, body }) => (
-                      <li key={n} className="border-b border-hairline py-5">
+                      <li key={n} className="border-b border-hairline py-4">
                         <span className="ed-mono block text-forest-600">{n}</span>
-                        <h4 className="mt-2.5 text-sm font-semibold leading-[1.7] text-stone-800">{heading}</h4>
+                        <h4 className="ed-body mt-2 font-semibold text-stone-800">{heading}</h4>
                         <p className="ed-body mt-1 text-stone-600">{body}</p>
                       </li>
                     ))}
@@ -666,11 +675,11 @@ export function Landing() {
             rule (3px forest), with both PubMed citations beneath it as mono
             source lines. The two honesty cards are margin notes now: same
             words, hairline top rule, no frame, no hover lift. */}
-        <section aria-labelledby="evidence-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="evidence-heading" className="pb-16 lg:pb-24">
           <div className="ed-container">
             <SectionMark n="03" label="The evidence" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
                 <h2 id="evidence-heading" className="ed-h2 text-stone-800">
                   Built on real habit science
@@ -682,7 +691,7 @@ export function Landing() {
                 <div className="mt-8 border-l-[3px] border-forest-600 pl-6 sm:pl-8">
                   <p className="ed-mono text-forest-600">The evidence behind the method</p>
 
-                  <p className="ed-lede ed-measure mt-5 text-stone-700">
+                  <p className="ed-lede ed-measure mt-6 text-stone-800">
                     The method inside this app isn't ours: it's Habit Reversal Training, the best-studied behavioural
                     treatment for nail biting. In the landmark clinical trial, participants' own daily episode counts
                     fell by roughly 99% over the study's five months, and a meta-analysis of 18 studies found a large
@@ -697,7 +706,7 @@ export function Landing() {
                         href="https://pubmed.ncbi.nlm.nih.gov/7436976/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block py-3.5 text-stone-500 hover:text-forest-600 transition-colors"
+                        className="block py-4 text-stone-500 transition-colors hover:text-forest-600"
                       >
                         <span className="ed-link ed-mono">Azrin, Nunn &amp; Frantz (1980): Behaviour Research and Therapy</span>
                       </a>
@@ -707,7 +716,7 @@ export function Landing() {
                         href="https://pubmed.ncbi.nlm.nih.gov/21549664/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block py-3.5 text-stone-500 hover:text-forest-600 transition-colors"
+                        className="block py-4 text-stone-500 transition-colors hover:text-forest-600"
                       >
                         <span className="ed-link ed-mono">Bate et al. (2011): Clinical Psychology Review meta-analysis</span>
                       </a>
@@ -728,7 +737,7 @@ export function Landing() {
                   </p>
                 </div>
 
-                <div className="mt-9 border-t border-hairline pt-4">
+                <div className="mt-8 border-t border-hairline pt-4">
                   <p className="ed-mono text-stone-500">An app is not a clinician</p>
                   <p className="ed-body mt-3 text-stone-600">
                     For severe or distressing BFRBs, see a professional. The{' '}
@@ -747,16 +756,16 @@ export function Landing() {
             h2), what it is made of (the feature grid, now a hairline-separated
             specification list, no cards, no hover lift), and how you check the
             claim for yourself (the privacy deep-dive, in the margin). */}
-        <section aria-labelledby="privacy-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="privacy-heading" className="pb-16 lg:pb-24">
           <div className="ed-container">
             <SectionMark n="04" label="The instrument" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div className="ed-main reveal" style={{ transitionDelay: '80ms' }}>
                 <h2 id="privacy-heading" className="ed-h2 text-stone-800">
                   Your camera never leaves this app.
                 </h2>
-                <p className="font-display text-2xl leading-[1.15] tracking-[-0.01em] mt-3 text-forest-600">
+                <p className="ed-h3 mt-3 text-forest-600">
                   Not even for a millisecond.
                 </p>
 
@@ -771,7 +780,7 @@ export function Landing() {
                     the hero's on-device guarantee: ruled top and bottom, mono,
                     nothing else. The rounded lock tile it used to sit under is
                     gone: it was the most card-shaped object on the page. */}
-                <p className="ed-mono mt-9 border-y border-hairline py-3.5 text-forest-600">
+                <p className="ed-mono mt-8 border-y border-hairline py-4 text-forest-600">
                   Disconnect from the internet and the app works exactly the same.
                 </p>
 
@@ -784,18 +793,18 @@ export function Landing() {
                     mechanism diagram and needs no source. Hairline is the raw
                     landmark topology; forest is the small part of it the
                     detector actually computes on. */}
-                <figure className="mt-14">
+                <figure className="mt-16">
                   <div className="ed-mark text-stone-500">
                     <span className="ed-mono flex-shrink-0">Fig. 4</span>
                     <span className="ed-mark-rule" aria-hidden="true" />
                     <span className="ed-mono flex-shrink-0">Detection geometry</span>
                   </div>
 
-                  <div className="mt-8">
+                  <div className="mt-6">
                     <DetectionGeometryFigure />
                   </div>
 
-                  <figcaption className="ed-caption ed-measure mt-7 text-stone-500">
+                  <figcaption className="ed-caption ed-measure mt-4 text-stone-500">
                     MediaPipe reduces a hand to 21 landmarks and a mouth to the midpoint of two lip
                     landmarks. The only quantity this app computes is the distance between the five
                     fingertips and that midpoint, in frame-relative coordinates. The alarm fires when
@@ -815,7 +824,7 @@ export function Landing() {
                 <section aria-labelledby="privacy-details-heading">
                   <h3
                     id="privacy-details-heading"
-                    className="font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                    className="ed-h3 text-stone-800"
                   >
                     Open, honest, verifiable.
                   </h3>
@@ -823,7 +832,7 @@ export function Landing() {
                     The privacy claims on this page aren't marketing. You can verify every one of them yourself.
                   </p>
 
-                  <div className="mt-9">
+                  <div className="mt-8">
                     {[
                       {
                         title: 'No network requests during detection',
@@ -851,18 +860,18 @@ export function Landing() {
                     this says what you would be checking. The route to a server
                     is drawn as severed rather than idle, because that is the
                     actual architecture: there is no upload path to disable. */}
-                <figure className="mt-14">
+                <figure className="mt-16">
                   <div className="ed-mark text-stone-500">
                     <span className="ed-mono flex-shrink-0">Fig. 5</span>
                     <span className="ed-mark-rule" aria-hidden="true" />
                     <span className="ed-mono flex-shrink-0">The detection path</span>
                   </div>
 
-                  <div className="mt-7">
+                  <div className="mt-6">
                     <PrivacyArchitectureFigure />
                   </div>
 
-                  <figcaption className="ed-caption ed-measure mt-6 text-stone-500">
+                  <figcaption className="ed-caption ed-measure mt-4 text-stone-500">
                     Frames go from the camera to the landmark model, and from the model to the alarm.
                     All three sit inside your device. There is no route out for camera data, which is
                     why the figure on the cut path is zero rather than small. Signing in and paying
@@ -882,7 +891,7 @@ export function Landing() {
                   verification notes beside it. */}
               <section
                 aria-labelledby="features-heading"
-                className="reveal col-span-full mt-6 lg:col-span-9 lg:col-start-1"
+                className="reveal col-span-full lg:col-span-9 lg:col-start-1"
                 style={{ transitionDelay: '240ms' }}
               >
                 <div className="ed-mark text-stone-500">
@@ -892,13 +901,13 @@ export function Landing() {
 
                 <h3
                   id="features-heading"
-                  className="mt-6 font-display text-2xl leading-[1.15] tracking-[-0.01em] text-stone-800"
+                  className="ed-h3 mt-6 text-stone-800"
                 >
                   Everything you need to build the habit.
                 </h3>
                 <p className="ed-body mt-2 text-stone-500">Nothing you don't.</p>
 
-                <dl className="mt-7 border-t border-hairline">
+                <dl className="mt-6 border-t border-hairline">
                   {[
                     { icon: Cpu, name: 'On-Device AI', desc: 'MediaPipe runs in WebAssembly. Your CPU does the work, not a remote server.' },
                     { icon: BellRing, name: 'Real-Time Alerts', desc: 'Persistent audible alarm the moment your hand nears your mouth. Hard to ignore.' },
@@ -911,7 +920,7 @@ export function Landing() {
                       key={name}
                       className="border-b border-hairline py-4 sm:grid sm:grid-cols-[10.5rem_1fr] sm:gap-6"
                     >
-                      <dt className="flex items-center gap-2.5 text-sm font-semibold leading-[1.7] text-stone-800">
+                      <dt className="ed-body flex items-center gap-3 font-semibold text-stone-800">
                         <Icon size={15} aria-hidden="true" className="flex-shrink-0 text-forest-600" />
                         {name}
                       </dt>
@@ -931,19 +940,19 @@ export function Landing() {
             string keeps its job instead of being repeated. Only the signature
             is centred: the prose stays ragged-right like every other column
             on the page. */}
-        <section aria-labelledby="why-built-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="why-built-heading" className="pb-24 lg:pb-32">
           <div className="ed-container">
             <SectionMark n="05" label="Why we built this" />
 
             <div
-              className="reveal ed-measure mx-auto mt-14 border-y border-hairline py-12 lg:mt-20 lg:py-14"
+              className="reveal ed-measure mx-auto mt-6 border-y border-hairline py-8 lg:mt-8 lg:py-12"
               style={{ transitionDelay: '80ms' }}
             >
               <h2 id="why-built-heading" className="ed-h2 text-stone-800">
                 Made by people who bite their nails too.
               </h2>
 
-              <div className="mt-7 space-y-5 text-stone-600">
+              <div className="mt-6 space-y-6 text-stone-600">
                 <p className="ed-body">
                   Every other tool we tried fought the symptom. Bitter polish makes your nails taste bad. Gloves
                   and fidget toys put something in the way. None of them touched the real problem: by the time
@@ -963,7 +972,7 @@ export function Landing() {
 
               {/* The signature. The dash that used to introduce it is gone; a
                   mono line under the colophon reads as a signature without it. */}
-              <p className="ed-mono mt-10 text-center text-stone-500">The Stop Biting team</p>
+              <p className="ed-mono mt-8 text-center text-stone-500">The Stop Biting team</p>
             </div>
           </div>
         </section>
@@ -973,7 +982,7 @@ export function Landing() {
             that used to sit inside that wrapper beside it is an editorial
             section now, so the wrapper closes again immediately and re-opens
             further down for the contact form. */}
-        <div className="max-w-6xl mx-auto px-8 pb-20">
+        <div className="max-w-6xl mx-auto px-8 pb-24 lg:pb-32">
           {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
           <PricingSection />
         </div>
@@ -993,11 +1002,11 @@ export function Landing() {
             the list instead, where it still labels the pointer to the full
             index. From here down the page is back matter and runs at this
             wider measure: 07 does the same. */}
-        <section aria-labelledby="featured-guides-heading" className="pb-20 lg:pb-28">
+        <section aria-labelledby="featured-guides-heading" className="pb-16 lg:pb-24">
           <div className="ed-container">
             <SectionMark n="06" label="Further reading" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div
                 className="reveal col-span-full lg:col-span-9 lg:col-start-1"
                 style={{ transitionDelay: '80ms' }}
@@ -1011,16 +1020,16 @@ export function Landing() {
                     <li key={href} className="border-b border-hairline">
                       <a
                         href={href}
-                        className="group block py-4 text-stone-700 transition-colors hover:text-forest-600 sm:grid sm:grid-cols-[7.5rem_1fr_auto] sm:items-baseline sm:gap-x-6"
+                        className="group block py-4 text-stone-800 transition-colors hover:text-forest-600 sm:grid sm:grid-cols-[7.5rem_1fr_auto] sm:items-baseline sm:gap-x-6"
                       >
                         <span className="ed-mono block text-stone-500 transition-colors group-hover:text-forest-600">
                           {kicker}
                         </span>
-                        <span className="mt-2 block text-sm font-semibold leading-[1.6] sm:mt-0">
+                        <span className="ed-body mt-2 block font-semibold sm:mt-0">
                           <span className="ed-link">{title}</span>
                         </span>
                         {minutes !== undefined && (
-                          <span className="ed-mono mt-1.5 block text-stone-500 sm:mt-0 sm:text-right">
+                          <span className="ed-mono mt-2 block text-stone-500 sm:mt-0 sm:text-right">
                             {minutes} min read
                           </span>
                         )}
@@ -1039,7 +1048,7 @@ export function Landing() {
                   <h3 id="blog-preview-heading" className="ed-mono text-stone-500">From the blog</h3>
                   <a
                     href="/blog"
-                    className="group mt-3 inline-flex items-center gap-1.5 text-sm text-forest-600 transition-colors hover:text-forest-500"
+                    className="ed-ui group mt-3 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
                   >
                     <span className="ed-link">All articles</span>
                     <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -1064,11 +1073,11 @@ export function Landing() {
             beside six closed disclosures. A wider row also gives the chevron
             somewhere to sit, hard right of its question. The answers keep
             `.ed-measure`, so opening one still sets it at 62 characters. */}
-        <section id="faq" aria-labelledby="faq-heading" className="pb-20 lg:pb-28">
+        <section id="faq" aria-labelledby="faq-heading" className="pb-24 lg:pb-32">
           <div className="ed-container">
             <SectionMark n="07" label="FAQ" />
 
-            <div className="ed-grid mt-10 lg:mt-14">
+            <div className="ed-grid mt-6 lg:mt-8">
               <div
                 className="reveal col-span-full lg:col-span-9 lg:col-start-1"
                 style={{ transitionDelay: '80ms' }}
@@ -1080,7 +1089,7 @@ export function Landing() {
                 <div className="mt-8 border-t border-hairline">
                   {FAQS.map(({ q, a }) => (
                     <details key={q} className="group border-b border-hairline">
-                      <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-sm font-semibold leading-[1.6] text-stone-800 marker:content-none [&::-webkit-details-marker]:hidden">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-4 ed-body font-semibold text-stone-800 marker:content-none [&::-webkit-details-marker]:hidden">
                         {q}
                         <ChevronDown
                           size={16}
@@ -1088,7 +1097,7 @@ export function Landing() {
                           className="shrink-0 text-stone-500 transition-transform duration-200 group-open:rotate-180"
                         />
                       </summary>
-                      <p className="ed-body ed-measure pb-5 text-stone-600">{a}</p>
+                      <p className="ed-body ed-measure pb-4 text-stone-600">{a}</p>
                     </details>
                   ))}
                 </div>
@@ -1108,11 +1117,11 @@ export function Landing() {
             the end of the page rather than as one more card on it. The
             shimmer is off the button too: it was the last animated ornament
             left in this file. */}
-        <section aria-label="Call to action" className="pb-20 lg:pb-28">
+        <section aria-label="Call to action" className="pb-16 lg:pb-24">
           <div className="ed-container">
-            <div className="reveal border-y border-hairline py-14 text-center lg:py-16">
+            <div className="reveal border-y border-hairline py-12 text-center lg:py-16">
               <h2 className="ed-h2 text-stone-800">Ready to stop nail biting?</h2>
-              <p className="ed-body ed-measure mx-auto mt-5 text-stone-600">
+              <p className="ed-body ed-measure mx-auto mt-6 text-stone-600">
                 Use the web app directly in your browser: sign in with Google and nail biting detection starts in
                 under ten seconds. No install needed.
               </p>
@@ -1120,12 +1129,12 @@ export function Landing() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-9 inline-flex items-center gap-2 rounded-2xl bg-forest-600 px-8 py-3.5 text-sm font-semibold text-cream-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-forest-500 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
+                className="ed-ui mt-8 inline-flex items-center gap-2 rounded-2xl bg-forest-600 px-8 py-4 font-semibold text-cream-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-forest-500 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
               >
                 <Zap size={15} aria-hidden="true" />
                 Start free trial (it's free)
               </a>
-              <p className="ed-mono mt-7 text-stone-500">3-day free trial · no credit card required</p>
+              <p className="ed-mono mt-6 text-stone-500">3-day free trial · no credit card required</p>
             </div>
           </div>
         </section>
@@ -1133,7 +1142,7 @@ export function Landing() {
         {/* ── CONTACT ───────────────────────────────────────────────────── */}
         {/* Shared component, unchanged: it keeps the legacy wrapper for the
             same reason PricingSection does. */}
-        <div className="max-w-6xl mx-auto px-8 pb-20">
+        <div className="max-w-6xl mx-auto px-8 pb-24 lg:pb-32">
           <ContactForm />
         </div>
       </main>
@@ -1143,13 +1152,13 @@ export function Landing() {
           the display serif, and the eight links set as a mono column rather
           than a row of small grey text. All eight hrefs, and the copyright
           line, are the page's own, unchanged. */}
-      <footer className="border-t border-hairline bg-cream-200 py-14">
+      <footer className="border-t border-hairline bg-cream-200 py-16">
         <div className="ed-container">
-          <div className="flex flex-col justify-between gap-10 sm:flex-row sm:gap-16">
+          <div className="flex flex-col justify-between gap-12 sm:flex-row sm:gap-16">
             <div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-                <span className="font-display text-lg leading-none tracking-[-0.01em] text-stone-800">Stop Biting</span>
+                <span className="ed-wordmark text-stone-800">Stop Biting</span>
               </div>
               <p className="ed-body mt-4 max-w-sm text-stone-500">
                 Stop nail biting (onychophagia) using on-device AI. Works in your browser as a Progressive Web App,
@@ -1160,7 +1169,7 @@ export function Landing() {
             {/* Written out one by one rather than mapped over an array: these
                 eight hrefs are the site's whole legal and navigational surface,
                 and spelling them as real attributes keeps them greppable. */}
-            <nav aria-label="Footer navigation" className="flex flex-col items-start gap-3.5">
+            <nav aria-label="Footer navigation" className="flex flex-col items-start gap-4">
               <a href="/" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Home</span></a>
               <a href="/blog" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Blog</span></a>
               <a href="/#pricing" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Pricing</span></a>

@@ -35,7 +35,7 @@ export function PrevalenceMatrix() {
 
       <svg
         viewBox="0 0 340 316"
-        className="mt-5 block h-auto w-full max-w-[340px]"
+        className="mt-4 block h-auto w-full max-w-[340px]"
         aria-hidden="true"
         focusable="false"
       >
@@ -70,7 +70,7 @@ export function PrevalenceMatrix() {
         })}
       </svg>
 
-      <ul className="mt-5 list-none space-y-2">
+      <ul className="mt-4 list-none space-y-2">
         <li className="flex items-center gap-3">
           <span aria-hidden="true" className="h-2 w-2 flex-shrink-0 rounded-full bg-forest-600" />
           <span className="ed-mono text-stone-500">20 in 100, lower estimate</span>

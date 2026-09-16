@@ -230,6 +230,15 @@ html.dark {
   transform: translateY(0) scale(1);
 }
 
+/* Applied by useScrollReveal to anything it catches while the page is being
+   flicked rather than read. The entrance is still an entrance, but a short one:
+   a 600ms fade behind a 160ms stagger delay is what leaves a section blank when
+   the visitor is travelling at ten thousand pixels a second. */
+.reveal.revealed-fast,
+.reveal-card.revealed-fast {
+  transition-duration: 0.22s;
+}
+
 /* Shimmer sweep on primary CTA button */
 .btn-shimmer {
   position: relative;
@@ -368,7 +377,7 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
                 padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
 
 .ed-grid  { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
-            column-gap: clamp(1.5rem, 3vw, 2.5rem); row-gap: 2.5rem; }
+            column-gap: clamp(1.5rem, 3vw, 2.5rem); row-gap: 3rem; }
 .ed-main  { grid-column: 1 / -1; container-type: inline-size; }
 .ed-aside { grid-column: 1 / -1; }
 @media (min-width: 1024px) {
@@ -396,29 +405,116 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 @media (min-width: 1024px) {
   .ed-display { font-size: clamp(2.75rem, 12.7cqw, 5.25rem); }
 }
+/* ── The type scale ───────────────────────────────────────────────────────
+   Seven steps, and every adjacent pair is at least 15% apart at every width
+   the page is built for. What was here before had twelve, seven of them
+   crammed between 11px and 19px: 19/18, 18/17, 15/14 and 12/11 are 6-9%
+   steps, which the eye reads as a typo rather than as a level.
+
+   Three of those steps are gone rather than moved. The 17px sub-head
+   (`text-[1.0625rem]`) and the 18px wordmark were both a single size step
+   away from a neighbour, so they are carried by weight and colour instead:
+   `.ed-subhead` is 15px/600 in stone-900, one tier darker than the 15px
+   stone-600 prose it heads. 14px `text-sm` folded into the 15px body, which
+   is the same decision in the other direction — two sizes 7% apart were
+   never two levels. The sub-head's "darker ink" is stone-800, the page's
+   existing emphasis tier, not a new stone-900: adding a fourth grey seven
+   lightness points from the third would have rebuilt the very tier this pass
+   deleted. Three text greys, which is the ceiling.
+
+       58.4  .ed-display   Instrument Serif   h1 only (44 on a phone)
+       46    .ed-h2        Instrument Serif   section headings (30 on a phone)
+       24    .ed-h3        Instrument Serif   serif sub-heads
+             .ed-figure    Instrument Serif   key figures, in forest
+       19    .ed-lede      Inter              section ledes
+       15    .ed-body      Inter 400          prose
+             .ed-subhead   Inter 600          sub-heads, in stone-900
+             .ed-ui        Inter              links, buttons, nav
+       13    .ed-caption   Inter              figcaptions, colophon
+       11    .ed-mono      JetBrains Mono     marks, labels, apparatus
+
+   `.ed-figure` and `.ed-h2` used to be 48px and 46px — 4.3% apart, both
+   Instrument Serif 400, rendering side by side in section 01. They are one
+   step apart now rather than two sizes pretending to be a hierarchy, and the
+   figure is the lower of the two on purpose: it is marginalia in a four-column
+   margin and a pricing card's price, neither of which should out-shout the
+   heading of the section carrying them. Forest green against an otherwise
+   all-stone page is the emphasis, which is where that distinction belongs.
+   Anything between the two would have collided with `.ed-h2`'s fluid ramp at
+   some viewport, and anything above it runs into `.ed-display`, which the
+   container query caps at 58.4px from 1024px up. */
 .ed-h2      { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
               font-size: clamp(1.875rem, 3.6vw, 2.875rem); line-height: 1.05;
               letter-spacing: -0.01em; }
-.ed-lede    { font-size: clamp(1.0625rem, 1.35vw, 1.1875rem); line-height: 1.65; }
+.ed-h3      { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+              font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.01em; }
+.ed-lede    { font-size: 1.1875rem; line-height: 1.65; }
 .ed-body    { font-size: 0.9375rem; line-height: 1.7; }
-.ed-caption { font-size: 0.75rem; line-height: 1.55; }
+.ed-subhead { font-size: 0.9375rem; font-weight: 600; line-height: 1.4; }
+.ed-ui      { font-size: 0.9375rem; line-height: 1.5; }
+.ed-caption { font-size: 0.8125rem; line-height: 1.55; }
 .ed-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace;
               font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.18em;
               text-transform: uppercase; }
 .ed-figure  { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
-              font-size: clamp(2rem, 4vw, 3rem); line-height: 1; }
+              font-size: 1.5rem; line-height: 1; }
+
+/* The editorial scale has no 14px step, and this is the one place that cannot
+   say so in its own markup. PricingSection and ContactForm are shared with
+   /pricing and are not this page's to edit, but both opt into `.ed-page` on
+   their root <section>, and three button labels in them are `text-sm` — 7%
+   under the 15px body, which is the same non-hierarchy this pass deleted
+   everywhere else. Scoped to `.ed-page`, so it reaches exactly those two
+   components and nothing else in the app: PricingPage's own wrapper is not an
+   `.ed-page`, so its nav keeps Tailwind's 14px. Landing itself no longer uses
+   `text-sm` anywhere — every size there comes from a role above. */
+.ed-page .text-sm { font-size: 0.9375rem; }
+
+/* The wordmark is the one display-serif role that has to share a single fixed
+   bar with a nav link and a button. At the `.ed-h3` step it wants 130px, which
+   a 360px phone does not have: the bar wrapped to 111px tall and swallowed the
+   top of the hero. It sits at the 15px UI step until there is room for the
+   serif one, which is the same trade the rest of this pass makes — a role
+   moves down the scale rather than inventing a step of its own. */
+.ed-wordmark { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
+               font-size: 0.9375rem; line-height: 1.15; letter-spacing: -0.01em; }
+@media (min-width: 640px) { .ed-wordmark { font-size: 1.5rem; } }
 
 /* Section mark: 01 ─────────────────── THE PROBLEM */
 .ed-mark      { display: flex; align-items: center; gap: 1rem; }
 .ed-mark-rule { flex: 1 1 auto; height: 1px; background: var(--ed-hairline); }
 
 /* Signature motion: rules draw themselves left-to-right when their section
-   reveals. Driven by the .revealed class useScrollReveal already applies to
-   the ancestor .reveal element — no JS change needed. */
+   reveals. Driven by the .revealed class useScrollReveal applies to the
+   .reveal element — which on every numbered section is the mark row itself. */
 .ed-rule-draw           { transform: scaleX(0); transform-origin: left;
                           transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1); }
 .revealed .ed-rule-draw,
 .ed-rule-draw.revealed  { transform: scaleX(1); }
+
+/* The mark is ruled, not faded in. Where the row is itself the reveal target
+   (`<div class="reveal ed-mark">` — every numbered section, and the pricing
+   mark in the shared PricingSection) the row holds still and its parts arrive
+   in turn: the ordinal lands, the rule draws across behind it, and the label
+   arrives at the far end. Without this the whole 17px row slid up together and
+   the signature rule-draw was invisible inside it.
+   The rule is addressed by class and the label as "whatever follows the rule",
+   so one pair of selectors covers both the three-part marks (01 ─ THE PROBLEM)
+   and the two-part ones (PRICING ─), where the rule is the last child. */
+.ed-mark.reveal         { opacity: 1; transform: none; transition: none; }
+.ed-mark.reveal > :first-child,
+.ed-mark.reveal > .ed-mark-rule ~ * {
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ed-mark.reveal > .ed-mark-rule ~ *          { transition-delay: 260ms; }
+.ed-mark.reveal .ed-rule-draw                { transition-delay: 80ms; }
+.ed-mark.reveal.revealed > :first-child,
+.ed-mark.reveal.revealed > .ed-mark-rule ~ * { opacity: 1; }
+
+/* Caught mid-flick: the mark arrives in one piece rather than over 660ms. */
+.ed-mark.reveal.revealed-fast > *,
+.ed-mark.reveal.revealed-fast .ed-rule-draw { transition-delay: 0ms; transition-duration: 0.22s; }
 
 /* Hairline separator */
 
@@ -462,6 +558,11 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 
   .ed-rule-draw {
     transform: none;
+    transition: none;
+  }
+
+  .ed-mark.reveal > * {
+    opacity: 1;
     transition: none;
   }
 

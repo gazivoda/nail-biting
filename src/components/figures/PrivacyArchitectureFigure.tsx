@@ -37,7 +37,7 @@ export function PrivacyArchitectureFigure() {
   return (
     <svg
       viewBox="0 0 340 334"
-      className="block h-auto w-full max-w-[340px] text-stone-700"
+      className="block h-auto w-full max-w-[340px] text-stone-600"
       role="img"
       aria-labelledby={`${titleId} ${descId}`}
     >
@@ -106,21 +106,21 @@ export function PrivacyArchitectureFigure() {
 
       {/* ── Labels ────────────────────────────────────────────────────────── */}
       <g fontFamily={MONO} fontWeight="500" letterSpacing="0.16em">
-        <text x="8" y="52" fontSize="12" fill="currentColor">
+        <text x="8" y="52" fontSize="11" fill="currentColor">
           YOUR DEVICE
         </text>
         {STAGES.map(({ x, label }) => (
-          <text key={label} x={x} y="136" textAnchor="middle" fontSize="12" fill="currentColor">
+          <text key={label} x={x} y="136" textAnchor="middle" fontSize="11" fill="currentColor">
             {label}
           </text>
         ))}
-        <text x="192" y={BOUNDARY_BOTTOM - 2} fontSize="12" className="fill-forest-600">
+        <text x="192" y={BOUNDARY_BOTTOM - 2} fontSize="11" className="fill-forest-600">
           0 BYTES
         </text>
-        <text x="192" y={BOUNDARY_BOTTOM + 16} fontSize="12" className="fill-forest-600">
+        <text x="192" y={BOUNDARY_BOTTOM + 16} fontSize="11" className="fill-forest-600">
           OF CAMERA DATA
         </text>
-        <text x="170" y="304" textAnchor="middle" fontSize="12" className="fill-stone-500">
+        <text x="170" y="304" textAnchor="middle" fontSize="11" className="fill-stone-500">
           ANY SERVER
         </text>
       </g>
