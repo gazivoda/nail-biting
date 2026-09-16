@@ -1221,6 +1221,14 @@ if (!existsSync(distPath)) {
 
     const schemaBlocks = [schemaTag(blogPosting), schemaTag(breadcrumb)];
 
+    // A post that renders an FAQ-headed section of <h3>/<p> pairs gets a
+    // FAQPage, read out of that same markup. This ran only on compare and
+    // solutions pages before, so the two posts that do render an FAQ block
+    // described it to no one. Same function, same contract: a post with no
+    // FAQ section still gets no FAQPage.
+    const postFaq = visibleFaqSection(post);
+    if (postFaq) schemaBlocks.push(schemaTag(faqPageSchema(canonical, postFaq.heading, postFaq.pairs)));
+
     if (slug === 'habit-reversal-training-guide') {
       const howTo = {
         '@context': 'https://schema.org',
@@ -1251,7 +1259,7 @@ if (!existsSync(distPath)) {
             '@type': 'HowToStep',
             position: 4,
             name: 'Maintain practice for 4–8 weeks',
-            text: 'Biting frequency typically decreases significantly between weeks 2 and 6, and the competing response becomes more automatic the longer it is practised. Continue daily monitoring during high-stress periods to prevent relapse.',
+            text: 'Biting frequency falls as the competing response becomes more automatic with practice. No controlled trial has measured week-by-week frequency during self-directed practice, so treat any specific schedule as an expectation rather than a measured result. Continue daily monitoring through high-stress periods, when the original habit is most likely to resurface.',
           },
         ],
       };

@@ -691,3 +691,28 @@ significant at one month, not at two) — it was absent despite a dedicated cite
       Lee & Lipner 2022 (prevalence), Bate 2011 (d = 0.80, with the pre-to-post and
       six-behaviour-classes caveats intact), Lally 2010, Ghanizadeh 2013 (NAC, null result at
       two months stated). No new source was invented; nothing outside the closed pool was used.
+
+- [x] 2E FAQPage schema now reaches blog posts (`server.js`, `src/data/blogPosts.ts`).
+      Two separate defects, both verified by booting the server and fetching:
+      (a) `visibleFaqSection()` was only ever called on the compare/solutions route, so **no
+      blog post could emit FAQPage regardless of its markup**. Wired into `injectBlogSchemas`
+      under the same derive-from-visible-markup contract.
+      (b) The two posts that do render an FAQ kept their Q&As in `body` as "Question?\nAnswer".
+      `body.split('\n\n')` turns that into ONE paragraph with the question as its first line,
+      so the questions were headings for neither readers nor machines. Converted to <h3>/<p>.
+      Added a 4-question FAQ block to the pillar, every answer restating something already
+      argued and cited on that page. Result: pillar + best-apps + vs-mavala now emit FAQPage
+      (4/3/2 Q&As), all answers verbatim-identical to visible text, `@id` on `#faq` so there
+      is no collision with BlogPosting's `@id`.
+      Regression-checked across 8 page types: all 200, 0 JSON-LD parse failures, every page
+      that had FAQPage/HowTo/MedicalCondition before still has it.
+- [x] **Fifth copy of the timeline contradiction found and fixed** — the `HowTo` schema for
+      `habit-reversal-training-guide` asserted "Biting frequency typically decreases
+      significantly between weeks 2 and 6" as structured data, contradicting the reconciled
+      copy shipped in 9617dd4. Now matches. `between weeks 2 and 6` returns nothing sitewide.
+
+### Watch-out recorded for future edits
+Inserting an `html:` key into a section that already had one produces a duplicate key in the
+object literal, and **the later one silently wins** — the FAQ markup would have been discarded
+with no error. Caught by counting `html:` keys per section after the edit. Always count keys
+after a structural insert; tsc will not flag a duplicate literal key here.
