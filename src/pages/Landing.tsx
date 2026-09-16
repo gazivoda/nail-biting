@@ -121,7 +121,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'How long does it take to stop biting your nails?',
-    a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. Frequency typically starts dropping meaningfully between weeks two and four, and the competing response starts feeling natural around weeks six to eight. Habit-formation research suggests a median of roughly two months for a new response to become automatic.',
+    a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. No controlled trial has measured week-by-week biting frequency during self-directed habit reversal training, so treat any schedule, including ours, as an expectation rather than a measured result. The best-evidenced anchor is Lally et al. 2010: among the 39 volunteers whose data fitted the model, the median time for a new daily habit to become automatic was 66 days, with a range of 18 to 254. That is a general habit-formation figure, not one measured for nail biting.',
   },
 ];
 

@@ -536,3 +536,106 @@ assume an aggregator is more bot-friendly than the source (Europe PMC 403s four 
 soft-203s) · trust `elink`'s `linksetdbs[0]` (it returned the same PMC id for different PMIDs) ·
 write "no study has" where the body supports only "we could not find one" · or verify a claim with a
 literal-string grep, which is how the 30fps regression survived a pass that declared it fixed.
+
+
+---
+
+# Head-term visibility push — "stop nail biting" (2026-09-16)
+
+Branch: `seo-geo-loop-sept` (31 commits ahead of main, pushed). Site: stopbiting.today.
+Goal (user): improve positioning for **"stop nail biting"** and the queries around it so visibility rises.
+Mode (user): specialist subagents; **commit + push after each subagent finishes**.
+
+## Baseline established this session (facts, not assumptions)
+- Corpus: 143 blog posts, 6 `/compare/*`, 3 `/solutions/*`, 161 sitemap URLs. Live 200s.
+- Prior loops already banked: Technical 93, Schema 82, E-E-A-T 75, composite 75/100.
+  The remaining known lever from those loops was **off-site brand authority (46-49)** — off-repo.
+- **The head-term gap is on-repo and unaddressed:** `/blog/how-to-stop-nail-biting`
+  is 6,978 chars (~900 words, "4 min") — *below the 6,484-char corpus average* and far
+  below what ranks for this query (health-authority guides at 1,500-3,000 words).
+- **Suspected cannibalisation:** homepage H1 "Stop biting your nails. For good, this time."
+  + `how-to-stop-nail-biting` + `stop-nail-biting-fast` + `stopping-nail-biting-for-good`
+  + `nail-biting-cure` + `best-nail-biting-remedies` all chase near-identical intent.
+
+## Wave 1 — diagnosis (parallel, read-only)
+- [ ] 1A `seo-sxo` — SERP-backwards on the head-term set: what page *type* Google rewards,
+      intent split, and which of our URLs is the right owner (homepage vs blog pillar)
+- [ ] 1B `seo-cluster` — cannibalisation map + hub-and-spoke architecture across all 152
+      content URLs; internal-link matrix with head-term anchor text
+- [ ] 1C `seo-geo` — AI-search visibility for the head query: citability of the current
+      pillar, AI Overview / ChatGPT / Perplexity readiness, extractable-passage gaps
+
+## Wave 2 — implementation (sequential; commit + push after each)
+- [ ] 2A Rebuild the pillar for the head term (depth, answer-first, FAQ, sourced claims)
+- [ ] 2B Resolve cannibalisation + rewire internal links toward the pillar
+- [ ] 2C Head-query schema (HowTo/FAQ) + homepage/pillar title-description alignment
+- [ ] 2D Supporting-gap content where Wave 1 proves a real query is unserved
+
+## Wave 3 — verification
+- [ ] 3A Adversarial re-audit: no fabricated claims, no regressions, gates green
+- [ ] 3B Report + measurement plan
+
+## Hard guardrails (carried from prior loops' lessons)
+- **Cite or delete.** No invented statistics, studies, trials, testimonials or percentages.
+  Prior loops removed ~25 fabricated claims; do not reintroduce any.
+- Never claim Stop Biting is the "only" anything — `/compare/ai-detection-apps` documents
+  a verified four-app category.
+- Gates before every commit: `tsc`, `npm test`, `npm run build:web`, `npm run seo:check`.
+- `grep -c` counts LINES and exits 1 on zero matches; BSD sed has no `\?`; never `echo ok`
+  after a piped check.
+
+## Wave 1 findings — VERIFIED (2026-09-16)
+
+All three diagnosis agents delivered. Findings below were independently re-verified by the
+coordinator before being accepted; agent claims that could not be re-verified are marked.
+
+### F1 — The pillar has zero contextual inbound links (verified, coordinator-measured)
+`/blog/how-to-stop-nail-biting` receives **0** in-body `<a href>` links from the entire
+143-post corpus. Sanity-anchored count over `blogPosts.ts`: 404 total `href=`, 359 external
+(PubMed/PMC), **22 internal `/blog/` links total**, 18 distinct targets — the pillar is not
+among them. Its only inbound links are 3 automatic tag-cycle related-links + 1 homepage
+Featured Guides slot = **4 total**.
+Root cause (from `src/data/related.ts`): `getRelated()` filters strictly by tag and links each
+post to the next 3 in its own tag cycle. So every post — pillar or long-tail spoke — gets
+exactly 3 inbound, and the pillar gets **zero** from the 111 posts outside the Treatment tag.
+The algorithm cannot express hierarchy. Elegant fix = make `related.ts` hierarchy-aware
+(a 4th, pillar-ward link for off-tag posts) rather than hand-editing 30+ posts.
+
+### F2 — Four contradictory answers to one question (verified, coordinator-measured)
+"How long until nail biting improves?" is answered four different ways:
+pillar "weeks two and six" (uncited) · homepage FAQ "weeks two and four" (uncited, **and
+encoded in FAQPage JSON-LD**) · `how-long-to-stop-nail-biting` "6-12 weeks" ·
+`breaking-any-habit-science` "4-8 weeks". ~55 timeline sentences corpus-wide.
+Only properly-cited anchor: Lally et al. 2010 (median 66 days, range 18-254, n=39).
+Homepage FAQ text lives in THREE places: `index.html` JSON-LD (source) → parsed into
+`server.js:1466` `HOME_FAQS` → crawler SSR; plus `Landing.tsx:101-124`, a hand-maintained
+mirror that can silently drift.
+
+### F3 — Head-term SERP is health-authority editorial, not product (agent-verified)
+13 queries sampled. `how to stop nail biting` = 75% health-authority-article consensus
+(AAD, NYP, Healthline, Cleveland Clinic, Nationwide Children's). Verified competitive depth
+band **1,070-1,821 words**; our pillar sits at the very bottom (~1,076). Every competitor
+carries a named health writer or institutional byline; ours says "Founder".
+`stop nail biting app` / `app to stop nail biting` = 89-100% App Store/Google Play listings —
+a surface a PWA cannot occupy natively (distribution problem, not a content problem). The one
+non-store result there is competitor skinawareapp.com's comparison listicle, the exact format
+our `/blog/best-apps-to-stop-nail-biting` already uses.
+stopbiting.today was **not observed in any sampled result for any of the 13 queries**.
+
+### F4 — Homepage serves a different H1 to crawlers than to users (verified by coordinator)
+Raw fetch: `<h1>Stop Nail Biting with AI</h1>`, 736 crawler-visible words, 6 H2s, from
+`server.js` `homeArticleHtml()` inside `<article id="ssr-page-content">`.
+JS-rendered: `<h1>Stop biting your nails. For good, this time.</h1>`, ~2,484 words.
+Hidden from JS clients via `html.js #ssr-page-content{display:none}`. Not cloaking (same
+substance, both paths ship), but the two H1s should be single-sourced.
+
+### F5 — Merge target confirmed (agent full-body evidence)
+`/blog/nail-biting-cure` restates `how-long-to-stop-nail-biting`'s Twohig et al. 2003 trial
+near-verbatim AND duplicates `stopping-nail-biting-for-good`'s premise. Owner approved
+merge + 301. Port forward the Twohig citation + the awareness/replacement/consolidation
+framework first. Watchlist (not called): `stop-nail-biting-fast` vs `best-nail-biting-remedies`.
+
+### Deliberately NOT accepted
+- Agent-proposed medical-reviewer byline: would require a real credentialed reviewer. Cannot
+  be manufactured — flagged to owner as an off-repo decision, not implemented.
+- Product screenshots for `/` and the App Store surface: off-repo asset/distribution work.
