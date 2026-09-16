@@ -677,3 +677,17 @@ pillar -> best-nail-biting-remedies / best-apps-to-stop-nail-biting / bitter-nai
 nail-biting-cure -> stopping-nail-biting-for-good.
 Also added the missing NAC option class to the pillar (Ghanizadeh 2013, 42 children, 800mg/day,
 significant at one month, not at two) — it was absent despite a dedicated cited page existing.
+
+- [x] 2D Pillar depth (`how-to-stop-nail-biting`): **1,076 -> 1,600 rendered words**, inside the
+      verified 1,070-1,821 competitive band. H2s 5 -> 8, question-shaped H2s 1 -> 3.
+      Added: a "Why do people bite their nails?" section (competitors treat why+how as one
+      self-contained article), an explicit 3-step HRT protocol (was one dense prose paragraph
+      despite the summary promising "step by step"), and a "When should you see a doctor"
+      escalation section. Rewrote the passage the citability audit flagged: it opened on a bare
+      pronoun, hedged with "arguably", and asserted an unsourced "most self-help attempts skip"
+      — the unsourced quantifier was deleted rather than given a citation.
+      readingMinutes 4 -> 6 per the corpus rule floor((heading+body+list)/195) = 1233/195.
+      Every new claim traces to a source already cited on-domain: Halteh/Scher/Lipner and
+      Lee & Lipner 2022 (prevalence), Bate 2011 (d = 0.80, with the pre-to-post and
+      six-behaviour-classes caveats intact), Lally 2010, Ghanizadeh 2013 (NAC, null result at
+      two months stated). No new source was invented; nothing outside the closed pool was used.

@@ -471,7 +471,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "How to Stop Nail Biting: The Complete Guide (2026)",
     description: "Habit Reversal Training has the strongest evidence: self-recorded biting episodes fell roughly 99% over five months in the 1980 trial. The method, step by step.",
     tag: "Treatment",
-    readingMinutes: 4,
+    readingMinutes: 6,
     datePublished: "2026-07-16",
     dateModified: "2026-09-15",
   },
