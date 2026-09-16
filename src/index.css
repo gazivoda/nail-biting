@@ -456,8 +456,13 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 .ed-mono    { font-family: 'JetBrains Mono', ui-monospace, monospace;
               font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.18em;
               text-transform: uppercase; }
+/* Its own step between .ed-h2 (46px) and .ed-h3 (24px): 26% below the heading,
+   42% above the sub-head, so it collides with neither. A figure is a number that
+   has to dominate its row — a price, a prevalence, a byte count — and at 24px it
+   was landing at exactly .ed-h3's size, which merged two roles into one tier and
+   left the prices in PricingSection reading as sub-heads. */
 .ed-figure  { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
-              font-size: 1.5rem; line-height: 1; }
+              font-size: clamp(1.75rem, 2.6vw, 2.125rem); line-height: 1; }
 
 /* The editorial scale has no 14px step, and this is the one place that cannot
    say so in its own markup. PricingSection and ContactForm are shared with
