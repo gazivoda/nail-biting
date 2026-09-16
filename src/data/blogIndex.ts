@@ -212,7 +212,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 7,
     datePublished: "2026-04-19",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
@@ -221,7 +221,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 4,
     datePublished: "2026-04-19",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-adhd",
@@ -329,7 +329,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-bacteria-parasites",
@@ -473,7 +473,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "onychophagia",

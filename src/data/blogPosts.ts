@@ -849,7 +849,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
@@ -962,7 +962,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 4,
   datePublished: '2026-04-19',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-16',
   ogImage: '/og/stop-biting-vs-mavala-stop.png',
   sections: [
     {
@@ -1469,7 +1469,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-cure.png',
   sections: [
     {
@@ -2124,7 +2124,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 6,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/how-to-stop-nail-biting.png',
   sections: [
     {
