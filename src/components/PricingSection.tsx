@@ -115,8 +115,14 @@ export function PricingSection() {
 
           {/* ── Monthly ───────────────────────────────────────────────────
               Same row, quieter typography: the plan name is stone rather
-              than forest, and the call to action is the page's secondary
-              link form. Same href, same target, same label. */}
+              than forest, and the call to action is outlined rather than
+              filled. Same href, same target, same label.
+
+              Outlined and not a bare text link on purpose. Yearly reads as
+              recommended through position, the forest accent and the single
+              filled button; that ranking does not require making the cheaper
+              plan look unbuyable, and a text link next to a solid button
+              reads as "not really an option". */}
           <div
             className="reveal-card border-b border-hairline py-9 sm:grid sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-x-10"
             style={{ transitionDelay: '80ms' }}
@@ -135,13 +141,13 @@ export function PricingSection() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-7 inline-flex items-center gap-1.5 text-sm text-forest-600 transition-colors hover:text-forest-500"
+                className="group mt-7 inline-flex items-center gap-2 rounded-xl border border-forest-600 px-6 py-3 text-sm font-semibold text-forest-600 transition-colors duration-150 hover:bg-forest-50"
               >
-                <span className="ed-link">Start free trial</span>
+                Start free trial
                 <ArrowRight
-                  size={13}
+                  size={14}
                   aria-hidden="true"
-                  className="transition-transform duration-200 group-hover:translate-x-1"
+                  className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5"
                 />
               </a>
             </div>
