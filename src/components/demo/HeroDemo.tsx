@@ -27,10 +27,10 @@ const MODEL_ERROR_MESSAGE = "The AI models couldn't load. Check your connection 
 const CAMERA_ERROR_MESSAGE: Record<CameraError['kind'], string> = {
   'permission-denied':
     "Camera access was blocked. Allow camera access in your browser's address bar, then try again.",
-  'no-camera': 'No camera found. The demo needs a webcam — the app itself works the same way.',
+  'no-camera': 'No camera found. The demo needs a webcam, and the app itself works the same way.',
   'insecure-context': 'The demo needs a secure (HTTPS) connection to use your camera.',
   'unavailable':
-    "Your camera couldn't start — it may be in use by another app. Close anything else using it and try again.",
+    "Your camera couldn't start: it may be in use by another app. Close anything else using it and try again.",
 };
 
 function resultLine(catches: number): string {

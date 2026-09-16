@@ -9,7 +9,7 @@ export function PricingSection() {
     <section id="pricing" aria-labelledby="pricing-heading">
       <p className="reveal text-xs uppercase tracking-[0.2em] text-forest-600 dark:text-forest-400 text-center font-semibold">Pricing</p>
       <h2 id="pricing-heading" className="reveal text-2xl font-bold text-stone-800 dark:text-stone-100 text-center mt-2 tracking-tight">Simple, honest pricing.</h2>
-      <p className="reveal text-stone-500 dark:text-stone-400 text-sm text-center mt-2">Start with a 3-day free trial. No credit card required.</p>
+      <p className="reveal text-stone-500 dark:text-stone-500 text-sm text-center mt-2">Start with a 3-day free trial. No credit card required.</p>
 
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
         {/* Monthly */}
@@ -20,16 +20,16 @@ export function PricingSection() {
             </div>
             <div>
               <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
-              <p className="text-xs text-stone-400 dark:text-stone-500">Billed monthly</p>
+              <p className="text-xs text-stone-500 dark:text-stone-500">Billed monthly</p>
             </div>
           </div>
           <div className="mb-5">
             <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
-            <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
+            <span className="text-stone-500 dark:text-stone-500 text-sm"> / month</span>
           </div>
           <ul className="space-y-2.5 mb-7 flex-1">
             {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types'].map(f => (
-              <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
+              <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-500">
                 <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
               </li>
             ))}
@@ -48,7 +48,7 @@ export function PricingSection() {
         <div className="reveal-card bg-white dark:bg-ink-50 border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-7 flex flex-col shadow-card-md relative hover:-translate-y-1 hover:shadow-card-md transition-all duration-200" style={{ transitionDelay: '80ms' }}>
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm whitespace-nowrap">
-              Best value — save 19%
+              Best value: save 19%
             </span>
           </div>
           <div className="flex items-center gap-2 mb-5">
@@ -57,17 +57,17 @@ export function PricingSection() {
             </div>
             <div>
               <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-              <p className="text-xs text-stone-400 dark:text-stone-500">Billed once a year</p>
+              <p className="text-xs text-stone-500 dark:text-stone-500">Billed once a year</p>
             </div>
           </div>
           <div className="mb-1">
             <span className="text-4xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-            <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
+            <span className="text-stone-500 dark:text-stone-500 text-sm"> / year</span>
           </div>
           <p className="text-forest-600 dark:text-forest-400 text-xs mb-5 font-medium">Just $2.42/month</p>
           <ul className="space-y-2.5 mb-7 flex-1">
             {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
-              <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
+              <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-500">
                 <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" aria-hidden="true" />{f}
               </li>
             ))}
@@ -85,7 +85,7 @@ export function PricingSection() {
       </div>
 
       {/* Trust badges */}
-      <div className="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-stone-400 dark:text-stone-500">
+      <div className="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-stone-500 dark:text-stone-500">
         <div className="flex items-center gap-1.5"><Shield size={11} aria-hidden="true" /><span>Secure payment via Paddle</span></div>
         <div className="flex items-center gap-1.5"><Check size={11} aria-hidden="true" /><span>Cancel anytime</span></div>
         <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" aria-hidden="true" /><span>3-day free trial</span></div>

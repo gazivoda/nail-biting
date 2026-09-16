@@ -449,7 +449,7 @@ export function Landing() {
                   ))}
                 </dl>
 
-                <figcaption className="ed-caption ed-measure mt-5 text-stone-400">
+                <figcaption className="ed-caption ed-measure mt-5 text-stone-500">
                   Prevalence: Halteh, Scher &amp; Lipner (2017). Reduction figure: Azrin, Nunn &amp; Frantz (1980), self-recorded episode counts over the trial's five months, not a follow-up after treatment ended. Camera privacy is architectural: there's no server to send data to.
                 </figcaption>
               </figure>
@@ -851,7 +851,7 @@ export function Landing() {
                           <span className="ed-link">{title}</span>
                         </span>
                         {minutes !== undefined && (
-                          <span className="ed-mono mt-1.5 block text-stone-400 sm:mt-0 sm:text-right">
+                          <span className="ed-mono mt-1.5 block text-stone-500 sm:mt-0 sm:text-right">
                             {minutes} min read
                           </span>
                         )}
@@ -906,7 +906,7 @@ export function Landing() {
                         <ChevronDown
                           size={16}
                           aria-hidden="true"
-                          className="shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-180"
+                          className="shrink-0 text-stone-500 transition-transform duration-200 group-open:rotate-180"
                         />
                       </summary>
                       <p className="ed-body ed-measure pb-5 text-stone-600">{a}</p>
@@ -914,7 +914,7 @@ export function Landing() {
                   ))}
                 </div>
 
-                <p className="ed-caption mt-8 text-stone-400">
+                <p className="ed-caption mt-8 text-stone-500">
                   More on all of this in the{' '}
                   <a href="/blog" className="ed-link text-forest-600 transition-colors hover:text-forest-500">nail biting guides</a>: {BLOG_INDEX.length} evidence-based articles.
                 </p>
@@ -946,7 +946,7 @@ export function Landing() {
                 <Zap size={15} aria-hidden="true" />
                 Start free trial (it's free)
               </a>
-              <p className="ed-mono mt-7 text-stone-400">3-day free trial · no credit card required</p>
+              <p className="ed-mono mt-7 text-stone-500">3-day free trial · no credit card required</p>
             </div>
           </div>
         </section>
@@ -993,7 +993,7 @@ export function Landing() {
             </nav>
           </div>
 
-          <p className="ed-caption mt-12 border-t border-hairline pt-8 text-stone-400">
+          <p className="ed-caption mt-12 border-t border-hairline pt-8 text-stone-500">
             © {new Date().getFullYear()} Stop Biting · AI-powered nail biting detection ·{' '}
             <a href="https://stopbiting.today/" className="ed-link transition-colors hover:text-stone-600">stopbiting.today</a>
           </p>

@@ -42,7 +42,7 @@ export function ContactForm() {
         >
           Get in touch
         </h2>
-        <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-8">
+        <p className="text-stone-500 dark:text-stone-500 text-sm text-center mb-8">
           Have a question or feedback? We'd love to hear from you.
         </p>
         <form
@@ -61,7 +61,7 @@ export function ContactForm() {
               value={form.fullName}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, fullName: e.target.value })); }}
               placeholder="Jane Smith"
-              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
+              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -76,7 +76,7 @@ export function ContactForm() {
               value={form.email}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, email: e.target.value })); }}
               placeholder="jane@example.com"
-              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
+              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-forest-500 transition"
             />
           </div>
           <div className="flex flex-col gap-1.5">
@@ -91,7 +91,7 @@ export function ContactForm() {
               value={form.message}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, message: e.target.value })); }}
               placeholder="Tell us what's on your mind..."
-              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-500 transition resize-none"
+              className="rounded-xl border border-stone-200 dark:border-ink-400 bg-cream-100 dark:bg-ink-100 px-4 py-2.5 text-sm text-stone-800 dark:text-stone-100 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-forest-500 transition resize-none"
             />
           </div>
           <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
