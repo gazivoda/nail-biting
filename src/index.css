@@ -464,17 +464,6 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 .ed-figure  { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400;
               font-size: clamp(1.75rem, 2.6vw, 2.125rem); line-height: 1; }
 
-/* The editorial scale has no 14px step, and this is the one place that cannot
-   say so in its own markup. PricingSection and ContactForm are shared with
-   /pricing and are not this page's to edit, but both opt into `.ed-page` on
-   their root <section>, and three button labels in them are `text-sm` — 7%
-   under the 15px body, which is the same non-hierarchy this pass deleted
-   everywhere else. Scoped to `.ed-page`, so it reaches exactly those two
-   components and nothing else in the app: PricingPage's own wrapper is not an
-   `.ed-page`, so its nav keeps Tailwind's 14px. Landing itself no longer uses
-   `text-sm` anywhere — every size there comes from a role above. */
-.ed-page .text-sm { font-size: 0.9375rem; }
-
 /* The wordmark is the one display-serif role that has to share a single fixed
    bar with a nav link and a button. At the `.ed-h3` step it wants 130px, which
    a 360px phone does not have: the bar wrapped to 111px tall and swallowed the

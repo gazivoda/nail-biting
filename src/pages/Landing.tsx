@@ -484,8 +484,10 @@ export function Landing() {
                   <figcaption> carries the source note verbatim. Like Figure 1 in
                   the hero, the caption rule does not draw: the draw is reserved
                   for section marks, so a figure never mimics a section opener. */}
+              {/* No aria-label here on purpose: one would override the
+                  <figcaption> as the accessible name, and the caption is where
+                  the Halteh and Azrin citations live. */}
               <figure
-                aria-label="Key statistics"
                 className="ed-aside reveal"
                 style={{ transitionDelay: '160ms' }}
               >

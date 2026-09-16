@@ -101,7 +101,7 @@ export function PricingSection() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-7 inline-flex items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 text-sm font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
+                className="group mt-7 inline-flex items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
               >
                 Start free trial
                 <ArrowRight
@@ -141,7 +141,7 @@ export function PricingSection() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-7 inline-flex items-center gap-2 rounded-xl border border-forest-600 px-6 py-3 text-sm font-semibold text-forest-600 transition-colors duration-150 hover:bg-forest-50"
+                className="group mt-7 inline-flex items-center gap-2 rounded-xl border border-forest-600 px-6 py-3 ed-ui font-semibold text-forest-600 transition-colors duration-150 hover:bg-forest-50"
               >
                 Start free trial
                 <ArrowRight

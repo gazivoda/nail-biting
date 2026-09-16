@@ -22,7 +22,7 @@ interface FormState {
 // focus ring applies) wherever this component is mounted, not only inside
 // Landing's `.ed-page` root.
 const FIELD_CLASS =
-  'w-full rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm text-stone-800 ' +
+  'w-full rounded-lg border border-hairline bg-white px-4 py-2.5 ed-ui text-stone-800 ' +
   'placeholder:text-stone-500 transition focus:outline-none focus:ring-2 focus:ring-forest-500';
 
 export function ContactForm() {
@@ -124,7 +124,7 @@ export function ContactForm() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-forest-600 px-6 py-3 text-sm font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {status === 'sending' ? 'Sending…' : 'Send Message'}
           </button>

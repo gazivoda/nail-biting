@@ -48,8 +48,12 @@ export function useScrollReveal() {
       return;
     }
 
+    // Deliberately not `if (pending.size === 0) return;`. That failed closed: it
+    // installed no observer, no listeners and no failsafe, so any .reveal that
+    // entered the DOM later (a lazy section, a route swap) was stranded at
+    // opacity 0 permanently and silently. The sweep re-queries, so an empty
+    // start is fine.
     const pending = new Set<Element>(document.querySelectorAll(SELECTOR));
-    if (pending.size === 0) return;
 
     let observerDelivered = false;
 
@@ -105,6 +109,20 @@ export function useScrollReveal() {
     let lastT = performance.now();
     const sweep = () => {
       frame = 0;
+
+      // Pick up anything that entered the DOM after mount. `pending` is built
+      // once, and a set built once goes stale the moment a lazy section or a
+      // route swap renders — leaving that content at opacity 0 with no error.
+      // A querySelectorAll over a few dozen nodes is microseconds next to the
+      // getBoundingClientRect calls below, and :not(.revealed) keeps it short.
+      document
+        .querySelectorAll('.reveal:not(.revealed), .reveal-card:not(.revealed)')
+        .forEach(el => {
+          if (pending.has(el)) return;
+          pending.add(el);
+          observer.observe(el);
+        });
+
       if (pending.size === 0) return;
       const viewport = window.innerHeight;
 
@@ -120,12 +138,18 @@ export function useScrollReveal() {
       const outrunning = speed * ENTRANCE_S > cap;
       const atBottom =
         y + viewport >= document.documentElement.scrollHeight - 2;
-      for (const el of [...pending]) {
+      // Measure everything before mutating anything: writing a class or an
+      // inline style between two getBoundingClientRect reads forces a
+      // synchronous reflow per read, in the one frame this code exists to keep
+      // cheap.
+      const due: Element[] = [];
+      for (const el of pending) {
         const { top } = el.getBoundingClientRect();
-        if (top < line || (atBottom && top < viewport)) {
-          markRevealed(el, outrunning);
-          observer.unobserve(el);
-        }
+        if (top < line || (atBottom && top < viewport)) due.push(el);
+      }
+      for (const el of due) {
+        markRevealed(el, outrunning);
+        observer.unobserve(el);
       }
     };
     const schedule = () => {
