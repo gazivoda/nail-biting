@@ -5826,4 +5826,58 @@ BLOG_POSTS.push(
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
+  {
+    slug: 'nail-biting-by-situation',
+    title: 'Nail Biting by Situation: What Changes for Children, Musicians, Nurses and Desk Workers',
+    seoTitle: 'Nail Biting: What Changes by Age and Job',
+    description: 'The method does not change from person to person. What changes is which triggers dominate your day and which tools you are actually able to use.',
+    tag: 'Treatment',
+    readingMinutes: 3,
+    datePublished: '2026-09-16',
+    dateModified: '2026-09-16',
+    sections: [
+      {
+        heading: `Does stopping nail biting work differently for different people?`,
+        body: `No. The mechanism is the same for a six-year-old and a surgeon: an automatic hand-to-mouth loop that fires before awareness arrives, and a method, Habit Reversal Training, that works by supplying the awareness and giving the hands something else to do.\n\nWhat changes is narrower than people expect, and it is worth naming precisely, because most advice fails by ignoring it. Two things vary. Which triggers dominate your day, and which tools you are actually able to use. A musician cannot file their nails to the quick. A nurse cannot wear cotton gloves on a ward. A toddler cannot run a self-directed protocol at all. The method survives all three; the implementation does not.\n\nThis page is a map. It says what changes for each situation and sends you to the guide that covers it properly.`,
+      },
+      {
+        heading: `What changes for children and teenagers`,
+        body: `Age changes who is running the protocol. Habit Reversal Training asks you to notice a precursor movement and hold a competing response, which requires a degree of self-monitoring that young children do not yet have. For a toddler, the work belongs to the adult: adjusting the environment and the trigger, not coaching a technique.\n\nThe habit is also at its most common here. Reviews put nail biting at up to 45% of children between age 10 and puberty, against roughly 20% to 30% of adults, so for many families the honest question is whether to intervene at all rather than how (Halteh, Scher and Lipner; Lee and Lipner, 2022).`,
+        list: [
+          `Toddlers and young children: the adult changes the context; the child is not the one running a protocol.`,
+          `School-age children: worth knowing that pointing it out repeatedly tends to backfire, which is its own guide.`,
+          `Teenagers: self-monitoring is available, and so is social self-consciousness, which cuts both ways.`,
+          `College students: exam periods concentrate the habit into short, predictable windows.`,
+        ],
+        html: `<p>In depth: <a href="/blog/nail-biting-toddler">toddlers</a>, <a href="/blog/nail-biting-in-children">children</a>, <a href="/blog/nail-biting-teenagers">teenagers</a>, <a href="/blog/nail-biting-college-students">college students</a>, <a href="/blog/nail-biting-punishing-children">why punishment backfires</a>, and <a href="/blog/nail-biting-during-exams">exam periods</a>. For the numbers themselves, see <a href="/blog/nail-biting-statistics">the statistics</a>.</p>`,
+      },
+      {
+        heading: `What changes when your hands are part of your job`,
+        body: `Two things: the cost of the damage, and which remedies are available to you at all.\n\nIf your nails are equipment, filing them short, the cheapest and most reliable first step for most people, is not a step you can take. If you handle food or work in a clinical setting, the hygiene stakes are higher than they are for someone at a desk, and the barrier methods that would help most are the ones your job forbids. The method does not change. The order you apply it in does, because the usual opening move is closed to you.`,
+        list: [
+          `Musicians: nail length is part of the instrument, so trimming short is off the table.`,
+          `Healthcare workers and chefs: repeated hand washing plus damaged nail folds is a worse combination than either alone.`,
+          `Nail technicians: asked about this constantly, and well placed to notice it in others.`,
+          `Teachers and public speakers: the trigger is performance and observation, not idleness.`,
+        ],
+        html: `<p>In depth: <a href="/blog/nail-biting-musicians">musicians</a>, <a href="/blog/nail-biting-healthcare-workers">healthcare workers</a>, <a href="/blog/nail-biting-chefs-food-service">food service</a>, <a href="/blog/nail-biting-nail-technicians">nail technicians</a>, <a href="/blog/nail-biting-teachers">teachers</a>, and <a href="/blog/nail-biting-public-speaking">public speaking</a>. On the damage itself: <a href="/blog/nail-biting-health-risks">the real health risks</a>.</p>`,
+      },
+      {
+        heading: `What changes across adult life stages`,
+        body: `Mostly the trigger load rather than the habit. A habit that has run for twenty years is not a different behaviour from one that has run for two, but it has had far longer to attach itself to contexts, which is why adult attempts so often succeed in one setting and fail in another.`,
+        list: [
+          `Adults generally: the habit has more contexts attached to it, so plans that target one context leak.`,
+          `Pregnancy and menopause: periods where trigger load changes, and where what you are willing to take changes too.`,
+          `Older adults: rarely discussed, and skin and nail changes alter the damage picture.`,
+        ],
+        html: `<p>In depth: <a href="/blog/nail-biting-adults-why-persists">why it persists into adulthood</a>, <a href="/blog/nail-biting-pregnancy">pregnancy</a>, <a href="/blog/nail-biting-menopause">menopause</a>, and <a href="/blog/nail-biting-seniors-elderly">older adults</a>.</p>`,
+      },
+      {
+        heading: `What changes with where you spend your day`,
+        body: `This is the variable that decides which tool is worth paying for, and it is the one people skip.\n\nIf most of your biting happens at a desk, a detector that watches through a webcam covers most of your episodes. If most of it happens away from a screen, the same tool covers almost none of them, and a 24/7 method matters more. Work out where your biting actually lives before buying anything, which is what a week of plain observation is for.`,
+        html: `<p>Situation guides: <a href="/solutions/for-desk-workers">desk workers</a>, <a href="/solutions/for-adhd">ADHD</a>, and <a href="/solutions/for-gamers">gamers</a>. To find your own pattern first, see <a href="/blog/nail-biting-trigger-mapping">trigger mapping</a>, then <a href="/blog/how-to-stop-nail-biting">the complete guide to stopping</a> for the method all of these adapt.</p><p><strong>Sources:</strong></p><ul><li><a href="https://www.tandfonline.com/doi/full/10.1080/09546634.2016.1200711" target="_blank" rel="noopener noreferrer">Halteh P, Scher RK, Lipner SR. Onychophagia: a nail-biting conundrum for physicians. J Dermatolog Treat.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+      },
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+  },
 );

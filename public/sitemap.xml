@@ -1129,4 +1129,11 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://stopbiting.today/blog/nail-biting-by-situation</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

@@ -1303,4 +1303,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-08-12",
     dateModified: "2026-09-15",
   },
+  {
+    slug: "nail-biting-by-situation",
+    title: "Nail Biting by Situation: What Changes for Children, Musicians, Nurses and Desk Workers",
+    description: "The method does not change from person to person. What changes is which triggers dominate your day and which tools you are actually able to use.",
+    tag: "Treatment",
+    readingMinutes: 3,
+    datePublished: "2026-09-16",
+    dateModified: "2026-09-16",
+  },
 ];

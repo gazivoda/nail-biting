@@ -845,3 +845,26 @@ Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
 3 (Populations hub) and 4 (/solutions index) — both NEW index pages, both justified by the
 cluster audit structurally rather than from measured query demand, which it explicitly marked
 NOT ANALYSED. 9 (Humor singleton orphan) is one post with a pre-existing cause.
+
+## Loop iteration 5 — 2026-09-16
+Backlog items 3 AND 4, closed by one page: `/blog/nail-biting-by-situation` (corpus 143 -> 144,
+sitemap 161 -> 162 URLs).
+**Why it is not the thin index page I warned about.** The obvious version — "who bites their
+nails", prevalence by group — would have cannibalised `nail-biting-statistics`, which already
+owns "Prevalence: how common is nail biting?" and "Age of onset and developmental trajectory".
+Checked that before writing. The page instead answers a question nothing on the site answers:
+**does the method change depending on who you are?** It does not. The mechanism and Habit
+Reversal Training are constant; what varies is which triggers dominate your day and which tools
+you can actually use. A musician cannot file their nails short. A nurse cannot wear gloves on a
+ward. A toddler cannot run a protocol at all. That thesis is the page, and the routing follows
+from it rather than being the point.
+It also ties the three `/solutions/*` pages together, which was item 4, so both close here.
+Verified by fetching from a running server: 200, 1,208 crawler words, 36 internal links,
+**0 broken**, all three /solutions URLs 200, BlogPosting + BreadcrumbList present. The auto
+related-block picked up the pillar as designed. readingMinutes set to 3 by the corpus rule
+(770/195), corrected from an initial 4.
+Also regenerated 3 stale OG cards flagged by `og:check` (plus one for the new post); og:check
+now exits 0.
+Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0 (144 posts), og:check 0.
+
+### Backlog now: 8 of 10 done. Only item 9 remains, and it is an owner decision.
