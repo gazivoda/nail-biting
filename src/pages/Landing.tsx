@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import {
   ShieldCheck, Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff,
@@ -131,41 +131,14 @@ function SectionMark({ n, label }: { n: string; label: string }) {
   );
 }
 
-interface Props {}
-
-export function Landing(_props: Props) {
+export function Landing() {
   // The homepage is light only. It is the one page whose whole job is to read as
   // health and wellbeing, and that argument does not survive a dark background.
   //
-  // This never writes to the store. `theme` stays exactly as the visitor set it,
-  // the signed-in app and the other eight pages still honour it through
-  // useTheme(), and every link out of here is a plain anchor, so the next
-  // document mounts fresh and applies the stored preference itself.
-  //
-  // It has to be an observer rather than a one-shot removal: AppRouter (App.tsx)
-  // calls useTheme() and is our parent, and React flushes a parent's effect after
-  // its child's, so a lone classList.remove() on mount is undone a moment later
-  // by useTheme writing the stored preference back. Watching <html> keeps the
-  // page light for as long as Landing is mounted; the cleanup disconnects and
-  // hands the class straight back to whatever useTheme last asked for.
-  useEffect(() => {
-    const root = document.documentElement;
-    let darkRequested = root.classList.contains('dark');
-    const forceLight = () => {
-      if (root.classList.contains('dark')) {
-        darkRequested = true;
-        root.classList.remove('dark');
-      }
-    };
-    forceLight();
-    const observer = new MutationObserver(forceLight);
-    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
-    return () => {
-      observer.disconnect();
-      if (darkRequested) root.classList.add('dark');
-    };
-  }, []);
-
+  // Nothing is done here: AppRouter is the only writer of the `dark` class on
+  // this route and pins it to light while it is rendering us (see App.tsx). The
+  // visitor's stored preference is never written, so the signed-in app and the
+  // other eight pages still honour it.
   useScrollReveal();
 
   // Stays false until the visitor asks for the demo: the lazy import is only

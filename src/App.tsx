@@ -68,7 +68,10 @@ function AppRouter() {
   const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
 
   useNotifications(remindersEnabled, reminderIntervalMinutes);
-  useTheme();
+  // The landing page below is light-only by design. Pinning it here rather than
+  // inside Landing is what keeps it simple: this effect is the only writer of the
+  // `dark` class on this route, so there is nothing for the page to fight.
+  useTheme(accessStatus === 'no_auth' ? 'light' : undefined);
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') return <AppLoading />;
