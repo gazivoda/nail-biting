@@ -764,3 +764,15 @@ a marker that is unambiguous (sitemap `lastmod`), not prose that might appear el
 5. **Measurement.** Nothing here is a ranking guarantee. stopbiting.today was not observed in
    the top 10 for any of the 13 sampled queries at baseline — re-run that sample in 4-6 weeks
    against Search Console impressions to see whether the pillar moved.
+
+## Loop iteration 1 — 2026-09-16 (cron 8410cfcc, every 20 min)
+Backlog items 1, 5, 7 (one coherent unit: strengthen the pillar's inbound context).
+- Homepage -> pillar promoted from item 3 of an 11-item reading list to a contextual
+  sentence link, in BOTH paths: `Landing.tsx` (rendered) and `server.js homeArticleHtml()`
+  (crawler). Copy only, no layout touched. Anchor varied, not exact-match.
+- `stop-nail-biting-fast`: "Dermatology reviews of onychophagia state..." -> named to
+  Lee and Lipner 2022, already in that page's own Sources list. No new verification needed.
+- `onychophagia` and `best-apps-to-stop-nail-biting`: contextual links up to the pillar,
+  each with its own anchor wording.
+Internal blog links 32 -> 34. dateModified bumped only for the 3 genuinely-changed posts
+(diffed against HEAD, not recalled). Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.

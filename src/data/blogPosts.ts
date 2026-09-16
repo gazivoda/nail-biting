@@ -943,7 +943,7 @@ BLOG_POSTS.push({
     {
       heading: 'Verdict — for unconscious habits, passive detection is the only real-time solution',
       body: `The pattern across every category is consistent: tools that require your conscious participation to work are structurally unable to catch the majority of nail biting episodes, because most episodes happen without conscious awareness.\n\nBitter polish is the best passive option across all contexts — it doesn't require you to notice the habit — but habituation limits its long-term effectiveness for established biters. It remains useful as a 24/7 complement for biting away from screens.\n\nAI detection is the only tool that catches the habit in real time at the screen, without any input from you. That makes it the only approach that directly solves the awareness gap — the fundamental reason nail biting is so hard to stop with willpower or manual tracking.\n\nThe most effective combination for chronic screen-time biters: Stop Biting for desk hours + bitter polish for away-from-screen contexts + a competing response you have pre-selected and practiced. HRT provides the framework; the tools make the awareness component tractable.`,
-      html: `<p>For a full protocol walkthrough, read the <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a>. To compare Stop Biting directly against bitter polish, see the <a href="/compare/bitter-polish-alternative">bitter polish alternative comparison</a>.</p><p>See also: <a href="/compare/habit-tracking-apps">habit tracking apps compared</a>, and <a href="/compare/ai-detection-apps">AI detection apps compared</a> if you want the camera-based options side by side.</p>`,
+      html: `<p>An app is one component, not the method. For the method it plugs into, start with <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>, then read the <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a> for the full protocol walkthrough. To compare Stop Biting directly against bitter polish, see the <a href="/compare/bitter-polish-alternative">bitter polish alternative comparison</a>.</p><p>See also: <a href="/compare/habit-tracking-apps">habit tracking apps compared</a>, and <a href="/compare/ai-detection-apps">AI detection apps compared</a> if you want the camera-based options side by side.</p>`,
     },
     {
       heading: 'Frequently asked questions',
@@ -1098,7 +1098,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/stop-nail-biting-fast.png',
   sections: [
     {
@@ -1111,7 +1111,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Fast but inconsistent: bitter nail polish (days 1–14)',
-      body: `Bitter nail polish (products like Mavala Stop or Orly No Bite) works quickly in the sense that its deterrent effect is immediate — the first time you bite after application, the intensely bitter taste interrupts the habit. For people with mild or early-stage habits, this initial aversion is sometimes enough to break the loop.\n\nThe problem is usually adherence rather than potency. Dermatology reviews of onychophagia state that the success of aversion therapy depends on consistent reapplication of the polish, and reapplication is what people stop doing. The evidence on how well it ranks is genuinely mixed: in one small controlled comparison a bitter preparation improved nail length but a competing response did more, while a larger replication with a non-student sample and an eight-week follow-up found the reverse — mild aversion reached significance on nail length and the competing response just missed it.\n\nBitter polish is most useful as a temporary bridge — something to create initial interruptions while you build the competing response habit that will carry the long-term change. Used alone, it depends entirely on you keeping it topped up.`,
+      body: `Bitter nail polish (products like Mavala Stop or Orly No Bite) works quickly in the sense that its deterrent effect is immediate — the first time you bite after application, the intensely bitter taste interrupts the habit. For people with mild or early-stage habits, this initial aversion is sometimes enough to break the loop.\n\nThe problem is usually adherence rather than potency. Lee and Lipner's 2022 review of onychophagia management states that the success of aversion therapy depends on consistent reapplication of the polish, and reapplication is what people stop doing. The evidence on how well it ranks is genuinely mixed: in one small controlled comparison a bitter preparation improved nail length but a competing response did more, while a larger replication with a non-student sample and an eight-week follow-up found the reverse — mild aversion reached significance on nail length and the competing response just missed it.\n\nBitter polish is most useful as a temporary bridge — something to create initial interruptions while you build the competing response habit that will carry the long-term change. Used alone, it depends entirely on you keeping it topped up.`,
     },
     {
       heading: 'Moderate speed: physical barriers (immediate, but not habit-changing)',
@@ -2203,7 +2203,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-16',
   ogImage: '/og/onychophagia.png',
   sections: [
     {
@@ -2226,6 +2226,11 @@ BLOG_POSTS.push({
       heading: `When does casual biting become worth addressing?`,
       body: `There's no fixed threshold, but a few signals suggest it's worth moving from "I should probably stop" to actively treating it as onychophagia: visible bleeding or open skin around the nails, recurring nail-fold infections, genuine distress or shame about the habit, biting that intensifies during specific stress periods to the point of self-harm-adjacent damage, or co-occurrence with other repetitive behaviours like skin picking or hair pulling.\n\nIf none of those apply, ordinary self-directed methods — competing responses, awareness tools, bitter-tasting polish — are a reasonable starting point. If they do apply, the same tools still work, but a more structured approach is worth escalating to — a full habit reversal protocol, or support from a therapist who treats BFRBs. Habit reversal is the intervention with the strongest evidence for body-focused repetitive behaviours, and reviews of internet-based self-help note that therapist-guided versions of these techniques are likely to yield better outcomes than self-guided ones.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li></ul>`,
+    },
+    {
+      heading: `Where to start if you want to stop`,
+      body: `Knowing the clinical name is useful for reading the literature. It does not tell you what to do next.`,
+      html: `<p>For that, see <a href="/blog/how-to-stop-nail-biting">the complete guide to stopping nail biting</a>, which covers Habit Reversal Training and how the other options compare.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],

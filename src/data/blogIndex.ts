@@ -248,7 +248,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-hypnosis",
@@ -482,7 +482,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-11",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-and-depression",

@@ -1506,7 +1506,8 @@ if (!existsSync(distPath)) {
       'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +
       'approaching your mouth, the alarm fires within a second: the external awareness signal that Habit Reversal ' +
       'Training identifies as its most critical component. Each detection is logged locally so you can see your real ' +
-      'biting frequency and triggers. Read more at <a href="/how-it-works">how it works</a>.</p></section>' +
+      'biting frequency and triggers. Read more at <a href="/how-it-works">how it works</a>, or start with ' +
+      '<a href="/blog/how-to-stop-nail-biting">the complete guide to stopping nail biting</a>.</p></section>' +
       '<section><h2>Pricing</h2>' +
       '<p>Simple, honest pricing. Start with a 3-day free trial, no credit card required. ' +
       'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +

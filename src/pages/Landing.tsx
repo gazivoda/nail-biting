@@ -466,7 +466,8 @@ export function Landing() {
                 </dl>
 
                 <p className="ed-body ed-measure mt-8 text-stone-600">
-                  Bitter nail polish and physical barriers don't fix this: they fight the symptom. What actually works is catching the moment it starts and building awareness of when and why it happens.
+                  Bitter nail polish and physical barriers don't fix this: they fight the symptom. What actually works is catching the moment it starts and building awareness of when and why it happens, which is the whole of{' '}
+                  <a href="/blog/how-to-stop-nail-biting" className="ed-link text-forest-600 transition-colors hover:text-forest-500">the evidence-based method for stopping</a>.
                 </p>
 
                 <a
