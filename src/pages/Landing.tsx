@@ -101,7 +101,7 @@ const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No
 const FAQS: { q: string; a: string }[] = [
   {
     q: 'Why do people bite their nails?',
-    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults. Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic, happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
+    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults (Lee and Lipner, 2022). Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic, happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
   },
   {
     q: 'What are the best remedies to stop nail biting?',

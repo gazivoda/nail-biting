@@ -207,7 +207,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/best-nail-biting-remedies.png',
     sections: [
       {
@@ -226,7 +226,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: 'Tier 3: Promising new approach — AI detection apps',
-        body: `Real-time AI detection represents a new category of nail biting remedy that directly addresses the core problem of awareness. Using computer vision running on-device (preventing any privacy concerns), these applications monitor via webcam and sound an alarm the moment the hand approaches the mouth. This provides the sensory interruption component of HRT automatically, in real time, without requiring a therapist or social partner to be present.\n\nThe mechanism is therapeutically sound: the alarm fires at the exact moment the automatic chain can most effectively be broken, and the jarring interruption promotes the development of conscious awareness over time. Early users report significant reductions in biting frequency within 2–4 weeks, consistent with the HRT literature on awareness training timelines. The technology is most effective for those who bite primarily during sedentary, screen-based activities — coding, video calls, reading — where a webcam can observe continuously.`,
+        body: `Real-time AI detection represents a new category of nail biting remedy that directly addresses the core problem of awareness. Using computer vision running on-device (preventing any privacy concerns), these applications monitor via webcam and sound an alarm the moment the hand approaches the mouth. This provides the sensory interruption component of HRT automatically, in real time, without requiring a therapist or social partner to be present.\n\nThe mechanism is therapeutically sound: the alarm fires at the exact moment the automatic chain can most effectively be broken, and the jarring interruption promotes the development of conscious awareness over time. No controlled trial has measured how quickly real-time detection reduces biting frequency, for this tool or any other in the category, so this page makes no claim about it. The technology is most effective for those who bite primarily during sedentary, screen-based activities — coding, video calls, reading — where a webcam can observe continuously.`,
       },
       {
         heading: 'Tier 4: Limited evidence — Mindfulness and stress reduction',
@@ -323,7 +323,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Technology',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-09-16',
     ogImage: '/og/how-ai-can-help-stop-nail-biting.png',
     sections: [
       {
@@ -344,7 +344,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: 'What should I expect in the first month of using AI detection for nail biting?',
-        body: `The first week is typically the most disorienting. The alarm fires frequently — often far more frequently than the user expected based on their subjective sense of how often they bit. This is the most therapeutically important period: the gap between perceived and actual biting frequency becomes concretely visible. Some users find this discouraging; reframing it as data collection rather than failure is important.\n\nBy week two, most users report becoming more aware of the urge before the hand moves — the beginning of genuine awareness training. By week three, they begin noticing their hand moving before it reaches the mouth, and can intercept the movement before the alarm fires. This progression from post-hoc alarm to proactive interception is the target outcome of the awareness training component of HRT — and it is the point at which durable habit change becomes possible.`,
+        body: `The first week is typically the most disorienting. The alarm fires frequently — often far more frequently than the user expected based on their subjective sense of how often they bit. This is the most therapeutically important period: the gap between perceived and actual biting frequency becomes concretely visible. Some users find this discouraging; reframing it as data collection rather than failure is important.\n\nThe progression the method aims at runs in one direction: first you notice after the alarm, then as the hand moves, then before it moves at all. That last stage is the point, because it is the competing response firing on its own. How long each stage takes has not been measured in a controlled trial, so treat any week-by-week version of it as an expectation rather than a schedule. This progression from post-hoc alarm to proactive interception is the target outcome of the awareness training component of HRT — and it is the point at which durable habit change becomes possible.`,
       },
     ],
   },
@@ -877,7 +877,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Category 4 — General habit trackers (Habitica, Streaks)',
-      body: `Habitica gamifies habits with RPG mechanics. Streaks uses commitment streaks and calendar views. Both are well-designed, well-maintained apps with strong followings for building intentional habits — exercise, reading, meditation.\n\nFor nail biting, the core limitation is structural: both require manual logging. You must notice you bit, open the app, and record it. As discussed above, the majority of biting episodes never reach conscious attention. Logging only the minority of episodes you happen to notice gives you inaccurate data and weak feedback loops.\n\nStreaks is particularly well-suited to building new daily habits (flossing, language practice) where you perform the habit once and mark it done. It is not designed for interrupting an automatic behaviour that happens many times throughout the day below awareness.\n\nHabitica's "negative habit" feature allows logging each biting episode and taking damage, which provides some incentive. Some users report this helps — but only for the episodes they catch. The unconscious majority remain invisible.\n\nBottom line: both apps are good tools, wrong application. Use them for habits you perform consciously. For nail biting, the awareness gap is the real problem, and these tools don't address it.`,
+      body: `Habitica gamifies habits with RPG mechanics. Streaks uses commitment streaks and calendar views. Both are well-designed, well-maintained apps with strong followings for building intentional habits — exercise, reading, meditation.\n\nFor nail biting, the core limitation is structural: both require manual logging. You must notice you bit, open the app, and record it. As discussed above, the majority of biting episodes never reach conscious attention. Logging only the minority of episodes you happen to notice gives you inaccurate data and weak feedback loops.\n\nStreaks is particularly well-suited to building new daily habits (flossing, language practice) where you perform the habit once and mark it done. It is not designed for interrupting an automatic behaviour that happens many times throughout the day below awareness.\n\nHabitica's "negative habit" feature allows logging each biting episode and taking damage, which provides some incentive. That incentive only ever reaches the episodes you catch, which for nail biting is the minority. The unconscious majority stay invisible.\n\nBottom line: both apps are good tools, wrong application. Use them for habits you perform consciously. For nail biting, the awareness gap is the real problem, and these tools don't address it.`,
       html: `<p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> — the evidence-based protocol that does address it.</p>`,
     },
     {
@@ -1818,7 +1818,7 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/stop-biting-app-review.png',
   sections: [
     {
@@ -1827,11 +1827,11 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Getting started: what the first 10 minutes look like',
-      body: `The app runs in a browser (Chrome, Edge, Firefox) without installation — or as a downloadable app for macOS and Windows. A 3-day free trial starts immediately; no credit card required. Setup takes under two minutes: grant camera permission, position your webcam so your face and hands are visible, and the detection is live.\n\nThe first surprise most users report: the app catches biting episodes they weren't aware of. Within the first hour of running it during normal computer use, most people see the alarm fire for episodes they genuinely didn't notice. This is not a bug — it's exactly what the tool is for. Nail biting is automatic. The alarm makes it visible.`,
+      body: `The app runs in a browser (Chrome, Edge, Firefox) without installation — or as a downloadable app for macOS and Windows. A 3-day free trial starts immediately; no credit card required. Setup takes under two minutes: grant camera permission, position your webcam so your face and hands are visible, and the detection is live.\n\nThe first thing the tool tends to surface is biting you did not know about. That is not a malfunction, it is the entire purpose: the episodes worth catching are by definition the ones you were never going to notice yourself. This is not a bug — it's exactly what the tool is for. Nail biting is automatic. The alarm makes it visible.`,
     },
     {
       heading: 'The first week: what your data shows',
-      body: `The app logs each detected incident with a timestamp and optional trigger tag (stress, focus, boredom, habit). After 7 days of use, the incident log typically reveals patterns that were invisible before: peak times of day, specific contexts (morning work sessions vs evening browsing), and weekly frequency counts.\n\nMost users report that seeing the actual frequency data is motivating in a way that abstract intentions to stop are not. If you thought you bit your nails occasionally and the app shows 40 incidents in the first week, the gap between self-perception and reality becomes concrete. The streak feature — tracking your longest bite-free period — provides a visible progress metric that responds to the competing response habit being built.`,
+      body: `The app logs each detected incident with a timestamp and optional trigger tag (stress, focus, boredom, habit). After 7 days of use, the incident log typically reveals patterns that were invisible before: peak times of day, specific contexts (morning work sessions vs evening browsing), and weekly frequency counts.\n\nThe point of the log is to replace an estimate with a count. If you thought you bit your nails occasionally and the app shows 40 incidents in the first week, the gap between self-perception and reality becomes concrete. The streak feature — tracking your longest bite-free period — provides a visible progress metric that responds to the competing response habit being built.`,
     },
     {
       heading: 'Privacy: the question everyone asks first',
@@ -2091,12 +2091,12 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-screen-time.png',
   sections: [
     {
       heading: 'The screen time-nail biting link',
-      body: `Screen time and nail biting have not been studied together in large-scale research, but the connection is well-supported by the established psychology of each. Screen devices — phones, tablets, computers, televisions — create the exact cognitive conditions that have been shown to facilitate habitual behaviour: partial engagement (occupied but not fully), intermittent micro-stress (notifications, social comparison, news), and reduced self-monitoring (attention directed outward).\n\nAnecdotally, nail biters overwhelmingly identify screen time as among their highest-risk contexts. This is consistent with the mechanism: any activity that occupies the brain enough to suppress self-monitoring while not demanding enough physical activity to keep hands away from the face is a nail biting catalyst.`,
+      body: `Screen time and nail biting have not been studied together in large-scale research, but the connection is well-supported by the established psychology of each. Screen devices — phones, tablets, computers, televisions — create the exact cognitive conditions that have been shown to facilitate habitual behaviour: partial engagement (occupied but not fully), intermittent micro-stress (notifications, social comparison, news), and reduced self-monitoring (attention directed outward).\n\nScreen time is a plausible high-risk context on this mechanism, though we have found no study measuring how it ranks against the others. This is consistent with the mechanism: any activity that occupies the brain enough to suppress self-monitoring while not demanding enough physical activity to keep hands away from the face is a nail biting catalyst.`,
     },
     {
       heading: 'Why phones are particularly high-risk compared to computers',

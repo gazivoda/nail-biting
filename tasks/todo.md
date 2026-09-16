@@ -794,3 +794,29 @@ FAQPage still emits 3 pairs. dateModified already 2026-09-16 so no bump (content
 same day it was last dated) — note this means IndexNow will not resubmit this URL, which is
 fine because it was already submitted earlier today.
 Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
+
+## Loop iteration 3 — 2026-09-16
+Backlog item 8 (citability rewrites), which turned out to be bigger than the audit recorded.
+The audit flagged two weak passages. Sweeping the pattern found **six unsupported first-party
+outcome claims** — statements about what "most users report" with no user research behind them,
+the same class of defect a prior loop removed as fake testimonials:
+- `best-apps`: "Some users report this helps" -> the mechanism (only reaches episodes you catch).
+- `best-nail-biting-remedies`: "Early users report significant reductions within 2-4 weeks" —
+  a first-party outcome statistic AND a week range, neither evidenced. Deleted both; the page
+  now says plainly that no controlled trial has measured this for any tool in the category.
+- `how-ai-can-help-stop-nail-biting`: an invented week-by-week progression ("by week two most
+  users report... by week three...") -> the intended progression, explicitly labelled an
+  expectation rather than a measured schedule.
+- `stop-biting-app-review`: two more ("the first surprise most users report", "most users
+  report that seeing the data is motivating") -> mechanism. The 40-incidents example is kept,
+  since it reads as a hypothetical rather than a measurement.
+- `nail-biting-screen-time`: "nail biters overwhelmingly identify screen time" — a strong
+  quantifier behind the word "anecdotally" -> plausible on the mechanism, no study measuring it.
+Also attributed the homepage prevalence figure ("up to 30% of adults" -> "(Lee and Lipner,
+2022)"), which was uncited **inside FAQPage structured data**. Applied to index.html and the
+Landing.tsx mirror; parity re-verified 6/6 verbatim.
+Kept deliberately: the night-guard line, which already says outright that no dedicated clinical
+research validates it — that is the honest register, not a defect.
+Residual sweep: 0 unevidenced first-party claims remain. dateModified bumped for 4 of the 5
+changed posts (best-apps already read 2026-09-16).
+Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.

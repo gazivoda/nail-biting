@@ -59,7 +59,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "stress-and-nail-biting",
@@ -86,7 +86,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-during-focus-and-work",
@@ -401,7 +401,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "nail-biting-personality",
@@ -464,7 +464,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-15",
+    dateModified: "2026-09-16",
   },
   {
     slug: "how-to-stop-nail-biting",
