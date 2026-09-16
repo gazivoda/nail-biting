@@ -26,7 +26,7 @@ Key facts:
 
 ## Key pages
 
-- [Stop Nail Biting with AI](https://stopbiting.today/): Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.
+- [Stop Nail Biting with AI](https://stopbiting.today/): Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time: 100% private, no data leaves your device. Science-backed habit reversal techniques included.
 - [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.
 - [Pricing — $2.99/month or $29/year](https://stopbiting.today/pricing): Stop Biting pricing: 3-day free trial, no credit card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Unlimited AI detection, streak tracking, full incident history. Cancel anytime.
 - [About Stop Biting | Built by Igor Gazivoda](https://stopbiting.today/about): Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.

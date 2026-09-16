@@ -886,10 +886,10 @@ if (!existsSync(distPath)) {
   // so it is a fallback rather than anything hidden, and it costs JS clients
   // nothing. Keep it in step with the links in Landing.tsx and LegalPage.tsx.
   const SITE_NAV = [
-    ['/', 'Stop Biting — AI nail biting detection'],
+    ['/', 'Stop Biting: AI nail biting detection'],
     ['/blog', 'Nail biting guides and research'],
     ['/how-it-works', 'How AI nail biting detection works'],
-    ['/pricing', 'Pricing — free trial, $2.99/month or $29/year'],
+    ['/pricing', 'Pricing: free trial, $2.99/month or $29/year'],
     ['/about', 'About Stop Biting'],
     ['/compare/bitter-polish-alternative', 'Stop Biting vs bitter nail polish'],
     ['/compare/habit-tracking-apps', 'Why habit tracking apps do not work for nail biting'],
@@ -1485,23 +1485,23 @@ if (!existsSync(distPath)) {
       '<h1>Stop Nail Biting with AI</h1>' +
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
       'it checks 21 hand landmarks and your face mesh five times a second, and the moment your hand moves toward your mouth an ' +
-      'audible alarm fires within a second — catching the automatic episodes you never notice. All detection runs ' +
+      'audible alarm fires within a second, catching the automatic episodes you never notice. All detection runs ' +
       'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<section><h2>Try the detector right now</h2>' +
-      '<p>Run the real nail biting detector on your own camera for 60 seconds — no account, no signup. ' +
+      '<p>Run the real nail biting detector on your own camera for 60 seconds: no account, no signup. ' +
       'The AI models download once (about 20 MB) and then everything runs on your device: open your ' +
       'browser\'s network panel and you\'ll see zero requests while it is watching. Nothing is uploaded ' +
       'and nothing is saved.</p></section>' +
       '<section><h2>How it works</h2>' +
       '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
       'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +
-      'approaching your mouth, the alarm fires within a second — the external awareness signal that Habit Reversal ' +
+      'approaching your mouth, the alarm fires within a second: the external awareness signal that Habit Reversal ' +
       'Training identifies as its most critical component. Each detection is logged locally so you can see your real ' +
       'biting frequency and triggers. Read more at <a href="/how-it-works">how it works</a>.</p></section>' +
       '<section><h2>Pricing</h2>' +
-      '<p>Simple, honest pricing. Start with a 3-day free trial — no credit card required. ' +
-      'Monthly: $2.99/month. Yearly: $29.00/year — just $2.42/month, saving 19%. ' +
+      '<p>Simple, honest pricing. Start with a 3-day free trial, no credit card required. ' +
+      'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +
       'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. ' +
       'Secure payment via Paddle, cancel anytime. See <a href="/pricing">pricing details</a>.</p></section>' +
       `<section><h2>Frequently asked questions</h2>${faqs}</section>` +
@@ -1516,7 +1516,7 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time — 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
+    const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time: 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
     // The homepage FAQ names onychophagia and habit reversal training in flow,
     // so it earns the MedicalCondition entity — but which therapies it may list
     // is read off the article it actually renders, never assumed.
