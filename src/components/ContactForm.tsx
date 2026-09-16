@@ -42,7 +42,7 @@ export function ContactForm() {
         >
           Get in touch
         </h2>
-        <p className="text-stone-500 dark:text-stone-500 text-sm text-center mb-8">
+        <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-8">
           Have a question or feedback? We'd love to hear from you.
         </p>
         <form
