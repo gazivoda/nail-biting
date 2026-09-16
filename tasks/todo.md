@@ -820,3 +820,28 @@ research validates it — that is the honest register, not a defect.
 Residual sweep: 0 unevidenced first-party claims remain. dateModified bumped for 4 of the 5
 changed posts (best-apps already read 2026-09-16).
 Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
+
+## Loop iteration 4 — 2026-09-16
+**Item 10 closed as already done**, not worked on: `seo:check` reports 143 posts in sync with
+zero title/description length problems. A prior loop cleared that backlog; recording it rather
+than manufacturing work.
+
+Backlog item 6 (question-shaped H2s). Measured first: 752 H2s corpus-wide, only 182 (24%)
+question-shaped, and 79 of 143 posts opened on a statement. The lead H2 is what an answer
+engine matches against a natural-language query, so that is where the value is.
+Converted **22**, not all 79, and deliberately so. The test applied was "does the new heading
+read as a query a person would actually type" — not "can a question mark be bolted on".
+So `Is nail biting contagious?`, `Can nail biting cause warts?`, `Do white spots on your nails
+mean a vitamin deficiency?`, `When does nail biting need a doctor?` are in; editorial openers
+that carry the site's voice are untouched, including the Humor post's "Scene: you, your laptop,
+and your fingers", "Two tools, one problem", and "Nail biting works — that's why you do it".
+Flattening those into questions would cost voice and gain nothing.
+Result: lead-question posts 64/143 (45%) -> **86/143 (60%)**; all H2s 24% -> 27%.
+Section headings are not `headline` (that is post.title), so schema is unaffected — verified
+0 title mismatches. dateModified bumped for exactly the 22 changed posts.
+Gates: tsc 0, 71/71, seo:sync 0, build 0, seo:check 0.
+
+### Remaining after this iteration
+3 (Populations hub) and 4 (/solutions index) — both NEW index pages, both justified by the
+cluster audit structurally rather than from measured query demand, which it explicitly marked
+NOT ANALYSED. 9 (Humor singleton orphan) is one post with a pre-existing cause.

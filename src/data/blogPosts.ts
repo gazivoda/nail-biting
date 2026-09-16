@@ -1016,11 +1016,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 6,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-adhd.png',
   sections: [
     {
-      heading: 'Why nail biting is so common in ADHD',
+      heading: 'Why is nail biting so common with ADHD?',
       body: `Research consistently finds that nail biting and ADHD travel together. The clearest data comes from a psychiatrically referred sample of children who bite their nails: ADHD was the single most common co-occurring diagnosis, present in 74.6% of the nail-biting children studied (Ghanizadeh, 2008). Comparable adult prevalence studies are thinner, but clinicians working with ADHD consistently report elevated rates of nail biting and other body-focused repetitive behaviors (BFRBs) in this group.\n\nThe connection isn't coincidental. ADHD affects the exact neural systems that determine whether an automatic habit can be noticed, interrupted, and redirected — which is precisely what stopping nail biting requires. Nail biting sits at the intersection of several ADHD-specific challenges in a way that makes it one of the most persistently resistant habits for this group.`,
     },
     {
@@ -1055,11 +1055,11 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-stimming.png',
   sections: [
     {
-      heading: 'What stimming actually is',
+      heading: 'What is stimming?',
       body: `Stimming — short for self-stimulatory behavior — refers to any repetitive action performed to regulate sensory input or emotional arousal. The term is used most commonly in the context of autism, where stimming is a well-documented feature of how autistic individuals process sensory information. But the neurological mechanism isn't autism-specific: repetitive sensory behaviors that serve a regulatory function occur across a wide range of neurotypes, and they're particularly prevalent in ADHD.\n\nCommon stims include rocking, hand-flapping, humming, finger-snapping, spinning objects, and — relevant here — repetitive oral and hand behaviors like nail biting, cheek biting, and hair chewing. What distinguishes stimming from random habit is the regulatory function: stims are performed to manage internal states, either by adding stimulation (when understimulated or bored) or reducing it (when overwhelmed or anxious).`,
     },
     {
@@ -1179,11 +1179,11 @@ BLOG_POSTS.push({
   tag: 'Science',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nac-nail-biting.png',
   sections: [
     {
-      heading: 'What NAC is and why it matters for BFRBs',
+      heading: 'What is NAC, and does it help nail biting?',
       body: `N-acetylcysteine (NAC) is an amino acid supplement and antioxidant most commonly known as a mucolytic (used in hospitals to thin mucus and treat acetaminophen overdose). In the BFRB world, it's attracted significant attention because of its effects on glutamate transmission in the brain.\n\nGlutamate is the primary excitatory neurotransmitter and plays a key role in habit and compulsion circuits. NAC modulates glutamate activity in the nucleus accumbens and prefrontal cortex — regions central to habitual and compulsive behavior. The hypothesis is that glutamate dysregulation underlies the repetitive, hard-to-stop quality of BFRBs, and that NAC's normalization of this activity reduces urge intensity.`,
     },
     {
@@ -1562,11 +1562,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 4,
   datePublished: '2026-04-23',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-social-confidence.png',
   sections: [
     {
-      heading: 'How nail biting affects social confidence',
+      heading: 'How does nail biting affect social confidence?',
       body: `The visible consequences of nail biting — short, ragged nails, damaged cuticles, scarred skin around the nail folds — affect how many chronic biters relate to social situations in ways that accumulate quietly over years. Ask chronic biters and the same behaviours come up again and again: hiding hands in social situations, avoiding handshakes, keeping fingers curled during meetings — and the burden has been measured: in a survey of 3,475 Turkish students, quality-of-life scores were lower in those with onychophagia than in those without, and in an online survey of 1,378 Australian adults the group with a probable body-focused repetitive behaviour reported reduced quality of life on some domains. A separate survey of 4,335 college students found that people with a pathological BFRB were distressed about the behaviour even though few reported functional impairment or sought help for it — distress and impairment are not the same thing.\n\nThese are not minor adjustments. Hiding hands during a meeting, turning down a handshake at a job interview, keeping hands under the table at a dinner — each represents a social cost that compounds. Over time, many nail biters develop an ambient self-consciousness about their hands that operates at low intensity across nearly every social context, draining cognitive bandwidth and reducing the ease with which they engage in situations where their hands are visible.`,
     },
     {
@@ -2326,11 +2326,11 @@ BLOG_POSTS.push({
   tag: 'Parenting',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-toddler.png',
   sections: [
     {
-      heading: `Why toddlers bite their nails`,
+      heading: `Why do toddlers bite their nails?`,
       body: `Nail biting in toddlers rarely means what it looks like it might mean. It is ordinary at this age: in a US interview study of nervous habits in 3- to 6-year-olds, parents reported nail-biting in 23% of children and thumb-sucking in 25%, and the authors concluded that these habits are prevalent in typically developing preschool children. (The parent arm of that study was small — 32 interviews — and teachers reported far fewer behaviours than parents did, so read 23% as "common," not as a precise rate.) At this age it's most often a self-soothing or exploratory oral behaviour — an extension of the same drive that leads toddlers to mouth toys, suck thumbs, or chew on shirt collars. The mouth is still a primary way young children process sensation and manage arousal, and nails happen to be conveniently attached.\n\nCommon triggers at this age include transitions (starting daycare, a new sibling, moving), overstimulation, tiredness, and simple habit formation through repetition. Family resemblance is real and measured — in a community sample of 743 Iranian schoolchildren aged 7–10, 36.8% of the children who bit their nails had at least one family member who did too — but that number cannot tell you whether it travels by imitation or by inheritance, and a twin study of 1,131 pairs attributed 50% of the variance in nail biting to genetic factors. So a nail-biting parent is a plausible influence, not a demonstrated cause.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1097/00004583-199807000-00010" target="_blank" rel="noopener noreferrer">Foster LG. Nervous habits and stereotyped behaviors in preschool children. J Am Acad Child Adolesc Psychiatry. 1998;37(7):711–717.</a></li><li><a href="https://doi.org/10.1007/s40257-018-0386-1" target="_blank" rel="noopener noreferrer">Winebrake JP, Grover K, Halteh P, Lipner SR. Pediatric Onychophagia: A Survey-Based Study of Prevalence, Etiologies, and Co-Morbidities. Am J Clin Dermatol. 2018;19(6):887–891.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011;4:116.</a></li><li><a href="https://doi.org/10.1375/1832427054936637" target="_blank" rel="noopener noreferrer">Ooki S. Genetic and environmental influences on finger-sucking and nail-biting in Japanese twin children. Twin Res Hum Genet. 2005;8(4):320–327.</a></li></ul>`,
     },
@@ -2361,11 +2361,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-during-exams.png',
   sections: [
     {
-      heading: `Why exams spike nail biting`,
+      heading: `Why do exams spike nail biting?`,
       body: `Exam periods stack several nail biting risk factors on top of each other at once: acute performance-related stress, sustained cognitive load (studying is a deep-focus activity, and the experimental work points at difficult, effortful tasks rather than at stress as such), disrupted sleep, and long sedentary stretches at a desk with hands free and idle. Any one of these alone raises biting frequency; together, they compound.\n\nMany students who bite only occasionally the rest of the year notice a sharp increase specifically during study and exam weeks, then a return to baseline afterward — a pattern that confirms the behaviour is being driven by the acute stress-and-focus combination rather than representing a permanently worsening habit.`,
     },
     {
@@ -2620,11 +2620,11 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-autism.png',
   sections: [
     {
-      heading: `Why nail biting is more common in autistic people`,
+      heading: `Why is nail biting more common in autistic people?`,
       body: `Research on repetitive behaviours in autism has found that self-directed repetitive behaviours, including nail biting, occur at elevated rates in autistic individuals compared to the general population. This fits within the broader category of repetitive and restricted behaviours associated with autism, which can include stimming (hand flapping, rocking, and similar self-regulatory movements) alongside behaviours like nail biting that overlap with the BFRB category more typically discussed outside the autism context.\n\nIt's worth being precise here: nail biting in autistic people isn't a separate or different behaviour biologically — it's the same habit-loop mechanism seen in non-autistic nail biters — but it tends to be more strongly tied to sensory processing differences than to the anxiety-driven pattern that's more commonly discussed as the primary trigger in the general population.`,
     },
     {
@@ -2907,11 +2907,11 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-braces.png',
   sections: [
     {
-      heading: `Why orthodontists specifically warn against nail biting`,
+      heading: `Why do orthodontists warn against nail biting?`,
       body: `Braces work by applying carefully calibrated, controlled pressure to move teeth gradually into position over months or years — a process that depends on the brackets and wires staying exactly where the orthodontist placed them and applying force in exactly the intended direction. Nail biting introduces uncontrolled, repetitive force directly onto that system, in a way ordinary chewing (spread across a full bite and softened by food) doesn't.\n\nThere is one measurement worth knowing about, and it happens to be specifically about orthodontic patients. A Swedish study compared 21 severe nail biters undergoing fixed orthodontic treatment with 21 patients matched for overjet, age, sex, and the length and type of treatment. The nail biters had a significantly higher apical root resorption index both before (p < 0.01) and after (p < 0.001) treatment (Odenrick & Brattström, 1985). Read that carefully, because it is usually reported badly: the difference was already there before any appliance was fitted. So this is not "braces plus nail biting damages roots", and with 21 patients per group, no measure of how much root was lost, and no clinical outcome, it does not establish which way the association runs. That is a mechanical argument, and it is the one orthodontists generally make. We should be clear that we could not find a study measuring what nail biting does to fixed appliances: no bracket failure rates in biters versus non-biters, no wire-distortion data, nothing.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/3859328/" target="_blank" rel="noopener noreferrer">Odenrick L, Brattström V. Nailbiting: frequency and association with root resorption during orthodontic treatment. Br J Orthod. 1985;12(2):78–81.</a></li></ul>`,
     },
@@ -3194,11 +3194,11 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-16',
   ogImage: '/og/when-to-see-a-doctor-for-nail-biting.png',
   sections: [
     {
-      heading: `Most nail biting doesn't need a doctor`,
+      heading: `When does nail biting need a doctor?`,
       body: `The overwhelming majority of nail biting — even long-standing, daily habits — doesn't require medical intervention. Self-directed methods (competing responses, awareness tools, bitter-tasting polish) are a reasonable first line, and plenty of people get where they want without a professional visit. We would not put a proportion on it: the self-help trials that exist report four-week completion rates between 53.5% and 68.6%, and reviews of internet-based self-help are explicit that therapist-guided versions are likely to do better. Understanding this upfront matters because unnecessary medicalisation of an ordinary habit can add shame or urgency that isn't warranted for the average case.`,
     },
     {
@@ -3314,11 +3314,11 @@ BLOG_POSTS.push({
   tag: 'Science',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-fingerprints.png',
   sections: [
     {
-      heading: `Why this question comes up`,
+      heading: `Can nail biting change your fingerprints?`,
       body: `It's a genuinely common search — people wonder whether years of biting nails down to the skin, or biting the surrounding fingertip skin itself, could damage or alter their fingerprints, sometimes prompted by a specific practical concern (biometric scanners at a border crossing or workplace failing to read a print) rather than pure curiosity. The short answer is: it's possible in more severe cases, though it's not a typical or expected outcome of ordinary nail biting.`,
     },
     {
@@ -3384,11 +3384,11 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-eczema.png',
   sections: [
     {
-      heading: `How eczema and nail biting can interact`,
+      heading: `How do eczema and nail biting interact?`,
       body: `Eczema (atopic dermatitis) around the fingers and nail folds creates a skin barrier that's already compromised — drier, more prone to cracking, and more reactive to irritation than typical skin. This creates favourable conditions for a specific feedback loop: eczema-affected skin around the nails is often itchy and uncomfortable, which can prompt picking or biting at the affected area for relief, and that biting further damages an already-compromised skin barrier, worsening the eczema and increasing the itch-scratch (or itch-bite) cycle that eczema is already prone to.`,
     },
     {
@@ -3418,11 +3418,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-caffeine.png',
   sections: [
     {
-      heading: `The mechanism: arousal and restlessness`,
+      heading: `Does caffeine make nail biting worse?`,
       body: `Caffeine is a central nervous system stimulant that increases physiological arousal — elevated heart rate, heightened alertness, and for many people, a subjective feeling of restlessness or jitteriness, particularly at higher doses or in people more sensitive to its effects. Nail biting is often assumed to track physiological arousal, so a caffeine link looks mechanistically plausible. Two things should temper that. Nobody has studied caffeine and nail biting together. And the arousal premise itself is shakier than it sounds: in a controlled experiment, a stress induction failed to raise urges in people with body-focused repetitive behaviours, while boredom and frustration did. Under-stimulation is at least as well evidenced a trigger as over-arousal, which cuts against a simple "more stimulant, more biting" story.`,
     },
     {
@@ -3593,11 +3593,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/how-to-help-someone-who-bites-their-nails.png',
   sections: [
     {
-      heading: `Why pointing it out usually backfires`,
+      heading: `Why does pointing it out usually backfire?`,
       body: `The instinctive response to watching someone you care about bite their nails is often to say something — "you're doing it again," a gentle nudge, a hand on their wrist. The honest picture is more awkward than "it doesn't work." In the only experiment we could find that tested it, 40 undergraduate nail biters bit least often in two conditions: when they were in continuous conversation, and when they were reprimanded for biting. So being told off does suppress it — for as long as the person doing the telling off is watching. That is short-term suppression in front of an observer over a brief lab session, not a change in the habit, and it is the reason repeated pointing-out tends to produce hiding rather than stopping. It also adds shame to something most biters are already self-conscious about, without giving them anything to do differently in the moment.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1016/j.brat.2006.07.013" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989–995.</a></li></ul>`,
     },
@@ -3844,11 +3844,11 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-contagious.png',
   sections: [
     {
-      heading: `Not contagious in a medical sense, but socially transmissible`,
+      heading: `Is nail biting contagious?`,
       body: `Nail biting isn't contagious the way an infection is. What has actually been measured is family clustering, not social transmission: in a community sample of 743 Iranian schoolchildren aged 7–10, 36.8% of the children who bit their nails had at least one family member who did too. That is consistent with copying — but it is equally consistent with inheritance, and a twin study of 1,131 pairs attributed 50% of the variance in nail biting to genetic influences in both sexes. Observational learning between friends, roommates and partners is a plausible extension of the modelling idea; nobody has demonstrated it for this behaviour, and the family data cannot be used as evidence for it.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011;4:116.</a></li><li><a href="https://doi.org/10.1375/1832427054936637" target="_blank" rel="noopener noreferrer">Ooki S. Genetic and environmental influences on finger-sucking and nail-biting in Japanese twin children. Twin Res Hum Genet. 2005;8(4):320–327.</a></li></ul>`,
     },
@@ -3879,11 +3879,11 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-09-16',
   ogImage: '/og/nail-biting-fsa-hsa.png',
   sections: [
     {
-      heading: `The general rule for FSA/HSA eligibility`,
+      heading: `Are nail biting treatments FSA or HSA eligible?`,
       body: `Flexible Spending Accounts (FSA) and Health Savings Accounts (HSA) generally cover expenses that qualify as a "medical expense" under IRS guidelines — broadly, costs for the diagnosis, treatment, or prevention of disease, or costs that affect a structure or function of the body. Because chronic nail biting (onychophagia) is a recognised condition with a formal classification, treatments specifically aimed at addressing it have a reasonable case for eligibility, though — as with many borderline categories — actual approval can depend on documentation and the specific plan administrator's interpretation.`,
     },
     {
@@ -4645,11 +4645,11 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-paronychia.png',
     sections: [
       {
-        heading: 'What paronychia is',
+        heading: 'What is paronychia?',
         body: `Paronychia is infection of the nail fold — the strip of skin along the sides and base of the nail. Acute paronychia is described in clinical references as one of the most common infections of the hand, and nail biting is a listed risk factor for it (Leggit, 2017; Macneal & Milroy, StatPearls). It is the infection most often linked to the habit. What no one has published is a rate: there is no figure for how much more common paronychia is in nail biters, and no basis for the line this page used to carry about most chronic biters getting it at least once.\n\nThe mechanism is reasonably well described. The proximal nail fold and cuticle form a protective seal over the matrix underneath. Acute paronychia is "usually caused by a breakdown of the seal between the nail plate and the nail fold with infection resulting from subsequent inoculation of bacterial or fungal pathogens", and is "typically precipitated by nail-biting, trauma, manicures, ingrown nails, and hangnail manipulation" (Macneal & Milroy, StatPearls). It is usually polymicrobial. Staphylococcus aureus, including MRSA, is the most common organism; the anaerobes — Bacteroides, Enterococcus, Eikenella corrodens — are the ones associated with exposure to oral secretions through biting and finger sucking. Note the word associated: that is an aetiological pattern, not proof of what happened in any individual finger.\n\nThis article is general information, not medical advice — hand infections can escalate, and anything that looks like it is progressing warrants a real clinician.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://www.aafp.org/pubs/afp/issues/2017/0701/p44.html" target="_blank" rel="noopener noreferrer">Leggit JC. Acute and Chronic Paronychia. Am Fam Physician. 2017;96(1):44–51.</a></li><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK559146/" target="_blank" rel="noopener noreferrer">Macneal P, Milroy C. Paronychia Drainage. StatPearls. Updated 2023.</a></li><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK534769/" target="_blank" rel="noopener noreferrer">Johnson C, Sinkler MA, Schmieder GJ. Anatomy, Shoulder and Upper Limb, Nails. StatPearls. Updated 2023.</a></li></ul>`,
       },
@@ -4698,11 +4698,11 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-warts.png',
     sections: [
       {
-        heading: 'Warts around the nails are a nail biter problem',
+        heading: 'Can nail biting cause warts?',
         body: `Periungual warts — warts around and under the nail edge — are caused by human papillomavirus. Subungual warts are listed among the periungual infections seen in nail biters in the standard clinical review of the habit (Lee & Lipner, 2022). Before going further, a correction to the framing this page previously used: we could not find a study measuring how much more often periungual warts occur in nail biters than in anyone else. There is no rate, no risk ratio, and so no basis for calling the association strong.\n\nThe reasoning usually offered is that intact skin is a good barrier, broken skin is not, and chronic nail biting produces continuously broken skin at exactly the site where these warts form. That is plausible. It is not a measurement.\n\nThis is general information rather than medical advice; persistent or spreading skin lesions should be seen by a clinician who can look at them.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
@@ -4741,11 +4741,11 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-jaw-pain-tmj.png',
     sections: [
       {
-        heading: 'An underrated consequence',
+        heading: 'Can nail biting cause jaw pain or TMJ problems?',
         body: `Most discussion of nail biting damage focuses on nails and teeth. The jaw joint gets less attention, and it probably should get more — persistent jaw ache, clicking, or morning tightness in someone who bites their nails many times a day is worth connecting up rather than treating as unrelated.\n\nThe temporomandibular joint sits just in front of each ear and is among the most heavily used joints in the body. It handles ordinary chewing without complaint. What it handles less well is repetitive, low-amplitude, forward-positioned biting sustained many times daily over years.\n\nAs elsewhere on this site: general information, not a diagnosis. Persistent jaw pain deserves a dentist or clinician who can actually examine you.`,
       },
       {
@@ -4823,11 +4823,11 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-white-spots.png',
     sections: [
       {
-        heading: 'The most persistent nail myth going',
+        heading: 'Do white spots on your nails mean a vitamin deficiency?',
         body: `If you have white spots on your nails, someone has told you it means a calcium deficiency. Someone else has told you zinc. Both claims are extremely widespread and neither is well supported.\n\nThe clinical term is leukonychia, and the small white spots people notice are punctate leukonychia. They are conventionally attributed to minor trauma to the nail matrix — the tissue at the base of the nail that forms the hard nail plate — and punctate leukonychia has been reported as one of the changes induced by onychophagia in a published case, alongside longitudinal melanonychia and splinter haemorrhages (Fıçıcıoğlu & Korkmaz, 2018). That is a single patient, and those authors describe such pigmentary changes as relatively uncommon. Read it as "this has been seen in a nail biter", not as a frequency. For nail biters, the mechanism is not exactly mysterious.\n\nAs elsewhere: general information, not a diagnosis. Nail changes that are extensive, affect all nails, or come with other symptoms are worth a clinician's opinion.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5831699/" target="_blank" rel="noopener noreferrer">Fıçıcıoğlu S, Korkmaz S. Onychophagia Induced Melanonychia, Splinter Hemorrhages, Leukonychia, and Pterygium Inversum Unguis Concurrently. Case Rep Dermatol Med. 2018;2018:3230582.</a></li><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK534769/" target="_blank" rel="noopener noreferrer">Johnson C, Sinkler MA, Schmieder GJ. Anatomy, Shoulder and Upper Limb, Nails. StatPearls. Updated 2023.</a></li></ul>`,
       },
@@ -5001,11 +5001,11 @@ BLOG_POSTS.push(
     tag: 'Clinical',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-finding-a-therapist.png',
     sections: [
       {
-        heading: 'Why the general search does not work',
+        heading: 'How do you find a therapist for nail biting?',
         body: `Searching for a therapist and picking whoever is available is a reasonable strategy for many problems. It works less well here, because body-focused repetitive behaviours are a specific area, the treatment is protocol-driven, and a lot of otherwise excellent therapists have limited experience with it.\n\nThe common failure mode is not incompetence. It is a therapist treating the nail biting as a symptom of underlying anxiety and working exclusively on the anxiety. That can be worthwhile in itself, but for a habit that has become automatic, the behaviour often persists at much the same rate even after the anxiety improves — because the pathway is now cue-driven rather than emotion-driven.`,
       },
       {
@@ -5437,11 +5437,11 @@ BLOG_POSTS.push(
     tag: 'Parenting',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-punishing-children.png',
     sections: [
       {
-        heading: 'The most common parental instinct',
+        heading: 'Does punishing a child for nail biting work?',
         body: `Nail biting in children is visible, feels unhygienic, and looks like something the child could simply stop. So the standard response is correction: telling them off, slapping the hand away, pointing it out in front of others, or setting up a punishment for being caught.\n\nThis is understandable and it reliably does not work. Worse, the mechanism by which it fails tends to make the behaviour more entrenched rather than merely leaving it unchanged.`,
       },
       {
@@ -5644,11 +5644,11 @@ BLOG_POSTS.push(
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-09-16',
     ogImage: '/og/nail-biting-app-battery-performance.png',
     sections: [
       {
-        heading: 'A reasonable thing to worry about',
+        heading: 'Does a nail biting detection app drain your battery?',
         body: `Running two machine learning models against a live camera feed for eight hours a day sounds expensive, and the concern comes up often enough to deserve a direct answer rather than reassurance.\n\nThe short version: the cost is real but modest, and it is modest because of deliberate choices about how often inference runs rather than because the models are trivial. Continuous computer vision can absolutely make a laptop hot and drain a battery. Avoiding that requires not doing the obvious thing.`,
       },
       {
