@@ -911,3 +911,50 @@ None of this session's work is a ranking guarantee. The baseline was that stopbi
 **not observed in the top 10 for any of the 13 sampled queries**. Re-run that same 13-query
 sample in 4-6 weeks alongside Search Console impressions for the pillar. That comparison, not
 the number of commits, is what says whether this worked.
+
+---
+
+# UI/UX + conversion pass — homepage and signed-in app (2026-09-25)
+
+Tooling: impeccable 4.4.0 installed globally (~/.claude/skills/impeccable) + design:ux-copy,
+ui-ux-pro-max, frontend-design, refactoring-ui. Refinement of the 2026-09-16 editorial HP, not a redesign.
+
+Constraints: no invented social proof/metrics/urgency; HP light-only; no em/en dashes in HP copy;
+border-hairline + .ed-* primitives; FAQ <-> index.html JSON-LD byte-identical; trial is 3 days (code),
+PRODUCT.md's "7 days" is stale; app edits re-measured in light AND dark.
+
+- [x] Review (parallel subagents): A HP design review · B HP detector+browser · C app usability (signed in) · D UX copy
+- [x] Synthesize critique, persist snapshot (.impeccable/critique)
+- [x] Fix HP P0/P1 (above-fold CTA, trial fact before first CTA, demo denied-camera state)
+- [x] Fix app P0/P1 (activation funnel: sign-in -> camera -> detection -> first alarm -> streak)
+- [x] Copy fixes (CTAs, empty/error states)
+- [x] Verify: test, build, lint, seo:check, detector on changed files, desktop+mobile screenshots, both themes for app
+- [x] Commit + push seo-geo-loop-sept
+
+## Review (2026-09-25)
+
+HP critique 19/32 (Persuade; snapshot in .impeccable/critique/). Detector on changed files: clean.
+Verified: 71/71 tests, build, seo:check, lint identical to baseline minus one fixed error, browser at
+1440 and 390 (demo denied state, trial cues, section order, Settings mobile, camera-error card, tour).
+
+Shipped
+- HP: outlined trial button + "3 days free · no card · then $2.99/month" beside every trial CTA; plain-language
+  hero tags; demo plate warns about camera prompt + sound; hero privacy line cut (4th repeat)
+- Demo: no fake "Watching…" after a failure; retry + trial path on failure; on-plate hint to trigger the alarm;
+  trial CTA the moment the first catch fires; honest 0-catch line; editorial buttons
+- HP: trial cue rows after 03 Evidence and 04 Instrument; Further reading moved after the final CTA;
+  tap targets 20 -> 2 under 44px; unmeasured/macOS-only claims fixed; pricing says plan is chosen at trial end
+- App: camera errors shown with fix + retry (was "Detection Active" over a dead camera); Settings no longer
+  collapses to 1px on mobile; tour no longer skips to step 3; manual log works by keyboard and no longer
+  fires on scroll; History actions visible on touch; empty state explains next step; paywall shows Yearly
+  first on mobile; "Watching you" -> "Detecting"
+- /pricing, /how-it-works: light-mode muted text stone-400 -> stone-500 (~3.2:1 -> AA), dark untouched
+
+Follow-ups (not done: feature-sized or owner decisions)
+- Pre-permission explainer before the first camera prompt (cameraEnabled defaults true, prompt fires cold)
+- Tag/confirm at the alarm moment (ReplacementPrompt), not later in History
+- App-wide dark hairline token: 73 x dark:border-ink-400 are invisible (needs a :root token, not border-hairline)
+- Plan choice through OAuth (?plan=yearly) so Yearly/Monthly buttons preselect at the paywall
+- "Incident" vs "bite" glossary across Dashboard/History/chart; tour step 1 copy when camera is not running
+- PRODUCT.md is stale: says 7-day trial and EUR; code says 3 days and USD
+- /pricing and /how-it-works run on Inter, not the editorial type system; their <title> stays the homepage's

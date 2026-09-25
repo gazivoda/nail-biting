@@ -66,3 +66,24 @@ The three diagnosis agents were genuinely excellent. Pattern: use subagents for
 research and audit, do precise edits directly. If an implementation agent is used,
 give it the verified finding plus exact file/line targets and tell it to edit
 within its first few tool calls.
+
+## 2026-09-25 — UI/UX + conversion pass (nail-habit-app)
+
+**Review subagents share one Chrome profile, so a cookie one sets changes what the others see.**
+The app-usability agent set the dev `nh_session` cookie; after that, `/` rendered the Dashboard
+for every other agent, and the detector agent had to measure Landing in iframes with a patched
+fetch. When a reviewer needs a signed-in state, say in its prompt that it must expire the cookie
+before closing its tab, or give signed-in and signed-out reviewers separate origins/ports.
+
+**A background automation tab freezes CSS transitions at t=0, so `.reveal` reads opacity 0.**
+`document.visibilityState === 'hidden'` pauses animations; every revealed section, old and new,
+measured opacity 0 until a screenshot brought the tab forward. Check visibilityState before
+calling a reveal broken.
+
+**A code comment can claim a mirror that no longer exists.** HeroDemo said its strings were
+"reproduced verbatim" in server.js; grep found only Landing's heading and paragraph there. Grep
+the mirror before treating copy as frozen, then fix the comment.
+
+**Keep deliberate owner decisions even when a reviewer flags them.** Two reviewers wanted the
+trial links out of `target="_blank"`; `git log -S` showed 92360d2 did it on purpose (the landing
+tab keeps the demo running). Check history before reverting a pattern that looks like a mistake.
