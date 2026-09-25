@@ -169,20 +169,6 @@ function TrustList({ className }: { className: string }) {
   );
 }
 
-const STEPS = [
-  {
-    n: 1, title: 'Sign in with Google',
-    body: 'One click, in a new tab. Your 3-day trial starts straight away and asks for no card.',
-  },
-  {
-    n: 2, title: 'Allow the camera',
-    body: 'The detector runs inside your browser. Keep working as usual: the video is never uploaded, and you can hide it.',
-  },
-  {
-    n: 3, title: 'Hear the alarm, press your palms flat',
-    body: 'When a fingertip gets near your lips, an alarm sounds and the moment is logged. Swap the bite for something your hands can\'t do at the same time.',
-  },
-] as const;
 
 export function Landing() {
   // Stays false until the visitor asks for the demo: the lazy import is only
@@ -347,34 +333,26 @@ export function Landing() {
           </div>
         </section>
 
-        {/* ── HOW IT WORKS / HOW TO START ───────────────────────────────── */}
-        {/* One list does both jobs: the three things you do to start are the
-            three things the product does. */}
-        <section id="how" aria-labelledby="how-heading" className="border-t border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-20 lg:py-28">
-          <div className="sg-container">
-            <SignHeading
-              id="how-heading"
-              sign={<span className="sg-sign sg-sign-m"><ArrowRight size={24} aria-hidden="true" /></span>}
-            >
-              Three steps, about a minute
-            </SignHeading>
-
-            <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
-              {STEPS.map(({ n, title, body }) => (
-                <li key={n} className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4">
-                    <span className="sg-sign sg-sign-m" aria-hidden="true">{n}</span>
-                    <h3 className="sg-h3"><span className="sr-only">Step {n}: </span>{title}</h3>
-                  </div>
-                  <p className="sg-body">{body}</p>
-                </li>
-              ))}
-            </ol>
-
-            <p className="sg-small mt-12 border-t border-[color:var(--sg-rule)] pt-6">
-              Works in your desktop browser, nothing to download. You can install it like an app
-              later if you want it one click away.
-            </p>
+        {/* ── HOW TO START ──────────────────────────────────────────────── */}
+        {/* Said, not diagrammed: setting it up is one sentence long, and a
+            three-column numbered grid made it look like a SaaS onboarding
+            flow. The blue "do this" sign appears here once. */}
+        <section id="how" aria-labelledby="how-heading" className="border-y border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-14 lg:py-16">
+          <div className="sg-container grid gap-6 lg:grid-cols-12 lg:items-center lg:gap-10">
+            <div className="flex items-center gap-4 lg:col-span-4">
+              <span className="sg-sign sg-sign-m"><ArrowRight size={24} aria-hidden="true" /></span>
+              <h2 id="how-heading" className="sg-h2">How to start</h2>
+            </div>
+            <div className="lg:col-span-8">
+              <p className="sg-lede text-[color:var(--sg-ink)]">
+                Sign in with Google (it opens in a new tab), allow the camera, and get on with your
+                work. When your hand reaches your mouth, it goes off. That's the whole setup.
+              </p>
+              <p className="sg-small mt-3">
+                It runs in your desktop browser, so there's nothing to download. You can install it
+                like an app later if you want it one click away.
+              </p>
+            </div>
           </div>
         </section>
 
