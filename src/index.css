@@ -185,6 +185,12 @@
 @tailwind base;
 @tailwind components;
 
+/* The signed-in app speaks the same type as the marketing site: Overpass for
+   text, Overpass Mono for the timers. Scoped to the app shell (App.tsx) so the
+   blog and legal pages keep their own editorial type. */
+.app-type { font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.app-type .font-mono { font-family: 'Overpass Mono', ui-monospace, monospace; }
+
 /* A visible keyboard focus ring everywhere in the app (the signed-in screens
    had none; only .sg-page and .ed-page defined one). :where() keeps this at
    zero specificity, so those scoped rings and any component ring still win. */

@@ -155,7 +155,7 @@ export function Log() {
 
   return (
     <div className="p-5 sm:p-8 pb-10">
-      <PageHeader eyebrow="Progress" title="History" />
+      <PageHeader title="History" />
 
       {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">

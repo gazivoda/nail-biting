@@ -7,7 +7,7 @@ function Segment({ value, label }: { value: number; label: string }) {
       <span className="font-mono text-[44px] sm:text-[56px] font-medium leading-none tracking-[-2px] tabular-nums text-forest-700 dark:text-forest-300">
         {String(value).padStart(2, '0')}
       </span>
-      <span className="text-[10.5px] font-medium tracking-[1.5px] uppercase text-stone-500 dark:text-stone-400 mt-1.5">
+      <span className="text-xs font-medium tracking-[1.5px] uppercase text-stone-500 dark:text-stone-400 mt-1.5">
         {label}
       </span>
     </div>

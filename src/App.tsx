@@ -52,7 +52,7 @@ type Tab = 'dashboard' | 'log' | 'settings';
 // a spinner, a flash, and then another spinner.
 function AppLoading() {
   return (
-    <div className="flex items-center justify-center min-h-dvh bg-cream-200 dark:bg-ink-100">
+    <div className="app-type flex items-center justify-center min-h-dvh bg-cream-200 dark:bg-ink-100">
       <div className="flex items-center gap-3 text-stone-400">
         <img src="/logo.svg" alt="" className="w-6 h-6 animate-pulse" />
         <span className="text-sm">Loading…</span>
@@ -85,10 +85,12 @@ function AppRouter() {
   if (accessStatus === 'paywall' || showPaywall) {
     return (
       <Suspense fallback={<AppLoading />}>
+        <div className="app-type">
         <PaywallPage
           onBack={accessStatus === 'trial_active' ? () => setShowPaywall(false) : undefined}
         />
         <PWAGuideModal />
+        </div>
       </Suspense>
     );
   }
@@ -96,6 +98,7 @@ function AppRouter() {
   // ── App (trial_active or subscribed) ────────────────────────────────────
   return (
     <Suspense fallback={<AppLoading />}>
+      <div className="app-type">
       <div className="flex bg-cream-200 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
         <TabBar
           active={activeTab}
@@ -111,6 +114,7 @@ function AppRouter() {
       </div>
       <OnboardingTour />
       <PWAGuideModal />
+      </div>
     </Suspense>
   );
 }

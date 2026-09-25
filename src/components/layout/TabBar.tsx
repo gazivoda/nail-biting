@@ -48,14 +48,12 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
             </div>
             <div>
               <p className="text-[13.5px] font-semibold tracking-[-0.1px] text-stone-800 dark:text-stone-100">Stop Biting</p>
-              <p className="text-[10.5px] text-stone-500 dark:text-stone-400 mt-[1px] tracking-[0.2px]">on-device · v2</p>
             </div>
           </div>
         </div>
 
         {/* Nav items */}
         <nav className="flex-1 p-3 space-y-0.5" aria-label="Main navigation">
-          <p className="text-xs font-semibold tracking-[1.2px] uppercase text-stone-500 dark:text-stone-400 mb-2 px-1">Navigate</p>
           {tabs.map(({ id, label, icon: Icon }) => {
             const isActive = active === id;
             return (
