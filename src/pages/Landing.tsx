@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from 'react';
 import {
-  ArrowRight, BookOpen, Camera, ChevronDown, Loader2,
+  ArrowRight, Camera, ChevronDown, Loader2,
   ShieldCheck,
 } from 'lucide-react';
 import { ContactForm } from '../components/ContactForm';
@@ -132,21 +132,6 @@ function TrialButton({ tone = 'blue', size = 'md' }: { tone?: 'blue' | 'light'; 
       Start free trial
       <ArrowRight size={size === 'sm' ? 15 : 18} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
     </a>
-  );
-}
-
-// A section heading with its sign beside it: the glyph says which kind of
-// statement follows (do this / this is safe) before the words do.
-function SignHeading({ id, sign, children }: {
-  id: string;
-  sign: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-start gap-4 sm:gap-5">
-      <div className="pt-1">{sign}</div>
-      <h2 id={id} className="sg-h2">{children}</h2>
-    </div>
   );
 }
 
@@ -316,7 +301,7 @@ export function Landing() {
             three-column numbered grid made it look like a SaaS onboarding
             flow. The blue "do this" sign appears here once. */}
         <section id="how" aria-labelledby="how-heading" className="border-y border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-14 lg:py-16">
-          <div className="sg-container grid gap-6 lg:grid-cols-12 lg:items-center lg:gap-10">
+          <div className="sg-container grid gap-6 lg:grid-cols-12 lg:items-start lg:gap-10">
             <div className="flex items-center gap-4 lg:col-span-4">
               <span className="sg-sign sg-sign-m"><ArrowRight size={24} aria-hidden="true" /></span>
               <h2 id="how-heading" className="sg-h2">How to start</h2>
@@ -351,12 +336,9 @@ export function Landing() {
         <section id="science" aria-labelledby="science-heading" className="py-20 lg:py-28">
           <div className="sg-container grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
-              <SignHeading
-                id="science-heading"
-                sign={<span className="sg-sign sg-sign-m"><BookOpen size={22} aria-hidden="true" /></span>}
-              >
+              <h2 id="science-heading" className="sg-h2 max-w-[18ch]">
                 Why an alarm works when willpower doesn't
-              </SignHeading>
+              </h2>
 
               <div className="sg-measure mt-8 space-y-5">
                 <p className="sg-body">
