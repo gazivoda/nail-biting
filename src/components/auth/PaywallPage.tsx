@@ -109,7 +109,7 @@ export function PaywallPage({ onBack }: Props) {
           >
             Go to app →
           </button>
-          <p className="text-stone-400 dark:text-stone-500 text-xs mt-4">Takes a moment to activate…</p>
+          <p className="text-stone-500 dark:text-stone-400 text-xs mt-4">Takes a moment to activate…</p>
         </div>
       </div>
     );
@@ -136,7 +136,7 @@ export function PaywallPage({ onBack }: Props) {
               Back to app
             </button>
           )}
-          <button onClick={signOut} className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">
+          <button onClick={signOut} className="text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">
             Sign out
           </button>
         </div>
@@ -172,7 +172,7 @@ export function PaywallPage({ onBack }: Props) {
         )}
 
         {activating && (
-          <div className="flex items-center gap-3 text-stone-400 mb-8">
+          <div className="flex items-center gap-3 text-stone-500 mb-8">
             <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
             <span className="text-sm">Activating your subscription…</span>
           </div>
@@ -187,12 +187,12 @@ export function PaywallPage({ onBack }: Props) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
-                <p className="text-xs text-stone-400 dark:text-stone-500">Billed monthly</p>
+                <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
               </div>
             </div>
             <div className="mb-4">
               <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
-              <span className="text-stone-400 dark:text-stone-500 text-sm"> / month</span>
+              <span className="text-stone-500 dark:text-stone-400 text-sm"> / month</span>
             </div>
             <ul className="space-y-2 mb-6 flex-1">
               {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types'].map(f => (
@@ -225,12 +225,12 @@ export function PaywallPage({ onBack }: Props) {
               </div>
               <div>
                 <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-                <p className="text-xs text-stone-400 dark:text-stone-500">Billed once a year</p>
+                <p className="text-xs text-stone-500 dark:text-stone-400">Billed once a year</p>
               </div>
             </div>
             <div className="mb-1">
               <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-              <span className="text-stone-400 dark:text-stone-500 text-sm"> / year</span>
+              <span className="text-stone-500 dark:text-stone-400 text-sm"> / year</span>
             </div>
             <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">Just $2.42/month</p>
             <ul className="space-y-2 mb-6 flex-1">
@@ -259,14 +259,14 @@ export function PaywallPage({ onBack }: Props) {
           </div>
         )}
 
-        <div className="flex items-center gap-6 mt-10 text-xs text-stone-400 dark:text-stone-500">
+        <div className="flex items-center gap-6 mt-10 text-xs text-stone-500 dark:text-stone-400">
           <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>
           <div className="flex items-center gap-1.5"><Check size={11} /><span>Cancel anytime</span></div>
           <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" /><span>Camera stays on-device</span></div>
         </div>
 
         {onBack && trialDaysLeft > 0 && (
-          <p className="mt-6 text-xs text-stone-400 dark:text-stone-500">
+          <p className="mt-6 text-xs text-stone-500 dark:text-stone-400">
             {trialDaysLeft} day{trialDaysLeft !== 1 ? 's' : ''} remaining in your free trial
           </p>
         )}

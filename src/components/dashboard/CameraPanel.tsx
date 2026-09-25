@@ -26,7 +26,7 @@ export function CameraPanel() {
       {/* Idle placeholder */}
       {!cameraEnabled && (
         <div className="flex items-center justify-center h-24 bg-stone-50 dark:bg-ink-300">
-          <p className="text-xs text-stone-400 dark:text-stone-500">Camera off — start detection above</p>
+          <p className="text-xs text-stone-500 dark:text-stone-400">Camera off — start detection above</p>
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@ import { Bell, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, Exter
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
-import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval } from '../types';
+import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 
@@ -16,7 +16,7 @@ function Section({ title, icon: Icon, children, fullWidth }: {
   return (
     <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'md:col-span-2' : ''}`}>
       <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
-        <Icon size={15} className="text-stone-400 dark:text-stone-500" />
+        <Icon size={15} className="text-stone-500 dark:text-stone-400" />
         <p className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</p>
       </div>
       <div className="p-4 space-y-4">{children}</div>
@@ -33,7 +33,7 @@ function Row({ label, description, children }: {
     <div className="flex items-center justify-between gap-4">
       <div className="min-w-0">
         <p className="text-sm text-stone-800 dark:text-stone-200">{label}</p>
-        {description && <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">{description}</p>}
+        {description && <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">{description}</p>}
       </div>
       {children}
     </div>
@@ -159,12 +159,12 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
               <p className={`text-xs font-medium ${isSelected ? 'text-forest-700 dark:text-forest-300' : 'text-stone-700 dark:text-stone-300'}`}>
                 {opt.label}
               </p>
-              <p className="text-[10px] text-stone-400 dark:text-stone-500 leading-snug">{opt.description}</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400 leading-snug">{opt.description}</p>
             </div>
             <button
               onClick={(e) => handlePreview(opt.value, e)}
               aria-label={`Preview ${opt.label}`}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] transition-all duration-150 ${
+              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-xs transition-all duration-150 ${
                 isPreviewing
                   ? 'bg-forest-500 text-white'
                   : 'bg-stone-200 dark:bg-ink-300 text-stone-500 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
@@ -196,9 +196,9 @@ function VolumeSlider({ value, onChange, sound }: { value: number; onChange: (v:
   return (
     <div className="flex items-center gap-3">
       {value === 0 ? (
-        <VolumeX size={15} className="text-stone-400 dark:text-stone-500 flex-shrink-0" />
+        <VolumeX size={15} className="text-stone-500 dark:text-stone-400 flex-shrink-0" />
       ) : (
-        <Volume2 size={15} className="text-stone-400 dark:text-stone-500 flex-shrink-0" />
+        <Volume2 size={15} className="text-stone-500 dark:text-stone-400 flex-shrink-0" />
       )}
       <input
         type="range"
@@ -235,7 +235,7 @@ function ReasonsSection() {
 
   return (
     <Section title="Bite reasons" icon={Tag} fullWidth>
-      <p className="text-xs text-stone-400 dark:text-stone-500 -mt-1">
+      <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">
         Add your own reasons to choose from when logging a bite, alongside the built-in options (stress, focus, boredom, not sure).
       </p>
 
@@ -251,7 +251,7 @@ function ReasonsSection() {
               <button
                 onClick={() => removeCustomTag(tag.id)}
                 aria-label={`Remove ${tag.label}`}
-                className="p-0.5 rounded-full text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
+                className="p-0.5 rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -268,7 +268,7 @@ function ReasonsSection() {
           placeholder="🏷️"
           maxLength={4}
           aria-label="Emoji"
-          className="w-12 text-center bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-2 py-2 text-sm placeholder:text-stone-300 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="w-12 text-center bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-2 py-2 text-sm placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <input
           type="text"
@@ -277,7 +277,7 @@ function ReasonsSection() {
           placeholder="e.g. Tiredness"
           maxLength={30}
           aria-label="Reason label"
-          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-2 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-300 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-2 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <button
           type="submit"
@@ -359,7 +359,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
                 <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting Pro</span>
               )}
             </div>
-            <p className="text-xs text-stone-400 dark:text-stone-500">
+            <p className="text-xs text-stone-500 dark:text-stone-400">
               {subscription_status === 'trial' && trial_end_date && (
                 trialDaysLeft > 0
                   ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} left in trial — ends ${fmt(trial_end_date)}`
@@ -403,6 +403,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
   const {
     detectionSensitivity, setSensitivity,
+    theme, setTheme,
     alertType, setAlertType,
     alertSound, setAlertSound,
     alertVolume, setAlertVolume,
@@ -449,6 +450,19 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Detection */}
       <Section title="Detection" icon={Sliders}>
+        {/* Theme lives here for every screen size: the phone tab bar used to
+            carry three 28px theme buttons squeezed next to the tabs. */}
+        <Row label="Theme" description="Light, dark, or follow your system">
+          <SegmentedControl
+            value={theme}
+            onChange={(v) => setTheme(v as Theme)}
+            options={[
+              { label: 'Light', value: 'light' },
+              { label: 'System', value: 'system' },
+              { label: 'Dark', value: 'dark' },
+            ]}
+          />
+        </Row>
         <Row label="Sensitivity" description="How close hand must be to trigger alert">
           <SegmentedControl
             value={detectionSensitivity}
@@ -475,7 +489,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Alert sound — full width */}
       <Section title="Alert sound" icon={Volume2} fullWidth>
-        <p className="text-xs text-stone-400 dark:text-stone-500 -mt-1">Choose the sound played when nail-biting is detected. Click Preview to hear each option.</p>
+        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">Choose the sound played when nail-biting is detected. Click Preview to hear each option.</p>
         <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
         <Row label="Volume" description="How loud the alarm plays">
           <div className="w-40">

@@ -23,12 +23,14 @@ export function ThemeToggle({ fullWidth = false }: Props) {
           key={value}
           onClick={() => setTheme(value)}
           title={label}
+          aria-label={`${label} theme`}
+          aria-pressed={theme === value}
           className={`flex items-center justify-center rounded-md transition-all duration-150 ${
             fullWidth ? 'flex-1 py-1.5' : 'w-7 h-7'
           } ${
             theme === value
               ? 'bg-white dark:bg-ink-50 text-stone-700 dark:text-stone-200 shadow-sm'
-              : 'text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300'
+              : 'text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300'
           }`}
         >
           <Icon size={13} />

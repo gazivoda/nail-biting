@@ -7,7 +7,7 @@ function Segment({ value, label }: { value: number; label: string }) {
       <span className="font-mono text-[44px] sm:text-[56px] font-medium leading-none tracking-[-2px] tabular-nums text-forest-700 dark:text-forest-300">
         {String(value).padStart(2, '0')}
       </span>
-      <span className="text-[10.5px] font-medium tracking-[1.5px] uppercase text-stone-400 dark:text-stone-500 mt-1.5">
+      <span className="text-[10.5px] font-medium tracking-[1.5px] uppercase text-stone-500 dark:text-stone-400 mt-1.5">
         {label}
       </span>
     </div>
@@ -37,7 +37,7 @@ export function StreakHero() {
       {/* Overline */}
       <div className="flex items-center gap-2 mb-6">
         <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
-        <p className="text-[10px] font-semibold tracking-[1.2px] uppercase text-stone-400 dark:text-stone-500">
+        <p className="text-xs font-semibold tracking-[1.2px] uppercase text-stone-500 dark:text-stone-400">
           Current streak
         </p>
       </div>
@@ -58,7 +58,7 @@ export function StreakHero() {
       {/* Best streak */}
       <div className="mt-6 pt-5 border-t border-stone-100 dark:border-ink-400 flex items-center gap-2 text-stone-500 dark:text-stone-400 text-sm">
         <Trophy size={14} className="text-amber-400" />
-        <span>Best: <span className="text-amber-500 font-semibold">{formattedBest || '—'}</span></span>
+        <span>Best: <span className="font-semibold text-stone-800 dark:text-stone-100">{formattedBest || '—'}</span></span>
       </div>
     </div>
   );

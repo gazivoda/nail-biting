@@ -55,7 +55,7 @@ export function PWAInstallPrompt() {
         </div>
         <button
           onClick={handleDismiss}
-          className="text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors flex-shrink-0"
+          className="text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors flex-shrink-0"
           aria-label="Dismiss"
         >
           <X className="w-4 h-4" />

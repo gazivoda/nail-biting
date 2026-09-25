@@ -87,7 +87,7 @@ export function PWAGuideModal() {
         {/* Close */}
         <button
           onClick={() => snooze(3)}
-          className="absolute right-4 top-4 text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300 transition-colors"
+          className="absolute right-4 top-4 text-stone-500 hover:text-stone-600 dark:text-stone-400 dark:hover:text-stone-300 transition-colors"
           aria-label="Dismiss"
         >
           <X size={18} />
@@ -120,7 +120,7 @@ export function PWAGuideModal() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 leading-snug">{title}</p>
-                  <p className="text-xs text-stone-400 dark:text-stone-500 leading-snug">{desc}</p>
+                  <p className="text-xs text-stone-500 dark:text-stone-400 leading-snug">{desc}</p>
                 </div>
               </div>
             ))}
@@ -147,7 +147,7 @@ export function PWAGuideModal() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-stone-700 dark:text-stone-200">{step.label}</p>
-                        <p className="text-xs text-stone-400 dark:text-stone-500">{step.sub}</p>
+                        <p className="text-xs text-stone-500 dark:text-stone-400">{step.sub}</p>
                       </div>
                     </div>
                   </li>
@@ -175,12 +175,12 @@ export function PWAGuideModal() {
 
           {/* Footer */}
           <div className="flex items-center justify-between">
-            <p className="text-xs text-stone-400 dark:text-stone-500">
+            <p className="text-xs text-stone-500 dark:text-stone-400">
               {platform === 'ios' ? 'Open in Safari to install' : 'No app store required'}
             </p>
             <button
               onClick={() => snooze(7)}
-              className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+              className="text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
             >
               Maybe later
             </button>

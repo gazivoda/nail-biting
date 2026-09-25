@@ -23,13 +23,13 @@ export function StreakCard() {
     <div data-tour="streak-card" className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 text-center shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}>
       <div className="flex items-center justify-center gap-2 mb-2">
         <span className={`w-2 h-2 rounded-full ${dotColor} animate-pulse`} />
-        <p className="text-stone-400 dark:text-stone-500 text-xs uppercase tracking-[0.15em] font-medium">Current streak</p>
+        <p className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-[0.15em] font-medium">Current streak</p>
       </div>
 
       <p className={`text-5xl font-bold tabular-nums ${streakColor} mt-1 tracking-tight`}>
         {formattedCurrent}
       </p>
-      <p className="text-stone-400 dark:text-stone-500 text-xs mt-1">nail-bite free</p>
+      <p className="text-stone-500 dark:text-stone-400 text-xs mt-1">nail-bite free</p>
 
       <div className="mt-4 pt-4 border-t border-stone-100 dark:border-ink-400 flex items-center justify-center gap-2 text-stone-500 dark:text-stone-400 text-sm">
         <Trophy size={14} className="text-amber-400" />

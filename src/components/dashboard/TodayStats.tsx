@@ -11,13 +11,13 @@ export function TodayStats() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-7 shadow-card dark:shadow-card-dark">
-      <p className="text-[10px] font-semibold tracking-[1.2px] uppercase text-stone-400 dark:text-stone-500 mb-5">Today</p>
+      <p className="text-xs font-semibold tracking-[1.2px] uppercase text-stone-500 dark:text-stone-400 mb-5">Today</p>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <p className="text-[28px] font-semibold tabular-nums tracking-tight text-amber-500 dark:text-amber-400 leading-none">
+          <p className="text-[28px] font-semibold tabular-nums tracking-tight text-amber-700 dark:text-amber-400 leading-none">
             {incidentCount}
           </p>
-          <p className="text-[10px] uppercase tracking-[1px] text-stone-400 dark:text-stone-500 mt-2 font-medium">
+          <p className="text-xs uppercase tracking-[1px] text-stone-500 dark:text-stone-400 mt-2 font-medium">
             alarms to review
           </p>
         </div>
@@ -25,7 +25,7 @@ export function TodayStats() {
           <p className="text-[28px] font-semibold tabular-nums tracking-tight text-alert-600 dark:text-alert-400 leading-none">
             {biteCount}
           </p>
-          <p className="text-[10px] uppercase tracking-[1px] text-stone-400 dark:text-stone-500 mt-2 font-medium">
+          <p className="text-xs uppercase tracking-[1px] text-stone-500 dark:text-stone-400 mt-2 font-medium">
             bites
           </p>
         </div>

@@ -210,7 +210,7 @@ export function OnboardingTour() {
               </div>
               <button
                 onClick={finish}
-                className="text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+                className="text-[11px] text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
               >
                 Skip tour
               </button>

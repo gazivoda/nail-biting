@@ -27,13 +27,13 @@ export function SessionGoal() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-7 shadow-card dark:shadow-card-dark">
-      <p className="text-[10px] font-semibold tracking-[1.2px] uppercase text-stone-400 dark:text-stone-500 mb-4">Session</p>
+      <p className="text-xs font-semibold tracking-[1.2px] uppercase text-stone-500 dark:text-stone-400 mb-4">Session</p>
 
       <div className="flex items-baseline gap-1.5 mb-1">
         <span className="font-mono text-[32px] font-medium leading-none tabular-nums text-stone-800 dark:text-stone-100 tracking-tight">
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </span>
-        <span className="text-sm text-stone-400 dark:text-stone-500">/ 25m goal</span>
+        <span className="text-sm text-stone-500 dark:text-stone-400">/ 25m goal</span>
       </div>
 
       {/* Progress bar */}
@@ -54,7 +54,7 @@ export function SessionGoal() {
       )}
 
       {!cameraEnabled && !done && (
-        <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-2">
+        <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-2">
           Start detection to begin session
         </p>
       )}

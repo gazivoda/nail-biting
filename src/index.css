@@ -184,6 +184,19 @@
 
 @tailwind base;
 @tailwind components;
+
+/* A visible keyboard focus ring everywhere in the app (the signed-in screens
+   had none; only .sg-page and .ed-page defined one). :where() keeps this at
+   zero specificity, so those scoped rings and any component ring still win. */
+@layer base {
+  :where(a, button, summary, [role="tab"], [tabindex]):focus-visible {
+    outline: 2px solid oklch(46% 0.13 148);
+    outline-offset: 2px;
+  }
+  :where(.dark) :where(a, button, summary, [role="tab"], [tabindex]):focus-visible {
+    outline-color: oklch(70% 0.11 148);
+  }
+}
 @tailwind utilities;
 
 * {

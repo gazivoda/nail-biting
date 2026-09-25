@@ -8,7 +8,7 @@ export function PageHeader({ eyebrow, title, right }: Props) {
   return (
     <header className="flex items-end justify-between gap-6 mb-7">
       <div>
-        <p className="text-[10px] font-semibold tracking-[1.2px] uppercase text-stone-400 dark:text-stone-500">
+        <p className="text-xs font-semibold tracking-[1.2px] uppercase text-stone-500 dark:text-stone-400">
           {eyebrow}
         </p>
         <h1

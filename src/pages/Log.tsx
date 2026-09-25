@@ -22,7 +22,7 @@ function isConfirmedBite(inc: Incident) {
 // Every confirmed-bite tag shares the same styling — preset or custom.
 const BITE_TAG_COLOR = 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800';
 
-const INCIDENT_TAG_COLOR = 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
+const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
 
 const BITE_TAG_LABELS: Record<string, string> = {
   'auto-detected': '✓ Bite',
@@ -129,7 +129,7 @@ function ClearAllButton() {
   return (
     <button
       onClick={() => setConfirming(true)}
-      className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 transition-colors"
+      className="flex min-h-11 items-center gap-1.5 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-colors"
     >
       <Trash2 size={12} />
       Clear all
@@ -188,7 +188,7 @@ export function Log() {
         {/* Right: incident list */}
         <div>
           {incidents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-stone-400 dark:text-stone-500">
+            <div className="flex flex-col items-center justify-center py-24 text-stone-500 dark:text-stone-400">
               <p className="text-5xl mb-4">🙌</p>
               <p className="font-semibold text-stone-500 dark:text-stone-400 text-lg">Nothing logged yet</p>
               <p className="text-sm mt-1 max-w-xs text-center">
@@ -199,7 +199,7 @@ export function Log() {
             <div className="space-y-6">
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between px-1">
-                <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest font-medium">
+                <p className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest font-medium">
                   {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />
@@ -207,7 +207,7 @@ export function Log() {
 
               {grouped.map(({ date, items }) => (
                 <div key={date}>
-                  <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 px-1 font-medium">{date}</p>
+                  <h3 className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-3 px-1 font-medium">{date}</h3>
                   <div className="space-y-2">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
@@ -233,7 +233,7 @@ export function Log() {
                                 onClick={() => confirmIncident(inc.id)}
                                 aria-label="Confirm as bite"
                                 title="This was an actual bite"
-                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 items-center gap-1 px-2 text-xs text-amber-600 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
+                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 items-center gap-1 px-2 text-xs text-amber-800 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
                               >
                                 <CheckCircle size={13} />
                                 <span>Bite</span>
@@ -242,7 +242,7 @@ export function Log() {
                             <button
                               onClick={() => deleteIncident(inc.id)}
                               aria-label={`Delete entry from ${formatTime(inc.timestamp)}`}
-                              className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 min-w-10 items-center justify-center text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
+                              className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 min-w-10 items-center justify-center text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
                             >
                               <Trash2 size={14} />
                             </button>
