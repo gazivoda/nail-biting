@@ -27,3 +27,7 @@ FIRST VIEWPORT: Left 6/12: h1 "Stop biting your nails.", a one-sentence plain ex
 FORM: Safety Sign System, list position 4 of 7 (roll), seed key 79f8cbca. Signature interaction: the pictogram hand rises, crosses the real threshold ring and the plate flashes; the live demo replaces it and only a real catch turns the plate yellow. Raises: sign-code index (Teletext), only the live element glows (Neon), ring = real threshold (Ink), tabular timestamps (Daylight).
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Amendment 2026-09-25 (owner decision)
+
+The animated hand-to-mouth warning pictogram is REMOVED at the owner's request ("insulting and idiotic animation"). It illustrated the visitor's own habit and read as mockery. The hero now shows the real Watch screen (captured with example data); the live demo still mounts in its place on click. Do not reintroduce any drawing of the habit (hand at mouth, biting figure) or decorative motion. The THESIS/FORM lines above that mention the pictogram and its loop are superseded by this amendment.

@@ -701,43 +701,7 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 .sg-page summary:focus-visible { outline: 3px solid var(--sg-blue); outline-offset: 3px; border-radius: 0.5rem; }
 .sg-page .sg-band a:focus-visible { outline-color: #fff; }
 
-/* The signature: the pictogram hand rises, crosses the threshold ring, and
-   the warning sign answers. One authored loop, nothing else on the page moves. */
-/* The rest pose keeps the fist and finger inside the yellow, so any still
-   frame (a screenshot, a share card, reduced motion) still reads as the sign. */
-@keyframes sg-hand {
-  0%, 12%   { transform: translate(14px, 20px); }
-  46%, 70%  { transform: translate(0, 0); }
-  88%, 100% { transform: translate(14px, 20px); }
-}
-@keyframes sg-plate {
-  0%, 44%   { fill: var(--sg-yellow); }
-  48%, 54%  { fill: oklch(95% 0.11 95); }
-  58%, 62%  { fill: var(--sg-yellow); }
-  64%, 68%  { fill: oklch(95% 0.11 95); }
-  72%, 100% { fill: var(--sg-yellow); }
-}
-.sg-pict-plate { animation: sg-plate 4.2s linear infinite; }
-@keyframes sg-ring {
-  0%, 38%   { stroke-dasharray: 5 6; stroke-width: 3; }
-  46%, 70%  { stroke-dasharray: 1 0; stroke-width: 5; }
-  78%, 100% { stroke-dasharray: 5 6; stroke-width: 3; }
-}
-@keyframes sg-flash {
-  0%, 44%   { opacity: 0; }
-  48%, 54%  { opacity: 1; }
-  58%, 62%  { opacity: 0; }
-  64%, 68%  { opacity: 1; }
-  72%, 100% { opacity: 0; }
-}
-.sg-pict-hand  { animation: sg-hand 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
-.sg-pict-ring  { animation: sg-ring 4.2s linear infinite; }
-.sg-pict-flash { animation: sg-flash 4.2s linear infinite; }
-
 @media (prefers-reduced-motion: reduce) {
-  .sg-pict-hand, .sg-pict-ring, .sg-pict-flash, .sg-pict-plate { animation: none; }
-  .sg-pict-flash { opacity: 1; }
-  .sg-pict-ring { stroke-dasharray: 1 0; stroke-width: 5; }
   .sg-btn { transition: none; }
 }
 }

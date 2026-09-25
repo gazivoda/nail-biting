@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 import { ContactForm } from '../components/ContactForm';
 import { PricingSection } from '../components/PricingSection';
-import { AlarmSign } from '../components/sign/AlarmSign';
 import { BLOG_INDEX } from '../data/blogIndex';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
@@ -196,15 +195,15 @@ export function Landing() {
 
             </div>
 
-            {/* The warning sign is the plate: no card around it. Until the
-                visitor asks, it is the pictogram; then the real detector runs
-                in its place. The heading and paragraph render on page view:
-                they are the crawler-visible copy mirrored in server.js and must
-                not hide behind the click. */}
+            {/* The real app, not an illustration: until the visitor asks, the
+                Watch screen (captured with example data, see public/shots);
+                then the real detector runs in its place. The heading and
+                paragraph render on page view: they are the crawler-visible
+                copy mirrored in server.js and must not hide behind the click. */}
             <section
               id="live-demo"
               aria-labelledby="live-demo-heading"
-              className="flex flex-col items-center text-center lg:col-span-6"
+              className="flex flex-col items-start lg:col-span-6"
             >
               {demoStarted ? (
                 <div className="w-full">
@@ -225,12 +224,27 @@ export function Landing() {
                 // The click gate. `HeroDemo` is behind `lazy()` and is only
                 // ever referenced above, so a page view fetches no chunk, no
                 // WebAssembly and no MediaPipe model.
-                <AlarmSign className="w-full max-w-[26rem]" />
+                <figure className="w-full">
+                  <img
+                    src="/shots/app-watch-1280.webp"
+                    srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
+                    sizes="(min-width: 1024px) 36rem, 100vw"
+                    width={1280}
+                    height={800}
+                    fetchPriority="high"
+                    decoding="async"
+                    alt="The Stop Biting Watch screen: detection running with the camera feed hidden, the streak just reset after a catch, best streak 19 hours, and a card suggesting pressing your thumb to each fingertip instead."
+                    className="w-full rounded-lg border border-[color:var(--sg-rule)]"
+                  />
+                  <figcaption className="sg-note mt-2">
+                    The app right after a catch, shown with example data.
+                  </figcaption>
+                </figure>
               )}
 
-              <h2 id="live-demo-heading" className="sg-h3 mt-6">Try the detector right now</h2>
-              <p className="sg-note mt-2 max-w-sm">
-                When a fingertip crosses the ring around your mouth, the alarm goes off.
+              <h2 id="live-demo-heading" className="sg-h3 mt-8">Try the detector right now</h2>
+              <p className="sg-note mt-2 max-w-md">
+                The same detector the app uses, on your own camera, before you sign up for anything.
               </p>
               {!demoStarted && (
                 <>
@@ -245,7 +259,7 @@ export function Landing() {
                   <p className="sg-note mt-3">60 seconds, camera prompt, sound on</p>
                 </>
               )}
-              <p className="sg-small mt-6 max-w-[46ch] text-left">
+              <p className="sg-small mt-5 max-w-[46ch]">
                 Runs on your own camera for 60 seconds, no account needed. About 20 MB of AI models
                 download once; after that, nothing leaves the page.
               </p>
@@ -254,53 +268,31 @@ export function Landing() {
           </div>
         </section>
 
-        {/* ── THE APP ───────────────────────────────────────────────────── */}
-        {/* The product itself, not a drawing of it. Real screens from the app,
-            captured with a week of example data and labelled as such (see
-            public/shots; provenance is embedded in each file). Wider than the
-            rest of the page on purpose: this is the one section that wants
-            the room. */}
+        {/* ── HISTORY ───────────────────────────────────────────────────── */}
+        {/* The other half of the product, shown rather than described: the
+            real History screen, captured with example data (public/shots;
+            provenance embedded in the file). */}
         <section aria-labelledby="app-heading" className="pb-16 lg:pb-24">
-          <div className="mx-auto w-full max-w-[88rem] px-[clamp(1.25rem,4vw,2.5rem)]">
-            <h2 id="app-heading" className="sg-h2 max-w-[20ch]">What it looks like while you work</h2>
-
-            <div className="mt-10 grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-              <figure className="lg:col-span-8">
-                <img
-                  src="/shots/app-watch-1280.webp"
-                  srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
-                  sizes="(min-width: 1024px) 58rem, 100vw"
-                  width={1280}
-                  height={800}
-                  loading="lazy"
-                  decoding="async"
-                  alt="The Watch screen: detection is running with the camera feed hidden, the streak has just reset to zero after a catch, best streak 19 hours, and a card suggests pressing your thumb to each fingertip instead."
-                  className="w-full rounded-lg border border-[color:var(--sg-rule)]"
-                />
-                <figcaption className="sg-small mt-3 max-w-[60ch]">
-                  <strong className="font-bold text-[color:var(--sg-ink)]">Watch.</strong> Right after a
-                  catch: the streak goes back to zero and it suggests something else to do with your hands.
-                </figcaption>
-              </figure>
-
-              <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:mx-0">
-                <img
-                  src="/shots/app-history-390.webp"
-                  width={390}
-                  height={844}
-                  loading="lazy"
-                  decoding="async"
-                  alt="The History screen on a phone: bites per day for the last seven days, then each entry with its time and trigger, such as Focus or Stress."
-                  className="w-full rounded-lg border border-[color:var(--sg-rule)]"
-                />
-                <figcaption className="sg-small mt-3">
-                  <strong className="font-bold text-[color:var(--sg-ink)]">History.</strong> Every alarm and
-                  every bite you log, with the time and what set it off.
-                </figcaption>
-              </figure>
+          <div className="sg-container grid items-center gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6 lg:col-start-2">
+              <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in History</h2>
+              <p className="sg-body sg-measure mt-5">
+                Each alarm and each bite you log lands here with the time. Tag what set it off
+                (stress, boredom, deep focus) and after a week you can see which one is yours.
+              </p>
             </div>
-
-            <p className="sg-note mt-8">Real screens from the app, shown with example data.</p>
+            <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4">
+              <img
+                src="/shots/app-history-390.webp"
+                width={390}
+                height={844}
+                loading="lazy"
+                decoding="async"
+                alt="The History screen on a phone: bites per day for the last seven days, then each entry with its time and trigger, such as Focus or Stress."
+                className="w-full rounded-lg border border-[color:var(--sg-rule)]"
+              />
+              <figcaption className="sg-note mt-2">Shown with example data.</figcaption>
+            </figure>
           </div>
         </section>
 

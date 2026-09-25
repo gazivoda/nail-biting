@@ -2,58 +2,7 @@
   "schemaVersion": 2,
   "generatedAt": "2026-09-25T00:00:00Z",
   "title": "Design System: Stop Biting",
-  "scope": "Sign surface: src/pages/Landing.tsx and the components it mounts (AlarmSign, PricingSection, HeroDemo, ContactForm). Tokens live under .sg-page in src/index.css, not :root. Other surfaces: the editorial .ed-* world (/blog, /pricing chrome, /how-it-works, policy pages) and the signed-in app (Tailwind cream/ink/forest, Inter, light+dark) are separate systems not described here.",
-  "extensions": {
-    "colorMeta": {
-      "sign-white": { "role": "neutral", "displayName": "Sign-White", "canonical": "oklch(98.5% 0.004 85)", "hex": "#FBFAF7", "cssVar": "--sg-ground", "tonalRamp": ["oklch(20% 0.004 85)", "oklch(32% 0.004 85)", "oklch(45% 0.004 85)", "oklch(58% 0.004 85)", "oklch(70% 0.004 85)", "oklch(82% 0.004 85)", "oklch(92% 0.004 85)", "oklch(98.5% 0.004 85)"] },
-      "plate-white": { "role": "neutral", "displayName": "Plate-White", "canonical": "oklch(100% 0 0)", "hex": "#FFFFFF", "cssVar": "--sg-plate", "tonalRamp": ["oklch(20% 0 0)", "oklch(32% 0 0)", "oklch(45% 0 0)", "oklch(58% 0 0)", "oklch(70% 0 0)", "oklch(82% 0 0)", "oklch(92% 0 0)", "oklch(100% 0 0)"] },
-      "pictogram-ink": { "role": "neutral", "displayName": "Pictogram Ink", "canonical": "oklch(19% 0.014 255)", "hex": "#10141A", "cssVar": "--sg-ink", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
-      "ink-secondary": { "role": "neutral", "displayName": "Secondary Ink", "canonical": "oklch(40% 0.014 255)", "hex": "#43484F", "cssVar": "--sg-ink-2", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
-      "plate-rule": { "role": "neutral", "displayName": "Plate Rule", "canonical": "oklch(89% 0.006 255)", "hex": "#D8DBDF", "cssVar": "--sg-rule", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
-      "warning-yellow": { "role": "tertiary", "displayName": "Warning Yellow", "canonical": "oklch(86% 0.175 92)", "hex": "#FACC08", "cssVar": "--sg-yellow", "tonalRamp": ["oklch(25% 0.05 92)", "oklch(35% 0.07 92)", "oklch(48% 0.1 92)", "oklch(60% 0.125 92)", "oklch(72% 0.15 92)", "oklch(86% 0.175 92)", "oklch(95% 0.11 95)", "oklch(98% 0.04 95)"] },
-      "mandatory-blue": { "role": "primary", "displayName": "Mandatory Blue", "canonical": "oklch(45% 0.155 257)", "hex": "#0651A9", "cssVar": "--sg-blue", "tonalRamp": ["oklch(25% 0.09 257)", "oklch(32% 0.13 257)", "oklch(39% 0.15 257)", "oklch(45% 0.155 257)", "oklch(58% 0.14 257)", "oklch(72% 0.1 257)", "oklch(86% 0.05 257)", "oklch(95% 0.025 257)"] },
-      "mandatory-blue-pressed": { "role": "primary", "displayName": "Mandatory Blue, Pressed", "canonical": "oklch(39% 0.15 257)", "hex": "#004093", "cssVar": "--sg-blue-press" },
-      "mandatory-blue-tint": { "role": "primary", "displayName": "Mandatory Blue Tint", "canonical": "oklch(95% 0.025 257)", "hex": "#E4F0FF", "cssVar": "--sg-blue-tint" },
-      "safe-green": { "role": "secondary", "displayName": "Safe Green", "canonical": "oklch(46% 0.13 148)", "hex": "#076B29", "cssVar": "--sg-green", "tonalRamp": ["oklch(22% 0.06 148)", "oklch(30% 0.09 148)", "oklch(38% 0.115 148)", "oklch(46% 0.13 148)", "oklch(60% 0.13 148)", "oklch(74% 0.1 148)", "oklch(88% 0.05 148)", "oklch(96% 0.03 148)"] },
-      "safe-green-tint": { "role": "secondary", "displayName": "Safe Green Tint", "canonical": "oklch(96% 0.03 148)", "hex": "#E5F8E7", "cssVar": "--sg-green-tint" }
-    },
-    "typographyMeta": {
-      "display": { "displayName": "Display", "cssClass": "sg-h1", "purpose": "The one h1. Balanced wrap." },
-      "headline": { "displayName": "Headline", "cssClass": "sg-h2", "purpose": "Section headings, including on the blue band and in the green plate header. Balanced wrap." },
-      "title": { "displayName": "Title", "cssClass": "sg-h3", "purpose": "Step titles, plan names, the demo heading." },
-      "figure": { "displayName": "Figure", "cssClass": "sg-figure", "purpose": "Prices. Tabular numerals." },
-      "lede": { "displayName": "Lede", "cssClass": "sg-lede", "purpose": "Sentence under the h1 and the pricing heading. Secondary ink, pretty wrap." },
-      "body": { "displayName": "Body", "cssClass": "sg-body", "purpose": "Running copy, capped at 62ch (sg-measure). Secondary ink." },
-      "small": { "displayName": "Small", "cssClass": "sg-small", "purpose": "Footnotes, plan features, trust terms, footer." },
-      "label": { "displayName": "Label", "cssClass": "sg-note", "purpose": "Offer line beside every trial button, demo instructions, citations." },
-      "measurement": { "displayName": "Measurement", "cssClass": "sg-code", "purpose": "Timestamps and durations only (Overpass Mono)." }
-    },
-    "fonts": [
-      { "family": "Overpass", "weights": "400 900 (variable)", "files": ["/fonts/overpass-latin.woff2", "/fonts/overpass-latin-ext.woff2"], "display": "swap" },
-      { "family": "Overpass Mono", "weights": "500, 700", "files": ["/fonts/overpass-mono-latin.woff2", "/fonts/overpass-mono-latin-ext.woff2"], "display": "swap" }
-    ],
-    "shadows": [
-      { "name": "enamel-keyline", "value": "inset 0 0 0 3px oklch(45% 0.155 257), inset 0 0 0 5px oklch(100% 0 0 / 0.9)", "purpose": "Filled blue buttons and mandatory discs: a white line set in from the edge. The first ring tracks the fill (pressed blue on hover)." },
-      { "name": "reverse-keyline", "value": "inset 0 0 0 3px #fff, inset 0 0 0 5px oklch(45% 0.155 257)", "purpose": "Light button on the blue CTA band." },
-      { "name": "outline-ink", "value": "inset 0 0 0 2px oklch(19% 0.014 255)", "purpose": "Ink (secondary) buttons." },
-      { "name": "outline-blue", "value": "inset 0 0 0 2px oklch(45% 0.155 257)", "purpose": "Recommended pricing plate." },
-      { "name": "outline-green", "value": "inset 0 0 0 2px oklch(46% 0.13 148)", "purpose": "Privacy (safe-condition) plate." },
-      { "name": "focus-ring", "value": "outline: 3px solid oklch(45% 0.155 257); outline-offset: 3px; border-radius: 0.5rem", "purpose": "Every link, button and summary on the sign surface; white on the blue band." }
-    ],
-    "motion": [
-      { "name": "button-transition", "value": "background-color 150ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out", "purpose": "Button state changes; active state drops 1px. Removed under reduced motion." },
-      { "name": "pictogram-loop", "value": "4.2s infinite", "purpose": "The page's one authored animation: the alarm sign's hand, ring, flash and plate share one 4.2s timeline." },
-      { "name": "pictogram-hand-ease", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Hand rises from translate(14px, 20px) to rest at 46-70%, then falls away." },
-      { "name": "pictogram-ring", "value": "stroke-dasharray 5 6 / width 3 to solid / width 5 at 46-70%", "purpose": "Threshold ring closes when the hand crosses it." },
-      { "name": "pictogram-flash", "value": "opacity 0 to 1 at 48-54% and 64-68%; plate fill oklch(95% 0.11 95) on the same beats", "purpose": "The alarm answers twice." },
-      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Loop stops in the caught state: ring solid, alarm strokes visible, no button transitions." }
-    ],
-    "breakpoints": [
-      { "name": "sm", "value": "640px" },
-      { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" }
-    ]
-  },
+  "scope": "Sign surface: src/pages/Landing.tsx and the components it mounts (PricingSection, HeroDemo, ContactForm). Tokens live under .sg-page in src/index.css, not :root. Other surfaces: the editorial .ed-* world (/blog, /pricing chrome, /how-it-works, policy pages) and the signed-in app (Tailwind cream/ink/forest, Inter, light+dark) are separate systems not described here.",
   "components": [
     {
       "name": "Primary Button (trial)",
@@ -128,43 +77,7 @@
       "css": ".ds-alarm { width: 100%; max-width: 16rem; } .ds-plate { fill: oklch(86% 0.175 92); stroke: oklch(19% 0.014 255); animation: ds-plate 4.2s linear infinite; } .ds-ink { fill: oklch(19% 0.014 255); } .ds-ring, .ds-hand, .ds-flash { stroke: oklch(19% 0.014 255); } .ds-hand { animation: ds-hand 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; } .ds-ring { animation: ds-ring 4.2s linear infinite; } .ds-flash { animation: ds-flash 4.2s linear infinite; } @keyframes ds-hand { 0%, 12% { transform: translate(14px, 20px); } 46%, 70% { transform: translate(0, 0); } 88%, 100% { transform: translate(14px, 20px); } } @keyframes ds-plate { 0%, 44% { fill: oklch(86% 0.175 92); } 48%, 54% { fill: oklch(95% 0.11 95); } 58%, 62% { fill: oklch(86% 0.175 92); } 64%, 68% { fill: oklch(95% 0.11 95); } 72%, 100% { fill: oklch(86% 0.175 92); } } @keyframes ds-ring { 0%, 38% { stroke-dasharray: 5 6; stroke-width: 3; } 46%, 70% { stroke-dasharray: 1 0; stroke-width: 5; } 78%, 100% { stroke-dasharray: 5 6; stroke-width: 3; } } @keyframes ds-flash { 0%, 44% { opacity: 0; } 48%, 54% { opacity: 1; } 58%, 62% { opacity: 0; } 64%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-plate, .ds-hand, .ds-ring, .ds-flash { animation: none; } .ds-flash { opacity: 1; } .ds-ring { stroke-dasharray: 1 0; stroke-width: 5; } }"
     }
   ],
-  "narrative": {
-    "northStar": "The Safety Sign",
-    "overview": "The homepage explains the product the way a workplace safety sign explains a hazard: one pictogram, one second, no reading. The vocabulary is ISO 7010 used as an explanatory system rather than decoration. There are three sign kinds and each one means exactly one thing. The yellow warning triangle is the alarm. Blue circular \"mandatory\" plates are the things the visitor does. Forest-green square \"safe condition\" plates are privacy. Everything else is black pictogram ink on sign-white enamel.\n\nThe material is enamel plate: flat, printed, with keylines set in from the edge the way a road sign carries its border. Nothing glows, nothing floats, nothing is glassy except the fixed navigation bar. Density is low and legible from a distance: heavy, tight Overpass headings (Overpass descends from Highway Gothic, the US road-sign face), open body copy, generous section bands that alternate between sign-white and plate-white. One thing moves on the page: the pictogram hand rising to the mouth, crossing the dashed threshold ring, and the warning plate flashing. The surface is light only; it is read at a desk in daylight.\n\nThis system is scoped to the sign surface (the homepage and the shared pricing block, which carries the tokens on /pricing too). The rest of the site lives in two other worlds that this file does not restate: the editorial \"journal\" world (`.ed-*` primitives in `src/index.css`, Instrument Serif / Inter / JetBrains Mono) still serves /blog, /pricing chrome, /how-it-works and the policy pages; the signed-in app (dashboard and friends) is its own incumbent system built on Tailwind `cream` / `ink` / `forest` tokens with Inter, in light and dark. Neither should borrow sign-system colors, and the sign surface should not borrow theirs.",
-    "keyCharacteristics": [
-      "Three sign kinds with fixed meanings: yellow warning (the alarm), blue mandatory (actions), green safe condition (privacy).",
-      "Enamel-plate buttons: blue plate, white keyline inset 3px to 5px, 0.375rem corners.",
-      "Overpass throughout, heavy (750 to 850) and tightly tracked for headings; Overpass Mono only for measurements.",
-      "Flat: no drop shadows; depth is inset keylines and 1px rules.",
-      "One authored animation loop (the pictogram), no scroll-reveal.",
-      "Light only, on a warm sign-white ground."
-    ],
-    "rules": [
-      { "name": "The One Warning Rule", "body": "Warning yellow belongs to the alarm. It fills the warning triangle and highlights selected text, and appears nowhere else: no yellow buttons, badges, backgrounds or highlights of \"important\" copy.", "section": "colors" },
-      { "name": "The Blue Means Do Rule", "body": "Blue marks something the visitor does. If an element is not an action or a step toward one, it is not blue. The full blue field is used once per page, for the closing call to action.", "section": "colors" },
-      { "name": "The Green Means Safe Rule", "body": "Green only ever says \"this is safe / this is private / this is included\". It is never a success-flavored action color.", "section": "colors" },
-      { "name": "The Measurement Mono Rule", "body": "Overpass Mono is for numbers that measure something (a countdown, a timestamp, a duration). Labels, offers and citations are set in Overpass at 650, the sign's own face.", "section": "typography" },
-      { "name": "The Comma Offer Rule", "body": "Offer and meta lines separate their parts with commas (\"3 days free, no card, then $2.99/month\"). Overpass sets the middle dot hard against the following word, so dotted lines read as broken.", "section": "typography" },
-      { "name": "The Flat Enamel Rule", "body": "Signs are printed, not lit. Never add an outer shadow, glow or gradient to a plate or button; draw borders inside the edge with an inset keyline.", "section": "elevation" }
-    ],
-    "dos": [
-      "**Do** bind each sign color to its one meaning: yellow for the alarm, blue for actions, green for privacy and inclusion.",
-      "**Do** put the offer line (\"3 days free, no card, then $2.99/month\") beside every trial button, in the label style.",
-      "**Do** draw button and sign borders as inset keylines (white 2px line, 3px in) on flat fills.",
-      "**Do** mark a section with a mandatory disc or safe square beside its heading when the section is an instruction or a privacy statement.",
-      "**Do** use a numeral in the mandatory disc for ordered steps.",
-      "**Do** keep every section visible at first paint and every hit area at least 44px.",
-      "**Do** keep Overpass Mono for measured numbers only; tabular figures for prices and timers."
-    ],
-    "donts": [
-      "**Don't** use warning yellow for anything but the alarm sign and text selection.",
-      "**Don't** fill a second button blue beside the trial button; secondary actions are ink-outlined.",
-      "**Don't** add drop shadows, glows, gradients or glassy surfaces (the fixed nav's blur is the only translucency).",
-      "**Don't** print ISO sign codes (W01, M01, E01) or section numbers in the UI; they were removed from the UI for clarity.",
-      "**Don't** put eyebrows or kickers above headings; the sign beside the heading does that job.",
-      "**Don't** build the wellness-app hero: no gradient field, no phone mockup, no grid of icon feature cards.",
-      "**Don't** add scroll-reveal or ambient motion; the pictogram loop is the page's one piece of motion.",
-      "**Don't** give the sign surface a dark theme or borrow the app's cream / forest tokens or the journal's `.ed-*` type."
-    ]
-  }
+  "notes": [
+    "2026-09-25: the animated hand-to-mouth pictogram (AlarmSign) was removed at the owner's request; the hero shows the real Watch screen. Never illustrate the habit itself."
+  ]
 }

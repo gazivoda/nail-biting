@@ -169,7 +169,7 @@ components:
 
 **Creative North Star: "The Safety Sign"**
 
-The homepage explains the product the way a workplace safety sign explains a hazard: one pictogram, one second, no reading. The vocabulary is ISO 7010 used as an explanatory system rather than decoration. There are three sign kinds and each one means exactly one thing. The yellow warning triangle is the alarm. Blue circular "mandatory" plates are the things the visitor does. Forest-green square "safe condition" plates are privacy. Everything else is black pictogram ink on sign-white enamel.
+The homepage borrows the plainness of safety signage: a colour means one thing, and the page says what the product is in one sentence. Blue "mandatory" plates are the things the visitor does. Forest-green "safe condition" plates are privacy. Everything else is black ink on sign-white enamel. The hero shows the real app (a captured screen, labelled as example data), never an illustration of the visitor's habit: a drawn hand-to-mouth pictogram was tried and removed on 2026-09-25 because it read as mocking the person it is for.
 
 The material is enamel plate: flat, printed, with keylines set in from the edge the way a road sign carries its border. Nothing glows, nothing floats, nothing is glassy except the fixed navigation bar. Density is low and legible from a distance: heavy, tight Overpass headings (Overpass descends from Highway Gothic, the US road-sign face), open body copy, generous section bands that alternate between sign-white and plate-white. One thing moves on the page: the pictogram hand rising to the mouth, crossing the dashed threshold ring, and the warning plate flashing. The surface is light only; it is read at a desk in daylight.
 
@@ -180,7 +180,7 @@ This system is scoped to the sign surface (the homepage and the shared pricing b
 - Enamel-plate buttons: blue plate, white keyline inset 3px to 5px, 0.375rem corners.
 - Overpass throughout, heavy (750 to 850) and tightly tracked for headings; Overpass Mono only for measurements.
 - Flat: no drop shadows; depth is inset keylines and 1px rules.
-- One authored animation loop (the pictogram), no scroll-reveal.
+- No decorative motion and no scroll-reveal; the page is still until the visitor starts the demo.
 - Light only, on a warm sign-white ground.
 
 ## Colors
@@ -197,7 +197,7 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 - **Safe Green Tint** (oklch(96% 0.03 148)): the body ground of the privacy plate. Its inner divider is safe green at 20% alpha.
 
 ### Tertiary
-- **Warning Yellow** (oklch(86% 0.175 92), about #FACC08): the warning triangle of the alarm sign, and the text selection highlight on the sign surface. The flash frame of the pictogram lifts it to oklch(95% 0.11 95) for two short beats.
+- **Warning Yellow** (oklch(86% 0.175 92), about #FACC08): reserved; today it is only the text selection highlight on the sign surface.
 
 ### Neutral
 - **Sign-White** (oklch(98.5% 0.004 85), #FBFAF7): the page ground and the navigation bar (at 90% alpha).
@@ -207,7 +207,7 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 - **Plate Rule** (oklch(89% 0.006 255), about #D8DBDF): every 1px divider, section top border, plate border, and field border.
 
 ### Named Rules
-**The One Warning Rule.** Warning yellow belongs to the alarm. It fills the warning triangle and highlights selected text, and appears nowhere else: no yellow buttons, badges, backgrounds or highlights of "important" copy.
+**The One Warning Rule.** Warning yellow belongs to the alarm. Today it only highlights selected text; it appears nowhere else: no yellow buttons, badges, backgrounds or highlights of "important" copy.
 
 **The Blue Means Do Rule.** Blue marks something the visitor does. If an element is not an action or a step toward one, it is not blue. The full blue field is used once per page, for the closing call to action.
 
@@ -239,11 +239,11 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 
 ## Layout
 
-A 12-column grid at `lg` (1024px) inside a centered container of 76rem with a fluid side gutter (clamp(1.25rem, 4vw, 2.5rem)). Common splits: hero 6/6 (headline and trial button left, warning sign right), science 7/5 (argument left, evidence right), FAQ and contact 4/8 (heading left, content right). Pricing is a centered 4xl pair of plates.
+A 12-column grid at `lg` (1024px) inside a centered container of 76rem with a fluid side gutter (clamp(1.25rem, 4vw, 2.5rem)). Common splits: hero 6/6 (headline and trial button left, the real Watch screen and the demo right), science 7/5 (argument left, evidence right), FAQ and contact 4/8 (heading left, content right). Pricing is a centered 4xl pair of plates.
 
 Sections are full-width bands separated by a 1px plate-rule top border, alternating sign-white and plate-white grounds, padded 5rem vertically and 7rem from `lg` (the hero clears the fixed 4rem nav with 7rem / 9rem top padding). Headings sit 3rem above their content; grid gaps are 2.5rem to 3rem; body copy is capped at 62ch.
 
-Responsive behavior: below `lg` everything stacks to one column. On a phone the order is headline, lede, trial button and offer line, then the warning sign and demo, then the three trust facts, so the trial button reaches the first screen before the sign. Steps go three-up at `md` (768px). Nav links collapse below `md`, leaving the logo and a small trial button.
+Responsive behavior: below `lg` everything stacks to one column. On a phone the order is headline, lede, trial button and offer line, then the app screen and demo, so the trial button reaches the first screen first. Nav links collapse below `md`, leaving the logo and a small trial button.
 
 Every interactive element keeps a 44px minimum hit area (`min-h-11`), including inline text links.
 
@@ -263,7 +263,7 @@ The system is flat. There are no drop shadows anywhere on the sign surface. Dept
 
 Corners encode what kind of object something is. Buttons are nearly square enamel plates (0.375rem). Content plates, like the pricing cards, are large softly rounded boards (1.5rem). The safe-condition family is squarer: the privacy plate (0.5rem) and the green square sign (0.6rem). Mandatory signs are perfect circles (999px). The plan tag is almost sharp (0.25rem). Form fields sit between (0.75rem) because they must read as affordances, not signs. Focus outlines round at 0.5rem.
 
-The warning sign is the one non-rectangular form: an equilateral triangle with a 13-unit ink border and round joins, its pictogram clipped to the triangle. It is never boxed in a card; the triangle is the plate.
+Product screenshots sit on the ground with a 1px rule border and 0.5rem corners: no device frame, no browser chrome, no shadow.
 
 ## Components
 
@@ -296,8 +296,8 @@ Enamel sign plates: flat, keylined, decisive.
 - **Mandatory disc:** a 3.25rem mandatory-blue circle with the enamel keyline, holding either a white icon (section headings) or a white numeral in Overpass 850 at 1.375rem (the three steps). It sits beside a section heading to say "this is something you do" before the words do.
 - **Safe square:** a 3.25rem safe-green square (0.6rem corners) with a white icon; inside the green header it takes a 2px white inset keyline.
 
-### Alarm Sign (signature)
-The whole product in one frame: a yellow warning triangle with a heavy ink border; inside it, a head in profile, a dashed threshold ring around the mouth (the detector's real radius), and a hand rising from below. On a 4.2s loop the hand rises (cubic-bezier(0.22, 1, 0.36, 1)), crosses the ring, the ring closes from dashed to solid, three alarm strokes flash twice and the plate lightens with them, then the hand falls away. The rest pose keeps the fist inside the yellow so a still frame still reads. Under reduced motion it holds the caught state: ring solid, strokes shown. The live demo replaces the sign in place, in the same box, when the visitor asks for it.
+### Product screenshot (signature)
+The real app, captured from a running build with example data and labelled as such: the Watch screen in the hero (it becomes the live demo in place when the visitor asks) and the History screen on a phone beside its explanation. Provenance is embedded in each WebP under public/shots.
 
 ## Do's and Don'ts
 
@@ -317,5 +317,6 @@ The whole product in one frame: a yellow warning triangle with a heavy ink borde
 - **Don't** print ISO sign codes (W01, M01, E01) or section numbers in the UI; they were removed from the UI for clarity.
 - **Don't** put eyebrows or kickers above headings; the sign beside the heading does that job.
 - **Don't** build the wellness-app hero: no gradient field, no phone mockup, no grid of icon feature cards.
-- **Don't** add scroll-reveal or ambient motion; the pictogram loop is the page's one piece of motion.
+- **Don't** add scroll-reveal or ambient motion.
+- **Don't** illustrate the habit itself (a drawn hand at a mouth, a cartoon biter): show the real app instead. The owner found the animated pictogram insulting.
 - **Don't** give the sign surface a dark theme or borrow the app's cream / forest tokens or the journal's `.ed-*` type.

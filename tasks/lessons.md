@@ -108,3 +108,9 @@ scratchpad, cap.mjs) and assert `scrollWidth === innerWidth` in the output.
 **Custom CSS outside a Tailwind layer beats every utility.** The `.sg-*` block sat after
 `@tailwind utilities`, so `text-white/90` on a `.sg-note` lost and a CTA offer line rendered
 invisible on blue. Put design-system classes in `@layer components`.
+
+**Never illustrate the user's own problem behaviour (user correction, 2026-09-25).** An
+animated hand-to-mouth "warning" pictogram was the homepage's signature; the owner called it
+"insulting and idiotic". Drawing the visitor's habit, even as a clever sign, reads as mockery
+to the person who has it. Show the product and the outcome instead (real app screens), and
+treat any cartoon of the habit (biting figure, hand at mouth) as off-limits for this product.
