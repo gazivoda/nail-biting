@@ -79,7 +79,7 @@ export function PricingPage() {
       <div className="max-w-3xl mx-auto px-6 pt-28 pb-24">
 
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 mb-8">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-500 mb-8">
           <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
           <span aria-hidden="true">/</span>
           <span className="text-stone-500 dark:text-stone-400">Pricing</span>
@@ -125,7 +125,7 @@ export function PricingPage() {
                   <ChevronDown
                     size={16}
                     aria-hidden="true"
-                    className="shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-180"
+                    className="shrink-0 text-stone-500 transition-transform duration-200 group-open:rotate-180"
                   />
                 </summary>
                 <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">{a}</p>
@@ -147,7 +147,7 @@ export function PricingPage() {
             <Zap size={14} aria-hidden="true" />
             Start free trial
           </a>
-          <p className="mt-4 text-xs text-stone-400 dark:text-stone-500">
+          <p className="mt-4 text-xs text-stone-500 dark:text-stone-500">
             Or read{' '}
             <a href="/how-it-works" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors underline">
               how the AI detection works
@@ -158,7 +158,7 @@ export function PricingPage() {
         <div className="mt-10 text-center">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-stone-500 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
           >
             <ArrowLeft size={14} aria-hidden="true" />
             Back to home
@@ -167,7 +167,7 @@ export function PricingPage() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
+      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-500 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
         <p>
           <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
           {' — '}Built by <a href="/about" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Igor Gazivoda</a>

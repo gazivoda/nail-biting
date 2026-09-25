@@ -90,7 +90,7 @@ export function HowItWorks() {
       <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 mb-8">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-500 mb-8">
           <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
           <span aria-hidden="true">/</span>
           <span className="text-stone-500 dark:text-stone-400">How It Works</span>
@@ -147,7 +147,7 @@ export function HowItWorks() {
               <div key={spec.label} className="flex items-start gap-4 py-4">
                 <div className="text-forest-500 dark:text-forest-400 mt-0.5 flex-shrink-0">{spec.icon}</div>
                 <div>
-                  <p className="text-xs font-medium text-stone-400 dark:text-stone-500 uppercase tracking-wide mb-0.5">{spec.label}</p>
+                  <p className="text-xs font-medium text-stone-500 dark:text-stone-500 uppercase tracking-wide mb-0.5">{spec.label}</p>
                   <p className="text-[15px] text-stone-700 dark:text-stone-300">{spec.value}</p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ export function HowItWorks() {
                 className="group flex items-center justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-sm transition-all"
               >
                 <span className="text-sm text-stone-700 dark:text-stone-200 group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors">{link.label}</span>
-                <ArrowRight size={14} className="text-stone-400 group-hover:text-forest-500 shrink-0 transition-colors" aria-hidden="true" />
+                <ArrowRight size={14} className="text-stone-500 group-hover:text-forest-500 shrink-0 transition-colors" aria-hidden="true" />
               </a>
             ))}
           </div>
@@ -200,7 +200,7 @@ export function HowItWorks() {
           >
             Launch App
           </a>
-          <p className="mt-4 text-xs text-stone-400 dark:text-stone-500">
+          <p className="mt-4 text-xs text-stone-500 dark:text-stone-500">
             $2.99/month · $29/year · Cancel anytime
           </p>
         </div>
@@ -208,7 +208,7 @@ export function HowItWorks() {
         <div className="mt-10 text-center">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-stone-500 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
           >
             <ArrowLeft size={14} aria-hidden="true" />
             Back to home
@@ -217,7 +217,7 @@ export function HowItWorks() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
+      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-500 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
         <p>
           <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
           {' — '}AI-powered nail biting tracker for Mac and Windows
