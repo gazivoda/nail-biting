@@ -40,11 +40,11 @@ function FeatureList({ features }: { features: string[] }) {
   );
 }
 
-export function PricingSection() {
+export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1' | 'h2' }) {
   return (
     <section id="pricing" aria-labelledby="pricing-heading" className="sg-page">
       <div className="mx-auto max-w-4xl text-center">
-        <h2 id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</h2>
+        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</Heading>
         <p className="sg-lede mx-auto mt-4 max-w-2xl">
           Three days free first, and no card to start. You pick a plan when the trial ends.
         </p>

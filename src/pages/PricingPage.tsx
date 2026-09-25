@@ -1,8 +1,10 @@
 import { useEffect, type ReactNode } from 'react';
-import { ArrowLeft, BookOpen, Check, ChevronDown, Zap } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PricingSection } from '../components/PricingSection';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
+import { TrialButton } from '../components/site/TrialButton';
 
 // Dedicated /pricing page. The server (server.js) injects the title, meta
 // description, canonical (https://stopbiting.today/pricing), Offer schema and
@@ -33,7 +35,7 @@ const PRICING_FAQS: { q: string; a: ReactNode }[] = [
       <>
         Yes — cancel anytime from the app settings and you keep access until the end of the paid
         period. See the{' '}
-        <a href="/refund-policy" className="text-forest-600 dark:text-forest-400 hover:underline">
+        <a href="/refund-policy" className="sg-link">
           refund policy
         </a>{' '}
         for details.
@@ -53,126 +55,71 @@ const PLAN_INCLUDES = [
 
 export function PricingPage() {
   useTheme('light');
-  useScrollReveal();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
+  // In the homepage's sign system (tokens in `.sg-page`, see DESIGN.md), with
+  // the same header and footer. The price headline from PricingSection is this
+  // page's h1: there used to be a smaller Inter "Stop Biting Pricing" h1 above
+  // a larger h2, in two typefaces.
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
+    <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
+      <SiteHeader />
 
-      {/* Nav */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
-        <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
-            <BookOpen size={14} aria-hidden="true" />
-            Blog
-          </a>
-          <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
-            Launch App
-          </a>
-        </div>
-      </nav>
-
-      <div className="max-w-3xl mx-auto px-6 pt-28 pb-24">
-
-        {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-500 mb-8">
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
+      <main className="sg-container pt-28 pb-20 lg:pt-32">
+        <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
+          <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
-          <span className="text-stone-500 dark:text-stone-400">Pricing</span>
+          <span className="text-[color:var(--sg-ink)]">Pricing</span>
         </nav>
 
-        <header className="mb-10 text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-800 dark:text-stone-100 leading-tight">
-            Stop Biting Pricing
-          </h1>
-        </header>
+        <PricingSection headingAs="h1" />
 
-        {/* Pricing cards — shared verbatim with the landing page */}
-        <PricingSection />
+        <div className="mx-auto mt-20 grid max-w-4xl gap-12 lg:grid-cols-12 lg:gap-10">
+          {/* Mirrors the "What every plan includes" list in the server-injected prose. */}
+          <section aria-labelledby="plan-includes-heading" className="lg:col-span-5">
+            <h2 id="plan-includes-heading" className="sg-h3">What every plan includes</h2>
+            <ul className="mt-4 space-y-3">
+              {PLAN_INCLUDES.map(f => (
+                <li key={f} className="sg-body flex items-start gap-2.5">
+                  <Check size={17} className="mt-1 shrink-0 text-[color:var(--sg-green)]" aria-hidden="true" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-        {/* What every plan includes — mirrors the server-injected prose */}
-        <section aria-labelledby="plan-includes-heading" className="mt-16 max-w-2xl mx-auto">
-          <h2 id="plan-includes-heading" className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4 text-center">
-            What every plan includes
-          </h2>
-          <ul className="space-y-2.5">
-            {PLAN_INCLUDES.map(f => (
-              <li key={f} className="flex items-start gap-2.5 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                <Check size={15} className="text-forest-500 dark:text-forest-400 shrink-0 mt-1" aria-hidden="true" />
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section aria-labelledby="pricing-faq-heading" className="lg:col-span-7">
+            <h2 id="pricing-faq-heading" className="sg-h3">Pricing questions</h2>
+            <div className="mt-4 border-t border-[color:var(--sg-rule)]">
+              {PRICING_FAQS.map(({ q, a }) => (
+                <details key={q} className="group border-b border-[color:var(--sg-rule)]">
+                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 py-4 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
+                    {q}
+                    <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
+                  </summary>
+                  <p className="sg-body pb-5">{a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        </div>
 
-        {/* FAQ */}
-        <section aria-labelledby="pricing-faq-heading" className="mt-16 max-w-2xl mx-auto">
-          <h2 id="pricing-faq-heading" className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-6 text-center">
-            Pricing questions
-          </h2>
-          <div className="flex flex-col gap-3">
-            {PRICING_FAQS.map(({ q, a }) => (
-              <details
-                key={q}
-                className="group rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-5 py-4 shadow-card open:shadow-card-md transition-shadow"
-              >
-                <summary className="flex cursor-pointer items-center justify-between gap-4 text-sm font-semibold text-stone-800 dark:text-stone-100 marker:content-none [&::-webkit-details-marker]:hidden">
-                  {q}
-                  <ChevronDown
-                    size={16}
-                    aria-hidden="true"
-                    className="shrink-0 text-stone-500 transition-transform duration-200 group-open:rotate-180"
-                  />
-                </summary>
-                <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed mt-3">{a}</p>
-              </details>
-            ))}
+        <div className="mx-auto mt-20 flex max-w-4xl flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="sg-h3">Try it free for 3 days.</p>
+            <p className="sg-small mt-1">
+              No card to start. Curious first? Read{' '}
+              <a href="/how-it-works" className="sg-link">how the detection works</a>.
+            </p>
           </div>
-        </section>
-
-        {/* CTA */}
-        <div className="mt-16 max-w-2xl mx-auto rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
-          <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">3-day free trial — no credit card needed</p>
-          <p className="text-stone-900 dark:text-stone-100 font-semibold text-xl mb-5">Start free today</p>
-          <a
-            href="/api/auth/google"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
-          >
-            <Zap size={14} aria-hidden="true" />
-            Start free trial
-          </a>
-          <p className="mt-4 text-xs text-stone-500 dark:text-stone-500">
-            Or read{' '}
-            <a href="/how-it-works" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors underline">
-              how the AI detection works
-            </a>
-          </p>
+          <TrialButton />
         </div>
+      </main>
 
-        <div className="mt-10 text-center">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-stone-500 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            Back to home
-          </a>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-500 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
-        <p>
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
-          {' — '}Built by <a href="/about" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Igor Gazivoda</a>
-        </p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

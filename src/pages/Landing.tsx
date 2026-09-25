@@ -4,6 +4,9 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { ContactForm } from '../components/ContactForm';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
+import { TrialButton } from '../components/site/TrialButton';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
@@ -128,21 +131,6 @@ const FAQS: { q: string; a: string }[] = [
 // Light only, no dashes in copy, no scroll-reveal: every section is visible
 // from the first paint, and the warning pictogram is the one thing that moves.
 
-// Every trial button. A new tab on purpose (92360d2): the landing tab, and any
-// demo running in it, stays open.
-function TrialButton({ tone = 'blue', size = 'md' }: { tone?: 'blue' | 'light'; size?: 'md' | 'sm' }) {
-  return (
-    <a
-      href="/api/auth/google"
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`sg-btn group ${tone === 'light' ? 'sg-btn-light' : ''} ${size === 'sm' ? 'sg-btn-sm' : ''}`}
-    >
-      Start free trial
-      <ArrowRight size={size === 'sm' ? 15 : 18} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
-    </a>
-  );
-}
 
 export function Landing() {
   // Stays false until the visitor asks for the demo: the lazy import is only
@@ -152,29 +140,7 @@ export function Landing() {
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
 
-      {/* ── NAV ─────────────────────────────────────────────────────────── */}
-      <nav
-        aria-label="Site navigation"
-        className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--sg-rule)] bg-[color:var(--sg-ground)]/90 backdrop-blur-md"
-      >
-        <div className="sg-container flex h-16 items-center justify-between gap-4">
-          <a href="/" className="flex min-h-11 items-center gap-2.5">
-            <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />
-            <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
-          </a>
-          <div className="hidden items-center gap-7 md:flex">
-            {([['#how', 'How to start'], ['#science', 'Science'], ['#privacy', 'Privacy'], ['#pricing', 'Pricing'], ['#faq', 'FAQ']] as const).map(([href, label]) => (
-              <a key={href} href={href} className="text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
-                {label}
-              </a>
-            ))}
-            <a href="/blog" className="text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
-              Blog
-            </a>
-          </div>
-          <TrialButton size="sm" />
-        </div>
-      </nav>
+      <SiteHeader onHome />
 
       <main>
         {/* ── HERO ──────────────────────────────────────────────────────── */}
@@ -526,41 +492,7 @@ export function Landing() {
         </div>
       </main>
 
-      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-14">
-        <div className="sg-container">
-          <div className="flex flex-col justify-between gap-10 sm:flex-row">
-            <div className="max-w-sm">
-              <div className="flex items-center gap-2.5">
-                <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />
-                <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
-              </div>
-              <p className="sg-small mt-4">
-                An awareness alarm for nail biting (onychophagia), made by{' '}
-                <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser
-                and nothing is uploaded.
-              </p>
-            </div>
-            {/* Written out one by one: these eight hrefs are the site's whole
-                legal and navigational surface, and spelling them as real
-                attributes keeps them greppable. */}
-            <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-10 text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)]">
-              <a href="/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Home</a>
-              <a href="/blog" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Blog</a>
-              <a href="/#pricing" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Pricing</a>
-              <a href="mailto:hello@stopbiting.today" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Contact</a>
-              <a href="/editorial-policy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Editorial Policy</a>
-              <a href="/privacy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Privacy Policy</a>
-              <a href="/terms-and-conditions" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Terms of Service</a>
-              <a href="/refund-policy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Refund Policy</a>
-            </nav>
-          </div>
-          <p className="sg-small mt-10 border-t border-[color:var(--sg-rule)] pt-6">
-            © {new Date().getFullYear()} Stop Biting.{' '}
-            <a href="https://stopbiting.today/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">stopbiting.today</a>
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
