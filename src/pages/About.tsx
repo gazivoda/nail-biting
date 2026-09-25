@@ -80,15 +80,12 @@ export function About() {
             </p>
             <p>
               That alarm is the external awareness signal that HRT research identifies as the most critical
-              component of the treatment. It catches the episodes that self-monitoring misses.
-              Most nail biters catch fewer than half their daily episodes through self-awareness alone.
-              The rest happen invisibly.
+              component of the treatment. It catches the episodes that self-monitoring misses. Most of them happen without you noticing.
             </p>
             <p>
               The app also logs each detection with a timestamp, so you can see your actual biting
-              frequency — not your estimated frequency. Most users are surprised. The gap between
-              "I bite occasionally" and 40+ incidents per day is the gap that makes willpower-based
-              approaches feel futile.
+              frequency — not your estimated frequency. A real count, rather than a guess, is
+              what turns the habit into something you can work on.
             </p>
           </div>
         </section>
