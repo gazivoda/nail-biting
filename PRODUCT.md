@@ -43,9 +43,9 @@ The user opens the app, enables their webcam, and the AI starts watching. When i
 
 | Tier | Price |
 |---|---|
-| Free trial | 7 days, no card required |
-| Monthly | €2.99 / month |
-| Yearly | €29.00 / year (~€2.42/mo, saves 19%) |
+| Free trial | 3 days, no card required (server.js grants 3 days at first sign-in) |
+| Monthly | $2.99 / month |
+| Yearly | $29.00 / year (~$2.42/mo, saves 19%) |
 
 All paid plans include unlimited AI detection, streak tracking, full incident history, and all alert types. Trial expires → paywall → subscribe to continue.
 
