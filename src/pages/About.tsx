@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
-import { ArrowLeft, BookOpen } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
+import { TrialButton } from '../components/site/TrialButton';
 
 export function About() {
   useTheme('light');
@@ -10,44 +12,32 @@ export function About() {
   }, []);
 
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
+    <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
 
-      {/* Nav */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
-        <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
-            <BookOpen size={14} aria-hidden="true" />
-            Blog
-          </a>
-          <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
-            Launch App
-          </a>
-        </div>
-      </nav>
+      <SiteHeader />
 
-      <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
+      <main className="sg-container max-w-3xl pt-28 pb-20 lg:pt-32">
 
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 mb-8">
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
+        <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
+          <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
-          <span className="text-stone-500 dark:text-stone-400">About</span>
+          <span className="text-[color:var(--sg-ink)]">About</span>
         </nav>
 
-        <header className="mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-800 dark:text-stone-100 leading-tight mb-4">
+        <header className="mb-14">
+          <h1 className="sg-h2">
             About Stop Biting
           </h1>
-          <p className="text-lg text-stone-500 dark:text-stone-400 leading-relaxed">
+          <p className="sg-lede sg-measure mt-5">
             Built by a nail biter, for nail biters. Here's why this app exists.
           </p>
         </header>
 
         {/* Founder story */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">The founder's story</h2>
-          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+        <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">
+          <h2 className="sg-h3 mb-3">The founder's story</h2>
+          <div className="sg-body sg-measure space-y-4">
             <p>
               I'm Igor Gazivoda, a software developer. I bit my nails for over 20 years. Not occasionally — constantly,
               automatically, without noticing until the damage was already done.
@@ -70,9 +60,9 @@ export function About() {
         </section>
 
         {/* What the app does */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">What Stop Biting does</h2>
-          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+        <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">
+          <h2 className="sg-h3 mb-3">What Stop Biting does</h2>
+          <div className="sg-body sg-measure space-y-4">
             <p>
               Stop Biting uses your computer's webcam and Google's MediaPipe framework — compiled to WebAssembly and
               running entirely in your browser — to detect when your hand moves toward your mouth. When it does,
@@ -91,9 +81,9 @@ export function About() {
         </section>
 
         {/* Privacy */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">Privacy: the non-negotiable</h2>
-          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+        <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">
+          <h2 className="sg-h3 mb-3">Privacy: the non-negotiable</h2>
+          <div className="sg-body sg-measure space-y-4">
             <p>
               The app uses your webcam. This requires trust. I've designed it so that trust can be verified,
               not just promised.
@@ -105,19 +95,18 @@ export function About() {
               the app runs.
             </p>
             <p>
-              The incident log is stored locally. No account required to use the core detection feature.
-              No analytics on how you use it.
+              The incident log is stored locally, and there are no analytics on how you use the app.
             </p>
           </div>
         </section>
 
         {/* The technology */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">The technology</h2>
-          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+        <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">
+          <h2 className="sg-h3 mb-3">The technology</h2>
+          <div className="sg-body sg-measure space-y-4">
             <p>
               The detection model is built on{' '}
-              <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" className="text-forest-600 dark:text-forest-400 hover:underline">
+              <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" className="sg-link">
                 Google MediaPipe's Hand Landmarker
               </a>
               , which locates 21 hand landmarks. Stop Biting runs it five times a second. The model runs in WebAssembly — a
@@ -129,20 +118,16 @@ export function About() {
               in each frame. When a hand landmark is within detection threshold of the mouth region for a
               sustained period, the alarm triggers.
             </p>
-            <p>
-              The desktop apps (macOS and Windows) are Electron wrappers around the same web app, with
-              system tray integration for background running.
-            </p>
           </div>
         </section>
 
         {/* How this site is written — keep in step with the /about SSR copy in server.js */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">How this site is written</h2>
-          <div className="space-y-4 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
+        <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">
+          <h2 className="sg-h3 mb-3">How this site is written</h2>
+          <div className="sg-body sg-measure space-y-4">
             <p>
               Every article, guide and comparison here is written by me. I'm a developer, not a clinician, and the{' '}
-              <a href="/editorial-policy" className="text-forest-600 dark:text-forest-400 hover:underline">
+              <a href="/editorial-policy" className="sg-link">
                 editorial policy and corrections page
               </a>
               {' '}says exactly what that means for what you read: how claims are sourced, how anything I say about a
@@ -151,39 +136,16 @@ export function About() {
           </div>
         </section>
 
-        {/* CTA */}
-        <div className="rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
-          <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">3-day free trial — no credit card needed</p>
-          <p className="text-stone-900 dark:text-stone-100 font-semibold text-xl mb-5">Try Stop Biting</p>
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
-          >
-            Launch App
-          </a>
-          <p className="mt-4 text-xs text-stone-400 dark:text-stone-500">
-            $2.99/month · $29/year · Cancel anytime
-          </p>
+        <div className="mt-16 flex flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="sg-h3">Try it free for 3 days.</p>
+            <p className="sg-small mt-1">No card to start. Then $2.99 a month or $29 a year, cancel anytime.</p>
+          </div>
+          <TrialButton />
         </div>
+      </main>
 
-        <div className="mt-10 text-center">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            Back to home
-          </a>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
-        <p>
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
-          {' — '}Built by <a href="/about" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Igor Gazivoda</a>
-        </p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

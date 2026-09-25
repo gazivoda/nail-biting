@@ -1843,7 +1843,6 @@ if (!existsSync(distPath)) {
       '<section><h2>The technology</h2>' +
       '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which locates 21 hand landmarks. Stop Biting runs it five times a second — enough to catch a hand on its way to your mouth, and far less CPU than running it on every frame. ' +
       'Mouth proximity detection compares hand landmark coordinates to facial landmark coordinates in each frame. ' +
-      'The desktop apps (macOS and Windows) are Electron wrappers around the same web app with system-tray background running. ' +
       'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>' +
       '<section><h2>How this site is written</h2>' +
       '<p>Every article, guide and comparison here is written by me. I&#39;m a developer, not a clinician, and the ' +
