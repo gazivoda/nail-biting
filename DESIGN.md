@@ -8,9 +8,9 @@ colors:
   ink-secondary: "oklch(40% 0.014 255)"
   plate-rule: "oklch(89% 0.006 255)"
   warning-yellow: "oklch(86% 0.175 92)"
-  mandatory-blue: "oklch(45% 0.155 257)"
-  mandatory-blue-pressed: "oklch(39% 0.15 257)"
-  mandatory-blue-tint: "oklch(95% 0.025 257)"
+  action-green: "oklch(46% 0.13 148)"
+  action-green-pressed: "oklch(39% 0.12 148)"
+  action-green-tint: "oklch(95% 0.03 148)"
   safe-green: "oklch(46% 0.13 148)"
   safe-green-tint: "oklch(96% 0.03 148)"
 typography:
@@ -85,17 +85,17 @@ spacing:
   section-lg: "7rem"
 components:
   button-primary:
-    backgroundColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green}"
     textColor: "{colors.plate-white}"
     typography: "{typography.label}"
     rounded: "{rounded.button}"
     padding: "0 1.6rem"
     height: "3.25rem"
   button-primary-hover:
-    backgroundColor: "{colors.mandatory-blue-pressed}"
+    backgroundColor: "{colors.action-green-pressed}"
     textColor: "{colors.plate-white}"
   button-primary-sm:
-    backgroundColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green}"
     textColor: "{colors.plate-white}"
     rounded: "{rounded.button}"
     padding: "0 1.1rem"
@@ -111,15 +111,15 @@ components:
     textColor: "{colors.plate-white}"
   button-light:
     backgroundColor: "{colors.plate-white}"
-    textColor: "{colors.mandatory-blue}"
+    textColor: "{colors.action-green}"
     rounded: "{rounded.button}"
     padding: "0 1.6rem"
     height: "3.25rem"
   button-light-hover:
-    backgroundColor: "{colors.mandatory-blue-tint}"
-    textColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green-tint}"
+    textColor: "{colors.action-green}"
   sign-mandatory:
-    backgroundColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green}"
     textColor: "{colors.plate-white}"
     rounded: "{rounded.disc}"
     size: "3.25rem"
@@ -143,7 +143,7 @@ components:
     textColor: "{colors.plate-white}"
     padding: "2.5rem"
   plan-tag:
-    backgroundColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green}"
     textColor: "{colors.plate-white}"
     rounded: "{rounded.tag}"
     padding: "0.25rem 0.625rem"
@@ -154,7 +154,7 @@ components:
     rounded: "{rounded.field}"
     padding: "0.75rem 1rem"
   cta-band:
-    backgroundColor: "{colors.mandatory-blue}"
+    backgroundColor: "{colors.action-green}"
     textColor: "{colors.plate-white}"
     padding: "{spacing.section} 0"
   nav-bar:
@@ -188,9 +188,9 @@ This system is scoped to the sign surface (the homepage and the shared pricing b
 A near-monochrome ink-on-enamel palette with three saturated sign colors, each bound to a single meaning.
 
 ### Primary
-- **Mandatory Blue** (oklch(45% 0.155 257), about #0651A9): every action the visitor takes. The filled trial button, the numbered step discs and the section discs, the recommended plan's 2px inset outline and its tag, text links, focus rings, and the one full-bleed call-to-action band.
-- **Mandatory Blue, Pressed** (oklch(39% 0.15 257)): hover and pressed state of filled blue buttons and of links.
-- **Mandatory Blue Tint** (oklch(95% 0.025 257)): hover fill of the light (white) button on the blue band. Nothing else.
+- **Action Green** (oklch(46% 0.13 148), the site forest green, about #16663A): every action the visitor takes. The filled trial button, the numbered step discs and the section discs, the recommended plan's 2px inset outline and its tag, text links, focus rings, and the one full-bleed call-to-action band.
+- **Action Green, Pressed** (oklch(39% 0.12 148)): hover and pressed state of filled blue buttons and of links.
+- **Action Green Tint** (oklch(95% 0.03 148)): hover fill of the light (white) button on the blue band. Nothing else.
 
 ### Secondary
 - **Safe Green** (oklch(46% 0.13 148), about #076B29): the safe-condition sign. The privacy plate's header band and 2px inset border, the square safe sign, and the small check / shield icons that mark trust statements (trust list, plan features, pricing terms, form success message).
@@ -271,13 +271,13 @@ Product screenshots sit on the ground with a 1px rule border and 0.5rem corners:
 Enamel sign plates: flat, keylined, decisive.
 - **Shape:** nearly square corners (0.375rem), 3.25rem tall, 1.6rem side padding, Overpass 750 at 1.0625rem, icon gap 0.6rem.
 - **Primary (blue):** mandatory blue with the enamel keyline and white text. Reserved for starting the trial. Every trial button carries an arrow that nudges 2px right on hover, and has the offer line (label style) directly beside or below it.
-- **Hover / Focus / Active:** hover darkens to pressed blue (keyline follows); active drops 1px; transitions are 150ms ease-out on background, shadow and transform, removed under reduced motion. Focus is a 3px mandatory-blue outline offset 3px (white on the blue band).
+- **Hover / Focus / Active:** hover darkens to pressed blue (keyline follows); active drops 1px; transitions are 150ms ease-out on background, shadow and transform, removed under reduced motion. Focus is a 3px action-green outline offset 3px (white on the blue band).
 - **Ink:** plate-white face, 2px inset ink outline, ink text; hover inverts to an ink fill with white text. Used for every non-trial action (live demo, monthly plan, contact submit) so the blue fill stays the trial's.
 - **Light:** plate-white face with the reverse keyline and blue text, only on the blue band; hover fills with blue tint.
 - **Small:** 2.75rem tall, 1.1rem padding, 0.9375rem text (nav).
 
 ### Chips
-- **Plan tag:** a small mandatory-blue label (0.25rem corners, 0.8125rem bold white text) pinned over the top edge of the recommended plan. One per pricing block.
+- **Plan tag:** a small action-green label (0.25rem corners, 0.8125rem bold white text) pinned over the top edge of the recommended plan. One per pricing block.
 
 ### Cards / Containers
 - **Plate:** plate-white, 1px plate-rule border, 1.5rem corners, 1.75rem to 2rem padding. The recommended plan adds the 2px blue inset outline.
@@ -293,7 +293,7 @@ Enamel sign plates: flat, keylined, decisive.
 - **Style:** fixed, 4rem tall, sign-white at 90% with backdrop blur, 1px plate-rule bottom border. Logo and wordmark (Overpass 800) left, section links in label weight and secondary ink center-right, small blue trial button right. Links darken to ink on hover. Below `md` only the logo and trial button remain.
 
 ### Mandatory and Safe Signs
-- **Mandatory disc:** a 3.25rem mandatory-blue circle with the enamel keyline and a white icon. Used once, beside "How to start", to say "this is something you do". Never as decoration beside other headings.
+- **Mandatory disc:** a 3.25rem action-green circle with the enamel keyline and a white icon. Used once, beside "How to start", to say "this is something you do". Never as decoration beside other headings.
 - **Safe square:** a 3.25rem safe-green square (0.6rem corners) with a white icon; inside the green header it takes a 2px white inset keyline.
 
 ### Product screenshot (signature)

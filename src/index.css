@@ -634,9 +634,11 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
   --sg-ink-2: oklch(40% 0.014 255);
   --sg-rule: oklch(89% 0.006 255);
   --sg-yellow: oklch(86% 0.175 92);
-  --sg-blue: oklch(45% 0.155 257);
-  --sg-blue-press: oklch(39% 0.15 257);
-  --sg-blue-tint: oklch(95% 0.025 257);
+  /* The action colour: the site's forest green (same as --sg-green and the
+     brand's forest-500), used for every button and link. Was a sign blue. */
+  --sg-accent: oklch(46% 0.13 148);
+  --sg-accent-press: oklch(39% 0.12 148);
+  --sg-accent-tint: oklch(95% 0.03 148);
   --sg-green: oklch(46% 0.13 148);
   --sg-green-tint: oklch(96% 0.03 148);
   color: var(--sg-ink);
@@ -671,34 +673,34 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
   display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
   min-height: 3.25rem; padding: 0 1.6rem; border-radius: 0.375rem;
   font-weight: 750; font-size: 1.0625rem; letter-spacing: -0.005em;
-  background: var(--sg-blue); color: #fff;
-  box-shadow: inset 0 0 0 3px var(--sg-blue), inset 0 0 0 5px oklch(100% 0 0 / 0.9);
+  background: var(--sg-accent); color: #fff;
+  box-shadow: inset 0 0 0 3px var(--sg-accent), inset 0 0 0 5px oklch(100% 0 0 / 0.9);
   transition: background-color 150ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out;
 }
-.sg-btn:hover { background: var(--sg-blue-press); box-shadow: inset 0 0 0 3px var(--sg-blue-press), inset 0 0 0 5px #fff; }
+.sg-btn:hover { background: var(--sg-accent-press); box-shadow: inset 0 0 0 3px var(--sg-accent-press), inset 0 0 0 5px #fff; }
 .sg-btn:active { transform: translateY(1px); }
 .sg-btn-sm { min-height: 2.75rem; padding: 0 1.1rem; font-size: 0.9375rem; }
 .sg-btn-ink {
   background: #fff; color: var(--sg-ink); box-shadow: inset 0 0 0 2px var(--sg-ink);
 }
 .sg-btn-ink:hover { background: var(--sg-ink); color: #fff; box-shadow: inset 0 0 0 2px var(--sg-ink); }
-.sg-btn-light { background: #fff; color: var(--sg-blue); box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px var(--sg-blue); }
-.sg-btn-light:hover { background: var(--sg-blue-tint); box-shadow: inset 0 0 0 3px var(--sg-blue-tint), inset 0 0 0 5px var(--sg-blue); }
+.sg-btn-light { background: #fff; color: var(--sg-accent); box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px var(--sg-accent); }
+.sg-btn-light:hover { background: var(--sg-accent-tint); box-shadow: inset 0 0 0 3px var(--sg-accent-tint), inset 0 0 0 5px var(--sg-accent); }
 
-.sg-link { color: var(--sg-blue); font-weight: 650; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
-.sg-link:hover { color: var(--sg-blue-press); text-decoration-thickness: 2.5px; }
+.sg-link { color: var(--sg-accent); font-weight: 650; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
+.sg-link:hover { color: var(--sg-accent-press); text-decoration-thickness: 2.5px; }
 
 /* A plate: the enamel sign board everything sits on. */
 .sg-plate { background: var(--sg-plate); border: 1px solid var(--sg-rule); border-radius: 1.5rem; }
 
 /* Sign glyphs. m = mandatory (blue disc), e = safe condition (green square). */
 .sg-sign { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; }
-.sg-sign-m { width: 3.25rem; height: 3.25rem; border-radius: 999px; background: var(--sg-blue); box-shadow: inset 0 0 0 3px var(--sg-blue), inset 0 0 0 5px oklch(100% 0 0 / 0.9); font-weight: 850; font-size: 1.375rem; }
+.sg-sign-m { width: 3.25rem; height: 3.25rem; border-radius: 999px; background: var(--sg-accent); box-shadow: inset 0 0 0 3px var(--sg-accent), inset 0 0 0 5px oklch(100% 0 0 / 0.9); font-weight: 850; font-size: 1.375rem; }
 .sg-sign-e { width: 3.25rem; height: 3.25rem; border-radius: 0.6rem; background: var(--sg-green); }
 
 .sg-page a:focus-visible,
 .sg-page button:focus-visible,
-.sg-page summary:focus-visible { outline: 3px solid var(--sg-blue); outline-offset: 3px; border-radius: 0.5rem; }
+.sg-page summary:focus-visible { outline: 3px solid var(--sg-accent); outline-offset: 3px; border-radius: 0.5rem; }
 .sg-page .sg-band a:focus-visible { outline-color: #fff; }
 
 @media (prefers-reduced-motion: reduce) {

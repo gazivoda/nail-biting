@@ -384,7 +384,7 @@ export function Landing() {
                   ['https://pubmed.ncbi.nlm.nih.gov/21549664/', 'Bate et al. (2011), Clinical Psychology Review meta-analysis'],
                 ].map(([href, label]) => (
                   <li key={href}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="sg-note inline-flex min-h-11 items-center gap-2 text-[color:var(--sg-ink)] underline decoration-[color:var(--sg-rule)] decoration-2 underline-offset-4 hover:decoration-[color:var(--sg-blue)]">
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="sg-note inline-flex min-h-11 items-center gap-2 text-[color:var(--sg-ink)] underline decoration-[color:var(--sg-rule)] decoration-2 underline-offset-4 hover:decoration-[color:var(--sg-accent)]">
                       {label} (PubMed)
                     </a>
                   </li>
@@ -470,7 +470,7 @@ export function Landing() {
 
         {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
         {/* The one full blue field on the page: a mandatory sign, blown up. */}
-        <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-blue)] py-20 text-white lg:py-24">
+        <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
           <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="sg-h2">Catch your next bite.</h2>
@@ -501,7 +501,7 @@ export function Landing() {
                 return (
                   <li key={href}>
                     <a href={href} className="group block border-t-2 border-[color:var(--sg-ink)] pt-4">
-                      <span className="sg-h3 group-hover:text-[color:var(--sg-blue)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
+                      <span className="sg-h3 group-hover:text-[color:var(--sg-accent)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
                       <span className="sg-small mt-2 block">{note}</span>
                     </a>
                   </li>
@@ -512,7 +512,7 @@ export function Landing() {
             <ul className="mt-10 grid border-t border-[color:var(--sg-rule)] md:grid-cols-2 md:gap-x-10">
               {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }) => (
                 <li key={href} className="border-b border-[color:var(--sg-rule)]">
-                  <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-blue)] hover:underline hover:underline-offset-4">
+                  <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-accent)] hover:underline hover:underline-offset-4">
                     {title}
                   </a>
                 </li>

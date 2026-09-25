@@ -52,8 +52,8 @@ export function PricingSection() {
 
       <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
-        <div className="sg-plate relative flex flex-col p-7 shadow-[inset_0_0_0_2px_var(--sg-blue)] sm:p-8">
-          <p className="absolute -top-3.5 left-7 rounded-[0.25rem] bg-[color:var(--sg-blue)] px-2.5 py-1 text-[0.8125rem] font-bold text-white">
+        <div className="sg-plate relative flex flex-col p-7 shadow-[inset_0_0_0_2px_var(--sg-accent)] sm:p-8">
+          <p className="absolute -top-3.5 left-7 rounded-[0.25rem] bg-[color:var(--sg-accent)] px-2.5 py-1 text-[0.8125rem] font-bold text-white">
             Best value: save 19%
           </p>
           <p className="sg-h3">Yearly</p>
