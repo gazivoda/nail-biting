@@ -92,3 +92,19 @@ tab keeps the demo running). Check history before reverting a pattern that looks
 UI/UX pass on the `seo-geo-loop-sept` branch, and the user had to ask for it to go to main.
 Rule: default to `main` (which auto-deploys via Coolify) for this project; create or use a
 branch only when the user explicitly asks for one.
+
+## 2026-09-25 — Authenticity loop (nail-habit-app homepage)
+
+**The biggest "AI slop" tell was absence, not decoration: the page never showed the product.**
+Ten rounds of de-slopping, and the one that changed the page most was capturing the real app
+(CDP + Chrome's `--use-fake-device-for-media-stream`, seeded example data, labelled "example
+data", provenance embedded with `impeccable embed-prompt`). Before polishing icon rows or copy,
+ask: does this page show the real thing anywhere?
+
+**Headless Chrome ignores `--window-size` below ~500px wide.** 390px "mobile" captures silently
+rendered wider and cropped. Use CDP `Emulation.setDeviceMetricsOverride` (script in the session
+scratchpad, cap.mjs) and assert `scrollWidth === innerWidth` in the output.
+
+**Custom CSS outside a Tailwind layer beats every utility.** The `.sg-*` block sat after
+`@tailwind utilities`, so `text-white/90` on a `.sg-note` lost and a CTA offer line rendered
+invisible on blue. Put design-system classes in `@layer components`.
