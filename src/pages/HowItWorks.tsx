@@ -90,11 +90,11 @@ export function HowItWorks() {
         </nav>
 
         <header className="max-w-3xl">
-          <h1 className="sg-h2">How AI Nail Biting Detection Works</h1>
+          <h1 className="sg-h2">How AI nail biting detection works</h1>
           <p className="sg-lede sg-measure mt-5">
             Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your
-            device. The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires under 1 second
-            after it detects your hand approaching your mouth. Setup takes under two minutes.
+            device. The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires about 0.6 seconds
+            after it sees your hand approaching your mouth. Setup takes under two minutes.
           </p>
         </header>
 

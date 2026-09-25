@@ -36,7 +36,7 @@ export function CameraToggle({ cameraProblem = false }: { cameraProblem?: boolea
           </p>
           <div className="flex items-center gap-1.5 mt-1.5" style={{ color: 'oklch(100% 0 0 / 0.65)' }}>
             <ShieldCheck size={12} />
-            <span className="text-[12px]">100% on-device — no data sent</span>
+            <span className="text-[12px]">Video stays on this device</span>
           </div>
         </div>
 

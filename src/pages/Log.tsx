@@ -6,6 +6,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recha
 import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
+import { PRESET_TAGS } from '../components/dashboard/triggerTags';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -24,19 +25,12 @@ const BITE_TAG_COLOR = 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-
 
 const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
 
-const BITE_TAG_LABELS: Record<string, string> = {
-  'auto-detected': '✓ Bite',
-  'stress': '😰 Stress',
-  'focus': '🧠 Focus',
-  'boredom': '😐 Boredom',
-  'unknown': '🤷 Unknown',
-};
-
+// Every bite pill starts with "Bite", and a tagged one uses the same words as
+// the tag picker (triggerTags.ts): "Deep focus", not "Focus".
 function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
-  const preset = BITE_TAG_LABELS[inc.tag];
-  if (preset) return preset;
-  const custom = customTags.find(t => t.id === inc.tag);
-  return custom ? `${custom.emoji} ${custom.label}` : '🏷️ Other';
+  if (inc.tag === 'auto-detected') return '✓ Bite';
+  const t = [...PRESET_TAGS, ...customTags].find(x => x.id === inc.tag);
+  return t ? `Bite · ${t.emoji} ${t.label}` : 'Bite';
 }
 
 function WeekChart() {
@@ -92,7 +86,7 @@ function WeekChart() {
           <Tooltip
             contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 8, fontSize: 12 }}
             labelStyle={{ color: tooltipLabel }}
-            itemStyle={{ color: isDark ? '#f87171' : '#dc2626' }}
+            itemStyle={{ color: BAR_FILL[isDark ? 'dark' : 'light'] }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
           <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[4, 4, 0, 0]} fill={BAR_FILL[isDark ? 'dark' : 'light']} />
@@ -166,7 +160,7 @@ export function Log() {
 
           {incidents.length > 0 && (
             <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card dark:shadow-card-dark">
-              <h2 className="text-stone-500 dark:text-stone-400 text-[11px] uppercase tracking-widest mb-3 font-semibold">Summary</h2>
+              <h2 className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-3 font-semibold">Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>

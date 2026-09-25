@@ -45,16 +45,13 @@ export function ReplacementPrompt() {
     <div className="bg-white dark:bg-ink-50 border border-forest-200 dark:border-forest-800 rounded-[18px] p-7 shadow-card-md dark:shadow-card-md-dark animate-fade-up">
       <div className="flex items-start justify-between gap-3 mb-3">
         <div>
-          <p className="text-xs font-semibold tracking-[1.2px] uppercase text-forest-500 dark:text-forest-400">
-            Interrupt detected
-          </p>
-          <p className="text-[15px] font-semibold text-stone-800 dark:text-stone-100 mt-1">
-            Try this instead
-          </p>
+          <h2 className="text-[15px] font-semibold text-stone-800 dark:text-stone-100">
+            Alarm: try this instead
+          </h2>
         </div>
         <button
           onClick={() => answer()}
-          aria-label="Dismiss"
+          aria-label="Dismiss, not a bite"
           className="p-2.5 -m-1.5 rounded-lg text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />

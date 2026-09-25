@@ -12,31 +12,31 @@ const STEPS: Step[] = [
   {
     target: 'camera-toggle',
     title: 'Detection is already running',
-    body: 'The AI is watching for nail biting in real time using your webcam. Everything processes on-device — nothing is uploaded anywhere.',
+    body: 'Watching for nail biting through your webcam. Everything runs on your device and nothing is uploaded.',
     side: 'bottom',
   },
   {
     target: 'hide-feed',
     title: 'Camera feed stays hidden',
-    body: "Your video isn't shown by default so you can focus on work. The AI detects nail biting either way — toggle the feed on only if you want to see yourself.",
+    body: "Your video stays hidden so you can focus on work. Detection runs either way. Turn the feed on only if you want to see yourself.",
     side: 'bottom',
   },
   {
     target: 'streak-card',
     title: 'Your streak',
-    body: "Counts how long you've gone without a bite. Every hour it grows. When the alarm fires and resets it — that's the feedback loop that builds awareness.",
+    body: "How long you've gone without a bite. An alarm doesn't reset it; a bite you confirm or log does.",
     side: 'left',
   },
   {
     target: 'panic-button',
     title: 'Bit and the alarm missed it?',
-    body: "Log it manually here. Tag the trigger — stress, deep focus, boredom — to find patterns in when it happens.",
+    body: "Log it here and tag what set it off: stress, deep focus, boredom.",
     side: 'top',
   },
   {
     target: 'history-tab',
-    title: 'Track your progress',
-    body: '7-day bite chart, full incident log, and trigger breakdown — patterns usually become obvious within the first week.',
+    title: 'History',
+    body: 'Every alarm and bite by day, with a 7-day chart.',
     side: 'right',
   },
 ];

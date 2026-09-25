@@ -2062,7 +2062,7 @@ if (!existsSync(distPath)) {
       '@type': 'FAQPage',
       '@id': 'https://stopbiting.today/how-it-works',
       url: 'https://stopbiting.today/how-it-works',
-      name: 'How AI Nail Biting Detection Works',
+      name: 'How AI nail biting detection works',
       description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': ORG_ID },
@@ -2085,9 +2085,9 @@ if (!existsSync(distPath)) {
     const faqHtml = HOW_IT_WORKS_FAQS.map(f =>
       `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('');
     const article =
-      '<h1>How AI Nail Biting Detection Works</h1>' +
+      '<h1>How AI nail biting detection works</h1>' +
       '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your device. ' +
-      'The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires under 1 second after it detects your hand approaching your mouth. ' +
+      'The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires about 0.6 seconds after it sees your hand approaching your mouth. ' +
       // "under two minutes" stays spelled out: nothing in this page's visible
       // body states a setup time, so the one claim here with no counterpart
       // below does not get made more quotable than the page can support.

@@ -295,7 +295,7 @@ function ReasonsSection() {
 // ── Plan section ─────────────────────────────────────────────────────────────
 
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
-  trial:     { label: 'Free Trial', className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
+  trial:     { label: 'Free trial', className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
   active:    { label: 'Active',     className: 'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700' },
   paused:    { label: 'Paused',     className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
   cancelled: { label: 'Cancelled',  className: 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
@@ -362,7 +362,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
             <p className="text-xs text-stone-500 dark:text-stone-400">
               {subscription_status === 'trial' && trial_end_date && (
                 trialDaysLeft > 0
-                  ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} left in trial — ends ${fmt(trial_end_date)}`
+                  ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} left in trial, ends ${fmt(trial_end_date)}`
                   : 'Trial has ended'
               )}
               {subscription_status === 'active' && subscription_end_date && `Renews ${fmt(subscription_end_date)}`}
@@ -440,9 +440,9 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
           <ShieldCheck size={18} className="text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">100% on-device processing</p>
-            <p className="text-xs text-forest-600 dark:text-forest-500 mt-0.5">
-              Your camera feed is processed locally using WebAssembly. No video frames, images, or personal data are ever sent to any server.
+            <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
+            <p className="text-xs text-forest-700 dark:text-forest-400 mt-0.5">
+              Your camera is processed in this browser. Video never leaves your device; only sign-in and payment use the network.
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
 {
-  "prompt": "ORIGIN: screenshot of the real Stop Biting web app (not generated), recaptured 2026-09-25 after the app moved to Overpass, from the local dev build via Chrome DevTools Protocol with Chrome's fake camera, test account 'Alex' with a seeded week of EXAMPLE incidents (plus one fresh detection for the Watch screen). Labelled 'example data' on the page.",
-  "createdAt": "2026-09-25T19:24:05.168Z"
+  "prompt": "ORIGIN: screenshot of the real Stop Biting web app (not generated), recaptured 2026-09-25 (design loop 10) from the local dev build via Chrome DevTools Protocol with Chrome's fake camera, test account 'Alex' with a seeded week of EXAMPLE incidents plus one fresh detection. Labelled 'example data' on the page.",
+  "createdAt": "2026-09-25T21:03:01.170Z"
 }
