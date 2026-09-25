@@ -190,8 +190,10 @@ export function Log() {
           {incidents.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24 text-stone-400 dark:text-stone-500">
               <p className="text-5xl mb-4">🙌</p>
-              <p className="font-semibold text-stone-500 dark:text-stone-400 text-lg">No incidents logged yet</p>
-              <p className="text-sm mt-1">Keep it that way!</p>
+              <p className="font-semibold text-stone-500 dark:text-stone-400 text-lg">Nothing logged yet</p>
+              <p className="text-sm mt-1 max-w-xs text-center">
+                Alarms from the Watch tab and bites you log with "I just bit my nails" appear here. Tag them to see your triggers.
+              </p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -228,7 +230,7 @@ export function Log() {
                                 onClick={() => confirmIncident(inc.id)}
                                 aria-label="Confirm as bite"
                                 title="This was an actual bite"
-                                className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
+                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 items-center gap-1 px-2 text-xs text-amber-600 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
                               >
                                 <CheckCircle size={13} />
                                 <span>Bite</span>
@@ -236,8 +238,8 @@ export function Log() {
                             )}
                             <button
                               onClick={() => deleteIncident(inc.id)}
-                              aria-label="Delete"
-                              className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 text-stone-300 dark:text-stone-600 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
+                              aria-label={`Delete entry from ${formatTime(inc.timestamp)}`}
+                              className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 min-w-10 items-center justify-center text-stone-400 dark:text-stone-500 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
                             >
                               <Trash2 size={14} />
                             </button>

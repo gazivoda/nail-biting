@@ -36,7 +36,8 @@ export function ReplacementPrompt() {
         </div>
         <button
           onClick={() => setDismissed(lastAuto.timestamp)}
-          className="p-1 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
+          aria-label="Dismiss"
+          className="p-2.5 -m-1.5 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />
         </button>

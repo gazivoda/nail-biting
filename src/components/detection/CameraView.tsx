@@ -9,9 +9,11 @@ import type { DetectionSensitivity } from '../../types';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
+  /** Why the camera didn't start, in words for the user; null while it runs. */
+  cameraError?: string | null;
 }
 
-export function CameraView({ videoRef }: Props) {
+export function CameraView({ videoRef, cameraError = null }: Props) {
   const {
     cameraEnabled,
     showCameraFeed,
@@ -57,9 +59,10 @@ export function CameraView({ videoRef }: Props) {
         showFeed={effectiveShowFeed}
         showFlash={showFlash}
         onRetry={handleRetry}
+        cameraError={cameraError}
       >
         {/* PiP button — keeps detection alive when tab is minimized */}
-        {cameraEnabled && pipSupported && (
+        {cameraEnabled && pipSupported && !cameraError && (
           <button
             onClick={togglePiP}
             title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window — detection keeps running when you switch apps'}

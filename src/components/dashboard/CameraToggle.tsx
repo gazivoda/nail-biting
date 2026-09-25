@@ -1,7 +1,8 @@
 import { Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 
-export function CameraToggle() {
+/** `cameraProblem`: detection is switched on but the camera didn't start. */
+export function CameraToggle({ cameraProblem = false }: { cameraProblem?: boolean }) {
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
   if (!cameraEnabled) {
@@ -58,17 +59,19 @@ export function CameraToggle() {
       {/* Status row */}
       <div className="flex items-center justify-between px-5 py-4">
         <div className="flex items-center gap-3.5">
-          {/* Animated live dot */}
+          {/* Live dot: animated only when there is actually something live */}
           <div className="relative flex h-2.5 w-2.5 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-500 opacity-70" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-forest-500" />
+            {!cameraProblem && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-500 opacity-70" />
+            )}
+            <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${cameraProblem ? 'bg-alert-400' : 'bg-forest-500'}`} />
           </div>
           <div>
             <p className="text-[13px] font-semibold text-forest-700 dark:text-forest-300">
-              Detection Active
+              {cameraProblem ? 'Camera not running' : 'Detection active'}
             </p>
-            <p className="text-[11px] mt-0.5 text-forest-500 dark:text-forest-400">
-              AI running on-device
+            <p className="text-[11px] mt-0.5 text-forest-600 dark:text-forest-400">
+              {cameraProblem ? 'See below for how to fix it' : 'AI running on-device'}
             </p>
           </div>
         </div>

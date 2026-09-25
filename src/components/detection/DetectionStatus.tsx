@@ -11,9 +11,9 @@ interface Props {
 const config: Record<DetectionStatus, { icon: typeof Eye; label: string; color: string }> = {
   idle: { icon: EyeOff, label: 'Detection off', color: 'text-stone-500' },
   loading: { icon: Loader2, label: 'Loading AI models…', color: 'text-amber-400' },
-  watching: { icon: Eye, label: 'Watching you', color: 'text-forest-400' },
+  watching: { icon: Eye, label: 'Detecting', color: 'text-forest-400' },
   alert: { icon: AlertTriangle, label: 'Hands near mouth!', color: 'text-alert-400' },
-  error: { icon: WifiOff, label: 'Model load failed', color: 'text-alert-600' },
+  error: { icon: WifiOff, label: "AI models didn't load", color: 'text-alert-400' },
 };
 
 export function DetectionStatus({ status, onRetry }: Props) {

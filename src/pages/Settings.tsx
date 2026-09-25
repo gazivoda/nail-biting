@@ -14,7 +14,7 @@ function Section({ title, icon: Icon, children, fullWidth }: {
   fullWidth?: boolean;
 }) {
   return (
-    <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'col-span-2' : ''}`}>
+    <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'md:col-span-2' : ''}`}>
       <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
         <Icon size={15} className="text-stone-400 dark:text-stone-500" />
         <p className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</p>

@@ -213,7 +213,7 @@ export function PaywallPage({ onBack }: Props) {
           </div>
 
           {/* Yearly */}
-          <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
+          <div className="order-first md:order-none border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
                 Best value — save 19%

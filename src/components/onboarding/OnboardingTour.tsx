@@ -65,7 +65,12 @@ function Arrow({ side }: { side: Step['side'] }) {
 
 export function OnboardingTour() {
   const [step, setStep] = useState(-1);
-  const [rect, setRect] = useState<DOMRect | null>(null);
+  // Keyed by the step it was measured for. A bare rect used to start as null,
+  // and the render read "null" as "target missing" and skipped the step before
+  // the effect had measured anything, so the tour opened at step 3 of 5 and
+  // never explained detection. Now a step only renders once it is measured,
+  // and only the effect, having actually looked, may skip a step.
+  const [target, setTarget] = useState<{ step: number; rect: DOMRect } | null>(null);
   const [vw, setVw] = useState(window.innerWidth);
   const [vh, setVh] = useState(window.innerHeight);
   const doneRef = useRef(!!localStorage.getItem(TOUR_KEY));
@@ -80,7 +85,18 @@ export function OnboardingTour() {
     if (step < 0 || step >= STEPS.length) return;
     const update = () => {
       const el = findTarget(STEPS[step].target);
-      setRect(el ? (el.getBoundingClientRect() as DOMRect) : null);
+      if (!el) {
+        // Genuinely not on screen (e.g. a control this layout doesn't render).
+        if (step >= STEPS.length - 1) {
+          localStorage.setItem(TOUR_KEY, '1');
+          doneRef.current = true;
+          setStep(-1);
+        } else {
+          setStep(step + 1);
+        }
+        return;
+      }
+      setTarget({ step, rect: el.getBoundingClientRect() as DOMRect });
       setVw(window.innerWidth);
       setVh(window.innerHeight);
     };
@@ -102,11 +118,9 @@ export function OnboardingTour() {
     setStep(s => s + 1);
   };
 
-  // If element not found, advance to next
-  if (!rect) {
-    setTimeout(next, 0);
-    return null;
-  }
+  // Not measured for this step yet: the effect above runs after this render.
+  const rect = target?.step === step ? target.rect : null;
+  if (!rect) return null;
 
   const { title, body, side } = STEPS[step];
 
