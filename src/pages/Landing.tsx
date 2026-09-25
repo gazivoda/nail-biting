@@ -454,6 +454,25 @@ export function Landing() {
           </div>
         </section>
 
+        {/* ── WHO MADE THIS ─────────────────────────────────────────────── */}
+        {/* A person, in his own words, before the price. Every fact here is
+            from the founder's story on /about; nothing is added. Deliberately
+            plain: no sign, no plate, a narrow measure. */}
+        <section aria-labelledby="maker-heading" className="pb-16 lg:pb-20">
+          <div className="sg-container">
+            <div className="max-w-[52ch]">
+              <h2 id="maker-heading" className="sg-h3">Why this exists</h2>
+              <p className="sg-body mt-3 text-[color:var(--sg-ink)]">
+                I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of
+                it lasted, because I never noticed I was doing it until the damage was done. I write
+                software and I had a webcam, so I built the thing that notices for me.
+              </p>
+              <p className="mt-4 font-bold">Igor Gazivoda</p>
+              <a href="/about" className="sg-link mt-1 inline-flex min-h-11 items-center">The longer story</a>
+            </div>
+          </div>
+        </section>
+
         {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
         <div className="border-t border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-20 lg:py-28">
           <div className="sg-container">
