@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T00:00:00Z",
+  "title": "Design System: Stop Biting",
+  "scope": "Sign surface: src/pages/Landing.tsx and the components it mounts (AlarmSign, PricingSection, HeroDemo, ContactForm). Tokens live under .sg-page in src/index.css, not :root. Other surfaces: the editorial .ed-* world (/blog, /pricing chrome, /how-it-works, policy pages) and the signed-in app (Tailwind cream/ink/forest, Inter, light+dark) are separate systems not described here.",
+  "extensions": {
+    "colorMeta": {
+      "sign-white": { "role": "neutral", "displayName": "Sign-White", "canonical": "oklch(98.5% 0.004 85)", "hex": "#FBFAF7", "cssVar": "--sg-ground", "tonalRamp": ["oklch(20% 0.004 85)", "oklch(32% 0.004 85)", "oklch(45% 0.004 85)", "oklch(58% 0.004 85)", "oklch(70% 0.004 85)", "oklch(82% 0.004 85)", "oklch(92% 0.004 85)", "oklch(98.5% 0.004 85)"] },
+      "plate-white": { "role": "neutral", "displayName": "Plate-White", "canonical": "oklch(100% 0 0)", "hex": "#FFFFFF", "cssVar": "--sg-plate", "tonalRamp": ["oklch(20% 0 0)", "oklch(32% 0 0)", "oklch(45% 0 0)", "oklch(58% 0 0)", "oklch(70% 0 0)", "oklch(82% 0 0)", "oklch(92% 0 0)", "oklch(100% 0 0)"] },
+      "pictogram-ink": { "role": "neutral", "displayName": "Pictogram Ink", "canonical": "oklch(19% 0.014 255)", "hex": "#10141A", "cssVar": "--sg-ink", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
+      "ink-secondary": { "role": "neutral", "displayName": "Secondary Ink", "canonical": "oklch(40% 0.014 255)", "hex": "#43484F", "cssVar": "--sg-ink-2", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
+      "plate-rule": { "role": "neutral", "displayName": "Plate Rule", "canonical": "oklch(89% 0.006 255)", "hex": "#D8DBDF", "cssVar": "--sg-rule", "tonalRamp": ["oklch(15% 0.014 255)", "oklch(19% 0.014 255)", "oklch(30% 0.014 255)", "oklch(40% 0.014 255)", "oklch(54% 0.012 255)", "oklch(70% 0.01 255)", "oklch(89% 0.006 255)", "oklch(95.5% 0.006 250)"] },
+      "warning-yellow": { "role": "tertiary", "displayName": "Warning Yellow", "canonical": "oklch(86% 0.175 92)", "hex": "#FACC08", "cssVar": "--sg-yellow", "tonalRamp": ["oklch(25% 0.05 92)", "oklch(35% 0.07 92)", "oklch(48% 0.1 92)", "oklch(60% 0.125 92)", "oklch(72% 0.15 92)", "oklch(86% 0.175 92)", "oklch(95% 0.11 95)", "oklch(98% 0.04 95)"] },
+      "mandatory-blue": { "role": "primary", "displayName": "Mandatory Blue", "canonical": "oklch(45% 0.155 257)", "hex": "#0651A9", "cssVar": "--sg-blue", "tonalRamp": ["oklch(25% 0.09 257)", "oklch(32% 0.13 257)", "oklch(39% 0.15 257)", "oklch(45% 0.155 257)", "oklch(58% 0.14 257)", "oklch(72% 0.1 257)", "oklch(86% 0.05 257)", "oklch(95% 0.025 257)"] },
+      "mandatory-blue-pressed": { "role": "primary", "displayName": "Mandatory Blue, Pressed", "canonical": "oklch(39% 0.15 257)", "hex": "#004093", "cssVar": "--sg-blue-press" },
+      "mandatory-blue-tint": { "role": "primary", "displayName": "Mandatory Blue Tint", "canonical": "oklch(95% 0.025 257)", "hex": "#E4F0FF", "cssVar": "--sg-blue-tint" },
+      "safe-green": { "role": "secondary", "displayName": "Safe Green", "canonical": "oklch(46% 0.13 148)", "hex": "#076B29", "cssVar": "--sg-green", "tonalRamp": ["oklch(22% 0.06 148)", "oklch(30% 0.09 148)", "oklch(38% 0.115 148)", "oklch(46% 0.13 148)", "oklch(60% 0.13 148)", "oklch(74% 0.1 148)", "oklch(88% 0.05 148)", "oklch(96% 0.03 148)"] },
+      "safe-green-tint": { "role": "secondary", "displayName": "Safe Green Tint", "canonical": "oklch(96% 0.03 148)", "hex": "#E5F8E7", "cssVar": "--sg-green-tint" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "cssClass": "sg-h1", "purpose": "The one h1. Balanced wrap." },
+      "headline": { "displayName": "Headline", "cssClass": "sg-h2", "purpose": "Section headings, including on the blue band and in the green plate header. Balanced wrap." },
+      "title": { "displayName": "Title", "cssClass": "sg-h3", "purpose": "Step titles, plan names, the demo heading." },
+      "figure": { "displayName": "Figure", "cssClass": "sg-figure", "purpose": "Prices. Tabular numerals." },
+      "lede": { "displayName": "Lede", "cssClass": "sg-lede", "purpose": "Sentence under the h1 and the pricing heading. Secondary ink, pretty wrap." },
+      "body": { "displayName": "Body", "cssClass": "sg-body", "purpose": "Running copy, capped at 62ch (sg-measure). Secondary ink." },
+      "small": { "displayName": "Small", "cssClass": "sg-small", "purpose": "Footnotes, plan features, trust terms, footer." },
+      "label": { "displayName": "Label", "cssClass": "sg-note", "purpose": "Offer line beside every trial button, demo instructions, citations." },
+      "measurement": { "displayName": "Measurement", "cssClass": "sg-code", "purpose": "Timestamps and durations only (Overpass Mono)." }
+    },
+    "fonts": [
+      { "family": "Overpass", "weights": "400 900 (variable)", "files": ["/fonts/overpass-latin.woff2", "/fonts/overpass-latin-ext.woff2"], "display": "swap" },
+      { "family": "Overpass Mono", "weights": "500, 700", "files": ["/fonts/overpass-mono-latin.woff2", "/fonts/overpass-mono-latin-ext.woff2"], "display": "swap" }
+    ],
+    "shadows": [
+      { "name": "enamel-keyline", "value": "inset 0 0 0 3px oklch(45% 0.155 257), inset 0 0 0 5px oklch(100% 0 0 / 0.9)", "purpose": "Filled blue buttons and mandatory discs: a white line set in from the edge. The first ring tracks the fill (pressed blue on hover)." },
+      { "name": "reverse-keyline", "value": "inset 0 0 0 3px #fff, inset 0 0 0 5px oklch(45% 0.155 257)", "purpose": "Light button on the blue CTA band." },
+      { "name": "outline-ink", "value": "inset 0 0 0 2px oklch(19% 0.014 255)", "purpose": "Ink (secondary) buttons." },
+      { "name": "outline-blue", "value": "inset 0 0 0 2px oklch(45% 0.155 257)", "purpose": "Recommended pricing plate." },
+      { "name": "outline-green", "value": "inset 0 0 0 2px oklch(46% 0.13 148)", "purpose": "Privacy (safe-condition) plate." },
+      { "name": "focus-ring", "value": "outline: 3px solid oklch(45% 0.155 257); outline-offset: 3px; border-radius: 0.5rem", "purpose": "Every link, button and summary on the sign surface; white on the blue band." }
+    ],
+    "motion": [
+      { "name": "button-transition", "value": "background-color 150ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out", "purpose": "Button state changes; active state drops 1px. Removed under reduced motion." },
+      { "name": "pictogram-loop", "value": "4.2s infinite", "purpose": "The page's one authored animation: the alarm sign's hand, ring, flash and plate share one 4.2s timeline." },
+      { "name": "pictogram-hand-ease", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Hand rises from translate(14px, 20px) to rest at 46-70%, then falls away." },
+      { "name": "pictogram-ring", "value": "stroke-dasharray 5 6 / width 3 to solid / width 5 at 46-70%", "purpose": "Threshold ring closes when the hand crosses it." },
+      { "name": "pictogram-flash", "value": "opacity 0 to 1 at 48-54% and 64-68%; plate fill oklch(95% 0.11 95) on the same beats", "purpose": "The alarm answers twice." },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Loop stops in the caught state: ring solid, alarm strokes visible, no button transitions." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (trial)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Blue enamel plate with an inset white keyline. Reserved for starting the trial; always paired with the offer line.",
+      "html": "<div class=\"ds-cta\"><a class=\"ds-btn\" href=\"#\">Start free trial <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a><p class=\"ds-note\">3 days free, no card, then $2.99/month</p></div>",
+      "css": ".ds-cta { font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0 1.6rem; border-radius: 0.375rem; font-weight: 750; font-size: 1.0625rem; letter-spacing: -0.005em; text-decoration: none; background: oklch(45% 0.155 257); color: #fff; box-shadow: inset 0 0 0 3px oklch(45% 0.155 257), inset 0 0 0 5px oklch(100% 0 0 / 0.9); transition: background-color 150ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out; } .ds-btn svg { transition: transform 150ms; } .ds-btn:hover { background: oklch(39% 0.15 257); box-shadow: inset 0 0 0 3px oklch(39% 0.15 257), inset 0 0 0 5px #fff; } .ds-btn:hover svg { transform: translateX(2px); } .ds-btn:active { transform: translateY(1px); } .ds-btn:focus-visible { outline: 3px solid oklch(45% 0.155 257); outline-offset: 3px; } .ds-note { margin: 1rem 0 0; font-weight: 650; font-size: 0.9375rem; line-height: 1.45; color: oklch(40% 0.014 255); }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "White plate with a 2px ink outline; inverts on hover. Every non-trial action.",
+      "html": "<button class=\"ds-btn-ink\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\"/><circle cx=\"12\" cy=\"13\" r=\"3\"/></svg>Try the live demo</button>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0 1.6rem; border: 0; border-radius: 0.375rem; font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 750; font-size: 1.0625rem; background: #fff; color: oklch(19% 0.014 255); box-shadow: inset 0 0 0 2px oklch(19% 0.014 255); cursor: pointer; transition: background-color 150ms ease-out, color 150ms ease-out, transform 150ms ease-out; } .ds-btn-ink:hover { background: oklch(19% 0.014 255); color: #fff; } .ds-btn-ink:active { transform: translateY(1px); } .ds-btn-ink:focus-visible { outline: 3px solid oklch(45% 0.155 257); outline-offset: 3px; }"
+    },
+    {
+      "name": "Light Button on Blue Band",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "The closing call to action: a white plate with a reverse blue keyline on the one full blue field.",
+      "html": "<div class=\"ds-band\"><h2 class=\"ds-band-h\">Catch your next bite.</h2><a class=\"ds-btn-light\" href=\"#\">Start free trial</a><p class=\"ds-band-note\">3 days free, no card, then $2.99/month</p></div>",
+      "css": ".ds-band { background: oklch(45% 0.155 257); color: #fff; padding: 3rem 2rem; font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-band-h { margin: 0 0 1.5rem; font-weight: 800; font-size: clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem); line-height: 1.04; letter-spacing: -0.025em; } .ds-btn-light { display: inline-flex; align-items: center; min-height: 3.25rem; padding: 0 1.6rem; border-radius: 0.375rem; font-weight: 750; font-size: 1.0625rem; text-decoration: none; background: #fff; color: oklch(45% 0.155 257); box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px oklch(45% 0.155 257); transition: background-color 150ms ease-out, box-shadow 150ms ease-out; } .ds-btn-light:hover { background: oklch(95% 0.025 257); box-shadow: inset 0 0 0 3px oklch(95% 0.025 257), inset 0 0 0 5px oklch(45% 0.155 257); } .ds-btn-light:focus-visible { outline: 3px solid #fff; outline-offset: 3px; } .ds-band-note { margin: 0.75rem 0 0; font-weight: 650; font-size: 0.9375rem; color: rgb(255 255 255 / 0.9); }"
+    },
+    {
+      "name": "Numbered Step with Mandatory Disc",
+      "kind": "custom",
+      "refersTo": "sign-mandatory",
+      "description": "A blue mandatory disc with the enamel keyline and a white numeral, beside the step title.",
+      "html": "<div class=\"ds-step\"><div class=\"ds-step-head\"><span class=\"ds-disc\" aria-hidden=\"true\">1</span><h3 class=\"ds-step-t\">Sign in with Google</h3></div><p class=\"ds-step-b\">One click, in a new tab. Your 3-day trial starts straight away and asks for no card.</p></div>",
+      "css": ".ds-step { font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 22rem; } .ds-step-head { display: flex; align-items: center; gap: 1rem; } .ds-disc { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 3.25rem; height: 3.25rem; border-radius: 999px; background: oklch(45% 0.155 257); color: #fff; box-shadow: inset 0 0 0 3px oklch(45% 0.155 257), inset 0 0 0 5px oklch(100% 0 0 / 0.9); font-weight: 850; font-size: 1.375rem; } .ds-step-t { margin: 0; font-weight: 750; font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.01em; color: oklch(19% 0.014 255); } .ds-step-b { margin: 1rem 0 0; font-size: 1.0625rem; line-height: 1.6; color: oklch(40% 0.014 255); }"
+    },
+    {
+      "name": "Safe-Condition Plate (privacy)",
+      "kind": "card",
+      "refersTo": "plate-safe",
+      "description": "Green-tint board with a green inset border, headed by a solid green band carrying the square safe sign.",
+      "html": "<div class=\"ds-safe\"><div class=\"ds-safe-head\"><span class=\"ds-safe-sign\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/><path d=\"m9 12 2 2 4-4\"/></svg></span><h2 class=\"ds-safe-h\">Your camera never leaves your device.</h2></div><div class=\"ds-safe-body\"><p>Detection runs entirely in your browser: <strong>0 bytes</strong> of camera data go to any server.</p></div></div>",
+      "css": ".ds-safe { overflow: hidden; border-radius: 0.5rem; background: oklch(96% 0.03 148); box-shadow: inset 0 0 0 2px oklch(46% 0.13 148); font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-safe-head { display: flex; align-items: flex-start; gap: 1.25rem; padding: 2rem; background: oklch(46% 0.13 148); color: #fff; } .ds-safe-sign { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 3.25rem; height: 3.25rem; border-radius: 0.6rem; background: oklch(46% 0.13 148); box-shadow: inset 0 0 0 2px #fff; } .ds-safe-h { margin: 0; font-weight: 800; font-size: 2rem; line-height: 1.04; letter-spacing: -0.025em; } .ds-safe-body { padding: 2rem; font-size: 1.0625rem; line-height: 1.6; color: oklch(19% 0.014 255); } .ds-safe-body p { margin: 0; } .ds-safe-body strong { font-weight: 800; }"
+    },
+    {
+      "name": "Pricing Plate (recommended)",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "White enamel board, 1.5rem corners; the recommended plan adds a blue inset outline and a pinned plan tag.",
+      "html": "<div class=\"ds-plate\"><p class=\"ds-tag\">Best value: save 19%</p><p class=\"ds-plan\">Yearly</p><p class=\"ds-price\"><span class=\"ds-fig\">$29.00</span><span class=\"ds-per\">/ year</span></p><p class=\"ds-per\">$2.42/month, billed yearly</p></div>",
+      "css": ".ds-plate { position: relative; max-width: 22rem; padding: 2rem; background: #fff; border: 1px solid oklch(89% 0.006 255); border-radius: 1.5rem; box-shadow: inset 0 0 0 2px oklch(45% 0.155 257); font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: oklch(19% 0.014 255); } .ds-tag { position: absolute; top: -0.875rem; left: 1.75rem; margin: 0; padding: 0.25rem 0.625rem; border-radius: 0.25rem; background: oklch(45% 0.155 257); color: #fff; font-weight: 700; font-size: 0.8125rem; } .ds-plan { margin: 0; font-weight: 750; font-size: 1.25rem; line-height: 1.25; } .ds-price { display: flex; align-items: baseline; gap: 0.375rem; margin: 1.25rem 0 0; } .ds-fig { font-weight: 850; font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; } .ds-per { margin: 0.5rem 0 0; font-size: 0.9375rem; line-height: 1.5; color: oklch(40% 0.014 255); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "The one place that needs real affordances: white field, visible rule border, blue focus ring.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Email</span><input class=\"ds-input\" type=\"email\" placeholder=\"jane@example.com\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 0.625rem; max-width: 24rem; font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: oklch(19% 0.014 255); } .ds-label { font-weight: 700; font-size: 0.9375rem; } .ds-input { width: 100%; padding: 0.75rem 1rem; border: 1px solid oklch(89% 0.006 255); border-radius: 0.75rem; background: #fff; font: inherit; font-size: 1.0625rem; color: oklch(19% 0.014 255); transition: border-color 150ms, box-shadow 150ms; } .ds-input::placeholder { color: oklch(54% 0.012 255); } .ds-input:focus { outline: none; border-color: oklch(45% 0.155 257); box-shadow: 0 0 0 2px oklch(45% 0.155 257 / 0.3); }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "Fixed 4rem bar, sign-white at 90% with blur, logo left, label-weight links, small blue trial button right.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">Stop Biting</a><div class=\"ds-links\"><a href=\"#\">How it works</a><a href=\"#\">Science</a><a href=\"#\">Privacy</a><a href=\"#\">Pricing</a></div><a class=\"ds-nav-btn\" href=\"#\">Start free trial</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 4rem; padding: 0 1.5rem; background: oklch(98.5% 0.004 85 / 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid oklch(89% 0.006 255); font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-brand { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.025em; color: oklch(19% 0.014 255); text-decoration: none; } .ds-links { display: flex; gap: 1.75rem; } .ds-links a { font-size: 0.9375rem; font-weight: 600; color: oklch(40% 0.014 255); text-decoration: none; transition: color 150ms; } .ds-links a:hover { color: oklch(19% 0.014 255); } .ds-links a:focus-visible, .ds-nav-btn:focus-visible { outline: 3px solid oklch(45% 0.155 257); outline-offset: 3px; border-radius: 0.5rem; } .ds-nav-btn { display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 1.1rem; border-radius: 0.375rem; font-weight: 750; font-size: 0.9375rem; text-decoration: none; background: oklch(45% 0.155 257); color: #fff; box-shadow: inset 0 0 0 3px oklch(45% 0.155 257), inset 0 0 0 5px oklch(100% 0 0 / 0.9); } .ds-nav-btn:hover { background: oklch(39% 0.15 257); box-shadow: inset 0 0 0 3px oklch(39% 0.15 257), inset 0 0 0 5px #fff; }"
+    },
+    {
+      "name": "Alarm Sign",
+      "kind": "custom",
+      "refersTo": "warning-yellow",
+      "description": "Signature: yellow warning triangle, head in profile, dashed threshold ring, rising hand; one 4.2s loop.",
+      "html": "<svg class=\"ds-alarm\" viewBox=\"0 0 240 214\" role=\"img\" aria-label=\"Warning sign: a hand reaching the mouth sets off the alarm\"><defs><clipPath id=\"ds-alarm-clip\"><path d=\"M120 16 L226 198 L14 198 Z\"/></clipPath></defs><path class=\"ds-plate\" d=\"M120 16 L226 198 L14 198 Z\" stroke-width=\"13\" stroke-linejoin=\"round\"/><g clip-path=\"url(#ds-alarm-clip)\" class=\"ds-ink\"><g transform=\"translate(1 36) scale(0.85)\"><path d=\"M104 176 L104 157 C90 150 82 137 82 119 C82 93 100 75 124 75 C146 75 158 89 158 107 L158 111 L166 123 L159 126 L160 131 L157 133.5 L159 139 C158 146 152 150 144 150 L137 150 L137 176 Z\"/><circle class=\"ds-ring\" cx=\"161\" cy=\"134\" r=\"21\" fill=\"none\" stroke-width=\"3\" stroke-dasharray=\"5 6\"/><g class=\"ds-hand\" stroke-linecap=\"round\"><line x1=\"199\" y1=\"200\" x2=\"185\" y2=\"163\" stroke-width=\"17\"/><circle cx=\"180\" cy=\"153\" r=\"12\" stroke=\"none\"/><line x1=\"175\" y1=\"147\" x2=\"168\" y2=\"139\" stroke-width=\"8\"/></g><g class=\"ds-flash\" stroke-width=\"5\" stroke-linecap=\"round\" opacity=\"0\"><line x1=\"184\" y1=\"110\" x2=\"194\" y2=\"100\"/><line x1=\"190\" y1=\"124\" x2=\"203\" y2=\"121\"/><line x1=\"172\" y1=\"102\" x2=\"176\" y2=\"89\"/></g></g></g></svg>",
+      "css": ".ds-alarm { width: 100%; max-width: 16rem; } .ds-plate { fill: oklch(86% 0.175 92); stroke: oklch(19% 0.014 255); animation: ds-plate 4.2s linear infinite; } .ds-ink { fill: oklch(19% 0.014 255); } .ds-ring, .ds-hand, .ds-flash { stroke: oklch(19% 0.014 255); } .ds-hand { animation: ds-hand 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; } .ds-ring { animation: ds-ring 4.2s linear infinite; } .ds-flash { animation: ds-flash 4.2s linear infinite; } @keyframes ds-hand { 0%, 12% { transform: translate(14px, 20px); } 46%, 70% { transform: translate(0, 0); } 88%, 100% { transform: translate(14px, 20px); } } @keyframes ds-plate { 0%, 44% { fill: oklch(86% 0.175 92); } 48%, 54% { fill: oklch(95% 0.11 95); } 58%, 62% { fill: oklch(86% 0.175 92); } 64%, 68% { fill: oklch(95% 0.11 95); } 72%, 100% { fill: oklch(86% 0.175 92); } } @keyframes ds-ring { 0%, 38% { stroke-dasharray: 5 6; stroke-width: 3; } 46%, 70% { stroke-dasharray: 1 0; stroke-width: 5; } 78%, 100% { stroke-dasharray: 5 6; stroke-width: 3; } } @keyframes ds-flash { 0%, 44% { opacity: 0; } 48%, 54% { opacity: 1; } 58%, 62% { opacity: 0; } 64%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-plate, .ds-hand, .ds-ring, .ds-flash { animation: none; } .ds-flash { opacity: 1; } .ds-ring { stroke-dasharray: 1 0; stroke-width: 5; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Safety Sign",
+    "overview": "The homepage explains the product the way a workplace safety sign explains a hazard: one pictogram, one second, no reading. The vocabulary is ISO 7010 used as an explanatory system rather than decoration. There are three sign kinds and each one means exactly one thing. The yellow warning triangle is the alarm. Blue circular \"mandatory\" plates are the things the visitor does. Forest-green square \"safe condition\" plates are privacy. Everything else is black pictogram ink on sign-white enamel.\n\nThe material is enamel plate: flat, printed, with keylines set in from the edge the way a road sign carries its border. Nothing glows, nothing floats, nothing is glassy except the fixed navigation bar. Density is low and legible from a distance: heavy, tight Overpass headings (Overpass descends from Highway Gothic, the US road-sign face), open body copy, generous section bands that alternate between sign-white and plate-white. One thing moves on the page: the pictogram hand rising to the mouth, crossing the dashed threshold ring, and the warning plate flashing. The surface is light only; it is read at a desk in daylight.\n\nThis system is scoped to the sign surface (the homepage and the shared pricing block, which carries the tokens on /pricing too). The rest of the site lives in two other worlds that this file does not restate: the editorial \"journal\" world (`.ed-*` primitives in `src/index.css`, Instrument Serif / Inter / JetBrains Mono) still serves /blog, /pricing chrome, /how-it-works and the policy pages; the signed-in app (dashboard and friends) is its own incumbent system built on Tailwind `cream` / `ink` / `forest` tokens with Inter, in light and dark. Neither should borrow sign-system colors, and the sign surface should not borrow theirs.",
+    "keyCharacteristics": [
+      "Three sign kinds with fixed meanings: yellow warning (the alarm), blue mandatory (actions), green safe condition (privacy).",
+      "Enamel-plate buttons: blue plate, white keyline inset 3px to 5px, 0.375rem corners.",
+      "Overpass throughout, heavy (750 to 850) and tightly tracked for headings; Overpass Mono only for measurements.",
+      "Flat: no drop shadows; depth is inset keylines and 1px rules.",
+      "One authored animation loop (the pictogram), no scroll-reveal.",
+      "Light only, on a warm sign-white ground."
+    ],
+    "rules": [
+      { "name": "The One Warning Rule", "body": "Warning yellow belongs to the alarm. It fills the warning triangle and highlights selected text, and appears nowhere else: no yellow buttons, badges, backgrounds or highlights of \"important\" copy.", "section": "colors" },
+      { "name": "The Blue Means Do Rule", "body": "Blue marks something the visitor does. If an element is not an action or a step toward one, it is not blue. The full blue field is used once per page, for the closing call to action.", "section": "colors" },
+      { "name": "The Green Means Safe Rule", "body": "Green only ever says \"this is safe / this is private / this is included\". It is never a success-flavored action color.", "section": "colors" },
+      { "name": "The Measurement Mono Rule", "body": "Overpass Mono is for numbers that measure something (a countdown, a timestamp, a duration). Labels, offers and citations are set in Overpass at 650, the sign's own face.", "section": "typography" },
+      { "name": "The Comma Offer Rule", "body": "Offer and meta lines separate their parts with commas (\"3 days free, no card, then $2.99/month\"). Overpass sets the middle dot hard against the following word, so dotted lines read as broken.", "section": "typography" },
+      { "name": "The Flat Enamel Rule", "body": "Signs are printed, not lit. Never add an outer shadow, glow or gradient to a plate or button; draw borders inside the edge with an inset keyline.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** bind each sign color to its one meaning: yellow for the alarm, blue for actions, green for privacy and inclusion.",
+      "**Do** put the offer line (\"3 days free, no card, then $2.99/month\") beside every trial button, in the label style.",
+      "**Do** draw button and sign borders as inset keylines (white 2px line, 3px in) on flat fills.",
+      "**Do** mark a section with a mandatory disc or safe square beside its heading when the section is an instruction or a privacy statement.",
+      "**Do** use a numeral in the mandatory disc for ordered steps.",
+      "**Do** keep every section visible at first paint and every hit area at least 44px.",
+      "**Do** keep Overpass Mono for measured numbers only; tabular figures for prices and timers."
+    ],
+    "donts": [
+      "**Don't** use warning yellow for anything but the alarm sign and text selection.",
+      "**Don't** fill a second button blue beside the trial button; secondary actions are ink-outlined.",
+      "**Don't** add drop shadows, glows, gradients or glassy surfaces (the fixed nav's blur is the only translucency).",
+      "**Don't** print ISO sign codes (W01, M01, E01) or section numbers in the UI; they were removed from the UI for clarity.",
+      "**Don't** put eyebrows or kickers above headings; the sign beside the heading does that job.",
+      "**Don't** build the wellness-app hero: no gradient field, no phone mockup, no grid of icon feature cards.",
+      "**Don't** add scroll-reveal or ambient motion; the pictogram loop is the page's one piece of motion.",
+      "**Don't** give the sign surface a dark theme or borrow the app's cream / forest tokens or the journal's `.ed-*` type."
+    ]
+  }
+}

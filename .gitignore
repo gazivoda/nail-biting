@@ -39,3 +39,12 @@ data/indexnow-state.json
 
 # Desktop app installers — not served by the web app, keep out of git
 downloads/
+
+# impeccable: keep the design record (design.json, surfaces/, critique/), not the
+# working files (screenshots, decision-page payloads, question logs)
+.impeccable/review/
+.impeccable/decision/
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/build/
+.impeccable/config.local.json

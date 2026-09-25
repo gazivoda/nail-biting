@@ -42,16 +42,15 @@ function resultLine(catches: number): string {
 }
 
 // --------------------------------------------------------------------------
-// Buttons, in the homepage's editorial set: square-ish radius, no shimmer, no
-// hover lift. The page is light only, so there are no dark variants. The
-// secondary button sits on the dark plate, so it is drawn light-on-dark.
+// Buttons, in the homepage's sign set (`.sg-btn` in index.css): the primary
+// is the blue "mandatory" plate. The page is light only, so there are no dark
+// variants. The secondary sits on the dark plate, so it is drawn light-on-dark.
 // --------------------------------------------------------------------------
 
-const PRIMARY_BTN =
-  'inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500';
+const PRIMARY_BTN = 'sg-btn';
 
 const SECONDARY_BTN =
-  'inline-flex min-h-11 items-center gap-2 rounded-xl border border-stone-600 px-5 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:border-cream-100';
+  'sg-btn bg-transparent text-white shadow-[inset_0_0_0_2px_oklch(100%_0_0/0.55)] hover:bg-white/10';
 
 // --------------------------------------------------------------------------
 
@@ -236,17 +235,17 @@ export function HeroDemo({ autoStart = false }: Props) {
         // untrue after a denial and undercuts the privacy claim beside it. The
         // plate keeps the same box, so nothing moves.
         <div
-          className="animate-fade-in flex aspect-video w-full flex-col items-center justify-center gap-5 rounded-2xl bg-stone-900 px-6 text-center"
+          className="animate-fade-in flex aspect-video w-full flex-col items-center justify-center gap-5 rounded-2xl bg-[color:var(--sg-ink)] px-6 text-center"
           role={failure ? 'alert' : undefined}
           aria-live={failure ? undefined : 'polite'}
         >
           {failure ? (
-            <p className="flex max-w-md items-start gap-2 ed-ui text-cream-100">
+            <p className="flex max-w-md items-start gap-2 text-[0.9375rem] text-white">
               <AlertTriangle size={15} className="mt-1 flex-shrink-0 text-alert-400" aria-hidden="true" />
               <span>{failure}</span>
             </p>
           ) : isFinished ? (
-            <p className="max-w-md ed-ui font-semibold text-cream-100">{resultLine(state.catches)}</p>
+            <p className="max-w-md text-[1.0625rem] font-bold text-white">{resultLine(state.catches)}</p>
           ) : null}
 
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -264,15 +263,15 @@ export function HeroDemo({ autoStart = false }: Props) {
               {failure ? RETRY_LABEL : isFinished ? 'Run it again' : START_LABEL}
             </button>
           </div>
-          {isFinished && <p className="ed-mono text-stone-400">{OFFER_LABEL}</p>}
+          {isFinished && <p className="sg-note text-white/80">{OFFER_LABEL}</p>}
         </div>
       )}
 
       {isLoading && (
-        <p className="flex items-center justify-center gap-2 ed-ui text-stone-500">
+        <p className="sg-small flex items-center justify-center gap-2">
           <Loader2
             size={14}
-            className="animate-spin text-forest-500 flex-shrink-0"
+            className="animate-spin flex-shrink-0"
             aria-hidden="true"
           />
           {LOADING_LABEL}
@@ -284,7 +283,7 @@ export function HeroDemo({ autoStart = false }: Props) {
           after the minute runs out. */}
       {isRunning && state.catches > 0 && (
         <div className="animate-fade-in flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-live="polite">
-          <p className="ed-ui font-semibold text-stone-800">
+          <p className="text-[1.0625rem] font-bold">
             That&apos;s the alarm. Caught {state.catches === 1 ? 'once' : `${state.catches} times`} so far.
           </p>
           <TrialLink />
@@ -293,18 +292,18 @@ export function HeroDemo({ autoStart = false }: Props) {
 
       {/* A failed camera is a dead end for the demo, not for the visitor. */}
       {failure && (
-        <p className="text-center ed-ui text-stone-600">
+        <p className="sg-small text-center">
           You can still{' '}
           <a
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
-            className="ed-link font-semibold text-forest-600 hover:text-forest-500"
+            className="sg-link"
           >
             start the free trial
           </a>{' '}
           ({OFFER_LABEL}) or read{' '}
-          <a href="/how-it-works" className="ed-link font-semibold text-forest-600 hover:text-forest-500">
+          <a href="/how-it-works" className="sg-link">
             how detection works
           </a>
           .

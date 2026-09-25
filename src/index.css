@@ -128,6 +128,60 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* ── Overpass (sign system, homepage) ──────────────────────────────────────
+   Variable font: one file per subset covers every weight. Overpass descends
+   from Highway Gothic, the US road-sign face, which is the point: the
+   homepage speaks the language of safety signs. Overpass Mono is for sign
+   codes and timestamps only. */
+@font-face {
+  font-family: 'Overpass';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/overpass-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Overpass';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/fonts/overpass-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Overpass Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/overpass-mono-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Overpass Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/overpass-mono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Overpass Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/overpass-mono-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Overpass Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/overpass-mono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -564,4 +618,126 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
     transform: scaleX(0);
     transition: none;
   }
+}
+
+@layer components {
+/* ── Sign system (homepage) ─────────────────────────────────────────────────
+   ISO 7010 sign language, used as an explanatory system: yellow warning for
+   the alarm and nothing else, blue "mandatory" plates for what the visitor
+   does, forest-green "safe condition" plates for privacy. Scoped to .sg-page
+   so the editorial pages (/blog, /pricing chrome) keep their own world. The
+   page is light only: it is read at a desk in daylight. */
+.sg-page {
+  --sg-ground: oklch(98.5% 0.004 85); /* #FBFAF7, the chosen card's sign-white */
+  --sg-plate: oklch(100% 0 0);
+  --sg-ink: oklch(19% 0.014 255);
+  --sg-ink-2: oklch(40% 0.014 255);
+  --sg-rule: oklch(89% 0.006 255);
+  --sg-yellow: oklch(86% 0.175 92);
+  --sg-blue: oklch(45% 0.155 257);
+  --sg-blue-press: oklch(39% 0.15 257);
+  --sg-blue-tint: oklch(95% 0.025 257);
+  --sg-green: oklch(46% 0.13 148);
+  --sg-green-tint: oklch(96% 0.03 148);
+  color: var(--sg-ink);
+  font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: 'kern' 1;
+}
+.sg-page ::selection { background: var(--sg-yellow); color: var(--sg-ink); }
+/* .sg-page carries tokens, type and focus rings only, never a ground: the
+   homepage root paints its own, and PricingSection (which carries .sg-page so
+   /pricing resolves the tokens) must not paint a box on the page it sits on. */
+
+/* Type. Headings are heavy and tight like sign lettering; body stays open. */
+.sg-h1   { font-weight: 850; font-size: clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem); line-height: 0.96; letter-spacing: -0.035em; text-wrap: balance; }
+.sg-h2   { font-weight: 800; font-size: clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem); line-height: 1.04; letter-spacing: -0.025em; text-wrap: balance; }
+.sg-h3   { font-weight: 750; font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.01em; }
+.sg-lede { font-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem); line-height: 1.45; color: var(--sg-ink-2); text-wrap: pretty; }
+.sg-body { font-size: 1.0625rem; line-height: 1.6; color: var(--sg-ink-2); text-wrap: pretty; }
+.sg-small { font-size: 0.9375rem; line-height: 1.5; color: var(--sg-ink-2); }
+/* Overpass Mono is for measurements only (timestamps, durations). Labels,
+   offers and citations are set in .sg-note, the sign's own face. */
+.sg-code { font-family: 'Overpass Mono', ui-monospace, monospace; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.sg-note { font-weight: 650; font-size: 0.9375rem; line-height: 1.45; color: var(--sg-ink-2); }
+.sg-figure { font-weight: 850; font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.sg-measure { max-width: 62ch; }
+
+.sg-container { width: 100%; max-width: 76rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+
+/* Buttons are enamel sign plates: a nearly square blue plate with a white
+   keyline set in from the edge, the way a road sign carries its border. No
+   glow: a sign is flat. */
+.sg-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 3.25rem; padding: 0 1.6rem; border-radius: 0.375rem;
+  font-weight: 750; font-size: 1.0625rem; letter-spacing: -0.005em;
+  background: var(--sg-blue); color: #fff;
+  box-shadow: inset 0 0 0 3px var(--sg-blue), inset 0 0 0 5px oklch(100% 0 0 / 0.9);
+  transition: background-color 150ms ease-out, box-shadow 150ms ease-out, transform 150ms ease-out;
+}
+.sg-btn:hover { background: var(--sg-blue-press); box-shadow: inset 0 0 0 3px var(--sg-blue-press), inset 0 0 0 5px #fff; }
+.sg-btn:active { transform: translateY(1px); }
+.sg-btn-sm { min-height: 2.75rem; padding: 0 1.1rem; font-size: 0.9375rem; }
+.sg-btn-ink {
+  background: #fff; color: var(--sg-ink); box-shadow: inset 0 0 0 2px var(--sg-ink);
+}
+.sg-btn-ink:hover { background: var(--sg-ink); color: #fff; box-shadow: inset 0 0 0 2px var(--sg-ink); }
+.sg-btn-light { background: #fff; color: var(--sg-blue); box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px var(--sg-blue); }
+.sg-btn-light:hover { background: var(--sg-blue-tint); box-shadow: inset 0 0 0 3px var(--sg-blue-tint), inset 0 0 0 5px var(--sg-blue); }
+
+.sg-link { color: var(--sg-blue); font-weight: 650; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 0.2em; }
+.sg-link:hover { color: var(--sg-blue-press); text-decoration-thickness: 2.5px; }
+
+/* A plate: the enamel sign board everything sits on. */
+.sg-plate { background: var(--sg-plate); border: 1px solid var(--sg-rule); border-radius: 1.5rem; }
+
+/* Sign glyphs. m = mandatory (blue disc), e = safe condition (green square). */
+.sg-sign { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; }
+.sg-sign-m { width: 3.25rem; height: 3.25rem; border-radius: 999px; background: var(--sg-blue); box-shadow: inset 0 0 0 3px var(--sg-blue), inset 0 0 0 5px oklch(100% 0 0 / 0.9); font-weight: 850; font-size: 1.375rem; }
+.sg-sign-e { width: 3.25rem; height: 3.25rem; border-radius: 0.6rem; background: var(--sg-green); }
+
+.sg-page a:focus-visible,
+.sg-page button:focus-visible,
+.sg-page summary:focus-visible { outline: 3px solid var(--sg-blue); outline-offset: 3px; border-radius: 0.5rem; }
+.sg-page .sg-band a:focus-visible { outline-color: #fff; }
+
+/* The signature: the pictogram hand rises, crosses the threshold ring, and
+   the warning sign answers. One authored loop, nothing else on the page moves. */
+/* The rest pose keeps the fist and finger inside the yellow, so any still
+   frame (a screenshot, a share card, reduced motion) still reads as the sign. */
+@keyframes sg-hand {
+  0%, 12%   { transform: translate(14px, 20px); }
+  46%, 70%  { transform: translate(0, 0); }
+  88%, 100% { transform: translate(14px, 20px); }
+}
+@keyframes sg-plate {
+  0%, 44%   { fill: var(--sg-yellow); }
+  48%, 54%  { fill: oklch(95% 0.11 95); }
+  58%, 62%  { fill: var(--sg-yellow); }
+  64%, 68%  { fill: oklch(95% 0.11 95); }
+  72%, 100% { fill: var(--sg-yellow); }
+}
+.sg-pict-plate { animation: sg-plate 4.2s linear infinite; }
+@keyframes sg-ring {
+  0%, 38%   { stroke-dasharray: 5 6; stroke-width: 3; }
+  46%, 70%  { stroke-dasharray: 1 0; stroke-width: 5; }
+  78%, 100% { stroke-dasharray: 5 6; stroke-width: 3; }
+}
+@keyframes sg-flash {
+  0%, 44%   { opacity: 0; }
+  48%, 54%  { opacity: 1; }
+  58%, 62%  { opacity: 0; }
+  64%, 68%  { opacity: 1; }
+  72%, 100% { opacity: 0; }
+}
+.sg-pict-hand  { animation: sg-hand 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+.sg-pict-ring  { animation: sg-ring 4.2s linear infinite; }
+.sg-pict-flash { animation: sg-flash 4.2s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sg-pict-hand, .sg-pict-ring, .sg-pict-flash, .sg-pict-plate { animation: none; }
+  .sg-pict-flash { opacity: 1; }
+  .sg-pict-ring { stroke-dasharray: 1 0; stroke-width: 5; }
+  .sg-btn { transition: none; }
+}
 }

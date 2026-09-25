@@ -8,22 +8,18 @@ interface FormState {
   message: string;
 }
 
-// Typeset in the editorial system the rest of the homepage uses (see the
-// `/* ── Editorial system ── */` block in index.css): heading in the display
-// serif, intro as a lede, field labels in mono as apparatus, and hairlines
-// rather than a rounded card with a shadow bounding the whole thing.
-//
-// A form is the one place on this page that still needs real affordances, so
-// the inputs keep a visible field boundary, a white ground against the cream
-// page, and the forest focus ring. Labels stay tied to their inputs, `required`
-// still drives native validation, and the live region is unchanged.
-//
-// `ed-page` is on the section so `--ed-hairline` resolves (and the editorial
-// focus ring applies) wherever this component is mounted, not only inside
-// Landing's `.ed-page` root.
+// Set in the homepage's sign system (`.sg-*` in index.css; the section sits
+// inside Landing's `.sg-page`). A form is the one place on the page that needs
+// real affordances, so fields keep a visible boundary on a white ground and a
+// blue focus ring. No `.reveal`: the homepage runs no reveal hook, and an
+// unrevealed section stays invisible. The submit is ink-outlined so the blue
+// fill stays reserved for the trial.
 const FIELD_CLASS =
-  'w-full rounded-lg border border-hairline bg-white px-4 py-2.5 ed-ui text-stone-800 ' +
-  'placeholder:text-stone-500 transition focus:outline-none focus:ring-2 focus:ring-forest-500';
+  'w-full rounded-xl border border-[color:var(--sg-rule)] bg-white px-4 py-3 text-[1.0625rem] ' +
+  'text-[color:var(--sg-ink)] placeholder:text-[color:oklch(54%_0.012_255)] transition ' +
+  'focus:border-[color:var(--sg-blue)] focus:outline-none focus:ring-2 focus:ring-[color:var(--sg-blue)]/30';
+
+const LABEL_CLASS = 'text-[0.9375rem] font-bold';
 
 export function ContactForm() {
   const [form, setForm] = useState<FormState>({ fullName: '', email: '', message: '' });
@@ -51,22 +47,24 @@ export function ContactForm() {
   }
 
   return (
-    <section aria-labelledby="contact-heading" className="ed-page reveal">
-      <div className="mx-auto max-w-2xl border-t border-hairline pt-10">
-        <h2 id="contact-heading" className="ed-h2 text-stone-800">
+    <section aria-labelledby="contact-heading" className="grid gap-10 border-t border-[color:var(--sg-rule)] pt-16 lg:grid-cols-12">
+      <div className="lg:col-span-4">
+        <h2 id="contact-heading" className="sg-h2">
           Get in touch
         </h2>
-        <p className="ed-lede ed-measure mt-5 text-stone-600">
+        <p className="sg-body mt-4">
           Have a question or feedback? We'd love to hear from you.
         </p>
+      </div>
 
+      <div className="lg:col-span-8">
         <form
           onSubmit={handleSubmit}
-          className="mt-9 flex flex-col gap-7 border-y border-hairline py-9"
+          className="flex flex-col gap-6"
         >
           <div className="flex flex-col gap-2.5">
-            <label htmlFor="contact-name" className="ed-mono text-stone-500">
-              Your Name
+            <label htmlFor="contact-name" className={LABEL_CLASS}>
+              Name
             </label>
             <input
               id="contact-name"
@@ -80,8 +78,8 @@ export function ContactForm() {
             />
           </div>
           <div className="flex flex-col gap-2.5">
-            <label htmlFor="contact-email" className="ed-mono text-stone-500">
-              Your Email
+            <label htmlFor="contact-email" className={LABEL_CLASS}>
+              Email
             </label>
             <input
               id="contact-email"
@@ -95,8 +93,8 @@ export function ContactForm() {
             />
           </div>
           <div className="flex flex-col gap-2.5">
-            <label htmlFor="contact-message" className="ed-mono text-stone-500">
-              Your Message
+            <label htmlFor="contact-message" className={LABEL_CLASS}>
+              Message
             </label>
             <textarea
               id="contact-message"
@@ -111,12 +109,12 @@ export function ContactForm() {
           </div>
           <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
             {status === 'success' && (
-              <p className="ed-body text-forest-600">
+              <p className="sg-body font-semibold text-[color:var(--sg-green)]">
                 Message sent! We'll get back to you soon.
               </p>
             )}
             {status === 'error' && (
-              <p className="ed-body text-red-700">
+              <p className="sg-body font-semibold text-red-700">
                 Something went wrong. Please try again or email us at hello@stopbiting.today.
               </p>
             )}
@@ -124,9 +122,9 @@ export function ContactForm() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="sg-btn sg-btn-ink self-start disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {status === 'sending' ? 'Sending…' : 'Send Message'}
+            {status === 'sending' ? 'Sending…' : 'Send message'}
           </button>
         </form>
       </div>
