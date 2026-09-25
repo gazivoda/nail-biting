@@ -958,3 +958,13 @@ Follow-ups (not done: feature-sized or owner decisions)
 - "Incident" vs "bite" glossary across Dashboard/History/chart; tour step 1 copy when camera is not running
 - PRODUCT.md is stale: says 7-day trial and EUR; code says 3 days and USD
 - /pricing and /how-it-works run on Inter, not the editorial type system; their <title> stays the homepage's
+
+## Follow-ups status (2026-09-25, later)
+- [x] Tag/confirm at the alarm moment (ReplacementPrompt asks "Was it a bite? What set it off?") — deployed 2af8fec
+- [x] App-wide dark hairline: ink-400 lifted 9% -> 30% L — deployed 2af8fec
+- [x] PRODUCT.md pricing facts corrected (3-day, USD)
+- [ ] Pre-permission explainer before the first camera prompt
+- [ ] Plan choice through OAuth (?plan=yearly)
+- [ ] "Incident" vs "bite" glossary across Dashboard/History/chart
+- [ ] /pricing, /how-it-works, /about still on the old Inter/cream look
+- [ ] Real alarm-moment photo and a photo of Igor (owner assets)
