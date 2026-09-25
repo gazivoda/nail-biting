@@ -233,7 +233,7 @@ export function Landing() {
                     height={800}
                     fetchPriority="high"
                     decoding="async"
-                    alt="The Stop Biting Watch screen: detection running with the camera feed hidden, the streak just reset after a catch, best streak 19 hours, and a card suggesting pressing your thumb to each fingertip instead."
+                    alt="The Stop Biting Watch screen right after a catch: detection running with the camera feed hidden, the streak reset, best streak 19 hours, and a card suggesting pressing your thumb to each fingertip, then asking whether it was a bite and what set it off: stress, deep focus, boredom or not sure."
                     className="w-full rounded-lg border border-[color:var(--sg-rule)]"
                   />
                   <figcaption className="sg-note mt-2">

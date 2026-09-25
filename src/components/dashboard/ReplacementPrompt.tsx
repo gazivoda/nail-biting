@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
+import { PRESET_TAGS } from './triggerTags';
+import type { TriggerTag } from '../../types';
 
 const SUGGESTIONS = [
   'Press thumb to each fingertip',
@@ -9,19 +11,35 @@ const SUGGESTIONS = [
   'Sip water mindfully',
 ];
 
+const RECENT_MS = 10 * 60 * 1000;
+
+// Shown after every auto-detection. Two jobs, in the order the moment needs
+// them: a competing response to do with your hands right now, then one tap to
+// say whether it was a bite and what set it off. Tagging used to be possible
+// only later, from a hover button in History, which is where it never happened.
 export function ReplacementPrompt() {
-  const { incidents } = useAppStore();
+  const { incidents, customTags, confirmIncident } = useAppStore();
   const [dismissed, setDismissed] = useState<number>(0);
+  // Only ask about detections from this sitting: after a reload, a catch from
+  // yesterday is not "the moment" any more. Anchored at mount so render stays pure.
+  const [askAfter] = useState(() => Date.now() - RECENT_MS);
 
-  const lastAuto = [...incidents]
-    .reverse()
-    .find(i => i.tag === 'auto-detected');
+  // `autoDetected`, not the tag: confirming with a trigger replaces the
+  // 'auto-detected' tag, and the dismissed timestamp is what hides this card.
+  const lastAuto = incidents.find(i => i.autoDetected);
 
-  const shouldShow = lastAuto && dismissed < lastAuto.timestamp;
+  const shouldShow =
+    lastAuto && !lastAuto.confirmed && lastAuto.timestamp > askAfter && dismissed < lastAuto.timestamp;
 
   if (!shouldShow) return null;
 
   const suggestion = SUGGESTIONS[lastAuto.timestamp % SUGGESTIONS.length];
+  const tags = [...PRESET_TAGS, ...customTags];
+
+  const answer = (tag?: TriggerTag) => {
+    if (tag) confirmIncident(lastAuto.id, tag);
+    setDismissed(lastAuto.timestamp);
+  };
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-forest-200 dark:border-forest-800 rounded-[18px] p-7 shadow-card-md dark:shadow-card-md-dark animate-fade-up">
@@ -35,7 +53,7 @@ export function ReplacementPrompt() {
           </p>
         </div>
         <button
-          onClick={() => setDismissed(lastAuto.timestamp)}
+          onClick={() => answer()}
           aria-label="Dismiss"
           className="p-2.5 -m-1.5 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
@@ -47,11 +65,26 @@ export function ReplacementPrompt() {
         {suggestion}
       </p>
 
+      <p className="mt-5 text-[13px] font-semibold text-stone-800 dark:text-stone-100">
+        Was it a bite? What set it off?
+      </p>
+      <div className="mt-2 grid grid-cols-2 gap-2">
+        {tags.map(({ id, label, emoji }) => (
+          <button
+            key={id}
+            onClick={() => answer(id)}
+            className="flex min-h-11 items-center gap-2 rounded-xl border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-300 px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-200"
+          >
+            <span aria-hidden="true">{emoji}</span>
+            <span>{label}</span>
+          </button>
+        ))}
+      </div>
       <button
-        onClick={() => setDismissed(lastAuto.timestamp)}
-        className="mt-3 w-full py-2.5 rounded-xl text-[13px] font-medium text-forest-700 dark:text-forest-300 bg-forest-50 dark:bg-forest-900/20 hover:bg-forest-100 dark:hover:bg-forest-900/40 border border-forest-200 dark:border-forest-800 transition-colors"
+        onClick={() => answer()}
+        className="mt-2 min-h-11 w-full rounded-xl text-[13px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
       >
-        Got it
+        No, just my hand nearby
       </button>
     </div>
   );

@@ -213,7 +213,7 @@ export function Log() {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
                       const tagLabel = bite
-                        ? (inc.confirmed ? '✓ Bite (confirmed)' : biteTagLabel(inc, customTags))
+                        ? (inc.confirmed && inc.tag === 'auto-detected' ? '✓ Bite (confirmed)' : biteTagLabel(inc, customTags))
                         : '📷 Incident';
                       return (
                         <div

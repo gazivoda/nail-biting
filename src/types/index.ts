@@ -66,7 +66,8 @@ export interface AppState {
 
 export interface AppActions {
   logIncident: (tag: TriggerTag, autoDetected?: boolean) => void;
-  confirmIncident: (id: string) => void;
+  /** Marks an auto-detection as a real bite, optionally with the trigger the user picked. */
+  confirmIncident: (id: string, tag?: TriggerTag) => void;
   deleteIncident: (id: string) => void;
   setCameraEnabled: (enabled: boolean) => void;
   setShowCameraFeed: (show: boolean) => void;

@@ -152,12 +152,12 @@ export const useAppStore = create<AppState & AppActions>()(
         set({ ...next, ...deriveStreakState(next) });
       },
 
-      confirmIncident: (id: string) => {
+      confirmIncident: (id: string, tag?: TriggerTag) => {
         const { incidents, historyStartTime, bestStreakFloorMs } = get();
         if (!incidents.some(i => i.id === id)) return;
 
         const next = {
-          incidents: incidents.map(i => i.id === id ? { ...i, confirmed: true } : i),
+          incidents: incidents.map(i => i.id === id ? { ...i, confirmed: true, ...(tag ? { tag } : {}) } : i),
           historyStartTime,
           bestStreakFloorMs,
         };

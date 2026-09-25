@@ -59,6 +59,23 @@ describe('confirmIncident', () => {
     // The streak broke when the bite happened, not when it was confirmed.
     expect(store().lastBiteTime).toBe(T0 + 60_000);
   });
+  it('records the trigger picked at the alarm moment', () => {
+    at(60_000);
+    store().logIncident('auto-detected', true);
+    const id = store().incidents[0].id;
+
+    store().confirmIncident(id, 'stress');
+
+    expect(store().incidents[0]).toMatchObject({ confirmed: true, tag: 'stress', autoDetected: true });
+    expect(store().lastBiteTime).toBe(T0 + 60_000);
+  });
+
+  it('keeps the auto-detected tag when no trigger is given', () => {
+    at(60_000);
+    store().logIncident('auto-detected', true);
+    store().confirmIncident(store().incidents[0].id);
+    expect(store().incidents[0].tag).toBe('auto-detected');
+  });
 });
 
 describe('deleteIncident', () => {
