@@ -330,6 +330,19 @@ export function Landing() {
                 It runs in your desktop browser, so there's nothing to download. You can install it
                 like an app later if you want it one click away.
               </p>
+
+              {/* The limits, said plainly. Each line is checked against the
+                  code: useDetection (hidden tabs need the Minimize window),
+                  biteDetector (fingertip distance, three sensitivity levels),
+                  Settings (sound, volume, flash), the store (local history). */}
+              <h3 className="sg-h3 mt-8">Before you start</h3>
+              <ul className="sg-body mt-3 list-disc space-y-2 pl-5 marker:text-[color:var(--sg-ink-2)]">
+                <li>You need a webcam and a laptop or desktop browser. It's made for the hours you spend at a screen.</li>
+                <li>Keep the app open while you work. If you switch to another tab, press Minimize so a small window keeps watching.</li>
+                <li>It reacts to a hand near your mouth, not only to biting, so resting your chin on your fingers can set it off. Sensitivity has three levels.</li>
+                <li>It makes a noise. Pick a quieter sound, turn it down, or use a screen flash instead.</li>
+                <li>Your history is stored in this browser, so it doesn't follow you to another computer.</li>
+              </ul>
             </div>
           </div>
         </section>
