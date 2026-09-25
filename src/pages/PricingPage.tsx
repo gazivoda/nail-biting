@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { PricingSection } from '../components/PricingSection';
+import { PLAN_FEATURES } from '../components/site/plans';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
@@ -19,11 +20,11 @@ import { TrialButton } from '../components/site/TrialButton';
 const PRICING_FAQS: { q: string; a: ReactNode }[] = [
   {
     q: 'How does the 3-day free trial work?',
-    a: 'Every account starts with a 3-day free trial that includes full detection and tracking features — no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.',
+    a: 'Every account starts with a 3-day free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.',
   },
   {
     q: 'What is the difference between Monthly and Yearly?',
-    a: 'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. Yearly is billed once at $29.00 — about $2.42/month, saving 19% versus $2.99/month billing — and adds priority support.',
+    a: 'Both plans include the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support.',
   },
   {
     q: 'How do payments work?',
@@ -33,7 +34,7 @@ const PRICING_FAQS: { q: string; a: ReactNode }[] = [
     q: 'Can I cancel anytime?',
     a: (
       <>
-        Yes — cancel anytime from the app settings and you keep access until the end of the paid
+        Yes. Cancel anytime from the app settings and you keep access until the end of the paid
         period. See the{' '}
         <a href="/refund-policy" className="sg-link">
           refund policy
@@ -44,14 +45,9 @@ const PRICING_FAQS: { q: string; a: ReactNode }[] = [
   },
 ];
 
+// The same wording as the pricing cards (site/plans.ts) plus the privacy line.
 // Mirrors the "What every plan includes" list in the server-injected prose.
-const PLAN_INCLUDES = [
-  'Unlimited real-time AI nail biting detection via your webcam',
-  'Streak and habit tracking with all-time best record',
-  'Full incident history with trigger tagging',
-  'All alert types (sound and visual)',
-  '100% on-device processing — no camera data ever leaves your device',
-];
+const PLAN_INCLUDES = [...PLAN_FEATURES, 'Detection runs on your device; no camera data leaves it'];
 
 export function PricingPage() {
   useTheme('light');

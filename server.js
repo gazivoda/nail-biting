@@ -1999,11 +1999,11 @@ if (!existsSync(distPath)) {
       '<section><h2>Yearly — $29.00/year</h2>' +
       '<p>Billed once a year — just $2.42/month, saving 19% versus monthly billing. Includes everything in Monthly plus priority support.</p></section>' +
       '<section><h2>What every plan includes</h2><ul>' +
-      '<li>Unlimited real-time AI nail biting detection via your webcam</li>' +
-      '<li>Streak and habit tracking with all-time best record</li>' +
-      '<li>Full incident history with trigger tagging</li>' +
-      '<li>All alert types (sound and visual)</li>' +
-      '<li>100% on-device processing — no camera data ever leaves your device</li>' +
+      '<li>Detection for as long as you run it</li>' +
+      '<li>Current and best streak</li>' +
+      '<li>Full history with trigger tags</li>' +
+      '<li>Sound, flash, or both</li>' +
+      '<li>Detection runs on your device; no camera data leaves it</li>' +
       '</ul></section>' +
       '<section><h2>Payments and cancellation</h2>' +
       '<p>Secure payment via Paddle. Cancel anytime — see the <a href="/refund-policy">refund policy</a>. ' +
@@ -2046,10 +2046,10 @@ if (!existsSync(distPath)) {
       totalTime: 'PT2M',
       step: [
         { '@type': 'HowToStep', position: 1, name: 'Open the app', text: 'Visit stopbiting.today in Chrome, Edge, or Firefox. There is nothing to install.' },
-        { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally — nothing is ever transmitted.' },
+        { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally and never leaves your device.' },
         { '@type': 'HowToStep', position: 3, name: 'Position your webcam', text: 'Make sure your face and hands are visible in the camera view. The AI tracks hand-to-mouth movements.' },
         { '@type': 'HowToStep', position: 4, name: 'Work normally', text: 'The app runs in the background. When it detects nail biting, an audible alarm fires immediately.' },
-        { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, press both palms flat on your desk for 60 seconds — the physical incompatibility breaks the habit chain.' },
+        { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, do the hand exercise the app suggests, such as pressing your palms flat or clenching a fist: something your hands cannot do while biting.' },
       ],
     };
     // FAQPage IS a WebPage subtype, so this doubles as the page node rather
@@ -2101,7 +2101,7 @@ if (!existsSync(distPath)) {
       '<section><h2>Technical specifications</h2><ul>' +
       '<li>Detection model: Google MediaPipe Hand Landmarker (21 landmarks)</li>' +
       '<li>Processing: WebAssembly — sandboxed, on-device, no network access</li>' +
-      '<li>Alarm latency: under 1 second from detection to alarm</li>' +
+      '<li>Alarm latency: about 0.6 seconds after your hand starts moving to your mouth</li>' +
       '<li>Incident logging: timestamped log stored locally — never transmitted</li>' +
       '</ul></section>' +
       `<section><h2>Common questions</h2>${faqHtml}</section>` +

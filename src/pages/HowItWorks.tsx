@@ -17,7 +17,7 @@ const STEPS = [
   },
   {
     title: 'Grant camera access',
-    body: 'Allow webcam access. The video feed is processed entirely on your device by MediaPipe running in WebAssembly. Nothing is transmitted anywhere.',
+    body: 'Allow webcam access. The video feed is processed entirely on your device by MediaPipe running in WebAssembly. The video never leaves your device.',
   },
   {
     title: 'Position your camera',
@@ -29,14 +29,14 @@ const STEPS = [
   },
   {
     title: 'Respond to the alarm',
-    body: 'The alarm is your awareness signal. Press both palms flat on your desk for 60 seconds: a competing response that is physically incompatible with biting. Doing it every time is the core of habit reversal training.',
+    body: 'The alarm is your awareness signal. Do the hand exercise the app suggests, such as pressing your palms flat or clenching a fist: a competing response your hands cannot do while biting. Doing it every time is the core of habit reversal training.',
   },
 ];
 
 const SPECS = [
   { label: 'Detection model', value: 'Google MediaPipe Hand Landmarker (21 landmarks)' },
   { label: 'Processing', value: 'WebAssembly: sandboxed, on-device, no network access' },
-  { label: 'Alarm latency', value: 'Under 1 second from detection to alarm' },
+  { label: 'Alarm latency', value: 'About 0.6 seconds after your hand starts moving to your mouth' },
   { label: 'Incident logging', value: 'Timestamped log stored locally, never transmitted' },
 ];
 
