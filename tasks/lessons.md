@@ -87,3 +87,8 @@ the mirror before treating copy as frozen, then fix the comment.
 **Keep deliberate owner decisions even when a reviewer flags them.** Two reviewers wanted the
 trial links out of `target="_blank"`; `git log -S` showed 92360d2 did it on purpose (the landing
 tab keeps the demo running). Check history before reverting a pattern that looks like a mistake.
+
+**Work on main unless told otherwise (user correction, 2026-09-25).** I built and pushed the
+UI/UX pass on the `seo-geo-loop-sept` branch, and the user had to ask for it to go to main.
+Rule: default to `main` (which auto-deploys via Coolify) for this project; create or use a
+branch only when the user explicitly asks for one.
