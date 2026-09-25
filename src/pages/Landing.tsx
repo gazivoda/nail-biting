@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from 'react';
 import {
   ArrowRight, BookOpen, Camera, ChevronDown, Loader2,
-  ShieldCheck, WifiOff, HardDrive, Activity,
+  ShieldCheck,
 } from 'lucide-react';
 import { ContactForm } from '../components/ContactForm';
 import { PricingSection } from '../components/PricingSection';
@@ -150,26 +150,6 @@ function SignHeading({ id, sign, children }: {
   );
 }
 
-// Three facts that answer the first worries, under the call to action. On a
-// phone they move below the sign, so the sign itself reaches the first screen.
-function TrustList({ className }: { className: string }) {
-  return (
-    <ul className={`gap-3 border-t border-[color:var(--sg-rule)] pt-6 sm:grid-cols-3 ${className}`}>
-      {([
-        [ShieldCheck, 'Nothing leaves your device'],
-        [WifiOff, 'Works offline once loaded'],
-        [Activity, 'Built on habit reversal training'],
-      ] as const).map(([Icon, label]) => (
-        <li key={label} className="flex items-center gap-2.5 text-[0.9375rem] font-semibold">
-          <Icon size={18} aria-hidden="true" className="flex-shrink-0 text-[color:var(--sg-green)]" />
-          {label}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-
 export function Landing() {
   // Stays false until the visitor asks for the demo: the lazy import is only
   // ever triggered by this flag, which is what keeps MediaPipe off a page view.
@@ -189,7 +169,7 @@ export function Landing() {
             <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
           </a>
           <div className="hidden items-center gap-7 md:flex">
-            {([['#how', 'How it works'], ['#science', 'Science'], ['#privacy', 'Privacy'], ['#pricing', 'Pricing'], ['#faq', 'FAQ']] as const).map(([href, label]) => (
+            {([['#how', 'How to start'], ['#science', 'Science'], ['#privacy', 'Privacy'], ['#pricing', 'Pricing'], ['#faq', 'FAQ']] as const).map(([href, label]) => (
               <a key={href} href={href} className="text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
                 {label}
               </a>
@@ -215,11 +195,10 @@ export function Landing() {
 
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <TrialButton />
-                <a href="#how" className="sg-link inline-flex min-h-11 items-center">How it works</a>
+                <a href="#how" className="sg-link inline-flex min-h-11 items-center">How to start</a>
               </div>
               <p className="sg-note mt-4">{OFFER_LINE}</p>
 
-              <TrustList className="mt-10 hidden lg:grid" />
             </div>
 
             {/* The warning sign is the plate: no card around it. Until the
@@ -279,7 +258,6 @@ export function Landing() {
               </p>
             </section>
 
-            <TrustList className="grid lg:hidden" />
           </div>
         </section>
 
@@ -434,21 +412,12 @@ export function Landing() {
                   entirely in your browser, on your own computer: <strong className="font-extrabold">0 bytes</strong> of
                   camera data go to any server. Signing in and paying use the network; watching never does.
                 </p>
-              <ul className="mt-8 grid gap-6 border-t border-[color:oklch(46%_0.13_148/0.2)] pt-8 md:grid-cols-3">
-                {([
-                  [Activity, 'Check it yourself', "Open your browser's network panel while detection runs. You'll see nothing camera-related, because nothing is sent."],
-                  [WifiOff, 'Works offline', 'After the first load, disconnect from the internet and detection works exactly the same.'],
-                  [HardDrive, 'History stays with you', "Your streak and log are stored on your device. Clear this site's data and they're gone: no server copy."],
-                ] as const).map(([Icon, title, body]) => (
-                  <li key={title}>
-                    <p className="flex items-center gap-2.5 font-bold">
-                      <Icon size={18} aria-hidden="true" className="text-[color:var(--sg-green)]" />
-                      {title}
-                    </p>
-                    <p className="sg-small mt-2">{body}</p>
-                  </li>
-                ))}
-              </ul>
+              <p className="sg-body sg-measure mt-6 border-t border-[color:oklch(46%_0.13_148/0.2)] pt-6">
+                <strong className="font-bold text-[color:var(--sg-ink)]">Check it yourself:</strong> open
+                your browser's developer tools, go to the Network tab and start detection. The list stays
+                empty. It keeps working with the Wi-Fi off, and your history lives in this browser:
+                clear the site's data and it's gone.
+              </p>
               </div>
             </div>
           </div>
