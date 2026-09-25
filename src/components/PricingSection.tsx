@@ -75,7 +75,8 @@ export function PricingSection() {
           Simple, honest pricing.
         </h2>
         <p className="reveal ed-lede ed-measure mt-5 text-stone-600" style={{ transitionDelay: '80ms' }}>
-          Start with a 3-day free trial. No credit card required.
+          Start with a 3-day free trial. No credit card required. Both plans start the same
+          trial: you pick one when it ends.
         </p>
 
         <div className="mt-10 border-t border-hairline">
@@ -91,7 +92,7 @@ export function PricingSection() {
               <p className="ed-figure mt-6 text-forest-600">
                 $29.00<span className="ed-mono text-stone-500">{' / year'}</span>
               </p>
-              <p className="ed-mono mt-4 text-stone-500">Just $2.42/month</p>
+              <p className="ed-mono mt-4 text-stone-500">$2.42/month, billed yearly</p>
               <p className="ed-mono mt-2 text-forest-600">Best value: save 19%</p>
             </div>
 
@@ -101,7 +102,7 @@ export function PricingSection() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-7 inline-flex items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
+                className="group mt-7 inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
               >
                 Start free trial
                 <ArrowRight
@@ -141,7 +142,7 @@ export function PricingSection() {
                 href="/api/auth/google"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-7 inline-flex items-center gap-2 rounded-xl border border-forest-600 px-6 py-3 ed-ui font-semibold text-forest-600 transition-colors duration-150 hover:bg-forest-50"
+                className="group mt-7 inline-flex min-h-11 items-center gap-2 rounded-xl border border-forest-600 px-6 py-3 ed-ui font-semibold text-forest-600 transition-colors duration-150 hover:bg-forest-50"
               >
                 Start free trial
                 <ArrowRight

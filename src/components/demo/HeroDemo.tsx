@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from 'react';
 import { AlertTriangle, Camera, Loader2, RotateCcw, Zap } from 'lucide-react';
 import { DetectionSurface } from '../detection/DetectionSurface';
-import { useCamera, type CameraError } from '../../hooks/useCamera';
+import { useCamera } from '../../hooks/useCamera';
+import { CAMERA_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
 import { useDetection } from '../../hooks/useDetection';
 import { initialSession, remainingMs, sessionReducer } from './demoSession';
 
 // --------------------------------------------------------------------------
 // Copy
 //
-// Every string below is reproduced verbatim in the crawler-visible SSR block in
-// server.js. Edit them here and there in the same commit, or the two renders
-// drift and the parity discipline the GEO work established is lost.
+// None of these strings are in server.js's crawler block: only the demo's
+// heading and paragraph in Landing.tsx are mirrored there, and they render
+// outside this component. Plain language, no dashes (the homepage has none).
 // --------------------------------------------------------------------------
 
 const START_LABEL = 'Try the live demo';
+const RETRY_LABEL = 'Try again';
 
 /**
  * Also used as the `Suspense` fallback in `Landing.tsx` — the lazy chunk fetch
@@ -22,35 +24,46 @@ const START_LABEL = 'Try the live demo';
  */
 const LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
 
+/** Shown on the plate while it watches, until the first catch. */
+const HINT_LABEL = 'Bring a fingertip to your lips to hear the alarm';
+
+/** The offer, next to every trial link this component renders. */
+const OFFER_LABEL = '3 days free, no card';
+
 const MODEL_ERROR_MESSAGE = "The AI models couldn't load. Check your connection and try again.";
 
-const CAMERA_ERROR_MESSAGE: Record<CameraError['kind'], string> = {
-  'permission-denied':
-    "Camera access was blocked. Allow camera access in your browser's address bar, then try again.",
-  'no-camera': 'No camera found. The demo needs a webcam, and the app itself works the same way.',
-  'insecure-context': 'The demo needs a secure (HTTPS) connection to use your camera.',
-  'unavailable':
-    "Your camera couldn't start: it may be in use by another app. Close anything else using it and try again.",
-};
 
 function resultLine(catches: number): string {
-  if (catches === 0) return "We didn't catch you once. Nice.";
-  if (catches === 1) return 'We caught you once in 60 seconds.';
-  return `We caught you ${catches} times in 60 seconds.`;
+  // A zero is the most likely result of a minute of sitting still, and "Nice"
+  // read as "nothing happened". Tell the visitor how to see it work instead.
+  if (catches === 0) return 'Nothing caught in 60 seconds. Run it again and touch your lips to hear the alarm.';
+  if (catches === 1) return 'Caught you once in 60 seconds. The app does this all day, while you work.';
+  return `Caught you ${catches} times in 60 seconds. The app does this all day, while you work.`;
 }
 
 // --------------------------------------------------------------------------
-// Shared class strings — lifted from the hero CTAs so the demo reads as part of
-// the same page rather than a bolted-on widget.
+// Buttons, in the homepage's editorial set: square-ish radius, no shimmer, no
+// hover lift. The page is light only, so there are no dark variants. The
+// secondary button sits on the dark plate, so it is drawn light-on-dark.
 // --------------------------------------------------------------------------
 
 const PRIMARY_BTN =
-  'btn-shimmer inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-2xl px-6 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95';
+  'inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-6 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500';
 
 const SECONDARY_BTN =
-  'inline-flex items-center gap-2 rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-5 py-3 text-sm font-semibold text-stone-700 dark:text-stone-200 hover:border-forest-300 dark:hover:border-forest-700 hover:text-forest-600 dark:hover:text-forest-400 transition-all duration-200 hover:-translate-y-0.5 active:scale-95';
+  'inline-flex min-h-11 items-center gap-2 rounded-xl border border-stone-600 px-5 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:border-cream-100';
 
 // --------------------------------------------------------------------------
+
+/** The trial link. A new tab on purpose (see 92360d2): the demo tab keeps running. */
+function TrialLink() {
+  return (
+    <a href="/api/auth/google" target="_blank" rel="noopener noreferrer" className={PRIMARY_BTN}>
+      <Zap size={15} aria-hidden="true" />
+      Start free trial
+    </a>
+  );
+}
 
 /** How often the clock is sampled. Fine enough that a whole second is never skipped. */
 const TICK_MS = 250;
@@ -186,87 +199,116 @@ export function HeroDemo({ autoStart = false }: Props) {
 
   return (
     <div className="flex flex-col gap-5">
-      <DetectionSurface
-        videoRef={videoRef}
-        status={status}
-        cameraEnabled={cameraOn}
-        showFeed
-        showFlash={status === 'alert'}
-        onRetry={start}
-      >
-        {/* The slot is rendered bare inside the frame's `relative` box, so the
-            overlay carries its own placement. */}
-        {isDetecting && (
-          <div
-            role="timer"
-            className="absolute top-3 right-3 flex items-center gap-1.5 rounded-lg border border-white/10 bg-stone-900/75 px-2.5 py-1.5 text-xs font-semibold tabular-nums text-stone-100"
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-alert-400 animate-pulse"
-              aria-hidden="true"
-            />
-            {formatCountdown(remainingMs(state, now))}
+      {isRunning ? (
+        <DetectionSurface
+          videoRef={videoRef}
+          status={status}
+          cameraEnabled={cameraOn}
+          showFeed
+          showFlash={status === 'alert'}
+          onRetry={start}
+        >
+          {/* The slot is rendered bare inside the frame's `relative` box, so the
+              overlays carry their own placement. */}
+          {isDetecting && (
+            <div
+              role="timer"
+              className="absolute top-3 right-3 flex items-center gap-1.5 rounded-lg border border-white/10 bg-stone-900/75 px-2.5 py-1.5 text-xs font-semibold tabular-nums text-stone-100"
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-alert-400 animate-pulse"
+                aria-hidden="true"
+              />
+              {formatCountdown(remainingMs(state, now))}
+            </div>
+          )}
+          {/* Without this, the payoff depends on the visitor happening to bite
+              in the next minute. Gone after the first catch: it has done its job. */}
+          {isDetecting && state.catches === 0 && (
+            <p className="absolute top-3 left-3 right-24 rounded-lg bg-stone-900/75 px-2.5 py-1.5 text-xs font-medium text-stone-100">
+              {HINT_LABEL}
+            </p>
+          )}
+        </DetectionSurface>
+      ) : (
+        // Finished or failed. The live surface is not rendered here: with the
+        // camera off it falls back to its animated "Watching…" wave, which is
+        // untrue after a denial and undercuts the privacy claim beside it. The
+        // plate keeps the same box, so nothing moves.
+        <div
+          className="animate-fade-in flex aspect-video w-full flex-col items-center justify-center gap-5 rounded-2xl bg-stone-900 px-6 text-center"
+          role={failure ? 'alert' : undefined}
+          aria-live={failure ? undefined : 'polite'}
+        >
+          {failure ? (
+            <p className="flex max-w-md items-start gap-2 ed-ui text-cream-100">
+              <AlertTriangle size={15} className="mt-1 flex-shrink-0 text-alert-400" aria-hidden="true" />
+              <span>{failure}</span>
+            </p>
+          ) : isFinished ? (
+            <p className="max-w-md ed-ui font-semibold text-cream-100">{resultLine(state.catches)}</p>
+          ) : null}
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {isFinished && <TrialLink />}
+            <button
+              type="button"
+              onClick={start}
+              className={isFinished || failure ? SECONDARY_BTN : PRIMARY_BTN}
+            >
+              {isIdle && !failure ? (
+                <Camera size={15} aria-hidden="true" />
+              ) : (
+                <RotateCcw size={14} aria-hidden="true" />
+              )}
+              {failure ? RETRY_LABEL : isFinished ? 'Run it again' : START_LABEL}
+            </button>
           </div>
-        )}
-      </DetectionSurface>
+          {isFinished && <p className="ed-mono text-stone-400">{OFFER_LABEL}</p>}
+        </div>
+      )}
 
       {isLoading && (
-        <p className="flex items-center justify-center gap-2 text-sm text-stone-500 dark:text-stone-400">
+        <p className="flex items-center justify-center gap-2 ed-ui text-stone-500">
           <Loader2
             size={14}
-            className="animate-spin text-forest-500 dark:text-forest-400 flex-shrink-0"
+            className="animate-spin text-forest-500 flex-shrink-0"
             aria-hidden="true"
           />
           {LOADING_LABEL}
         </p>
       )}
 
+      {/* The peak moment: the alarm just fired on the visitor's own face. The
+          trial is offered here, while the camera is still live, rather than
+          after the minute runs out. */}
+      {isRunning && state.catches > 0 && (
+        <div className="animate-fade-in flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-live="polite">
+          <p className="ed-ui font-semibold text-stone-800">
+            That&apos;s the alarm. Caught {state.catches === 1 ? 'once' : `${state.catches} times`} so far.
+          </p>
+          <TrialLink />
+        </div>
+      )}
+
+      {/* A failed camera is a dead end for the demo, not for the visitor. */}
       {failure && (
-        <div className="animate-fade-in flex flex-col items-center gap-4 text-center" role="alert">
-          <p className="flex items-start gap-2 text-sm leading-relaxed text-alert-600 dark:text-alert-400">
-            <AlertTriangle size={15} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
-            <span>{failure}</span>
-          </p>
-          <button type="button" onClick={start} className={SECONDARY_BTN}>
-            <RotateCcw size={14} aria-hidden="true" />
-            {START_LABEL}
-          </button>
-        </div>
-      )}
-
-      {isFinished && (
-        <div
-          className="animate-fade-in flex flex-col items-center gap-4 text-center"
-          aria-live="polite"
-        >
-          <p className="text-base font-semibold text-stone-800 dark:text-stone-100">
-            {resultLine(state.catches)}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="/api/auth/google"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={PRIMARY_BTN}
-            >
-              <Zap size={15} aria-hidden="true" />
-              Start free trial
-            </a>
-            <button type="button" onClick={start} className={SECONDARY_BTN}>
-              <RotateCcw size={14} aria-hidden="true" />
-              Run it again
-            </button>
-          </div>
-        </div>
-      )}
-
-      {isIdle && !failure && (
-        <div className="flex justify-center">
-          <button type="button" onClick={start} className={PRIMARY_BTN}>
-            <Camera size={15} aria-hidden="true" />
-            {START_LABEL}
-          </button>
-        </div>
+        <p className="text-center ed-ui text-stone-600">
+          You can still{' '}
+          <a
+            href="/api/auth/google"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ed-link font-semibold text-forest-600 hover:text-forest-500"
+          >
+            start the free trial
+          </a>{' '}
+          ({OFFER_LABEL}) or read{' '}
+          <a href="/how-it-works" className="ed-link font-semibold text-forest-600 hover:text-forest-500">
+            how detection works
+          </a>
+          .
+        </p>
       )}
     </div>
   );

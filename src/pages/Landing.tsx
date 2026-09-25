@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from 'react';
 import {
-  ShieldCheck, Zap, Cpu, BellRing, Trophy,
+  Zap, Cpu, BellRing, Trophy,
   ClipboardList, BarChart2, WifiOff,
   ChevronDown, Camera, BookOpen,
   ArrowRight, Loader2,
@@ -87,14 +87,52 @@ const READING_LIST: ReadingRow[] = (() => {
 })();
 
 // The apparatus row under the hero's call to action: what the thing is, in
-// five words or fewer each, set as a mono rule of hairline-separated terms.
-// The price is a term like any other, and it is here because it used to live
-// only in PricingSection at 61% page depth: a visitor deciding whether to give
-// this thing their camera should not have to scroll two thirds of the page to
-// learn what it costs. It sits last because the end of a rule is its second
-// strongest position. The figure MUST match PricingSection and the Offer schema
-// server.js injects for /pricing ($2.99/month, $29.00/year).
-const HERO_TAGS = ['Web App', 'PWA install', 'MediaPipe AI', '100% private', 'No cloud', '$2.99/month'];
+// three words or fewer each, set as a mono rule of hairline-separated terms.
+// No jargon a first-time visitor has to look up ("PWA", "MediaPipe" went).
+const HERO_TAGS = ['Runs in your browser', '100% on-device', 'Works offline'];
+
+// The offer, stated beside every trial button. The price used to be the last
+// grey hero tag and "3 days free, no card" first appeared at two thirds of the
+// page, so "Start free trial" could read as a card wall. The figures MUST match
+// PricingSection and the Offer schema server.js injects for /pricing
+// ($2.99/month, $29.00/year, 3-day trial, no card).
+const OFFER_LINE = '3 days free · no card · then $2.99/month';
+
+// The trial link, in the three weights the page uses. Every one opens Google
+// sign-in in a new tab on purpose (92360d2: the landing tab, and any demo
+// running in it, stays open).
+function TrialButton({ variant = 'solid', label = 'Start free trial' }: { variant?: 'solid' | 'outline'; label?: string }) {
+  const look = variant === 'solid'
+    ? 'bg-forest-600 text-cream-100 hover:bg-forest-500'
+    : 'border border-forest-600 text-forest-600 hover:bg-forest-50';
+  return (
+    <a
+      href="/api/auth/google"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group inline-flex min-h-11 items-center gap-2 rounded-xl px-6 py-3 ed-ui font-semibold transition-colors duration-150 ${look}`}
+    >
+      {label}
+      <ArrowRight size={14} aria-hidden="true" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5" />
+    </a>
+  );
+}
+
+// A one-line ruled offer, set like the page's other instrument readings, at
+// the two points where a sceptic has just been convinced (after the evidence,
+// after the privacy argument) and would otherwise find nothing to act on for
+// several screens.
+function TrialCue({ lead }: { lead: string }) {
+  return (
+    <div className="reveal mt-12 flex flex-col gap-4 border-y border-hairline py-5 sm:flex-row sm:items-center sm:justify-between lg:mt-16">
+      <div>
+        <p className="ed-body font-semibold text-stone-800">{lead}</p>
+        <p className="ed-mono mt-1 text-stone-500">{OFFER_LINE}</p>
+      </div>
+      <TrialButton variant="outline" />
+    </div>
+  );
+}
 
 // Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
 // to have a visible on-page counterpart, so these two must stay in step.
@@ -180,10 +218,10 @@ export function Landing() {
       <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 backdrop-blur-md border-b border-hairline">
         <a href="/" className="flex items-center gap-3 text-stone-800">
           <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-          <span className="ed-wordmark">Stop Biting Nails</span>
+          <span className="ed-wordmark">Stop Biting</span>
         </a>
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="/blog" className="ed-ui flex items-center gap-2 text-stone-500 transition-colors hover:text-stone-800">
+          <a href="/blog" className="ed-ui flex min-h-11 items-center gap-2 text-stone-500 transition-colors hover:text-stone-800">
             <BookOpen size={14} aria-hidden="true" />
             <span className="ed-link">Blog</span>
           </a>
@@ -197,7 +235,7 @@ export function Landing() {
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl border border-stone-300 px-3 py-2 ed-ui font-semibold text-forest-600 sm:px-4 transition-colors duration-150 hover:border-forest-600 hover:text-forest-500"
+            className="inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-xl border border-stone-300 px-3 py-2 ed-ui font-semibold text-forest-600 sm:px-4 transition-colors duration-150 hover:border-forest-600 hover:text-forest-500"
           >
             <Zap size={13} aria-hidden="true" />
             Start free trial
@@ -312,15 +350,20 @@ export function Landing() {
                       // only ever referenced inside the branch above, so a page
                       // view fetches no chunk, no WebAssembly and no MediaPipe
                       // model. Nothing here may preload, prefetch or auto-start.
-                      <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-stone-900">
+                      <div className="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-2xl bg-stone-900 px-6 text-center">
                         <button
                           type="button"
                           onClick={() => setDemoStarted(true)}
-                          className="inline-flex items-center gap-2 rounded-xl bg-forest-600 px-8 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
+                          className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-8 py-3 ed-ui font-semibold text-cream-100 transition-colors duration-150 hover:bg-forest-500"
                         >
                           <Camera size={15} aria-hidden="true" />
                           Try the live demo
                         </button>
+                        {/* Said before the click, so the browser's camera
+                            prompt and the alarm are expected, not a surprise. */}
+                        <p className="ed-mono text-stone-400">
+                          60 seconds · your browser asks for the camera · sound on
+                        </p>
                       </div>
                     )}
                   </div>
@@ -363,41 +406,25 @@ export function Landing() {
                   with the strongest clinical evidence behind it. Every frame is processed on your own device.
                 </p>
 
-                {/* The on-device guarantee, set as an instrument reading: ruled
-                    top and bottom, mono, with the live dot still ticking. */}
+                {/* The trial as a real, outlined button with its terms under
+                    it. The demo keeps the page's one filled control above the
+                    fold; this is the path for the visitor who is already
+                    convinced, and it used to be a grey text link identical to
+                    "Read the science" with no word about cost. */}
                 <div
-                  className="animate-fade-up mt-8 flex items-center gap-3 border-y border-hairline py-3 text-forest-600"
-                  style={{ animationDelay: '240ms' }}
-                >
-                  <ShieldCheck size={14} className="flex-shrink-0" aria-hidden="true" />
-                  <span className="ed-mono">All AI processing on-device: zero network requests during detection</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-forest-500 animate-pulse flex-shrink-0" aria-hidden="true" />
-                </div>
-
-                {/* Two text links, no fill. The hero's one filled control is
-                    the detector's, in the figure beside this: the visitor who
-                    just searched for how to stop biting their nails is worth
-                    more inside a 60-second demo than inside a signup form, and
-                    the trial is still one outlined click away in the nav and a
-                    solid forest button at the foot of the page. */}
-                <div
-                  className="animate-fade-up mt-8 flex flex-wrap items-center gap-x-8 gap-y-4"
+                  className="animate-fade-up mt-8"
                   style={{ animationDelay: '320ms' }}
                 >
-                  <a
-                    href="/api/auth/google"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ed-link ed-ui text-stone-600 transition-colors hover:text-stone-800"
-                  >
-                    Start free trial
-                  </a>
-                  <a
-                    href="/blog"
-                    className="ed-link ed-ui text-stone-600 transition-colors hover:text-stone-800"
-                  >
-                    Read the science
-                  </a>
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+                    <TrialButton variant="outline" />
+                    <a
+                      href="/blog/habit-reversal-training-guide"
+                      className="ed-link ed-ui inline-flex min-h-11 items-center text-stone-600 transition-colors hover:text-stone-800"
+                    >
+                      Read the science
+                    </a>
+                  </div>
+                  <p className="ed-mono mt-3 text-stone-500">{OFFER_LINE}</p>
                 </div>
 
                 {/* What it is, in apparatus terms: hairline-separated. */}
@@ -472,7 +499,7 @@ export function Landing() {
 
                 <a
                   href="/blog/why-do-people-bite-their-nails"
-                  className="ed-ui group mt-6 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
+                  className="ed-ui group mt-6 inline-flex min-h-11 items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
                 >
                   <span className="ed-link">Read the full article</span>
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -513,7 +540,7 @@ export function Landing() {
                   {[
                     { number: '20-30%', label: 'of adults bite their nails chronically' },
                     { number: '~99%', label: 'fewer biting episodes in the landmark habit reversal trial' },
-                    { number: '0 bytes', label: 'Of camera data sent to servers' },
+                    { number: '0 bytes', label: 'of camera data sent to servers' },
                   ].map(({ number, label }) => (
                     <div key={label} className="border-b border-hairline py-4">
                       <dt className="ed-figure text-forest-600">{number}</dt>
@@ -564,7 +591,7 @@ export function Landing() {
                     rule is Task 4's pull-quote device. */}
                 <div className="mt-4 border-t border-hairline">
                   {([
-                    ['Notice it happening', "Most nail biters catch fewer than half their daily biting episodes. Step one is simply becoming aware every single time, which is harder than it sounds when the habit is fully automatic."],
+                    ['Notice it happening', "Most biting happens without you noticing. Step one is simply becoming aware every single time, which is harder than it sounds when the habit is fully automatic."],
                     ['Do something else instead', 'The moment you notice it, replace the bite with something your hands can\'t do simultaneously: press your palms flat, clench a fist, grip the desk. Hold it for a minute.'],
                     ['Get an external signal', 'In clinical settings, a therapist would tap your shoulder. The audio alarm in this app does the same thing: it catches the moment you missed.'],
                   ] as const).map(([title, text]) => (
@@ -581,7 +608,7 @@ export function Landing() {
 
                 <a
                   href="/blog/habit-reversal-training-guide"
-                  className="ed-ui group mt-6 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
+                  className="ed-ui group mt-6 inline-flex min-h-11 items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
                 >
                   <span className="ed-link">Read the full HRT guide</span>
                   <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -648,11 +675,11 @@ export function Landing() {
                     {[
                       {
                         n: '01', heading: 'Allow camera access',
-                        body: 'One-time permission prompt. Revoke it any time from System Preferences. The app never asks for microphone, location, or anything else.',
+                        body: 'One-time permission prompt. Revoke it any time in your browser\'s site settings. The app never asks for microphone, location, or anything else.',
                       },
                       {
                         n: '02', heading: 'AI loads on your device',
-                        body: 'MediaPipe hand and face landmark models run in WebAssembly, the same technology powering Google Meet\'s background blur. No internet needed after setup.',
+                        body: 'Google\'s MediaPipe hand and face landmark models run in WebAssembly, inside your browser. No internet needed after setup.',
                       },
                       {
                         n: '03', heading: 'Get alerted the moment it happens',
@@ -736,7 +763,7 @@ export function Landing() {
                   <p className="ed-mono text-stone-500">No fake reviews here</p>
                   <p className="ed-body mt-3 text-stone-600">
                     We don't publish paid or invented testimonials. The free trial exists so the app can prove
-                    itself on your own biting data, usually within the first hour.
+                    itself on your own biting data.
                   </p>
                 </div>
 
@@ -750,6 +777,8 @@ export function Landing() {
                 </div>
               </aside>
             </div>
+
+            <TrialCue lead="The method is proven. The hard part is noticing: that is what the app does." />
           </div>
         </section>
 
@@ -839,11 +868,11 @@ export function Landing() {
                     {[
                       {
                         title: 'No network requests during detection',
-                        detail: "Open Activity Monitor and watch network usage while the app runs. You'll see nothing camera-related, because nothing is sent.",
+                        detail: "Open your browser's network panel while detection runs. You'll see nothing camera-related, because nothing is sent.",
                       },
                       {
                         title: 'Data lives on your device only',
-                        detail: 'Your streak and incident log are stored locally. Uninstall the app and it\'s gone: no server backup, no data retained.',
+                        detail: 'Your streak and incident log are stored locally. Clear this site\'s data and it\'s gone: no server backup, no data retained.',
                       },
                       {
                         title: 'Built on open web technologies',
@@ -906,7 +935,7 @@ export function Landing() {
                   id="features-heading"
                   className="ed-h3 mt-6 text-stone-800"
                 >
-                  Everything you need to build the habit.
+                  Everything you need to break the habit.
                 </h3>
                 <p className="ed-body mt-2 text-stone-500">Nothing you don't.</p>
 
@@ -933,6 +962,8 @@ export function Landing() {
                 </dl>
               </section>
             </div>
+
+            <TrialCue lead="Test the privacy claim yourself, on your own machine." />
           </div>
         </section>
 
@@ -985,84 +1016,12 @@ export function Landing() {
             that used to sit inside that wrapper beside it is an editorial
             section now, so the wrapper closes again immediately and re-opens
             further down for the contact form. */}
-        <div className="max-w-6xl mx-auto px-8 pb-24 lg:pb-32">
+        <div className="ed-container pb-24 lg:pb-32">
           {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
           <PricingSection />
         </div>
 
-        {/* ── 06 · FURTHER READING ──────────────────────────────────────── */}
-        {/* The ten featured guides and the three blog cards, argued as one
-            reading list: mono kicker, title, reading time where the
-            destination is an article. No cards, no chevrons, no hover lift,
-            just hairlines and the link underline growing on hover.
-
-            Nine columns wide, not seven plus an empty four. An index is the one
-            thing on the page that genuinely wants width: kicker, title and
-            reading time are three distinct fields and they read as a table when
-            the row is wide enough to separate them. The margin here held
-            twenty-five characters in a 735px box, which is not marginalia, so
-            "From the blog" keeps its heading and its id as a ruled tail under
-            the list instead, where it still labels the pointer to the full
-            index. From here down the page is back matter and runs at this
-            wider measure: 07 does the same. */}
-        <section aria-labelledby="featured-guides-heading" className="pb-16 lg:pb-24">
-          <div className="ed-container">
-            <SectionMark n="06" label="Further reading" />
-
-            <div className="ed-grid mt-6 lg:mt-8">
-              <div
-                className="reveal col-span-full lg:col-span-9 lg:col-start-1"
-                style={{ transitionDelay: '80ms' }}
-              >
-                <h2 id="featured-guides-heading" className="ed-h2 text-stone-800">
-                  Featured Guides
-                </h2>
-
-                <ul className="mt-8 list-none border-t border-hairline">
-                  {READING_LIST.map(({ href, title, kicker, minutes }) => (
-                    <li key={href} className="border-b border-hairline">
-                      <a
-                        href={href}
-                        className="group block py-4 text-stone-800 transition-colors hover:text-forest-600 sm:grid sm:grid-cols-[7.5rem_1fr_auto] sm:items-baseline sm:gap-x-6"
-                      >
-                        <span className="ed-mono block text-stone-500 transition-colors group-hover:text-forest-600">
-                          {kicker}
-                        </span>
-                        <span className="ed-body mt-2 block font-semibold sm:mt-0">
-                          <span className="ed-link">{title}</span>
-                        </span>
-                        {minutes !== undefined && (
-                          <span className="ed-mono mt-2 block text-stone-500 sm:mt-0 sm:text-right">
-                            {minutes} min read
-                          </span>
-                        )}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* The blog preview's heading, now the list's ruled tail. It is
-                    an h3 (06's h2 is the guides heading) and keeps
-                    `id="blog-preview-heading"`, so the aria-labelledby on this
-                    nested section still resolves. The last row of the list is
-                    already ruled beneath, so this one needs no rule of its
-                    own: it reads as the note that closes the index. */}
-                <section aria-labelledby="blog-preview-heading" className="mt-8">
-                  <h3 id="blog-preview-heading" className="ed-mono text-stone-500">From the blog</h3>
-                  <a
-                    href="/blog"
-                    className="ed-ui group mt-3 inline-flex items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
-                  >
-                    <span className="ed-link">All articles</span>
-                    <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
-                  </a>
-                </section>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 07 · FAQ ──────────────────────────────────────────────────── */}
+        {/* ── 06 · FAQ ──────────────────────────────────────────────────── */}
         {/* The same six questions and answers, still byte-identical to the
             FAQPage JSON-LD in index.html: Google requires the structured data
             to have a visible counterpart, and server.js parses that same block
@@ -1070,7 +1029,7 @@ export function Landing() {
             frames are gone and the disclosure is untouched: <details> and
             <summary> keep this working with no JavaScript at all.
 
-            Nine columns, like 06 and for the same reason. There is nothing in
+            Nine columns, like 07 and for the same reason. There is nothing in
             this section that could annotate it from a margin, so the two-column
             grid was declaring a column it never filled: 600px of empty cream
             beside six closed disclosures. A wider row also gives the chevron
@@ -1078,7 +1037,7 @@ export function Landing() {
             `.ed-measure`, so opening one still sets it at 62 characters. */}
         <section id="faq" aria-labelledby="faq-heading" className="pb-24 lg:pb-32">
           <div className="ed-container">
-            <SectionMark n="07" label="FAQ" />
+            <SectionMark n="06" label="FAQ" />
 
             <div className="ed-grid mt-6 lg:mt-8">
               <div
@@ -1125,19 +1084,89 @@ export function Landing() {
             <div className="reveal border-y border-hairline py-12 text-center lg:py-16">
               <h2 className="ed-h2 text-stone-800">Ready to stop nail biting?</h2>
               <p className="ed-body ed-measure mx-auto mt-6 text-stone-600">
-                Use the web app directly in your browser: sign in with Google and nail biting detection starts in
-                under ten seconds. No install needed.
+                Sign in with Google and start detection in your browser. Nothing to install, and nothing
+                leaves your device.
               </p>
-              <a
-                href="/api/auth/google"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ed-ui mt-8 inline-flex items-center gap-2 rounded-2xl bg-forest-600 px-8 py-4 font-semibold text-cream-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-forest-500 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
+              <div className="mt-8">
+                <TrialButton />
+              </div>
+              <p className="ed-mono mt-6 text-stone-500">{OFFER_LINE}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 07 · FURTHER READING ──────────────────────────────────────── */}
+        {/* Back matter, after the final call to action: it used to sit
+            between pricing and the FAQ and handed a dozen exits to the visitor
+            at the page's point of highest intent.
+
+            The ten featured guides and the three blog cards, argued as one
+            reading list: mono kicker, title, reading time where the
+            destination is an article. No cards, no chevrons, no hover lift,
+            just hairlines and the link underline growing on hover.
+
+            Nine columns wide, not seven plus an empty four. An index is the one
+            thing on the page that genuinely wants width: kicker, title and
+            reading time are three distinct fields and they read as a table when
+            the row is wide enough to separate them. The margin here held
+            twenty-five characters in a 735px box, which is not marginalia, so
+            "From the blog" keeps its heading and its id as a ruled tail under
+            the list instead, where it still labels the pointer to the full
+            index. From here down the page is back matter and runs at this
+            wider measure: 06 does the same. */}
+        <section aria-labelledby="featured-guides-heading" className="pb-16 lg:pb-24">
+          <div className="ed-container">
+            <SectionMark n="07" label="Further reading" />
+
+            <div className="ed-grid mt-6 lg:mt-8">
+              <div
+                className="reveal col-span-full lg:col-span-9 lg:col-start-1"
+                style={{ transitionDelay: '80ms' }}
               >
-                <Zap size={15} aria-hidden="true" />
-                Start free trial (it's free)
-              </a>
-              <p className="ed-mono mt-6 text-stone-500">3-day free trial · no credit card required</p>
+                <h2 id="featured-guides-heading" className="ed-h2 text-stone-800">
+                  Featured guides
+                </h2>
+
+                <ul className="mt-8 list-none border-t border-hairline">
+                  {READING_LIST.map(({ href, title, kicker, minutes }) => (
+                    <li key={href} className="border-b border-hairline">
+                      <a
+                        href={href}
+                        className="group block py-4 text-stone-800 transition-colors hover:text-forest-600 sm:grid sm:grid-cols-[7.5rem_1fr_auto] sm:items-baseline sm:gap-x-6"
+                      >
+                        <span className="ed-mono block text-stone-500 transition-colors group-hover:text-forest-600">
+                          {kicker}
+                        </span>
+                        <span className="ed-body mt-2 block font-semibold sm:mt-0">
+                          <span className="ed-link">{title}</span>
+                        </span>
+                        {minutes !== undefined && (
+                          <span className="ed-mono mt-2 block text-stone-500 sm:mt-0 sm:text-right">
+                            {minutes} min read
+                          </span>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* The blog preview's heading, now the list's ruled tail. It is
+                    an h3 (06's h2 is the guides heading) and keeps
+                    `id="blog-preview-heading"`, so the aria-labelledby on this
+                    nested section still resolves. The last row of the list is
+                    already ruled beneath, so this one needs no rule of its
+                    own: it reads as the note that closes the index. */}
+                <section aria-labelledby="blog-preview-heading" className="mt-8">
+                  <h3 id="blog-preview-heading" className="ed-mono text-stone-500">From the blog</h3>
+                  <a
+                    href="/blog"
+                    className="ed-ui group mt-3 inline-flex min-h-11 items-center gap-2 text-forest-600 transition-colors hover:text-forest-500"
+                  >
+                    <span className="ed-link">All articles</span>
+                    <ArrowRight size={13} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1" />
+                  </a>
+                </section>
+              </div>
             </div>
           </div>
         </section>
@@ -1172,15 +1201,15 @@ export function Landing() {
             {/* Written out one by one rather than mapped over an array: these
                 eight hrefs are the site's whole legal and navigational surface,
                 and spelling them as real attributes keeps them greppable. */}
-            <nav aria-label="Footer navigation" className="flex flex-col items-start gap-4">
-              <a href="/" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Home</span></a>
-              <a href="/blog" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Blog</span></a>
-              <a href="/#pricing" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Pricing</span></a>
-              <a href="mailto:hello@stopbiting.today" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Contact</span></a>
-              <a href="/editorial-policy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Editorial Policy</span></a>
-              <a href="/privacy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Privacy Policy</span></a>
-              <a href="/terms-and-conditions" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Terms of Service</span></a>
-              <a href="/refund-policy" className="ed-mono text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Refund Policy</span></a>
+            <nav aria-label="Footer navigation" className="flex flex-col items-start">
+              <a href="/" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Home</span></a>
+              <a href="/blog" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Blog</span></a>
+              <a href="/#pricing" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Pricing</span></a>
+              <a href="mailto:hello@stopbiting.today" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Contact</span></a>
+              <a href="/editorial-policy" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Editorial Policy</span></a>
+              <a href="/privacy" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Privacy Policy</span></a>
+              <a href="/terms-and-conditions" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Terms of Service</span></a>
+              <a href="/refund-policy" className="ed-mono inline-flex min-h-11 items-center text-stone-500 transition-colors hover:text-stone-800"><span className="ed-link">Refund Policy</span></a>
             </nav>
           </div>
 
