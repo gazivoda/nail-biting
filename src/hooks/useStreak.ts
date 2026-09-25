@@ -24,7 +24,9 @@ export function useStreak() {
     currentStreakMs,
     bestStreakMs,
     formattedCurrent: formatDuration(currentStreakMs),
-    formattedBest: formatDuration(bestStreakMs),
+    // Empty until a bite has ended a streak; StreakHero shows a dash. A zero
+    // used to format as "just now", which read as a bug on a new account.
+    formattedBest: bestStreakMs > 0 ? formatDuration(bestStreakMs) : '',
     isGood: currentStreakMs > 60 * 60 * 1000,
     isGreat: currentStreakMs > 24 * 60 * 60 * 1000,
     streakDays,
