@@ -293,7 +293,7 @@ Enamel sign plates: flat, keylined, decisive.
 - **Style:** fixed, 4rem tall, sign-white at 90% with backdrop blur, 1px plate-rule bottom border. Logo and wordmark (Overpass 800) left, section links in label weight and secondary ink center-right, small blue trial button right. Links darken to ink on hover. Below `md` only the logo and trial button remain.
 
 ### Mandatory and Safe Signs
-- **Mandatory disc:** a 3.25rem mandatory-blue circle with the enamel keyline, holding either a white icon (section headings) or a white numeral in Overpass 850 at 1.375rem (the three steps). It sits beside a section heading to say "this is something you do" before the words do.
+- **Mandatory disc:** a 3.25rem mandatory-blue circle with the enamel keyline and a white icon. Used once, beside "How to start", to say "this is something you do". Never as decoration beside other headings.
 - **Safe square:** a 3.25rem safe-green square (0.6rem corners) with a white icon; inside the green header it takes a 2px white inset keyline.
 
 ### Product screenshot (signature)
@@ -306,7 +306,7 @@ The real app, captured from a running build with example data and labelled as su
 - **Do** put the offer line ("3 days free, no card, then $2.99/month") beside every trial button, in the label style.
 - **Do** draw button and sign borders as inset keylines (white 2px line, 3px in) on flat fills.
 - **Do** mark a section with a mandatory disc or safe square beside its heading when the section is an instruction or a privacy statement.
-- **Do** use a numeral in the mandatory disc for ordered steps.
+- **Do** say short sequences as a sentence ("sign in, allow the camera, keep working") rather than a numbered grid.
 - **Do** keep every section visible at first paint and every hit area at least 44px.
 - **Do** keep Overpass Mono for measured numbers only; tabular figures for prices and timers.
 
@@ -320,3 +320,12 @@ The real app, captured from a running build with example data and labelled as su
 - **Don't** add scroll-reveal or ambient motion.
 - **Don't** illustrate the habit itself (a drawn hand at a mouth, a cartoon biter): show the real app instead. The owner found the animated pictogram insulting.
 - **Don't** give the sign surface a dark theme or borrow the app's cream / forest tokens or the journal's `.ed-*` type.
+
+## Authenticity rules (2026-09-25 loop)
+
+- Show the real product: captured app screens with labelled example data, provenance embedded (public/shots).
+- A person is on the page: the "Why this exists" note from Igor, facts from /about only.
+- Say the limits plainly ("Before you start"), each line checked against the code.
+- No icon-plus-label triplets, no stat callouts in big bold numbers, no stock phrases ("We'd love to hear from you"), no icon badges beside headings.
+- Never illustrate the habit itself.
+
