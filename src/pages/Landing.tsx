@@ -253,7 +253,7 @@ export function Landing() {
                 height={844}
                 loading="lazy"
                 decoding="async"
-                alt="The History screen on a phone: bites per day for the last seven days, then each entry with its time and trigger, such as Focus or Stress."
+                alt="The History screen on a phone: alarms and bites per day for the last seven days with a one-line weekly summary, then each entry with its time and what it was: an alarm to review, a bite, or a trigger such as Focus."
                 className="w-full rounded-lg border border-[color:var(--sg-rule)]"
               />
               <figcaption className="sg-note mt-2">Shown with example data.</figcaption>

@@ -18,7 +18,7 @@ export function TodayStats() {
             {incidentCount}
           </p>
           <p className="text-[10px] uppercase tracking-[1px] text-stone-400 dark:text-stone-500 mt-2 font-medium">
-            incidents logged
+            alarms to review
           </p>
         </div>
         <div>
@@ -26,7 +26,7 @@ export function TodayStats() {
             {biteCount}
           </p>
           <p className="text-[10px] uppercase tracking-[1px] text-stone-400 dark:text-stone-500 mt-2 font-medium">
-            bites confirmed
+            bites
           </p>
         </div>
       </div>

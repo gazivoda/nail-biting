@@ -2,22 +2,19 @@ import { useState } from 'react';
 import { Trash2, CheckCircle } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import type { CustomTag, Incident, StatsMetric } from '../types';
-import { severityForCount, type Severity } from '../utils/severity';
+// One fill for every bar. Colouring bars by count (green, amber, red) meant a
+// quiet day read as "safe" and clashed with the amber/red used for alarms and
+// bites right beside the chart.
+const BAR_FILL = { light: 'oklch(46% 0.13 148)', dark: 'oklch(62% 0.13 148)' };
 
-const SEVERITY_FILL: Record<Severity, { light: string; dark: string }> = {
-  none:   { light: '#e7e5e4', dark: '#374151' },
-  low:    { light: '#86efac', dark: '#166534' },
-  medium: { light: '#f59e0b', dark: '#f59e0b' },
-  high:   { light: '#ef4444', dark: '#ef4444' },
-};
-
-// Incidents = auto-detected & not yet confirmed as a bite (amber)
-// Bites = manually logged OR confirmed auto-detected (red)
+// Two words, used the same way everywhere:
+// Alarm = auto-detected and not yet reviewed (amber)
+// Bite  = logged by hand OR an alarm confirmed as a bite (red)
 function isConfirmedBite(inc: Incident) {
   return !inc.autoDetected || inc.confirmed === true;
 }
@@ -60,6 +57,13 @@ function WeekChart() {
     return { day: format(date, 'EEE'), count, date };
   });
 
+  const total = days.reduce((n, d) => n + d.count, 0);
+  const busiest = days.reduce((a, b) => (b.count > a.count ? b : a), days[0]);
+  const noun = weekChartMetric === 'confirmed' ? 'bite' : 'entry';
+  const summary = total === 0
+    ? `No ${noun === 'bite' ? 'bites' : 'entries'} in the last 7 days.`
+    : `${total} ${total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week, most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`;
+
   const tickColor = isDark ? '#6b7280' : '#78716c';
   const tooltipBg = isDark ? 'oklch(18% 0.010 200)' : '#fafaf9';
   const tooltipBorder = isDark ? 'oklch(9% 0.005 200)' : '#e7e5e4';
@@ -68,18 +72,18 @@ function WeekChart() {
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card dark:shadow-card-dark">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</p>
+        <h2 className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</h2>
         <SegmentedControl<StatsMetric>
           value={weekChartMetric}
           onChange={setWeekChartMetric}
           options={[
-            { label: 'Incidents', value: 'incidents' },
-            { label: 'Confirmed', value: 'confirmed' },
+            { label: 'All', value: 'incidents' },
+            { label: 'Bites', value: 'confirmed' },
           ]}
         />
       </div>
-      <p className="text-stone-400 dark:text-stone-500 text-xs mb-6">
-        {weekChartMetric === 'confirmed' ? 'Confirmed bites per day' : 'Incidents per day'}
+      <p className="text-stone-500 dark:text-stone-400 text-xs mb-6">
+        {weekChartMetric === 'confirmed' ? 'Bites per day' : 'Alarms and bites per day'}. {summary}
       </p>
       <ResponsiveContainer width="100%" height={160}>
         <BarChart data={days} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
@@ -91,11 +95,7 @@ function WeekChart() {
             itemStyle={{ color: isDark ? '#f87171' : '#dc2626' }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
-          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'confirmed bites' : 'incidents'} radius={[4, 4, 0, 0]}>
-            {days.map((entry, index) => (
-              <Cell key={index} fill={SEVERITY_FILL[severityForCount(entry.count)][isDark ? 'dark' : 'light']} />
-            ))}
-          </Bar>
+          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[4, 4, 0, 0]} fill={BAR_FILL[isDark ? 'dark' : 'light']} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -155,27 +155,27 @@ export function Log() {
 
   return (
     <div className="p-5 sm:p-8 pb-10">
-      <PageHeader eyebrow="Progress" title="Patterns & milestones" />
+      <PageHeader eyebrow="Progress" title="History" />
 
       {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
         {/* Left: sticky chart + summary */}
         <div className="xl:sticky xl:top-8 flex flex-col gap-4">
-          <WeekChart />
+          {incidents.length > 0 && <WeekChart />}
 
           {incidents.length > 0 && (
             <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card dark:shadow-card-dark">
-              <p className="text-stone-400 dark:text-stone-500 text-[10px] uppercase tracking-widest mb-3 font-medium">Summary</p>
+              <h2 className="text-stone-500 dark:text-stone-400 text-[11px] uppercase tracking-widest mb-3 font-semibold">Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-amber-600 dark:text-amber-400">Incidents (unconfirmed)</span>
+                  <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>
                   <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
                     {incidents.filter(i => i.autoDetected && !i.confirmed).length}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-alert-600 dark:text-alert-400">Confirmed bites</span>
+                  <span className="text-alert-600 dark:text-alert-400">Bites</span>
                   <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
                     {incidents.filter(isConfirmedBite).length}
                   </span>
@@ -213,18 +213,21 @@ export function Log() {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
                       const tagLabel = bite
-                        ? (inc.confirmed && inc.tag === 'auto-detected' ? '✓ Bite (confirmed)' : biteTagLabel(inc, customTags))
-                        : '📷 Incident';
+                        ? biteTagLabel(inc, customTags)
+                        : '📷 Alarm';
                       return (
                         <div
                           key={inc.id}
-                          className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-3.5 flex items-center justify-between shadow-card dark:shadow-card-dark"
+                          className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-2 flex items-center gap-3 shadow-card dark:shadow-card-dark"
                         >
-                          <span className="text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
-                              {tagLabel}
-                            </span>
+                          {/* Time and tag together on the left, actions in
+                              their own group on the right: hidden actions
+                              used to push every tag to a different x. */}
+                          <span className="w-20 flex-shrink-0 text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
+                          <span className={`text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
+                            {tagLabel}
+                          </span>
+                          <div className="ml-auto flex items-center gap-1">
                             {inc.autoDetected && !inc.confirmed && (
                               <button
                                 onClick={() => confirmIncident(inc.id)}
