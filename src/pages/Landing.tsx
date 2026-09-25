@@ -492,7 +492,7 @@ export function Landing() {
             <div>
               <h2 className="sg-h2">Catch your next bite.</h2>
               <p className="mt-4 text-lg text-white/85">
-                Sign in with Google and start in your browser. Nothing to install, nothing leaves your device.
+                Leave it running through your next workday, then open History and see when you bite.
               </p>
             </div>
             <div className="flex flex-col items-start gap-3">
@@ -540,8 +540,9 @@ export function Landing() {
                 <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
               </div>
               <p className="sg-small mt-4">
-                Stop nail biting (onychophagia) using on-device AI. Works in your browser as a
-                Progressive Web App, no install required. Built with MediaPipe, React, and WebAssembly.
+                An awareness alarm for nail biting (onychophagia), made by{' '}
+                <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser
+                and nothing is uploaded.
               </p>
             </div>
             {/* Written out one by one: these eight hrefs are the site's whole
@@ -559,7 +560,7 @@ export function Landing() {
             </nav>
           </div>
           <p className="sg-small mt-10 border-t border-[color:var(--sg-rule)] pt-6">
-            © {new Date().getFullYear()} Stop Biting. AI-powered nail biting detection.{' '}
+            © {new Date().getFullYear()} Stop Biting.{' '}
             <a href="https://stopbiting.today/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">stopbiting.today</a>
           </p>
         </div>

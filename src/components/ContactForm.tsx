@@ -53,7 +53,7 @@ export function ContactForm() {
           Get in touch
         </h2>
         <p className="sg-body mt-4">
-          Have a question or feedback? We'd love to hear from you.
+          Questions, bugs, a false alarm that annoyed you: this goes straight to my inbox.
         </p>
       </div>
 
@@ -73,7 +73,7 @@ export function ContactForm() {
               autoComplete="name"
               value={form.fullName}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, fullName: e.target.value })); }}
-              placeholder="Jane Smith"
+              placeholder="Your name"
               className={FIELD_CLASS}
             />
           </div>
@@ -88,7 +88,7 @@ export function ContactForm() {
               autoComplete="email"
               value={form.email}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, email: e.target.value })); }}
-              placeholder="jane@example.com"
+              placeholder="you@example.com"
               className={FIELD_CLASS}
             />
           </div>
@@ -103,7 +103,7 @@ export function ContactForm() {
               autoComplete="off"
               value={form.message}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, message: e.target.value })); }}
-              placeholder="Tell us what's on your mind..."
+              placeholder="What happened?"
               className={`${FIELD_CLASS} resize-none`}
             />
           </div>
