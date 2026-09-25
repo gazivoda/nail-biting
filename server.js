@@ -2028,8 +2028,7 @@ if (!existsSync(distPath)) {
     },
     {
       q: 'Does it work on Mac, Windows, and Linux?',
-      a: 'The web app works on any device with a modern browser and webcam — Mac, Windows, Linux, and Chromebook. '
-        + 'Native desktop apps are available for macOS and Windows for system-tray background running.',
+      a: 'The web app works on any device with a modern browser and webcam — Mac, Windows, Linux, and Chromebook.',
     },
     {
       q: 'Will it false-alarm when I\'m eating or touching my face?',
@@ -2047,7 +2046,7 @@ if (!existsSync(distPath)) {
       description: 'Set up real-time AI nail biting detection in under 2 minutes using your webcam.',
       totalTime: 'PT2M',
       step: [
-        { '@type': 'HowToStep', position: 1, name: 'Open the app', text: 'Visit stopbiting.today in Chrome, Edge, or Firefox — or download the macOS/Windows desktop app.' },
+        { '@type': 'HowToStep', position: 1, name: 'Open the app', text: 'Visit stopbiting.today in Chrome, Edge, or Firefox. There is nothing to install.' },
         { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally — nothing is ever transmitted.' },
         { '@type': 'HowToStep', position: 3, name: 'Position your webcam', text: 'Make sure your face and hands are visible in the camera view. The AI tracks hand-to-mouth movements.' },
         { '@type': 'HowToStep', position: 4, name: 'Work normally', text: 'The app runs in the background. When it detects nail biting, an audible alarm fires immediately.' },
@@ -2088,15 +2087,15 @@ if (!existsSync(distPath)) {
       `<h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p>`).join('');
     const article =
       '<h1>How AI Nail Biting Detection Works</h1>' +
-      '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. ' +
+      '<p class="article-summary">Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your device. ' +
       'The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires under 1 second after it detects your hand approaching your mouth. ' +
       // "under two minutes" stays spelled out: nothing in this page's visible
       // body states a setup time, so the one claim here with no counterpart
       // below does not get made more quotable than the page can support.
       'Setup takes under two minutes.</p>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
-      '<p>Most nail biters catch fewer than half of their daily biting episodes through self-monitoring alone. ' +
-      'The habit is automatic — it runs below the threshold of conscious awareness. ' +
+      '<p>Most biting episodes happen without you noticing: the habit is automatic, ' +
+      'and it runs below the threshold of conscious awareness. ' +
       '<a href="/blog/habit-reversal-training-guide">Habit Reversal Training</a> (the gold-standard treatment) identifies ' +
       'awareness training as its most critical component. Stop Biting automates that component: it catches the episodes you don&#39;t notice.</p></section>' +
       `<section><h2>Getting started</h2><ol>${stepsHtml}</ol></section>` +
