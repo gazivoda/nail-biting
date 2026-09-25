@@ -107,10 +107,10 @@ export function ContactForm() {
               className={`${FIELD_CLASS} resize-none`}
             />
           </div>
-          <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
+          <div aria-live="polite" aria-atomic="true" className="empty:-mt-6">
             {status === 'success' && (
               <p className="sg-body font-semibold text-[color:var(--sg-green)]">
-                Message sent! We'll get back to you soon.
+                Sent. I'll get back to you soon.
               </p>
             )}
             {status === 'error' && (

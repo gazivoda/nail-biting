@@ -179,8 +179,8 @@ export function Landing() {
       <main>
         {/* ── HERO ──────────────────────────────────────────────────────── */}
         <section aria-label="Hero" className="pt-28 pb-16 lg:pt-36 lg:pb-24">
-          <div className="sg-container grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-6">
+          <div className="sg-container grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-6 lg:pt-8">
               <h1 className="sg-h1">Stop biting your nails.</h1>
               <p className="sg-lede sg-measure mt-6">
                 Your webcam watches your hands while you work. The moment a fingertip reaches your lips,
@@ -242,7 +242,7 @@ export function Landing() {
                 </figure>
               )}
 
-              <h2 id="live-demo-heading" className="sg-h3 mt-8">Try the detector right now</h2>
+              <h2 id="live-demo-heading" className="sg-h3 mt-10">Try the detector right now</h2>
               <p className="sg-note mt-2 max-w-md">
                 The same detector the app uses, on your own camera, before you sign up for anything.
               </p>
@@ -256,12 +256,11 @@ export function Landing() {
                     <Camera size={18} aria-hidden="true" />
                     Try the live demo
                   </button>
-                  <p className="sg-note mt-3">60 seconds, camera prompt, sound on</p>
                 </>
               )}
-              <p className="sg-small mt-5 max-w-[46ch]">
-                Runs on your own camera for 60 seconds, no account needed. About 20 MB of AI models
-                download once; after that, nothing leaves the page.
+              <p className="sg-small mt-4 max-w-[46ch]">
+                Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About
+                20 MB of AI models download once; after that, nothing leaves the page.
               </p>
             </section>
 
@@ -273,15 +272,15 @@ export function Landing() {
             real History screen, captured with example data (public/shots;
             provenance embedded in the file). */}
         <section aria-labelledby="app-heading" className="pb-16 lg:pb-24">
-          <div className="sg-container grid items-center gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-6 lg:col-start-2">
+          <div className="sg-container grid items-start gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6 lg:pt-16">
               <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in History</h2>
               <p className="sg-body sg-measure mt-5">
                 Each alarm and each bite you log lands here with the time. Tag what set it off
                 (stress, boredom, deep focus) and after a week you can see which one is yours.
               </p>
             </div>
-            <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4">
+            <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:col-start-8">
               <img
                 src="/shots/app-history-390.webp"
                 width={390}
@@ -402,13 +401,13 @@ export function Landing() {
                 <span className="sg-sign sg-sign-e shadow-[inset_0_0_0_2px_#fff]"><ShieldCheck size={26} aria-hidden="true" /></span>
                 <h2 id="privacy-heading" className="sg-h2">Your camera never leaves your device.</h2>
               </div>
-              <div className="p-6 sm:p-10">
-                <p className="sg-body sg-measure text-[color:var(--sg-ink)]">
+              <div className="grid gap-6 p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
+                <p className="sg-body text-[color:var(--sg-ink)]">
                   A camera pointed at you all day is a lot to trust an app with, so detection runs
                   entirely in your browser, on your own computer: <strong className="font-extrabold">0 bytes</strong> of
                   camera data go to any server. Signing in and paying use the network; watching never does.
                 </p>
-              <p className="sg-body sg-measure mt-6 border-t border-[color:oklch(46%_0.13_148/0.2)] pt-6">
+              <p className="sg-body">
                 <strong className="font-bold text-[color:var(--sg-ink)]">Check it yourself:</strong> open
                 your browser's developer tools, go to the Network tab and start detection. The list stays
                 empty. It keeps working with the Wi-Fi off, and your history lives in this browser:
@@ -424,10 +423,10 @@ export function Landing() {
             from the founder's story on /about; nothing is added. Deliberately
             plain: no sign, no plate, a narrow measure. */}
         <section aria-labelledby="maker-heading" className="pb-16 lg:pb-20">
-          <div className="sg-container">
-            <div className="max-w-[52ch]">
-              <h2 id="maker-heading" className="sg-h3">Why this exists</h2>
-              <p className="sg-body mt-3 text-[color:var(--sg-ink)]">
+          <div className="sg-container grid gap-3 lg:grid-cols-12 lg:gap-10">
+            <h2 id="maker-heading" className="sg-h3 lg:col-span-4">Why this exists</h2>
+            <div className="max-w-[60ch] lg:col-span-7 lg:col-start-5">
+              <p className="sg-body text-[color:var(--sg-ink)]">
                 I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of
                 it lasted, because I never noticed I was doing it until the damage was done. I write
                 software and I had a webcam, so I built the thing that notices for me.
