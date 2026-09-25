@@ -1497,10 +1497,8 @@ if (!existsSync(distPath)) {
       'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<section><h2>Try the detector right now</h2>' +
-      '<p>Run the real nail biting detector on your own camera for 60 seconds: no account, no signup. ' +
-      'The AI models download once (about 20 MB) and then everything runs on your device: open your ' +
-      'browser\'s network panel and you\'ll see zero requests while it is watching. Nothing is uploaded ' +
-      'and nothing is saved.</p></section>' +
+      '<p>Runs on your own camera for 60 seconds, no account needed. About 20 MB of AI models download ' +
+      'once; after that, nothing leaves the page.</p></section>' +
       '<section><h2>How it works</h2>' +
       '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
       'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +

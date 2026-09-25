@@ -51,6 +51,16 @@ const FEATURED_GUIDES: { href: string; label: string }[] = [
   { href: '/blog/nail-biting-health-risks', label: 'The real health risks of nail biting' },
   { href: '/blog/nail-biting-in-children', label: 'Nail biting in children: a guide for parents' },
   { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
+  { href: '/blog/how-ai-can-help-stop-nail-biting', label: 'Can an app help? The camera approach, in depth' },
+];
+
+// Three places to start, each with a line on who it is for. Everything else in
+// READING_LIST follows as a compact list, so every destination is still linked
+// exactly once, but the section reads as a recommendation, not a link dump.
+const START_HERE: { href: string; note: string }[] = [
+  { href: '/blog/habit-reversal-training-guide', note: "Start here if you've tried polish and given up." },
+  { href: '/blog/nail-biting-trigger-mapping', note: 'For when you want to know why you bite, not just when.' },
+  { href: '/compare/bitter-polish-alternative', note: "If you're deciding between this and bitter polish." },
 ];
 
 // Section 06 is one reading list, so the two old lists are merged here rather
@@ -236,10 +246,8 @@ export function Landing() {
                 </>
               )}
               <p className="sg-small mt-6 max-w-[46ch] text-left">
-                Run the real nail biting detector on your own camera for 60 seconds: no account, no
-                signup. The AI models download once (about 20 MB) and then everything runs on your
-                device: open your browser's network panel and you'll see zero requests while it is
-                watching. Nothing is uploaded and nothing is saved.
+                Runs on your own camera for 60 seconds, no account needed. About 20 MB of AI models
+                download once; after that, nothing leaves the page.
               </p>
             </section>
 
@@ -495,11 +503,25 @@ export function Landing() {
                 All {BLOG_INDEX.length} articles <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
-            <ul className="mt-8 grid border-t border-[color:var(--sg-rule)] md:grid-cols-2 md:gap-x-10">
-              {READING_LIST.map(({ href, title }) => (
+            <ol className="mt-8 grid gap-6 md:grid-cols-3">
+              {START_HERE.map(({ href, note }) => {
+                const row = READING_LIST.find(r => r.href === href);
+                return (
+                  <li key={href}>
+                    <a href={href} className="group block border-t-2 border-[color:var(--sg-ink)] pt-4">
+                      <span className="sg-h3 group-hover:text-[color:var(--sg-blue)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
+                      <span className="sg-small mt-2 block">{note}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+
+            <ul className="mt-10 grid border-t border-[color:var(--sg-rule)] md:grid-cols-2 md:gap-x-10">
+              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }) => (
                 <li key={href} className="border-b border-[color:var(--sg-rule)]">
-                  <a href={href} className="group flex min-h-14 items-center justify-between gap-4 py-3.5 font-semibold transition-colors hover:text-[color:var(--sg-blue)]">
-                    <span className="group-hover:underline group-hover:underline-offset-4">{title}</span>
+                  <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-blue)] hover:underline hover:underline-offset-4">
+                    {title}
                   </a>
                 </li>
               ))}
