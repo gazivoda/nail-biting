@@ -297,6 +297,56 @@ export function Landing() {
           </div>
         </section>
 
+        {/* ── THE APP ───────────────────────────────────────────────────── */}
+        {/* The product itself, not a drawing of it. Real screens from the app,
+            captured with a week of example data and labelled as such (see
+            public/shots; provenance is embedded in each file). Wider than the
+            rest of the page on purpose: this is the one section that wants
+            the room. */}
+        <section aria-labelledby="app-heading" className="pb-16 lg:pb-24">
+          <div className="mx-auto w-full max-w-[88rem] px-[clamp(1.25rem,4vw,2.5rem)]">
+            <h2 id="app-heading" className="sg-h2 max-w-[20ch]">What it looks like while you work</h2>
+
+            <div className="mt-10 grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
+              <figure className="lg:col-span-8">
+                <img
+                  src="/shots/app-watch-1280.webp"
+                  srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
+                  sizes="(min-width: 1024px) 58rem, 100vw"
+                  width={1280}
+                  height={800}
+                  loading="lazy"
+                  decoding="async"
+                  alt="The Watch screen: detection is running with the camera feed hidden, the streak has just reset to zero after a catch, best streak 19 hours, and a card suggests pressing your thumb to each fingertip instead."
+                  className="w-full rounded-lg border border-[color:var(--sg-rule)]"
+                />
+                <figcaption className="sg-small mt-3 max-w-[60ch]">
+                  <strong className="font-bold text-[color:var(--sg-ink)]">Watch.</strong> Right after a
+                  catch: the streak goes back to zero and it suggests something else to do with your hands.
+                </figcaption>
+              </figure>
+
+              <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:mx-0">
+                <img
+                  src="/shots/app-history-390.webp"
+                  width={390}
+                  height={844}
+                  loading="lazy"
+                  decoding="async"
+                  alt="The History screen on a phone: bites per day for the last seven days, then each entry with its time and trigger, such as Focus or Stress."
+                  className="w-full rounded-lg border border-[color:var(--sg-rule)]"
+                />
+                <figcaption className="sg-small mt-3">
+                  <strong className="font-bold text-[color:var(--sg-ink)]">History.</strong> Every alarm and
+                  every bite you log, with the time and what set it off.
+                </figcaption>
+              </figure>
+            </div>
+
+            <p className="sg-note mt-8">Real screens from the app, shown with example data.</p>
+          </div>
+        </section>
+
         {/* ── HOW IT WORKS / HOW TO START ───────────────────────────────── */}
         {/* One list does both jobs: the three things you do to start are the
             three things the product does. */}
