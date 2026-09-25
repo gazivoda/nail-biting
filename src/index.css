@@ -417,10 +417,9 @@ html.dark .blog-html-block td a {
    `dark:border-ink-400` (used across the app's cards/dividers) measures
    1.00:1 against the ink-100 page background: ink-400 sits at 9% L, *darker*
    than the 15% L surface it's meant to separate, so the "border" disappears
-   in dark mode. ink-400 itself can't move — 113 usages across 31 files, 9 of
-   them `bg-ink-400` surfaces a lighter value would blow out. Scoping a
-   dedicated variable to `.ed-page` fixes the editorial redesign without
-   touching that token or leaking a new color into the rest of the app.
+   in dark mode. (Since 2026-09-25 ink-400 itself is 30% L, which fixes the
+   app too; its few bg-ink-400 uses are tracks, toggles and hover fills,
+   which read correctly a step lighter than the card.)
    32% L (same near-zero-chroma hue as the ink scale) lands at ~1.56:1
    against ink-100 — inside the 1.5–2.0 band called for: legible as
    structure, still reads as a hairline rather than a hard divider. */

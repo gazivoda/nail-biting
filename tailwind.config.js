@@ -47,7 +47,11 @@ export default {
           100: 'oklch(15%   0.010 200 / <alpha-value>)',   // default page bg
           200: 'oklch(13%   0.008 200 / <alpha-value>)',   // sidebar / deeper
           300: 'oklch(11%   0.006 200 / <alpha-value>)',   // deepest surfaces
-          400: 'oklch(9%    0.005 200 / <alpha-value>)',   // borders (subtle)
+          // Borders, tracks and hover fills in dark mode. Was 9% L: darker than
+          // every surface it separates (ink-100 15%, ink-50 18%), so all 73
+          // dark:border-ink-400 card edges and dividers were invisible. 30% L
+          // sits above the surfaces, like the --ed-hairline fix (32%).
+          400: 'oklch(30%   0.008 200 / <alpha-value>)',
         },
         // ── Scoped editorial hairline (src/index.css `--ed-hairline`) ─────
         // Generates border-hairline / bg-hairline / divide-hairline. No
