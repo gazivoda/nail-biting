@@ -18,18 +18,13 @@ import { ArrowRight, Check } from 'lucide-react';
 // rather than mapped over an array: these two anchors are the whole checkout
 // entry surface, and writing them as real attributes keeps them greppable.
 
+// Named the way the app names them, so the list describes this product rather
+// than any subscription. Same substance as before; the offer is unchanged.
 const FEATURES = [
-  'Unlimited AI detection',
-  'Streak & habit tracking',
-  'Full incident history',
-  'All alert types',
-];
-
-const TRUST_TERMS = [
-  'Secure payment via Paddle',
-  'Cancel anytime',
-  '3-day free trial',
-  'No credit card required to start',
+  'Detection for as long as you run it',
+  'Current and best streak',
+  'Full history with trigger tags',
+  'Sound, flash, or both',
 ];
 
 function FeatureList({ features }: { features: string[] }) {
@@ -49,10 +44,9 @@ export function PricingSection() {
   return (
     <section id="pricing" aria-labelledby="pricing-heading" className="sg-page">
       <div className="mx-auto max-w-4xl text-center">
-        <h2 id="pricing-heading" className="sg-h2">Simple, honest pricing.</h2>
+        <h2 id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</h2>
         <p className="sg-lede mx-auto mt-4 max-w-2xl">
-          Start with a 3-day free trial. No credit card required. Both plans start the same
-          trial: you pick one when it ends.
+          Three days free first, and no card to start. You pick a plan when the trial ends.
         </p>
       </div>
 
@@ -105,14 +99,9 @@ export function PricingSection() {
         </div>
       </div>
 
-      <ul className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-x-6 gap-y-2">
-        {TRUST_TERMS.map(term => (
-          <li key={term} className="sg-small flex items-center gap-2">
-            <Check size={15} aria-hidden="true" className="text-[color:var(--sg-green)]" />
-            {term}
-          </li>
-        ))}
-      </ul>
+      <p className="sg-small mx-auto mt-8 max-w-4xl text-center">
+        Payments go through Paddle. Cancel anytime from your account.
+      </p>
     </section>
   );
 }
