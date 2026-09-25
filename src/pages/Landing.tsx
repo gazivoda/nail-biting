@@ -366,14 +366,15 @@ export function Landing() {
 
             <div className="lg:col-span-5">
               <div className="border-t-2 border-[color:var(--sg-ink)] pt-6 lg:mt-3">
-                <p className="sg-body text-[color:var(--sg-ink)]">
-                  <strong className="font-extrabold">20-30% of adults</strong> bite their nails
-                  chronically (Halteh, Scher &amp; Lipner, 2017).
+                <p className="sg-body">
+                  Somewhere between 20 and 30% of adults bite their nails chronically (Halteh, Scher
+                  &amp; Lipner, 2017).
                 </p>
-                <p className="sg-body mt-4 text-[color:var(--sg-ink)]">
-                  In the landmark habit reversal trial, participants' own daily counts fell by{' '}
-                  <strong className="font-extrabold">about 99%</strong> over five months (Azrin, Nunn
-                  &amp; Frantz, 1980).
+                <p className="sg-body mt-4">
+                  In the landmark habit reversal trial, participants' own daily counts fell by about
+                  99% over five months (Azrin, Nunn &amp; Frantz, 1980). That trial had a therapist
+                  teaching the method and people practising it every day. The app does the noticing
+                  part; the rest is still yours.
                 </p>
               </div>
 
