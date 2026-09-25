@@ -1,4 +1,5 @@
 import { ArrowRight, Check } from 'lucide-react';
+import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
@@ -18,14 +19,8 @@ import { ArrowRight, Check } from 'lucide-react';
 // rather than mapped over an array: these two anchors are the whole checkout
 // entry surface, and writing them as real attributes keeps them greppable.
 
-// Named the way the app names them, so the list describes this product rather
-// than any subscription. Same substance as before; the offer is unchanged.
-const FEATURES = [
-  'Detection for as long as you run it',
-  'Current and best streak',
-  'Full history with trigger tags',
-  'Sound, flash, or both',
-];
+// Shared with the in-app paywall (site/plans.ts).
+const FEATURES = PLAN_FEATURES;
 
 function FeatureList({ features }: { features: string[] }) {
   return (
@@ -63,7 +58,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
           </p>
           <p className="sg-small mt-2">$2.42/month, billed yearly</p>
           <div className="mt-7 flex-1">
-            <FeatureList features={[...FEATURES, 'Priority support']} />
+            <FeatureList features={[...FEATURES, YEARLY_EXTRA]} />
           </div>
           <a
             href="/api/auth/google"

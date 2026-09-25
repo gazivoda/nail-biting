@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
 import { Check, Zap, Star, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
+import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 
 interface Props {
   onBack?: () => void;
@@ -101,15 +102,14 @@ export function PaywallPage({ onBack }: Props) {
           <div className="w-16 h-16 rounded-full bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center mx-auto mb-4 shadow-card">
             <Check size={32} className="text-forest-600 dark:text-forest-400" />
           </div>
-          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2 tracking-tight">You're all set!</h2>
-          <p className="text-stone-500 dark:text-stone-400 mb-6">Subscription activated. Enjoy Stop Biting Pro.</p>
+          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2 tracking-tight">Payment received</h2>
+          <p className="text-stone-500 dark:text-stone-400 mb-6">Your subscription can take a few seconds to activate.</p>
           <button
             onClick={() => refreshProfile()}
-            className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5"
+            className="inline-flex min-h-11 items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-2.5 text-sm transition-colors duration-150"
           >
-            Go to app →
+            Open the app
           </button>
-          <p className="text-stone-500 dark:text-stone-400 text-xs mt-4">Takes a moment to activate…</p>
         </div>
       </div>
     );
@@ -147,25 +147,26 @@ export function PaywallPage({ onBack }: Props) {
         {isTrialExpired && (
           <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl px-4 py-2.5 text-sm mb-8">
             <AlertTriangle size={14} />
-            <span>Your 3-day free trial has ended. Subscribe to keep using Stop Biting.</span>
+            <span>Your free trial has ended. Your history is still saved on this device.</span>
           </div>
         )}
 
         <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-2 text-center tracking-tight">
-          {onBack ? 'Upgrade to Pro' : 'Continue Breaking the Habit'}
+          {onBack ? 'Choose a plan' : 'Keep the alarm running'}
         </h1>
         <p className="text-stone-500 dark:text-stone-400 mb-10 text-center max-w-md">
-          Unlimited AI nail-biting detection, streak tracking, and history — 100% on-device.
+          $2.99 a month, or $29 a year. Detection runs on your computer; only sign-in and payment use the network.
         </p>
 
         {!plansConfigured && (
           <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-5 py-4 mb-8 max-w-lg w-full">
             <AlertTriangle size={16} className="text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
             <div>
-              <p className="text-amber-800 dark:text-amber-300 text-sm font-medium mb-1">Paddle plans not configured</p>
-              <p className="text-amber-600 dark:text-amber-500 text-xs leading-relaxed">
-                Set <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PADDLE_PRICE_ID_MONTHLY</code> and
-                <code className="mx-1 bg-amber-100 dark:bg-amber-900/40 px-1 rounded">VITE_PADDLE_PRICE_ID_YEARLY</code> in .env
+              {/* Customer-facing: the config details (VITE_PADDLE_PRICE_ID_*)
+                  belong in the console, not on a checkout screen. */}
+              <p className="text-amber-800 dark:text-amber-300 text-sm font-medium mb-1">Subscriptions are unavailable right now</p>
+              <p className="text-amber-800 dark:text-amber-300 text-xs leading-relaxed">
+                Please try again later, or email hello@stopbiting.today.
               </p>
             </div>
           </div>
@@ -195,7 +196,7 @@ export function PaywallPage({ onBack }: Props) {
               <span className="text-stone-500 dark:text-stone-400 text-sm"> / month</span>
             </div>
             <ul className="space-y-2 mb-6 flex-1">
-              {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types'].map(f => (
+              {PLAN_FEATURES.map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
                   <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
                 </li>
@@ -205,9 +206,9 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_MONTHLY)}
-                className="inline-flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-11 items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Subscribe Monthly
+                Subscribe monthly
               </button>
             )}
           </div>
@@ -216,7 +217,7 @@ export function PaywallPage({ onBack }: Props) {
           <div className="order-first md:order-none border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                Best value — save 19%
+                Best value: save 19%
               </span>
             </div>
             <div className="flex items-center gap-2 mb-4">
@@ -232,9 +233,9 @@ export function PaywallPage({ onBack }: Props) {
               <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
               <span className="text-stone-500 dark:text-stone-400 text-sm"> / year</span>
             </div>
-            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">Just $2.42/month</p>
+            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">$2.42/month, billed yearly</p>
             <ul className="space-y-2 mb-6 flex-1">
-              {['Unlimited AI detection', 'Streak & habit tracking', 'Full incident history', 'All alert types', 'Priority support'].map(f => (
+              {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
                   <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
                 </li>
@@ -244,10 +245,9 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_YEARLY)}
-                className="inline-flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-11 items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Zap size={13} />
-                Subscribe Yearly
+                Subscribe yearly
               </button>
             )}
           </div>

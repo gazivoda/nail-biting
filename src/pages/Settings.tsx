@@ -349,14 +349,14 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
               </span>
               {(subscription_status === 'active' || subscription_status === 'paused') && subscription_plan && (
                 <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
-                  Stop Biting Pro · {subscription_plan === 'yearly' ? 'Yearly' : 'Monthly'}
+                  Subscribed · {subscription_plan === 'yearly' ? 'Yearly' : 'Monthly'}
                 </span>
               )}
               {subscription_status === 'trial' && (
                 <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting</span>
               )}
               {subscription_status === 'cancelled' && (
-                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting Pro</span>
+                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting</span>
               )}
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400">
@@ -380,7 +380,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
               className="inline-flex items-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-4 py-2 text-xs transition-all duration-150 hover:-translate-y-0.5"
             >
               <Zap size={12} />
-              Upgrade to Pro
+              Choose a plan
             </button>
           )}
           {canManage && (

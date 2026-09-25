@@ -108,7 +108,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-stone-700 dark:text-stone-200 truncate">{displayName}</p>
                 {accessStatus === 'subscribed' && (
-                  <p className="text-xs text-forest-600 dark:text-forest-400 font-medium tracking-wide">Pro</p>
+                  <p className="text-xs text-forest-600 dark:text-forest-400 font-medium tracking-wide">Subscribed</p>
                 )}
               </div>
             </div>
