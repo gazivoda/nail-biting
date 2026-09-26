@@ -251,7 +251,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                             {inc.autoDetected && !inc.confirmed && (
                               <button
                                 onClick={() => confirmIncident(inc.id)}
-                                aria-label="Confirm as bite"
+                                aria-label={`Confirm alarm at ${formatTime(inc.timestamp)} as a bite`}
                                 title="This was an actual bite"
                                 className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 items-center gap-1 px-2 text-xs text-amber-800 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
                               >

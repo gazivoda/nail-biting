@@ -267,7 +267,7 @@ export function HeroDemo({ autoStart = false }: Props) {
       )}
 
       {isLoading && (
-        <p className="sg-small flex items-center justify-center gap-2">
+        <p role="status" className="sg-small flex items-center justify-center gap-2">
           <Loader2
             size={14}
             className="animate-spin flex-shrink-0"
@@ -280,14 +280,18 @@ export function HeroDemo({ autoStart = false }: Props) {
       {/* The peak moment: the alarm just fired on the visitor's own face. The
           trial is offered here, while the camera is still live, rather than
           after the minute runs out. */}
-      {isRunning && state.catches > 0 && (
-        <div className="animate-fade-in flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-live="polite">
-          <p className="text-[1.0625rem] font-bold">
-            That&apos;s the alarm. Caught {state.catches === 1 ? 'once' : `${state.catches} times`} so far.
-          </p>
-          <TrialLink />
-        </div>
-      )}
+      {/* The live region is always in the page, so the first catch is
+          announced: a region created together with its text often is not. */}
+      <div aria-live="polite" className="empty:-mt-5">
+        {isRunning && state.catches > 0 && (
+          <div className="animate-fade-in flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+            <p className="text-[1.0625rem] font-bold">
+              That&apos;s the alarm. Caught {state.catches === 1 ? 'once' : `${state.catches} times`} so far.
+            </p>
+            <TrialLink />
+          </div>
+        )}
+      </div>
 
       {/* A failed camera is a dead end for the demo, not for the visitor. */}
       {failure && (

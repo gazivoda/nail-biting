@@ -176,7 +176,7 @@ export function Landing() {
                   <Suspense
                     fallback={
                       <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-[color:var(--sg-ink)] px-6">
-                        <p className="flex items-center gap-2 text-center text-[0.9375rem] text-white">
+                        <p role="status" className="flex items-center gap-2 text-center text-[0.9375rem] text-white">
                           <Loader2 size={15} className="flex-shrink-0 animate-spin" aria-hidden="true" />
                           {DEMO_LOADING_LABEL}
                         </p>

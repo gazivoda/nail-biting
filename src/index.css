@@ -603,6 +603,15 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  /* Endless loops (live dots, loading placeholders, the pinging "detecting"
+     dot) stop; the dot itself still shows the state. The alarm's own ring on
+     the camera frame is the alert, so it is left alone. */
+  .animate-pulse,
+  .animate-ping,
+  .animate-pulse-slow {
+    animation: none;
+  }
+
   .animate-fade-up,
   .animate-fade-in {
     animation: none;
