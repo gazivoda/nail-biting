@@ -1535,6 +1535,16 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/',
     });
     if (condition) injected = injectSchema(injected, condition);
+    // The hero screenshot is the largest thing above the fold on desktop, but
+    // React only creates its <img> after the JS bundle has run. Preloading it
+    // from the HTML starts the download in parallel. srcset/sizes mirror the
+    // <img> in Landing.tsx exactly, or the browser fetches a second copy.
+    injected = injected.replace(
+      '</head>',
+      '<link rel="preload" as="image" href="/shots/app-watch-1280.webp" ' +
+      'imagesrcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
+      'imagesizes="(min-width: 1024px) 36rem, 100vw" fetchpriority="high"></head>',
+    );
     // WebPage entity carrying the speakable spec — injected only here, so
     // legal/noindex routes (which share the same shell) never receive it.
     // Selectors resolve against the SSR article injected just below.
