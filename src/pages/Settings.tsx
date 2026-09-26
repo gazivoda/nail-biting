@@ -6,6 +6,7 @@ import { useAuth, apiFetch } from '../contexts/AuthContext';
 import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
+import { trialLeft } from '../utils/trial';
 import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
 
 function Section({ title, icon: Icon, children, fullWidth }: {
@@ -341,9 +342,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
   const { subscription_status, subscription_plan, subscription_end_date, trial_end_date } = user;
   const badge = STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired;
 
-  const trialDaysLeft = trial_end_date
-    ? Math.max(0, Math.ceil((new Date(trial_end_date).getTime() - Date.now()) / 86_400_000))
-    : 0;
+  const trialLeftText = trialLeft(trial_end_date);
 
   const openPortal = async () => {
     setPortalLoading(true);
@@ -381,8 +380,8 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400">
               {subscription_status === 'trial' && trial_end_date && (
-                trialDaysLeft > 0
-                  ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} left in trial, ends ${fmt(trial_end_date)}`
+                trialLeftText
+                  ? `${trialLeftText} in trial, ends ${fmt(trial_end_date)}`
                   : 'Trial has ended'
               )}
               {subscription_status === 'active' && subscription_end_date && `Renews ${fmt(subscription_end_date)}`}

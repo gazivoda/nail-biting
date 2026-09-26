@@ -1,4 +1,5 @@
 import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap, Download } from 'lucide-react';
+import { trialLeft } from '../../utils/trial';
 import { useAuth } from '../../contexts/AuthContext';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
 
@@ -20,9 +21,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
   const { user, accessStatus, signOut } = useAuth();
   const { canInstall, triggerInstall } = usePWAInstall();
 
-  const trialDaysLeft = user?.trial_end_date
-    ? Math.max(0, Math.ceil((new Date(user.trial_end_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
-    : 0;
+  const trialLeftText = trialLeft(user?.trial_end_date);
 
   const avatarUrl = user?.avatar;
   const displayName = user?.name ?? user?.email ?? '';
@@ -78,9 +77,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
           <div className="mx-3 mb-3 border border-forest-200 dark:border-forest-800 bg-forest-50 dark:bg-forest-900/30 rounded-xl p-3">
             <p className="text-xs text-forest-700 dark:text-forest-400 font-medium mb-0.5">Free trial</p>
             <p className="text-xs text-stone-500 dark:text-stone-400 mb-2">
-              {trialDaysLeft > 0
-                ? `${trialDaysLeft} day${trialDaysLeft !== 1 ? 's' : ''} remaining`
-                : 'Expires today'}
+              {trialLeftText ?? 'Ends today'}
             </p>
             <button
               onClick={onUpgrade}

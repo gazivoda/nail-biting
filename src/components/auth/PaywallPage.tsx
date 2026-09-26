@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
 import { Check, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { trialLeft } from '../../utils/trial';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 
@@ -124,9 +125,7 @@ export function PaywallPage({ onBack }: Props) {
     );
   }
 
-  const trialDaysLeft = user?.trial_end_date
-    ? Math.max(0, Math.ceil((new Date(user.trial_end_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
-    : 0;
+  const trialLeftText = trialLeft(user?.trial_end_date);
 
   const isTrialExpired = !onBack;
 
@@ -170,9 +169,9 @@ export function PaywallPage({ onBack }: Props) {
         </p>
         {/* Mid-trial, the free days left are the first thing to know, not a
             footnote under the fold on a phone. */}
-        {onBack && trialDaysLeft > 0 && (
+        {onBack && trialLeftText && (
           <p className="mt-3 text-sm font-medium text-forest-700 dark:text-forest-300">
-            {trialDaysLeft} day{trialDaysLeft !== 1 ? 's' : ''} left in your free trial.
+            {trialLeftText} in your free trial.
           </p>
         )}
         </div>
