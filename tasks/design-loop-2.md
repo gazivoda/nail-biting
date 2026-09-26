@@ -1,11 +1,10 @@
 # Design loop, round 2 (10 iterations, every 5 min)
 
-iterations: 4
+iterations: 5
 
 ## Log
 
 ## Backlog (from the round-2 reviews; top first)
-- 5: App eyebrows left: CURRENT STREAK / SESSION / TODAY / SUMMARY / date headers -> sentence case.
 - 6: Emoji as icons: Settings sound cards + preset trigger tags -> lucide icons (custom tags keep user emoji).
 - 7: Detection status: role=status aria-live, "Detection couldn't load. Check your connection." + 44px "Try again", "Paused while this tab is hidden".
 - 8: History empty state: no emoji, h2 "No history yet", "Go to Watch" button.
@@ -15,3 +14,4 @@ iterations: 4
 - 2/10: blog: shared header (Blog current), shared footer, unified trial CTA; false desktop-app footer claim gone
 - 3/10: blog posts in Overpass: 17px body, heavier headings, AA meta, no double rule; content untouched
 - 4/10: blog index: sentence-case h1, one neutral pill, green active filter, plain cards, compact on mobile
+- 5/10: app card labels sentence case (Current streak, Session, Today, Summary, day headers); homepage shots recaptured

@@ -161,7 +161,7 @@ export function Log() {
 
           {incidents.length > 0 && (
             <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card dark:shadow-card-dark">
-              <h2 className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-3 font-semibold">Summary</h2>
+              <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>
@@ -194,7 +194,7 @@ export function Log() {
             <div className="space-y-6">
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between px-1">
-                <p className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest font-medium">
+                <p className="text-sm font-medium text-stone-600 dark:text-stone-300">
                   {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />
@@ -202,7 +202,7 @@ export function Log() {
 
               {grouped.map(({ date, items }) => (
                 <div key={date}>
-                  <h3 className="text-stone-500 dark:text-stone-400 text-xs uppercase tracking-widest mb-3 px-1 font-medium">{date}</h3>
+                  <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3 px-1">{date}</h3>
                   <div className="space-y-2">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
