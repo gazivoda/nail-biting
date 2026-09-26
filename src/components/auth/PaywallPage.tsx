@@ -13,6 +13,9 @@ const PRICE_MONTHLY = import.meta.env.VITE_PADDLE_PRICE_ID_MONTHLY as string;
 const PRICE_YEARLY = import.meta.env.VITE_PADDLE_PRICE_ID_YEARLY as string;
 const PADDLE_ENV = (import.meta.env.VITE_PADDLE_ENV || 'production') as 'production' | 'sandbox';
 
+const CHECKOUT_UNAVAILABLE =
+  "Checkout couldn't load. If you use an ad blocker, allow paddle.com for this site and reload, or email hello@stopbiting.today.";
+
 export function PaywallPage({ onBack }: Props) {
   const { user, refreshProfile, signOut } = useAuth();
   const [activating, setActivating] = useState(false);
@@ -39,9 +42,15 @@ export function PaywallPage({ onBack }: Props) {
           handleCheckoutComplete(txId);
         }
       },
-    }).then((paddleInstance) => {
-      if (paddleInstance) setPaddle(paddleInstance);
-    });
+    })
+      // Paddle's script is blocked by some ad blockers and can fail on a bad
+      // connection. The Subscribe buttons wait on it, so say why they are
+      // disabled instead of leaving them greyed out forever.
+      .then((paddleInstance) => {
+        if (paddleInstance) setPaddle(paddleInstance);
+        else setError(CHECKOUT_UNAVAILABLE);
+      })
+      .catch(() => setError(CHECKOUT_UNAVAILABLE));
   }, []);
 
   // When success screen is shown, poll refreshProfile until App.tsx transitions away.
@@ -189,6 +198,14 @@ export function PaywallPage({ onBack }: Props) {
           </div>
         )}
 
+        {/* Above the plans: it explains why their buttons are disabled, and on
+            a phone the space below them is two screens down. */}
+        {error && (
+          <div role="alert" className="mb-8 max-w-lg w-full text-sm text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/20 border border-alert-400 dark:border-alert-800 rounded-xl px-4 py-3">
+            {error}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
           {/* Yearly first at every width, as on /pricing. */}
           <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
@@ -253,11 +270,6 @@ export function PaywallPage({ onBack }: Props) {
 
         </div>
 
-        {error && (
-          <div className="mt-6 max-w-lg text-sm text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/20 border border-alert-400 dark:border-alert-800 rounded-xl px-4 py-3">
-            {error}
-          </div>
-        )}
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-xs text-stone-500 dark:text-stone-400">
           <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>
