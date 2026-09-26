@@ -246,7 +246,7 @@ export function Landing() {
                 (stress, boredom, deep focus) and after a week you can see which one is yours.
               </p>
             </div>
-            <figure className="mx-auto w-full max-w-[20rem] lg:col-span-4 lg:col-start-8">
+            <figure className="mx-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:col-span-4 lg:col-start-8">
               <img
                 src="/shots/app-history-390.webp"
                 width={390}
@@ -475,8 +475,10 @@ export function Landing() {
             </ol>
 
             <ul className="mt-10 grid border-t border-[color:var(--sg-rule)] md:grid-cols-2 md:gap-x-10">
-              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }) => (
-                <li key={href} className="border-b border-[color:var(--sg-rule)]">
+              {/* On a phone the list stops after four; "All N articles" above
+                  carries the rest. The hidden rows stay in the markup. */}
+              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }, i) => (
+                <li key={href} className={`border-b border-[color:var(--sg-rule)] ${i >= 4 ? 'hidden md:block' : ''}`}>
                   <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-accent)] hover:underline hover:underline-offset-4">
                     {title}
                   </a>
