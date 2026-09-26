@@ -3,7 +3,7 @@ import { TrialButton } from './TrialButton';
 // The site header for every page in the sign system (homepage, /pricing,
 // /how-it-works, /about). Section links are in-page anchors on the homepage
 // and absolute (/#section) everywhere else. Must sit inside a `.sg-page`.
-export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
+export function SiteHeader({ onHome = false, current }: { onHome?: boolean; current?: 'blog' }) {
   return (
     <nav
       aria-label="Site navigation"
@@ -20,7 +20,11 @@ export function SiteHeader({ onHome = false }: { onHome?: boolean }) {
               {label}
             </a>
           ))}
-          <a href="/blog" className="text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
+          <a
+            href="/blog"
+            aria-current={current === 'blog' ? 'page' : undefined}
+            className={`text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-ink)] ${current === 'blog' ? 'text-[color:var(--sg-accent)]' : 'text-[color:var(--sg-ink-2)]'}`}
+          >
             Blog
           </a>
         </div>

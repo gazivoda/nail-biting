@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Clock, BookOpen } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { BLOG_INDEX } from '../data/blogIndex';
 import { useTheme } from '../hooks/useTheme';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
 
 const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_INDEX.map(p => p.tag)))];
 
@@ -51,22 +53,7 @@ export function BlogIndex() {
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
-      {/* Nav */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="flex items-center gap-2 text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">
-          <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
-          Stop Biting
-        </a>
-        <div className="flex items-center gap-4">
-          <a href="/blog" aria-current="page" className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-sm font-semibold">
-            <BookOpen size={14} aria-hidden="true" />
-            Blog
-          </a>
-          <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
-            Launch App
-          </a>
-        </div>
-      </nav>
+      <div className="sg-page"><SiteHeader current="blog" /></div>
 
       {/* Header */}
       <header className="reveal pt-28 pb-12 px-6 text-center max-w-3xl mx-auto">
@@ -133,17 +120,11 @@ export function BlogIndex() {
         </div>
 
         {posts.length === 0 && (
-          <p className="text-center text-stone-400 dark:text-stone-500 py-20">No posts in this category yet.</p>
+          <p className="text-center text-stone-500 py-20">No posts in this category yet.</p>
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
-        <p>
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
-          {' — '}AI-powered nail biting tracker for Mac and Windows
-        </p>
-      </footer>
+      <div className="sg-page"><SiteFooter /></div>
     </div>
   );
 }

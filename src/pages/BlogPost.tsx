@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
-import { ArrowLeft, Clock, BookOpen, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Clock, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
 import { getRelated } from '../data/related';
 import { AUTHOR_BIO } from '../data/editorialPolicy';
 import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
+import { TrialButton } from '../components/site/TrialButton';
 
 interface Props {
   slug: string;
@@ -78,19 +81,7 @@ export function BlogPost({ slug }: Props) {
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
 
-      {/* Nav */}
-      <nav aria-label="Site navigation" className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
-        <div className="flex items-center gap-6">
-          <a href="/blog" className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 text-sm transition-colors">
-            <BookOpen size={14} aria-hidden="true" />
-            Blog
-          </a>
-          <a href="/" className="text-sm font-semibold text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
-            Launch App
-          </a>
-        </div>
-      </nav>
+      <div className="sg-page"><SiteHeader current="blog" /></div>
 
       {/* 404 */}
       {!post && (
@@ -197,24 +188,17 @@ export function BlogPost({ slug }: Props) {
             ))}
           </article>
 
-          {/* CTA */}
-          <div className="mt-14 rounded-2xl bg-forest-50 dark:bg-forest-900/20 border border-forest-200 dark:border-forest-800 p-8 text-center">
-            <p className="text-stone-500 dark:text-stone-400 text-sm mb-1">Ready to start tracking?</p>
-            <p className="text-stone-900 font-semibold text-xl mb-5">Try Stop Biting — free to start</p>
-            <a
-              href="/"
-              className="inline-flex items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_oklch(38%_0.12_148/0.35)] active:scale-95"
-            >
-              Launch App
-            </a>
-            <div className="flex items-center justify-center gap-5 mt-4">
-              <a href="/how-it-works" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
-                How it works →
-              </a>
-              <a href="/#pricing" className="text-xs text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:underline transition-colors">
-                See pricing →
-              </a>
+          {/* CTA: the same offer and button as every other page. */}
+          <div className="sg-page mt-14 flex flex-col items-start gap-4 rounded-2xl border border-[color:var(--sg-rule)] bg-white p-7 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="sg-h3">Try it free for 3 days.</p>
+              <p className="sg-small mt-1">
+                No card to start. Read{' '}
+                <a href="/how-it-works" className="sg-link">how it works</a> or{' '}
+                <a href="/pricing" className="sg-link">see pricing</a>.
+              </p>
             </div>
+            <TrialButton />
           </div>
 
           {/* Related articles — internal linking for SEO */}
@@ -260,13 +244,7 @@ export function BlogPost({ slug }: Props) {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-8 px-6 text-center text-stone-400 dark:text-stone-500 text-sm bg-cream-200 dark:bg-ink-200">
-        <p>
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Stop Biting</a>
-          {' — '}AI-powered nail biting tracker for Mac and Windows
-        </p>
-      </footer>
+      <div className="sg-page"><SiteFooter /></div>
     </div>
   );
 }
