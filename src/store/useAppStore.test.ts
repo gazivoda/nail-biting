@@ -274,6 +274,7 @@ describe('clearHistory', () => {
     expect(s.lastBiteTime).toBeNull();
     expect(s.bestStreakMs).toBe(0);
     expect(s.historyStartTime).toBe(T0 + 120_000);
+    expect(s.firstOpenTime).toBe(T0 + 120_000);
     expect(s.alertSound).toBe('chime');
     expect(s.detectionSensitivity).toBe('high');
     expect(s.customTags.map(t => t.label)).toEqual(['Meetings']);

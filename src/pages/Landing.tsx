@@ -238,8 +238,8 @@ export function Landing() {
             real History screen, captured with example data (public/shots;
             provenance embedded in the file). */}
         <section aria-labelledby="app-heading" className="pb-16 lg:pb-24">
-          <div className="sg-container grid items-start gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-6 lg:pt-16">
+          <div className="sg-container grid items-start gap-10 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-6">
               <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in History</h2>
               <p className="sg-body sg-measure mt-5">
                 Each alarm and each bite you log lands here with the time. Tag what set it off
@@ -373,12 +373,14 @@ export function Landing() {
                   entirely in your browser, on your own computer: <strong className="font-extrabold">0 bytes</strong> of
                   camera data go to any server. Signing in and paying use the network; watching never does.
                 </p>
-              <p className="sg-body">
-                <strong className="font-bold text-[color:var(--sg-ink)]">Check it yourself:</strong> open
-                your browser's developer tools, go to the Network tab and start detection. The list stays
-                empty. It keeps working with the Wi-Fi off, and your history lives in this browser:
-                clear the site's data and it's gone.
-              </p>
+                {/* "The list stays empty" was not true on a first run: starting
+                    detection downloads the models. Say what a visitor will see. */}
+                <p className="sg-body text-[color:var(--sg-ink)]">
+                  <strong className="font-bold">Check it yourself:</strong> open your browser's developer
+                  tools, go to the Network tab and start detection. Once the detection models have
+                  downloaded, nothing carrying camera data is sent while it watches. It keeps working with the Wi-Fi off,
+                  and your history lives in this browser: clear the site's data and it's gone.
+                </p>
               </div>
             </div>
           </div>
@@ -418,8 +420,8 @@ export function Landing() {
             working with no JavaScript at all. */}
         <section id="faq" aria-labelledby="faq-heading" className="py-20 lg:py-28">
           <div className="sg-container grid gap-10 lg:grid-cols-12">
-            <h2 id="faq-heading" className="sg-h2 lg:col-span-4">Questions people ask about nail biting</h2>
-            <div className="border-t border-[color:var(--sg-rule)] lg:col-span-8">
+            <h2 id="faq-heading" className="sg-h2 lg:col-span-5">Questions people ask about nail biting</h2>
+            <div className="border-t border-[color:var(--sg-rule)] lg:col-span-7">
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group border-b border-[color:var(--sg-rule)]">
                   <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">

@@ -202,13 +202,19 @@ export const useAppStore = create<AppState & AppActions>()(
 
       // History's "Clear all" used to call clearAllData, which also reset
       // sensitivity, sound, volume, theme, reminders and custom bite reasons.
-      clearHistory: () => set({
-        incidents: [],
-        lastBiteTime: null,
-        bestStreakMs: 0,
-        bestStreakFloorMs: 0,
-        historyStartTime: Date.now(),
-      }),
+      // The current streak runs from lastBiteTime ?? firstOpenTime, so both
+      // restart here or the streak would keep counting from install day.
+      clearHistory: () => {
+        const now = Date.now();
+        set({
+          incidents: [],
+          lastBiteTime: null,
+          bestStreakMs: 0,
+          bestStreakFloorMs: 0,
+          historyStartTime: now,
+          firstOpenTime: now,
+        });
+      },
 
       clearAllData: () => set({
         ...initialState,
