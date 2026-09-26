@@ -63,7 +63,7 @@ function AppLoading() {
 }
 
 function AppRouter() {
-  const { accessStatus } = useAuth();
+  const { accessStatus, authError, clearAuthError } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showPaywall, setShowPaywall] = useState(false);
   const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
@@ -79,7 +79,7 @@ function AppRouter() {
 
   // ── Not authenticated → Landing ──────────────────────────────────────────
   if (accessStatus === 'no_auth') {
-    return <Landing />;
+    return <Landing authError={authError} onDismissAuthError={clearAuthError} />;
   }
 
   // ── Paywall (trial expired) or voluntary upgrade ────────────────────────

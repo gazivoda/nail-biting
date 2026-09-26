@@ -1,9 +1,8 @@
 # Design loop, round 6 (10 iterations, every 5 min)
 
-iterations: 2
+iterations: 3
 
 ## Backlog
-- 3: A failed/cancelled Google sign-in returns to the homepage silently (#auth_error only in console); say it and offer to retry.
 - 4: Returning customers can only see 'Start free trial' in the header; add 'Sign in'.
 - 5: Trial countdown: 'Ends today at <time>' in the last 24h (Math.ceil never shows 0); trial status visible below lg.
 - 6: Performance: drop the Inter preload nobody uses; lazy-load ComparePage (+94KB source out of the main bundle).
@@ -15,3 +14,4 @@ iterations: 2
 ## Log
 - 1/10: paywall explains a blocked/failed checkout (Paddle load error surfaced above the plans)
 - 2/10: hero: 'Made for a laptop or desktop with a webcam.' under the offer
+- 3/10: failed/cancelled Google sign-in shown on the homepage with Try again

@@ -132,7 +132,15 @@ const FAQS: { q: string; a: string }[] = [
 // from the first paint, and the warning pictogram is the one thing that moves.
 
 
-export function Landing() {
+// What a cancelled or failed Google sign-in means, in the visitor's words.
+// access_denied is Google's code for "you pressed Cancel".
+function authErrorMessage(code: string) {
+  return code === 'access_denied'
+    ? 'Sign-in was cancelled, so nothing was set up. You can try again whenever you like.'
+    : "Sign-in didn't finish, so nothing was set up. Please try again.";
+}
+
+export function Landing({ authError = null, onDismissAuthError }: { authError?: string | null; onDismissAuthError?: () => void } = {}) {
   // Stays false until the visitor asks for the demo: the lazy import is only
   // ever triggered by this flag, which is what keeps MediaPipe off a page view.
   const [demoStarted, setDemoStarted] = useState(false);
@@ -147,6 +155,15 @@ export function Landing() {
         <section aria-label="Hero" className="pt-28 pb-16 lg:pt-36 lg:pb-24">
           <div className="sg-container grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-6 lg:pt-8">
+              {authError && (
+                <div role="alert" className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-[color:var(--sg-rule)] bg-white px-4 py-3">
+                  <p className="sg-small flex-1 text-[color:var(--sg-ink)]">{authErrorMessage(authError)}</p>
+                  <a href="/api/auth/google" className="sg-link inline-flex min-h-11 items-center">Try again</a>
+                  <button type="button" onClick={onDismissAuthError} className="sg-small inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">
+                    Dismiss
+                  </button>
+                </div>
+              )}
               <h1 className="sg-h1">Stop biting your nails.</h1>
               <p className="sg-lede sg-measure mt-6">
                 Your webcam watches your hands while you work. The moment a fingertip reaches your lips,

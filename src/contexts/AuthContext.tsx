@@ -14,6 +14,9 @@ interface AuthContextType {
   signInWithGoogle: () => void;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
+  /** Why the last Google sign-in didn't finish (from #auth_error), if it didn't. */
+  authError: string | null;
+  clearAuthError: () => void;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -62,6 +65,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.getItem(SESSION_FLAG) ? 'loading' : 'no_auth'
   );
   const [signingIn, setSigningIn] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const clearAuthError = useCallback(() => setAuthError(null), []);
 
   const applyUser = useCallback((profile: UserProfile) => {
     localStorage.setItem(SESSION_FLAG, '1');
@@ -97,6 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const hashError = hashParams.get('auth_error');
     if (hashError) {
       console.error('Auth error from OAuth callback:', hashError);
+      // Kept, not just logged: the visitor otherwise lands back on the
+      // homepage they started from with no idea why.
+      setAuthError(hashError);
       window.history.replaceState(null, '', '/');
       setAccessStatus('no_auth');
       return () => window.removeEventListener('electron-auth', onElectronAuth);
@@ -172,7 +180,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [applyUser]);
 
   return (
-    <AuthContext.Provider value={{ user, accessStatus, signingIn, signInWithGoogle, signOut, refreshProfile }}>
+    <AuthContext.Provider value={{ user, accessStatus, signingIn, signInWithGoogle, signOut, refreshProfile, authError, clearAuthError }}>
       {children}
     </AuthContext.Provider>
   );
