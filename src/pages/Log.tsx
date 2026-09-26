@@ -29,8 +29,10 @@ const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:
 // the tag picker (triggerTags.ts): "Deep focus", not "Focus".
 function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
   if (inc.tag === 'auto-detected') return '✓ Bite';
-  const t = [...PRESET_TAGS, ...customTags].find(x => x.id === inc.tag);
-  return t ? `Bite · ${t.emoji} ${t.label}` : 'Bite';
+  const preset = PRESET_TAGS.find(x => x.id === inc.tag);
+  if (preset) return `Bite · ${preset.label}`;
+  const custom = customTags.find(x => x.id === inc.tag);
+  return custom ? `Bite · ${custom.emoji} ${custom.label}`.replace('  ', ' ') : 'Bite';
 }
 
 function WeekChart() {
@@ -209,7 +211,7 @@ export function Log() {
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
                       const tagLabel = bite
                         ? biteTagLabel(inc, customTags)
-                        : '📷 Alarm';
+                        : 'Alarm';
                       return (
                         <div
                           key={inc.id}

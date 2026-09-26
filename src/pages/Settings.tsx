@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Bell, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X } from 'lucide-react';
+import { Bell, BellRing, Bird, Music, Vibrate, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X, type LucideIcon } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
@@ -120,62 +120,77 @@ const SOUND_OPTIONS: {
   value: AlertSound;
   label: string;
   description: string;
-  emoji: string;
+  icon: LucideIcon;
 }[] = [
-  { value: 'alarm',   label: 'Alarm',   description: 'Rapid alternating beeps',    emoji: '🔔' },
-  { value: 'chime',   label: 'Chime',   description: 'Soft decaying bell',         emoji: '🎵' },
-  { value: 'buzz',    label: 'Buzz',    description: 'Low harsh rumble',            emoji: '📳' },
-  { value: 'chirp',   label: 'Chirp',   description: 'Ascending sweep tone',       emoji: '🐦' },
-  { value: 'whistle', label: 'Whistle', description: 'Descending pure tone',       emoji: '🎶' },
+  { value: 'alarm',   label: 'Alarm',   description: 'Rapid alternating beeps', icon: BellRing },
+  { value: 'chime',   label: 'Chime',   description: 'Soft decaying bell',      icon: Bell },
+  { value: 'buzz',    label: 'Buzz',    description: 'Low harsh rumble',        icon: Vibrate },
+  { value: 'chirp',   label: 'Chirp',   description: 'Ascending sweep tone',    icon: Bird },
+  { value: 'whistle', label: 'Whistle', description: 'Descending pure tone',    icon: Music },
 ];
 
 function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange: (s: AlertSound) => void; volume: number }) {
   const [previewing, setPreviewing] = useState<AlertSound | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  function handlePreview(sound: AlertSound, e: React.MouseEvent) {
-    e.stopPropagation();
+  function handlePreview(sound: AlertSound) {
     previewSound(sound, volume);
     setPreviewing(sound);
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setPreviewing(null), 700);
   }
 
+  // Each card is two sibling controls: the card body picks the sound, the
+  // Preview button under it plays it. A button nested in a button is invalid
+  // HTML and screen readers announced the pair as one control.
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div role="radiogroup" aria-label="Alarm sound" className="grid grid-cols-2 gap-2 sm:grid-cols-5">
       {SOUND_OPTIONS.map(opt => {
         const isSelected = value === opt.value;
         const isPreviewing = previewing === opt.value;
+        const Icon = opt.icon;
         return (
-          <button
+          <div
             key={opt.value}
-            onClick={() => onChange(opt.value)}
-            className={`group flex flex-col items-center gap-2 p-3 rounded-xl border text-center transition-all duration-150 ${
+            className={`flex flex-col items-center rounded-xl border text-center transition-colors duration-150 last:col-span-2 sm:last:col-span-1 ${
               isSelected
-                ? 'bg-forest-50 dark:bg-forest-900/40 border-forest-400 dark:border-forest-700 shadow-sm'
+                ? 'bg-forest-50 dark:bg-forest-900/40 border-forest-400 dark:border-forest-700'
                 : 'bg-stone-50 dark:bg-ink-100 border-stone-200 dark:border-ink-400 hover:border-stone-300 dark:hover:border-ink-300'
             }`}
           >
-            <span className="text-2xl leading-none">{opt.emoji}</span>
-            <div className="space-y-0.5">
-              <p className={`text-xs font-medium ${isSelected ? 'text-forest-700 dark:text-forest-300' : 'text-stone-700 dark:text-stone-300'}`}>
-                {opt.label}
-              </p>
-              <p className="text-xs text-stone-500 dark:text-stone-400 leading-snug">{opt.description}</p>
-            </div>
             <button
-              onClick={(e) => handlePreview(opt.value, e)}
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              onClick={() => onChange(opt.value)}
+              className="flex w-full flex-col items-center gap-2 rounded-xl px-3 pt-3 pb-2"
+            >
+              <Icon
+                size={22}
+                aria-hidden="true"
+                className={isSelected ? 'text-forest-600 dark:text-forest-400' : 'text-stone-500 dark:text-stone-400'}
+              />
+              <span className="space-y-0.5">
+                <span className={`block text-xs font-medium ${isSelected ? 'text-forest-700 dark:text-forest-300' : 'text-stone-700 dark:text-stone-300'}`}>
+                  {opt.label}
+                </span>
+                <span className="block text-xs text-stone-500 dark:text-stone-400 leading-snug">{opt.description}</span>
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handlePreview(opt.value)}
               aria-label={`Preview ${opt.label}`}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-xs transition-all duration-150 ${
+              className={`mb-3 flex min-h-8 items-center gap-1 rounded-md px-2 text-xs transition-colors duration-150 ${
                 isPreviewing
                   ? 'bg-forest-500 text-white'
-                  : 'bg-stone-200 dark:bg-ink-300 text-stone-500 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
+                  : 'bg-stone-200 dark:bg-ink-300 text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
               }`}
             >
-              <Volume2 size={9} />
+              <Volume2 size={11} aria-hidden="true" />
               {isPreviewing ? 'Playing' : 'Preview'}
             </button>
-          </button>
+          </div>
         );
       })}
     </div>

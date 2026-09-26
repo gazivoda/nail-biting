@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
-import { PRESET_TAGS } from './triggerTags';
+import { PRESET_TAGS, type TagOption } from './triggerTags';
+import { TagMark } from './TagMark';
 import type { TriggerTag } from '../../types';
 
 export function PanicButton() {
   const { logIncident, customTags } = useAppStore();
-  const tags = [...PRESET_TAGS, ...customTags];
+  const tags: TagOption[] = [...PRESET_TAGS, ...customTags];
   const [showTags, setShowTags] = useState(false);
   const [logged, setLogged] = useState<string | null>(null);
   const [pressing, setPressing] = useState(false);
@@ -40,14 +41,14 @@ export function PanicButton() {
       <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card dark:shadow-card-dark animate-fade-up">
         <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
-          {tags.map(({ id, label, emoji }) => (
+          {tags.map(tag => (
             <button
-              key={id}
-              onClick={() => handleLog(id, label)}
+              key={tag.id}
+              onClick={() => handleLog(tag.id, tag.label)}
               className="flex items-center gap-2 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
             >
-              <span className="text-lg">{emoji}</span>
-              <span>{label}</span>
+              <TagMark tag={tag} size={18} />
+              <span>{tag.label}</span>
             </button>
           ))}
         </div>

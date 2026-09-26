@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
-import { PRESET_TAGS } from './triggerTags';
+import { PRESET_TAGS, type TagOption } from './triggerTags';
+import { TagMark } from './TagMark';
 import type { TriggerTag } from '../../types';
 
 const SUGGESTIONS = [
@@ -34,7 +35,7 @@ export function ReplacementPrompt() {
   if (!shouldShow) return null;
 
   const suggestion = SUGGESTIONS[lastAuto.timestamp % SUGGESTIONS.length];
-  const tags = [...PRESET_TAGS, ...customTags];
+  const tags: TagOption[] = [...PRESET_TAGS, ...customTags];
 
   const answer = (tag?: TriggerTag) => {
     if (tag) confirmIncident(lastAuto.id, tag);
@@ -66,14 +67,14 @@ export function ReplacementPrompt() {
         Was it a bite? What set it off?
       </p>
       <div className="mt-2 grid grid-cols-2 gap-2">
-        {tags.map(({ id, label, emoji }) => (
+        {tags.map(tag => (
           <button
-            key={id}
-            onClick={() => answer(id)}
+            key={tag.id}
+            onClick={() => answer(tag.id)}
             className="flex min-h-11 items-center gap-2 rounded-xl border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-300 px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-200"
           >
-            <span aria-hidden="true">{emoji}</span>
-            <span>{label}</span>
+            <TagMark tag={tag} />
+            <span>{tag.label}</span>
           </button>
         ))}
       </div>
