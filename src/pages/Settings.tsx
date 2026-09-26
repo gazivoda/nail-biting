@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Bell, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X } from 'lucide-react';
+import { Bell, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
@@ -17,7 +17,7 @@ function Section({ title, icon: Icon, children, fullWidth }: {
     <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'md:col-span-2' : ''}`}>
       <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
         <Icon size={15} className="text-stone-500 dark:text-stone-400" />
-        <p className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</p>
+        <h2 className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</h2>
       </div>
       <div className="p-4 space-y-4">{children}</div>
     </div>
@@ -30,7 +30,7 @@ function Row({ label, description, children }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
       <div className="min-w-0">
         <p className="text-sm text-stone-800 dark:text-stone-200">{label}</p>
         {description && <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">{description}</p>}
@@ -40,9 +40,11 @@ function Row({ label, description, children }: {
   );
 }
 
-function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button
+      type="button"
+      aria-label={label}
       role="switch"
       aria-checked={value}
       onClick={() => onChange(!value)}
@@ -207,7 +209,7 @@ function VolumeSlider({ value, onChange, sound }: { value: number; onChange: (v:
         step={1}
         value={Math.round(value * 100)}
         onChange={handleChange}
-        aria-label="Alert volume"
+        aria-label="Alarm volume"
         className="flex-1 accent-forest-500 h-1.5"
       />
       <span className="text-xs tabular-nums text-stone-500 dark:text-stone-400 w-9 text-right">
@@ -419,7 +421,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
     if (val && 'Notification' in window && Notification.permission !== 'granted') {
       const perm = await requestNotificationPermission();
       if (perm !== 'granted') {
-        setNotifStatus('Notifications blocked — enable in browser settings');
+        setNotifStatus("Notifications are blocked. Allow them in your browser's site settings, then turn this on again.");
         return;
       }
     }
@@ -449,22 +451,10 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       </Section>
 
       {/* Detection */}
-      <Section title="Detection" icon={Sliders}>
-        {/* Theme lives here for every screen size: the phone tab bar used to
-            carry three 28px theme buttons squeezed next to the tabs. */}
-        <Row label="Theme" description="Light, dark, or follow your system">
+      <Section title="Detection and alarm" icon={Sliders}>
+        <Row label="Sensitivity" description="How close your hand must get before the alarm sounds">
           <SegmentedControl
-            value={theme}
-            onChange={(v) => setTheme(v as Theme)}
-            options={[
-              { label: 'Light', value: 'light' },
-              { label: 'System', value: 'system' },
-              { label: 'Dark', value: 'dark' },
-            ]}
-          />
-        </Row>
-        <Row label="Sensitivity" description="How close hand must be to trigger alert">
-          <SegmentedControl
+            ariaLabel="Sensitivity"
             value={detectionSensitivity}
             onChange={(v) => setSensitivity(v as DetectionSensitivity)}
             options={[
@@ -474,8 +464,9 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
             ]}
           />
         </Row>
-        <Row label="Alert type">
+        <Row label="Alarm type">
           <SegmentedControl
+            ariaLabel="Alarm type"
             value={alertType}
             onChange={(v) => setAlertType(v as AlertType)}
             options={[
@@ -487,12 +478,12 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         </Row>
       </Section>
 
-      {/* Alert sound — full width */}
-      <Section title="Alert sound" icon={Volume2} fullWidth>
-        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">Choose the sound played when nail-biting is detected. Click Preview to hear each option.</p>
+      {/* Alarm sound, full width */}
+      <Section title="Alarm sound" icon={Volume2} fullWidth>
+        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">The sound the alarm makes when your hand reaches your mouth. Press Preview to hear each one.</p>
         <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
         <Row label="Volume" description="How loud the alarm plays">
-          <div className="w-40">
+          <div className="w-full sm:w-56">
             <VolumeSlider value={alertVolume} onChange={setAlertVolume} sound={alertSound} />
           </div>
         </Row>
@@ -504,7 +495,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       {/* Reminders */}
       <Section title="Periodic reminders" icon={Bell}>
         <Row label="Enable reminders" description="Get notified to check your hands">
-          <Toggle value={remindersEnabled} onChange={handleReminderToggle} />
+          <Toggle label="Periodic reminders" value={remindersEnabled} onChange={handleReminderToggle} />
         </Row>
         {notifStatus && (
           <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-3 py-2">
@@ -514,6 +505,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         {remindersEnabled && (
           <Row label="Interval">
             <SegmentedControl
+              ariaLabel="Reminder interval"
               value={String(reminderIntervalMinutes) as any}
               onChange={(v) => setReminderInterval(Number(v) as ReminderInterval)}
               options={[
@@ -526,6 +518,22 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
             />
           </Row>
         )}
+      </Section>
+
+      {/* Appearance: the one place to set the theme, on every screen size. */}
+      <Section title="Appearance" icon={Sun}>
+        <Row label="Theme" description="Light, dark, or follow your system">
+          <SegmentedControl
+            ariaLabel="Theme"
+            value={theme}
+            onChange={(v) => setTheme(v as Theme)}
+            options={[
+              { label: 'Light', value: 'light' },
+              { label: 'System', value: 'system' },
+              { label: 'Dark', value: 'dark' },
+            ]}
+          />
+        </Row>
       </Section>
 
       {/* Danger zone */}

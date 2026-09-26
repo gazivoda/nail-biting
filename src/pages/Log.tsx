@@ -68,6 +68,7 @@ function WeekChart() {
       <div className="flex items-center justify-between mb-1">
         <h2 className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</h2>
         <SegmentedControl<StatsMetric>
+          ariaLabel="Chart shows"
           value={weekChartMetric}
           onChange={setWeekChartMetric}
           options={[

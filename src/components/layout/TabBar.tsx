@@ -1,6 +1,5 @@
 import { LayoutDashboard, History, Settings, ShieldCheck, LogOut, Zap, Download } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { ThemeToggle } from '../ThemeToggle';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
 
 type Tab = 'dashboard' | 'log' | 'settings';
@@ -64,7 +63,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150 text-left overflow-hidden ${
                   isActive
-                    ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.06)] border border-stone-200 dark:border-ink-400'
+                    ? 'bg-forest-50 dark:bg-forest-900/30 text-forest-700 dark:text-forest-300 font-semibold'
                     : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100/70 dark:hover:bg-ink-50/60'
                 }`}
               >
@@ -112,7 +111,6 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
                 )}
               </div>
             </div>
-            <ThemeToggle fullWidth />
             <button
               onClick={signOut}
               className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors"
