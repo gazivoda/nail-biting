@@ -371,6 +371,12 @@ html.dark .blog-html-block a {
   margin-bottom: 0.4rem;
 }
 
+/* Comparison tables keep readable columns on a phone and scroll sideways in
+   their overflow-x-auto wrapper, instead of squeezing to one word a line. */
+.blog-html-block table {
+  min-width: 34rem;
+}
+
 .blog-html-block p + p,
 .blog-html-block ul + p {
   margin-top: 0.75rem;
