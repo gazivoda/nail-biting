@@ -8,8 +8,9 @@
    Only the `latin` and `latin-ext` subsets are shipped (the site is lang=en);
    unicode-range keeps the browser from fetching a subset it does not need,
    so a typical English page downloads one file per family at most.
-   index.html preloads inter-latin + instrument-serif-latin — the two faces
-   needed for first paint. Do not add a family here without also adding it to
+   index.html preloads overpass-latin, the only face visible at first paint
+   (every page is on .sg-page or .app-type). Inter survives only for the
+   crawler copy that JavaScript removes, so it is not preloaded. Do not add a family here without also adding it to
    tailwind.config.js `fontFamily`, or it will never be requested.
    ────────────────────────────────────────────────────────────────────────── */
 /* ── Inter ─────────────────────────────────────────────────────── */

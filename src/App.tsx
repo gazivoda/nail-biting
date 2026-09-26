@@ -19,6 +19,11 @@ const PaywallPage = lazy(() =>
 const BlogPost = lazy(() =>
   import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
 );
+// Same reason: comparePages.ts is ~94KB of source that only /compare/* and
+// /solutions/* read, and it was riding in the main chunk.
+const ComparePage = lazy(() =>
+  import('./pages/ComparePage').then(m => ({ default: m.ComparePage })),
+);
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
@@ -26,7 +31,6 @@ import { EditorialPolicyPage } from './pages/EditorialPolicyPage';
 import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
-import { ComparePage } from './pages/ComparePage';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
@@ -157,7 +161,11 @@ export default function App() {
 
   // Compare pages
   if (path.startsWith('/compare/') || path.startsWith('/solutions/')) {
-    return <ComparePage path={path} />;
+    return (
+      <Suspense fallback={null}>
+        <ComparePage path={path} />
+      </Suspense>
+    );
   }
 
   // Privacy policy

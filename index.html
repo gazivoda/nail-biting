@@ -25,13 +25,12 @@
          critical path: the fonts.googleapis.com <link> used to be render-blocking
          on a cross-origin host and accounted for ~894 ms of the mobile LCP render
          delay. Its two preconnects went with it — there is nothing left to connect
-         to. Preload only the two latin faces needed for first paint (Overpass for
-         the homepage, a variable font covering every weight; Inter for the SSR
-         article body); latin-ext,
+         to. Preload only the one latin face visible at first paint (Overpass, a
+         variable font covering every weight; Inter now only styles crawler
+         copy that JavaScript removes, so preloading it wasted 48KB); latin-ext,
          italic and mono resolve on demand through unicode-range. `crossorigin` is
          required even same-origin — fonts are always fetched in CORS mode, and
          without it the preload is discarded and fetched a second time. -->
-    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/overpass-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#020617" />
