@@ -38,7 +38,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
           </p>
           <div className="flex items-center gap-1.5 mt-1.5" style={{ color: 'oklch(100% 0 0 / 0.65)' }}>
             <ShieldCheck size={12} />
-            <span className="text-[12px]">Video stays on this device</span>
+            <span className="text-xs">Video stays on this device</span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
             <p className={`text-[13px] font-semibold ${cameraProblem ? 'text-alert-600 dark:text-alert-400' : 'text-forest-700 dark:text-forest-300'}`}>
               {problem ?? 'Detection active'}
             </p>
-            <p className={`text-[11px] mt-0.5 ${cameraProblem ? 'text-stone-600 dark:text-stone-400' : 'text-forest-600 dark:text-forest-400'}`}>
+            <p className={`text-xs mt-0.5 ${cameraProblem ? 'text-stone-600 dark:text-stone-400' : 'text-forest-600 dark:text-forest-400'}`}>
               {cameraProblem ? 'See below for how to fix it' : 'Runs on this device'}
             </p>
           </div>
@@ -90,7 +90,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
 
         <button
           onClick={() => setCameraEnabled(false)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium text-stone-500 dark:text-stone-400 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-stone-500 dark:text-stone-400 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
         >
           <Square size={10} fill="currentColor" />
           Stop
@@ -101,7 +101,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
       <div data-tour="hide-feed" className={`flex items-center justify-between px-5 py-3 border-t ${cameraProblem ? 'border-alert-400/30 dark:border-alert-800/60' : 'border-forest-200/60 dark:border-forest-800/60'}`}>
         <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400">
           {showCameraFeed ? <Eye size={13} /> : <EyeOff size={13} />}
-          <span className="text-[12px]">Show camera feed</span>
+          <span className="text-xs">Show camera feed</span>
         </div>
         <button
           role="switch"

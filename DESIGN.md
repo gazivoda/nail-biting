@@ -65,6 +65,48 @@ typography:
     fontWeight: 700
     letterSpacing: "0.02em"
     fontFeature: "'tnum' 1"
+  app-title:
+    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontSize: "2rem"
+    fontWeight: 800
+    lineHeight: 1.1
+    letterSpacing: "-0.025em"
+  app-streak:
+    fontFamily: "'Overpass Mono', ui-monospace, monospace"
+    fontSize: "56px"
+    fontWeight: 500
+    lineHeight: 1
+  app-streak-compact:
+    fontFamily: "'Overpass Mono', ui-monospace, monospace"
+    fontSize: "44px"
+    fontWeight: 500
+    lineHeight: 1
+  app-streak-colon:
+    fontFamily: "'Overpass Mono', ui-monospace, monospace"
+    fontSize: "40px"
+    fontWeight: 300
+    lineHeight: 1
+  app-timer:
+    fontFamily: "'Overpass Mono', ui-monospace, monospace"
+    fontSize: "32px"
+    fontWeight: 500
+    lineHeight: 1
+  app-count:
+    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontSize: "28px"
+    fontWeight: 600
+    lineHeight: 1
+  article-section:
+    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 800
+    lineHeight: 1.2
+    letterSpacing: "-0.02em"
+  app-meta:
+    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 400
+    lineHeight: 1.4
 rounded:
   tag: "0.25rem"
   button: "0.375rem"
@@ -231,6 +273,15 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 - **Small** (400, 0.9375rem, 1.5, secondary ink): footnotes, plan features, trust terms, footer copy.
 - **Label** (650, 0.9375rem, 1.45, secondary ink): the offer line beside every trial button, demo instructions, citations. Nav and footer links, trust items and form labels sit at the same 0.9375rem size in 600 to 700.
 - **Measurement** (Overpass Mono 700, 0.8125rem, +0.02em, tabular): timestamps and durations only.
+
+### App ramp (signed-in app, Overpass on `.app-type`)
+- **App title** (800, 2rem, 1.1, -0.025em): the one page title per tab (greeting, History, Settings).
+- **Streak** (Overpass Mono 500, 56px, 44px under sm; colon 40px/32px at 300): the current-streak clock, the largest thing in the app.
+- **Timer** (Overpass Mono 500, 32px, tabular): the session clock.
+- **Count** (Overpass 600, 28px, tabular): today's alarms and bites.
+- **Card title** (600, 0.875rem): card and section titles, sentence case, no tracking.
+- **App meta** (400, 0.75rem): the floor. Captions, subtitles, sidebar footer lines; nothing in the app is set smaller than 12px.
+- **Article section** (800, 1.5rem, -0.02em): h2 inside blog posts.
 
 ### Named Rules
 **The Measurement Mono Rule.** Overpass Mono is for numbers that measure something (a countdown, a timestamp, a duration). Labels, offers and citations are set in Overpass at 650, the sign's own face.

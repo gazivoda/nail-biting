@@ -48,13 +48,13 @@ export function SessionGoal() {
       </div>
 
       {done && (
-        <p className="text-[11px] text-forest-600 dark:text-forest-400 font-medium mt-2">
+        <p className="text-xs text-forest-600 dark:text-forest-400 font-medium mt-2">
           Goal reached!
         </p>
       )}
 
       {!cameraEnabled && !done && (
-        <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-2">
+        <p className="text-xs text-stone-500 dark:text-stone-400 mt-2">
           Start detection to begin session
         </p>
       )}

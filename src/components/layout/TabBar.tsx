@@ -135,7 +135,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
 
         {/* Privacy footer */}
         <div className="p-4 border-t border-stone-200 dark:border-ink-400">
-          <div className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 text-[11px]">
+          <div className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 text-xs">
             <ShieldCheck size={11} />
             <span>Camera stays on-device</span>
           </div>
