@@ -200,6 +200,16 @@ export const useAppStore = create<AppState & AppActions>()(
 
       setWeekChartMetric: (m: StatsMetric) => set({ weekChartMetric: m }),
 
+      // History's "Clear all" used to call clearAllData, which also reset
+      // sensitivity, sound, volume, theme, reminders and custom bite reasons.
+      clearHistory: () => set({
+        incidents: [],
+        lastBiteTime: null,
+        bestStreakMs: 0,
+        bestStreakFloorMs: 0,
+        historyStartTime: Date.now(),
+      }),
+
       clearAllData: () => set({
         ...initialState,
         firstOpenTime: Date.now(),

@@ -99,23 +99,30 @@ function WeekChart() {
   );
 }
 
+// Clears History only. Settings and bite reasons are the Settings page's
+// "Clear all data", which says so. Focus goes to Cancel on open (the safe
+// choice) and back to the trigger on cancel, never to <body>.
 function ClearAllButton() {
-  const { clearAllData } = useAppStore();
+  const { clearHistory } = useAppStore();
   const [confirming, setConfirming] = useState(false);
+  const [returnFocus, setReturnFocus] = useState(false);
 
   if (confirming) {
     return (
-      <div className="flex items-center gap-2 text-xs">
-        <span className="text-stone-500 dark:text-stone-400">Clear all data?</span>
+      <div className="flex flex-wrap items-center justify-end gap-2 text-xs">
+        <span className="text-stone-600 dark:text-stone-300">Clear all history? This can't be undone.</span>
         <button
-          onClick={() => { clearAllData(); setConfirming(false); }}
-          className="px-2.5 py-1 rounded-lg bg-alert-600 hover:bg-alert-800 text-cream-100 font-semibold transition-colors"
+          type="button"
+          onClick={() => { clearHistory(); setConfirming(false); }}
+          className="min-h-10 px-3 rounded-lg bg-alert-600 hover:bg-alert-800 text-cream-100 font-semibold transition-colors"
         >
           Yes, clear
         </button>
         <button
-          onClick={() => setConfirming(false)}
-          className="px-2.5 py-1 rounded-lg border border-stone-200 dark:border-ink-400 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
+          type="button"
+          autoFocus
+          onClick={() => { setConfirming(false); setReturnFocus(true); }}
+          className="min-h-10 px-3 rounded-lg border border-stone-200 dark:border-ink-400 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
         >
           Cancel
         </button>
@@ -125,6 +132,8 @@ function ClearAllButton() {
 
   return (
     <button
+      type="button"
+      autoFocus={returnFocus}
       onClick={() => setConfirming(true)}
       className="flex min-h-11 items-center gap-1.5 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-colors"
     >
@@ -208,8 +217,8 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           {incidents.length > 0 && (
             <div className="space-y-6">
               {/* Header row with clear-all */}
-              <div className="flex items-center justify-between px-1">
-                <p className="text-sm font-medium text-stone-600 dark:text-stone-300">
+              <div className="flex items-center justify-between gap-3 px-1">
+                <p className="shrink-0 whitespace-nowrap text-sm font-medium text-stone-600 dark:text-stone-300">
                   {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />

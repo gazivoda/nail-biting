@@ -564,17 +564,20 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       <Section title="Data" icon={Trash2}>
         {showConfirm ? (
           <div className="space-y-3">
-            <p className="text-sm text-alert-600 dark:text-alert-400">This will erase your entire history, reset your streak, and cannot be undone.</p>
+            <p className="text-sm text-alert-600 dark:text-alert-400">This erases your history, streak, bite reasons and every setting on this device. It can't be undone.</p>
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={() => { clearAllData(); setShowConfirm(false); }}
-                className="flex-1 bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
+                className="flex-1 min-h-11 font-semibold bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
               >
                 Yes, clear everything
               </button>
               <button
+                type="button"
+                autoFocus
                 onClick={() => setShowConfirm(false)}
-                className="flex-1 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
+                className="flex-1 min-h-11 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
               >
                 Cancel
               </button>

@@ -81,5 +81,7 @@ export interface AppActions {
   addCustomTag: (label: string, emoji: string) => void;
   removeCustomTag: (id: string) => void;
   setWeekChartMetric: (m: StatsMetric) => void;
+  /** Empties History and resets the streak; settings and bite reasons stay. */
+  clearHistory: () => void;
   clearAllData: () => void;
 }

@@ -258,3 +258,24 @@ describe('migrateState (v0 -> v1)', () => {
     expect(migrateState(v1, 1)).toEqual(v1);
   });
 });
+
+describe('clearHistory', () => {
+  it('empties history and the streak but keeps settings and bite reasons', () => {
+    store().setAlertSound('chime');
+    store().setSensitivity('high');
+    store().addCustomTag('Meetings', '📅');
+    at(60_000);
+    store().logIncident('stress');
+    at(120_000);
+    store().clearHistory();
+
+    const s = store();
+    expect(s.incidents).toEqual([]);
+    expect(s.lastBiteTime).toBeNull();
+    expect(s.bestStreakMs).toBe(0);
+    expect(s.historyStartTime).toBe(T0 + 120_000);
+    expect(s.alertSound).toBe('chime');
+    expect(s.detectionSensitivity).toBe('high');
+    expect(s.customTags.map(t => t.label)).toEqual(['Meetings']);
+  });
+});
