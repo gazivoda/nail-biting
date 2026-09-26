@@ -10,7 +10,7 @@ interface Props {
 const config: Record<DetectionStatus, { icon: typeof Eye; label: string; color: string }> = {
   idle: { icon: EyeOff, label: 'Detection off', color: 'text-stone-400' },
   loading: { icon: Loader2, label: 'Loading detection…', color: 'text-amber-400' },
-  watching: { icon: Eye, label: 'Detecting', color: 'text-forest-400' },
+  watching: { icon: Eye, label: 'Watching', color: 'text-forest-400' },
   alert: { icon: AlertTriangle, label: 'Hands near mouth', color: 'text-alert-400' },
   // Never shown in a frame: DetectionSurface replaces the badge with the full
   // failure message and its Try again button.

@@ -142,7 +142,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
       stateRef.current = 'watching';
       setGradColor(GREEN);
       if (labelRef.current) {
-        labelRef.current.textContent = 'Watching...';
+        labelRef.current.textContent = 'Watching…';
         labelRef.current.style.color = '';
       }
       if (dotRef.current) {
@@ -292,7 +292,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
             ref={labelRef}
             className="text-xs font-medium text-forest-600 dark:text-forest-400 transition-colors duration-300 tabular-nums"
           >
-            Watching...
+            Watching…
           </span>
         </div>
       </div>

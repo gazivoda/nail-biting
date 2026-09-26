@@ -1,4 +1,4 @@
-import { Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
+import { AlertTriangle, Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 
 /** `problem`: detection is switched on but nothing is watching (the camera
@@ -34,7 +34,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
         {/* Label */}
         <div className="flex-1 min-w-0">
           <p className="text-[17px] font-semibold tracking-tight text-white leading-tight">
-            Start AI Detection
+            Start detection
           </p>
           <div className="flex items-center gap-1.5 mt-1.5" style={{ color: 'oklch(100% 0 0 / 0.65)' }}>
             <ShieldCheck size={12} />
@@ -57,23 +57,33 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
 
   // Active / ON state
   return (
-    <div data-tour="camera-toggle" className="w-full rounded-2xl overflow-hidden bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800">
+    <div
+      data-tour="camera-toggle"
+      className={`w-full rounded-2xl overflow-hidden border ${
+        cameraProblem
+          ? 'bg-alert-100/60 dark:bg-alert-900/20 border-alert-400/40 dark:border-alert-800'
+          : 'bg-forest-50 dark:bg-forest-900/30 border-forest-200 dark:border-forest-800'
+      }`}
+    >
       {/* Status row */}
       <div className="flex items-center justify-between px-5 py-4">
         <div className="flex items-center gap-3.5">
-          {/* Live dot: animated only when there is actually something live */}
-          <div className="relative flex h-2.5 w-2.5 shrink-0">
-            {!cameraProblem && (
+          {/* Live dot while watching; a warning sign, not just a red dot,
+              when nothing is (colour alone can't carry the state). */}
+          {cameraProblem ? (
+            <AlertTriangle size={16} aria-hidden="true" className="shrink-0 text-alert-600 dark:text-alert-400" />
+          ) : (
+            <div className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-500 opacity-70" />
-            )}
-            <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${cameraProblem ? 'bg-alert-400' : 'bg-forest-500'}`} />
-          </div>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-forest-500" />
+            </div>
+          )}
           <div>
-            <p className="text-[13px] font-semibold text-forest-700 dark:text-forest-300">
+            <p className={`text-[13px] font-semibold ${cameraProblem ? 'text-alert-600 dark:text-alert-400' : 'text-forest-700 dark:text-forest-300'}`}>
               {problem ?? 'Detection active'}
             </p>
-            <p className="text-[11px] mt-0.5 text-forest-600 dark:text-forest-400">
-              {cameraProblem ? 'See below for how to fix it' : 'AI running on-device'}
+            <p className={`text-[11px] mt-0.5 ${cameraProblem ? 'text-stone-600 dark:text-stone-400' : 'text-forest-600 dark:text-forest-400'}`}>
+              {cameraProblem ? 'See below for how to fix it' : 'Runs on this device'}
             </p>
           </div>
         </div>
@@ -88,7 +98,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
       </div>
 
       {/* Show feed sub-toggle */}
-      <div data-tour="hide-feed" className="flex items-center justify-between px-5 py-3 border-t border-forest-200/60 dark:border-forest-800/60">
+      <div data-tour="hide-feed" className={`flex items-center justify-between px-5 py-3 border-t ${cameraProblem ? 'border-alert-400/30 dark:border-alert-800/60' : 'border-forest-200/60 dark:border-forest-800/60'}`}>
         <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400">
           {showCameraFeed ? <Eye size={13} /> : <EyeOff size={13} />}
           <span className="text-[12px]">Show camera feed</span>

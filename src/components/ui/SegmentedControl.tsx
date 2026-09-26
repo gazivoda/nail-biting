@@ -1,3 +1,5 @@
+import { radioGroupKeyDown, radioTabIndex } from './radioKeys';
+
 interface Option<T extends string> {
   label: string;
   value: T;
@@ -15,13 +17,18 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
   return (
     // A radio group, not a row of loose buttons: assistive tech hears the
     // group's name and which option is selected. 44px tall on touch screens.
-    <div role="radiogroup" aria-label={ariaLabel} className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 rounded-[11px]">
+    <div
+      role="radiogroup"
+      aria-label={ariaLabel}
+      onKeyDown={e => radioGroupKeyDown(e, options.map(o => o.value), value, onChange)}
+      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 rounded-[11px]">
       {options.map(opt => (
         <button
           key={opt.value}
           type="button"
           role="radio"
           aria-checked={value === opt.value}
+          tabIndex={radioTabIndex(value === opt.value)}
           onClick={() => onChange(opt.value)}
           className={`min-h-11 sm:min-h-8 px-3 py-1 text-[13px] rounded-[8px] transition-all duration-[140ms] ${
             value === opt.value

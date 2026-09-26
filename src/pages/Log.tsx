@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, CheckCircle, ArrowRight } from 'lucide-react';
+import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -28,11 +28,11 @@ const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:
 // Every bite pill starts with "Bite", and a tagged one uses the same words as
 // the tag picker (triggerTags.ts): "Deep focus", not "Focus".
 function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
-  if (inc.tag === 'auto-detected') return '✓ Bite';
+  if (inc.tag === 'auto-detected') return 'Bite';
   const preset = PRESET_TAGS.find(x => x.id === inc.tag);
   if (preset) return `Bite · ${preset.label}`;
   const custom = customTags.find(x => x.id === inc.tag);
-  return custom ? `Bite · ${custom.emoji} ${custom.label}`.replace('  ', ' ') : 'Bite';
+  return custom ? ['Bite ·', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite';
 }
 
 function WeekChart() {
@@ -168,7 +168,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           <button
             type="button"
             onClick={onGoToWatch}
-            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-700"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-5 text-sm font-semibold text-cream-100 transition-colors hover:bg-forest-500"
           >
             Go to Watch
             <ArrowRight size={15} aria-hidden="true" />
@@ -234,7 +234,8 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                               their own group on the right: hidden actions
                               used to push every tag to a different x. */}
                           <span className="w-20 flex-shrink-0 text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
-                          <span className={`text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
+                          <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
+                            {inc.tag === 'auto-detected' && bite && <Check size={12} aria-hidden="true" />}
                             {tagLabel}
                           </span>
                           <div className="ml-auto flex items-center gap-1">

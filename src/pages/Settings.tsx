@@ -6,6 +6,7 @@ import { useAuth, apiFetch } from '../contexts/AuthContext';
 import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
+import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
 
 function Section({ title, icon: Icon, children, fullWidth }: {
   title: string;
@@ -17,7 +18,7 @@ function Section({ title, icon: Icon, children, fullWidth }: {
     <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'md:col-span-2' : ''}`}>
       <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
         <Icon size={15} className="text-stone-500 dark:text-stone-400" />
-        <h2 className="text-sm font-medium text-stone-700 dark:text-stone-300">{title}</h2>
+        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">{title}</h2>
       </div>
       <div className="p-4 space-y-4">{children}</div>
     </div>
@@ -122,7 +123,7 @@ const SOUND_OPTIONS: {
   description: string;
   icon: LucideIcon;
 }[] = [
-  { value: 'alarm',   label: 'Alarm',   description: 'Rapid alternating beeps', icon: BellRing },
+  { value: 'alarm',   label: 'Beeps',   description: 'Rapid alternating beeps', icon: BellRing },
   { value: 'chime',   label: 'Chime',   description: 'Soft decaying bell',      icon: Bell },
   { value: 'buzz',    label: 'Buzz',    description: 'Low harsh rumble',        icon: Vibrate },
   { value: 'chirp',   label: 'Chirp',   description: 'Ascending sweep tone',    icon: Bird },
@@ -144,7 +145,12 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
   // Preview button under it plays it. A button nested in a button is invalid
   // HTML and screen readers announced the pair as one control.
   return (
-    <div role="radiogroup" aria-label="Alarm sound" className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+    <div
+      role="radiogroup"
+      aria-label="Alarm sound"
+      onKeyDown={e => { if ((e.target as HTMLElement).getAttribute('role') === 'radio') radioGroupKeyDown(e, SOUND_OPTIONS.map(o => o.value), value, onChange); }}
+      className="grid grid-cols-2 gap-2 sm:grid-cols-5"
+    >
       {SOUND_OPTIONS.map(opt => {
         const isSelected = value === opt.value;
         const isPreviewing = previewing === opt.value;
@@ -162,6 +168,7 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
               type="button"
               role="radio"
               aria-checked={isSelected}
+              tabIndex={radioTabIndex(isSelected)}
               onClick={() => onChange(opt.value)}
               className="flex w-full flex-col items-center gap-2 rounded-xl px-3 pt-3 pb-2"
             >
@@ -184,7 +191,9 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
               className={`mb-3 flex min-h-8 items-center gap-1 rounded-md px-2 text-xs transition-colors duration-150 ${
                 isPreviewing
                   ? 'bg-forest-500 text-white'
-                  : 'bg-stone-200 dark:bg-ink-300 text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
+                  : isSelected
+                    ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 hover:bg-forest-100 dark:hover:bg-ink-100'
+                    : 'bg-stone-200 dark:bg-ink-300 text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
               }`}
             >
               <Volume2 size={11} aria-hidden="true" />
@@ -261,14 +270,14 @@ function ReasonsSection() {
           {customTags.map(tag => (
             <span
               key={tag.id}
-              className="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1.5 rounded-full text-xs bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
+              className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-full text-xs bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
             >
-              <span>{tag.emoji}</span>
+              <span aria-hidden="true">{tag.emoji}</span>
               <span>{tag.label}</span>
               <button
                 onClick={() => removeCustomTag(tag.id)}
                 aria-label={`Remove ${tag.label}`}
-                className="p-0.5 rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -510,7 +519,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       {/* Reminders */}
       <Section title="Periodic reminders" icon={Bell}>
         <Row label="Enable reminders" description="Get notified to check your hands">
-          <Toggle label="Periodic reminders" value={remindersEnabled} onChange={handleReminderToggle} />
+          <Toggle label="Enable reminders" value={remindersEnabled} onChange={handleReminderToggle} />
         </Row>
         {notifStatus && (
           <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-3 py-2">

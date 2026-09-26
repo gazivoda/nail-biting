@@ -7,5 +7,7 @@ export function TagMark({ tag, size = 16 }: { tag: TagOption; size?: number }) {
     const Icon = tag.icon;
     return <Icon size={size} aria-hidden="true" className="flex-shrink-0 text-stone-500 dark:text-stone-400" />;
   }
-  return tag.emoji ? <span aria-hidden="true">{tag.emoji}</span> : null;
+  return tag.emoji
+    ? <span aria-hidden="true" className="flex-shrink-0 text-center text-base leading-none" style={{ width: size }}>{tag.emoji}</span>
+    : null;
 }
