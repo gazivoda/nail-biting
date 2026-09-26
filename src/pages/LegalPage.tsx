@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { SiteHeader } from '../components/site/SiteHeader';
+import { SiteFooter } from '../components/site/SiteFooter';
 import { useTheme } from '../hooks/useTheme';
 
 interface Section {
@@ -24,44 +25,32 @@ interface Props {
 export function LegalPage({ title, lastUpdated, sections, standfirst, children }: Props) {
   useTheme('light');
 
+  // Same header, footer and type as every other page: the privacy policy is
+  // where people check whether to trust the camera app, so it should not look
+  // like a different site.
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-3 bg-cream-100/90 dark:bg-ink-100/90 backdrop-blur-md border-b border-stone-200 dark:border-ink-400">
-        <a href="/" className="text-sm font-semibold text-stone-800 dark:text-stone-100 tracking-tight">Stop Biting</a>
-        <div className="flex items-center gap-4">
-          <a
-            href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-100 transition-colors"
-          >
-            <ArrowLeft size={14} aria-hidden="true" />
-            Back
-          </a>
-        </div>
-      </nav>
+    <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
+      <div className="sg-page"><SiteHeader /></div>
 
       <main className="max-w-2xl mx-auto px-6 pt-28 pb-20">
-        <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">{title}</h1>
-        <p className="text-stone-400 dark:text-stone-500 text-sm mt-2">Last updated: {lastUpdated}</p>
+        <h1 className="sg-h2">{title}</h1>
+        <p className="sg-note mt-3">Last updated: {lastUpdated}</p>
         {standfirst && (
-          <p className="article-summary mt-4 text-stone-600 dark:text-stone-300 text-[15px] leading-relaxed">{standfirst}</p>
+          <p className="article-summary sg-lede mt-5">{standfirst}</p>
         )}
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-10 space-y-9">
           {sections.map(({ heading, content }) => (
             <section key={heading}>
-              <h2 className="text-base font-semibold text-stone-800 dark:text-stone-100 mb-2">{heading}</h2>
+              <h2 className="sg-h3 mb-3">{heading}</h2>
               {Array.isArray(content) ? (
-                <ul className="space-y-1.5">
+                <ul className="sg-body list-disc space-y-2 pl-5 marker:text-[color:var(--sg-accent)]">
                   {content.map((item, i) => (
-                    <li key={i} className="flex gap-2 text-stone-500 dark:text-stone-400 text-sm leading-relaxed">
-                      <span className="w-1.5 h-1.5 rounded-full bg-forest-500 flex-shrink-0 mt-1.5" aria-hidden="true" />
-                      {item}
-                    </li>
+                    <li key={i}>{item}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-stone-500 dark:text-stone-400 text-sm leading-relaxed">{content}</p>
+                <p className="sg-body">{content}</p>
               )}
             </section>
           ))}
@@ -69,21 +58,12 @@ export function LegalPage({ title, lastUpdated, sections, standfirst, children }
 
         {children}
 
-        <div className="mt-16 pt-8 border-t border-stone-200 dark:border-ink-400 text-xs text-stone-400 dark:text-stone-500 space-y-1">
-          <p>Stop Biting · <a href="https://stopbiting.today" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">stopbiting.today</a></p>
-          <p>Contact: <a href="mailto:hello@stopbiting.today" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">hello@stopbiting.today</a></p>
-        </div>
+        <p className="sg-small mt-14 border-t border-[color:var(--sg-rule)] pt-6">
+          Questions about this page: <a href="mailto:hello@stopbiting.today" className="sg-link">hello@stopbiting.today</a>
+        </p>
       </main>
 
-      <footer className="border-t border-stone-200 dark:border-ink-400 py-6 px-8 bg-cream-200 dark:bg-ink-200">
-        <div className="max-w-2xl mx-auto flex flex-wrap gap-4 text-xs text-stone-400 dark:text-stone-500">
-          <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
-          <a href="/privacy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Privacy Policy</a>
-          <a href="/terms-and-conditions" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Terms of Service</a>
-          <a href="/refund-policy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Refund Policy</a>
-          <a href="/editorial-policy" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Editorial Policy</a>
-        </div>
-      </footer>
+      <div className="sg-page"><SiteFooter /></div>
     </div>
   );
 }
