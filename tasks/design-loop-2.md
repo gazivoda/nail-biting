@@ -1,11 +1,10 @@
 # Design loop, round 2 (10 iterations, every 5 min)
 
-iterations: 7
+iterations: 8
 
 ## Log
 
 ## Backlog (from the round-2 reviews; top first)
-- 8: History empty state: no emoji, h2 "No history yet", "Go to Watch" button.
 - 9: Homepage 390 rhythm: History mock width/centering, guides list shorter on mobile, one section padding token.
 - 10: Final dual review.
 - 1/10: Settings: headings, alarm vocabulary, Appearance section, accessible segmented controls, duplicate theme toggle removed
@@ -15,3 +14,4 @@ iterations: 7
 - 5/10: app card labels sentence case (Current streak, Session, Today, Summary, day headers); homepage shots recaptured
 - 6/10: emoji -> line icons for preset triggers and sounds; sound card nested button fixed (radio + sibling Preview); shots recaptured
 - 7/10: model failure shown like camera failure (frame alert + Try again, card 'Detection not running'); badge is a live region; false 'Paused' state removed
+- 8/10: History empty state: no emoji, h2 + next step 'Go to Watch', aligned under the title

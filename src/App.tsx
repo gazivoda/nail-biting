@@ -108,7 +108,7 @@ function AppRouter() {
         <main className="flex-1 lg:ml-56 pb-20 lg:pb-0">
           {/* Dashboard is always mounted so detection keeps running on other tabs */}
           <div className={activeTab === 'dashboard' ? '' : 'hidden'}><Dashboard /></div>
-          {activeTab === 'log' && <Log />}
+          {activeTab === 'log' && <Log onGoToWatch={() => setActiveTab('dashboard')} />}
           {activeTab === 'settings' && <Settings onUpgrade={() => setShowPaywall(true)} />}
         </main>
       </div>

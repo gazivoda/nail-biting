@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, CheckCircle } from 'lucide-react';
+import { Trash2, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -134,7 +134,7 @@ function ClearAllButton() {
   );
 }
 
-export function Log() {
+export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const { incidents, deleteIncident, confirmIncident, customTags } = useAppStore();
 
   // Group by day
@@ -154,7 +154,28 @@ export function Log() {
     <div className="p-5 sm:p-8 pb-10">
       <PageHeader title="History" />
 
-      {/* Split: chart left, incident list right — stacks on narrow sidebar viewports */}
+      {/* First visit: say what will fill this page and hand over the one
+          action that fills it, under the title rather than in an empty
+          chart column. Otherwise: chart left, incident list right, stacking
+          on narrow viewports. */}
+      {incidents.length === 0 ? (
+      <div className="flex max-w-md flex-col items-start pt-4">
+        <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100">No history yet</h2>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+          Alarms from the Watch tab and bites you log with “I just bit my nails” appear here, day by day. Tag them and this page shows what sets you off.
+        </p>
+        {onGoToWatch && (
+          <button
+            type="button"
+            onClick={onGoToWatch}
+            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-700"
+          >
+            Go to Watch
+            <ArrowRight size={15} aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      ) : (
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
         {/* Left: sticky chart + summary */}
@@ -184,15 +205,7 @@ export function Log() {
 
         {/* Right: incident list */}
         <div>
-          {incidents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-stone-500 dark:text-stone-400">
-              <p className="text-5xl mb-4">🙌</p>
-              <p className="font-semibold text-stone-500 dark:text-stone-400 text-lg">Nothing logged yet</p>
-              <p className="text-sm mt-1 max-w-xs text-center">
-                Alarms from the Watch tab and bites you log with "I just bit my nails" appear here. Tag them to see your triggers.
-              </p>
-            </div>
-          ) : (
+          {incidents.length > 0 && (
             <div className="space-y-6">
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between px-1">
@@ -254,6 +267,7 @@ export function Log() {
           )}
         </div>
       </div>
+      )}
     </div>
   );
 }
