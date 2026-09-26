@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { ArrowRight } from 'lucide-react';
 
 interface Step {
   target: string;
@@ -105,6 +106,15 @@ export function OnboardingTour() {
     return () => window.removeEventListener('resize', update);
   }, [step]);
 
+  // A modal has to behave like one: focus moves onto its main button each
+  // step, Tab stays between its two buttons, and Escape ends the tour.
+  const nextRef = useRef<HTMLButtonElement>(null);
+  const skipRef = useRef<HTMLButtonElement>(null);
+  const measured = target?.step === step;
+  useEffect(() => {
+    if (measured) nextRef.current?.focus();
+  }, [step, measured]);
+
   if (step < 0 || step >= STEPS.length) return null;
 
   const finish = () => {
@@ -116,6 +126,14 @@ export function OnboardingTour() {
   const next = () => {
     if (step >= STEPS.length - 1) { finish(); return; }
     setStep(s => s + 1);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') { e.preventDefault(); finish(); return; }
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    const onNext = document.activeElement === nextRef.current;
+    (onNext ? skipRef : nextRef).current?.focus();
   };
 
   // Not measured for this step yet: the effect above runs after this render.
@@ -148,7 +166,14 @@ export function OnboardingTour() {
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[200]" aria-modal="true" role="dialog" aria-label="App tour">
+    <div
+      className="fixed inset-0 z-[200]"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tour-title"
+      aria-describedby="tour-body"
+      onKeyDown={onKeyDown}
+    >
       {/* Darkened backdrop with spotlight cutout */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
         <defs>
@@ -175,7 +200,6 @@ export function OnboardingTour() {
 
       {/* Tooltip */}
       <div
-        role="document"
         className="absolute z-10 bg-white dark:bg-ink-50 rounded-2xl shadow-2xl"
         style={{ left: tooltipLeft, top: tooltipTop, width: TOOLTIP_W }}
         onClick={(e) => e.stopPropagation()}
@@ -194,7 +218,8 @@ export function OnboardingTour() {
           <div className="p-5">
             {/* Dots + skip */}
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-1">
+              <span className="sr-only">Step {step + 1} of {STEPS.length}</span>
+              <div className="flex items-center gap-1" aria-hidden="true">
                 {STEPS.map((_, i) => (
                   <span
                     key={i}
@@ -209,25 +234,29 @@ export function OnboardingTour() {
                 ))}
               </div>
               <button
+                ref={skipRef}
+                type="button"
                 onClick={finish}
-                className="text-[11px] text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+                className="-mr-2 min-h-8 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
               >
                 Skip tour
               </button>
             </div>
 
-            <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 tracking-tight mb-1.5">
+            <h2 id="tour-title" className="text-sm font-bold text-stone-800 dark:text-stone-100 tracking-tight mb-1.5">
               {title}
-            </h3>
-            <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+            </h2>
+            <p id="tour-body" className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
               {body}
             </p>
 
             <button
+              ref={nextRef}
+              type="button"
               onClick={next}
-              className="mt-4 w-full bg-forest-600 hover:bg-forest-500 active:scale-[0.98] text-white text-xs font-semibold rounded-xl py-2.5 transition-all duration-150"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 text-sm font-semibold rounded-xl transition-colors duration-150"
             >
-              {step >= STEPS.length - 1 ? "Got it — let's go!" : 'Next →'}
+              {step >= STEPS.length - 1 ? 'Done' : <>Next <ArrowRight size={14} aria-hidden="true" /></>}
             </button>
           </div>
         </div>
