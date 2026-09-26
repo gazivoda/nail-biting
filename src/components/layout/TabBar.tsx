@@ -40,11 +40,9 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
         {/* Brand */}
         <div className="px-5 py-5 border-b border-stone-200 dark:border-ink-400">
           <div className="flex items-center gap-2.5">
-            <div className="w-[26px] h-[26px] rounded-lg bg-forest-500 flex items-center justify-center flex-shrink-0">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 1.5l5 1.5v5c0 3-2.5 5.5-5 6.5-2.5-1-5-3.5-5-6.5v-5l5-1.5z" />
-              </svg>
-            </div>
+            {/* The site's arch mark, as on every marketing page and the
+                paywall, so the brand doesn't change the moment you sign in. */}
+            <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
             <div>
               <p className="text-[13.5px] font-semibold tracking-[-0.1px] text-stone-800 dark:text-stone-100">Stop Biting</p>
             </div>
