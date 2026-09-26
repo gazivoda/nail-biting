@@ -364,10 +364,10 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
       <div className="flex items-center justify-between gap-4 flex-wrap">
 
         {/* Status + detail */}
+        {/* The section header already carries the card icon, and the badge
+            already says the status: no second icon, no product name where a
+            plan name belongs. */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center text-forest-600 dark:text-forest-400 flex-shrink-0">
-            <CreditCard size={17} />
-          </div>
           <div>
             <div className="flex items-center gap-2 mb-0.5 flex-wrap">
               <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${badge.className}`}>
@@ -377,12 +377,6 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
                 <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
                   Subscribed · {subscription_plan === 'yearly' ? 'Yearly' : 'Monthly'}
                 </span>
-              )}
-              {subscription_status === 'trial' && (
-                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting</span>
-              )}
-              {subscription_status === 'cancelled' && (
-                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">Stop Biting</span>
               )}
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400">
@@ -403,9 +397,10 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
           {accessStatus === 'trial_active' && onUpgrade && (
             <button
               onClick={onUpgrade}
-              className="inline-flex items-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-4 py-2 text-xs transition-all duration-150 hover:-translate-y-0.5"
+              type="button"
+              className="inline-flex min-h-11 items-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-4 text-sm transition-colors duration-150"
             >
-              <Zap size={12} />
+              <Zap size={14} aria-hidden="true" />
               Choose a plan
             </button>
           )}
@@ -413,7 +408,8 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
             <button
               onClick={openPortal}
               disabled={portalLoading}
-              className="inline-flex items-center gap-1.5 border border-stone-200 dark:border-ink-400 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-ink-100 rounded-xl px-4 py-2 text-xs transition-colors disabled:opacity-50"
+              type="button"
+              className="inline-flex min-h-11 items-center gap-1.5 border border-stone-200 dark:border-ink-400 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-ink-100 rounded-xl px-4 text-sm transition-colors disabled:opacity-50"
             >
               {portalLoading ? <RefreshCw size={12} className="animate-spin" /> : <ExternalLink size={12} />}
               {portalLoading ? 'Opening…' : 'Manage subscription'}
@@ -561,15 +557,15 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       </Section>
 
       {/* Danger zone */}
-      <Section title="Data" icon={Trash2}>
+      <Section title="Data" icon={Trash2} fullWidth>
         {showConfirm ? (
           <div className="space-y-3">
             <p className="text-sm text-alert-600 dark:text-alert-400">This erases your history, streak, bite reasons and every setting on this device. It can't be undone.</p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={() => { clearAllData(); setShowConfirm(false); }}
-                className="flex-1 min-h-11 font-semibold bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
+                className="min-h-11 px-5 font-semibold bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
               >
                 Yes, clear everything
               </button>
@@ -577,7 +573,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
                 type="button"
                 autoFocus
                 onClick={() => setShowConfirm(false)}
-                className="flex-1 min-h-11 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
+                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
               >
                 Cancel
               </button>
@@ -586,7 +582,8 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         ) : (
           <button
             onClick={() => setShowConfirm(true)}
-            className="w-full flex items-center justify-center gap-2 text-alert-600 dark:text-alert-400 hover:text-alert-800 dark:hover:text-alert-100 bg-alert-100 dark:bg-alert-900/20 hover:bg-alert-100 dark:hover:bg-alert-900/30 border border-alert-400 dark:border-alert-800 rounded-xl py-2.5 text-sm transition-colors"
+            type="button"
+            className="inline-flex min-h-11 items-center justify-center gap-2 px-5 text-alert-600 dark:text-alert-400 hover:text-alert-800 dark:hover:text-alert-100 bg-alert-100 dark:bg-alert-900/20 hover:bg-alert-100 dark:hover:bg-alert-900/30 border border-alert-400 dark:border-alert-800 rounded-xl text-sm transition-colors"
           >
             <Trash2 size={14} />
             Clear all data
