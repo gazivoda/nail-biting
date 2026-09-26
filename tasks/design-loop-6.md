@@ -1,9 +1,8 @@
 # Design loop, round 6 (10 iterations, every 5 min)
 
-iterations: 9
+iterations: 10
 
 ## Backlog
-- 10: Final short review and fixes; report.
 
 ## Log
 - 1/10: paywall explains a blocked/failed checkout (Paddle load error surfaced above the plans)
@@ -15,3 +14,4 @@ iterations: 9
 - 7/10: hero screenshot preloaded from the / HTML (one fetch, verified); alt text accurate
 - 8/10: skip link + <main id=main> on every marketing page (posts had none); scroll-padding for the fixed header
 - 9/10: tour step 1 no longer claims detection is running; tour + install prompt set in the app's Overpass
+- 10/10: blog 404 is main#main in the sign system; footer says 'no video is uploaded'

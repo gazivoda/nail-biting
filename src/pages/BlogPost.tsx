@@ -69,14 +69,18 @@ export function BlogPost({ slug }: Props) {
 
       {/* 404 */}
       {!post && (
-        <div className="flex flex-col items-center justify-center min-h-dvh gap-4 text-center px-6">
-          <p className="text-6xl font-bold text-stone-300 dark:text-stone-600">404</p>
-          <p className="text-stone-500 dark:text-stone-400">Article not found.</p>
-          <a href="/blog" className="mt-2 inline-flex items-center gap-2 text-forest-600 dark:text-forest-400 hover:text-forest-500 text-sm">
-            <ArrowLeft size={14} aria-hidden="true" />
-            Back to blog
+        // The skip link in SiteHeader targets #main on this branch too, and the
+        // look matches the server's 404 page.
+        <main id="main" className="sg-container pt-32 pb-24 lg:pt-40">
+          <h1 className="sg-h2">This article doesn't exist.</h1>
+          <p className="sg-body sg-measure mt-4">
+            The link may be broken or the article may have moved. Every guide is listed on the blog.
+          </p>
+          <a href="/blog" className="sg-btn mt-8">
+            <ArrowLeft size={18} aria-hidden="true" />
+            All articles
           </a>
-        </div>
+        </main>
       )}
 
       {/* Article */}

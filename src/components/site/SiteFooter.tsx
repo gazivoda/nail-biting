@@ -12,7 +12,7 @@ export function SiteFooter() {
             <p className="sg-small mt-4">
               An awareness alarm for nail biting (onychophagia), made by{' '}
               <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser
-              and nothing is uploaded.
+              and no video is uploaded.
             </p>
           </div>
           {/* Written out one by one: these eight hrefs are the site's whole
