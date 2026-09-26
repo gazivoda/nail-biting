@@ -74,7 +74,7 @@ export function PrivacyPage() {
         {
           heading: '10. Cookies',
           content:
-            'We use an HttpOnly session cookie (nh_session) to keep you logged in; it is not accessible to JavaScript and is used solely for authentication. Google Analytics sets its own cookies on this site (named _ga and _ga_*) to count visits. We do not use advertising cookies. You can block or delete cookies in your browser; the app needs the session cookie to keep you signed in.',
+            'We use an HttpOnly session cookie (nh_session) to keep you logged in; it is not accessible to JavaScript and is used solely for authentication. During Google sign-in a short-lived HttpOnly cookie (oauth_state, 5 minutes) protects the login against forgery. Google Analytics sets its own cookies on this site (named _ga and _ga_*) to count visits. We do not use advertising cookies. You can block or delete cookies in your browser; the app needs the session cookie to keep you signed in.',
         },
         {
           heading: '11. Your Rights',

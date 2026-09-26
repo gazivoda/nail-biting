@@ -2308,79 +2308,66 @@ if (!existsSync(distPath)) {
     ...Object.keys(BLOG_POSTS).map(slug => `/blog/${slug}`),
   ]);
 
-  // Branded 404. Self-contained — the SPA's stylesheet is content-hashed, so a
-  // static error page cannot link to it without going stale on every build.
-  // Palette mirrors tailwind.config.js (cream/ink surfaces, forest accent).
+  // Branded 404 in the sign system, light-only like every marketing page.
+  // Self-contained: the SPA's stylesheet is content-hashed, so a static error
+  // page cannot link to it without going stale on every build. The fonts and
+  // logo live at stable /fonts and /logo.svg paths. Tokens mirror .sg-page.
   const NOT_FOUND_HTML = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light">
   <title>Page not found | Stop Biting</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
-    :root {
-      --bg: oklch(93% 0.016 80); --card: oklch(99% 0.005 80);
-      --border: oklch(88% 0.014 120); --text: oklch(22% 0.012 120);
-      --muted: oklch(50% 0.018 120); --accent: oklch(46% 0.130 148);
-      --accent-contrast: oklch(97% 0.012 80);
+    @font-face {
+      font-family: Overpass; font-style: normal; font-weight: 100 900; font-display: swap;
+      src: url(/fonts/overpass-latin.woff2) format('woff2');
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: oklch(15% 0.010 200); --card: oklch(18% 0.010 200);
-        --border: oklch(9% 0.005 200); --text: oklch(94% 0.010 120);
-        --muted: oklch(62% 0.018 120); --accent: oklch(58% 0.130 148);
-        --accent-contrast: oklch(15% 0.010 200);
-      }
+    :root {
+      --ground: oklch(98.5% 0.004 85); --ink: oklch(19% 0.014 255);
+      --ink-2: oklch(40% 0.014 255); --rule: oklch(89% 0.006 255);
+      --accent: oklch(46% 0.13 148); --accent-press: oklch(39% 0.12 148);
     }
     * { box-sizing: border-box; }
     body {
-      margin: 0; min-height: 100vh; display: flex; align-items: center;
-      justify-content: center; padding: 24px; background: var(--bg);
-      color: var(--text);
-      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
+      margin: 0; min-height: 100vh; background: var(--ground); color: var(--ink);
+      font-family: Overpass, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
-    main {
-      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
-      padding: 40px 32px; max-width: 460px; width: 100%; text-align: center;
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
-    }
-    .mark {
-      width: 40px; height: 40px; border-radius: 11px; background: var(--accent);
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
-    }
-    .code {
-      font-size: 11px; font-weight: 600; letter-spacing: 1.2px;
-      text-transform: uppercase; color: var(--muted); margin: 0 0 8px;
-    }
-    h1 { font-size: 24px; letter-spacing: -0.4px; margin: 0 0 10px; }
-    p { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    a {
-      text-decoration: none; font-size: 13.5px; font-weight: 500;
-      padding: 10px 18px; border-radius: 11px; transition: opacity .15s;
-    }
-    a:hover { opacity: .85; }
-    .primary { background: var(--accent); color: var(--accent-contrast); }
-    .secondary { color: var(--muted); border: 1px solid var(--border); }
+    header { border-bottom: 1px solid var(--rule); }
+    .bar, main { max-width: 64rem; margin: 0 auto; padding: 0 20px; }
+    .bar { display: flex; align-items: center; gap: 10px; min-height: 64px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink);
+      text-decoration: none; font-weight: 800; font-size: 1.0625rem; }
+    main { padding-top: clamp(4rem, 12vh, 8rem); padding-bottom: 6rem; }
+    h1 { font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem); font-weight: 850;
+      line-height: 1.02; letter-spacing: -0.03em; margin: 0; max-width: 16ch; }
+    p { font-size: 1.0625rem; line-height: 1.6; color: var(--ink-2); margin: 1.25rem 0 0; max-width: 44ch; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2rem; }
+    .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px;
+      border-radius: 0.375rem; font-weight: 750; font-size: 1rem; text-decoration: none; }
+    .btn-solid { background: var(--accent); color: #fff; box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 4px #fff; }
+    .btn-solid:hover { background: var(--accent-press); }
+    .btn-line { color: var(--ink); border: 2px solid var(--ink); }
+    .btn-line:hover { background: #fff; }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   </style>
 </head>
 <body>
-  <main>
-    <div class="mark">
-      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="#fff"
-           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8 1.5l5 1.5v5c0 3-2.5 5.5-5 6.5-2.5-1-5-3.5-5-6.5v-5l5-1.5z"/>
-      </svg>
+  <header>
+    <div class="bar">
+      <a class="brand" href="/"><img src="/logo.svg" alt="" width="28" height="28">Stop Biting</a>
     </div>
-    <p class="code">Error 404</p>
-    <h1>This page doesn't exist</h1>
-    <p>The link may be broken or the page may have moved. Everything else is still here.</p>
+  </header>
+  <main>
+    <h1>This page doesn't exist.</h1>
+    <p>The link may be broken or the page may have moved. The app, the guides and everything else are where they were.</p>
     <div class="actions">
-      <a class="primary" href="/">Go to the app</a>
-      <a class="secondary" href="/blog">Read the guides</a>
+      <a class="btn btn-solid" href="/">Go to the homepage</a>
+      <a class="btn btn-line" href="/blog">Read the guides</a>
     </div>
   </main>
 </body>
