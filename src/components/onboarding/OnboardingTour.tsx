@@ -12,8 +12,11 @@ interface Step {
 const STEPS: Step[] = [
   {
     target: 'camera-toggle',
-    title: 'Detection is already running',
-    body: 'Watching for nail biting through your webcam. Everything runs on your device and nothing is uploaded.',
+    // The tour opens 1.8s after the dashboard, often while the browser's
+    // camera prompt is still up or after it was refused, so it cannot promise
+    // that detection is running. The card it points at says whether it is.
+    title: 'This is the detector',
+    body: 'Once your browser lets it use the camera, it watches for your hands and sounds the alarm when one reaches your mouth. The video never leaves this computer.',
     side: 'bottom',
   },
   {
@@ -167,7 +170,7 @@ export function OnboardingTour() {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[200] outline-none"
+      className="app-type fixed inset-0 z-[200] outline-none"
       role="dialog"
       tabIndex={-1}
       aria-modal="true"

@@ -28,7 +28,7 @@ export function PWAInstallPrompt() {
 
   return (
     <div
-      className={`fixed bottom-4 left-1/2 z-50 w-full max-w-sm px-4 transition-all duration-300 ease-out ${
+      className={`app-type fixed bottom-4 left-1/2 z-50 w-full max-w-sm px-4 transition-all duration-300 ease-out ${
         show
           ? '-translate-x-1/2 translate-y-0 opacity-100'
           : '-translate-x-1/2 translate-y-8 opacity-0'
