@@ -158,6 +158,9 @@ export function Landing() {
                 <a href="#how" className="sg-link inline-flex min-h-11 items-center">How to start</a>
               </div>
               <p className="sg-note mt-4">{OFFER_LINE}</p>
+              {/* Said before the button is pressed: the 3-day clock starts at
+                  sign-in, and a phone visitor would spend it finding out. */}
+              <p className="sg-note mt-1">Made for a laptop or desktop with a webcam.</p>
 
             </div>
 
