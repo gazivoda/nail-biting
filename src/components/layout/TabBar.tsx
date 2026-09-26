@@ -42,7 +42,8 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
           <div className="flex items-center gap-2.5">
             {/* The site's arch mark, as on every marketing page and the
                 paywall, so the brand doesn't change the moment you sign in. */}
-            <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
+            <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0 dark:hidden" />
+            <img src="/logo-dark.svg" alt="" className="hidden w-7 h-7 flex-shrink-0 dark:block" />
             <div>
               <p className="text-[13.5px] font-semibold tracking-[-0.1px] text-stone-800 dark:text-stone-100">Stop Biting</p>
             </div>

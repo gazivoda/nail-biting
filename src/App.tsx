@@ -54,7 +54,8 @@ function AppLoading() {
   return (
     <div className="app-type flex items-center justify-center min-h-dvh bg-cream-200 dark:bg-ink-100">
       <div className="flex items-center gap-3 text-stone-400">
-        <img src="/logo.svg" alt="" className="w-6 h-6 animate-pulse" />
+        <img src="/logo.svg" alt="" className="w-6 h-6 animate-pulse dark:hidden" />
+        <img src="/logo-dark.svg" alt="" className="hidden w-6 h-6 animate-pulse dark:block" />
         <span className="text-sm">Loading…</span>
       </div>
     </div>

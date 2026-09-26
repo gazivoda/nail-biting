@@ -1,4 +1,3 @@
-import { ShieldCheck } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { StreakHero } from '../components/dashboard/StreakHero';
 import { CameraPanel } from '../components/dashboard/CameraPanel';
@@ -18,15 +17,9 @@ export function Dashboard() {
 
   return (
     <div className="p-5 sm:p-8 pb-10">
-      <PageHeader
-        title={`${greeting}, ${firstName}.`}
-        right={
-          <div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-forest-600 dark:text-forest-400 text-xs py-1.5 px-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full">
-            <ShieldCheck size={12} />
-            <span>On-device</span>
-          </div>
-        }
-      />
+      {/* No "On-device" pill: the detection card says "Runs on this device"
+          and the sidebar footer says it again; a third time was noise. */}
+      <PageHeader title={`${greeting}, ${firstName}.`} />
 
       {/* Single column on phones/tablets; split 1.35fr / 1fr from md up */}
       <div className="grid gap-5 items-start grid-cols-1 md:grid-cols-[1.35fr_1fr]">

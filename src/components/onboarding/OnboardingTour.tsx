@@ -167,8 +167,9 @@ export function OnboardingTour() {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[200]"
+      className="fixed inset-0 z-[200] outline-none"
       role="dialog"
+      tabIndex={-1}
       aria-modal="true"
       aria-labelledby="tour-title"
       aria-describedby="tour-body"

@@ -126,7 +126,8 @@ export function PaywallPage({ onBack }: Props) {
       {/* Header */}
       <header className="border-b border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-200 px-6 py-4 flex items-center justify-between shadow-card">
         <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0" />
+          <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0 dark:hidden" />
+          <img src="/logo-dark.svg" alt="" className="hidden w-7 h-7 flex-shrink-0 dark:block" />
           <span className="text-sm font-semibold tracking-tight text-stone-800 dark:text-stone-100">Stop Biting</span>
         </div>
         <div className="flex items-center gap-3">
