@@ -95,7 +95,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       </div>
 
       <p className="sg-small mx-auto mt-8 max-w-4xl text-center">
-        Payments go through Paddle. Cancel anytime from your account.
+        Payments go through Paddle. Cancel anytime in Settings.
       </p>
     </section>
   );

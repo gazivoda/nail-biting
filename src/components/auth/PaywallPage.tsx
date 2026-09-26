@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
-import { Check, Zap, Star, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Check, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 
@@ -102,7 +102,7 @@ export function PaywallPage({ onBack }: Props) {
           <div className="w-16 h-16 rounded-full bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center mx-auto mb-4 shadow-card">
             <Check size={32} className="text-forest-600 dark:text-forest-400" />
           </div>
-          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2 tracking-tight">Payment received</h2>
+          <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-2 tracking-tight">Payment received</h1>
           <p className="text-stone-500 dark:text-stone-400 mb-6">Your subscription can take a few seconds to activate.</p>
           <button
             onClick={() => refreshProfile()}
@@ -131,12 +131,12 @@ export function PaywallPage({ onBack }: Props) {
         </div>
         <div className="flex items-center gap-3">
           {onBack && (
-            <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">
+            <button onClick={onBack} className="flex min-h-11 items-center gap-1.5 px-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">
               <ArrowLeft size={14} />
               Back to app
             </button>
           )}
-          <button onClick={signOut} className="text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">
+          <button onClick={signOut} className="min-h-11 px-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">
             Sign out
           </button>
         </div>
@@ -151,12 +151,21 @@ export function PaywallPage({ onBack }: Props) {
           </div>
         )}
 
+        <div className="mb-10 flex flex-col items-center">
         <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-2 text-center tracking-tight">
           {onBack ? 'Choose a plan' : 'Keep the alarm running'}
         </h1>
-        <p className="text-stone-500 dark:text-stone-400 mb-10 text-center max-w-md">
+        <p className="text-stone-500 dark:text-stone-400 text-center max-w-md">
           $2.99 a month, or $29 a year. Detection runs on your computer; only sign-in and payment use the network.
         </p>
+        {/* Mid-trial, the free days left are the first thing to know, not a
+            footnote under the fold on a phone. */}
+        {onBack && trialDaysLeft > 0 && (
+          <p className="mt-3 text-sm font-medium text-forest-700 dark:text-forest-300">
+            {trialDaysLeft} day{trialDaysLeft !== 1 ? 's' : ''} left in your free trial.
+          </p>
+        )}
+        </div>
 
         {!plansConfigured && (
           <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-5 py-4 mb-8 max-w-lg w-full">
@@ -180,16 +189,44 @@ export function PaywallPage({ onBack }: Props) {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+          {/* Yearly first at every width, as on /pricing. */}
+          <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+              <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+                Best value: save 19%
+              </span>
+            </div>
+            <div className="mb-4">
+              <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Billed once a year</p>
+            </div>
+            <div className="mb-1">
+              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
+              <span className="text-stone-500 dark:text-stone-400 text-sm"> / year</span>
+            </div>
+            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">About $2.42 a month</p>
+            <ul className="space-y-2 mb-6 flex-1">
+              {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
+                <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
+                  <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
+                </li>
+              ))}
+            </ul>
+            {plansConfigured && (
+              <button
+                disabled={activating || !paddle}
+                onClick={() => openCheckout(PRICE_YEARLY)}
+                className="inline-flex min-h-11 items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Subscribe yearly
+              </button>
+            )}
+          </div>
           {/* Monthly */}
           <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center">
-                <Zap size={16} className="text-forest-600 dark:text-forest-400" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
-                <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
-              </div>
+            <div className="mb-4">
+              <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
+              <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
             </div>
             <div className="mb-4">
               <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
@@ -213,44 +250,6 @@ export function PaywallPage({ onBack }: Props) {
             )}
           </div>
 
-          {/* Yearly */}
-          <div className="order-first md:order-none border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                Best value: save 19%
-              </span>
-            </div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center">
-                <Star size={16} className="text-forest-600 dark:text-forest-400" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-                <p className="text-xs text-stone-500 dark:text-stone-400">Billed once a year</p>
-              </div>
-            </div>
-            <div className="mb-1">
-              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-              <span className="text-stone-500 dark:text-stone-400 text-sm"> / year</span>
-            </div>
-            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">$2.42/month, billed yearly</p>
-            <ul className="space-y-2 mb-6 flex-1">
-              {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                  <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
-                </li>
-              ))}
-            </ul>
-            {plansConfigured && (
-              <button
-                disabled={activating || !paddle}
-                onClick={() => openCheckout(PRICE_YEARLY)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Subscribe yearly
-              </button>
-            )}
-          </div>
         </div>
 
         {error && (
@@ -259,17 +258,12 @@ export function PaywallPage({ onBack }: Props) {
           </div>
         )}
 
-        <div className="flex items-center gap-6 mt-10 text-xs text-stone-500 dark:text-stone-400">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-xs text-stone-500 dark:text-stone-400">
           <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>
-          <div className="flex items-center gap-1.5"><Check size={11} /><span>Cancel anytime</span></div>
-          <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-forest-500" /><span>Camera stays on-device</span></div>
+          <div className="flex items-center gap-1.5"><Check size={11} /><span>Cancel anytime in Settings</span></div>
+          <div className="flex items-center gap-1.5"><Check size={11} /><span>Camera stays on-device</span></div>
         </div>
 
-        {onBack && trialDaysLeft > 0 && (
-          <p className="mt-6 text-xs text-stone-500 dark:text-stone-400">
-            {trialDaysLeft} day{trialDaysLeft !== 1 ? 's' : ''} remaining in your free trial
-          </p>
-        )}
       </main>
     </div>
   );
