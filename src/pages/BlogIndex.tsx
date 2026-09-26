@@ -23,6 +23,7 @@ export function BlogIndex() {
 
       {/* Header: every heading on the site is sentence case, and no kicker
           label sits above it. The h1 and lede are mirrored in server.js. */}
+      <main id="main">
       <header className="sg-container pt-28 pb-8 lg:pt-32">
         <h1 className="sg-h2">Nail biting resources</h1>
         <p className="sg-lede sg-measure mt-4">
@@ -51,7 +52,7 @@ export function BlogIndex() {
       {/* Post grid: plain plates, no hover lift. On a phone each card is the
           title and its tag only, so 144 articles are a list to scan rather
           than a 40,000px scroll; every link stays in the page for crawlers. */}
-      <main className="sg-container pb-20">
+      <div className="sg-container pb-20">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {posts.map(post => (
             <a
@@ -86,6 +87,7 @@ export function BlogIndex() {
         {posts.length === 0 && (
           <p className="sg-body py-20 text-center">No posts in this category yet.</p>
         )}
+      </div>
       </main>
 
       <div className="sg-page"><SiteFooter /></div>

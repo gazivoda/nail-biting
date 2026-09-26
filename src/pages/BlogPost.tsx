@@ -81,7 +81,7 @@ export function BlogPost({ slug }: Props) {
 
       {/* Article */}
       {post && (
-        <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
+        <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
           {/* Breadcrumb nav */}
           <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
@@ -223,7 +223,7 @@ export function BlogPost({ slug }: Props) {
               Back to all articles
             </a>
           </div>
-        </div>
+        </main>
       )}
 
       <div className="sg-page"><SiteFooter /></div>

@@ -82,7 +82,7 @@ export function HowItWorks() {
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <SiteHeader />
 
-      <main className="sg-container pt-28 pb-20 lg:pt-32">
+      <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>

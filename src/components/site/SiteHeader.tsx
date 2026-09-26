@@ -9,6 +9,14 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
       aria-label="Site navigation"
       className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--sg-rule)] bg-[color:var(--sg-ground)]/90 backdrop-blur-md"
     >
+      {/* First focusable thing on every marketing page: past the nav, to the
+          page's <main id="main">. Invisible until focused. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-[color:var(--sg-ink)]"
+      >
+        Skip to content
+      </a>
       <div className="sg-container flex h-16 items-center justify-between gap-4">
         <a href="/" className="flex min-h-11 items-center gap-2.5">
           <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />

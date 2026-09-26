@@ -50,7 +50,7 @@ export function ComparePage({ path }: Props) {
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <div className="sg-page"><SiteHeader /></div>
 
-      <main className="max-w-2xl mx-auto px-6 pt-28 pb-24">
+      <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>

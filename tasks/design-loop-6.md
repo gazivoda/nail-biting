@@ -1,9 +1,8 @@
 # Design loop, round 6 (10 iterations, every 5 min)
 
-iterations: 7
+iterations: 8
 
 ## Backlog
-- 8: A11y: scroll-padding-top for the fixed header, skip link, <main id=main> on blog posts and all pages.
 - 9: Onboarding tour's first step says 'Detection is already running' before the camera is allowed; make it true.
 - 10: Final short review and fixes; report.
 
@@ -15,3 +14,4 @@ iterations: 7
 - 5/10: trial countdown in hours on the last day (shared trialLeft + tests); trial line on Watch below lg
 - 6/10: no Inter preload; ComparePage lazy (main bundle 233KB -> 152KB)
 - 7/10: hero screenshot preloaded from the / HTML (one fetch, verified); alt text accurate
+- 8/10: skip link + <main id=main> on every marketing page (posts had none); scroll-padding for the fixed header

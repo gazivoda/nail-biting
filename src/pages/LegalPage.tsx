@@ -32,7 +32,7 @@ export function LegalPage({ title, lastUpdated, sections, standfirst, children }
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <div className="sg-page"><SiteHeader /></div>
 
-      <main className="max-w-2xl mx-auto px-6 pt-28 pb-20">
+      <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-20">
         <h1 className="sg-h2">{title}</h1>
         <p className="sg-note mt-3">Last updated: {lastUpdated}</p>
         {standfirst && (

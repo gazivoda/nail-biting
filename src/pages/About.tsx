@@ -16,7 +16,7 @@ export function About() {
 
       <SiteHeader />
 
-      <main className="sg-container max-w-3xl pt-28 pb-20 lg:pt-32">
+      <main id="main" className="sg-container max-w-3xl pt-28 pb-20 lg:pt-32">
 
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">

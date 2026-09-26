@@ -150,7 +150,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
       <SiteHeader onHome />
 
-      <main>
+      <main id="main">
         {/* ── HERO ──────────────────────────────────────────────────────── */}
         <section aria-label="Hero" className="pt-28 pb-16 lg:pt-36 lg:pb-24">
           <div className="sg-container grid items-start gap-12 lg:grid-cols-12 lg:gap-10">

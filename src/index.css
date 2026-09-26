@@ -196,6 +196,12 @@
    had none; only .sg-page and .ed-page defined one). :where() keeps this at
    zero specificity, so those scoped rings and any component ring still win. */
 @layer base {
+  /* The site header is fixed and 64px tall: in-page links (#privacy,
+     #pricing, the skip link) would otherwise scroll their heading under it. */
+  html {
+    scroll-padding-top: 5rem;
+  }
+
   :where(a, button, summary, [role="tab"], [tabindex]):focus-visible {
     outline: 2px solid oklch(46% 0.13 148);
     outline-offset: 2px;
