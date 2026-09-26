@@ -186,7 +186,7 @@ export function BlogPost({ slug }: Props) {
           {/* Related articles — internal linking for SEO */}
           {related.length > 0 && (
             <section className="mt-14" aria-labelledby="related-heading">
-              <h2 id="related-heading" className="text-lg font-semibold text-stone-800 dark:text-stone-100 mb-5">
+              <h2 id="related-heading" className="sg-h3 mb-5">
                 Related articles
               </h2>
               <div className="flex flex-col gap-3">
@@ -194,17 +194,17 @@ export function BlogPost({ slug }: Props) {
                   <a
                     key={rel.slug}
                     href={`/blog/${rel.slug}`}
-                    className="group flex items-start justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-sm transition-all"
+                    className="group flex items-start justify-between gap-4 rounded-xl border border-[color:var(--sg-rule)] bg-white px-4 py-3 transition-colors hover:border-[color:var(--sg-accent)]"
                   >
                     <div className="flex-1 min-w-0">
                       <span className={`${TAG_PILL} mb-1.5`}>
                         {rel.tag}
                       </span>
-                      <p className="text-sm font-medium text-stone-700 dark:text-stone-200 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors line-clamp-2">
+                      <p className="text-[0.9375rem] font-semibold leading-snug text-[color:var(--sg-ink)] group-hover:text-[color:var(--sg-accent)] transition-colors line-clamp-2">
                         {rel.title}
                       </p>
                     </div>
-                    <ArrowRight size={14} className="text-stone-400 dark:text-stone-500 group-hover:text-forest-500 dark:group-hover:text-forest-400 mt-1 shrink-0 transition-colors" aria-hidden="true" />
+                    <ArrowRight size={15} className="mt-1 shrink-0 text-[color:var(--sg-ink-2)] transition-colors group-hover:text-[color:var(--sg-accent)]" aria-hidden="true" />
                   </a>
                 ))}
               </div>
@@ -217,7 +217,7 @@ export function BlogPost({ slug }: Props) {
           <div className="mt-10 text-center">
             <a
               href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+              className="sg-link inline-flex min-h-11 items-center gap-2"
             >
               <ArrowLeft size={14} aria-hidden="true" />
               Back to all articles
