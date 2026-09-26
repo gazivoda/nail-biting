@@ -28,7 +28,15 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
             Blog
           </a>
         </div>
-        <TrialButton size="sm" />
+        {/* Returning customers (new computer, expired session) need a way in
+            that isn't "Start free trial". The same Google flow signs an
+            existing account in. Hidden on phones: the app runs on a computer. */}
+        <div className="flex items-center gap-5">
+          <a href="/api/auth/google" className="hidden min-h-11 items-center text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)] sm:inline-flex">
+            Sign in
+          </a>
+          <TrialButton size="sm" />
+        </div>
       </div>
     </nav>
   );
