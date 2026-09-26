@@ -1,11 +1,10 @@
 # Design loop, round 2 (10 iterations, every 5 min)
 
-iterations: 2
+iterations: 3
 
 ## Log
 
 ## Backlog (from the round-2 reviews; top first)
-- 3: Blog post typography onto the sign system (sg-body 17px, headings 800, remove stacked hr), blog-html-block tables/lists in index.css.
 - 4: Blog index: H1 "Nail biting guides", no eyebrow, neutral tag pills (one accent), sg-plate cards without lift, fewer cards visible on mobile (keep every link in DOM).
 - 5: App eyebrows left: CURRENT STREAK / SESSION / TODAY / SUMMARY / date headers -> sentence case.
 - 6: Emoji as icons: Settings sound cards + preset trigger tags -> lucide icons (custom tags keep user emoji).
@@ -15,3 +14,4 @@ iterations: 2
 - 10: Final dual review.
 - 1/10: Settings: headings, alarm vocabulary, Appearance section, accessible segmented controls, duplicate theme toggle removed
 - 2/10: blog: shared header (Blog current), shared footer, unified trial CTA; false desktop-app footer claim gone
+- 3/10: blog posts in Overpass: 17px body, heavier headings, AA meta, no double rule; content untouched

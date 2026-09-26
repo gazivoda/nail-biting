@@ -79,7 +79,7 @@ export function BlogPost({ slug }: Props) {
   // the app mounts.
 
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
+    <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
 
       <div className="sg-page"><SiteHeader current="blog" /></div>
 
@@ -100,12 +100,12 @@ export function BlogPost({ slug }: Props) {
         <div className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
           {/* Breadcrumb nav */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-stone-400 dark:text-stone-500 mb-8">
-            <a href="/" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Home</a>
+          <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
+            <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
             <span aria-hidden="true">/</span>
-            <a href="/blog" className="hover:text-stone-600 dark:hover:text-stone-300 transition-colors">Blog</a>
+            <a href="/blog" className="hover:text-[color:var(--sg-ink)]">Blog</a>
             <span aria-hidden="true">/</span>
-            <span className="text-stone-500 dark:text-stone-400 truncate max-w-[200px]">{post.tag}</span>
+            <span className="truncate max-w-[200px] text-[color:var(--sg-ink)]">{post.tag}</span>
           </nav>
 
           {/* Article header */}
@@ -114,34 +114,34 @@ export function BlogPost({ slug }: Props) {
               <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${tagClass(post.tag)}`}>
                 {post.tag}
               </span>
-              <span className="flex items-center gap-1 text-xs text-stone-400 dark:text-stone-500">
+              <span className="sg-note flex items-center gap-1">
                 <Clock size={11} aria-hidden="true" />
                 {post.readingMinutes} min read
               </span>
-              <time dateTime={post.datePublished} className="text-xs text-stone-400 dark:text-stone-500">
+              <time dateTime={post.datePublished} className="sg-note">
                 {formatDate(post.datePublished)}
               </time>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-800 dark:text-stone-100 leading-tight mb-4">
+            <h1 className="sg-h2 mb-5">
               {post.title}
             </h1>
 
-            <p className="text-lg text-stone-500 dark:text-stone-400 leading-relaxed mb-6">
+            <p className="sg-lede mb-7">
               {post.description}
             </p>
 
             {/* Author byline — authority signal for AI crawlers */}
-            <div className="flex items-center gap-3 py-4 border-t border-b border-stone-200 dark:border-ink-400">
+            <div className="flex items-center gap-3 border-y border-[color:var(--sg-rule)] py-4">
               <div className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center shrink-0">
                 <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">IG</span>
               </div>
               <div>
-                <p className="text-sm font-medium text-stone-700 dark:text-stone-200">
-                  <a href="/about" className="hover:text-forest-600 dark:hover:text-forest-400 transition-colors">{AUTHOR_BIO.name}</a>
+                <p className="text-[0.9375rem] font-semibold">
+                  <a href="/about" className="hover:text-[color:var(--sg-accent)]">{AUTHOR_BIO.name}</a>
                   {` · ${AUTHOR_BIO.role}`}
                 </p>
-                <p className="text-xs text-stone-400 dark:text-stone-500">
+                <p className="sg-small">
                   Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
                   {post.dateModified !== post.datePublished && (
                     <> Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>.</>
@@ -151,18 +151,16 @@ export function BlogPost({ slug }: Props) {
             </div>
           </header>
 
-          <hr className="border-stone-200 dark:border-ink-400 mb-10" />
-
           {/* Article body */}
-          <article>
+          <article className="mt-10">
             {post.sections.map((section, i) => (
               <section key={i} className="mb-10">
-                <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4 leading-snug">
+                <h2 className="mb-4 text-[1.5rem] font-extrabold leading-tight tracking-[-0.02em]">
                   {section.heading}
                 </h2>
 
                 {section.body.split('\n\n').map((para, j) => (
-                  <p key={j} className="text-stone-600 dark:text-stone-400 leading-relaxed mb-4 text-[15px]">
+                  <p key={j} className="sg-body mb-4">
                     {para}
                   </p>
                 ))}
@@ -170,8 +168,8 @@ export function BlogPost({ slug }: Props) {
                 {section.list && section.list.length > 0 && (
                   <ul className="mt-3 space-y-3">
                     {section.list.map((item, k) => (
-                      <li key={k} className="flex gap-3 text-[15px] text-stone-600 dark:text-stone-400 leading-relaxed">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-forest-500 shrink-0" aria-hidden="true" />
+                      <li key={k} className="sg-body flex gap-3">
+                        <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--sg-accent)]" aria-hidden="true" />
                         <span>{item}</span>
                       </li>
                     ))}
