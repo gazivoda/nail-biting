@@ -1821,27 +1821,27 @@ if (!existsSync(distPath)) {
     injected = injectSsrArticle(injected,
       '<h1>About Stop Biting</h1>' +
       '<p class="article-summary">Built by a nail biter, for nail biters: Igor Gazivoda bit his nails for over 20 years, ' +
-      'then built the awareness component of Habit Reversal Training into an app — MediaPipe hand tracking, ' +
+      'then built the awareness component of Habit Reversal Training into an app: MediaPipe hand tracking, ' +
       '21 landmarks five times a second, running entirely on your own device.</p>' +
       '<section><h2>The founder&#39;s story</h2>' +
-      '<p>I&#39;m Igor Gazivoda, a software developer. I bit my nails for over 20 years — constantly, automatically, ' +
+      '<p>I&#39;m Igor Gazivoda, a software developer. I bit my nails for over 20 years: constantly, automatically, ' +
       'without noticing until the damage was already done. I tried everything: bitter polish, reminder bands, sheer willpower. ' +
       'They all failed the same way, because the habit is automatic and happens below the threshold of conscious awareness.</p>' +
       '<p>When I read the research on Habit Reversal Training, I understood why everything else had failed. HRT&#39;s core ' +
-      'insight is that awareness is the bottleneck — you can&#39;t interrupt a habit you don&#39;t know is happening. ' +
+      'insight is that awareness is the bottleneck: you can&#39;t interrupt a habit you don&#39;t know is happening. ' +
       'I had a webcam, I knew how to code, and I knew MediaPipe could run hand tracking on-device. So I built the awareness ' +
-      'component — the part of HRT that is hardest to do alone.</p></section>' +
+      'component, the part of HRT that is hardest to do alone.</p></section>' +
       '<section><h2>What Stop Biting does</h2>' +
-      '<p>Stop Biting uses your computer&#39;s webcam and Google&#39;s MediaPipe framework — compiled to WebAssembly and ' +
-      'running entirely in your browser — to detect when your hand moves toward your mouth. When it does, an audible alarm fires. ' +
+      '<p>Stop Biting uses your computer&#39;s webcam and Google&#39;s MediaPipe framework (compiled to WebAssembly and ' +
+      'running entirely in your browser) to detect when your hand moves toward your mouth. When it does, an audible alarm fires. ' +
       'That alarm is the external awareness signal HRT research identifies as the most critical component of treatment. ' +
-      'The app also logs each detection with a timestamp, so you can see your actual biting frequency — not your estimated frequency.</p></section>' +
+      'The app also logs each detection with a timestamp, so you can see your actual biting frequency, not your estimated frequency.</p></section>' +
       '<section><h2>Privacy: the non-negotiable</h2>' +
-      '<p>All video processing runs in WebAssembly on your device. Nothing is transmitted — not frames, not detections, ' +
-      'not metadata. You can disconnect your internet connection after the app loads and it will function identically. ' +
-      'The incident log is stored locally, and there are no analytics on how you use the app.</p></section>' +
+      '<p>All video processing runs in WebAssembly on your device. No video, no frames and no detections are transmitted. ' +
+      'You can disconnect your internet connection after the app loads and it will function identically. ' +
+      'Your alarm and bite log is stored in your browser. The site counts page visits with Google Analytics; that never includes anything from your camera.</p></section>' +
       '<section><h2>The technology</h2>' +
-      '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which locates 21 hand landmarks. Stop Biting runs it five times a second — enough to catch a hand on its way to your mouth, and far less CPU than running it on every frame. ' +
+      '<p>Detection is built on Google MediaPipe&#39;s Hand Landmarker, which locates 21 hand landmarks. Stop Biting runs it five times a second: enough to catch a hand on its way to your mouth, and far less CPU than running it on every frame. ' +
       'Mouth proximity detection compares hand landmark coordinates to facial landmark coordinates in each frame. ' +
       'Read the full explanation at <a href="/how-it-works">how it works</a>.</p></section>' +
       '<section><h2>How this site is written</h2>' +

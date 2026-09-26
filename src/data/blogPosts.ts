@@ -1835,7 +1835,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Privacy: the question everyone asks first',
-      body: `The app uses your webcam, which creates an understandable privacy concern. The answer is simple: nothing is ever transmitted. The video feed is processed locally by MediaPipe, a framework that runs in WebAssembly — a sandboxed execution environment in your browser. The AI model is downloaded once and runs offline thereafter.\n\nThe incident log is stored locally on your device. No account, no cloud sync, no analytics on usage patterns. You can disconnect from the internet after the initial load and the app functions identically. This isn't a privacy policy claim that requires trust — it's verifiable by monitoring your network traffic while the app runs.`,
+      body: `The app uses your webcam, which creates an understandable privacy concern. The answer is simple: nothing is ever transmitted. The video feed is processed locally by MediaPipe, a framework that runs in WebAssembly — a sandboxed execution environment in your browser. The AI model is downloaded once and runs offline thereafter.\n\nThe alarm and bite log is stored in your browser, with no cloud sync. You sign in with Google so your trial and subscription work, and the site counts page visits with Google Analytics; neither ever sees your camera. You can disconnect from the internet after the initial load and the app functions identically. This isn't a privacy policy claim that requires trust — it's verifiable by monitoring your network traffic while the app runs.`,
     },
     {
       heading: 'Where Stop Biting fits in the treatment stack',

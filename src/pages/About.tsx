@@ -39,7 +39,7 @@ export function About() {
           <h2 className="sg-h3 mb-3">The founder's story</h2>
           <div className="sg-body sg-measure space-y-4">
             <p>
-              I'm Igor Gazivoda, a software developer. I bit my nails for over 20 years. Not occasionally — constantly,
+              I'm Igor Gazivoda, a software developer. I bit my nails for over 20 years. Not occasionally: constantly,
               automatically, without noticing until the damage was already done.
             </p>
             <p>
@@ -49,12 +49,12 @@ export function About() {
             </p>
             <p>
               When I read the research on Habit Reversal Training, I understood why everything else had failed.
-              HRT's core insight is that awareness is the bottleneck — you can't interrupt a habit you don't know is
+              HRT's core insight is that awareness is the bottleneck: you can't interrupt a habit you don't know is
               happening. The gold-standard treatment literally starts with "awareness training" before anything else.
             </p>
             <p>
               I had a webcam. I knew how to code. I knew MediaPipe could run hand tracking on-device.
-              So I built the awareness component — the part of HRT that is hardest to do alone.
+              So I built the awareness component, the part of HRT that is hardest to do alone.
             </p>
           </div>
         </section>
@@ -64,8 +64,8 @@ export function About() {
           <h2 className="sg-h3 mb-3">What Stop Biting does</h2>
           <div className="sg-body sg-measure space-y-4">
             <p>
-              Stop Biting uses your computer's webcam and Google's MediaPipe framework — compiled to WebAssembly and
-              running entirely in your browser — to detect when your hand moves toward your mouth. When it does,
+              Stop Biting uses your computer's webcam and Google's MediaPipe framework (compiled to WebAssembly and
+              running entirely in your browser) to detect when your hand moves toward your mouth. When it does,
               an audible alarm fires.
             </p>
             <p>
@@ -74,7 +74,7 @@ export function About() {
             </p>
             <p>
               The app also logs each detection with a timestamp, so you can see your actual biting
-              frequency — not your estimated frequency. A real count, rather than a guess, is
+              frequency, not your estimated frequency. A real count, rather than a guess, is
               what turns the habit into something you can work on.
             </p>
           </div>
@@ -89,13 +89,14 @@ export function About() {
               not just promised.
             </p>
             <p>
-              All video processing runs in WebAssembly on your device. Nothing is transmitted — not frames,
-              not detections, not metadata. You can disconnect your internet connection after the app loads
+              All video processing runs in WebAssembly on your device. No video, no frames and no
+              detections are transmitted. You can disconnect your internet connection after the app loads
               and it will function identically. You can verify this by watching your network traffic while
               the app runs.
             </p>
             <p>
-              The incident log is stored locally, and there are no analytics on how you use the app.
+              Your alarm and bite log is stored in your browser. The site counts page visits with Google
+              Analytics; that never includes anything from your camera.
             </p>
           </div>
         </section>
@@ -109,8 +110,8 @@ export function About() {
               <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" className="sg-link">
                 Google MediaPipe's Hand Landmarker
               </a>
-              , which locates 21 hand landmarks. Stop Biting runs it five times a second. The model runs in WebAssembly — a
-              sandboxed binary execution format supported by all modern browsers — meaning it has no network
+              , which locates 21 hand landmarks. Stop Biting runs it five times a second. The model runs in WebAssembly (a
+              sandboxed binary execution format supported by all modern browsers), meaning it has no network
               access and cannot read files outside the browser sandbox.
             </p>
             <p>
