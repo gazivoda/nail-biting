@@ -1,49 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Clock } from 'lucide-react';
 import { BLOG_INDEX } from '../data/blogIndex';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { TAG_PILL } from '../components/blog/tagPill';
 
 const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_INDEX.map(p => p.tag)))];
 
-const TAG_COLORS: Record<string, string> = {
-  Psychology:  'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800',
-  Treatment:   'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border-forest-200 dark:border-forest-800',
-  Health:      'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
-  Parenting:   'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800',
-  Clinical:    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
-  Technology:  'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800',
-  Productivity:'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
-  Science:     'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800',
-  Comparison:  'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border-teal-200 dark:border-teal-800',
-  Humor:       'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800',
-  Products:    'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800',
-};
-
-function tagClass(tag: string) {
-  return TAG_COLORS[tag] ?? 'bg-stone-100 dark:bg-ink-300 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-ink-400';
-}
-
-function useScrollReveal() {
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      document.querySelectorAll('.reveal, .reveal-card').forEach(el => el.classList.add('revealed'));
-      return;
-    }
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); observer.unobserve(e.target); } }),
-      { threshold: 0.10, rootMargin: '0px 0px -30px 0px' },
-    );
-    document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-}
-
 export function BlogIndex() {
   useTheme('light');
-  useScrollReveal();
   const [activeTag, setActiveTag] = useState('All');
 
   const posts = activeTag === 'All'
@@ -51,76 +17,74 @@ export function BlogIndex() {
     : BLOG_INDEX.filter(p => p.tag === activeTag);
 
   return (
-    <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200">
+    <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
 
       <div className="sg-page"><SiteHeader current="blog" /></div>
 
-      {/* Header */}
-      <header className="reveal pt-28 pb-12 px-6 text-center max-w-3xl mx-auto">
-        <p className="text-forest-600 dark:text-forest-400 text-sm font-semibold tracking-wider uppercase mb-3">Evidence-based guides</p>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-stone-800 dark:text-stone-100 mb-4">
-          Nail Biting Resources
-        </h1>
-        <p className="text-stone-500 dark:text-stone-400 text-lg leading-relaxed">
+      {/* Header: every heading on the site is sentence case, and no kicker
+          label sits above it. The h1 and lede are mirrored in server.js. */}
+      <header className="sg-container pt-28 pb-8 lg:pt-32">
+        <h1 className="sg-h2">Nail biting resources</h1>
+        <p className="sg-lede sg-measure mt-4">
           Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.
         </p>
+
+        <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+          {ALL_TAGS.map(tag => (
+            <button
+              key={tag}
+              type="button"
+              aria-pressed={activeTag === tag}
+              onClick={() => setActiveTag(tag)}
+              className={`inline-flex min-h-11 items-center rounded-full border px-4 text-[0.9375rem] font-semibold transition-colors ${
+                activeTag === tag
+                  ? 'border-[color:var(--sg-accent)] bg-[color:var(--sg-accent)] text-white'
+                  : 'border-[color:var(--sg-rule)] bg-white text-[color:var(--sg-ink-2)] hover:border-[color:var(--sg-ink-2)] hover:text-[color:var(--sg-ink)]'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </header>
 
-      {/* Tag filter */}
-      <div className="reveal flex flex-wrap justify-center gap-2 px-6 pb-10" role="group" aria-label="Filter by category">
-        {ALL_TAGS.map(tag => (
-          <button
-            key={tag}
-            onClick={() => setActiveTag(tag)}
-            className={`px-4 py-1.5 rounded-full text-sm border transition-all duration-150 ${
-              activeTag === tag
-                ? 'bg-forest-600 text-cream-100 border-forest-600 font-semibold'
-                : 'bg-white dark:bg-ink-50 text-stone-500 dark:text-stone-400 border-stone-200 dark:border-ink-400 hover:border-stone-400 dark:hover:border-stone-500 hover:text-stone-700 dark:hover:text-stone-200'
-            }`}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
-
-      {/* Post grid */}
-      <main className="max-w-5xl mx-auto px-6 pb-24">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, i) => (
+      {/* Post grid: plain plates, no hover lift. On a phone each card is the
+          title and its tag only, so 144 articles are a list to scan rather
+          than a 40,000px scroll; every link stays in the page for crawlers. */}
+      <main className="sg-container pb-20">
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {posts.map(post => (
             <a
               key={post.slug}
               href={`/blog/${post.slug}`}
-              style={{ transitionDelay: `${(i % 3) * 70}ms` }}
-              className="reveal-card group flex flex-col bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 hover:border-forest-300 dark:hover:border-forest-700 hover:-translate-y-1 hover:shadow-card-md transition-all duration-200 shadow-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500"
+              className="group flex flex-col rounded-2xl border border-[color:var(--sg-rule)] bg-white p-5 transition-colors hover:border-[color:var(--sg-accent)] sm:p-6"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${tagClass(post.tag)}`}>
-                  {post.tag}
-                </span>
-                <span className="flex items-center gap-1 text-xs text-stone-400 dark:text-stone-500">
-                  <Clock size={11} aria-hidden="true" />
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <span className={TAG_PILL}>{post.tag}</span>
+                <span className="sg-note flex items-center gap-1">
+                  <Clock size={12} aria-hidden="true" />
                   {post.readingMinutes} min
                 </span>
               </div>
 
-              <h2 className="text-base font-semibold text-stone-800 dark:text-stone-100 leading-snug mb-3 group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors line-clamp-3">
+              <h2 className="text-[1.0625rem] font-bold leading-snug group-hover:text-[color:var(--sg-accent)] sm:mb-2 sm:line-clamp-3">
                 {post.title}
               </h2>
 
-              <p className="text-sm text-stone-500 dark:text-stone-400 leading-relaxed mb-5 flex-1 line-clamp-3">
+              <p className="sg-small mb-4 hidden flex-1 line-clamp-3 sm:block">
                 {post.description}
               </p>
 
-              <span className="inline-flex items-center gap-1.5 text-sm text-forest-600 dark:text-forest-400 font-medium group-hover:gap-2.5 transition-all">
+              <span className="mt-3 hidden items-center gap-1.5 text-[0.9375rem] font-semibold text-[color:var(--sg-accent)] sm:mt-auto sm:inline-flex">
                 Read article
-                <ArrowRight size={14} aria-hidden="true" />
+                <ArrowRight size={15} aria-hidden="true" />
               </span>
             </a>
           ))}
         </div>
 
         {posts.length === 0 && (
-          <p className="text-center text-stone-500 py-20">No posts in this category yet.</p>
+          <p className="sg-body py-20 text-center">No posts in this category yet.</p>
         )}
       </main>
 

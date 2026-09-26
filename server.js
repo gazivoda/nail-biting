@@ -1692,7 +1692,7 @@ if (!existsSync(distPath)) {
     const postList = Object.entries(BLOG_POSTS).map(([slug, p]) =>
       `<li><a href="/blog/${slug}">${escapeHtml(p.title)}</a><br>${escapeHtml(p.description)}</li>`).join('');
     const articleHtml =
-      '<h1>Nail Biting Resources</h1>' +
+      '<h1>Nail biting resources</h1>' +
       '<p class="article-summary">Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
       `<section><h2>All articles</h2><ul>${postList}</ul></section>`;
     injected = injectSsrArticle(injected, articleHtml);

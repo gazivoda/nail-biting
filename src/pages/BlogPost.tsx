@@ -6,6 +6,7 @@ import { AUTHOR_BIO } from '../data/editorialPolicy';
 import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
 import { useTheme } from '../hooks/useTheme';
+import { TAG_PILL } from '../components/blog/tagPill';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
@@ -14,23 +15,6 @@ interface Props {
   slug: string;
 }
 
-const TAG_COLORS: Record<string, string> = {
-  Psychology:  'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800',
-  Treatment:   'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border-forest-200 dark:border-forest-800',
-  Health:      'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800',
-  Parenting:   'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800',
-  Clinical:    'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
-  Technology:  'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800',
-  Productivity:'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
-  Science:     'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800',
-  Comparison:  'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 border-teal-200 dark:border-teal-800',
-  Humor:       'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800',
-  Products:    'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-400 border-pink-200 dark:border-pink-800',
-};
-
-function tagClass(tag: string) {
-  return TAG_COLORS[tag] ?? 'bg-stone-100 text-stone-600 border-stone-200';
-}
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -111,7 +95,7 @@ export function BlogPost({ slug }: Props) {
           {/* Article header */}
           <header className="mb-10">
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${tagClass(post.tag)}`}>
+              <span className={TAG_PILL}>
                 {post.tag}
               </span>
               <span className="sg-note flex items-center gap-1">
@@ -213,7 +197,7 @@ export function BlogPost({ slug }: Props) {
                     className="group flex items-start justify-between gap-4 rounded-xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 px-4 py-3 hover:border-forest-300 dark:hover:border-forest-700 hover:shadow-sm transition-all"
                   >
                     <div className="flex-1 min-w-0">
-                      <span className={`inline-block text-xs font-medium px-2 py-0.5 rounded-full border mb-1.5 ${tagClass(rel.tag)}`}>
+                      <span className={`${TAG_PILL} mb-1.5`}>
                         {rel.tag}
                       </span>
                       <p className="text-sm font-medium text-stone-700 dark:text-stone-200 leading-snug group-hover:text-forest-600 dark:group-hover:text-forest-400 transition-colors line-clamp-2">

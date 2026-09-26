@@ -1,11 +1,10 @@
 # Design loop, round 2 (10 iterations, every 5 min)
 
-iterations: 3
+iterations: 4
 
 ## Log
 
 ## Backlog (from the round-2 reviews; top first)
-- 4: Blog index: H1 "Nail biting guides", no eyebrow, neutral tag pills (one accent), sg-plate cards without lift, fewer cards visible on mobile (keep every link in DOM).
 - 5: App eyebrows left: CURRENT STREAK / SESSION / TODAY / SUMMARY / date headers -> sentence case.
 - 6: Emoji as icons: Settings sound cards + preset trigger tags -> lucide icons (custom tags keep user emoji).
 - 7: Detection status: role=status aria-live, "Detection couldn't load. Check your connection." + 44px "Try again", "Paused while this tab is hidden".
@@ -15,3 +14,4 @@ iterations: 3
 - 1/10: Settings: headings, alarm vocabulary, Appearance section, accessible segmented controls, duplicate theme toggle removed
 - 2/10: blog: shared header (Blog current), shared footer, unified trial CTA; false desktop-app footer claim gone
 - 3/10: blog posts in Overpass: 17px body, heavier headings, AA meta, no double rule; content untouched
+- 4/10: blog index: sentence-case h1, one neutral pill, green active filter, plain cards, compact on mobile
