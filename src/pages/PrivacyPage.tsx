@@ -4,12 +4,12 @@ export function PrivacyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
-      lastUpdated="April 9, 2026"
+      lastUpdated="September 26, 2026"
       sections={[
         {
           heading: '1. Overview',
           content:
-            'Stop Biting is designed from the ground up to protect your privacy. The core principle is simple: your camera feed never leaves your device. This policy explains what data we collect, why, and how we handle it.',
+            'Stop Biting is designed so that your camera feed never leaves your device, and your habit log stays in your own browser. This policy explains exactly what data exists, where it is kept, which third parties see any of it, and why.',
         },
         {
           heading: '2. Camera and Video Data',
@@ -24,17 +24,21 @@ export function PrivacyPage() {
           heading: '3. Data We Collect',
           content: [
             'Account information: your name, email address, and profile picture — provided by Google when you sign in.',
-            'Usage data: your habit streaks, incident logs, and detection session timestamps — stored on our server linked to your account.',
-            'Subscription data: your Paddle subscription ID and subscription status — used to manage your access.',
-            'We do not collect biometric data, browsing history, or any data from your camera.',
+            'Habit data: your alarm and bite log, trigger tags, streaks, custom bite reasons and app settings. These are stored only in your browser (local storage) on the device you use. They are not sent to our server and do not follow you to another computer.',
+            'Subscription data: your trial end date, subscription plan and status, renewal date, and Paddle subscription and customer IDs, used to manage your access.',
+            'Website analytics: Google Analytics records page visits (pages viewed, approximate location, device and browser type) so we can see how people find and use the site. It never receives anything from your camera or your habit log.',
+            'Messages you send us through the contact form: your name, email address and message.',
+            'We do not collect biometric data or any data from your camera.',
           ],
         },
         {
           heading: '4. How We Use Your Data',
           content: [
             'To authenticate you and maintain your session.',
-            'To store and display your habit tracking history, streaks, and incident log.',
+            'To give you access during your free trial and while your subscription is active.',
             'To manage your subscription and payment status via Paddle.',
+            'To understand, in aggregate, which pages people visit (Google Analytics).',
+            'To answer messages you send us.',
             'We do not sell, rent, or share your personal data with third parties for marketing purposes.',
           ],
         },
@@ -49,42 +53,51 @@ export function PrivacyPage() {
             'Payments are processed by Paddle, who acts as the merchant of record. We do not store your credit card number or full payment details. We receive and store your Paddle subscription ID to verify your subscription status. Paddle\'s privacy policy applies to all payment transactions.',
         },
         {
-          heading: '7. Data Storage',
-          content:
-            'Your account data (name, email, habit streaks, incident logs) is stored on our secure server. We take reasonable technical and organisational measures to protect your data. We do not use third-party analytics that track you across websites.',
+          heading: '7. Third Parties',
+          content: [
+            'Google: sign-in (Google OAuth) and website analytics (Google Analytics).',
+            'Paddle: payments, as merchant of record.',
+            'Formspree: delivers messages sent through the contact form to our inbox.',
+            'None of them receive camera data or your habit log.',
+          ],
         },
         {
-          heading: '8. Data Retention',
+          heading: '8. Data Storage',
           content:
-            'We retain your account data for as long as your account is active. If you wish to delete your account and all associated data, contact us at hello@stopbiting.today and we will process the deletion within 30 days.',
+            'Your account and subscription data (name, email, profile picture, trial and subscription details) are stored on our server. We take reasonable technical and organisational measures to protect them. Your habit data is stored only in your browser: clearing this site\'s data in your browser, or using "Clear all data" in Settings, deletes it permanently, and we cannot recover it.',
         },
         {
-          heading: '9. Cookies',
+          heading: '9. Data Retention',
           content:
-            'We use a single HttpOnly session cookie (nh_session) to keep you logged in. This cookie is not accessible to JavaScript and is used solely for authentication. We do not use advertising cookies or third-party tracking cookies.',
+            'We retain your account data for as long as your account is active. If you wish to delete your account and all associated data, contact us at hello@stopbiting.today and we will process the deletion within 30 days. Your habit data is on your device, so you can delete it yourself at any time.',
         },
         {
-          heading: '10. Your Rights',
+          heading: '10. Cookies',
+          content:
+            'We use an HttpOnly session cookie (nh_session) to keep you logged in; it is not accessible to JavaScript and is used solely for authentication. Google Analytics sets its own cookies on this site (named _ga and _ga_*) to count visits. We do not use advertising cookies. You can block or delete cookies in your browser; the app needs the session cookie to keep you signed in.',
+        },
+        {
+          heading: '11. Your Rights',
           content: [
             'Access: you may request a copy of the personal data we hold about you.',
             'Correction: you may request that we correct inaccurate data.',
             'Deletion: you may request that we delete your account and all associated data.',
-            'Portability: you may request your data in a machine-readable format.',
+            'Portability: you may request your account data in a machine-readable format. Your habit data never leaves your browser, so we do not hold a copy of it.',
             'To exercise any of these rights, contact hello@stopbiting.today.',
           ],
         },
         {
-          heading: '11. Children\'s Privacy',
+          heading: '12. Children\'s Privacy',
           content:
             'Stop Biting is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such data, please contact us immediately.',
         },
         {
-          heading: '12. Changes to This Policy',
+          heading: '13. Changes to This Policy',
           content:
             'We may update this Privacy Policy from time to time. We will notify users of significant changes by updating the "Last updated" date. Continued use of the Service after changes constitutes acceptance of the revised Policy.',
         },
         {
-          heading: '13. Contact',
+          heading: '14. Contact',
           content:
             'For any privacy-related questions or requests, contact us at hello@stopbiting.today.',
         },
