@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState }
 import { AlertTriangle, Camera, Loader2, RotateCcw, Zap } from 'lucide-react';
 import { DetectionSurface } from '../detection/DetectionSurface';
 import { useCamera } from '../../hooks/useCamera';
-import { CAMERA_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
+import { CAMERA_ERROR_MESSAGE, MODEL_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
 import { useDetection } from '../../hooks/useDetection';
 import { initialSession, remainingMs, sessionReducer } from './demoSession';
 
@@ -30,7 +30,6 @@ const HINT_LABEL = 'Bring a fingertip to your lips to hear the alarm';
 /** The offer, next to every trial link this component renders. */
 const OFFER_LABEL = '3 days free, no card';
 
-const MODEL_ERROR_MESSAGE = "The AI models couldn't load. Check your connection and try again.";
 
 
 function resultLine(catches: number): string {

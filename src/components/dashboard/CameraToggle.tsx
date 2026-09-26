@@ -1,8 +1,10 @@
 import { Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 
-/** `cameraProblem`: detection is switched on but the camera didn't start. */
-export function CameraToggle({ cameraProblem = false }: { cameraProblem?: boolean }) {
+/** `problem`: detection is switched on but nothing is watching (the camera
+ *  didn't start, or the models didn't load), as a short title. */
+export function CameraToggle({ problem = null }: { problem?: string | null }) {
+  const cameraProblem = problem !== null;
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
   if (!cameraEnabled) {
@@ -68,7 +70,7 @@ export function CameraToggle({ cameraProblem = false }: { cameraProblem?: boolea
           </div>
           <div>
             <p className="text-[13px] font-semibold text-forest-700 dark:text-forest-300">
-              {cameraProblem ? 'Camera not running' : 'Detection active'}
+              {problem ?? 'Detection active'}
             </p>
             <p className="text-[11px] mt-0.5 text-forest-600 dark:text-forest-400">
               {cameraProblem ? 'See below for how to fix it' : 'AI running on-device'}

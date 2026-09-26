@@ -5,6 +5,7 @@ import { DetectionWave } from '../DetectionWave';
 import { DetectionStatus as DetectionStatusBadge } from './DetectionStatus';
 import { AlertOverlay } from './AlertOverlay';
 import type { DetectionStatus } from '../../hooks/useDetection';
+import { MODEL_ERROR_MESSAGE } from './cameraErrorCopy';
 
 interface DetectionSurfaceProps {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -44,8 +45,11 @@ export function DetectionSurface({
   cameraError = null,
   children,
 }: DetectionSurfaceProps) {
-  const isAlerting = status === 'alert' && !cameraError;
-  const cameraFailed = cameraEnabled && cameraError !== null;
+  // A camera that never started and models that never loaded are the same
+  // thing to the user: nothing is watching. Both get the one message and retry.
+  const failure = cameraError ?? (status === 'error' ? MODEL_ERROR_MESSAGE : null);
+  const isAlerting = status === 'alert' && !failure;
+  const cameraFailed = cameraEnabled && failure !== null;
 
   return (
     <>
@@ -75,7 +79,7 @@ export function DetectionSurface({
           <div role="alert" className="w-full aspect-video flex flex-col items-center justify-center gap-4 bg-stone-900 dark:bg-ink-50 px-6 text-center">
             <p className="flex max-w-sm items-start gap-2 text-sm leading-relaxed text-stone-100">
               <AlertTriangle size={15} className="mt-0.5 flex-shrink-0 text-alert-400" aria-hidden="true" />
-              <span>{cameraError}</span>
+              <span>{failure}</span>
             </p>
             {onRetry && (
               <button
@@ -107,7 +111,7 @@ export function DetectionSurface({
             card above already says what is wrong. */}
         {!cameraFailed && (
           <div className="absolute bottom-3 left-3">
-            <DetectionStatusBadge status={status} cameraEnabled={cameraEnabled} onRetry={onRetry} />
+            <DetectionStatusBadge status={status} cameraEnabled={cameraEnabled} />
           </div>
         )}
 

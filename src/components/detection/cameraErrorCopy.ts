@@ -14,3 +14,6 @@ export const CAMERA_ERROR_MESSAGE: Record<CameraError['kind'], string> = {
   'unavailable':
     "Your camera couldn't start: it may be in use by another app. Close anything else using it and try again.",
 };
+
+/** The detection models failed to download: almost always the connection. */
+export const MODEL_ERROR_MESSAGE = "Detection couldn't load. Check your connection and try again.";

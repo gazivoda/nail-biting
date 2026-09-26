@@ -21,7 +21,7 @@ export function Dashboard() {
       <PageHeader
         title={`${greeting}, ${firstName}.`}
         right={
-          <div className="flex items-center gap-1.5 text-forest-600 dark:text-forest-400 text-[11.5px] py-1.5 px-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full">
+          <div className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-forest-600 dark:text-forest-400 text-xs py-1.5 px-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-full">
             <ShieldCheck size={12} />
             <span>On-device</span>
           </div>

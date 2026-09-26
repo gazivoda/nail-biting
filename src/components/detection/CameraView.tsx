@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { PictureInPicture2 } from 'lucide-react';
 import { useDetection } from '../../hooks/useDetection';
 import { usePictureInPicture } from '../../hooks/usePictureInPicture';
@@ -11,9 +11,11 @@ interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
   /** Why the camera didn't start, in words for the user; null while it runs. */
   cameraError?: string | null;
+  /** Told whether the detection models failed, so the card above can say so. */
+  onModelError?: (failed: boolean) => void;
 }
 
-export function CameraView({ videoRef, cameraError = null }: Props) {
+export function CameraView({ videoRef, cameraError = null, onModelError }: Props) {
   const {
     cameraEnabled,
     showCameraFeed,
@@ -46,6 +48,9 @@ export function CameraView({ videoRef, cameraError = null }: Props) {
     handleAlert,
   );
 
+  const modelFailed = status === 'error';
+  useEffect(() => { onModelError?.(modelFailed); }, [modelFailed, onModelError]);
+
   const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
   // When PiP is active the floating window already shows the feed — hide it in the main view
   const effectiveShowFeed = showCameraFeed && !pipActive;
@@ -62,7 +67,7 @@ export function CameraView({ videoRef, cameraError = null }: Props) {
         cameraError={cameraError}
       >
         {/* PiP button — keeps detection alive when tab is minimized */}
-        {cameraEnabled && pipSupported && !cameraError && (
+        {cameraEnabled && pipSupported && !cameraError && !modelFailed && (
           <button
             onClick={togglePiP}
             title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window — detection keeps running when you switch apps'}
