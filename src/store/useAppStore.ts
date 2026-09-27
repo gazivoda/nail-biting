@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme, StatsMetric } from '../types';
+import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme, StatsMetric, CustomTag } from '../types';
 
 function isBite(inc: Incident): boolean {
   return !inc.autoDetected || inc.confirmed === true;
@@ -223,6 +223,15 @@ export const useAppStore = create<AppState & AppActions>()(
       removeCustomTag: (id: string) => {
         const { customTags } = get();
         set({ customTags: customTags.filter(t => t.id !== id) });
+      },
+
+      // Same id, so bites already tagged with it keep their label.
+      restoreCustomTag: (tag: CustomTag, index: number) => {
+        const { customTags } = get();
+        if (customTags.some(t => t.id === tag.id)) return;
+        const next = [...customTags];
+        next.splice(Math.max(0, Math.min(index, next.length)), 0, tag);
+        set({ customTags: next });
       },
 
       setWeekChartMetric: (m: StatsMetric) => set({ weekChartMetric: m }),

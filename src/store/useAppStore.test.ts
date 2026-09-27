@@ -315,3 +315,15 @@ describe('restoreIncident', () => {
     expect(after.bestStreakMs).toBe(snapshot.best);
   });
 });
+
+describe('restoreCustomTag', () => {
+  it('puts a removed reason back with the same id and position', () => {
+    store().addCustomTag('Meetings', '📅');
+    store().addCustomTag('Driving', '🚗');
+    const [first, second] = store().customTags;
+    store().removeCustomTag(first.id);
+    store().restoreCustomTag(first, 0);
+    store().restoreCustomTag(first, 0); // no duplicate
+    expect(store().customTags.map(t => t.id)).toEqual([first.id, second.id]);
+  });
+});

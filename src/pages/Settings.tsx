@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Bell, BellRing, Bird, Music, Vibrate, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X, type LucideIcon } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
-import type { DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
+import type { CustomTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { trialLeft } from '../utils/trial';
@@ -248,9 +248,26 @@ function VolumeSlider({ value, onChange, sound }: { value: number; onChange: (v:
 // Custom bite reasons — user-defined tags shown alongside the built-in presets
 // --------------------------------------------------------------------------
 function ReasonsSection() {
-  const { customTags, addCustomTag, removeCustomTag } = useAppStore();
+  const { customTags, addCustomTag, removeCustomTag, restoreCustomTag } = useAppStore();
   const [label, setLabel] = useState('');
   const [emoji, setEmoji] = useState('');
+  // Removing a reason was a 24px tap with no way back; the last removal can be
+  // undone for a few seconds, same id and place, so tagged bites keep it.
+  const [removed, setRemoved] = useState<{ tag: CustomTag; index: number } | null>(null);
+  const removedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (removedTimer.current) clearTimeout(removedTimer.current); }, []);
+  const remove = (tag: CustomTag) => {
+    const index = customTags.findIndex(t => t.id === tag.id);
+    removeCustomTag(tag.id);
+    setRemoved({ tag, index });
+    if (removedTimer.current) clearTimeout(removedTimer.current);
+    removedTimer.current = setTimeout(() => setRemoved(null), 6000);
+  };
+  const undoRemove = () => {
+    if (removed) restoreCustomTag(removed.tag, removed.index);
+    if (removedTimer.current) clearTimeout(removedTimer.current);
+    setRemoved(null);
+  };
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -276,9 +293,10 @@ function ReasonsSection() {
               <span aria-hidden="true">{tag.emoji}</span>
               <span>{tag.label}</span>
               <button
-                onClick={() => removeCustomTag(tag.id)}
+                type="button"
+                onClick={() => remove(tag)}
                 aria-label={`Remove ${tag.label}`}
-                className="inline-flex h-6 w-6 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors"
+                className="-my-1 inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -286,6 +304,21 @@ function ReasonsSection() {
           ))}
         </div>
       )}
+
+      <div role="status" aria-live="polite">
+        {removed && (
+          <p className="flex flex-wrap items-center gap-x-3 text-sm text-stone-600 dark:text-stone-300">
+            <span>Removed “{removed.tag.label}”.</span>
+            <button
+              type="button"
+              onClick={undoRemove}
+              className="inline-flex min-h-10 items-center font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
+            >
+              Undo
+            </button>
+          </p>
+        )}
+      </div>
 
       <form onSubmit={handleAdd} className="flex items-center gap-2">
         <input

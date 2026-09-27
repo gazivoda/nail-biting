@@ -85,6 +85,8 @@ export interface AppActions {
   setTheme: (theme: Theme) => void;
   addCustomTag: (label: string, emoji: string) => void;
   removeCustomTag: (id: string) => void;
+  /** Puts a just-removed bite reason back with the same id, at the same place. */
+  restoreCustomTag: (tag: CustomTag, index: number) => void;
   setWeekChartMetric: (m: StatsMetric) => void;
   /** Empties History and resets the streak; settings and bite reasons stay. */
   clearHistory: () => void;
