@@ -71,6 +71,8 @@ export interface AppActions {
   /** Marks an auto-detection as a real bite, optionally with the trigger the user picked. */
   confirmIncident: (id: string, tag?: TriggerTag) => void;
   deleteIncident: (id: string) => void;
+  /** Puts a just-deleted entry back (History's Undo). */
+  restoreIncident: (incident: Incident) => void;
   setCameraEnabled: (enabled: boolean) => void;
   setDetecting: (detecting: boolean) => void;
   setShowCameraFeed: (show: boolean) => void;

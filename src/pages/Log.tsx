@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
@@ -179,7 +179,25 @@ function ClearAllButton() {
 }
 
 export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
-  const { incidents, deleteIncident, confirmIncident, customTags } = useAppStore();
+  const { incidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
+
+  // One tap on the bin used to remove an entry for good, and deleting a bite
+  // silently moves the streak. The last deletion can be undone for a few
+  // seconds; the bar sits above the list so it survives deleting the last one.
+  const [lastDeleted, setLastDeleted] = useState<Incident | null>(null);
+  const undoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (undoTimer.current) clearTimeout(undoTimer.current); }, []);
+  const removeEntry = (inc: Incident) => {
+    deleteIncident(inc.id);
+    setLastDeleted(inc);
+    if (undoTimer.current) clearTimeout(undoTimer.current);
+    undoTimer.current = setTimeout(() => setLastDeleted(null), 6000);
+  };
+  const undoDelete = () => {
+    if (lastDeleted) restoreIncident(lastDeleted);
+    if (undoTimer.current) clearTimeout(undoTimer.current);
+    setLastDeleted(null);
+  };
 
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
@@ -197,6 +215,21 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   return (
     <div className="p-5 sm:p-8 pb-10">
       <PageHeader title="History" />
+
+      <div role="status" aria-live="polite">
+        {lastDeleted && (
+          <div className="-mt-3 mb-5 flex items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white px-4 py-1 text-sm shadow-card dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark">
+            <span className="text-stone-700 dark:text-stone-200">Entry from {formatTime(lastDeleted.timestamp)} deleted.</span>
+            <button
+              type="button"
+              onClick={undoDelete}
+              className="inline-flex min-h-10 items-center px-2 font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
+            >
+              Undo
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* First visit: say what will fill this page and hand over the one
           action that fills it, under the title rather than in an empty
@@ -273,7 +306,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                               </button>
                             )}
                             <button
-                              onClick={() => deleteIncident(inc.id)}
+                              onClick={() => removeEntry(inc)}
                               aria-label={`Delete entry from ${formatTime(inc.timestamp)}`}
                               className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 min-w-10 items-center justify-center text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
                             >

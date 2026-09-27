@@ -297,3 +297,21 @@ describe('auto-detection episodes', () => {
     expect(store().incidents).toHaveLength(2);
   });
 });
+
+describe('restoreIncident', () => {
+  it('undoes a delete exactly: same place in time, same streak', () => {
+    at(0); store().logIncident('stress');
+    at(60_000); store().logIncident('focus');
+    at(120_000); store().logIncident('boredom');
+    const before = store();
+    const middle = before.incidents[1];
+    const snapshot = { ids: before.incidents.map(i => i.id), last: before.lastBiteTime, best: before.bestStreakMs };
+    store().deleteIncident(middle.id);
+    store().restoreIncident(middle);
+    store().restoreIncident(middle); // a second undo is a no-op
+    const after = store();
+    expect(after.incidents.map(i => i.id)).toEqual(snapshot.ids);
+    expect(after.lastBiteTime).toBe(snapshot.last);
+    expect(after.bestStreakMs).toBe(snapshot.best);
+  });
+});

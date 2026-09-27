@@ -188,6 +188,19 @@ export const useAppStore = create<AppState & AppActions>()(
         set({ ...next, ...deriveStreakState(next) });
       },
 
+      restoreIncident: (incident: Incident) => {
+        const { incidents, historyStartTime, bestStreakFloorMs } = get();
+        if (incidents.some(i => i.id === incident.id)) return;
+        // Back into its place in time (newest first), then re-derive the
+        // streak so undoing a deleted bite puts the streak back exactly.
+        const next = {
+          incidents: [...incidents, incident].sort((a, b) => b.timestamp - a.timestamp),
+          historyStartTime,
+          bestStreakFloorMs,
+        };
+        set({ ...next, ...deriveStreakState(next) });
+      },
+
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),
       setDetecting: (detecting) => set({ detecting }),
       setShowCameraFeed: (show) => set({ showCameraFeed: show }),
