@@ -382,8 +382,8 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                   ['https://pubmed.ncbi.nlm.nih.gov/21549664/', 'Bate et al. (2011), Clinical Psychology Review meta-analysis'],
                 ].map(([href, label]) => (
                   <li key={href}>
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="sg-note inline-flex min-h-11 items-center gap-2 text-[color:var(--sg-ink)] underline decoration-[color:var(--sg-rule)] decoration-2 underline-offset-4 hover:decoration-[color:var(--sg-accent)]">
-                      {label} (PubMed)
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="sg-note inline-block py-3 text-[color:var(--sg-ink)] underline decoration-[color:var(--sg-rule)] decoration-2 underline-offset-4 hover:decoration-[color:var(--sg-accent)]">
+                      {label}{' '}<span className="whitespace-nowrap">(PubMed)</span>
                     </a>
                   </li>
                 ))}
@@ -403,7 +403,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               <div className="grid gap-6 p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
                 <p className="sg-body text-[color:var(--sg-ink)]">
                   A camera pointed at you all day is a lot to trust an app with, so detection runs
-                  entirely in your browser, on your own computer: <strong className="font-extrabold">0 bytes</strong> of
+                  entirely in your browser, on your own computer: <strong className="whitespace-nowrap font-extrabold">0 bytes</strong> of
                   camera data go to any server. Signing in and paying use the network; watching never does.
                 </p>
                 {/* "The list stays empty" was not true on a first run: starting
