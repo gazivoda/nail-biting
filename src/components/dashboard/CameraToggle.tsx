@@ -89,35 +89,42 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
         </div>
 
         <button
+          type="button"
           onClick={() => setCameraEnabled(false)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-stone-500 dark:text-stone-400 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
+          className="flex min-h-11 items-center gap-1.5 px-4 rounded-lg text-sm font-medium text-stone-500 dark:text-stone-400 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
         >
-          <Square size={10} fill="currentColor" />
+          <Square size={11} fill="currentColor" aria-hidden="true" />
           Stop
         </button>
       </div>
 
-      {/* Show feed sub-toggle */}
-      <div data-tour="hide-feed" className={`flex items-center justify-between px-5 py-3 border-t ${cameraProblem ? 'border-alert-400/30 dark:border-alert-800/60' : 'border-forest-200/60 dark:border-forest-800/60'}`}>
-        <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400">
-          {showCameraFeed ? <Eye size={13} /> : <EyeOff size={13} />}
-          <span className="text-xs">Show camera feed</span>
-        </div>
-        <button
-          role="switch"
-          aria-checked={showCameraFeed}
-          aria-label="Show camera feed"
-          onClick={() => setShowCameraFeed(!showCameraFeed)}
-          className={`relative w-9 h-[18px] rounded-full transition-colors duration-200 ${
+      {/* Show feed sub-toggle. The whole row is the switch: the 36x18 track
+          alone was the smallest target in the app, and its label was not
+          clickable. */}
+      <button
+        type="button"
+        role="switch"
+        aria-checked={showCameraFeed}
+        data-tour="hide-feed"
+        onClick={() => setShowCameraFeed(!showCameraFeed)}
+        className={`flex min-h-12 w-full items-center justify-between px-5 border-t text-left transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.03] ${cameraProblem ? 'border-alert-400/30 dark:border-alert-800/60' : 'border-forest-200/60 dark:border-forest-800/60'}`}
+      >
+        <span className="flex items-center gap-2 text-stone-600 dark:text-stone-300">
+          {showCameraFeed ? <Eye size={14} aria-hidden="true" /> : <EyeOff size={14} aria-hidden="true" />}
+          <span className="text-sm">Show camera feed</span>
+        </span>
+        <span
+          aria-hidden="true"
+          className={`relative h-[18px] w-9 shrink-0 rounded-full transition-colors duration-200 ${
             showCameraFeed ? 'bg-forest-500' : 'bg-stone-300 dark:bg-ink-400'
           }`}
         >
           <span
-            className="absolute top-0.5 left-0.5 w-3.5 h-3.5 bg-white rounded-full shadow-sm transition-transform duration-200"
+            className="absolute top-0.5 left-0.5 h-3.5 w-3.5 rounded-full bg-white shadow-sm transition-transform duration-200"
             style={{ transform: showCameraFeed ? 'translateX(18px)' : 'translateX(0)' }}
           />
-        </button>
-      </div>
+        </span>
+      </button>
     </div>
   );
 }

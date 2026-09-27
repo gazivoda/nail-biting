@@ -1,9 +1,8 @@
 # Design loop, round 9 (10 iterations, every 5 min)
 
-iterations: 2
+iterations: 3
 
 ## Backlog
-- 3: Watch: Stop (~28px) and the camera-feed switch (36x18) are below every other target in the app.
 - 4: Settings: removing a custom bite reason is a 24px instant delete; bigger target and Undo.
 - 6: Homepage ending: guides and the contact form sit after the closing CTA band; move them before FAQ so the offer is the last thing.
 - 7: Homepage closing band headline is the same size as every section heading; give the page a second peak.
@@ -14,3 +13,4 @@ iterations: 2
 ## Log
 - 1/10: History delete has a 6s Undo (restoreIncident + test)
 - 2/10: log-a-bite: honest confirmation with Undo; no emoji or press delay; Cancel 44px
+- 3/10: detection card: Stop 44px; whole 'Show camera feed' row is the switch (48px)
