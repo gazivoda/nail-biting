@@ -61,7 +61,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150 text-left overflow-hidden ${
                   isActive
-                    ? 'bg-forest-50 dark:bg-forest-900/30 text-forest-700 dark:text-forest-300 font-semibold'
+                    ? 'bg-forest-50 dark:bg-forest-800/50 text-forest-700 dark:text-forest-300 font-semibold'
                     : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100/70 dark:hover:bg-ink-50/60'
                 }`}
               >
@@ -74,7 +74,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
 
         {/* Trial upgrade prompt */}
         {accessStatus === 'trial_active' && (
-          <div className="mx-3 mb-3 border border-forest-200 dark:border-forest-800 bg-forest-50 dark:bg-forest-900/30 rounded-xl p-3">
+          <div className="mx-3 mb-3 border border-forest-200 dark:border-forest-800 bg-forest-50 dark:bg-forest-800/50 rounded-xl p-3">
             <p className="text-xs text-forest-700 dark:text-forest-400 font-medium mb-0.5">Free trial</p>
             <p className="text-xs text-stone-500 dark:text-stone-400 mb-2">
               {trialLeftText ?? 'Ends today'}

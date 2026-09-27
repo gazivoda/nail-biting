@@ -21,7 +21,7 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
       role="radiogroup"
       aria-label={ariaLabel}
       onKeyDown={e => radioGroupKeyDown(e, options.map(o => o.value), value, onChange)}
-      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 rounded-[11px]">
+      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 rounded-[11px]">
       {options.map(opt => (
         <button
           key={opt.value}

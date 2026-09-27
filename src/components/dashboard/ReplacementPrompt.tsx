@@ -77,7 +77,7 @@ export function ReplacementPrompt() {
           <button
             key={tag.id}
             onClick={() => answer(tag.id)}
-            className="flex min-h-11 items-center gap-2 rounded-xl border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-300 px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-200"
+            className="flex min-h-11 items-center gap-2 rounded-xl border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-fill px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-400"
           >
             <TagMark tag={tag} />
             <span>{tag.label}</span>

@@ -30,7 +30,7 @@ export function PanicButton() {
 
   if (logged) {
     return (
-      <div className="bg-forest-50 dark:bg-forest-900/30 border border-forest-300 dark:border-forest-700 rounded-2xl py-4 text-center animate-fade-up">
+      <div className="bg-forest-50 dark:bg-forest-800/50 border border-forest-300 dark:border-forest-700 rounded-2xl py-4 text-center animate-fade-up">
         <p className="text-forest-700 dark:text-forest-300 font-medium text-sm">✓ Logged — {logged}</p>
       </div>
     );
@@ -45,7 +45,7 @@ export function PanicButton() {
             <button
               key={tag.id}
               onClick={() => handleLog(tag.id, tag.label)}
-              className="flex items-center gap-2 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
+              className="flex items-center gap-2 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
             >
               <TagMark tag={tag} size={18} />
               <span>{tag.label}</span>

@@ -62,7 +62,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
       className={`w-full rounded-2xl overflow-hidden border ${
         cameraProblem
           ? 'bg-alert-100/60 dark:bg-alert-900/20 border-alert-400/40 dark:border-alert-800'
-          : 'bg-forest-50 dark:bg-forest-900/30 border-forest-200 dark:border-forest-800'
+          : 'bg-forest-50 dark:bg-forest-800/50 border-forest-200 dark:border-forest-800'
       }`}
     >
       {/* Status row */}

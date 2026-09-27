@@ -212,7 +212,7 @@ export function OnboardingTour() {
 
         <div className="relative z-10 rounded-2xl bg-white dark:bg-ink-50 overflow-hidden">
           {/* Progress bar */}
-          <div className="h-0.5 bg-stone-100 dark:bg-ink-300">
+          <div className="h-0.5 bg-stone-100 dark:bg-ink-fill">
             <div
               className="h-full bg-forest-500 transition-all duration-500 ease-out"
               style={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
@@ -232,7 +232,7 @@ export function OnboardingTour() {
                         ? 'w-4 h-1.5 bg-forest-500'
                         : i < step
                         ? 'w-1.5 h-1.5 bg-forest-300 dark:bg-forest-700'
-                        : 'w-1.5 h-1.5 bg-stone-200 dark:bg-ink-300'
+                        : 'w-1.5 h-1.5 bg-stone-200 dark:bg-ink-fill'
                     }`}
                   />
                 ))}

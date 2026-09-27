@@ -52,6 +52,10 @@ export default {
           // dark:border-ink-400 card edges and dividers were invisible. 30% L
           // sits above the surfaces, like the --ed-hairline fix (32%).
           400: 'oklch(30%   0.008 200 / <alpha-value>)',
+          // Controls and tracks that sit on a card (segmented controls, chips,
+          // secondary buttons). They used ink-300 (11% L), darker than the 18%
+          // card, so in dark mode every button read as a hole cut in it.
+          fill: 'oklch(24%   0.010 200 / <alpha-value>)',
         },
         // ── Scoped editorial hairline (src/index.css `--ed-hairline`) ─────
         // Generates border-hairline / bg-hairline / divide-hairline. No

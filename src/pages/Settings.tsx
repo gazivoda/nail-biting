@@ -194,7 +194,7 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
                   ? 'bg-forest-500 text-white'
                   : isSelected
                     ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 hover:bg-forest-100 dark:hover:bg-ink-100'
-                    : 'bg-stone-200 dark:bg-ink-300 text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-200'
+                    : 'bg-stone-200 dark:bg-ink-fill text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-400'
               }`}
             >
               <Volume2 size={11} aria-hidden="true" />
@@ -271,14 +271,14 @@ function ReasonsSection() {
           {customTags.map(tag => (
             <span
               key={tag.id}
-              className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-full text-xs bg-stone-100 dark:bg-ink-300 border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
+              className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-full text-xs bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
             >
               <span aria-hidden="true">{tag.emoji}</span>
               <span>{tag.label}</span>
               <button
                 onClick={() => removeCustomTag(tag.id)}
                 aria-label={`Remove ${tag.label}`}
-                className="inline-flex h-6 w-6 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-200 transition-colors"
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -323,10 +323,10 @@ function ReasonsSection() {
 
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
   trial:     { label: 'Free trial', className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
-  active:    { label: 'Active',     className: 'bg-forest-100 dark:bg-forest-900/30 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700' },
+  active:    { label: 'Active',     className: 'bg-forest-100 dark:bg-forest-800/50 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700' },
   paused:    { label: 'Paused',     className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
-  cancelled: { label: 'Cancelled',  className: 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
-  expired:   { label: 'Expired',    className: 'bg-stone-100 dark:bg-ink-300 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
+  cancelled: { label: 'Cancelled',  className: 'bg-stone-100 dark:bg-ink-fill text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
+  expired:   { label: 'Expired',    className: 'bg-stone-100 dark:bg-ink-fill text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
 };
 
 function fmt(iso: string) {
@@ -458,7 +458,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Privacy */}
       <Section title="Privacy" icon={ShieldCheck}>
-        <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-900/30 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
+        <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
           <ShieldCheck size={18} className="text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
@@ -572,7 +572,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
                 type="button"
                 autoFocus
                 onClick={() => setShowConfirm(false)}
-                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-300 hover:bg-stone-200 dark:hover:bg-ink-200 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
+                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
               >
                 Cancel
               </button>
