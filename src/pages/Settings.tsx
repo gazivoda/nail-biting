@@ -489,19 +489,9 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       {/* Plan */}
       <PlanSection onUpgrade={onUpgrade} />
 
-      {/* Privacy */}
-      <Section title="Privacy" icon={ShieldCheck}>
-        <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
-          <ShieldCheck size={18} className="text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
-            <p className="text-xs text-forest-700 dark:text-forest-400 mt-0.5">
-              Your camera is processed in this browser. Video never leaves your device; only sign-in and payment use the network.
-            </p>
-          </div>
-        </div>
-      </Section>
-
+      {/* Ordered by how often people change things: detection and reminders
+          first, the information-only Privacy card near the end beside
+          Appearance, Data last. Two-column pairs stay balanced. */}
       {/* Detection */}
       <Section title="Detection and alarm" icon={Sliders}>
         <Row label="Sensitivity" description="How close your hand must get before the alarm sounds">
@@ -529,20 +519,6 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           />
         </Row>
       </Section>
-
-      {/* Alarm sound, full width */}
-      <Section title="Alarm sound" icon={Volume2} fullWidth>
-        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">The sound the alarm makes when your hand reaches your mouth. Press Preview to hear each one.</p>
-        <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
-        <Row label="Volume" description="How loud the alarm plays">
-          <div className="w-full sm:w-56">
-            <VolumeSlider value={alertVolume} onChange={setAlertVolume} sound={alertSound} />
-          </div>
-        </Row>
-      </Section>
-
-      {/* Bite reasons — full width */}
-      <ReasonsSection />
 
       {/* Reminders */}
       <Section title="Periodic reminders" icon={Bell}>
@@ -572,6 +548,20 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
         )}
       </Section>
 
+      {/* Alarm sound, full width */}
+      <Section title="Alarm sound" icon={Volume2} fullWidth>
+        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">The sound the alarm makes when your hand reaches your mouth. Press Preview to hear each one.</p>
+        <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
+        <Row label="Volume" description="How loud the alarm plays">
+          <div className="w-full sm:w-56">
+            <VolumeSlider value={alertVolume} onChange={setAlertVolume} sound={alertSound} />
+          </div>
+        </Row>
+      </Section>
+
+      {/* Bite reasons — full width */}
+      <ReasonsSection />
+
       {/* Appearance: the one place to set the theme, on every screen size. */}
       <Section title="Appearance" icon={Sun}>
         <Row label="Theme" description="Light, dark, or follow your system">
@@ -586,6 +576,19 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
             ]}
           />
         </Row>
+      </Section>
+
+      {/* Privacy */}
+      <Section title="Privacy" icon={ShieldCheck}>
+        <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
+          <ShieldCheck size={18} className="text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
+            <p className="text-xs text-forest-700 dark:text-forest-400 mt-0.5">
+              Your camera is processed in this browser. Video never leaves your device; your alarm and bite log stays in this browser too.
+            </p>
+          </div>
+        </div>
       </Section>
 
       {/* Danger zone */}

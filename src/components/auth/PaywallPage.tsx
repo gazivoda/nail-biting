@@ -165,7 +165,7 @@ export function PaywallPage({ onBack }: Props) {
           {onBack ? 'Choose a plan' : 'Keep the alarm running'}
         </h1>
         <p className="text-stone-500 dark:text-stone-400 text-center max-w-md">
-          $2.99 a month, or $29 a year. Detection runs on your computer; only sign-in and payment use the network.
+          $2.99 a month, or $29 a year. Detection runs on your computer, and no video ever leaves it.
         </p>
         {/* Mid-trial, the free days left are the first thing to know, not a
             footnote under the fold on a phone. */}
