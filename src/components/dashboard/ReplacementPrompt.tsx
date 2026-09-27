@@ -19,7 +19,7 @@ const RECENT_MS = 10 * 60 * 1000;
 // say whether it was a bite and what set it off. Tagging used to be possible
 // only later, from a hover button in History, which is where it never happened.
 export function ReplacementPrompt() {
-  const { incidents, customTags, confirmIncident } = useAppStore();
+  const { incidents, customTags, confirmIncident, deleteIncident } = useAppStore();
   const [dismissed, setDismissed] = useState<number>(0);
   // Only ask about detections from this sitting: after a reload, a catch from
   // yesterday is not "the moment" any more. Anchored at mount so render stays pure.
@@ -35,10 +35,21 @@ export function ReplacementPrompt() {
   if (!shouldShow) return null;
 
   const suggestion = SUGGESTIONS[lastAuto.timestamp % SUGGESTIONS.length];
-  const tags: TagOption[] = [...PRESET_TAGS, ...customTags];
+  // Every choice here records a bite, so "Not sure" must read as "a bite, not
+  // sure why", never as "not sure it was a bite": it resets the streak.
+  const tags: TagOption[] = [...PRESET_TAGS, ...customTags].map(t =>
+    t.id === 'unknown' ? { ...t, label: 'Bite, not sure why' } : t,
+  );
 
   const answer = (tag?: TriggerTag) => {
     if (tag) confirmIncident(lastAuto.id, tag);
+    setDismissed(lastAuto.timestamp);
+  };
+
+  // A false alarm the person has just ruled out. Leaving it in place kept it
+  // counted as "to review" on Today and in History forever.
+  const notABite = () => {
+    deleteIncident(lastAuto.id);
     setDismissed(lastAuto.timestamp);
   };
 
@@ -52,7 +63,7 @@ export function ReplacementPrompt() {
         </div>
         <button
           onClick={() => answer()}
-          aria-label="Dismiss, not a bite"
+          aria-label="Close. The alarm stays in History to review"
           className="p-2.5 -m-1.5 rounded-lg text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />
@@ -64,7 +75,7 @@ export function ReplacementPrompt() {
       </p>
 
       <p className="mt-5 text-[13px] font-semibold text-stone-800 dark:text-stone-100">
-        Was it a bite? What set it off?
+        If it was a bite, what set it off?
       </p>
       <div className="mt-2 grid grid-cols-2 gap-2">
         {tags.map(tag => (
@@ -79,10 +90,10 @@ export function ReplacementPrompt() {
         ))}
       </div>
       <button
-        onClick={() => answer()}
+        onClick={notABite}
         className="mt-2 min-h-11 w-full rounded-xl text-[13px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
       >
-        No, just my hand nearby
+        Not a bite, just my hand nearby
       </button>
     </div>
   );
