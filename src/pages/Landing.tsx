@@ -517,8 +517,10 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
           <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="sg-h2">Catch your next bite.</h2>
-              <p className="mt-4 text-lg text-white/85">
+              {/* Display size, like the hero's h1: the page's one full-bleed field
+                  is its closing peak, not one more section heading. */}
+              <h2 className="sg-h1 max-w-[14ch]">Catch your next bite.</h2>
+              <p className="mt-5 max-w-[48ch] text-lg text-white/85">
                 Leave it running through your next workday, then open History and see when you bite.
               </p>
             </div>
