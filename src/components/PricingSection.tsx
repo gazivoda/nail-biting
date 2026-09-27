@@ -81,7 +81,11 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             <span className="sg-small">/ month</span>
           </p>
           <p className="sg-small mt-2">Billed monthly</p>
-          <div className="mt-7 flex-1">
+          {/* Stacked on a phone, right under Yearly, the same four lines word
+              for word cost about 150px and said nothing new. Side by side
+              (md up) the full list is what makes the cards comparable. */}
+          <p className="sg-small mt-7 flex-1 md:hidden">Everything in Yearly except priority support.</p>
+          <div className="mt-7 hidden flex-1 md:block">
             <FeatureList features={FEATURES} />
           </div>
           <a
