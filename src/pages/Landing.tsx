@@ -475,7 +475,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
         {/* ── GUIDES ────────────────────────────────────────────────────── */}
         {/* Back matter: every guide the page links, printed once. */}
-        <section aria-labelledby="featured-guides-heading" className="py-20 lg:py-24">
+        {/* No top padding: it shares the FAQ's background, and both paddings
+            together left ~208px of empty page. */}
+        <section aria-labelledby="featured-guides-heading" className="pb-20 lg:pb-24">
           <div className="sg-container">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 id="featured-guides-heading" className="sg-h2">Featured guides</h2>

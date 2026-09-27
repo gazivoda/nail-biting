@@ -1,9 +1,8 @@
 # Design loop, round 10 (10 iterations, every 5 min)
 
-iterations: 7
+iterations: 8
 
 ## Backlog
-- 9: ~208px empty gap between FAQ and Featured guides (both paddings on one background).
 - 10: Final short review and fixes; report.
 
 ## Log
@@ -14,3 +13,4 @@ iterations: 7
 - 5/10: homepage shots: hidden scrollbars, Watch trimmed to 1280x792 (no cut-off card sliver), dims updated
 - 6/10: text-wrap: balance on sg-h3 + FAQ questions, pretty on sg-small/sg-note; guide titles block
 - 7/10: '0 bytes' and '(PubMed)' no longer break apart (citation links inline-block)
+- 8/10: FAQ to Featured guides gap halved (guides section pt removed)
