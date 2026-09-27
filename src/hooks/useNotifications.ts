@@ -1,19 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import type { ReminderInterval } from '../types';
+import { SUGGESTIONS } from '../components/dashboard/suggestions';
 
-export function useNotifications(enabled: boolean, intervalMinutes: ReminderInterval) {
+// A periodic check-in for when detection is off. While the camera is watching,
+// the alarm already does this job, and a second nudge every 15 minutes only
+// teaches people to ignore both. The body coaches (one thing to do with your
+// hands) instead of cheering a streak. `watching` is read through a ref so
+// switching the camera on and off does not restart the interval.
+export function useNotifications(enabled: boolean, intervalMinutes: ReminderInterval, watching = false) {
+  const watchingRef = useRef(watching);
+  useEffect(() => { watchingRef.current = watching; }, [watching]);
+
   useEffect(() => {
     if (!enabled) return;
 
     const ms = intervalMinutes * 60 * 1000;
+    let n = 0;
     const id = setInterval(() => {
+      if (watchingRef.current) return;
+      const title = 'Hands check';
+      const body = `Where are your hands? If they're near your face, try: ${SUGGESTIONS[n++ % SUGGESTIONS.length].toLowerCase()}.`;
       if (window.electronAPI) {
         // Electron: native OS notification, works even when window is hidden
-        window.electronAPI.notify('Nail check!', 'How are your hands? Keep that streak going!');
+        window.electronAPI.notify(title, body);
       } else if ('Notification' in window && Notification.permission === 'granted') {
         // Browser / PWA fallback
-        new Notification('Nail check!', {
-          body: 'How are your hands? Keep that streak going!',
+        new Notification(title, {
+          body,
           icon: '/icons/icon-192x192.png',
           tag: 'nail-reminder',
         });

@@ -513,7 +513,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Reminders */}
       <Section title="Periodic reminders" icon={Bell}>
-        <Row label="Enable reminders" description="Get notified to check your hands">
+        <Row label="Enable reminders" description="A check-in on your hands while detection is off">
           <Toggle label="Enable reminders" value={remindersEnabled} onChange={handleReminderToggle} />
         </Row>
         {notifStatus && (

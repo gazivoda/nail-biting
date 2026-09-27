@@ -3,14 +3,9 @@ import { X } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
+import { SUGGESTIONS } from './suggestions';
 import type { TriggerTag } from '../../types';
 
-const SUGGESTIONS = [
-  'Press thumb to each fingertip',
-  'Clench and release fist · 5×',
-  'Exhale slowly through your nose',
-  'Sip water mindfully',
-];
 
 const RECENT_MS = 10 * 60 * 1000;
 

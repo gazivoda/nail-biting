@@ -70,9 +70,9 @@ function AppRouter() {
   const { accessStatus, authError, clearAuthError } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showPaywall, setShowPaywall] = useState(false);
-  const { remindersEnabled, reminderIntervalMinutes } = useAppStore();
+  const { remindersEnabled, reminderIntervalMinutes, cameraEnabled } = useAppStore();
 
-  useNotifications(remindersEnabled, reminderIntervalMinutes);
+  useNotifications(remindersEnabled, reminderIntervalMinutes, cameraEnabled);
   // The landing page below is light-only by design. Pinning it here rather than
   // inside Landing is what keeps it simple: this effect is the only writer of the
   // `dark` class on this route, so there is nothing for the page to fight.

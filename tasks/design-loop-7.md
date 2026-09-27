@@ -1,9 +1,8 @@
 # Design loop, round 7 (10 iterations, every 5 min)
 
-iterations: 8
+iterations: 9
 
 ## Backlog
-- 9: Reminders fire while the camera is already watching, and scold; skip them during detection, coach instead (reminder body + alarm overlay line).
 - 10: Final short review and fixes; report.
 
 ## Log
@@ -15,3 +14,4 @@ iterations: 8
 - 6/10: site OG card og/site.png for all core routes (+ og-image.png replaced); theme-color and manifest to #FBFAF7
 - 7/10: author box on the sign system, no em dashes (bio + crawler copy)
 - 8/10: post byline honest (not a clinician) and leads with the Updated date
+- 9/10: reminders skip while detection runs and coach; alarm overlay gives a competing response
