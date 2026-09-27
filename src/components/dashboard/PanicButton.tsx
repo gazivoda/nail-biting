@@ -14,7 +14,11 @@ export function PanicButton() {
   const [showTags, setShowTags] = useState(false);
   const [logged, setLogged] = useState<{ id: string; label: string } | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const undoRef = useRef<HTMLButtonElement>(null);
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+  // The pressed tag button disappears with the sheet; focus goes to Undo
+  // rather than dropping to <body>.
+  useEffect(() => { if (logged) undoRef.current?.focus(); }, [logged]);
 
   const close = () => {
     if (timer.current) clearTimeout(timer.current);
@@ -36,16 +40,26 @@ export function PanicButton() {
     close();
   };
 
+  // Always in the page, so screen readers announce the change: a live region
+  // that arrives together with its text often is not read.
+  const announcer = (
+    <p role="status" aria-live="polite" className="sr-only">
+      {logged ? `Logged: ${logged.label}. Your streak starts again from now.` : ''}
+    </p>
+  );
+
   if (logged) {
     return (
+      <>
+      {announcer}
       <div
-        role="status"
         className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border border-forest-300 bg-forest-50 px-4 py-2 animate-fade-up dark:border-forest-700 dark:bg-forest-800/50"
       >
         <p className="text-sm font-medium text-forest-700 dark:text-forest-300">
           Logged: {logged.label}. Your streak starts again from now.
         </p>
         <button
+          ref={undoRef}
           type="button"
           onClick={undo}
           className="inline-flex min-h-11 items-center text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
@@ -53,11 +67,14 @@ export function PanicButton() {
           Undo
         </button>
       </div>
+      </>
     );
   }
 
   if (showTags) {
     return (
+      <>
+      {announcer}
       <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card dark:shadow-card-dark animate-fade-up">
         <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
@@ -81,10 +98,13 @@ export function PanicButton() {
           Cancel
         </button>
       </div>
+      </>
     );
   }
 
   return (
+    <>
+    {announcer}
     <button
       type="button"
       data-tour="panic-button"
@@ -93,5 +113,6 @@ export function PanicButton() {
     >
       I just bit my nails
     </button>
+    </>
   );
 }

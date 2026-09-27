@@ -500,10 +500,8 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             {/* Desktop only: on a phone these rows repeated what "All N articles"
                 above already offers, after the three featured guides. */}
             <ul className="mt-10 hidden border-t border-[color:var(--sg-rule)] md:grid md:grid-cols-2 md:gap-x-10">
-              {/* On a phone the list stops after four; "All N articles" above
-                  carries the rest. The hidden rows stay in the markup. */}
-              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }, i) => (
-                <li key={href} className={`border-b border-[color:var(--sg-rule)] ${i >= 4 ? 'hidden md:block' : ''}`}>
+              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }) => (
+                <li key={href} className="border-b border-[color:var(--sg-rule)]">
                   <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-accent)] hover:underline hover:underline-offset-4">
                     {title}
                   </a>

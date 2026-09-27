@@ -1,9 +1,8 @@
 # Design loop, round 9 (10 iterations, every 5 min)
 
-iterations: 9
+iterations: 10
 
 ## Backlog
-- 10: Final short review and fixes; report.
 
 ## Log
 - 1/10: History delete has a 6s Undo (restoreIncident + test)
@@ -15,3 +14,4 @@ iterations: 9
 - 7/10: science figures in extrabold ink; founder note at lede size
 - 8/10: phones: guide rows after the featured three hidden; DESIGN.md + comments say green, not blue
 - 9/10: contact form: name + email side by side from sm, form max-w-2xl
+- 10/10: bite confirmation: persistent live region + focus to Undo; dead guide-row code removed
