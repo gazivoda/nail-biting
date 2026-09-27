@@ -24,13 +24,17 @@ function Colon() {
   );
 }
 
+// formatDate says "Today"/"Yesterday" for headings; inside a sentence they
+// are lowercase. Dates ("Fri, Sep 25") stay as they are.
+const midSentence = (day: string) => (/^(Today|Yesterday)$/.test(day) ? day.toLowerCase() : day);
+
 export function StreakHero() {
   const { streakDays, streakHours, streakMinutes, formattedBest, isGreat } = useStreak();
   const lastBiteTime = useAppStore(s => s.lastBiteTime);
   // "00 : 00" alone did not say what it counts from; on a new account it
   // looked broken. Name the start, and what resets it.
   const since = lastBiteTime
-    ? `Since your last bite, ${formatDate(lastBiteTime)} at ${formatTime(lastBiteTime)}.`
+    ? `Since your last bite, ${midSentence(formatDate(lastBiteTime))} at ${formatTime(lastBiteTime)}.`
     : "Since you started. A bite resets it; an alarm doesn't.";
 
   const ringClass = isGreat

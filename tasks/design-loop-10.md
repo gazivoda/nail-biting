@@ -1,9 +1,8 @@
 # Design loop, round 10 (10 iterations, every 5 min)
 
-iterations: 9
+iterations: 10
 
 ## Backlog
-- 10: Final short review and fixes; report.
 
 ## Log
 - 1/10: phone Watch: alarm card and bite button right under the camera
@@ -15,3 +14,4 @@ iterations: 9
 - 7/10: '0 bytes' and '(PubMed)' no longer break apart (citation links inline-block)
 - 8/10: FAQ to Featured guides gap halved (guides section pt removed)
 - 9/10: streak card: 'Since your last bite, <when>' / 'Since you started'; best 'none yet'; shots + alt updated
+- 10/10: streak line: lowercase today/yesterday mid-sentence; shots regenerated
