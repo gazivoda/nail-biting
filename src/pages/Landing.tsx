@@ -462,7 +462,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             <div className="border-t border-[color:var(--sg-rule)] lg:col-span-8 lg:col-start-5">
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group border-b border-[color:var(--sg-rule)]">
-                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
+                  <summary className="flex min-h-11 [text-wrap:balance] cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
                     {q}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
                   </summary>
@@ -489,7 +489,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 return (
                   <li key={href}>
                     <a href={href} className="group block border-t-2 border-[color:var(--sg-ink)] pt-4">
-                      <span className="sg-h3 group-hover:text-[color:var(--sg-accent)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
+                      <span className="sg-h3 block group-hover:text-[color:var(--sg-accent)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
                       <span className="sg-small mt-2 block">{note}</span>
                     </a>
                   </li>

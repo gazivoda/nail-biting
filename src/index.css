@@ -693,14 +693,14 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 /* Type. Headings are heavy and tight like sign lettering; body stays open. */
 .sg-h1   { font-weight: 850; font-size: clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem); line-height: 0.96; letter-spacing: -0.035em; text-wrap: balance; }
 .sg-h2   { font-weight: 800; font-size: clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem); line-height: 1.04; letter-spacing: -0.025em; text-wrap: balance; }
-.sg-h3   { font-weight: 750; font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.01em; }
+.sg-h3   { font-weight: 750; font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; }
 .sg-lede { font-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem); line-height: 1.45; color: var(--sg-ink-2); text-wrap: pretty; }
 .sg-body { font-size: 1.0625rem; line-height: 1.6; color: var(--sg-ink-2); text-wrap: pretty; }
-.sg-small { font-size: 0.9375rem; line-height: 1.5; color: var(--sg-ink-2); }
+.sg-small { font-size: 0.9375rem; line-height: 1.5; color: var(--sg-ink-2); text-wrap: pretty; }
 /* Overpass Mono is for measurements only (timestamps, durations). Labels,
    offers and citations are set in .sg-note, the sign's own face. */
 .sg-code { font-family: 'Overpass Mono', ui-monospace, monospace; font-weight: 700; font-size: 0.8125rem; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
-.sg-note { font-weight: 650; font-size: 0.9375rem; line-height: 1.45; color: var(--sg-ink-2); }
+.sg-note { font-weight: 650; font-size: 0.9375rem; line-height: 1.45; color: var(--sg-ink-2); text-wrap: pretty; }
 .sg-figure { font-weight: 850; font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .sg-measure { max-width: 62ch; }
 
