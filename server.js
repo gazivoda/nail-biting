@@ -1500,7 +1500,7 @@ if (!existsSync(distPath)) {
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<section><h2>Try the detector right now</h2>' +
       '<p>Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About 20 MB of ' +
-      'AI models download once; after that, nothing leaves the page.</p></section>' +
+      'AI models download once; after that, no video leaves the page.</p></section>' +
       '<section><h2>How it works</h2>' +
       '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
       'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +

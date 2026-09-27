@@ -1,9 +1,8 @@
 # Design loop, round 8 (10 iterations, every 5 min)
 
-iterations: 8
+iterations: 9
 
 ## Backlog
-- 9: Hero: the demo block overloads the right column and competes with the main CTA; move it under the CTA.
 - 10: Final short review and fixes; report.
 
 ## Log
@@ -15,3 +14,4 @@ iterations: 8
 - 6/10: one card spec (padding, title gap, 18px radius); detection status is the card's top band, not a nested card
 - 7/10: pricing section left-aligned with the page (homepage and /pricing)
 - 8/10: phones: Monthly card says 'Everything in Yearly except priority support' instead of repeating the list
+- 9/10: hero: demo trigger under the CTA, screenshot column sticky; 'no video leaves the page' (+ crawler copy)

@@ -179,6 +179,38 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                   sign-in, and a phone visitor would spend it finding out. */}
               <p className="sg-note mt-1">Made for a laptop or desktop with a webcam.</p>
 
+              {/* The demo trigger sits under the main CTA as the second path,
+                  not in the right column, where it stacked under the
+                  screenshot and competed with "Start free trial". The demo
+                  itself still runs in place of the screenshot. The heading and
+                  paragraph are mirrored in server.js. */}
+              <section
+                id="live-demo"
+                aria-labelledby="live-demo-heading"
+                className="mt-10 flex flex-col items-start border-t border-[color:var(--sg-rule)] pt-8"
+              >
+                <h2 id="live-demo-heading" className="sg-h3">Try the detector right now</h2>
+                <p className="sg-note mt-2 max-w-md">
+                  The same detector the app uses, on your own camera, before you sign up for anything.
+                </p>
+                {!demoStarted && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setDemoStarted(true)}
+                      className="sg-btn sg-btn-ink mt-5"
+                    >
+                      <Camera size={18} aria-hidden="true" />
+                      Try the live demo
+                    </button>
+                  </>
+                )}
+                <p className="sg-small mt-4 max-w-[46ch]">
+                  Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About
+                  20 MB of AI models download once; after that, no video leaves the page.
+                </p>
+              </section>
+
             </div>
 
             {/* The real app, not an illustration: until the visitor asks, the
@@ -186,11 +218,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 then the real detector runs in its place. The heading and
                 paragraph render on page view: they are the crawler-visible
                 copy mirrored in server.js and must not hide behind the click. */}
-            <section
-              id="live-demo"
-              aria-labelledby="live-demo-heading"
-              className="flex flex-col items-start lg:col-span-6"
-            >
+            <div className="flex flex-col items-start lg:col-span-6 lg:sticky lg:top-28">
               {demoStarted ? (
                 <div className="w-full">
                   <Suspense
@@ -228,27 +256,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 </figure>
               )}
 
-              <h2 id="live-demo-heading" className="sg-h3 mt-10">Try the detector right now</h2>
-              <p className="sg-note mt-2 max-w-md">
-                The same detector the app uses, on your own camera, before you sign up for anything.
-              </p>
-              {!demoStarted && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => setDemoStarted(true)}
-                    className="sg-btn sg-btn-ink mt-5"
-                  >
-                    <Camera size={18} aria-hidden="true" />
-                    Try the live demo
-                  </button>
-                </>
-              )}
-              <p className="sg-small mt-4 max-w-[46ch]">
-                Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About
-                20 MB of AI models download once; after that, nothing leaves the page.
-              </p>
-            </section>
+            </div>
 
           </div>
         </section>
