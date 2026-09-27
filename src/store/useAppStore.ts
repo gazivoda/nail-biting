@@ -85,6 +85,9 @@ function deriveStreakState(state: RetentionState) {
   };
 }
 
+/** Auto-detections this close to the previous one are the same episode. */
+export const AUTO_EPISODE_MS = 30_000;
+
 export const STATE_VERSION = 1;
 
 // v0 had no retention fields. Anyone upgrading has a complete, unpruned history,
@@ -134,6 +137,15 @@ export const useAppStore = create<AppState & AppActions>()(
       // so the numbers always agree with what the log actually shows.
       logIncident: (tag: TriggerTag, autoDetected = false) => {
         const { incidents, historyStartTime, bestStreakFloorMs } = get();
+
+        // A hand resting at the chin re-triggers the detector every second or
+        // two. The alarm still sounds each time, but it is one episode: a new
+        // entry within AUTO_EPISODE_MS of the last auto one would inflate the
+        // counts and bring the "try this instead" card back again and again.
+        if (autoDetected) {
+          const lastAuto = incidents.find(i => i.autoDetected);
+          if (lastAuto && Date.now() - lastAuto.timestamp < AUTO_EPISODE_MS) return;
+        }
 
         const incident: Incident = {
           id: crypto.randomUUID(),

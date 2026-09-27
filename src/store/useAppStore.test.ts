@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
-import { useAppStore, pruneIncidents, computeBestStreak, migrateState, MAX_INCIDENTS } from './useAppStore';
+import { useAppStore, pruneIncidents, computeBestStreak, migrateState, MAX_INCIDENTS, AUTO_EPISODE_MS } from './useAppStore';
 import type { Incident } from '../types';
 
 // The streak maths is all relative to firstOpenTime, so pin the clock and step
@@ -207,7 +207,8 @@ describe('pruneIncidents', () => {
 describe('retention in the store', () => {
   it('stops the incident list growing without bound', () => {
     for (let i = 0; i < MAX_INCIDENTS + 25; i++) {
-      at(1_000 + i);
+      // Spaced past the episode window, or they would merge into one alarm.
+      at(1_000 + i * AUTO_EPISODE_MS);
       store().logIncident('auto-detected', true);
     }
     expect(store().incidents).toHaveLength(MAX_INCIDENTS);
@@ -278,5 +279,21 @@ describe('clearHistory', () => {
     expect(s.alertSound).toBe('chime');
     expect(s.detectionSensitivity).toBe('high');
     expect(s.customTags.map(t => t.label)).toEqual(['Meetings']);
+  });
+});
+
+describe('auto-detection episodes', () => {
+  it('logs one alarm for a run of detections, and a new one after the gap', () => {
+    at(0); store().logIncident('auto-detected', true);
+    at(5_000); store().logIncident('auto-detected', true);
+    at(AUTO_EPISODE_MS - 1); store().logIncident('auto-detected', true);
+    expect(store().incidents.filter(i => i.autoDetected)).toHaveLength(1);
+    at(AUTO_EPISODE_MS + 1_000); store().logIncident('auto-detected', true);
+    expect(store().incidents.filter(i => i.autoDetected)).toHaveLength(2);
+  });
+  it('never swallows a bite logged by hand', () => {
+    at(0); store().logIncident('auto-detected', true);
+    at(2_000); store().logIncident('stress');
+    expect(store().incidents).toHaveLength(2);
   });
 });
