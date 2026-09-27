@@ -194,7 +194,7 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
                   ? 'bg-forest-500 text-white'
                   : isSelected
                     ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 hover:bg-forest-100 dark:hover:bg-ink-100'
-                    : 'bg-stone-200 dark:bg-ink-fill text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-ink-400'
+                    : 'bg-stone-200 dark:bg-ink-fill text-stone-600 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-ink-400'
               }`}
             >
               <Volume2 size={11} aria-hidden="true" />
@@ -572,7 +572,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
                 type="button"
                 autoFocus
                 onClick={() => setShowConfirm(false)}
-                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-400 transition-colors"
+                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-300 transition-colors"
               >
                 Cancel
               </button>

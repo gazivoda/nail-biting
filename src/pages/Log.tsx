@@ -223,34 +223,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
         {/* Left: sticky chart + summary */}
-        {/* On a phone the entries come first (that is what you open History
-            to review); the chart and summary follow. Side by side from xl. */}
-        <div className="order-last xl:order-none xl:sticky xl:top-8 flex flex-col gap-4">
-          {incidents.length > 0 && <WeekChart />}
-
-          {incidents.length > 0 && (
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
-              <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>
-                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
-                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-alert-600 dark:text-alert-400">Bites</span>
-                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
-                    {incidents.filter(isConfirmedBite).length}
-                  </span>
-                </div>
-                <BiteInsights />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Right: incident list */}
+        {/* Incident list: first in the DOM, right-hand column from xl */}
         <div>
           {incidents.length > 0 && (
             <div className="space-y-6">
@@ -316,6 +289,34 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
             </div>
           )}
         </div>
+        {/* Chart and summary. After the entries in the markup, so on a phone
+            (and for keyboard and screen-reader order) the entries come first;
+            from xl the grid puts this column on the left. */}
+        <div className="xl:order-first xl:sticky xl:top-8 flex flex-col gap-4">
+          {incidents.length > 0 && <WeekChart />}
+
+          {incidents.length > 0 && (
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
+              <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>
+                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
+                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-alert-600 dark:text-alert-400">Bites</span>
+                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
+                    {incidents.filter(isConfirmedBite).length}
+                  </span>
+                </div>
+                <BiteInsights />
+              </div>
+            </div>
+          )}
+        </div>
+
       </div>
       )}
     </div>
