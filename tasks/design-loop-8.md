@@ -1,9 +1,8 @@
 # Design loop, round 8 (10 iterations, every 5 min)
 
-iterations: 1
+iterations: 2
 
 ## Backlog
-- 2: History list: one card per day with divided rows instead of a tile per entry; 'Bite, Deep focus' (comma, not a jammed dot).
 - 3: History at 390: open on the entries, chart and summary after them.
 - 4: Watch in light mode: the idle camera well is a black slab with a grey frosted plate; make it calm.
 - 5: Dark mode: control fills darker than their cards (holes); forest tints invisible on ink.
@@ -15,3 +14,4 @@ iterations: 1
 
 ## Log
 - 1/10: homepage: History copy top-aligned + sticky (no 270px hole); FAQ list on the shared column line
+- 2/10: History: one card per day with divided rows; 'Bite, <tag>' labels

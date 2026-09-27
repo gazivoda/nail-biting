@@ -31,9 +31,11 @@ const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:
 function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
   if (inc.tag === 'auto-detected') return 'Bite';
   const preset = PRESET_TAGS.find(x => x.id === inc.tag);
-  if (preset) return `Bite · ${preset.label}`;
+  // A comma, not a middle dot: Overpass sets the dot hard against the next
+  // word (DESIGN.md, the Comma Offer Rule).
+  if (preset) return `Bite, ${preset.label}`;
   const custom = customTags.find(x => x.id === inc.tag);
-  return custom ? ['Bite ·', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite';
+  return custom ? ['Bite,', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite';
 }
 
 // What the empty state promises ("this page shows what sets you off"), from
@@ -261,7 +263,9 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
               {grouped.map(({ date, items }) => (
                 <div key={date}>
                   <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3 px-1">{date}</h3>
-                  <div className="space-y-2">
+                  {/* One card per day, rows divided: a separate shadowed tile
+                      for every entry fit six on a screen and read as a pile. */}
+                  <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
@@ -271,7 +275,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                       return (
                         <div
                           key={inc.id}
-                          className="group bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl px-5 py-2 flex items-center gap-3 shadow-card dark:shadow-card-dark"
+                          className="group flex items-center gap-3 px-5 py-2"
                         >
                           {/* Time and tag together on the left, actions in
                               their own group on the right: hidden actions
