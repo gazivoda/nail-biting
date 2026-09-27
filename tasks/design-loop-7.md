@@ -1,9 +1,8 @@
 # Design loop, round 7 (10 iterations, every 5 min)
 
-iterations: 5
+iterations: 6
 
 ## Backlog
-- 6: Shared links for core pages show the old dark bar-chart card; site OG image with the arch mark, theme-color to the ground.
 - 7: Author box on the old palette with em dashes; bring it onto the sign system, no dashes.
 - 8: Byline claims 'science-based content' while the author box disclaims expertise; honest subline, show the Updated date.
 - 9: Reminders fire while the camera is already watching, and scold; skip them during detection, coach instead (reminder body + alarm overlay line).
@@ -15,3 +14,4 @@ iterations: 5
 - 3/10: auto-detections within 30s are one episode (AUTO_EPISODE_MS + tests); alarm still sounds
 - 4/10: article/compare CTA names the product; buttons never wrap (no overflow at 320)
 - 5/10: blog index: 'Start here' guide link (+ crawler copy); topic filters sorted by size with counts
+- 6/10: site OG card og/site.png for all core routes (+ og-image.png replaced); theme-color and manifest to #FBFAF7

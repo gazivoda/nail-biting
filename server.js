@@ -953,7 +953,7 @@ if (!existsSync(distPath)) {
       // the schema and the byline read from one string and cannot drift apart.
       .replace(/<meta name="author" content="[^"]*"/, () => `<meta name="author" content="${escapeHtml(SCHEMA_AUTHOR.name)}"`);
     // Per-page OG image (absolute URL). When absent, the shell's shared
-    // /og-image.png tags pass through untouched.
+    // /og/site.png tags pass through untouched.
     if (ogImage) {
       const img = escapeHtml(ogImage);
       out = out
@@ -1025,7 +1025,9 @@ if (!existsSync(distPath)) {
   };
   const SCHEMA_IMAGE = {
     '@type': 'ImageObject',
-    url: 'https://stopbiting.today/og-image.png',
+    // The site card from scripts/generate-og-images.mjs (same template as
+    // every post card). /og-image.png holds the same bytes for old shares.
+    url: 'https://stopbiting.today/og/site.png',
     width: 1200,
     height: 630,
   };
@@ -1047,7 +1049,7 @@ if (!existsSync(distPath)) {
   };
   // Per-post OG/hero image: posts may set `ogImage` in blogPosts.ts (a
   // site-absolute path under public/, e.g. "/og/psychology.png", 1200x630).
-  // Falls back to the shared /og-image.png until per-tag images exist.
+  // Falls back to the shared /og/site.png until per-tag images exist.
   function postImageUrl(post) {
     if (!post.ogImage) return null;
     return post.ogImage.startsWith('http')
@@ -1068,7 +1070,7 @@ if (!existsSync(distPath)) {
   // in COMPARE_META and `vite build` copies public/ verbatim into dist/, so the
   // served file and this URL are the same bytes. The file is probed rather than
   // assumed: a route whose card has not been generated yet falls back to the
-  // shell's shared /og-image.png and to SCHEMA_IMAGE, instead of advertising a
+  // shell's shared /og/site.png and to SCHEMA_IMAGE, instead of advertising a
   // social preview that 404s.
   function routeImageUrl(pagePath) {
     const file = `${pagePath.replace(/^\//, '').replace(/\//g, '-')}.png`;

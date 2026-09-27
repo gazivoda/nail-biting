@@ -615,6 +615,10 @@ async function collectTargets() {
     });
   }
 
+  // The site card: /, /about, /how-it-works, /pricing, /blog and every other
+  // route without its own card. index.html and SCHEMA_IMAGE point at it.
+  targets.push({ file: 'site.png', title: 'A webcam alarm for nail biting', tag: 'Stop Biting', meta: '' });
+
   const seen = new Set();
   for (const t of targets) {
     if (seen.has(t.file)) throw new Error(`two pages want the same file: ${t.file}`);
