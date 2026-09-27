@@ -73,7 +73,7 @@ export const EDITORIAL_POLICY_PATH = '/editorial-policy';
 export const AUTHOR_BIO = {
   name: 'Igor Gazivoda',
   role: 'Founder, Stop Biting',
-  bio: `Igor is a software developer — not a doctor, therapist or researcher. He bit his nails for over 20 years, tried bitter polish, reminder bands and willpower without success, and built Stop Biting to supply the one thing none of them did: something outside his own attention that notices when his hand moves toward his mouth.`,
+  bio: `Igor is a software developer, not a doctor, therapist or researcher. He bit his nails for over 20 years, tried bitter polish, reminder bands and willpower without success, and built Stop Biting to supply the one thing none of them did: something outside his own attention that notices when his hand moves toward his mouth.`,
 };
 
 export const EDITORIAL_POLICY = {

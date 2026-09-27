@@ -871,7 +871,7 @@ if (!existsSync(distPath)) {
         + `<a href="${EDITORIAL_POLICY_PATH}">Editorial policy and corrections</a></p>`
       : '<p><a href="/about">More about Igor and why he built this</a></p>';
     return '<footer class="author-box"><h2>About the author</h2>' +
-      `<p><a href="/about">${escapeHtml(AUTHOR_BIO.name)}</a> — ${escapeHtml(AUTHOR_BIO.role)}. ${escapeHtml(AUTHOR_BIO.bio)}</p>` +
+      `<p><a href="/about">${escapeHtml(AUTHOR_BIO.name)}</a> (${escapeHtml(AUTHOR_BIO.role)}). ${escapeHtml(AUTHOR_BIO.bio)}</p>` +
       `${links}</footer>`;
   }
 

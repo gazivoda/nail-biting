@@ -16,26 +16,18 @@ import { AUTHOR_BIO, EDITORIAL_POLICY, EDITORIAL_POLICY_PATH } from '../data/edi
  */
 export function AuthorBox({ policyLink = true }: { policyLink?: boolean }) {
   return (
-    <footer className="mt-14 rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 p-6">
-      <h2 className="text-sm font-semibold text-stone-800 dark:text-stone-100 mb-2">About the author</h2>
-      <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed">
-        <a href="/about" className="font-medium text-stone-700 dark:text-stone-200 hover:text-forest-600 dark:hover:text-forest-400 transition-colors">
+    <footer className="mt-14 rounded-2xl border border-[color:var(--sg-rule)] bg-white p-6">
+      <h2 className="sg-h3 mb-2">About the author</h2>
+      <p className="sg-small">
+        <a href="/about" className="font-semibold text-[color:var(--sg-ink)] hover:text-[color:var(--sg-accent)]">
           {AUTHOR_BIO.name}
         </a>
-        {` — ${AUTHOR_BIO.role}. ${AUTHOR_BIO.bio}`}
+        {` (${AUTHOR_BIO.role}). ${AUTHOR_BIO.bio}`}
       </p>
-      {/* stone-400 links on white were about 2.5:1; these are the page's
-          way on to the author and the corrections policy, so they read as links. */}
-      <p className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-stone-600 dark:text-stone-300">
-        <a href="/about" className="underline underline-offset-4 decoration-stone-300 hover:text-forest-700 hover:decoration-forest-600 dark:hover:text-forest-400 transition-colors">
-          More about Igor and why he built this
-        </a>
+      <p className="sg-small mt-3 flex flex-wrap gap-x-5 gap-y-2">
+        <a href="/about" className="sg-link">More about Igor and why he built this</a>
         {policyLink && (
-          <>
-            <a href={EDITORIAL_POLICY_PATH} className="underline underline-offset-4 decoration-stone-300 hover:text-forest-700 hover:decoration-forest-600 dark:hover:text-forest-400 transition-colors">
-              Editorial policy and corrections
-            </a>
-          </>
+          <a href={EDITORIAL_POLICY_PATH} className="sg-link">Editorial policy and corrections</a>
         )}
       </p>
     </footer>
