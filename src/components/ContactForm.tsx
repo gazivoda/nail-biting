@@ -60,8 +60,11 @@ export function ContactForm() {
       <div className="lg:col-span-8">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-6"
+          className="flex max-w-2xl flex-col gap-6"
         >
+          {/* Name and email side by side: a name field 620px wide read as
+              a form built for a different page. */}
+          <div className="grid gap-6 sm:grid-cols-2">
           <div className="flex flex-col gap-2.5">
             <label htmlFor="contact-name" className={LABEL_CLASS}>
               Name
@@ -91,6 +94,7 @@ export function ContactForm() {
               placeholder="you@example.com"
               className={FIELD_CLASS}
             />
+          </div>
           </div>
           <div className="flex flex-col gap-2.5">
             <label htmlFor="contact-message" className={LABEL_CLASS}>
