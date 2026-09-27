@@ -469,23 +469,6 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
           </div>
         </section>
 
-        {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
-        {/* The one full blue field on the page: a mandatory sign, blown up. */}
-        <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
-          <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <h2 className="sg-h2">Catch your next bite.</h2>
-              <p className="mt-4 text-lg text-white/85">
-                Leave it running through your next workday, then open History and see when you bite.
-              </p>
-            </div>
-            <div className="flex flex-col items-start gap-3">
-              <TrialButton tone="light" />
-              <p className="sg-note whitespace-nowrap text-white/90">{OFFER_LINE}</p>
-            </div>
-          </div>
-        </section>
-
         {/* ── GUIDES ────────────────────────────────────────────────────── */}
         {/* Back matter: every guide the page links, printed once. */}
         <section aria-labelledby="featured-guides-heading" className="py-20 lg:py-24">
@@ -528,6 +511,24 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         <div className="sg-container pb-20 lg:pb-24">
           <ContactForm />
         </div>
+        {/* ── FINAL CTA: last, so the page ends on the offer rather than on
+            back matter (guides and the contact form used to follow it) ─────────────────────────────────────────────────── */}
+        {/* The one full blue field on the page: a mandatory sign, blown up. */}
+        <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
+          <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 className="sg-h2">Catch your next bite.</h2>
+              <p className="mt-4 text-lg text-white/85">
+                Leave it running through your next workday, then open History and see when you bite.
+              </p>
+            </div>
+            <div className="flex flex-col items-start gap-3">
+              <TrialButton tone="light" />
+              <p className="sg-note whitespace-nowrap text-white/90">{OFFER_LINE}</p>
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <SiteFooter />
