@@ -1,9 +1,8 @@
 # Design loop, round 9 (10 iterations, every 5 min)
 
-iterations: 7
+iterations: 8
 
 ## Backlog
-- 9: Homepage on phones: secondary guide rows repeat 'All 144 articles'; DESIGN.md still calls the green band 'blue'.
 - 10: Final short review and fixes; report.
 
 ## Log
@@ -14,3 +13,4 @@ iterations: 7
 - 5/10: homepage ends on the CTA band (guides and contact moved before it)
 - 6/10: closing band headline at display size (sg-h1)
 - 7/10: science figures in extrabold ink; founder note at lede size
+- 8/10: phones: guide rows after the featured three hidden; DESIGN.md + comments say green, not blue

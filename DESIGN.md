@@ -211,15 +211,15 @@ components:
 
 **Creative North Star: "The Safety Sign"**
 
-The homepage borrows the plainness of safety signage: a colour means one thing, and the page says what the product is in one sentence. Blue "mandatory" plates are the things the visitor does. Forest-green "safe condition" plates are privacy. Everything else is black ink on sign-white enamel. The hero shows the real app (a captured screen, labelled as example data), never an illustration of the visitor's habit: a drawn hand-to-mouth pictogram was tried and removed on 2026-09-25 because it read as mocking the person it is for.
+The homepage borrows the plainness of safety signage: a colour means one thing, and the page says what the product is in one sentence. Green "mandatory" plates are the things the visitor does. Forest-green "safe condition" plates are privacy. Everything else is black ink on sign-white enamel. The hero shows the real app (a captured screen, labelled as example data), never an illustration of the visitor's habit: a drawn hand-to-mouth pictogram was tried and removed on 2026-09-25 because it read as mocking the person it is for.
 
 The material is enamel plate: flat, printed, with keylines set in from the edge the way a road sign carries its border. Nothing glows, nothing floats, nothing is glassy except the fixed navigation bar. Density is low and legible from a distance: heavy, tight Overpass headings (Overpass descends from Highway Gothic, the US road-sign face), open body copy, generous section bands that alternate between sign-white and plate-white. One thing moves on the page: the pictogram hand rising to the mouth, crossing the dashed threshold ring, and the warning plate flashing. The surface is light only; it is read at a desk in daylight.
 
 This system is scoped to the sign surface (the homepage and the shared pricing block, which carries the tokens on /pricing too). The rest of the site lives in two other worlds that this file does not restate: the editorial "journal" world (`.ed-*` primitives in `src/index.css`, Instrument Serif / Inter / JetBrains Mono) still serves /blog, /pricing chrome, /how-it-works and the policy pages; the signed-in app (dashboard and friends) is its own incumbent system built on Tailwind `cream` / `ink` / `forest` tokens with Inter, in light and dark. Neither should borrow sign-system colors, and the sign surface should not borrow theirs.
 
 **Key Characteristics:**
-- Three sign kinds with fixed meanings: yellow warning (the alarm), blue mandatory (actions), green safe condition (privacy).
-- Enamel-plate buttons: blue plate, white keyline inset 3px to 5px, 0.375rem corners.
+- Three sign kinds with fixed meanings: yellow warning (the alarm), green mandatory (actions), green safe condition (privacy). Actions and privacy share one green since the 2026-09-25 accent change (formerly a action green); the plate shape, not the hue, tells them apart.
+- Enamel-plate buttons: green plate, white keyline inset 3px to 5px, 0.375rem corners.
 - Overpass throughout, heavy (750 to 850) and tightly tracked for headings; Overpass Mono only for measurements.
 - Flat: no drop shadows; depth is inset keylines and 1px rules.
 - No decorative motion and no scroll-reveal; the page is still until the visitor starts the demo.
@@ -231,8 +231,8 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 
 ### Primary
 - **Action Green** (oklch(46% 0.13 148), the site forest green, about #16663A): every action the visitor takes. The filled trial button, the numbered step discs and the section discs, the recommended plan's 2px inset outline and its tag, text links, focus rings, and the one full-bleed call-to-action band.
-- **Action Green, Pressed** (oklch(39% 0.12 148)): hover and pressed state of filled blue buttons and of links.
-- **Action Green Tint** (oklch(95% 0.03 148)): hover fill of the light (white) button on the blue band. Nothing else.
+- **Action Green, Pressed** (oklch(39% 0.12 148)): hover and pressed state of filled green buttons and of links.
+- **Action Green Tint** (oklch(95% 0.03 148)): hover fill of the light (white) button on the green band. Nothing else.
 
 ### Secondary
 - **Safe Green** (oklch(46% 0.13 148), about #076B29): the safe-condition sign. The privacy plate's header band and 2px inset border, the square safe sign, and the small check / shield icons that mark trust statements (trust list, plan features, pricing terms, form success message).
@@ -251,7 +251,7 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 ### Named Rules
 **The One Warning Rule.** Warning yellow belongs to the alarm. Today it only highlights selected text; it appears nowhere else: no yellow buttons, badges, backgrounds or highlights of "important" copy.
 
-**The Blue Means Do Rule.** Blue marks something the visitor does. If an element is not an action or a step toward one, it is not blue. The full blue field is used once per page, for the closing call to action.
+**The Green Means Do Rule.** Filled action green marks something the visitor does. If an element is not an action or a step toward one, it is not a filled green button. The full green field is used once per page, for the closing call to action.
 
 **The Green Means Safe Rule.** Green only ever says "this is safe / this is private / this is included". It is never a success-flavored action color.
 
@@ -265,7 +265,7 @@ A near-monochrome ink-on-enamel palette with three saturated sign colors, each b
 
 ### Hierarchy
 - **Display** (850, clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem), 0.96, -0.035em, balanced): the one h1.
-- **Headline** (800, clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem), 1.04, -0.025em, balanced): section headings, also on the blue band and inside the green plate header.
+- **Headline** (800, clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem), 1.04, -0.025em, balanced): section headings, also on the green band and inside the green plate header.
 - **Title** (750, 1.25rem, 1.25, -0.01em): step titles, plan names, the demo heading.
 - **Figure** (850, clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem), 1, -0.03em, tabular): prices.
 - **Lede** (400, clamp(1.15rem, 1rem + 0.55vw, 1.4rem), 1.45, secondary ink): the sentence under the h1 and under the pricing heading.
@@ -303,9 +303,9 @@ Every interactive element keeps a 44px minimum hit area (`min-h-11`), including 
 The system is flat. There are no drop shadows anywhere on the sign surface. Depth and grouping come from three devices only: a 1px plate-rule border or divider, a change of ground between sign-white and plate-white, and inset keylines (box-shadow `inset`) that draw a sign's border inside its edge. The only translucency is the fixed nav bar: sign-white at 90% over a medium backdrop blur, so content scrolling under it stays legible.
 
 ### Shadow Vocabulary
-- **Enamel keyline** (`box-shadow: inset 0 0 0 3px <plate color>, inset 0 0 0 5px oklch(100% 0 0 / 0.9)`): filled blue buttons and mandatory discs. A 2px white line set 3px in from the edge.
-- **Reverse keyline** (`box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px <mandatory blue>`): the light button on the blue band.
-- **Outline plate** (`box-shadow: inset 0 0 0 2px <color>`): ink buttons (pictogram ink), the recommended plan plate (mandatory blue), the privacy plate (safe green), the safe sign inside the green header (white).
+- **Enamel keyline** (`box-shadow: inset 0 0 0 3px <plate color>, inset 0 0 0 5px oklch(100% 0 0 / 0.9)`): filled green buttons and mandatory discs. A 2px white line set 3px in from the edge.
+- **Reverse keyline** (`box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px <action green>`): the light button on the green band.
+- **Outline plate** (`box-shadow: inset 0 0 0 2px <color>`): ink buttons (pictogram ink), the recommended plan plate (action green), the privacy plate (safe green), the safe sign inside the green header (white).
 
 ### Named Rules
 **The Flat Enamel Rule.** Signs are printed, not lit. Never add an outer shadow, glow or gradient to a plate or button; draw borders inside the edge with an inset keyline.
@@ -321,27 +321,27 @@ Product screenshots sit on the ground with a 1px rule border and 0.5rem corners:
 ### Buttons
 Enamel sign plates: flat, keylined, decisive.
 - **Shape:** nearly square corners (0.375rem), 3.25rem tall, 1.6rem side padding, Overpass 750 at 1.0625rem, icon gap 0.6rem.
-- **Primary (blue):** mandatory blue with the enamel keyline and white text. Reserved for starting the trial. Every trial button carries an arrow that nudges 2px right on hover, and has the offer line (label style) directly beside or below it.
-- **Hover / Focus / Active:** hover darkens to pressed blue (keyline follows); active drops 1px; transitions are 150ms ease-out on background, shadow and transform, removed under reduced motion. Focus is a 3px action-green outline offset 3px (white on the blue band).
-- **Ink:** plate-white face, 2px inset ink outline, ink text; hover inverts to an ink fill with white text. Used for every non-trial action (live demo, monthly plan, contact submit) so the blue fill stays the trial's.
-- **Light:** plate-white face with the reverse keyline and blue text, only on the blue band; hover fills with blue tint.
+- **Primary (green):** action green with the enamel keyline and white text. Reserved for starting the trial. Every trial button carries an arrow that nudges 2px right on hover, and has the offer line (label style) directly beside or below it.
+- **Hover / Focus / Active:** hover darkens to pressed green (keyline follows); active drops 1px; transitions are 150ms ease-out on background, shadow and transform, removed under reduced motion. Focus is a 3px action-green outline offset 3px (white on the green band).
+- **Ink:** plate-white face, 2px inset ink outline, ink text; hover inverts to an ink fill with white text. Used for every non-trial action (live demo, monthly plan, contact submit) so the green fill stays the trial's.
+- **Light:** plate-white face with the reverse keyline and green text, only on the green band; hover fills with green tint.
 - **Small:** 2.75rem tall, 1.1rem padding, 0.9375rem text (nav).
 
 ### Chips
 - **Plan tag:** a small action-green label (0.25rem corners, 0.8125rem bold white text) pinned over the top edge of the recommended plan. One per pricing block.
 
 ### Cards / Containers
-- **Plate:** plate-white, 1px plate-rule border, 1.5rem corners, 1.75rem to 2rem padding. The recommended plan adds the 2px blue inset outline.
+- **Plate:** plate-white, 1px plate-rule border, 1.5rem corners, 1.75rem to 2rem padding. The recommended plan adds the 2px green inset outline.
 - **Safe-condition plate (privacy):** a green-tint board with a 2px safe-green inset border and 0.5rem corners, headed by a solid safe-green band carrying the white-keylined square sign and the section headline in white. Padding 1.5rem, 2.5rem from `sm`.
 - **Evidence rule:** statistics sit under a 2px pictogram-ink top rule rather than in a card.
 
 ### Inputs / Fields
 - **Style:** plate-white field, 1px plate-rule border, 0.75rem corners, 0.75rem by 1rem padding, body-size ink text; placeholder in a mid grey (oklch(54% 0.012 255)). Labels are Overpass 700 at 0.9375rem above the field.
-- **Focus:** border turns mandatory blue with a 2px blue ring at 30% alpha; the browser outline is suppressed only because this ring replaces it.
+- **Focus:** border turns action green with a 2px green ring at 30% alpha; the browser outline is suppressed only because this ring replaces it.
 - **Disabled:** the submit drops to 50% opacity with a not-allowed cursor.
 
 ### Navigation
-- **Style:** fixed, 4rem tall, sign-white at 90% with backdrop blur, 1px plate-rule bottom border. Logo and wordmark (Overpass 800) left, section links in label weight and secondary ink center-right, small blue trial button right. Links darken to ink on hover. Below `md` only the logo and trial button remain.
+- **Style:** fixed, 4rem tall, sign-white at 90% with backdrop blur, 1px plate-rule bottom border. Logo and wordmark (Overpass 800) left, section links in label weight and secondary ink center-right, small green trial button right. Links darken to ink on hover. Below `md` only the logo and trial button remain.
 
 ### Mandatory and Safe Signs
 - **Mandatory disc:** a 3.25rem action-green circle with the enamel keyline and a white icon. Used once, beside "How to start", to say "this is something you do". Never as decoration beside other headings.
@@ -353,7 +353,7 @@ The real app, captured from a running build with example data and labelled as su
 ## Do's and Don'ts
 
 ### Do:
-- **Do** bind each sign color to its one meaning: yellow for the alarm, blue for actions, green for privacy and inclusion.
+- **Do** bind each sign color to its one meaning: yellow for the alarm, green for actions, green for privacy and inclusion.
 - **Do** put the offer line ("3 days free, no card, then $2.99/month") beside every trial button, in the label style.
 - **Do** draw button and sign borders as inset keylines (white 2px line, 3px in) on flat fills.
 - **Do** mark a section with a mandatory disc or safe square beside its heading when the section is an instruction or a privacy statement.
@@ -363,7 +363,7 @@ The real app, captured from a running build with example data and labelled as su
 
 ### Don't:
 - **Don't** use warning yellow for anything but the alarm sign and text selection.
-- **Don't** fill a second button blue beside the trial button; secondary actions are ink-outlined.
+- **Don't** fill a second button green beside the trial button; secondary actions are ink-outlined.
 - **Don't** add drop shadows, glows, gradients or glassy surfaces (the fixed nav's blur is the only translucency).
 - **Don't** print ISO sign codes (W01, M01, E01) or section numbers in the UI; they were removed from the UI for clarity.
 - **Don't** put eyebrows or kickers above headings; the sign beside the heading does that job.

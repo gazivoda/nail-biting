@@ -126,7 +126,7 @@ const FAQS: { q: string; a: string }[] = [
 
 // ── The page ────────────────────────────────────────────────────────────────
 // The sign system (see the `.sg-*` block in index.css and the surface brief in
-// .impeccable/surfaces/): yellow warning for the alarm only, blue "mandatory"
+// .impeccable/surfaces/): yellow warning for the alarm only, green "mandatory"
 // plates for what the visitor does, green "safe condition" plates for privacy.
 // Light only, no dashes in copy, no scroll-reveal: every section is visible
 // from the first paint, and the warning pictogram is the one thing that moves.
@@ -295,7 +295,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         {/* ── HOW TO START ──────────────────────────────────────────────── */}
         {/* Said, not diagrammed: setting it up is one sentence long, and a
             three-column numbered grid made it look like a SaaS onboarding
-            flow. The blue "do this" sign appears here once. */}
+            flow. The green "do this" sign appears here once. */}
         <section id="how" aria-labelledby="how-heading" className="border-y border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-14 lg:py-16">
           <div className="sg-container grid gap-6 lg:grid-cols-12 lg:items-start lg:gap-10">
             <div className="flex items-center gap-4 lg:col-span-4">
@@ -497,7 +497,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               })}
             </ol>
 
-            <ul className="mt-10 grid border-t border-[color:var(--sg-rule)] md:grid-cols-2 md:gap-x-10">
+            {/* Desktop only: on a phone these rows repeated what "All N articles"
+                above already offers, after the three featured guides. */}
+            <ul className="mt-10 hidden border-t border-[color:var(--sg-rule)] md:grid md:grid-cols-2 md:gap-x-10">
               {/* On a phone the list stops after four; "All N articles" above
                   carries the rest. The hidden rows stay in the markup. */}
               {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }, i) => (
@@ -517,7 +519,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         </div>
         {/* ── FINAL CTA: last, so the page ends on the offer rather than on
             back matter (guides and the contact form used to follow it) ─────────────────────────────────────────────────── */}
-        {/* The one full blue field on the page: a mandatory sign, blown up. */}
+        {/* The one full green field on the page: a mandatory sign, blown up. */}
         <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
           <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
