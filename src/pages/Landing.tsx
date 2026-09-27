@@ -363,12 +363,14 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             <div className="lg:col-span-5">
               <div className="border-t-2 border-[color:var(--sg-ink)] pt-6 lg:mt-3">
                 <p className="sg-body">
-                  Somewhere between 20 and 30% of adults bite their nails chronically (Halteh, Scher
+                  {/* The figures in ink, the device the privacy plate uses for
+                      "0 bytes": the proof was the quietest text on the page. */}
+                  Somewhere <strong className="font-extrabold text-[color:var(--sg-ink)]">between 20 and 30% of adults</strong> bite their nails chronically (Halteh, Scher
                   &amp; Lipner, 2017).
                 </p>
                 <p className="sg-body mt-4">
-                  In the landmark habit reversal trial, participants' own daily counts fell by about
-                  99% over five months (Azrin, Nunn &amp; Frantz, 1980). That trial had a therapist
+                  In the landmark habit reversal trial, participants' own daily counts fell by{' '}
+                  <strong className="font-extrabold text-[color:var(--sg-ink)]">about 99% over five months</strong> (Azrin, Nunn &amp; Frantz, 1980). That trial had a therapist
                   teaching the method and people practising it every day. The app does the noticing
                   part; the rest is still yours.
                 </p>
@@ -425,7 +427,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
           <div className="sg-container grid gap-3 lg:grid-cols-12 lg:gap-10">
             <h2 id="maker-heading" className="sg-h3 lg:col-span-4">Why this exists</h2>
             <div className="max-w-[60ch] lg:col-span-7 lg:col-start-5">
-              <p className="sg-body text-[color:var(--sg-ink)]">
+              {/* Lede size: the most human proof on the page was set like a
+                  caption beside a small label. */}
+              <p className="sg-lede text-[color:var(--sg-ink)]">
                 I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of
                 it lasted, because I never noticed I was doing it until the damage was done. I write
                 software and I had a webcam, so I built the thing that notices for me.

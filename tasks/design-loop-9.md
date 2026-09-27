@@ -1,9 +1,8 @@
 # Design loop, round 9 (10 iterations, every 5 min)
 
-iterations: 6
+iterations: 7
 
 ## Backlog
-- 8: Homepage proof lands quietly: science numbers in grey body text, founder note set as a caption.
 - 9: Homepage on phones: secondary guide rows repeat 'All 144 articles'; DESIGN.md still calls the green band 'blue'.
 - 10: Final short review and fixes; report.
 
@@ -14,3 +13,4 @@ iterations: 6
 - 4/10: Settings: bite-reason remove 32px with 6s Undo (restoreCustomTag, same id + test)
 - 5/10: homepage ends on the CTA band (guides and contact moved before it)
 - 6/10: closing band headline at display size (sg-h1)
+- 7/10: science figures in extrabold ink; founder note at lede size
