@@ -1704,6 +1704,7 @@ if (!existsSync(distPath)) {
     const articleHtml =
       '<h1>Nail biting resources</h1>' +
       '<p class="article-summary">Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
+      '<p>New here? Start with <a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a>.</p>' +
       `<section><h2>All articles</h2><ul>${postList}</ul></section>`;
     injected = injectSsrArticle(injected, articleHtml);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/blog'));

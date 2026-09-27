@@ -6,7 +6,15 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TAG_PILL } from '../components/blog/tagPill';
 
-const ALL_TAGS = ['All', ...Array.from(new Set(BLOG_INDEX.map(p => p.tag)))];
+// Topics by size, biggest first, with their counts: "Humor (1)" beside
+// "Treatment (33)" in insertion order told a reader nothing about where the
+// depth is.
+const TAG_COUNTS = BLOG_INDEX.reduce<Record<string, number>>((acc, p) => {
+  acc[p.tag] = (acc[p.tag] ?? 0) + 1;
+  return acc;
+}, {});
+const ALL_TAGS = ['All', ...Object.keys(TAG_COUNTS).sort((a, b) => TAG_COUNTS[b] - TAG_COUNTS[a] || a.localeCompare(b))];
+const START_HERE = { href: '/blog/how-to-stop-nail-biting', title: 'How to stop nail biting: the complete guide' };
 
 export function BlogIndex() {
   useTheme('light');
@@ -30,6 +38,12 @@ export function BlogIndex() {
           Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.
         </p>
 
+        {/* The main guide was card 52 of 144 in date order. The crawler copy
+            in server.js carries the same line. */}
+        <p className="sg-small mt-5">
+          New here? Start with <a href={START_HERE.href} className="sg-link">{START_HERE.title}</a>.
+        </p>
+
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
           {ALL_TAGS.map(tag => (
             <button
@@ -44,6 +58,9 @@ export function BlogIndex() {
               }`}
             >
               {tag}
+              <span className={`ml-1.5 tabular-nums ${activeTag === tag ? 'text-white/80' : 'text-[color:var(--sg-ink-2)]'}`}>
+                {tag === 'All' ? BLOG_INDEX.length : TAG_COUNTS[tag]}
+              </span>
             </button>
           ))}
         </div>
