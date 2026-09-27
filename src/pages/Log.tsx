@@ -101,7 +101,7 @@ function WeekChart() {
   const tooltipLabel = isDark ? '#d1d5db' : '#57534e';
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 shadow-card dark:shadow-card-dark">
+    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
       <div className="flex items-center justify-between mb-1">
         <h2 className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</h2>
         <SegmentedControl<StatsMetric>
@@ -229,7 +229,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           {incidents.length > 0 && <WeekChart />}
 
           {incidents.length > 0 && (
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-5 shadow-card dark:shadow-card-dark">
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
               <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -267,7 +267,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3 px-1">{date}</h3>
                   {/* One card per day, rows divided: a separate shadowed tile
                       for every entry fit six on a screen and read as a pile. */}
-                  <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
+                  <div className="overflow-hidden rounded-[18px] border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;

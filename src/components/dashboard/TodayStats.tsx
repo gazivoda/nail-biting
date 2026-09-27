@@ -11,7 +11,7 @@ export function TodayStats() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-7 shadow-card dark:shadow-card-dark">
-      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-5">Today</p>
+      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-4">Today</p>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <p className="text-[28px] font-semibold tabular-nums tracking-tight text-amber-700 dark:text-amber-400 leading-none">

@@ -31,11 +31,11 @@ export function StreakHero() {
 
   return (
     <div
-      className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 sm:p-9 shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}
+      className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 sm:p-7 shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}
       data-tour="streak-card"
     >
       {/* Overline */}
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-4">
         <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
         <p className="text-sm font-semibold text-stone-700 dark:text-stone-200">
           Current streak

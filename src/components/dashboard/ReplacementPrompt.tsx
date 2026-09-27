@@ -50,7 +50,7 @@ export function ReplacementPrompt() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-forest-200 dark:border-forest-800 rounded-[18px] p-7 shadow-card-md dark:shadow-card-md-dark animate-fade-up">
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <h2 className="text-[15px] font-semibold text-stone-800 dark:text-stone-100">
             Alarm: try this instead

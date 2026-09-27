@@ -17,8 +17,10 @@ export function CameraPanel() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] overflow-hidden shadow-card dark:shadow-card-dark">
-      {/* Toggle header */}
-      <div className="p-4 border-b border-stone-100 dark:border-ink-400">
+      {/* Toggle header. While detection is on, the status is the card's own
+          top band (edge to edge); a bordered green card inside the white card
+          was a card in a card. Off, the start button keeps its padding. */}
+      <div className={`border-b border-stone-100 dark:border-ink-400 ${cameraEnabled ? '' : 'p-4'}`}>
         <CameraToggle problem={problem} />
       </div>
 
