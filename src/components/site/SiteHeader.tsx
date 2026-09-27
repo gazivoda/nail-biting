@@ -20,7 +20,10 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
       <div className="sg-container flex h-16 items-center justify-between gap-4">
         <a href="/" className="flex min-h-11 items-center gap-2.5">
           <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />
-          <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
+          {/* Below 360px the name and the trial button do not both fit on one
+              line; the mark carries the brand there and the name stays in the
+              link for screen readers. */}
+          <span className="sr-only whitespace-nowrap text-lg font-extrabold tracking-tight min-[360px]:not-sr-only">Stop Biting</span>
         </a>
         <div className="hidden items-center gap-7 md:flex">
           {([['how', 'How to start'], ['science', 'Science'], ['privacy', 'Privacy'], ['pricing', 'Pricing'], ['faq', 'FAQ']] as const).map(([href, label]) => (

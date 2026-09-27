@@ -115,6 +115,7 @@ const initialState: AppState = {
   bestStreakMs: 0,
   bestStreakFloorMs: 0,
   cameraEnabled: true,
+  detecting: false,
   showCameraFeed: false,
   detectionSensitivity: 'medium',
   alertType: 'both',
@@ -188,6 +189,7 @@ export const useAppStore = create<AppState & AppActions>()(
       },
 
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),
+      setDetecting: (detecting) => set({ detecting }),
       setShowCameraFeed: (show) => set({ showCameraFeed: show }),
       setSensitivity: (s: DetectionSensitivity) => set({ detectionSensitivity: s }),
       setAlertType: (t: AlertType) => set({ alertType: t }),
@@ -240,7 +242,7 @@ export const useAppStore = create<AppState & AppActions>()(
       migrate: migrateState,
       // cameraEnabled + showCameraFeed excluded — always start with detection on, feed hidden
       partialize: (state) => {
-        const { cameraEnabled: _a, showCameraFeed: _b, ...rest } = state as AppState & AppActions;
+        const { cameraEnabled: _a, showCameraFeed: _b, detecting: _c, ...rest } = state as AppState & AppActions;
         return rest as AppState & AppActions;
       },
     }

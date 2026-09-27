@@ -42,6 +42,8 @@ export interface AppState {
 
   // Camera/detection
   cameraEnabled: boolean;
+  /** Detection is actually running: camera on, no camera or model error, models loaded. Not persisted. */
+  detecting: boolean;
   showCameraFeed: boolean;
   detectionSensitivity: DetectionSensitivity;
   alertType: AlertType;
@@ -70,6 +72,7 @@ export interface AppActions {
   confirmIncident: (id: string, tag?: TriggerTag) => void;
   deleteIncident: (id: string) => void;
   setCameraEnabled: (enabled: boolean) => void;
+  setDetecting: (detecting: boolean) => void;
   setShowCameraFeed: (show: boolean) => void;
   setSensitivity: (s: DetectionSensitivity) => void;
   setAlertType: (t: AlertType) => void;

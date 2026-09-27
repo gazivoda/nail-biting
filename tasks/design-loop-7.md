@@ -1,9 +1,8 @@
 # Design loop, round 7 (10 iterations, every 5 min)
 
-iterations: 9
+iterations: 10
 
 ## Backlog
-- 10: Final short review and fixes; report.
 
 ## Log
 - 1/10: post-alarm card: 'Not a bite' removes the false alarm; tag question can't be read as 'not a bite'
@@ -15,3 +14,4 @@ iterations: 9
 - 7/10: author box on the sign system, no em dashes (bio + crawler copy)
 - 8/10: post byline honest (not a clinician) and leads with the Updated date
 - 9/10: reminders skip while detection runs and coach; alarm overlay gives a competing response
+- 10/10: reminders gated on a real 'detecting' flag (verified); header wordmark sr-only below 360px

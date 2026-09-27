@@ -25,6 +25,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
     alertVolume,
     logIncident,
     setCameraEnabled,
+    setDetecting,
   } = useAppStore();
 
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -49,6 +50,14 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   );
 
   const modelFailed = status === 'error';
+
+  // "Switched on" is not "watching": cameraEnabled starts true on every load
+  // and stays true when the camera is refused or the models fail. Anything
+  // that should only happen while detection really runs (the check-in
+  // reminders) reads this instead.
+  const running = cameraEnabled && !cameraError && (status === 'watching' || status === 'alert');
+  useEffect(() => { setDetecting(running); }, [running, setDetecting]);
+  useEffect(() => () => setDetecting(false), [setDetecting]);
   useEffect(() => { onModelError?.(modelFailed); }, [modelFailed, onModelError]);
 
   const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
