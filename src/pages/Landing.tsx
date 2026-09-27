@@ -276,7 +276,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 height={844}
                 loading="lazy"
                 decoding="async"
-                alt="The History screen on a phone: alarms and bites per day for the last seven days with a one-line weekly summary, then each entry with its time and what it was: an alarm to review, a bite, or a trigger such as Focus."
+                alt="The History screen on a phone: each day's alarms and bites with their times, an alarm waiting to be reviewed, and bites tagged with what set them off, such as Deep focus."
                 className="w-full rounded-lg border border-[color:var(--sg-rule)]"
               />
               <figcaption className="sg-note mt-2">Shown with example data.</figcaption>

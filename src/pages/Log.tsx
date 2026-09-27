@@ -223,7 +223,9 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
 
         {/* Left: sticky chart + summary */}
-        <div className="xl:sticky xl:top-8 flex flex-col gap-4">
+        {/* On a phone the entries come first (that is what you open History
+            to review); the chart and summary follow. Side by side from xl. */}
+        <div className="order-last xl:order-none xl:sticky xl:top-8 flex flex-col gap-4">
           {incidents.length > 0 && <WeekChart />}
 
           {incidents.length > 0 && (
