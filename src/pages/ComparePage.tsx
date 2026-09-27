@@ -93,9 +93,11 @@ export function ComparePage({ path }: Props) {
         {/* The same offer and button as every other page. */}
         <div className="mb-14 flex flex-col items-start gap-4 rounded-2xl border border-[color:var(--sg-rule)] bg-white p-7 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="sg-h3">Try it free for 3 days.</p>
-            <p className="sg-small mt-1">
-              No card to start, then $2.99 a month or $29 a year. Read{' '}
+            <p className="sg-h3">A webcam alarm for nail biting.</p>
+            <p className="sg-small mt-1 max-w-[46ch]">
+              Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when your
+              hand moves toward your mouth. The video stays on your computer. 3 days free, no card,
+              then $2.99 a month or $29 a year. Read{' '}
               <a href="/how-it-works" className="sg-link">how it works</a>.
             </p>
           </div>
