@@ -1,10 +1,8 @@
 # Design loop, round 10 (10 iterations, every 5 min)
 
-iterations: 2
+iterations: 3
 
 ## Backlog
-- 3: Detection off: the grey box under 'Start detection' only repeats it; say what happens next instead.
-- 4: Session card before the first session is a third 'start detection' prompt; hide it until there is a session.
 - 5: Settings order: Privacy (information only) holds slot 2; reminders sit near the bottom. Reorder by how often people change things.
 - 6: Homepage screenshots carry capture leftovers (a scrollbar strip on the History shot, a pink sliver on the Watch shot).
 - 7: Widows: guide titles, FAQ questions and notes end with one word alone; text-wrap balance/pretty.
@@ -15,3 +13,4 @@ iterations: 2
 ## Log
 - 1/10: phone Watch: alarm card and bite button right under the camera
 - 2/10: tour: scroll target into view, re-measure on scroll; left/right steps go above/below on phones (verified 5/5 at 390)
+- 3/10: detection off: camera panel explains next steps; Session card hidden until a session, 'Paused' after

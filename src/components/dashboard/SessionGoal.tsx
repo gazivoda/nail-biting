@@ -25,6 +25,11 @@ export function SessionGoal() {
   const seconds = Math.floor((elapsedMs % 60000) / 1000);
   const done = progress >= 1;
 
+  // Before the first session the card was a third "start detection" prompt
+  // (after the button and the camera panel), pushing Today further down on a
+  // phone. It appears once there is a session to time.
+  if (!cameraEnabled && elapsedMs === 0) return null;
+
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-7 shadow-card dark:shadow-card-dark">
       <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-4">Session</p>
@@ -55,7 +60,7 @@ export function SessionGoal() {
 
       {!cameraEnabled && !done && (
         <p className="text-xs text-stone-500 dark:text-stone-400 mt-2">
-          Start detection to begin session
+          Paused. Start detection to carry on.
         </p>
       )}
     </div>

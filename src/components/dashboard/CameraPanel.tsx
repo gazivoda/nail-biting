@@ -31,10 +31,13 @@ export function CameraPanel() {
         </div>
       )}
 
-      {/* Idle placeholder */}
+      {/* Detection off: say what happens next, not the button's label again. */}
       {!cameraEnabled && (
-        <div className="flex items-center justify-center h-24 bg-stone-50 dark:bg-ink-300">
-          <p className="text-xs text-stone-500 dark:text-stone-400">Camera off — start detection above</p>
+        <div className="bg-stone-50 px-5 py-4 dark:bg-ink-300">
+          <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+            Your browser will ask to use the camera. Keep this tab open while you work; the alarm
+            sounds when a hand reaches your mouth.
+          </p>
         </div>
       )}
     </div>
