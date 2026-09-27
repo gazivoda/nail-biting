@@ -87,7 +87,7 @@ export function OnboardingTour() {
 
   useEffect(() => {
     if (step < 0 || step >= STEPS.length) return;
-    const update = () => {
+    const update = (scrollTo = false) => {
       const el = findTarget(STEPS[step].target);
       if (!el) {
         // Genuinely not on screen (e.g. a control this layout doesn't render).
@@ -100,13 +100,23 @@ export function OnboardingTour() {
         }
         return;
       }
+      // On a phone the target is often below the fold (the bite button, the
+      // tab bar): bring it into view first, or the spotlight and tooltip are
+      // drawn off-screen.
+      if (scrollTo) el.scrollIntoView({ block: 'center', behavior: 'instant' as ScrollBehavior });
       setTarget({ step, rect: el.getBoundingClientRect() as DOMRect });
       setVw(window.innerWidth);
       setVh(window.innerHeight);
     };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    update(true);
+    const onMove = () => update();
+    window.addEventListener('resize', onMove);
+    // Capture phase: the app scrolls an inner container, not the window.
+    window.addEventListener('scroll', onMove, true);
+    return () => {
+      window.removeEventListener('resize', onMove);
+      window.removeEventListener('scroll', onMove, true);
+    };
   }, [step]);
 
   // A modal has to behave like one: focus moves onto its main button each
@@ -143,7 +153,13 @@ export function OnboardingTour() {
   const rect = target?.step === step ? target.rect : null;
   if (!rect) return null;
 
-  const { title, body, side } = STEPS[step];
+  const { title, body } = STEPS[step];
+  // A 272px tooltip beside its target does not fit on a phone: below 640px a
+  // left/right step goes above or below, whichever has more room.
+  const side: Step['side'] =
+    vw < 640 && (STEPS[step].side === 'left' || STEPS[step].side === 'right')
+      ? (rect.top > vh / 2 ? 'top' : 'bottom')
+      : STEPS[step].side;
 
   const sx = rect.left - SPOTLIGHT_PAD;
   const sy = rect.top - SPOTLIGHT_PAD;
