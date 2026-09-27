@@ -7,6 +7,7 @@ import { subDays, startOfDay, format } from 'date-fns';
 import { PageHeader } from '../components/layout/PageHeader';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { PRESET_TAGS } from '../components/dashboard/triggerTags';
+import { topTrigger, peakHour, hourRange } from '../utils/insights';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -33,6 +34,38 @@ function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
   if (preset) return `Bite · ${preset.label}`;
   const custom = customTags.find(x => x.id === inc.tag);
   return custom ? ['Bite ·', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite';
+}
+
+// What the empty state promises ("this page shows what sets you off"), from
+// confirmed and logged bites only. Each row appears once there is enough data
+// to mean something (see utils/insights).
+function BiteInsights() {
+  const { incidents, customTags } = useAppStore();
+  const bites = incidents.filter(isConfirmedBite);
+  const trigger = topTrigger(bites);
+  const peak = peakHour(bites);
+  if (!trigger && !peak) return null;
+  const triggerLabel = trigger
+    ? [...PRESET_TAGS, ...customTags].find(t => t.id === trigger.tag)?.label ?? trigger.tag
+    : null;
+  return (
+    <div className="mt-3 space-y-2 border-t border-stone-100 pt-3 dark:border-ink-400">
+      {trigger && (
+        <div className="flex justify-between gap-4">
+          <span className="text-stone-600 dark:text-stone-300">Top trigger</span>
+          <span className="text-right font-semibold text-stone-700 dark:text-stone-200">
+            {triggerLabel} <span className="font-normal text-stone-500 dark:text-stone-400">({trigger.count} of {trigger.of} tagged)</span>
+          </span>
+        </div>
+      )}
+      {peak && (
+        <div className="flex justify-between gap-4">
+          <span className="text-stone-600 dark:text-stone-300">Most bites</span>
+          <span className="text-right font-semibold text-stone-700 dark:text-stone-200">{hourRange(peak.hour)}</span>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function WeekChart() {
@@ -207,6 +240,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                     {incidents.filter(isConfirmedBite).length}
                   </span>
                 </div>
+                <BiteInsights />
               </div>
             </div>
           )}

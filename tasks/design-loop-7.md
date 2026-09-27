@@ -1,9 +1,8 @@
 # Design loop, round 7 (10 iterations, every 5 min)
 
-iterations: 1
+iterations: 2
 
 ## Backlog
-- 2: History shows the insight it promises: top trigger and the hour most bites happen (from confirmed bites).
 - 3: One hand-at-chin moment logs a run of alarms: don't log a new incident within 30s of the last auto one (the alarm still sounds).
 - 4: The article CTA never says what the product is: name it (a webcam alarm) in the card under every post.
 - 5: Blog index: 'Start here' link to the complete guide; topic filters sorted by size with counts.
@@ -15,3 +14,4 @@ iterations: 1
 
 ## Log
 - 1/10: post-alarm card: 'Not a bite' removes the false alarm; tag question can't be read as 'not a bite'
+- 2/10: History summary: top trigger and busiest hour from bites (utils/insights + tests)
