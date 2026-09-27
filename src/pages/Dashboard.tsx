@@ -49,12 +49,17 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
           <CameraPanel />
         </div>
 
-        {/* Right column */}
+        {/* Right column. On a phone (one column) the alarm card and the
+            "I just bit my nails" button move up to sit right under the camera,
+            ahead of Session and Today: they are the things you act on, and
+            they were four or five cards down. Desktop order is unchanged. */}
         <div className="flex flex-col gap-5">
           <SessionGoal />
           <TodayStats />
           <ReplacementPrompt />
-          <PanicButton />
+          <div className="order-first md:order-none">
+            <PanicButton />
+          </div>
         </div>
       </div>
     </div>
