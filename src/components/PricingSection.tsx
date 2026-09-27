@@ -38,14 +38,16 @@ function FeatureList({ features }: { features: string[] }) {
 export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1' | 'h2' }) {
   return (
     <section id="pricing" aria-labelledby="pricing-heading" className="sg-page">
-      <div className="mx-auto max-w-4xl text-center">
+      {/* Left-aligned on the page's edge like every other section: centred
+          and narrower, it read as a template block pasted in. */}
+      <div className="max-w-4xl">
         <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</Heading>
-        <p className="sg-lede mx-auto mt-4 max-w-2xl">
+        <p className="sg-lede mt-4 max-w-2xl">
           Three days free first, and no card to start. You pick a plan when the trial ends.
         </p>
       </div>
 
-      <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+      <div className="mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
         <div className="sg-plate relative flex flex-col p-7 shadow-[inset_0_0_0_2px_var(--sg-accent)] sm:p-8">
           <p className="absolute -top-3.5 left-7 rounded-[0.25rem] bg-[color:var(--sg-accent)] px-2.5 py-1 text-[0.8125rem] font-bold text-white">
@@ -94,7 +96,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         </div>
       </div>
 
-      <p className="sg-small mx-auto mt-8 max-w-4xl text-center">
+      <p className="sg-small mt-8 max-w-4xl">
         Payments go through Paddle. Cancel anytime in Settings.
       </p>
     </section>
