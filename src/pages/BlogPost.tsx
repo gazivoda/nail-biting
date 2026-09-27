@@ -106,9 +106,17 @@ export function BlogPost({ slug }: Props) {
                 <Clock size={11} aria-hidden="true" />
                 {post.readingMinutes} min read
               </span>
-              <time dateTime={post.datePublished} className="sg-note">
-                {formatDate(post.datePublished)}
-              </time>
+              {/* Freshness is what a reader checks first on health advice, so a
+                  revised post leads with its update date. */}
+              {post.dateModified !== post.datePublished ? (
+                <span className="sg-note">
+                  Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>
+                </span>
+              ) : (
+                <time dateTime={post.datePublished} className="sg-note">
+                  {formatDate(post.datePublished)}
+                </time>
+              )}
             </div>
 
             <h1 className="sg-h2 mb-5">
@@ -121,19 +129,18 @@ export function BlogPost({ slug }: Props) {
 
             {/* Author byline — authority signal for AI crawlers */}
             <div className="flex items-center gap-3 border-y border-[color:var(--sg-rule)] py-4">
-              <div className="w-8 h-8 rounded-full bg-forest-100 dark:bg-forest-900/40 border border-forest-200 dark:border-forest-800 flex items-center justify-center shrink-0">
-                <span className="text-forest-600 dark:text-forest-400 text-xs font-bold">IG</span>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--sg-accent-tint)]">
+                <span className="text-xs font-bold text-[color:var(--sg-accent)]" aria-hidden="true">IG</span>
               </div>
+              {/* Says what the author is, the same thing the author box at the
+                  end says, instead of claiming "science-based content". */}
               <div>
                 <p className="text-[0.9375rem] font-semibold">
                   <a href="/about" className="hover:text-[color:var(--sg-accent)]">{AUTHOR_BIO.name}</a>
-                  {` · ${AUTHOR_BIO.role}`}
+                  <span className="font-normal text-[color:var(--sg-ink-2)]"> ({AUTHOR_BIO.role})</span>
                 </p>
                 <p className="sg-small">
-                  Science-based content on onychophagia and body-focused repetitive behaviors (BFRBs).
-                  {post.dateModified !== post.datePublished && (
-                    <> Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>.</>
-                  )}
+                  A software developer who bit his nails for over 20 years, not a clinician.
                 </p>
               </div>
             </div>
