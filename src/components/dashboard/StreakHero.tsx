@@ -1,5 +1,7 @@
 import { Trophy } from 'lucide-react';
 import { useStreak } from '../../hooks/useStreak';
+import { useAppStore } from '../../store/useAppStore';
+import { formatDate, formatTime } from '../../utils/time';
 
 function Segment({ value, label }: { value: number; label: string }) {
   return (
@@ -24,6 +26,12 @@ function Colon() {
 
 export function StreakHero() {
   const { streakDays, streakHours, streakMinutes, formattedBest, isGreat } = useStreak();
+  const lastBiteTime = useAppStore(s => s.lastBiteTime);
+  // "00 : 00" alone did not say what it counts from; on a new account it
+  // looked broken. Name the start, and what resets it.
+  const since = lastBiteTime
+    ? `Since your last bite, ${formatDate(lastBiteTime)} at ${formatTime(lastBiteTime)}.`
+    : "Since you started. A bite resets it; an alarm doesn't.";
 
   const ringClass = isGreat
     ? 'ring-2 ring-forest-400/40 dark:ring-forest-500/30 shadow-[0_0_24px_oklch(58%_0.130_148/0.15)]'
@@ -54,11 +62,12 @@ export function StreakHero() {
         <Colon />
         <Segment value={streakMinutes} label="min" />
       </div>
+      <p className="mt-3 text-sm text-stone-500 dark:text-stone-400">{since}</p>
 
       {/* Best streak */}
       <div className="mt-6 pt-5 border-t border-stone-100 dark:border-ink-400 flex items-center gap-2 text-stone-500 dark:text-stone-400 text-sm">
         <Trophy size={14} className="text-amber-400" />
-        <span>Best: <span className="font-semibold text-stone-800 dark:text-stone-100">{formattedBest || '—'}</span></span>
+        <span>Best: <span className="font-semibold text-stone-800 dark:text-stone-100">{formattedBest || 'none yet'}</span></span>
       </div>
     </div>
   );

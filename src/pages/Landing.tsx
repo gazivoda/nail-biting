@@ -247,7 +247,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                     height={792}
                     fetchPriority="high"
                     decoding="async"
-                    alt="The Stop Biting Watch screen right after a catch: detection running with the camera feed hidden, the streak reset, best streak 19 hours, and a card suggesting something to do with your hands instead, then asking whether it was a bite and what set it off: stress, deep focus, boredom or not sure."
+                    alt="The Stop Biting Watch screen right after a catch: detection running with the camera feed hidden, the current streak counted from the last bite, best streak 19 hours, and a card suggesting something to do with your hands instead, then asking whether it was a bite and what set it off: stress, deep focus, boredom or not sure."
                     className="w-full rounded-lg border border-[color:var(--sg-rule)]"
                   />
                   <figcaption className="sg-note mt-2">

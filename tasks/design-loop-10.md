@@ -1,6 +1,6 @@
 # Design loop, round 10 (10 iterations, every 5 min)
 
-iterations: 8
+iterations: 9
 
 ## Backlog
 - 10: Final short review and fixes; report.
@@ -14,3 +14,4 @@ iterations: 8
 - 6/10: text-wrap: balance on sg-h3 + FAQ questions, pretty on sg-small/sg-note; guide titles block
 - 7/10: '0 bytes' and '(PubMed)' no longer break apart (citation links inline-block)
 - 8/10: FAQ to Featured guides gap halved (guides section pt removed)
+- 9/10: streak card: 'Since your last bite, <when>' / 'Since you started'; best 'none yet'; shots + alt updated
