@@ -258,8 +258,11 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             real History screen, captured with example data (public/shots;
             provenance embedded in the file). */}
         <section aria-labelledby="app-heading" className="pb-16 lg:pb-24">
-          <div className="sg-container grid items-start gap-10 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-6">
+          {/* Top-aligned, with the copy sticky: centring it beside the ~600px
+              phone shot left a 270px hole under the hero that read as the end
+              of the page. */}
+          <div className="sg-container grid items-start gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-6 lg:sticky lg:top-28 lg:pt-10">
               <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in History</h2>
               <p className="sg-body sg-measure mt-5">
                 Each alarm and each bite you log lands here with the time. Tag what set it off
@@ -440,8 +443,11 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             working with no JavaScript at all. */}
         <section id="faq" aria-labelledby="faq-heading" className="py-20 lg:py-28">
           <div className="sg-container grid gap-10 lg:grid-cols-12">
-            <h2 id="faq-heading" className="sg-h2 lg:col-span-5">Questions people ask about nail biting</h2>
-            <div className="border-t border-[color:var(--sg-rule)] lg:col-span-7">
+            {/* Heading across the row, list on the same column line (5) as How
+                to start, Why this exists and the contact form: in a 4-column
+                slot the heading broke into four lines. */}
+            <h2 id="faq-heading" className="sg-h2 max-w-[22ch] lg:col-span-12">Questions people ask about nail biting</h2>
+            <div className="border-t border-[color:var(--sg-rule)] lg:col-span-8 lg:col-start-5">
               {FAQS.map(({ q, a }) => (
                 <details key={q} className="group border-b border-[color:var(--sg-rule)]">
                   <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
