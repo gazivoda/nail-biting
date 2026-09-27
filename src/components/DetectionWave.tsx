@@ -235,7 +235,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
       aria-hidden="true"
     >
       {/* Waveform card */}
-      <div className="relative rounded-2xl border border-stone-200 dark:border-ink-400 bg-white/60 dark:bg-ink-50/60 backdrop-blur-sm overflow-hidden px-4 pt-3 pb-2 shadow-card">
+      <div className="relative rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 overflow-hidden px-4 pt-3 pb-2 shadow-card">
 
         {/* Gradient fade on left & right edges */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-white/80 dark:from-ink-50/80 to-transparent z-10" />

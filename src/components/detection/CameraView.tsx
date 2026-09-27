@@ -83,7 +83,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
             className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
               pipActive
                 ? 'bg-forest-600 text-cream-100 shadow-md ring-1 ring-forest-400/40'
-                : 'bg-stone-900/75 text-stone-200 hover:bg-stone-800 hover:text-white border border-white/10'
+                : 'bg-white/90 text-stone-700 hover:bg-white border border-stone-200 dark:bg-ink-100/90 dark:text-stone-200 dark:hover:bg-ink-100 dark:border-ink-400'
             }`}
           >
             <PictureInPicture2 size={13} />

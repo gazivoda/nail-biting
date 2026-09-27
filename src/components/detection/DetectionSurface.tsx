@@ -56,10 +56,10 @@ export function DetectionSurface({
       <AlertOverlay visible={showFlash} />
 
       <div
-        className={`relative bg-stone-900 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
+        className={`relative bg-stone-100 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
           isAlerting
             ? 'border-alert-400 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
-            : 'border-stone-800 dark:border-ink-400'
+            : 'border-stone-200 dark:border-ink-400'
         }`}
       >
         {/* Video element always present for MediaPipe, visibility toggled */}
@@ -95,14 +95,16 @@ export function DetectionSurface({
         )}
 
         {cameraEnabled && !cameraFailed && !showFeed && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-900 dark:bg-ink-50 px-6">
+          // Feed hidden (the default while you work): a quiet well, not a
+          // black slab that out-shouts the streak on a light screen.
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-50 dark:bg-ink-50 px-6">
             <DetectionWave detectionStatus={status} />
           </div>
         )}
 
         {/* Offline / idle state — wave runs in demo mode */}
         {!cameraEnabled && (
-          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-950 dark:bg-ink-300 px-6">
+          <div className="w-full aspect-video flex flex-col items-center justify-center bg-stone-100 dark:bg-ink-300 px-6">
             <DetectionWave />
           </div>
         )}
