@@ -1,37 +1,57 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
 import type { TriggerTag } from '../../types';
 
+// "I just bit my nails": log a bite and what set it off. Logging resets the
+// streak, so the confirmation says so, stays up long enough to read, and can
+// be undone (a wrong tap should not cost a streak). No emoji and no artificial
+// press delay: the sheet opens on the press, like every other button.
 export function PanicButton() {
-  const { logIncident, customTags } = useAppStore();
+  const { logIncident, deleteIncident, customTags } = useAppStore();
   const tags: TagOption[] = [...PRESET_TAGS, ...customTags];
   const [showTags, setShowTags] = useState(false);
-  const [logged, setLogged] = useState<string | null>(null);
-  const [pressing, setPressing] = useState(false);
+  const [logged, setLogged] = useState<{ id: string; label: string } | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  const close = () => {
+    if (timer.current) clearTimeout(timer.current);
+    setLogged(null);
+    setShowTags(false);
+  };
 
   const handleLog = (tag: TriggerTag, label: string) => {
     logIncident(tag, false);
-    setLogged(label);
-    setTimeout(() => {
-      setLogged(null);
-      setShowTags(false);
-    }, 900);
+    // Hand-logged bites are never merged, so the new entry is the newest one.
+    const id = useAppStore.getState().incidents[0]?.id;
+    setLogged(id ? { id, label } : null);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(close, 5000);
   };
 
-  const handleMainPress = () => {
-    setPressing(true);
-    setTimeout(() => {
-      setPressing(false);
-      setShowTags(true);
-    }, 120);
+  const undo = () => {
+    if (logged) deleteIncident(logged.id);
+    close();
   };
 
   if (logged) {
     return (
-      <div className="bg-forest-50 dark:bg-forest-800/50 border border-forest-300 dark:border-forest-700 rounded-2xl py-4 text-center animate-fade-up">
-        <p className="text-forest-700 dark:text-forest-300 font-medium text-sm">✓ Logged — {logged}</p>
+      <div
+        role="status"
+        className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border border-forest-300 bg-forest-50 px-4 py-2 animate-fade-up dark:border-forest-700 dark:bg-forest-800/50"
+      >
+        <p className="text-sm font-medium text-forest-700 dark:text-forest-300">
+          Logged: {logged.label}. Your streak starts again from now.
+        </p>
+        <button
+          type="button"
+          onClick={undo}
+          className="inline-flex min-h-11 items-center text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
+        >
+          Undo
+        </button>
       </div>
     );
   }
@@ -44,6 +64,7 @@ export function PanicButton() {
           {tags.map(tag => (
             <button
               key={tag.id}
+              type="button"
               onClick={() => handleLog(tag.id, tag.label)}
               className="flex items-center gap-2 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
             >
@@ -53,8 +74,9 @@ export function PanicButton() {
           ))}
         </div>
         <button
+          type="button"
           onClick={() => setShowTags(false)}
-          className="w-full mt-2 text-stone-500 dark:text-stone-400 text-xs py-3 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+          className="mt-2 min-h-11 w-full text-sm text-stone-500 transition-colors hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200"
         >
           Cancel
         </button>
@@ -64,13 +86,12 @@ export function PanicButton() {
 
   return (
     <button
+      type="button"
       data-tour="panic-button"
-      onClick={handleMainPress}
-      className={`w-full bg-alert-100 dark:bg-alert-900/30 hover:bg-alert-100/80 dark:hover:bg-alert-900/50 border border-alert-400 dark:border-alert-800 hover:border-alert-600 rounded-2xl py-4 text-alert-600 dark:text-alert-400 font-medium text-base transition-all duration-150 select-none ${
-        pressing ? 'scale-95 shadow-inner' : 'active:scale-95'
-      }`}
+      onClick={() => setShowTags(true)}
+      className="w-full select-none rounded-2xl border border-alert-400 bg-alert-100 py-4 text-base font-medium text-alert-600 transition-all duration-150 hover:border-alert-600 hover:bg-alert-100/80 active:scale-95 dark:border-alert-800 dark:bg-alert-900/30 dark:text-alert-400 dark:hover:bg-alert-900/50"
     >
-      😬 I just bit my nails
+      I just bit my nails
     </button>
   );
 }
