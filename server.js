@@ -1569,7 +1569,20 @@ if (!existsSync(distPath)) {
     // site, and this makes that explicit rather than leaving the one page they
     // all point at as the only one without a BreadcrumbList.
     const breadcrumb = breadcrumbSchema([['Home', 'https://stopbiting.today/']]);
-    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    // The 30 s overview in the page's Video section (PromoVideo.tsx). The file
+    // and poster are real and same-origin; duration is the encoded length.
+    const homeVideo = {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: 'Stop Biting in 30 seconds',
+      description: 'A 30-second overview of Stop Biting: a webcam and on-device AI that sound an alarm the moment a finger reaches your mouth, with video that never leaves your device, and a 3-day free trial.',
+      thumbnailUrl: 'https://stopbiting.today/video/stop-biting-poster.webp',
+      contentUrl: 'https://stopbiting.today/video/stop-biting.mp4',
+      uploadDate: '2026-10-02',
+      duration: 'PT30S',
+      isPartOf: { '@id': 'https://stopbiting.today/' },
+    };
+    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n    ${schemaTag(homeVideo)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/'));
   });

@@ -7,6 +7,7 @@ import { ContactForm } from '../components/ContactForm';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { PromoVideo } from '../components/PromoVideo';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
@@ -289,6 +290,24 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               />
               <figcaption className="sg-note mt-2">Shown with example data.</figcaption>
             </figure>
+          </div>
+        </section>
+
+        {/* ── VIDEO ─────────────────────────────────────────────────────── */}
+        {/* After the product has been shown, before the setup steps: a 30 s
+            overview for people who would rather watch than read. Click to
+            play; the file is not requested until they do. */}
+        <section aria-labelledby="video-heading" className="pb-16 lg:pb-24">
+          <div className="sg-container grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-4">
+              <h2 id="video-heading" className="sg-h2 max-w-[14ch]">Thirty seconds, start to finish</h2>
+              <p className="sg-body sg-measure mt-5">
+                What Stop Biting does, how it keeps your camera private, and what the trial includes.
+              </p>
+            </div>
+            <div className="lg:col-span-8">
+              <PromoVideo />
+            </div>
           </div>
         </section>
 
