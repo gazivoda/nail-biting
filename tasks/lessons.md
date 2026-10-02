@@ -114,3 +114,28 @@ animated hand-to-mouth "warning" pictogram was the homepage's signature; the own
 "insulting and idiotic". Drawing the visitor's habit, even as a clever sign, reads as mockery
 to the person who has it. Show the product and the outcome instead (real app screens), and
 treat any cartoon of the habit (biting figure, hand at mouth) as off-limits for this product.
+
+## 2026-10-02 — Loop 11 (video, SEO/GEO, UX)
+
+**A label can promise what the asset does not have.** The play button said "sound on" over
+a video rendered silent on purpose (music cannot be heard or verified in-session). Caught only
+in the final review. Rule: after generating media, re-read every string around it (label, alt,
+schema description) against what the file actually contains.
+
+**The PWA service worker serves the previous build to the browser you are testing in.** After a
+rebuild the page still showed the old layout until the worker and caches were unregistered
+(`navigator.serviceWorker.getRegistrations()` + `caches.delete`). Unregister before judging a
+change, or test in headless Chrome, which starts clean.
+
+**A backgrounded automation tab never fetches `preload="none"` video.** `visibilityState` was
+`hidden`, readyState stayed 0 after a real click. Verify click-to-play in headless puppeteer
+(request log before/after the click, `currentTime` > 0), not in the shared tab.
+
+**A no-JS copy of a page must follow the page, not paraphrase it.** The crawler article had its
+own h1 and section names ("How it works", "Pricing") against the visible "How to start" and
+"$2.99 a month…". Fixing it meant mirroring headings and copy section by section, then fetching
+the raw HTML to compare. Re-run `sync-seo` after: the page-freshness ledger fingerprints content.
+
+**Grep a retired claim to zero across data files, built artifacts and llms.txt.** "Zero network
+requests during detection" lived in a FAQ, llms.txt and five compare-page sentences; the page
+itself said models download once. Check `dist/seo-content.json` and `dist/llms-full.txt` too.

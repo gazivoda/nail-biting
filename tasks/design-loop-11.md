@@ -14,3 +14,10 @@ iterations: 10
 - 7/10: tap targets measured (390 + 1440): header nav links 23 -> 44px tall, install prompt 'Install app' 16 -> 44px; only the inline footer name link stays small (inline text, exempt)
 - 8/10: GEO consistency: the retired 'zero network requests during detection' claim (a FAQ answer, llms.txt, 5 sentences in comparePages.ts) now matches the privacy section: 'once the models have downloaded, nothing carrying camera data is sent while it watches'. Grepped to zero in src, llms.txt, built seo-content/llms-full.
 - 9/10: FAQ opens on its definition ('What is Stop Biting...'); measured CLS 0 at 390 and 1440, video not fetched on load; audit item 'relative asset paths' checked and was a non-issue (built HTML is root-absolute)
+- 10/10: the round's review: the video is silent, so the play label no longer says 'sound on'; lessons.md updated (stale service worker, hidden-tab video, no-JS copy, claims grepped to zero)
+
+## Open (needs the owner)
+- Video is silent; music.py exists in the skill but cannot be heard here. Listen first if wanted.
+- Organization/Person sameAs lists one GitHub URL; add real profiles (LinkedIn, Product Hunt) only if they exist.
+- robots.txt blocks Google-Extended/anthropic-ai/cohere-ai/Bytespider (deliberate, costs Gemini citations); decide whether to keep.
+- 1:1 and 9:16 video cuts not built.

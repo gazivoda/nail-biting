@@ -4,8 +4,9 @@ const VIDEO_SRC = '/video/stop-biting.mp4';
 const POSTER_SRC = '/video/stop-biting-poster.webp';
 const TITLE = 'Stop Biting in 30 seconds';
 
-// Click-to-play on purpose: browsers block autoplay with sound, and
-// preload="none" keeps the video file off the page's load path entirely.
+// Click-to-play on purpose: preload="none" keeps the 4 MB file off the page's
+// load path entirely. The video is silent (on-screen text only), so nothing
+// here may promise sound.
 export function PromoVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
@@ -41,7 +42,7 @@ export function PromoVideo() {
           <span className="sg-promo__icon" aria-hidden="true">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z" /></svg>
           </span>
-          <span className="sg-promo__label">Watch it, 30 seconds, sound on</span>
+          <span className="sg-promo__label">Watch it in 30 seconds</span>
         </button>
       )}
     </div>
