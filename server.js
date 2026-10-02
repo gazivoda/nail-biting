@@ -958,7 +958,9 @@ if (!existsSync(distPath)) {
       const img = escapeHtml(ogImage);
       out = out
         .replace(/<meta property="og:image" content="[^"]*"/, () => `<meta property="og:image" content="${img}"`)
-        .replace(/<meta name="twitter:image" content="[^"]*"/, () => `<meta name="twitter:image" content="${img}"`);
+        .replace(/<meta name="twitter:image" content="[^"]*"/, () => `<meta name="twitter:image" content="${img}"`)
+        // The shell's alt text describes the site card, not this page's image.
+        .replace(/\s*<meta (?:property="og:image:alt"|name="twitter:image:alt") content="[^"]*" \/>/g, '');
     }
     return out;
   }
@@ -1525,7 +1527,7 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const homeDescription = 'Break the nail biting habit with on-device AI detection. Uses your webcam to catch onychophagia in real-time: 100% private, no data leaves your device. Science-backed habit reversal techniques included.';
+    const homeDescription = 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. Video never leaves your device. 3-day free trial.';
     // The homepage FAQ names onychophagia and habit reversal training in flow,
     // so it earns the MedicalCondition entity — but which therapies it may list
     // is read off the article it actually renders, never assumed.
