@@ -457,7 +457,7 @@ function getVsHandsOffContent(): PageContent {
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>€2.99/month (monthly plan only listed)</td></tr>' +
           '<tr><td>Free trial</td><td>3 days, no credit card</td><td>3 days</td></tr>' +
           '<tr><td>Progress tracking</td><td>Bite-free streaks and a timestamped incident history</td><td>Yes — its site says it “includes a statistics tracker to show your progress over time”</td></tr>' +
-          '<tr><td>Privacy</td><td>No camera data leaves the device; zero network requests during detection</td><td>States no video is recorded, GDPR compliant, no personal data collected</td></tr>' +
+          '<tr><td>Privacy</td><td>No camera data leaves the device, and nothing is sent while detection runs</td><td>States no video is recorded, GDPR compliant, no personal data collected</td></tr>' +
           '</tbody></table>',
       },
       {
@@ -478,7 +478,7 @@ function getVsHandsOffContent(): PageContent {
       },
       {
         heading: 'How does each app handle your camera data?',
-        body: 'Neither sends it anywhere — both process the webcam feed entirely on your device. This is a tie, and that’s good news. Hands Off states that all processing happens locally, no video gets recorded, and no personal data is collected — it is explicitly GDPR compliant. Stop Biting runs MediaPipe models compiled to WebAssembly directly on your device: the camera feed never leaves your machine, and detection makes zero network requests, which you can verify yourself with your browser’s network monitor.\n\nWhichever app you choose here, you are not trading privacy for the feature.',
+        body: 'Neither sends it anywhere — both process the webcam feed entirely on your device. This is a tie, and that’s good news. Hands Off states that all processing happens locally, no video gets recorded, and no personal data is collected — it is explicitly GDPR compliant. Stop Biting runs MediaPipe models compiled to WebAssembly directly on your device: the camera feed never leaves your machine, and no camera data is sent during detection, which you can verify yourself with your browser’s network monitor.\n\nWhichever app you choose here, you are not trading privacy for the feature.',
       },
       faqSection(
         'Every answer below uses the same 10 September 2026 verification against handsoffapp.com as the rest of this page.',
@@ -532,7 +532,7 @@ function getVsNailedContent(): PageContent {
       },
       {
         heading: 'Do Stop Biting and Nailed use the same detection technology?',
-        body: 'Yes — both run MediaPipe’s hand and face models, compiled to WebAssembly, locally on your own machine.\n\nUnder the hood, the two apps make the same technical bet: MediaPipe’s hand and face models, compiled to WebAssembly, running locally. Nailed’s site describes it plainly — machine learning detects when your hand approaches your mouth, everything runs on your Mac, the camera feed is processed in memory and immediately discarded, no servers, no analytics.\n\nStop Biting’s detection works the same way, and we publish the same commitment: no camera data ever leaves your device, zero network requests during detection.\n\nSo the honest framing isn’t "which detector is real" — both are. It’s "how much system do you want around the detector."',
+        body: 'Yes — both run MediaPipe’s hand and face models, compiled to WebAssembly, locally on your own machine.\n\nUnder the hood, the two apps make the same technical bet: MediaPipe’s hand and face models, compiled to WebAssembly, running locally. Nailed’s site describes it plainly — machine learning detects when your hand approaches your mouth, everything runs on your Mac, the camera feed is processed in memory and immediately discarded, no servers, no analytics.\n\nStop Biting’s detection works the same way, and we publish the same commitment: no camera data ever leaves your device, and nothing is sent while detection runs.\n\nSo the honest framing isn’t "which detector is real" — both are. It’s "how much system do you want around the detector."',
       },
       {
         heading: 'Why choose Nailed over Stop Biting?',
@@ -608,7 +608,7 @@ function getVsSmartBehaviorContent(): PageContent {
       },
       {
         heading: 'How do Stop Biting and SmartBehavior handle your data?',
-        body: 'Neither sends your camera data off the device. Both apps make strong, similar commitments. SmartBehavior states that all data is processed exclusively on your device, works 100% offline, collects no data, and requires no registration. Stop Biting runs MediaPipe models via WebAssembly on your device, transmits no camera data, and makes zero network requests during detection — verifiable with a network monitor.\n\nOn privacy, you can choose either app without compromise.',
+        body: 'Neither sends your camera data off the device. Both apps make strong, similar commitments. SmartBehavior states that all data is processed exclusively on your device, works 100% offline, collects no data, and requires no registration. Stop Biting runs MediaPipe models via WebAssembly on your device, and transmits no camera data while detection runs — verifiable with a network monitor.\n\nOn privacy, you can choose either app without compromise.',
       },
       {
         heading: 'Should I choose Stop Biting or SmartBehavior?',
@@ -659,7 +659,7 @@ function getAiDetectionAppsContent(): PageContent {
       },
       {
         heading: 'Which app is best for nail biting at a computer?',
-        body: 'Stop Biting — our app, so read this row knowing that. It runs on Mac, Windows, and — uniquely in this group as of 10 September 2026 — in a web browser as a no-install PWA. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with zero network requests during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.',
+        body: 'Stop Biting — our app, so read this row knowing that. It runs on Mac, Windows, and — uniquely in this group as of 10 September 2026 — in a web browser as a no-install PWA. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with no camera data sent during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.',
       },
       {
         heading: 'Which app is best for multiple BFRBs on desktop?',
