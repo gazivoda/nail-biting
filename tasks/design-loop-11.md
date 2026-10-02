@@ -13,3 +13,4 @@ iterations: 10
 - 6/10: video play control moved to the poster's empty bottom-right corner (was centred over the card text), label in a pill, no middle dot; playback re-verified headless
 - 7/10: tap targets measured (390 + 1440): header nav links 23 -> 44px tall, install prompt 'Install app' 16 -> 44px; only the inline footer name link stays small (inline text, exempt)
 - 8/10: GEO consistency: the retired 'zero network requests during detection' claim (a FAQ answer, llms.txt, 5 sentences in comparePages.ts) now matches the privacy section: 'once the models have downloaded, nothing carrying camera data is sent while it watches'. Grepped to zero in src, llms.txt, built seo-content/llms-full.
+- 9/10: FAQ opens on its definition ('What is Stop Biting...'); measured CLS 0 at 390 and 1440, video not fetched on load; audit item 'relative asset paths' checked and was a non-issue (built HTML is root-absolute)

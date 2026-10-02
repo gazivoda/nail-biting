@@ -483,8 +483,10 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 slot the heading broke into four lines. */}
             <h2 id="faq-heading" className="sg-h2 max-w-[22ch] lg:col-span-12">Questions people ask about nail biting</h2>
             <div className="border-t border-[color:var(--sg-rule)] lg:col-span-8 lg:col-start-5">
-              {FAQS.map(({ q, a }) => (
-                <details key={q} className="group border-b border-[color:var(--sg-rule)]">
+              {FAQS.map(({ q, a }, i) => (
+                // The first answer is the definition ("what is Stop Biting"), so it
+                // starts open: a reader and a crawler both meet it without a click.
+                <details key={q} open={i === 0} className="group border-b border-[color:var(--sg-rule)]">
                   <summary className="flex min-h-11 [text-wrap:balance] cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
                     {q}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
