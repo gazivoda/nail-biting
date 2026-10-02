@@ -100,6 +100,10 @@ const READING_LIST: ReadingRow[] = (() => {
 // to have a visible on-page counterpart, so these two must stay in step.
 const FAQS: { q: string; a: string }[] = [
   {
+    q: 'What is Stop Biting and how does it work?',
+    a: 'Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, or in the macOS desktop app, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device, and no camera video is sent anywhere. It costs $2.99 a month or $29 a year after a 3-day free trial with no card. It is not a medical treatment or a replacement for a therapist.',
+  },
+  {
     q: 'Why do people bite their nails?',
     a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults (Lee and Lipner, 2022). Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic, happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
   },
@@ -117,7 +121,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Does Stop Biting send my camera feed to the internet?',
-    a: 'No. Detection uses MediaPipe (Google\'s WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. There are zero network requests during detection: you can disconnect from the internet and the app works identically.',
+    a: 'No. Detection uses MediaPipe (Google\'s WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. Once the detection models have downloaded, nothing carrying camera data is sent while it watches: you can disconnect from the internet and it keeps working.',
   },
   {
     q: 'How long does it take to stop biting your nails?',

@@ -252,8 +252,6 @@
         "Free 60-second live demo — try detection in the browser, no signup"
       ],
       "keywords": "stop nail biting, onychophagia, habit reversal training, nail biting remedies, nail biting treatment, compulsive habits, BFRB, body-focused repetitive behavior",
-      "softwareVersion": "1.1",
-      "releaseNotes": "PWA support added — install directly from browser",
       "publisher": { "@id": "https://stopbiting.today/#organization" }
     }
     </script>
@@ -265,6 +263,14 @@
       "@type": "FAQPage",
       "@id": "https://stopbiting.today/",
       "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Stop Biting and how does it work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, or in the macOS desktop app, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device, and no camera video is sent anywhere. It costs $2.99 a month or $29 a year after a 3-day free trial with no card. It is not a medical treatment or a replacement for a therapist."
+          }
+        },
         {
           "@type": "Question",
           "name": "Why do people bite their nails?",
@@ -302,7 +308,7 @@
           "name": "Does Stop Biting send my camera feed to the internet?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. Detection uses MediaPipe (Google's WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. There are zero network requests during detection: you can disconnect from the internet and the app works identically."
+            "text": "No. Detection uses MediaPipe (Google's WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. Once the detection models have downloaded, nothing carrying camera data is sent while it watches: you can disconnect from the internet and it keeps working."
           }
         },
         {

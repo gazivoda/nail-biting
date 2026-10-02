@@ -1592,6 +1592,18 @@ if (!existsSync(distPath)) {
       // Reference, not a re-declaration — the WebSite node ships in the shell.
       isPartOf: { '@id': WEBSITE_ID },
       speakable: SCHEMA_SPEAKABLE,
+      inLanguage: 'en',
+      // What the page is about, who wrote it (the "Why this exists" section is
+      // signed by him), and its real screenshot (see public/shots provenance).
+      about: { '@id': 'https://stopbiting.today/#app' },
+      author: SCHEMA_AUTHOR,
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: 'https://stopbiting.today/shots/app-watch-1280.webp',
+        width: 2560,
+        height: 1584,
+        caption: 'The Stop Biting Watch screen after a catch, shown with example data.',
+      },
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/') ? { dateModified: pageLastmod('/') } : {}),
     };
@@ -2031,6 +2043,18 @@ if (!existsSync(distPath)) {
       // Selectors resolve against the SSR <h1> and the `article-summary`
       // standfirst injected below.
       speakable: SCHEMA_SPEAKABLE,
+      inLanguage: 'en',
+      // What the page is about, who wrote it (the "Why this exists" section is
+      // signed by him), and its real screenshot (see public/shots provenance).
+      about: { '@id': 'https://stopbiting.today/#app' },
+      author: SCHEMA_AUTHOR,
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: 'https://stopbiting.today/shots/app-watch-1280.webp',
+        width: 2560,
+        height: 1584,
+        caption: 'The Stop Biting Watch screen after a catch, shown with example data.',
+      },
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/pricing') ? { dateModified: pageLastmod('/pricing') } : {}),
     };
