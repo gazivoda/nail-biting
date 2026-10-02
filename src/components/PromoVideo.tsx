@@ -41,7 +41,7 @@ export function PromoVideo() {
           <span className="sg-promo__icon" aria-hidden="true">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z" /></svg>
           </span>
-          <span className="sg-promo__label">Watch · 0:30 · sound on</span>
+          <span className="sg-promo__label">Watch it, 30 seconds, sound on</span>
         </button>
       )}
     </div>
