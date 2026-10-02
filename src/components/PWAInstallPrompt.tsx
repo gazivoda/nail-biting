@@ -28,10 +28,8 @@ export function PWAInstallPrompt() {
 
   return (
     <div
-      className={`app-type fixed bottom-4 left-1/2 z-50 w-full max-w-sm px-4 transition-all duration-300 ease-out ${
-        show
-          ? '-translate-x-1/2 translate-y-0 opacity-100'
-          : '-translate-x-1/2 translate-y-8 opacity-0'
+      className={`app-type fixed bottom-4 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 px-4 transition-all duration-300 ease-out sm:left-auto sm:right-2 sm:translate-x-0 ${
+        show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}
     >
       <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl shadow-card-md dark:shadow-card-md-dark p-4 flex items-start gap-3">
@@ -55,7 +53,7 @@ export function PWAInstallPrompt() {
         </div>
         <button
           onClick={handleDismiss}
-          className="text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors flex-shrink-0"
+          className="-mr-2 -mt-2 flex h-11 w-11 flex-shrink-0 items-center justify-center text-stone-500 transition-colors hover:text-stone-600 dark:text-stone-400 dark:hover:text-stone-300"
           aria-label="Dismiss"
         >
           <X className="w-4 h-4" />
