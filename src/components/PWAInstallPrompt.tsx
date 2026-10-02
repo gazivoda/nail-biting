@@ -45,7 +45,7 @@ export function PWAInstallPrompt() {
           </p>
           <button
             onClick={handleInstall}
-            className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-forest-600 dark:text-forest-400 hover:text-forest-500 dark:hover:text-forest-300 transition-colors"
+            className="-mb-2 mt-0.5 inline-flex min-h-11 items-center gap-1.5 text-xs font-medium text-forest-600 dark:text-forest-400 hover:text-forest-500 dark:hover:text-forest-300 transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             Install app

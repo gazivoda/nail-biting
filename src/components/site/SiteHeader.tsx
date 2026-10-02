@@ -27,14 +27,14 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
         </a>
         <div className="hidden items-center gap-7 md:flex">
           {([['how', 'How to start'], ['science', 'Science'], ['privacy', 'Privacy'], ['pricing', 'Pricing'], ['faq', 'FAQ']] as const).map(([href, label]) => (
-            <a key={href} href={`${onHome ? '' : '/'}#${href}`} className="text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
+            <a key={href} href={`${onHome ? '' : '/'}#${href}`} className="inline-flex min-h-11 items-center text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)]">
               {label}
             </a>
           ))}
           <a
             href="/blog"
             aria-current={current === 'blog' ? 'page' : undefined}
-            className={`text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-ink)] ${current === 'blog' ? 'text-[color:var(--sg-accent)]' : 'text-[color:var(--sg-ink-2)]'}`}
+            className={`inline-flex min-h-11 items-center text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-ink)] ${current === 'blog' ? 'text-[color:var(--sg-accent)]' : 'text-[color:var(--sg-ink-2)]'}`}
           >
             Blog
           </a>
