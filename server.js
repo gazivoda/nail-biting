@@ -1494,28 +1494,58 @@ if (!existsSync(distPath)) {
     const faqs = HOME_FAQS.map(f =>
       `<section><h3>${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></section>`).join('');
     return (
-      '<h1>Stop Nail Biting with AI</h1>' +
+      // Headings and copy follow what the page renders, section for section.
+      // This block is what a crawler without JavaScript reads, so it must say
+      // what a visitor sees (Landing.tsx), not a differently-worded version.
+      '<h1>Stop biting your nails.</h1>' +
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
       'it checks 21 hand landmarks and your face mesh five times a second, and the moment your hand moves toward your mouth an ' +
       'audible alarm fires within a second, catching the automatic episodes you never notice. All detection runs ' +
       'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
+      '<p>Your webcam watches your hands while you work. The moment a fingertip reaches your lips, an alarm sounds, ' +
+      'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam.</p>' +
       '<section><h2>Try the detector right now</h2>' +
       '<p>Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About 20 MB of ' +
       'AI models download once; after that, no video leaves the page.</p></section>' +
-      '<section><h2>How it works</h2>' +
-      '<p>Open the app in your browser (or the macOS/Windows desktop app), grant camera access, and work normally. ' +
-      'The AI checks 21 hand landmarks and your face mesh five times a second, entirely on-device. When it detects your hand ' +
-      'approaching your mouth, the alarm fires within a second: the external awareness signal that Habit Reversal ' +
-      'Training identifies as its most critical component. Each detection is logged locally so you can see your real ' +
-      'biting frequency and triggers. Read more at <a href="/how-it-works">how it works</a>, or start with ' +
-      '<a href="/blog/how-to-stop-nail-biting">the complete guide to stopping nail biting</a>.</p></section>' +
-      '<section><h2>Pricing</h2>' +
-      '<p>Simple, honest pricing. Start with a 3-day free trial, no credit card required. ' +
+      '<section><h2>Every catch ends up in History</h2>' +
+      '<p>Each alarm and each bite you log lands here with the time. Tag what set it off ' +
+      '(stress, boredom, deep focus) and after a week you can see which one is yours.</p></section>' +
+      '<section><h2>Thirty seconds, start to finish</h2>' +
+      '<p>What Stop Biting does, how it keeps your camera private, and what the trial includes.</p></section>' +
+      '<section><h2>How to start</h2>' +
+      '<p>Sign in with Google (it opens in a new tab), allow the camera, and get on with your work. When your hand ' +
+      'reaches your mouth, it goes off. That\'s the whole setup. It runs in your desktop browser, so there\'s nothing ' +
+      'to download. You can install it like an app later if you want it one click away.</p>' +
+      '<h3>Before you start</h3><ul>' +
+      '<li>You need a webcam and a laptop or desktop browser. It\'s made for the hours you spend at a screen.</li>' +
+      '<li>Keep the app open while you work. If you switch to another tab, press Minimize so a small window keeps watching.</li>' +
+      '<li>It reacts to a hand near your mouth, not only to biting, so resting your chin on your fingers can set it off. Sensitivity has three levels.</li>' +
+      '<li>It makes a noise. Pick a quieter sound, turn it down, or use a screen flash instead.</li>' +
+      '<li>Your history is stored in this browser, so it doesn\'t follow you to another computer.</li></ul>' +
+      'Read more at <a href="/how-it-works">how it works</a>, or start with ' +
+      '<a href="/blog/how-to-stop-nail-biting">the complete guide to stopping nail biting</a>.</section>' +
+      '<section><h2>Why an alarm works when willpower doesn\'t</h2>' +
+      '<p>Nail biting runs on autopilot: by the time you notice, you\'re already doing it. That is why bitter polish and ' +
+      'willpower rarely stick. The method with the strongest evidence, habit reversal training, starts with one hard ' +
+      'step: noticing every time.</p>' +
+      '<p>In a clinic, a therapist would tap your shoulder. The alarm is that tap, available all day while you work. ' +
+      'What you do next (press your palms flat, clench a fist) is the other half of the method, and it\'s yours.</p>' +
+      '<p>An app is not a clinician. For severe or distressing biting, the TLC Foundation for Body-Focused Repetitive ' +
+      'Behaviors lists BFRB-informed therapists.</p></section>' +
+      '<section><h2>Your camera never leaves your device.</h2>' +
+      '<p>A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, ' +
+      'on your own computer: 0 bytes of camera data go to any server. Signing in and paying use the network; watching never does.</p></section>' +
+      '<section><h2>Why this exists</h2>' +
+      '<p>I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of it lasted, because ' +
+      'I never noticed I was doing it until the damage was done. I write software and I had a webcam, so I built the ' +
+      'thing that notices for me. Igor Gazivoda. <a href="/about">The longer story</a>.</p></section>' +
+      '<section><h2>$2.99 a month, or $29 a year.</h2>' +
+      '<p>Start with a 3-day free trial, no credit card required. ' +
       'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +
       'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. ' +
       'Secure payment via Paddle, cancel anytime. See <a href="/pricing">pricing details</a>.</p></section>' +
-      `<section><h2>Frequently asked questions</h2>${faqs}</section>` +
+      `<section><h2>Questions people ask about nail biting</h2>${faqs}</section>` +
       '<section><h2>Learn more</h2><ul>' +
       '<li><a href="/blog">Evidence-based nail biting guides</a></li>' +
       '<li><a href="/how-it-works">How the AI detection works</a></li>' +
