@@ -10,7 +10,7 @@ no hand-to-mouth/biting imagery, no em dashes in copy, one privacy claim only (t
 - [x] 3. Solutions page /solutions/for-students (+ link from exam and college posts)
 - [x] 4. Solutions page /solutions/for-remote-workers (+ link from WFH, meetings, screen-time posts)
 - [x] 5. PRODUCT_LINKS in src/data/related.ts: top 15 posts link to compare/solutions pages (BlogPost.tsx + server.js renderer)
-- [ ] 6. Content-Signal line in robots.txt + VideoObject schema for the homepage video (silent video, no "sound on")
+- [x] 6. Content-Signal line in robots.txt + VideoObject schema for the homepage video (silent video, no "sound on")
 - [ ] 7. Citability pass: self-contained number-bearing answer paragraph on homepage + compare pages; "Last verified" + spec table; run seo:sync
 - [ ] 8. Funnel: email capture (/api/subscribe via Resend) + mid-article blog block; privacy-friendly demo_start/trial_click events
 - [ ] 9. Free tool: "What type of biter are you?" quiz or yearly-cost calculator page, in sitemap, ending in trial CTA
@@ -28,3 +28,4 @@ Trial-end rescue emails (day 2/3) and 7-day trial test are a follow-up after fun
 - it3: /solutions/for-students live (no invented stats, only the exam post's 40-undergrad study), linked from exam + college posts; CORE_PAGES updated; sitemap 164 URLs.
 - it4: /solutions/for-remote-workers live; deliberately makes NO claim that detection runs during a video call (camera sharing is OS/app dependent, unverified); linked from 3 posts; sitemap 165 URLs.
 - it5: PRODUCT_LINKS (14 posts) in related.ts, rendered as 'Put it into practice' in BlogPost.tsx and server.js via seo-content.json; the 5 posts that already link a compare/solutions page in-body were left alone. React render not eyeballed in a browser, only tsc + SSR checked.
+- it6: Content-Signal (search=yes, ai-input=yes, ai-train=no) added under User-agent: * in robots.txt, matching the existing training-bot blocks; VideoObject was ALREADY on the homepage (server.js homeVideo, loop 11), the GEO agent was wrong, no change. Owner may still want to revisit ai-train and Google-Extended.
