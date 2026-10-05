@@ -54,6 +54,7 @@ const CORE_PAGES = [
   { path: '/compare/stop-biting-vs-hands-off',  changefreq: 'monthly', priority: '0.8' },
   { path: '/compare/stop-biting-vs-nailed',     changefreq: 'monthly', priority: '0.8' },
   { path: '/compare/stop-biting-vs-smartbehavior', changefreq: 'monthly', priority: '0.8' },
+  { path: '/compare/stop-biting-vs-habitaware', changefreq: 'monthly', priority: '0.8' },
   { path: '/solutions/for-desk-workers',        changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-adhd',                changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-gamers',              changefreq: 'monthly', priority: '0.7' },

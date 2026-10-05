@@ -5,7 +5,7 @@ Rules: one small commit per iteration on main (local, NOT pushed), `npm run seo:
 no hand-to-mouth/biting imagery, no em dashes in copy, one privacy claim only (the verifiable one), tick the box + log below.
 
 ## In-repo iterations (in order)
-- [ ] 1. Compare page: Stop Biting vs HabitAware (comparePages.ts, server.js meta map + links list, sitemap, llms.txt)
+- [x] 1. Compare page: Stop Biting vs HabitAware (comparePages.ts, server.js meta map + links list, sitemap, llms.txt)
 - [ ] 2. Unique title/description for /pricing, /how-it-works, /about (check injectMeta in server.js first; may already be fixed)
 - [ ] 3. Solutions page /solutions/for-students (+ link from exam and college posts)
 - [ ] 4. Solutions page /solutions/for-remote-workers (+ link from WFH, meetings, screen-time posts)
@@ -23,3 +23,4 @@ GSC recrawl of /; fix www TLS cert; decide Google-Extended; partnerships (BFRB t
 Trial-end rescue emails (day 2/3) and 7-day trial test are a follow-up after funnel events exist.
 
 ## Log
+- it1: HabitAware page live (price NOT stated on vendor pages, so none quoted). NOTE for it3/it4: new /solutions pages must ALSO be added to CORE_PAGES in scripts/sync-seo.mjs (use `command grep -a`, file has binary bytes) and committed BEFORE `npm run seo:sync`, then commit synced files.
