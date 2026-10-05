@@ -42,6 +42,7 @@ Key facts:
 - [Stop Nail Biting at Your Desk](https://stopbiting.today/solutions/for-desk-workers): Why desk workers bite during deep focus — and how webcam detection interrupts it
 - [Nail Biting and ADHD: AI Detection That Works With Your Brain](https://stopbiting.today/solutions/for-adhd): Why standard approaches fail for ADHD nail biters — and what actually helps
 - [Stop Nail Biting While Gaming](https://stopbiting.today/solutions/for-gamers): Gaming flow state makes the habit invisible — AI detection works in the background
+- [Stop Nail Biting as a Student: Exams, Laptops and Late Nights](https://stopbiting.today/solutions/for-students): Studying is long, screen-heavy and stressful, which is when automatic biting runs unnoticed: how webcam detection fits a student’s week
 - [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.
 - [Full content](https://stopbiting.today/llms-full.txt): Complete article text of every guide and comparison page, generated from the same source the site renders
 

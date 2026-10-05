@@ -7,7 +7,7 @@ no hand-to-mouth/biting imagery, no em dashes in copy, one privacy claim only (t
 ## In-repo iterations (in order)
 - [x] 1. Compare page: Stop Biting vs HabitAware (comparePages.ts, server.js meta map + links list, sitemap, llms.txt)
 - [x] 2. Unique title/description for /pricing, /how-it-works, /about (check injectMeta in server.js first; may already be fixed)
-- [ ] 3. Solutions page /solutions/for-students (+ link from exam and college posts)
+- [x] 3. Solutions page /solutions/for-students (+ link from exam and college posts)
 - [ ] 4. Solutions page /solutions/for-remote-workers (+ link from WFH, meetings, screen-time posts)
 - [ ] 5. PRODUCT_LINKS in src/data/related.ts: top 15 posts link to compare/solutions pages (BlogPost.tsx + server.js renderer)
 - [ ] 6. Content-Signal line in robots.txt + VideoObject schema for the homepage video (silent video, no "sound on")
@@ -25,3 +25,4 @@ Trial-end rescue emails (day 2/3) and 7-day trial test are a follow-up after fun
 ## Log
 - it1: HabitAware page live (price NOT stated on vendor pages, so none quoted). NOTE for it3/it4: new /solutions pages must ALSO be added to CORE_PAGES in scripts/sync-seo.mjs (use `command grep -a`, file has binary bytes) and committed BEFORE `npm run seo:sync`, then commit synced files.
 - it2: already done. /pricing, /how-it-works, /about each serve a unique title, description and h1 (verified by curl against server.js). No code change. Side note: how-it-works/about metas say '100% private'/'No cloud, no server'; check against the one-privacy-claim rule in it7.
+- it3: /solutions/for-students live (no invented stats, only the exam post's 40-undergrad study), linked from exam + college posts; CORE_PAGES updated; sitemap 164 URLs.
