@@ -956,6 +956,11 @@ BLOG_POSTS.push({
       body: `Answers to the questions people ask most about these tools.`,
       html: `<h3>Are there any free apps to stop nail biting?</h3><p>Stop Biting offers a free 3-day trial with full AI detection — no credit card required. After the trial it costs $2.99/month. General habit trackers (Habitica, Streaks) are free or low-cost but require manual logging and cannot detect biting automatically.</p><h3>Do nail biting apps actually work?</h3><p>Apps using real-time passive detection work by solving the awareness gap — the core obstacle in nail biting cessation. Catching each episode at the moment it happens creates the conscious interruption needed for a competing response to fire. General habit trackers are effective for consciously-performed habits; they are structurally limited for automatic unconscious ones like nail biting.</p><h3>What is the fastest combination to reduce biting?</h3><p>For screen-time biters: AI detection (Stop Biting) combined with a pre-selected competing response targets the awareness gap directly, which is the mechanism the HRT literature identifies as doing the heavy lifting. For biters who need 24/7 coverage, adding bitter polish for off-screen hours covers both contexts at under $15/month combined.</p>`,
     },
+    {
+      heading: `Where to go next`,
+      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -1708,6 +1713,11 @@ BLOG_POSTS.push({
       heading: 'The practical connection to nail biting treatment',
       body: `Understanding the perfectionism-nail biting connection changes the treatment emphasis. Rather than focusing only on catching and interrupting individual biting episodes, treatment also needs to address the internal tension state that the habit is serving.\n\nFor the frustration-driven pattern: the competing response must be practiced specifically during the frustration state, not just during calm moments. Practice pressing palms flat when a project is stuck, when a problem isn't resolving, when you're waiting on someone who's late. Train the competing response to fire during the actual trigger state, not just in neutral conditions.\n\nFor the sensory-perfectionism pattern: proactive nail care is the most effective prevention. Filing nails smooth daily removes the sensory triggers before they initiate an episode. Carrying a fine-grit nail file and addressing uneven edges immediately — rather than biting them — redirects the perfectionist impulse to fix the imperfection through a non-damaging channel.\n\nStop Biting catches the episodes that fire during focused, frustrated work — the moments when perfectionists are most productive and most vulnerable. Three days free, no credit card. The frequency data alone often surprises people who thought their habit was well-managed.`,
     },
+    {
+      heading: `Where to go next`,
+      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2118,6 +2128,11 @@ BLOG_POSTS.push({
     {
       heading: 'Using your screen as the solution',
       body: `For most nail biters, eliminating screen time is not realistic — and for those who bite primarily during computer work, the device causing the problem is also the most effective platform for the solution. Real-time AI detection running on a computer catches nail biting episodes during computer-context biting, which for desk workers covers the hours where a large share of the habit lives. We have no telemetry putting a percentage on that, so we are not going to quote one.\n\nFor phone-specific biting, the most practical interventions are: notification reduction (reducing the micro-stress trigger density), phone placement (keeping the phone flat on a surface rather than held at face level during passive use), and a prepared competing response for phone use contexts. The goal is not to eliminate screen use but to reduce the specific conditions — phone-at-face-height, notification-dense, mindless scrolling — that concentrate the habit in the screen context.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],

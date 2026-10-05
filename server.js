@@ -902,6 +902,7 @@ if (!existsSync(distPath)) {
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
     ['/solutions/for-students', 'Stop nail biting as a student'],
+    ['/solutions/for-remote-workers', 'Stop nail biting working from home'],
     ['/editorial-policy', 'Editorial policy and corrections'],
     ['/privacy', 'Privacy policy'],
     ['/terms-and-conditions', 'Terms of service'],
@@ -2263,6 +2264,10 @@ if (!existsSync(distPath)) {
     '/solutions/for-students': {
       title: 'Stop Nail Biting as a Student | Stop Biting',
       description: 'Students bite most alone, at a laptop and on hard problems. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
+    },
+    '/solutions/for-remote-workers': {
+      title: 'Stop Nail Biting Working From Home | Stop Biting',
+      description: 'Remote work means long focused stretches, idle hands and nobody watching. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own

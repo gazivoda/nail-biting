@@ -338,6 +338,56 @@ function getStudentsContent(): PageContent {
   };
 }
 
+function getRemoteWorkersContent(): PageContent {
+  return {
+    title: 'Stop Nail Biting Working From Home: Laptops, Calls and Home Offices',
+    subtitle: 'Working from home removes the audience that used to stop you biting: how webcam detection fits a remote workday',
+    intro: 'Remote work puts the three biggest nail biting conditions in one place: long stretches of focused screen work, idle hands near your face and nobody around to notice. Bitter polish is washed off by lunch and a phone reminder asks for attention you are spending on the work, so the fix that holds up is an interruption that does not depend on remembering. Stop Biting uses the webcam you already have and on-device AI to sound an alarm the moment your hand reaches your mouth, with a 3-day free trial and no card, then $2.99/month or $29/year. One honest limit up front: whether detection can run while a video call is using your camera depends on your operating system and call software, so test that before you rely on it.',
+    sections: [
+      {
+        heading: 'Why do I bite my nails more when I work from home?',
+        body: 'At home the conditions line up: hours of deep focus, hands resting by the keyboard and a mouth within reach, with no colleagues in view. Biting is automatic, so it continues while your attention is on the task. Our working-from-home and screen-time guides cover the pattern in more detail.\n\nIn an office, being seen is a quiet brake on the habit. A home office has no such brake, and willpower is the thing the work is already using up.',
+      },
+      {
+        heading: 'Which parts of a remote workday are the riskiest?',
+        body: 'The common high-risk stretches are solo deep-work blocks, reading long documents or email, waiting on a build, a download or a slow page, and the lull between meetings. Video calls and meetings are their own case, which our meetings guide covers separately.',
+      },
+      {
+        heading: 'Why don’t bitter polish and reminders work for remote workers?',
+        body: 'Each one needs something a working day takes away: a taste barrier that survives meals and handwashing, or attention you can spare.',
+        html: '<table><thead><tr><th>Approach</th><th>How it behaves across a remote workday</th></tr></thead><tbody>' +
+          '<tr><td>Bitter nail polish</td><td>Wears off with eating, drinking and handwashing, and needs reapplying</td></tr>' +
+          '<tr><td>Phone reminders</td><td>Rely on you noticing them, and a phone on the desk is a distraction</td></tr>' +
+          '<tr><td>Willpower and self-monitoring</td><td>Compete with the focus the work needs</td></tr>' +
+          '<tr><td>Stop Biting (webcam AI detection)</td><td>Runs in a browser tab or as a Mac or Windows app on the laptop you already work on, and interrupts the moment your hand nears your mouth</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'Can an app detect nail biting while I work?',
+        body: 'Yes, on a laptop or desktop with a webcam. Stop Biting runs in a browser tab or as a Mac or Windows app, uses the webcam to detect nail biting and fires an audible alarm. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor.\n\nThe limits: it only sees what your webcam sees, so it will not catch biting on your phone or away from the desk. During a video call, whether another app can use the camera at the same time varies by operating system and call software, so check that on your own setup before counting on it.',
+      },
+      faqSection(
+        'Short answers to what remote workers ask most, each restating what the sections above explain.',
+        [
+          ['Does it work during video calls?', 'It depends on your operating system and call software, because both want the camera. Test it on your own setup first. It does not depend on the call itself: it works alongside your normal screen work.'],
+          ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
+          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['Will it catch biting away from my desk?', 'No. It only sees what your laptop webcam can see.'],
+        ],
+      ),
+      verificationSection('This page was last reviewed on 5 October 2026. The remedies compared above, bitter polish and phone reminders, are general categories rather than named competitor products, so this page carries no vendor pricing or feature claims to check. We have not made a claim about running detection and a video call at the same time, because that depends on the user’s own setup.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/blog/nail-biting-laptop-working-from-home', label: 'Nail biting on your laptop while working from home' },
+      { href: '/blog/nail-biting-at-work-meetings', label: 'Nail biting during meetings and video calls' },
+      { href: '/blog/nail-biting-screen-time', label: 'How screens and phones make nail biting worse' },
+      { href: '/solutions/for-desk-workers', label: 'Stop nail biting at your desk' },
+      { href: '/how-it-works', label: 'How Stop Biting’s detection works' },
+    ],
+  };
+}
+
 // ─── Competitor comparison pages ─────────────────────────────────────────────
 // FACT-CHECK LOG — every competitor claim below is verified against the
 // competitor's own public website and, where a vendor's site and the store
@@ -822,4 +872,5 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-adhd': getAdhdContent,
   '/solutions/for-gamers': getGamersContent,
   '/solutions/for-students': getStudentsContent,
+  '/solutions/for-remote-workers': getRemoteWorkersContent,
 };
