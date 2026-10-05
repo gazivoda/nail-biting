@@ -13,7 +13,7 @@ no hand-to-mouth/biting imagery, no em dashes in copy, one privacy claim only (t
 - [x] 6. Content-Signal line in robots.txt + VideoObject schema for the homepage video (silent video, no "sound on")
 - [x] 7. Citability pass: self-contained number-bearing answer paragraph on homepage + compare pages; "Last verified" + spec table; run seo:sync
 - [x] 8. Funnel: email capture (/api/subscribe via Resend) + mid-article blog block; privacy-friendly demo_start/trial_click events
-- [ ] 9. Free tool: "What type of biter are you?" quiz or yearly-cost calculator page, in sitemap, ending in trial CTA
+- [x] 9. Free tool: "What type of biter are you?" quiz or yearly-cost calculator page, in sitemap, ending in trial CTA
 - [ ] 10. Long-tail post(s): nail-biting-subconscious-habit, nail-bed-damage-from-biting; cross-link compare/solutions hubs; final verification + summary
 
 ## Owner actions (off-repo, cannot be done here)
@@ -31,3 +31,4 @@ Trial-end rescue emails (day 2/3) and 7-day trial test are a follow-up after fun
 - it6: Content-Signal (search=yes, ai-input=yes, ai-train=no) added under User-agent: * in robots.txt, matching the existing training-bot blocks; VideoObject was ALREADY on the homepage (server.js homeVideo, loop 11), the GEO agent was wrong, no change. Owner may still want to revisit ai-train and Google-Extended.
 - it7: citability already in place (homepage 158-word answer FAQ, answer-first compare intros, spec tables, dated verification sections), so no rewrite. Real fix: removed unverifiable '100% private' / 'No cloud, no server' / 'no data ever leaves' from /about + /how-it-works metas, index.html twitter + JSON-LD, llms.txt prose; all now say what is checkable (no camera data sent while it runs).
 - it8: PARTIAL by design. Shipped trial_click + demo_start GA events (src/utils/track.ts, tested; GA is already loaded and disclosed in the privacy policy). Email capture NOT built: it needs owner decisions first (storage table, double opt-in + unsubscribe, privacy-policy text, a real worksheet PDF) and email.js sends from onboarding@resend.dev, Resend's test sender, which cannot mail arbitrary recipients; a verified sending domain is needed. signin_complete event also not added (OAuth redirect is server-side).
+- it9: /tools/nail-biting-cost-calculator live (React, own-numbers-only arithmetic in src/utils/costCalc.ts, tested; SSR head + article; CORE_PAGES/PAGE_SOURCES/llms wired; 166 sitemap URLs). Browser-verified: renders, computes $510/$2550 for 12x$40+$30, says honestly when the app would cost more than current spend. Quiz variant skipped (a self-diagnosis quiz already exists as a post).

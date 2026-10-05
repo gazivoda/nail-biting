@@ -139,3 +139,18 @@ the raw HTML to compare. Re-run `sync-seo` after: the page-freshness ledger fing
 **Grep a retired claim to zero across data files, built artifacts and llms.txt.** "Zero network
 requests during detection" lived in a FAQ, llms.txt and five compare-page sentences; the page
 itself said models download once. Check `dist/seo-content.json` and `dist/llms-full.txt` too.
+
+## 2026-10-05 — Growth loop (nail-habit-app)
+
+**`npm run build` is the Electron build; the site is `npm run build:web`.**
+`vite.config.ts` sets `base: './'` unless `VITE_BUILD_TARGET=web`, so a plain build
+emits `./assets/...` and every nested route (`/tools/x`, `/compare/x`) loads its
+script from a path that 404s. SSR-only curl checks cannot see this: the HTML is fine
+and the React app silently never mounts. Verify any new route in a real browser
+against a `build:web` bundle, and unregister the localhost service worker first, or
+it serves the previous bundle.
+
+**New core pages are not picked up by `seo:sync` until committed, and need three registrations.**
+`CORE_PAGES` and `PAGE_SOURCES` in scripts/sync-seo.mjs (the file contains binary
+bytes: use `command grep -a`, and edit it in bytes), plus the llms core-route list.
+Commit the page first, then sync, then commit the generated files.
