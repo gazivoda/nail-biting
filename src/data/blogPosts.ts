@@ -5901,3 +5901,36 @@ BLOG_POSTS.push(
     ],
   },
 );
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-subconscious-habit',
+  title: `Why Do I Bite My Nails Without Noticing? The Subconscious Habit Explained`,
+  seoTitle: 'Why Do I Bite My Nails Without Noticing?',
+  description: `Most nail biting runs on autopilot, which is why willpower fails. Awareness is the first trained component of habit reversal, and how to build it.`,
+  tag: 'Psychology',
+  readingMinutes: 3,
+  datePublished: '2026-10-05',
+  dateModified: '2026-10-05',
+  ogImage: '/og/nail-biting-subconscious-habit.png',
+  sections: [
+    {
+      heading: `Why do I bite my nails without noticing?`,
+      body: `Because for most people the habit has become automatic: the hand moves to the mouth and the nail is in your teeth before any decision is made, while your attention is on something else. You are not failing to notice out of carelessness. The behaviour runs without needing your attention, which is exactly what makes it a habit rather than a choice.\n\nThat is also why trying harder rarely works. Willpower acts on decisions you are aware of making, and there is no decision to resist.`,
+    },
+    {
+      heading: `Why is awareness the part that gets trained first?`,
+      body: `Habit reversal training, the best-studied behavioural treatment for nail biting, has three components, and awareness training is one of them, alongside competing response training and social support (Twohig et al., 2003). The order makes sense: you cannot swap in a different behaviour at a moment you do not know is happening.\n\nAwareness training means learning to catch the habit: noticing the early movement, the situations it clusters in and the urge that comes before it. A self-monitoring log, where you note each time you catch yourself and what you were doing, is the usual starting tool.`,
+    },
+    {
+      heading: `When does unnoticed biting happen most?`,
+      body: `Most often when your attention is occupied and your hands are idle: reading, screen work, problem solving, waiting. Our exam-season guide describes a study in which undergraduate biters bit most when left alone and while working on maths problems. We make no claim that this holds for everyone, but it fits the pattern that the habit surfaces when attention is elsewhere.`,
+      html: `<p>Our <a href="/blog/nail-biting-during-exams">exam-season guide</a> describes the study and its source. If most of your unnoticed biting happens at a laptop, see the <a href="/solutions/for-students">guide for students</a> and the <a href="/solutions/for-remote-workers">guide for remote workers</a>.</p>`,
+    },
+    {
+      heading: `How do I notice something I do on autopilot?`,
+      body: `Three approaches, from simplest to most external.\n\nKeep a tally for a week. Each time you catch yourself, mark it and note the situation. The number is usually higher than people expect, and the pattern of situations is the useful part.\n\nPrepare a competing response for the situations you find, such as pressing your palms flat or holding something, so that catching yourself has somewhere to go.\n\nAdd an external signal for the times you will not catch it yourself. A bitter polish adds a taste cue; a reminder app only works if you notice it; a webcam app such as ours sounds an alarm the moment your hand nears your mouth, which supplies the awareness step from outside. It only works where a webcam can see your hand.`,
+      html: `<p>Read <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> for the full method, or <a href="/how-it-works">how Stop Biting's detection works</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});

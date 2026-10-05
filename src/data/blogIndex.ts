@@ -1312,4 +1312,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-09-16",
     dateModified: "2026-09-16",
   },
+  {
+    slug: "nail-biting-subconscious-habit",
+    title: "Why Do I Bite My Nails Without Noticing? The Subconscious Habit Explained",
+    description: "Most nail biting runs on autopilot, which is why willpower fails. Awareness is the first trained component of habit reversal, and how to build it.",
+    tag: "Psychology",
+    readingMinutes: 3,
+    datePublished: "2026-10-05",
+    dateModified: "2026-10-05",
+  },
 ];
