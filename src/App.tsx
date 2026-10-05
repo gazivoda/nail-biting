@@ -31,6 +31,7 @@ import { EditorialPolicyPage } from './pages/EditorialPolicyPage';
 import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
+import { CostCalculator } from './pages/CostCalculator';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
@@ -157,6 +158,11 @@ export default function App() {
   // Pricing
   if (path === '/pricing') {
     return <PricingPage />;
+  }
+
+  // Free cost calculator
+  if (path === '/tools/nail-biting-cost-calculator') {
+    return <CostCalculator />;
   }
 
   // Compare pages

@@ -895,6 +895,7 @@ if (!existsSync(distPath)) {
     ['/blog', 'Nail biting guides and research'],
     ['/how-it-works', 'How AI nail biting detection works'],
     ['/pricing', 'Pricing: free trial, $2.99/month or $29/year'],
+    ['/tools/nail-biting-cost-calculator', 'Nail biting cost calculator'],
     ['/about', 'About Stop Biting'],
     ['/compare/bitter-polish-alternative', 'Stop Biting vs bitter nail polish'],
     ['/compare/habit-tracking-apps', 'Why habit tracking apps do not work for nail biting'],
@@ -2403,10 +2404,51 @@ if (!existsSync(distPath)) {
     });
   }
 
+  // Free cost calculator. The arithmetic runs in the browser on the visitor's
+  // own numbers (src/utils/costCalc.ts); this handler only supplies the head and
+  // the crawler-visible description of what the tool does.
+  app.get('/tools/nail-biting-cost-calculator', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const path = '/tools/nail-biting-cost-calculator';
+    const description = 'Free calculator: add up what nail biting costs you each year in manicures and repairs, using your own numbers, and compare it with the $29 yearly plan.';
+    let injected = injectMeta(indexHtml, {
+      title: 'Nail Biting Cost Calculator: What It Costs You a Year',
+      description,
+      canonical: `https://stopbiting.today${path}`,
+    });
+    const toolSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `https://stopbiting.today${path}`,
+      url: `https://stopbiting.today${path}`,
+      name: 'Nail Biting Cost Calculator',
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': WEBSITE_ID },
+      ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['Nail biting cost calculator', `https://stopbiting.today${path}`],
+    ]);
+    injected = injected.replace('</head>', `    ${schemaTag(toolSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    injected = injectSsrArticle(injected,
+      '<h1>What does nail biting cost you each year?</h1>' +
+      '<p class="article-summary">A free calculator: enter how many manicures or nail repairs you pay for each year, what each one costs, ' +
+      'and anything else you spend on it, and it shows your yearly and five-year cost next to Stop Biting’s $29 yearly plan.</p>' +
+      '<section><h2>What does the calculator use?</h2>' +
+      '<p>Only the numbers you type and our two published prices: $2.99 a month, or $29 a year. It assumes no average cost of nail biting. ' +
+      'It runs in your browser and sends nothing anywhere.</p></section>' +
+      '<section><h2>What does it not count?</h2>' +
+      '<p>Nail damage, infection risk and dental costs are not in the total, and Stop Biting is not a medical treatment. ' +
+      'See <a href="/blog/nail-biting-cost">the real cost of nail biting</a> for the wider picture, or <a href="/pricing">pricing</a>.</p></section>');
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(path));
+  });
+
   // Known valid routes for soft-404 protection
   const KNOWN_ROUTES = new Set([
     '/', '/blog', '/about', '/how-it-works', '/pricing', '/privacy',
-    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH,
+    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH, '/tools/nail-biting-cost-calculator',
     ...Object.keys(COMPARE_META),
     ...Object.keys(BLOG_POSTS).map(slug => `/blog/${slug}`),
   ]);
