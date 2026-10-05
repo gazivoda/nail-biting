@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { track } from '../../utils/track';
 
 // Every trial button. A new tab on purpose (92360d2): the landing tab, and any
 // demo running in it, stays open.
@@ -8,6 +9,7 @@ export function TrialButton({ tone = 'solid', size = 'md' }: { tone?: 'solid' | 
       href="/api/auth/google"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => track('trial_click')}
       className={`sg-btn group ${tone === 'light' ? 'sg-btn-light' : ''} ${size === 'sm' ? 'sg-btn-sm' : ''}`}
     >
       Start free trial

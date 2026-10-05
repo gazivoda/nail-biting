@@ -5,6 +5,7 @@ import { useCamera } from '../../hooks/useCamera';
 import { CAMERA_ERROR_MESSAGE, MODEL_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
 import { useDetection } from '../../hooks/useDetection';
 import { initialSession, remainingMs, sessionReducer } from './demoSession';
+import { track } from '../../utils/track';
 
 // --------------------------------------------------------------------------
 // Copy
@@ -130,6 +131,7 @@ export function HeroDemo({ autoStart = false }: Props) {
     setFailure(null);
     setNow(t);
     dispatch({ type: 'start', now: t });
+    track('demo_start');
   }, []);
 
   // Expiry + countdown clock. Cleared when the phase leaves `running` and on
