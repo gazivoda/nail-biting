@@ -901,6 +901,7 @@ if (!existsSync(distPath)) {
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
+    ['/solutions/for-students', 'Stop nail biting as a student'],
     ['/editorial-policy', 'Editorial policy and corrections'],
     ['/privacy', 'Privacy policy'],
     ['/terms-and-conditions', 'Terms of service'],
@@ -2258,6 +2259,10 @@ if (!existsSync(distPath)) {
     '/solutions/for-gamers': {
       title: 'Stop Nail Biting While Gaming | Stop Biting',
       description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm — without interrupting your session.',
+    },
+    '/solutions/for-students': {
+      title: 'Stop Nail Biting as a Student | Stop Biting',
+      description: 'Students bite most alone, at a laptop and on hard problems. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own

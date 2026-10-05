@@ -2392,6 +2392,11 @@ BLOG_POSTS.push({
         `If you have a detection or tracking tool, turn it on specifically during study sessions, your highest-risk window.`,
       ],
     },
+    {
+      heading: `Where to go next`,
+      body: `If most of your biting happens alone at a laptop, our guide for students covers how webcam detection fits a study week.`,
+      html: `<p>If most of your biting happens alone at a laptop, our <a href="/solutions/for-students">guide for students</a> covers how webcam detection fits a study week.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2682,7 +2687,7 @@ BLOG_POSTS.push({
     {
       heading: `Why address it during college rather than after?`,
       body: `Because college is when many people first get sustained control over their own routine, which is the thing an intervention has to fit into. (Whether the habit itself intensifies at this age is not established — the prevalence figures above go the other way.) Addressing it during these years — rather than after graduation, when the pattern has had several more years to consolidate — has real long-term value.\n\nStudents who establish even a basic awareness-and-competing-response routine during college, however imperfectly, tend to carry that skill forward into the more stable routines of post-college life, rather than starting from zero later on with a habit that has had additional years to deepen.`,
-          html: `<p>Studying is desk work with worse hours. Our <a href="/solutions/for-desk-workers">guide for desk workers</a> applies fairly directly.</p><p><strong>Sources:</strong></p><ul><li><a href="https://acta-apa.mf.uni-lj.si/journals/acta-dermatovenerol-apa/papers/10.15570/actaapa.2021.4/actaapa.2021.4.pdf" target="_blank" rel="noopener noreferrer">Erdogan HK, Arslantas D, Atay E, Eyuboglu D, Unsal A, Dagtekin G, Kilinc A. Prevalence of onychophagia and its relation to stress and quality of life. Acta Dermatovenerol Alp Pannonica Adriat. 2021;30(1):15–19.</a></li><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://doi.org/10.1016/j.jbtep.2014.10.007" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li></ul>`,
+          html: `<p>Studying is desk work with worse hours. Our <a href="/solutions/for-students">guide for students</a> and our <a href="/solutions/for-desk-workers">guide for desk workers</a> apply fairly directly.</p><p><strong>Sources:</strong></p><ul><li><a href="https://acta-apa.mf.uni-lj.si/journals/acta-dermatovenerol-apa/papers/10.15570/actaapa.2021.4/actaapa.2021.4.pdf" target="_blank" rel="noopener noreferrer">Erdogan HK, Arslantas D, Atay E, Eyuboglu D, Unsal A, Dagtekin G, Kilinc A. Prevalence of onychophagia and its relation to stress and quality of life. Acta Dermatovenerol Alp Pannonica Adriat. 2021;30(1):15–19.</a></li><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://doi.org/10.1016/j.jbtep.2014.10.007" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],

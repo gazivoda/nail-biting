@@ -288,6 +288,56 @@ function getGamersContent(): PageContent {
   };
 }
 
+function getStudentsContent(): PageContent {
+  return {
+    title: 'Stop Nail Biting as a Student: Exams, Laptops and Late Nights',
+    subtitle: 'Studying is long, screen-heavy and stressful, which is when automatic biting runs unnoticed: how webcam detection fits a student’s week',
+    intro: 'Students bite most where studying puts them: alone, at a laptop, working through hard problems for hours. In one study of 40 undergraduate biters, participants bit most when left alone and while working on maths problems, which are better-evidenced triggers than stress alone. Bitter polish wears off between study sessions and a phone reminder needs attention you are spending on the exam, so the useful fix is an interruption that does not depend on remembering. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with a 3-day free trial and no card, then $2.99/month or $29/year.',
+    sections: [
+      {
+        heading: 'Why do I bite my nails while studying?',
+        body: 'Studying stacks the conditions that run an automatic habit: you are alone, your attention is fully on the page, and your hands are idle near your face. Biting needs no decision, so it carries on while your awareness is on the material. Our exam-season guide covers the evidence in detail, including the 40-undergraduate study above.\n\nThat is also why willpower fails during revision: self-monitoring is the thing the work is using up.',
+      },
+      {
+        heading: 'Where do students bite the most?',
+        body: 'The highest-risk moments are the long solo stretches: a revision block at your desk, a problem set that is not working, reading a dense chapter, and the hour before a deadline. Lecture halls and libraries matter less than your own room, because being alone raised biting in the study above.',
+      },
+      {
+        heading: 'Why don’t bitter polish and reminders work for students?',
+        body: 'Each one needs something a student cannot spare during exam weeks: reapplication, a working taste barrier, or spare attention.',
+        html: '<table><thead><tr><th>Approach</th><th>How it behaves in a student week</th></tr></thead><tbody>' +
+          '<tr><td>Bitter nail polish</td><td>Needs reapplying, and stops working once you eat or drink during a session</td></tr>' +
+          '<tr><td>Phone reminders</td><td>Rely on you noticing them, and phones are a distraction during revision</td></tr>' +
+          '<tr><td>Willpower and self-monitoring</td><td>Compete with the focus the exam work needs</td></tr>' +
+          '<tr><td>Stop Biting (webcam AI detection)</td><td>Runs in a browser tab on your laptop and interrupts the moment your hand nears your mouth, so you do not have to remember</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'Can an app detect nail biting while I revise?',
+        body: 'Yes, if you study on a laptop or desktop with a webcam. Stop Biting runs in a browser tab or as a Mac or Windows app, uses the webcam to detect nail biting, and fires an audible alarm. Detection runs on your device, and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor.\n\nThe honest limit: it only works where a webcam can see your hand. In a quiet library, turn the alarm volume down or keep detection for your own room, and it will not see biting on your phone or in lectures.',
+      },
+      faqSection(
+        'Short answers to what students ask most, each restating what the sections above explain.',
+        [
+          ['Will it work on a shared or quiet study space?', 'The alarm volume is adjustable, but it is audible by design. Many students keep detection for their own room and desk, where most solo studying happens.'],
+          ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
+          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['Will it catch biting during lectures or on my phone?', 'No. It only sees what your laptop webcam can see.'],
+        ],
+      ),
+      verificationSection('This page was last reviewed on 5 October 2026. The remedies compared above, bitter polish and phone reminders, are general categories rather than named competitor products, so this page carries no vendor pricing or feature claims to check. The undergraduate study is described in our exam-season guide, which lists its source.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/blog/nail-biting-during-exams', label: 'Nail biting during exams: why stress season makes it worse' },
+      { href: '/blog/nail-biting-college-students', label: 'Nail biting in college students' },
+      { href: '/solutions/for-desk-workers', label: 'Stop nail biting at your desk' },
+      { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the evidence-based approach' },
+      { href: '/how-it-works', label: 'How Stop Biting’s detection works' },
+    ],
+  };
+}
+
 // ─── Competitor comparison pages ─────────────────────────────────────────────
 // FACT-CHECK LOG — every competitor claim below is verified against the
 // competitor's own public website and, where a vendor's site and the store
@@ -771,4 +821,5 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
   '/solutions/for-gamers': getGamersContent,
+  '/solutions/for-students': getStudentsContent,
 };
