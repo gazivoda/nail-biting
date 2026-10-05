@@ -813,6 +813,11 @@ if (!existsSync(distPath)) {
       ? `<section><h2>Related articles</h2><ul>${post.related.map(r =>
           `<li><a href="/blog/${escapeHtml(r.slug)}">${escapeHtml(r.title)}</a></li>`).join('')}</ul></section>`
       : '';
+    // Mirrors the "Put it into practice" link BlogPost.tsx renders from
+    // PRODUCT_LINKS (src/data/related.ts), so the crawler sees the same link.
+    const productLinkHtml = post.productLink
+      ? `<section><h2>Put it into practice</h2><p><a href="${escapeHtml(post.productLink.href)}">${escapeHtml(post.productLink.label)}</a></p></section>`
+      : '';
     // The byline is part of the crawler-visible meta line for the same reason
     // the FAQ answers are in-flow: BlogPosting names a Person as `author`, and
     // schema must not assert something the pre-JS page never shows. bylineHtml()
@@ -821,7 +826,7 @@ if (!existsSync(distPath)) {
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
       bylineHtml() +
       `<p class="article-summary">${escapeHtml(post.description)}</p>` +
-      renderSectionsHtml(post.sections) + related + authorBoxHtml();
+      renderSectionsHtml(post.sections) + productLinkHtml + related + authorBoxHtml();
   }
 
   function compareArticleHtml(content) {

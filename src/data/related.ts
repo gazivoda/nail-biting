@@ -70,3 +70,36 @@ export function getRelated<T extends RelatedPost>(
 
   return picks;
 }
+
+// One commercial page per post that is already about the thing it points to.
+//
+// getRelated only ever links post to post, so before this map no article
+// reached a compare or solutions page except by a hand-written link in its
+// body: the pages built to convert were reachable from the blog only through
+// the nav. Each entry sends the reader to the page that answers the question
+// the post leaves open. Posts without a natural fit are left out on purpose,
+// because a forced link is a worse experience than none.
+//
+// Same constraint as getRelated: free of imports, shared by BlogPost.tsx and
+// scripts/generate-seo-content.mjs so the visitor and the crawler see one link.
+export interface ProductLink {
+  href: string;
+  label: string;
+}
+
+export const PRODUCT_LINKS: Record<string, ProductLink> = {
+  'stop-biting-vs-mavala-stop': { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish' },
+  'products-to-stop-nail-biting': { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish' },
+  'nail-biting-alternatives': { href: '/compare/ai-detection-apps', label: 'AI apps that detect nail biting, compared' },
+  'nail-biting-habit-tracking': { href: '/compare/habit-tracking-apps', label: 'Why habit tracking apps do not work for nail biting' },
+  'nail-biting-adhd': { href: '/solutions/for-adhd', label: 'Nail biting and ADHD: how AI detection helps' },
+  'nail-biting-wearable-technology': { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
+  'stop-biting-app-review': { href: '/compare/ai-detection-apps', label: 'AI apps that detect nail biting, compared' },
+  'nail-biting-app-vs-therapy': { href: '/compare/ai-detection-apps', label: 'AI apps that detect nail biting, compared' },
+  'nail-biting-reddit': { href: '/compare/ai-detection-apps', label: 'AI apps that detect nail biting, compared' },
+  'nail-biting-cure': { href: '/how-it-works', label: 'How Stop Biting detects nail biting on your device' },
+  'stop-nail-biting-fast': { href: '/how-it-works', label: 'How Stop Biting detects nail biting on your device' },
+  'nail-biting-30-day-plan': { href: '/how-it-works', label: 'How Stop Biting detects nail biting on your device' },
+  'nail-biting-quiz': { href: '/how-it-works', label: 'How Stop Biting detects nail biting on your device' },
+  'nail-biting-cognitive-behavioral-therapy': { href: '/how-it-works', label: 'How Stop Biting detects nail biting on your device' },
+};

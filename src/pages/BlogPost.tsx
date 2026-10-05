@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Clock, ArrowRight } from 'lucide-react';
 import { BLOG_POSTS, getPost } from '../data/blogPosts';
-import { getRelated } from '../data/related';
+import { getRelated, PRODUCT_LINKS } from '../data/related';
 import { AUTHOR_BIO } from '../data/editorialPolicy';
 import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
@@ -26,6 +26,7 @@ export function BlogPost({ slug }: Props) {
   const post = getPost(slug);
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
   const related = post ? getRelated(BLOG_POSTS, slug) : [];
+  const productLink = PRODUCT_LINKS[slug];
 
   // Keep <title> and canonical current across client-side navigation.
   //
@@ -196,6 +197,24 @@ export function BlogPost({ slug }: Props) {
             </div>
             <TrialButton />
           </div>
+
+          {/* Product link: the compare/solutions page that answers what this post leaves open */}
+          {productLink && (
+            <section className="mt-14" aria-labelledby="product-link-heading">
+              <h2 id="product-link-heading" className="sg-h3 mb-5">
+                Put it into practice
+              </h2>
+              <a
+                href={productLink.href}
+                className="group flex items-center justify-between gap-4 rounded-xl border border-[color:var(--sg-rule)] bg-white px-4 py-3 transition-colors hover:border-[color:var(--sg-accent)]"
+              >
+                <p className="text-[0.9375rem] font-semibold leading-snug text-[color:var(--sg-ink)] group-hover:text-[color:var(--sg-accent)] transition-colors">
+                  {productLink.label}
+                </p>
+                <ArrowRight size={15} className="shrink-0 text-[color:var(--sg-ink-2)] transition-colors group-hover:text-[color:var(--sg-accent)]" aria-hidden="true" />
+              </a>
+            </section>
+          )}
 
           {/* Related articles — internal linking for SEO */}
           {related.length > 0 && (

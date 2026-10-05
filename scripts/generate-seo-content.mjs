@@ -24,7 +24,7 @@ const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
 const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 // Same function BlogPost.tsx renders from, so the crawler's "Related reading"
 // links are exactly the ones a visitor sees.
-const { getRelated } = await import('../src/data/related.ts');
+const { getRelated, PRODUCT_LINKS } = await import('../src/data/related.ts');
 // The author box under every article and the /editorial-policy page body. Same
 // module BlogPost.tsx / ComparePage.tsx / EditorialPolicyPage.tsx render from,
 // so the crawler copy and the rendered copy are one string, not two.
@@ -68,6 +68,7 @@ for (const p of BLOG_POSTS) {
     dateModified: p.dateModified,
     ...(p.ogImage ? { ogImage: p.ogImage } : {}),
     related: getRelated(BLOG_POSTS, p.slug),
+    productLink: PRODUCT_LINKS[p.slug] ?? null,
     sections: p.sections.map(s => ({
       heading: s.heading,
       body: s.body,
