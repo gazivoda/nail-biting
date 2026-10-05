@@ -699,12 +699,74 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsHabitAwareContent(): PageContent {
+  return {
+    title: 'Stop Biting vs HabitAware (Keen): Wrist Sensor or Webcam?',
+    subtitle: 'A vibrating bracelet that senses hand movement versus an on-device webcam app that watches your hand reach your mouth: compared honestly',
+    intro: 'Pick HabitAware’s Keen bracelet if you want something worn on your wrist that works away from a screen, or if you also pull hair or pick skin; pick Stop Biting if nail biting is your problem and you spend the hours you bite at a computer. Both interrupt the behavior at the moment it starts, which is the awareness step habit reversal training depends on. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card; HabitAware’s own pages we checked do not state a bracelet price, so this page does not quote one. Disclosure: Stop Biting is our product, and every HabitAware detail here was checked against habitaware.com on 5 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs HabitAware: what’s the difference?',
+        body: 'HabitAware sells a smart bracelet; Stop Biting is software that uses your webcam. One is worn, the other is only active while a screen is in front of you.\n\nBoth were checked on 5 October 2026. Prices and features change, so confirm on the vendor’s own site before buying.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>HabitAware (Keen2)</th></tr></thead><tbody>' +
+          '<tr><td>What it is</td><td>Software: Mac, Windows and web browser (PWA)</td><td>A smart bracelet; its site also lists a separate “KeenLite: Apple Watch App”</td></tr>' +
+          '<tr><td>Behaviors</td><td>Nail biting (focused)</td><td>Hair pulling, skin picking and nail biting, as its site names them</td></tr>' +
+          '<tr><td>How it alerts</td><td>On-screen and sound alert when your hand nears your mouth</td><td>The device vibrates on the wrist, “like a ‘hug’”, when it detects the behavior</td></tr>' +
+          '<tr><td>Where it works</td><td>Only while you are in front of your computer webcam</td><td>Wherever you wear it</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Not stated on the pages we checked</td></tr>' +
+          '<tr><td>Trial or guarantee</td><td>3 days, no credit card</td><td>A “90-Day Guarantee”</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and HabitAware have in common?',
+        body: 'Both aim at the same moment: the second your hand starts toward your mouth, before the nail is in your teeth. Most nail biting is automatic, so an external signal that makes you notice is the ingredient habit reversal training identifies as the hard part. Neither product relies on willpower or on a taste deterrent.\n\nHabitAware’s own site says behavior change takes about 66 days, which is why it offers 90 days. The same timescale applies to any tool you pick, ours included.',
+      },
+      {
+        heading: 'What does HabitAware do better than Stop Biting?',
+        body: 'It works away from your desk. A bracelet goes with you to the commute, the sofa and the meeting room, while Stop Biting can only act where a webcam can see your hand. If you bite mostly away from a computer, a wearable is the better fit and we would say so plainly.\n\nIt covers more behaviors. Its site names hair pulling (trichotillomania), skin picking (dermatillomania) and nail biting (onychophagia). Stop Biting detects nail biting only.\n\nIt offers a longer money-back window. HabitAware advertises a 90-day guarantee; our trial is 3 days.',
+      },
+      {
+        heading: 'What does Stop Biting do better than HabitAware?',
+        body: 'It needs no hardware. There is nothing to buy, charge or wear: it runs on a Mac, a Windows PC or in a browser tab, and the 3-day trial needs no credit card.\n\nIt is a subscription with a published price: $2.99/month or $29/year, about $2.42/month on the annual plan.\n\nIt pairs detection with treatment content: a library of over 100 guides on habit reversal training, competing responses and trigger mapping, plus bite-free streaks and a timestamped incident history.\n\nThe honest limit: if you bite on the train, in bed or on the phone, a webcam app will not see it.',
+      },
+      {
+        heading: 'How much do Stop Biting and HabitAware cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nHabitAware: the homepage and shop pages we checked on 5 October 2026 did not state a bracelet price, bundle price or subscription cost, so we are not guessing one. Check habitaware.com for the current price. Hardware is normally a larger one-off cost than a $2.99 subscription, but compare the real figures before deciding.',
+      },
+      faqSection(
+        'Every answer below uses the same 5 October 2026 check of habitaware.com as the rest of this page.',
+        [
+          ['Is HabitAware an app or a bracelet?', 'Its main product is the Keen2 smart bracelet, which vibrates on your wrist. Its site also lists a separate KeenLite Apple Watch app. Stop Biting is software only.'],
+          ['Does HabitAware work for nail biting?', 'Yes. Its site names nail biting (onychophagia) alongside hair pulling and skin picking.'],
+          ['Does Stop Biting work away from my computer?', 'No. It watches your hand through a webcam, so it only works while you are in front of one.'],
+          ['Which is cheaper?', 'Stop Biting’s price is published: $2.99/month or $29/year. We could not find a HabitAware bracelet price on the pages we checked, so we make no price claim for it.'],
+          ['Do both interrupt the habit as it happens?', 'Yes. HabitAware vibrates on your wrist; Stop Biting alerts you on screen the moment your hand approaches your mouth.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or HabitAware?',
+        body: 'Pick HabitAware if you bite away from screens, or if hair pulling or skin picking is part of the picture. A wearable is the right shape for that.\n\nPick Stop Biting if you bite while you work or browse, want to start in minutes without buying hardware, and want the habit-reversal coaching around the alert.\n\nSome people reasonably use a wearable for the day and Stop Biting for the desk; the two do not conflict.',
+      },
+      verificationSection('Every HabitAware detail on this page (the behaviors it names, the wrist vibration, the KeenLite Apple Watch app and the 90-day guarantee wording) was checked against habitaware.com on 5 October 2026, and quoted phrases are its own. We looked for a bracelet price, battery life, platform support and subscription cost and did not find them on the pages we fetched, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitaware.com before buying.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
+      { href: '/compare/habit-tracking-apps', label: 'Why habit tracking apps do not work for nail biting' },
+      { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the clinical method' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/bitter-polish-alternative': getBitterPolishContent,
   '/compare/habit-tracking-apps': getHabitTrackingContent,
   '/compare/stop-biting-vs-hands-off': getVsHandsOffContent,
   '/compare/stop-biting-vs-nailed': getVsNailedContent,
   '/compare/stop-biting-vs-smartbehavior': getVsSmartBehaviorContent,
+  '/compare/stop-biting-vs-habitaware': getVsHabitAwareContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
