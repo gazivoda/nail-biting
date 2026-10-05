@@ -1849,7 +1849,7 @@ if (!existsSync(distPath)) {
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
   app.get('/about', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const aboutDescription = 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection, 100% private, no data ever leaves your device.';
+    const aboutDescription = 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection that sends no camera data anywhere while it runs.';
     let injected = injectMeta(indexHtml, {
       title: 'About Stop Biting | Built by Igor Gazivoda',
       description: aboutDescription,
@@ -2153,7 +2153,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/how-it-works',
       url: 'https://stopbiting.today/how-it-works',
       name: 'How AI nail biting detection works',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — on your device, and no camera data is sent anywhere while it runs.',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': ORG_ID },
       speakable: SCHEMA_SPEAKABLE,
@@ -2207,7 +2207,7 @@ if (!existsSync(distPath)) {
     const condition = visibleConditionSchema(article);
     let injected = injectMeta(indexHtml, {
       title: 'How AI Nail Biting Detection Works | Stop Biting',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — entirely on your device. No cloud, no server, 100% private.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — on your device, and no camera data is sent anywhere while it runs.',
       canonical: 'https://stopbiting.today/how-it-works',
     });
     if (condition) injected = injectSchema(injected, condition);
