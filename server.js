@@ -929,6 +929,7 @@ if (!existsSync(distPath)) {
     ['/compare/stop-biting-vs-nailed', 'Stop Biting vs Nailed'],
     ['/compare/stop-biting-vs-smartbehavior', 'Stop Biting vs SmartBehavior'],
     ['/compare/stop-biting-vs-habitaware', 'Stop Biting vs HabitAware (Keen bracelet)'],
+    ['/compare/stop-biting-vs-nailkeeper', 'Stop Biting vs NailKeeper'],
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
@@ -2347,6 +2348,11 @@ if (!existsSync(distPath)) {
       title: 'Stop Biting vs HabitAware (Keen): Wrist Sensor or Webcam?',
       description: 'HabitAware\'s Keen bracelet works anywhere you wear it and covers more behaviors; Stop Biting needs no hardware, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-05',
+    },
+    '/compare/stop-biting-vs-nailkeeper': {
+      title: 'Stop Biting vs NailKeeper: Real-Time Detection or Photo Tracking?',
+      description: 'NailKeeper describes photo tracking, a timer and reminders on iPhone and Android; Stop Biting is a real-time webcam alarm, $2.99/mo or $29/yr. An honest comparison.',
+      date: '2026-10-06',
     },
     '/compare/ai-detection-apps': {
       title: 'Best AI Apps to Stop Nail Biting: 2026 Comparison',

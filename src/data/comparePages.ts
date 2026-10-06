@@ -562,6 +562,22 @@ function getWindowsContent(): PageContent {
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
 //
+//   NailKeeper    https://nailkeeper.app and its App Store listing
+//     apps.apple.com/us/app/nailkeeper-stop-biting-nails/id1579004361 (both
+//     fetched 2026-10-06)
+//     CONFIRMED verbatim (site): "Take photos to track how your nails grow and
+//       change over time."; "Monitor how much time has passed since you quit.
+//       Restart the timer if you relapse."; "Set up notifications to take photos
+//       and log your progress."; App Store and Google Play download buttons;
+//       price shown as "Free".
+//     CONFIRMED (App Store): "Free" with in-app purchases listed as NailKeeper
+//       Pro $19.99, Unlimited Access $4.99, NailKeeper Pro Annual $9.99;
+//       compatibility iPhone, iPad and Mac (Mac needs macOS 12.0+ and an Apple
+//       M1 chip or later). Prices are the US storefront's at the check date.
+//     NOT FOUND on either page: any mention of real-time detection or of using a
+//       camera to detect biting, and any trial length. The page therefore says
+//       what they describe and never says what the app lacks.
+//
 //   Mavala Stop   https://www.mavala.com/products/mavala-stop (200, 2026-09-10)
 //     CONFIRMED verbatim: "MAVALA Stop helps you regain healthy nails with its
 //       bitter-tasting, colourless formula that discourages putting fingers in
@@ -890,6 +906,65 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsNailKeeperContent(): PageContent {
+  return {
+    title: 'Stop Biting vs NailKeeper: Real-Time Detection or Photo Tracking?',
+    subtitle: 'A webcam app that interrupts nail biting as it happens versus a phone app built around photos, a quit timer and reminders: compared honestly',
+    intro: 'They solve different halves of the problem. NailKeeper, by its own description, tracks your nails with photos, a quit timer and reminder notifications on iPhone and Android. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac, Windows and in a browser. One records progress; the other tries to interrupt the habit while it is happening, and some people reasonably use both. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every NailKeeper detail here was checked against nailkeeper.app and its App Store listing on 6 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs NailKeeper: what’s the difference?',
+        body: 'NailKeeper describes photo tracking, a timer and reminders. Stop Biting describes real-time detection through a webcam. The two are built around different moments: one around checking in afterwards, the other around the moment of biting.\n\nBoth were checked on 6 October 2026. Prices and features change, so confirm on the vendor’s own pages before buying.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>NailKeeper</th></tr></thead><tbody>' +
+          '<tr><td>What it centres on</td><td>Real-time alarm when your hand nears your mouth</td><td>Photo tracking of nail growth, a time-since-quitting timer, and reminders to take photos</td></tr>' +
+          '<tr><td>Platforms</td><td>Mac, Windows, web browser (PWA); needs a webcam</td><td>iOS and Android; its App Store listing also shows iPad and Mac (Apple M1 or later)</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free to download; its App Store listing shows in-app purchases of $4.99, $9.99 and $19.99</td></tr>' +
+          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on the pages we checked</td></tr>' +
+          '<tr><td>Real-time detection</td><td>Yes, on-device AI through your webcam</td><td>Not mentioned on its site or App Store listing</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and NailKeeper have in common?',
+        body: 'Both aim to help you stop biting and to make progress visible. Both give you a way to see how long you have gone, and both are aimed at people who want an app rather than a polish or a wearable. Neither is a medical treatment.',
+      },
+      {
+        heading: 'What does NailKeeper do better than Stop Biting?',
+        body: 'It lives on your phone. Its site and store listings describe an iPhone and Android app, so it goes where you go, while Stop Biting only works at a computer with a webcam.\n\nIt shows your nails recovering. The before-and-after photos and growth tracking it describes give you something visible to hold on to, which Stop Biting does not offer; we track bite-free streaks and logged incidents instead.\n\nIt has a free tier. Its listing shows the app as free to download, with purchases inside. Stop Biting starts with a 3-day trial and then charges.',
+      },
+      {
+        heading: 'What does Stop Biting do better than NailKeeper?',
+        body: 'It acts at the moment of biting. The alarm fires when your hand nears your mouth, which is the awareness step habit reversal training depends on. We found no mention of real-time detection on NailKeeper’s pages, so we make no claim about it beyond what they describe.\n\nIt runs on a laptop or desktop and in a browser, with nothing to install. It also pairs detection with a library of habit reversal guides and a timestamped incident history.\n\nThe honest limit: it only sees biting that happens in front of your computer webcam.',
+      },
+      {
+        heading: 'How much do Stop Biting and NailKeeper cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nNailKeeper: free to download. Its US App Store listing on 6 October 2026 shows in-app purchases named NailKeeper Pro at $19.99, Unlimited Access at $4.99 and NailKeeper Pro Annual at $9.99. App Store prices vary by storefront and change, so check the listing.',
+      },
+      faqSection(
+        'Every answer below uses the same 6 October 2026 check of nailkeeper.app and its App Store listing as the rest of this page.',
+        [
+          ['Is NailKeeper free?', 'It is free to download, and its US App Store listing on 6 October 2026 shows in-app purchases of $4.99, $9.99 and $19.99. Stop Biting has a 3-day free trial, then $2.99/month or $29/year.'],
+          ['Does NailKeeper detect nail biting in real time?', 'Its site and App Store listing, as we read them, describe photo tracking, a timer and reminders. They do not mention real-time detection, so we do not say whether it has it. Stop Biting’s whole approach is real-time detection through your webcam.'],
+          ['Which works on a phone?', 'NailKeeper has iPhone and Android apps. Stop Biting needs a laptop or desktop webcam.'],
+          ['Can I use both?', 'Yes. They cover different moments: NailKeeper describes tracking your progress with photos and a timer, while Stop Biting interrupts biting at your computer.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or NailKeeper?',
+        body: 'Pick NailKeeper if you want a phone app that tracks your nails and your time since quitting, and you bite away from a computer.\n\nPick Stop Biting if you bite while you work and want an alarm at the moment it happens.\n\nIf you want both, nothing stops you using a photo tracker alongside the alarm.',
+      },
+      verificationSection('Every NailKeeper detail on this page (what it describes, its platforms, and its prices) was checked against nailkeeper.app and its US App Store listing on 6 October 2026, and quoted phrases are theirs. We looked for any mention of real-time detection, a camera used to detect biting, and a trial length, and did not find them, so we state none and make no claim about what the app lacks. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on nailkeeper.app before buying.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
+      { href: '/compare/habit-tracking-apps', label: 'Why habit tracking apps do not work for nail biting' },
+      { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best tools to stop nail biting, ranked by evidence' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 function getVsHabitAwareContent(): PageContent {
   return {
     title: 'Stop Biting vs HabitAware (Keen): Wrist Sensor or Webcam?',
@@ -942,6 +1017,7 @@ function getVsHabitAwareContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailkeeper', label: 'Stop Biting vs NailKeeper: real-time detection or photo tracking?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
       { href: '/compare/habit-tracking-apps', label: 'Why habit tracking apps do not work for nail biting' },
@@ -958,6 +1034,7 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/stop-biting-vs-nailed': getVsNailedContent,
   '/compare/stop-biting-vs-smartbehavior': getVsSmartBehaviorContent,
   '/compare/stop-biting-vs-habitaware': getVsHabitAwareContent,
+  '/compare/stop-biting-vs-nailkeeper': getVsNailKeeperContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
