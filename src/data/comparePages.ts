@@ -925,7 +925,7 @@ function getVsNailKeeperContent(): PageContent {
       },
       {
         heading: 'What do Stop Biting and NailKeeper have in common?',
-        body: 'Both aim to help you stop biting and to make progress visible. Both give you a way to see how long you have gone, and both are aimed at people who want an app rather than a polish or a wearable. Neither is a medical treatment.',
+        body: 'Both aim to help you stop biting and to make progress visible. Both give you a way to see how long you have gone, and both are aimed at people who want an app rather than a polish or a wearable. Stop Biting is not a medical treatment.',
       },
       {
         heading: 'What does NailKeeper do better than Stop Biting?',
