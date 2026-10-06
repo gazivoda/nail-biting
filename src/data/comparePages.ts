@@ -424,8 +424,53 @@ function getMacContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/solutions/for-windows', label: 'Stop nail biting on Windows' },
       { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/solutions/for-remote-workers', label: 'Stop nail biting working from home' },
+      { href: '/how-it-works', label: 'How Stop Biting’s detection works' },
+    ],
+  };
+}
+
+function getWindowsContent(): PageContent {
+  return {
+    title: 'Stop Nail Biting on Windows: Webcam Detection in Your Browser',
+    subtitle: 'A Windows laptop or desktop with a webcam is all this needs: how on-device detection works in a browser tab, and where it stops',
+    intro: 'Stop Biting runs on Windows in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Windows laptops have a built-in webcam; a desktop PC usually needs an external one. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a 3-day free trial with no credit card, then $2.99/month or $29/year.',
+    sections: [
+      {
+        heading: 'Can I use Stop Biting on Windows?',
+        body: 'Yes. Open stopbiting.today in a modern browser on your Windows PC, sign in with Google, allow camera access and start detection. It works as a web app (PWA), so there is nothing to download or install, and you can pin it from the browser if you want it one click away.\n\nKeep the tab open while you work. Detection only runs while the page is open and the camera is on.',
+      },
+      {
+        heading: 'What does a Windows PC need to run it?',
+        body: 'A modern browser, a camera that can see your hands and your face, and a few minutes for the AI models to download the first time (about 20 MB, once). Most laptops have a built-in webcam. A desktop PC usually does not, so you would plug in an external webcam.\n\nPlace the camera so your hands are in view when they rise towards your mouth. A camera that only sees your face will miss the hand.',
+      },
+      {
+        heading: 'How is a browser app different from installed Windows software?',
+        body: 'Both watch for the same moment. The difference is setup: a web app needs no installer and no admin rights, which matters on a locked-down work laptop, and it runs the same way on a Mac. Stop Biting also keeps bite-free streaks and a timestamped incident history, and pairs the alarm with habit reversal guides.\n\nWe compare the desktop-app alternatives honestly on their own pages, with every competitor detail checked against the vendor’s site.',
+        html: '<p>See <a href="/compare/stop-biting-vs-hands-off">Stop Biting vs Hands Off</a> and <a href="/compare/ai-detection-apps">every AI nail biting detection app compared</a>.</p>',
+      },
+      {
+        heading: 'Where does webcam detection stop working?',
+        body: 'It only sees what the camera sees. It will not catch biting on your phone, in a meeting room without your PC or away from the desk. If a video call is using your camera, whether the two can share it depends on your browser and call software, so test it before relying on it.',
+      },
+      faqSection(
+        'Short answers to what Windows users ask most, each restating what the sections above explain.',
+        [
+          ['Do I need to install anything on Windows?', 'No. It runs in a browser tab as a web app, with no installer.'],
+          ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
+          ['Does my PC need a webcam?', 'Yes. Most laptops have one built in; a desktop PC usually needs an external webcam.'],
+          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+        ],
+      ),
+      verificationSection('This page was last reviewed on 6 October 2026. It describes the browser version only. It names competitors only to link to the pages where their details are checked against their own sites, and makes no claim about them here.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/solutions/for-mac', label: 'Stop nail biting on a Mac' },
+      { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
       { href: '/solutions/for-remote-workers', label: 'Stop nail biting working from home' },
       { href: '/how-it-works', label: 'How Stop Biting’s detection works' },
     ],
@@ -643,6 +688,7 @@ function getVsHandsOffContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/solutions/for-windows', label: 'Stop nail biting on Windows: webcam detection in your browser' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
       { href: '/compare/stop-biting-vs-smartbehavior', label: 'Stop Biting vs SmartBehavior: which fits where you bite' },
@@ -919,4 +965,5 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-students': getStudentsContent,
   '/solutions/for-remote-workers': getRemoteWorkersContent,
   '/solutions/for-mac': getMacContent,
+  '/solutions/for-windows': getWindowsContent,
 };

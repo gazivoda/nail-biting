@@ -62,6 +62,7 @@ const CORE_PAGES = [
   { path: '/solutions/for-students',            changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-remote-workers',      changefreq: 'monthly', priority: '0.7' },
   { path: '/solutions/for-mac',                 changefreq: 'monthly', priority: '0.7' },
+  { path: '/solutions/for-windows',             changefreq: 'monthly', priority: '0.7' },
   { path: '/editorial-policy',                  changefreq: 'yearly',  priority: '0.4' },
   { path: '/privacy',                           changefreq: 'yearly',  priority: '0.3' },
   { path: '/terms-and-conditions',              changefreq: 'yearly',  priority: '0.3' },
