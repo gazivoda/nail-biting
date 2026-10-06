@@ -45,6 +45,7 @@ Key facts:
 - [Stop Nail Biting While Gaming](https://stopbiting.today/solutions/for-gamers): Gaming flow state makes the habit invisible — AI detection works in the background
 - [Stop Nail Biting as a Student: Exams, Laptops and Late Nights](https://stopbiting.today/solutions/for-students): Studying is long, screen-heavy and stressful, which is when automatic biting runs unnoticed: how webcam detection fits a student’s week
 - [Stop Nail Biting Working From Home: Laptops, Calls and Home Offices](https://stopbiting.today/solutions/for-remote-workers): Working from home removes the audience that used to stop you biting: how webcam detection fits a remote workday
+- [Stop Nail Biting on a Mac: Webcam Detection in Your Browser](https://stopbiting.today/solutions/for-mac): Your Mac already has the sensor this needs: how on-device webcam detection works in a browser tab, and where it stops
 - [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.
 - [Full content](https://stopbiting.today/llms-full.txt): Complete article text of every guide and comparison page, generated from the same source the site renders
 

@@ -1,0 +1,24 @@
+# Growth loop 2 (2026-10-06): 10 iterations, one every 3 minutes
+Synthesised from 3 subagents (technical SEO, SERP intent via WebSearch, conversion). Round 1: tasks/growth-loop.md.
+Rules (unchanged): one small local commit per iteration on main, NOT pushed; seo:check + `npm test` + `npm run build:web` (NOT `npm run build`) before commit;
+check new routes in a real browser after unregistering the localhost service worker; no biting imagery; no em dashes; one privacy claim
+("No camera data is sent while it runs"); every competitor claim fetched from the vendor's own site and dated, state "not found" instead of guessing;
+new core pages: commit first, then `npm run seo:sync`, register in CORE_PAGES/PAGE_SOURCES (use `command grep -a`, edit bytes); never regenerate all OG PNGs (revert noise, keep new ones).
+
+## Iterations
+- [x] 1. Mac landing page (/download/mac or similar): FIRST verify what is really downloadable (downloads/, electron config, macOS minimum, signing) and state only that. SERP "stop nail biting app mac" has no result for us.
+- [ ] 2. 301 canonicalisation middleware in server.js: trailing slash, uppercase path, /index.html (skip /api, /assets, static). Verify with curl -I and that /blog/<slug> still 200.
+- [ ] 3. Track every trial CTA: trial_click on HeroDemo (catch + other), PricingSection anchors, SiteHeader sign-in link (src/utils/track.ts; consider a source param).
+- [ ] 4. Hero trust line: single privacy claim + "Google sign-in, opens a new tab" + "cancel anytime" under the hero CTA/OFFER_LINE; reword the 5 other privacy phrasings in Landing/Paywall/Onboarding to the one claim (FAQ answer must match index.html JSON-LD).
+- [ ] 5. Phone visitors: on narrow/touch devices swap trial button for "Email me the link for my computer" (mailto, no backend) + track event.
+- [ ] 6. FAQ objections (card/cancel, does it work on my phone, do I need Google) in Landing FAQS and index.html JSON-LD together.
+- [ ] 7. Windows landing page (/download/windows), same verify-first rule as 1 (check Windows build availability).
+- [ ] 8. Compare page: Stop Biting vs NailKeeper (fetch vendor site first; photo tracking vs real-time detection only if stated there).
+- [ ] 9. Rewrite best-apps-to-stop-nail-biting title/intro, adding only apps verified on their own sites (NailKeeper, Unbite, HabitCam...); keep existing claims.
+- [ ] 10. Technical sweep: JSON-LD parse/@id uniqueness on new pages, orphan check of sitemap URLs vs crawler HTML nav (calculator, solutions), hero image alt shortened; final verification + summary.
+
+## Deferred (bigger or owner-gated)
+Split 918 KB BlogPost chunk per slug (touches server.js, generate-seo-content, sync-seo: needs its own plan); /compare/stop-biting-vs-stopbitingnails, habitcam, habitaware-alternatives; paywall "You caught N bites" (needs stored incident count); onboarding tour timing; tab refocus re-check after sign-in; GSC recrawl of / (SERP shows stale title "Free AI Habit Tracker"); app-store listings (Google rewards store listings for "nail biting app"); owner list in tasks/growth-loop.md.
+
+## Log
+- it1: CHANGED SCOPE. Verified: GitHub releases for gazivoda/nail-biting list ONLY v1.0.0 (old 'Nail Habit Tracker' DMGs). The v1.1.0 'Stop Biting' DMG URLs in server.js DOWNLOAD_MAP return 404, and no UI links /downloads/. So there is NO working Mac (or Windows) download of Stop Biting, yet llms.txt/index.html say 'native desktop app for Mac and Windows' and Landing mentions a macOS desktop app. Built /solutions/for-mac as a BROWSER-ONLY page (no download claim). OWNER: publish the v1.1.0 release or remove the desktop-app claims. Iteration 7 (Windows page) will follow the same browser-only rule.
