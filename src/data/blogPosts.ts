@@ -844,12 +844,12 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'best-apps-to-stop-nail-biting',
   title: '5 Best Tools to Stop Nail Biting in 2026 — Ranked by Evidence',
-  seoTitle: 'Best Apps to Stop Nail Biting in 2026',
+  seoTitle: 'Best Apps to Stop Nail Biting (2026), Compared',
   description: 'Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers — what each does for an automatic habit, and what each costs.',
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-06',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
@@ -879,6 +879,11 @@ BLOG_POSTS.push({
       heading: 'Category 4 — General habit trackers (Habitica, Streaks)',
       body: `Habitica gamifies habits with RPG mechanics. Streaks uses commitment streaks and calendar views. Both are well-designed, well-maintained apps with strong followings for building intentional habits — exercise, reading, meditation.\n\nFor nail biting, the core limitation is structural: both require manual logging. You must notice you bit, open the app, and record it. As discussed above, the majority of biting episodes never reach conscious attention. Logging only the minority of episodes you happen to notice gives you inaccurate data and weak feedback loops.\n\nStreaks is particularly well-suited to building new daily habits (flossing, language practice) where you perform the habit once and mark it done. It is not designed for interrupting an automatic behaviour that happens many times throughout the day below awareness.\n\nHabitica's "negative habit" feature allows logging each biting episode and taking damage, which provides some incentive. That incentive only ever reaches the episodes you catch, which for nail biting is the minority. The unconscious majority stay invisible.\n\nBottom line: both apps are good tools, wrong application. Use them for habits you perform consciously. For nail biting, the awareness gap is the real problem, and these tools don't address it.`,
       html: `<p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> — the evidence-based protocol that does address it.</p>`,
+    },
+    {
+      heading: 'Also worth knowing: a photo tracker and a wrist sensor',
+      body: `Two products do not fit the categories above. Both were checked against the vendors' own pages in October 2026, and prices and features change, so confirm before buying.\n\nNailKeeper (nailkeeper.app) is a dedicated nail biting app built around photo tracking of nail growth, a time-since-quitting timer and reminders to take photos, on iPhone and Android. Its US App Store listing on 6 October 2026 showed it as free to download with in-app purchases of $4.99, $9.99 and $19.99. Its site and listing do not mention real-time detection, so it records progress rather than interrupting the habit, and it can sit alongside a detector rather than replace one.\n\nHabitAware's Keen2 bracelet (habitaware.com) is a wearable: its site says it vibrates on the wrist when it detects the behaviour, and it names hair pulling, skin picking and nail biting. It works away from a screen, which webcam detection cannot. We found no bracelet price on the pages we checked.`,
+      html: `<p>Side-by-side pages: <a href="/compare/stop-biting-vs-nailkeeper">Stop Biting vs NailKeeper</a> and <a href="/compare/stop-biting-vs-habitaware">Stop Biting vs HabitAware (Keen)</a>.</p>`,
     },
     {
       heading: 'Full feature comparison table',
