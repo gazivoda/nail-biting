@@ -183,6 +183,13 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               {/* Said before the button is pressed: the 3-day clock starts at
                   sign-in, and a phone visitor would spend it finding out. */}
               <p className="sg-note mt-1">Made for a laptop or desktop with a webcam.</p>
+              {/* The three questions a visitor has before pressing the button, answered
+                  beside it rather than in the privacy section and FAQ further down.
+                  Mirrored in server.js. */}
+              <p className="sg-note mt-1">
+                Detection runs on your device and sends no camera data while it runs. Sign in with Google
+                (it opens in a new tab). Cancel anytime.
+              </p>
 
               {/* The demo trigger sits under the main CTA as the second path,
                   not in the right column, where it stacked under the

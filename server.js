@@ -1539,7 +1539,8 @@ if (!existsSync(distPath)) {
       'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<p>Your webcam watches your hands while you work. The moment a fingertip reaches your lips, an alarm sounds, ' +
-      'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam.</p>' +
+      'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam. ' +
+      'Detection runs on your device and sends no camera data while it runs. Sign in with Google (it opens in a new tab). Cancel anytime.</p>' +
       '<section><h2>Try the detector right now</h2>' +
       '<p>Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About 20 MB of ' +
       'AI models download once; after that, no video leaves the page.</p></section>' +
