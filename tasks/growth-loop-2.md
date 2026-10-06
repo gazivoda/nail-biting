@@ -7,7 +7,7 @@ new core pages: commit first, then `npm run seo:sync`, register in CORE_PAGES/PA
 
 ## Iterations
 - [x] 1. Mac landing page (/download/mac or similar): FIRST verify what is really downloadable (downloads/, electron config, macOS minimum, signing) and state only that. SERP "stop nail biting app mac" has no result for us.
-- [ ] 2. 301 canonicalisation middleware in server.js: trailing slash, uppercase path, /index.html (skip /api, /assets, static). Verify with curl -I and that /blog/<slug> still 200.
+- [x] 2. 301 canonicalisation middleware in server.js: trailing slash, uppercase path, /index.html (skip /api, /assets, static). Verify with curl -I and that /blog/<slug> still 200.
 - [ ] 3. Track every trial CTA: trial_click on HeroDemo (catch + other), PricingSection anchors, SiteHeader sign-in link (src/utils/track.ts; consider a source param).
 - [ ] 4. Hero trust line: single privacy claim + "Google sign-in, opens a new tab" + "cancel anytime" under the hero CTA/OFFER_LINE; reword the 5 other privacy phrasings in Landing/Paywall/Onboarding to the one claim (FAQ answer must match index.html JSON-LD).
 - [ ] 5. Phone visitors: on narrow/touch devices swap trial button for "Email me the link for my computer" (mailto, no backend) + track event.
@@ -22,3 +22,4 @@ Split 918 KB BlogPost chunk per slug (touches server.js, generate-seo-content, s
 
 ## Log
 - it1: CHANGED SCOPE. Verified: GitHub releases for gazivoda/nail-biting list ONLY v1.0.0 (old 'Nail Habit Tracker' DMGs). The v1.1.0 'Stop Biting' DMG URLs in server.js DOWNLOAD_MAP return 404, and no UI links /downloads/. So there is NO working Mac (or Windows) download of Stop Biting, yet llms.txt/index.html say 'native desktop app for Mac and Windows' and Landing mentions a macOS desktop app. Built /solutions/for-mac as a BROWSER-ONLY page (no download claim). OWNER: publish the v1.1.0 release or remove the desktop-app claims. Iteration 7 (Windows page) will follow the same browser-only rule.
+- it2: 301 canonicalisation middleware in server.js (trailing slash, uppercase, /index.html; extensionless page paths only, /api and /assets and anything with a file extension untouched, query kept). curl-verified 301s and that clean URLs, sitemap, llms, API and /downloads redirect are unchanged. Coolify/Traefik may still add its own redirects; check after deploy with curl -I.

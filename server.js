@@ -60,6 +60,31 @@ app.use((req, res, next) => {
   next();
 });
 
+// One URL per page. `/pricing/`, `/Pricing` and `/index.html` all used to answer
+// 200 with a canonical pointing at the clean URL, which asks crawlers to
+// consolidate them but does not make them. A 301 does, and it is what carries
+// links earned by the variant over to the real page.
+//
+// Only extensionless page paths are touched: anything with a file extension
+// (assets, fonts, downloads such as Stop-Biting-1.1.0.dmg, sitemap.xml) keeps
+// its exact spelling, and /api is never rewritten. The query string is kept.
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const q = req.originalUrl.indexOf('?');
+  const path = q === -1 ? req.originalUrl : req.originalUrl.slice(0, q);
+  const search = q === -1 ? '' : req.originalUrl.slice(q);
+  if (path.startsWith('/api/') || path.startsWith('/assets/')) return next();
+
+  let canonical = path;
+  if (path === '/index.html') canonical = '/';
+  else if (!/\.[a-z0-9]+$/i.test(path)) {
+    canonical = path.toLowerCase();
+    if (canonical.length > 1) canonical = canonical.replace(/\/+$/, '');
+  }
+  if (canonical !== path && canonical !== '') return res.redirect(301, canonical + search);
+  next();
+});
+
 // ─── Compression ─────────────────────────────────────────────────────────────
 // The origin served every byte uncompressed: an HTML route was 27,352 B on the
 // wire with or without an `Accept-Encoding` header. Registered here, above the
