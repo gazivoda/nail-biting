@@ -88,7 +88,14 @@
 
   <url>
     <loc>https://stopbiting.today/compare/stop-biting-vs-habitaware</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://stopbiting.today/compare/stop-biting-vs-nailkeeper</loc>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
