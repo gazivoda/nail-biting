@@ -5,7 +5,7 @@
 // policy already discloses, as aggregate counts with no parameters. Nothing
 // here identifies a person, and nothing is sent when gtag has not loaded
 // (blocked, offline, or before the deferred load handler runs).
-export type FunnelEvent = 'demo_start' | 'trial_click' | 'signin_click';
+export type FunnelEvent = 'demo_start' | 'trial_click' | 'signin_click' | 'phone_link_click';
 
 // Which button was clicked, so the demo-to-trial rate can be separated from the
 // plain landing-page rate. A fixed label, never anything about the visitor.
