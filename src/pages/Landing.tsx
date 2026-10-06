@@ -176,7 +176,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <TrialButton />
+                <TrialButton source="landing_hero" />
                 <a href="#how" className="sg-link inline-flex min-h-11 items-center">How to start</a>
               </div>
               <p className="sg-note mt-4">{OFFER_LINE}</p>
@@ -556,7 +556,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               </p>
             </div>
             <div className="flex flex-col items-start gap-3">
-              <TrialButton tone="light" />
+              <TrialButton tone="light" source="landing_final" />
               <p className="sg-note whitespace-nowrap text-white/90">{OFFER_LINE}</p>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { ArrowRight, Check } from 'lucide-react';
 import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
+import { track } from '../utils/track';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
@@ -66,6 +67,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track('trial_click', 'pricing_yearly')}
             className="sg-btn group mt-8 w-full"
           >
             Start free trial
@@ -92,6 +94,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             href="/api/auth/google"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track('trial_click', 'pricing_monthly')}
             className="sg-btn sg-btn-ink group mt-8 w-full"
           >
             Start free trial

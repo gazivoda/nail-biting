@@ -195,7 +195,7 @@ export function BlogPost({ slug }: Props) {
                 <a href="/pricing" className="sg-link">see pricing</a>.
               </p>
             </div>
-            <TrialButton />
+            <TrialButton source="blog_post" />
           </div>
 
           {/* Product link: the compare/solutions page that answers what this post leaves open */}

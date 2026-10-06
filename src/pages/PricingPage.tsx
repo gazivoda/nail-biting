@@ -111,7 +111,7 @@ export function PricingPage() {
               <a href="/how-it-works" className="sg-link">how the detection works</a>.
             </p>
           </div>
-          <TrialButton />
+          <TrialButton source="pricing_page" />
         </div>
       </main>
 

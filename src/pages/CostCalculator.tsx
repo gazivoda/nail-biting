@@ -86,7 +86,7 @@ export function CostCalculator() {
               )}
             </div>
             <div className="mt-6">
-              <TrialButton />
+              <TrialButton source="cost_calculator" />
               <p className="sg-note mt-3">3-day free trial, no credit card. Then $2.99/month or $29/year.</p>
             </div>
           </div>

@@ -142,7 +142,7 @@ export function About() {
             <p className="sg-h3">Try it free for 3 days.</p>
             <p className="sg-small mt-1">No card to start. Then $2.99 a month or $29 a year, cancel anytime.</p>
           </div>
-          <TrialButton />
+          <TrialButton source="about" />
         </div>
       </main>
 

@@ -101,7 +101,7 @@ export function ComparePage({ path }: Props) {
               <a href="/how-it-works" className="sg-link">how it works</a>.
             </p>
           </div>
-          <TrialButton />
+          <TrialButton source="compare_page" />
         </div>
 
         <section aria-labelledby="related-heading">

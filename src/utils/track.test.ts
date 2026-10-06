@@ -8,7 +8,14 @@ describe('track', () => {
     const gtag = vi.fn();
     vi.stubGlobal('window', { gtag });
     track('trial_click');
-    expect(gtag).toHaveBeenCalledWith('event', 'trial_click');
+    expect(gtag).toHaveBeenCalledWith('event', 'trial_click', undefined);
+  });
+
+  it('passes the source label when given', () => {
+    const gtag = vi.fn();
+    vi.stubGlobal('window', { gtag });
+    track('trial_click', 'pricing_yearly');
+    expect(gtag).toHaveBeenCalledWith('event', 'trial_click', { source: 'pricing_yearly' });
   });
 
   it('does nothing when gtag has not loaded', () => {

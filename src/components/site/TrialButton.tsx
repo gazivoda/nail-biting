@@ -3,13 +3,13 @@ import { track } from '../../utils/track';
 
 // Every trial button. A new tab on purpose (92360d2): the landing tab, and any
 // demo running in it, stays open.
-export function TrialButton({ tone = 'solid', size = 'md' }: { tone?: 'solid' | 'light'; size?: 'md' | 'sm' }) {
+export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button' }: { tone?: 'solid' | 'light'; size?: 'md' | 'sm'; source?: string }) {
   return (
     <a
       href="/api/auth/google"
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => track('trial_click')}
+      onClick={() => track('trial_click', source)}
       className={`sg-btn group ${tone === 'light' ? 'sg-btn-light' : ''} ${size === 'sm' ? 'sg-btn-sm' : ''}`}
     >
       Start free trial
