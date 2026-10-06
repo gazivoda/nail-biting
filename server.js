@@ -909,6 +909,7 @@ if (!existsSync(distPath)) {
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
     ['/solutions/for-students', 'Stop nail biting as a student'],
     ['/solutions/for-remote-workers', 'Stop nail biting working from home'],
+    ['/solutions/for-mac', 'Stop nail biting on a Mac'],
     ['/editorial-policy', 'Editorial policy and corrections'],
     ['/privacy', 'Privacy policy'],
     ['/terms-and-conditions', 'Terms of service'],
@@ -2274,6 +2275,10 @@ if (!existsSync(distPath)) {
     '/solutions/for-remote-workers': {
       title: 'Stop Nail Biting Working From Home | Stop Biting',
       description: 'Remote work means long focused stretches, idle hands and nobody watching. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
+    },
+    '/solutions/for-mac': {
+      title: 'Stop Nail Biting on a Mac | Stop Biting',
+      description: 'Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm the moment your hand reaches your mouth. 3-day free trial.',
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own

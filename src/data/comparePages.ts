@@ -388,6 +388,50 @@ function getRemoteWorkersContent(): PageContent {
   };
 }
 
+function getMacContent(): PageContent {
+  return {
+    title: 'Stop Nail Biting on a Mac: Webcam Detection in Your Browser',
+    subtitle: 'Your Mac already has the sensor this needs: how on-device webcam detection works in a browser tab, and where it stops',
+    intro: 'Stop Biting runs on a Mac in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Macs have a built-in camera; a Mac mini or Mac Studio needs an external webcam. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a 3-day free trial with no credit card, then $2.99/month or $29/year.',
+    sections: [
+      {
+        heading: 'Can I use Stop Biting on a Mac?',
+        body: 'Yes. Open stopbiting.today in a modern browser on your Mac, sign in with Google, allow camera access and start detection. It works as a web app (PWA), so there is nothing to download or install, and you can add it to your Dock or home screen from the browser if you want it one click away.\n\nKeep the tab open while you work. Detection only runs while the page is open and the camera is on.',
+      },
+      {
+        heading: 'What does a Mac need to run it?',
+        body: 'A modern browser, a camera that can see your hands and your face, and a few minutes for the AI models to download the first time (about 20 MB, once). A MacBook or iMac has a built-in camera. A Mac mini or Mac Studio has none, so you would plug in an external webcam.\n\nPlace the camera so your hands are in view when they rise towards your mouth. A camera that only sees your face will miss the hand.',
+      },
+      {
+        heading: 'How is a webcam app different from a Mac menu bar app?',
+        body: 'Both watch for the same moment. The difference is where they live and what else they do. A menu bar app sits in the system bar; Stop Biting is a web app that also runs on Windows and in any browser, keeps bite-free streaks and a timestamped incident history, and pairs the alarm with habit reversal guides.\n\nWe compare the Mac-specific options honestly on their own pages, with every competitor detail checked against the vendor’s site.',
+        html: '<p>See <a href="/compare/stop-biting-vs-nailed">Stop Biting vs Nailed</a> (a Mac menu bar app) and <a href="/compare/stop-biting-vs-hands-off">Stop Biting vs Hands Off</a>.</p>',
+      },
+      {
+        heading: 'Where does webcam detection stop working?',
+        body: 'It only sees what the camera sees. It will not catch biting on your phone, in a lecture hall or away from the Mac. If a video call is using your camera, whether the two can share it depends on your browser and call software, so test it before relying on it.',
+      },
+      faqSection(
+        'Short answers to what Mac users ask most, each restating what the sections above explain.',
+        [
+          ['Do I need to install anything on my Mac?', 'No. It runs in a browser tab as a web app. You can add it to your Dock from the browser if you like.'],
+          ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
+          ['Does my Mac need a camera?', 'Yes. MacBooks and iMacs have one built in; a Mac mini or Mac Studio needs an external webcam.'],
+          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+        ],
+      ),
+      verificationSection('This page was last reviewed on 6 October 2026. It describes the browser version only. It names two competitors only to link to the pages where their details are checked against their own sites, and makes no claim about either here.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/solutions/for-remote-workers', label: 'Stop nail biting working from home' },
+      { href: '/how-it-works', label: 'How Stop Biting’s detection works' },
+    ],
+  };
+}
+
 // ─── Competitor comparison pages ─────────────────────────────────────────────
 // FACT-CHECK LOG — every competitor claim below is verified against the
 // competitor's own public website and, where a vendor's site and the store
@@ -663,6 +707,7 @@ function getVsNailedContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/solutions/for-mac', label: 'Stop nail biting on a Mac: webcam detection in your browser' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
       { href: '/blog/mediapipe-ai-detection-explained', label: 'How MediaPipe detection works: a technical explainer' },
@@ -873,4 +918,5 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-gamers': getGamersContent,
   '/solutions/for-students': getStudentsContent,
   '/solutions/for-remote-workers': getRemoteWorkersContent,
+  '/solutions/for-mac': getMacContent,
 };
