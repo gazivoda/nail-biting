@@ -212,7 +212,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 7,
     datePublished: "2026-04-19",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-06",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
