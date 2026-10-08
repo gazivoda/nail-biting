@@ -482,6 +482,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         body: `Yes — BFRB co-occurrence is common: a substantial proportion of people with one BFRB also engage in at least one other. The most common combinations are nail biting with skin picking, nail biting with cheek biting, and hair pulling with skin picking. Twin modelling of obsessive-compulsive spectrum traits in 5,409 adult female twins found that hair pulling and skin picking load onto a genetic factor of their own, separate from the one shared with OCD, body dysmorphic disorder and hoarding — the clearest evidence so far of a heritable component common to BFRBs, although that study did not measure nail biting itself (Monzani et al., 2014).\n\nFor individuals with multiple BFRBs, clinicians commonly suggest starting with the most physically damaging or most distressing behaviour rather than working on all of them at once. Treat that as practical sequencing advice, not a tested finding: no trial we can point to has compared treating several BFRBs simultaneously against treating them one at a time, and the twin study above ran no treatment at all.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/24369376/" target="_blank" rel="noopener noreferrer">Monzani B, Rijsdijk F, Harris J, Mataix-Cols D. The structure of genetic and environmental risk factors for dimensional representations of DSM-5 obsessive-compulsive spectrum disorders. JAMA Psychiatry. 2014;71(2):182–189.</a></li></ul>`,
       },
+      {
+        heading: `Where to go next`,
+        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -3219,6 +3224,11 @@ BLOG_POSTS.push({
       ],
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK559146/" target="_blank" rel="noopener noreferrer">Macneal P, Milroy C. Paronychia Drainage. StatPearls. Updated 2023.</a></li></ul>`,
     },
+    {
+      heading: `Where to go next`,
+      body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+      html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -4884,6 +4894,11 @@ BLOG_POSTS.push(
         body: `Removing hangnails competently is worth doing. Not having them is worth considerably more, because it deletes a whole category of episode initiations.\n\nThe measures are unexciting: moisturise hands and cuticles regularly, particularly in winter and after washing; use a proper cuticle oil or balm rather than nothing; do not cut or push cuticles back — the proximal nail fold and cuticle together form a protective seal over the nail matrix (Johnson, Sinkler & Schmieder, StatPearls), and disrupting it produces more hangnails, not fewer; keep small scissors somewhere accessible so dealing with one properly is easier than biting it.\n\nAnd file rough nail edges immediately. Between a rough edge and a hangnail, a large share of biting episodes start with a physical irregularity rather than an emotional state — which means basic nail maintenance is genuinely part of habit work, not a cosmetic afterthought. It will not stop biting on its own, but it removes a lot of the openings.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK534769/" target="_blank" rel="noopener noreferrer">Johnson C, Sinkler MA, Schmieder GJ. Anatomy, Shoulder and Upper Limb, Nails. StatPearls. Updated 2023.</a></li></ul>`,
       },
+      {
+        heading: `Where to go next`,
+        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -5012,6 +5027,11 @@ BLOG_POSTS.push(
         heading: 'When to get help',
         body: `Dermatophagia can range from mild to genuinely disabling. Worth seeking professional support if the behaviour is causing repeated infections, if it takes up substantial time, if you are avoiding social or professional situations because of your hands, or if attempts to stop on your own have consistently failed.\n\nA clinician familiar with body-focused repetitive behaviours is the right kind of help — habit reversal is described in the trial literature as a well-established intervention for body-focused repetitive behaviours, and generic anxiety treatment is not the same thing.\n\nFor the awareness component, the same problem applies as with nail biting: the behaviour runs automatically, frequently during focus or distraction, and self-monitoring fails precisely when it is most needed. An external signal at the moment the hand reaches the mouth serves the same function regardless of whether the target is nail or skin.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+      },
+      {
+        heading: `Where to go next`,
+        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6086,6 +6106,34 @@ BLOG_POSTS.push({
       heading: `What if my biting hurts or feels out of control?`,
       body: `Many people with a heavy habit feel shame about it, and that is worth saying to a professional rather than carrying alone. If you bite until you bleed, keep getting infections, or feel real distress about it, our guide to the severity spectrum lists when to get help. If you are also hurting yourself on purpose, or having thoughts of harming yourself, please contact a clinician, your local emergency services or a crisis line in your country now.`,
       html: `<p>See <a href="/blog/onychophagia">onychophagia and the severity spectrum</a>, <a href="/blog/bfrb-guide">what BFRBs are</a>, and <a href="/blog/nail-biting-emotional-regulation">nail biting and emotional regulation</a>. For the method that works on the habit itself, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://www.bfrb.org/what-are-bfrbs" target="_blank" rel="noopener noreferrer">TLC Foundation for Body-Focused Repetitive Behaviors. Body-Focused Repetitive Behavior (what are BFRBs). bfrb.org. Accessed 8 October 2026.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/32135390/" target="_blank" rel="noopener noreferrer">Mathew AS, Davine TP, Snorrason I, Houghton DC, Woods DW, Lee HJ. Body-focused repetitive behaviors and non-suicidal self-injury: A comparison of clinical characteristics and symptom features. J Psychiatr Res. 2020;124:115–122.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-and-cuticle-picking',
+  title: `Nail and Cuticle Picking (Onychotillomania): What It Is and What Helps`,
+  seoTitle: 'Nail and Cuticle Picking: What It Is and What Helps',
+  description: `Nail picking is a body-focused repetitive behavior, like nail biting. What the main clinical review says helps, and where the evidence runs out.`,
+  tag: 'Clinical',
+  readingMinutes: 3,
+  datePublished: '2026-10-08',
+  dateModified: '2026-10-08',
+  ogImage: '/og/nail-and-cuticle-picking.png',
+  sections: [
+    {
+      heading: `What is nail and cuticle picking?`,
+      body: `The main clinical review defines onychotillomania as "repetitive nail picking and pulling" and groups it with onychophagia, habitual nail biting, as chronic nail conditions categorized as body-focused repetitive behavior (BFRB) disorders (Lee & Lipner, 2022). In the DSM-5 both fall under "Other Specified Obsessive-Compulsive and Related Disorders." Picking at the cuticle and the skin around the nail is part of the same family of behaviors. Most people who pick never need a formal diagnosis; the label exists for the end of the spectrum where it causes real damage or distress.`,
+    },
+    {
+      heading: `What helps?`,
+      body: `The review lists habit reversal training, which combines awareness training with a competing response, as the behavioral approach, and N-acetylcysteine, selective serotonin reuptake inhibitors and tricyclic antidepressants such as clomipramine as medication options. It is also direct about the limits: because of "the dearth of clinical trials for treatment of nail biting and nail picking," the authors say there are currently no standardized treatments, and most of the medication evidence comes from limited case reports rather than robust trials.\n\nIn practice that means habit reversal is the sensible place to start, and medication is a conversation for a clinician, not something to self-prescribe from an article.`,
+    },
+    {
+      heading: `Will Stop Biting catch nail picking?`,
+      body: `Probably not, and we would rather say so. Stop Biting watches for a fingertip close to your mouth, so it is built for nail biting. Picking that happens away from your mouth, with one hand working on the other, does not trigger it. If your picking is the main problem, the awareness and competing-response steps still apply, but you will need to do the noticing yourself.`,
+      html: `<p>Related reading: <a href="/blog/nail-biting-cuticle-damage">cuticle damage from biting</a>, <a href="/blog/nail-biting-hangnails">hangnails and how to deal with them</a>, <a href="/blog/nail-biting-vs-skin-picking">nail biting vs skin picking</a>, <a href="/blog/nac-nail-biting">N-acetylcysteine and nail biting</a> and <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
