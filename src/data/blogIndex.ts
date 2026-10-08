@@ -1348,4 +1348,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-08",
     dateModified: "2026-10-08",
   },
+  {
+    slug: "nail-and-cuticle-picking",
+    title: "Nail and Cuticle Picking (Onychotillomania): What It Is and What Helps",
+    description: "Nail picking is a body-focused repetitive behavior, like nail biting. What the main clinical review says helps, and where the evidence runs out.",
+    tag: "Clinical",
+    readingMinutes: 3,
+    datePublished: "2026-10-08",
+    dateModified: "2026-10-08",
+  },
 ];
