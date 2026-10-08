@@ -51,13 +51,11 @@ https://stopbiting.today
 ```
 Stop Biting uses your webcam and on-device AI (Google MediaPipe compiled to
 WebAssembly) to detect nail biting the moment your hand moves toward your mouth,
-then sounds an alarm. 100% private: all processing happens on your device, with
-zero network requests during detection — no camera data is ever transmitted or
-stored. It automates the awareness step of Habit Reversal Training, logs each
+then sounds an alarm. All processing happens on your device: no camera data is
+sent anywhere while it runs, and none is uploaded or stored outside your device. It automates the awareness step of Habit Reversal Training, logs each
 incident with a timestamp and trigger tags (stress, focus, boredom), and tracks
 streaks with a 7-day frequency chart. Runs in the browser as an installable PWA
-(no download needed) and as desktop apps for macOS 12+ and Windows 10+ with
-system-tray background running. 3-day free trial with no credit card; then
+(no download needed) on a Mac or Windows computer with a webcam. 3-day free trial with no credit card; then
 $2.99/month or $29/year.
 ```
 

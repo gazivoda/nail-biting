@@ -2,7 +2,7 @@
 
 Every directory in the main table was checked via its own site in August 2026 and
 confirmed to (a) have a free submission path and (b) plausibly accept a health/habit
-web+desktop app. Platforms that failed either check are in the "Dropped" section with
+web app. Platforms that failed either check are in the "Dropped" section with
 the reason — do not spend time on them without re-checking.
 
 Reusable short description for all forms:
@@ -10,8 +10,8 @@ Reusable short description for all forms:
 ```
 Stop Biting (stopbiting.today) detects nail biting through your webcam using
 on-device AI (Google MediaPipe in WebAssembly) and sounds an alarm the moment your
-hand nears your mouth. 100% private — zero network requests during detection.
-Browser PWA + macOS/Windows desktop apps. 3-day free trial, then $2.99/mo or $29/yr.
+hand nears your mouth. No camera data is sent anywhere while it runs.
+Browser PWA on Mac or Windows with a webcam. 3-day free trial, then $2.99/mo or $29/yr.
 ```
 
 ---

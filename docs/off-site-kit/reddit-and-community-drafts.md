@@ -14,7 +14,7 @@ Complements, does not repeat: `outreach-templates.md` (section A covers r/calmha
 - Not a medical treatment, not therapy, not a diagnosis.
 - Not to be claimed: user counts, reviews, success rates, "cures", clinical results. None exist in the source material. If asked, say there are no published results.
 
-Stale-copy warning: `directories.md` (reusable description, "Browser PWA + macOS/Windows desktop apps") and possibly `product-hunt-launch.md` still contain desktop-app claims. Commit 2bff457 removed those from the site because no desktop build is published. Do not paste those lines anywhere, and fix them in the kit before using it.
+Stale-copy note (fixed 2026-10-08): the desktop-app, "zero network requests", "100% private" and "no analytics" lines in the other kit files were removed or reworded to match the site (no desktop build is published; the site uses Google Analytics; the checkable privacy claim is "no camera data is sent while it runs"). Re-read before pasting anything.
 
 ## 1. Participation plan
 

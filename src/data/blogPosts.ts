@@ -869,7 +869,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-10-06',
+  dateModified: '2026-10-08',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
@@ -907,7 +907,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Full feature comparison table',
-      body: `Here is how all five approaches compare across the dimensions that matter most for a chronic nail biter:`,
+      body: `Here is how all five approaches compare across the dimensions that matter most for a chronic nail biter: The last four rows are named products, checked against their vendors' own pages on the dates shown. "Not described" means we found nothing on those pages, and "Not assessed" means we have not tested it and make no claim.`,
       html: `<table>
   <thead>
     <tr>
@@ -967,6 +967,38 @@ BLOG_POSTS.push({
       <td>No</td>
       <td>N/A</td>
       <td>Free / $2.99–$9.99/mo</td>
+    </tr>
+    <tr>
+      <td><strong>NailKeeper</strong> (photo tracker)</td>
+      <td>Not described: photo tracking, a quit timer and reminders</td>
+      <td>Yes — iPhone and Android app</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>Free; in-app $4.99–$19.99 (US App Store, 6 Oct 2026)</td>
+    </tr>
+    <tr>
+      <td><strong>HabitAware Keen2</strong> (wrist sensor)</td>
+      <td>Vibrates when it detects the behaviour, per its site</td>
+      <td>Yes — worn</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>Not stated on the pages we checked</td>
+    </tr>
+    <tr>
+      <td><strong>Pavlok</strong> (wearable)</td>
+      <td>On its nail biting page, you trigger the shock when you catch yourself</td>
+      <td>Yes — worn</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>$99.99–$134.99 devices shown, plus a $19/mo option (8 Oct 2026)</td>
+    </tr>
+    <tr>
+      <td><strong>BiteLess</strong> (Apple Watch)</td>
+      <td>Yes — automatic, per its listing</td>
+      <td>Yes — Apple Watch and iPhone, left wrist for now</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>In-app $9.99/mo or $69.99/yr (US App Store, 8 Oct 2026)</td>
     </tr>
   </tbody>
 </table>`,

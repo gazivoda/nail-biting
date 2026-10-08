@@ -90,8 +90,9 @@ Two honest caveats for your evaluation:
   perhaps the free guides are.
 
 On privacy (since it's a webcam app aimed at a vulnerable community): all processing
-runs on-device in WebAssembly, zero network requests during detection — it works with
-the internet disconnected, which anyone can verify in their browser's network panel.
+runs on-device in WebAssembly and no camera data is sent anywhere while it runs;
+once the models have downloaded it keeps working with the internet disconnected,
+which anyone can verify in their browser's network panel.
 
 Whatever you decide is fine — I'd also welcome any conditions you'd want (e.g. only
 the free guides, a specific flair when I comment, or staying link-free entirely).
@@ -114,7 +115,7 @@ Background: I bit my nails for 20+ years and eventually built a webcam app that
 detects the hand-to-mouth motion on-device and alarms in real time — essentially
 automating the awareness-training step of Habit Reversal Training
 (https://stopbiting.today, subscription app with a free trial; all detection runs
-on-device with zero network requests).
+on-device and sends no camera data while it runs).
 
 I'd like to be able to (a) comment where relevant, always with disclosure, and
 (b) occasionally post non-promotional content — e.g. a plain-text explainer of HRT
@@ -159,9 +160,9 @@ Two angles that might interest your readers:
    of HRT — the part that's hardest to do alone.
 
 2. The privacy-engineering angle: a webcam app whose privacy claim is verifiable
-   rather than promised — all processing is on-device, with zero network requests
-   during detection. Disconnect the internet and it works identically; anyone can
-   check in their browser's network panel.
+   rather than promised — all processing is on-device, and no camera data is sent
+   while it runs. Once the models have downloaded, disconnect the internet and it keeps
+   working; anyone can check in their browser's network panel.
 
 Happy to give you a free extended trial, a technical walkthrough of the detection
 pipeline, or answer anything on the record — including the skeptical questions.

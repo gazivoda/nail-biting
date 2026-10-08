@@ -73,12 +73,12 @@ each detection with a timestamp so you see your actual biting frequency, not you
 estimate.
 
 Privacy is verifiable, not promised: all processing runs on-device in WebAssembly.
-Zero network requests during detection — disconnect your internet after the app loads
-and it works identically. Incident log stays local. No account needed for core
-detection. No analytics.
+Once the models have downloaded, nothing carrying camera data is sent while it
+watches - disconnect your internet and it keeps working. The incident log stays in
+your browser. The live demo on the homepage needs no account.
 
-Works in the browser (PWA, no install) and as desktop apps for macOS 12+ and
-Windows 10+ with system-tray background running. 3-day free trial, no credit card.
+Works in the browser (PWA, no install) on a Mac or Windows computer with a
+webcam. 3-day free trial, no credit card.
 Then $2.99/month or $29/year.
 ```
 
@@ -121,13 +121,13 @@ logged with a timestamp — most people are surprised by the gap between "I bite
 occasionally" and what the log actually shows.
 
 The webcam part requires trust, so I designed it to be verifiable rather than
-promised: zero network requests during detection. You can disconnect your
-internet after the app loads and it works identically — watch your network
-traffic while it runs if you want proof. The incident log stays on your device,
-no account is needed for core detection, and there are no usage analytics.
+promised: once the models have downloaded, nothing carrying camera data is sent
+while it watches. You can disconnect your internet and it keeps working - watch
+your network traffic while it runs if you want proof. The incident log stays in
+your browser, and the live demo on the homepage needs no account.
 
-It runs in the browser as a PWA (nothing to install) and as desktop apps for
-macOS and Windows that sit in the system tray. 3-day free trial, no credit card
+It runs in the browser as a PWA (nothing to install) on a Mac or Windows
+computer with a webcam. 3-day free trial, no credit card
 — then $2.99/month or $29/year.
 
 Ask me anything — especially the skeptical questions about webcam privacy.
@@ -148,7 +148,7 @@ when you submit, and export to whatever it asks for:
 | App screenshot: detection screen with alarm state | **NEEDS CREATING** | The single most important slide — show the moment of detection |
 | App screenshot: incident log + trigger tagging (stress/focus/boredom) | **NEEDS CREATING** | Shows the "actual vs estimated frequency" story |
 | App screenshot: streak tracking + 7-day bite chart | **NEEDS CREATING** | |
-| Slide: "Zero network requests during detection" (devtools network panel while detecting) | **NEEDS CREATING** | Turns the privacy claim into evidence — uniquely credible slide |
+| Slide: "No camera data sent while detecting" (devtools network panel while detecting) | **NEEDS CREATING** | Turns the privacy claim into evidence — uniquely credible slide |
 | 30–60s screen recording / GIF of a detection firing | **NEEDS CREATING** | PH strongly favors listings with video |
 
 Note: `src/assets/hero.png` exists in the repo — check whether it's a usable product
