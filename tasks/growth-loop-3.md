@@ -7,7 +7,7 @@ New pages: commit first, then `npm run seo:sync`, CORE_PAGES in scripts/sync-seo
 
 ## Iterations
 - [x] 1. robots.txt Content-Signal: fetch the spec (contentsignals.org) and use only valid keys; GEO agent says `ai-input` is invalid, verify before changing.
-- [ ] 2. Homepage FAQ (Landing FAQS + index.html JSON-LD together): "Is there an app that detects nail biting with a webcam?" naming only competitors already verified on our compare pages (Hands Off, Nailed, SmartBehavior), honest about where they win.
+- [x] 2. Homepage FAQ (Landing FAQS + index.html JSON-LD together): "Is there an app that detects nail biting with a webcam?" naming only competitors already verified on our compare pages (Hands Off, Nailed, SmartBehavior), honest about where they win.
 - [ ] 3. /compare/stop-biting-vs-pavlok (fetch pavlok.com first; no snippet claims).
 - [ ] 4. /compare/stop-biting-vs-biteless (Apple Watch app; fetch App Store listing + vendor site).
 - [ ] 5. Post: nail biting and teeth damage (SERP is all small dentist blogs); reuse existing sourced claims or fetch PubMed.
@@ -22,3 +22,4 @@ Bitey compare (vendor claims need scrutiny: FDA/93%); printable tracker tool (ne
 
 ## Log
 - it1: NO CHANGE. Searched the Content Signals spec coverage (contentsignals.org / Cloudflare, Sept 2025): the three valid signals are search, ai-input, ai-train, so our `search=yes, ai-input=yes, ai-train=no` is valid; the GEO agent's claim that ai-input is invalid (and that ai-retrieval/ai-personalization exist) was wrong. contentsignals.org itself returned only a heading to the fetcher. Note from the same sources: Google ignores the line and the AI vendors do not document reading it, so it is a stated preference, not enforcement.
+- it2: 11th homepage FAQ added (Landing FAQS + index.html FAQPage, text verified identical, JSON-LD parses). Names only Hands Off (Mac, Windows), Nailed (Mac menu bar app), SmartBehavior (iPhone, Android, Windows), all from our 10 Sep 2026 verified compare pages; says Stop Biting is ours, browser-only, nail biting only. HabitCam / StopBitingNails / NailBiteMenu (named by the GEO agent) NOT added: not checked on their own sites. Crawler HTML contains the question twice (schema + in-flow). React render not re-opened in a browser (same mechanism verified in growth2 it6).
