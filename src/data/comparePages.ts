@@ -963,7 +963,7 @@ function getVsPavlokContent(): PageContent {
           ['Does Pavlok use an electric shock?', 'Its home page describes feedback as an electric shock, vibration or a chime. Stop Biting uses none of these: it sounds an alarm, flashes the screen, or both.'],
           ['Does Pavlok detect nail biting automatically?', 'The nail biting page we read describes the user triggering the shock when they catch themselves biting. We found no automatic nail biting detection described there, and we make no claim about every Pavlok model. Stop Biting’s detection is automatic.'],
           ['Which works away from a computer?', 'Pavlok, because it is a wearable. Stop Biting only works in front of a webcam.'],
-          ['Which is cheaper to try?', 'Stop Biting: a 3-day free trial with no card, then $2.99/month or $29/year. Pavlok’s device prices on its home page start at $99.99 for the ring.'],
+          ['Which is cheaper to try?', 'Stop Biting: a 3-day free trial with no card, then $2.99/month or $29/year. Pavlok’s home page shows $99.99 for the ring and $134.99 for the Shock Clock 3.'],
         ],
       ),
       {
