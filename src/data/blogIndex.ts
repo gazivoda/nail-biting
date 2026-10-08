@@ -1339,4 +1339,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-08",
     dateModified: "2026-10-08",
   },
+  {
+    slug: "is-nail-biting-self-harm",
+    title: "Is Nail Biting a Form of Self-Harm?",
+    description: "By the usual definitions, no: nail biting is a body-focused repetitive behavior. What the TLC Foundation and a 1,523-person study say about the difference.",
+    tag: "Psychology",
+    readingMinutes: 3,
+    datePublished: "2026-10-08",
+    dateModified: "2026-10-08",
+  },
 ];
