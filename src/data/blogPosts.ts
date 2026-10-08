@@ -321,6 +321,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `A mental health evaluation is appropriate when nail biting causes: significant physical damage (infections, tooth damage, permanent nail changes); meaningful distress or shame; functional impairment (avoiding activities because of the habit); or when the habit fails to respond to self-help HRT approaches after 8–12 weeks of consistent effort.\n\nWhen seeking treatment, it is important to find a therapist with specific experience in BFRBs — not simply OCD treatment, as the approaches differ meaningfully. The TLC Foundation for Body-Focused Repetitive Behaviors maintains a therapist directory at bfrb.org. Telehealth has made BFRB-experienced therapists substantially more accessible, and HRT delivered via videoconference is increasingly common.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul>`,
       },
+      {
+        heading: `Where to go next`,
+        body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+        html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -1439,6 +1444,11 @@ BLOG_POSTS.push({
 Understanding nail biting as emotional regulation explains why the intervention design matters so much. An intervention that doesn't address the regulatory function — that merely tries to suppress or punish the behavior — leaves the underlying need unmet. The behavior either returns once the suppression effort lapses, or shifts to a different behavior serving the same function.\n\nAn intervention that works provides: awareness of the moment the habit fires (catching it before the relief cycle completes), a competing response that provides comparable tension release, and over time, alternative emotional regulation skills that reduce the frequency and intensity of the triggers. This is the architecture of HRT — and the reason it outperforms every purely suppression-based approach in the literature.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1016/j.cpr.2013.05.004" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Bélanger C. Emotion regulation and other psychological models for body-focused repetitive behaviors. Clin Psychol Rev. 2013;33(6):745–762.</a></li><li><a href="https://doi.org/10.1016/j.jbtep.2014.10.007" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li></ul>`,
     },
+    {
+      heading: `Where to go next`,
+      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2308,6 +2318,11 @@ BLOG_POSTS.push({
       heading: `What helps when biting and low mood co-occur`,
       body: `We are not going to tell you which to treat first. No trial we could find has compared addressing the depression against addressing the habit, in nail biting or in any other body-focused repetitive behaviour, so the common advice to "fix the mood and the habit follows" is a reasonable-sounding guess with nothing measured behind it. Low mood is worth treating on its own terms, and that is the whole of the argument for treating it.\n\nWhat the previous section does support is a practical constraint rather than an ordering: during a low period the capacity that habit work demands is genuinely reduced, so pick habit techniques that survive a bad week. Low-effort, low-friction interventions (an alarm-based detection tool that doesn't require sustained self-monitoring, keeping nails filed short to reduce the physical trigger) tend to fit better than approaches requiring significant daily discipline.\n\nIf nail biting is severe, causing real physical damage, or accompanied by other signs of depression — persistent low mood, loss of interest, sleep or appetite changes lasting more than two weeks — it's worth raising both together with a doctor or therapist rather than treating the nail biting as the primary issue to solve alone.`,
     },
+    {
+      heading: `Where to go next`,
+      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2543,6 +2558,11 @@ BLOG_POSTS.push({
       heading: `Finding support`,
       body: `Because BFRBs as a category are less well known than more commonly discussed conditions like generalised anxiety, many people who bite their nails, pick their skin, or pull their hair have never been told these are a recognised, named, treatable group of behaviours — which can itself add unnecessary shame to something that's genuinely well understood clinically.\n\nIf you experience more than one BFRB, or if your primary BFRB is causing significant distress or physical damage, it's worth seeking a therapist with specific BFRB experience rather than general anxiety-focused therapy, since the treatment approach (HRT-based, behaviourally focused) differs somewhat from standard talk therapy for mood or anxiety alone.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8478440/" target="_blank" rel="noopener noreferrer">Hoffman J, Williams T, Rothbart R, Ipser JC, Fineberg N, Chamberlain SR, Stein DJ. Pharmacotherapy for trichotillomania. Cochrane Database Syst Rev. 2021;9(9):CD007662.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6038,6 +6058,34 @@ BLOG_POSTS.push({
       heading: `What should I do?`,
       body: `Keep nails short and clean, wash your hands before eating, and treat the habit itself as the thing to change. If you have ongoing stomach symptoms, speak to a clinician rather than relying on a general article.`,
       html: `<p>More on the gut side: <a href="/blog/nail-biting-gut-health">nail biting and gut health</a> and <a href="/blog/nail-biting-bacteria-parasites">bacteria and parasites</a>; the wider picture is in <a href="/blog/nail-biting-health-risks">the real health risks of nail biting</a>. For the method, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/29054319/" target="_blank" rel="noopener noreferrer">Morais R, Nunes ACR, Rios E, Rodrigues S, Macedo G. Granulomatous gastritis induced by onychophagia: First case report. Gastroenterol Hepatol. 2018;41(8):498–500.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/11716114/" target="_blank" rel="noopener noreferrer">Sung JF, Lin RS, Huang KC, Wang SY, Lu YJ. Pinworm control and risk factors of pinworm infection among primary-school children in Taiwan. Am J Trop Med Hyg. 2001;65(5):558–562.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9458792/" target="_blank" rel="noopener noreferrer">Al-Adhroey AH, Al-Ansi YA, Al-Kholani MA, et al. Enterobiasis among Yemeni children: a cross-sectional study. J Parasit Dis. 2022;46(3):722–728.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/17241163/" target="_blank" rel="noopener noreferrer">Baydaş B, Uslu H, Yavuz I, Ceylan I, Dağsuyu IM. Effect of a chronic nail-biting habit on the oral carriage of Enterobacteriaceae. Oral Microbiol Immunol. 2007;22(1):1–4.</a></li><li><a href="https://www.cdc.gov/pinworm/prevention/index.html" target="_blank" rel="noopener noreferrer">CDC. Preventing Pinworm Infection.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'is-nail-biting-self-harm',
+  title: `Is Nail Biting a Form of Self-Harm?`,
+  seoTitle: 'Is Nail Biting a Form of Self-Harm?',
+  description: `By the usual definitions, no: nail biting is a body-focused repetitive behavior. What the TLC Foundation and a 1,523-person study say about the difference.`,
+  tag: 'Psychology',
+  readingMinutes: 3,
+  datePublished: '2026-10-08',
+  dateModified: '2026-10-08',
+  ogImage: '/og/is-nail-biting-self-harm.png',
+  sections: [
+    {
+      heading: `Is nail biting a form of self-harm?`,
+      body: `By the usual definitions, no. The TLC Foundation for Body-Focused Repetitive Behaviors lists nail biting as a body-focused repetitive behavior (BFRB) and states that "BFRBs are not self-harm." Its distinction is about intent: self-harm is done with the goal of intentional harm to one's body, while the physical damage from a BFRB is an unintended result of the repetitive behavior. For many people, it says, BFRB behaviors are self-regulating and serve some internal need.\n\nThe damage can look similar, which is why the question comes up. The difference is in why it happens.`,
+    },
+    {
+      heading: `What does the research say?`,
+      body: `A study of 1,523 people compared non-suicidal self-injury (NSSI) with BFRBs, including 487 people in a nail biting group (Mathew et al., 2020). It notes that the two are recognised as distinct categories in the DSM-5. People in the NSSI group were more likely to act for social-affective reasons, such as getting out of doing something or receiving attention, and to act to regulate tension and feelings of emptiness and to feel relief during the act. People in the BFRB groups were more likely to act automatically without reflective awareness, to reduce boredom, or to fix appearance. The NSSI group also scored significantly higher on stress, anxiety, depression and harm avoidance.\n\nThe authors also note that definitions of NSSI sometimes encompass behaviors similar to BFRBs, so the boundary is not always drawn cleanly.`,
+    },
+    {
+      heading: `What if my biting hurts or feels out of control?`,
+      body: `Many people with a heavy habit feel shame about it, and that is worth saying to a professional rather than carrying alone. If you bite until you bleed, keep getting infections, or feel real distress about it, our guide to the severity spectrum lists when to get help. If you are also hurting yourself on purpose, or having thoughts of harming yourself, please contact a clinician, your local emergency services or a crisis line in your country now.`,
+      html: `<p>See <a href="/blog/onychophagia">onychophagia and the severity spectrum</a>, <a href="/blog/bfrb-guide">what BFRBs are</a>, and <a href="/blog/nail-biting-emotional-regulation">nail biting and emotional regulation</a>. For the method that works on the habit itself, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://www.bfrb.org/what-are-bfrbs" target="_blank" rel="noopener noreferrer">TLC Foundation for Body-Focused Repetitive Behaviors. Body-Focused Repetitive Behavior (what are BFRBs). bfrb.org. Accessed 8 October 2026.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/32135390/" target="_blank" rel="noopener noreferrer">Mathew AS, Davine TP, Snorrason I, Houghton DC, Woods DW, Lee HJ. Body-focused repetitive behaviors and non-suicidal self-injury: A comparison of clinical characteristics and symptom features. J Psychiatr Res. 2020;124:115–122.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
