@@ -562,6 +562,20 @@ function getWindowsContent(): PageContent {
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
 //
+//   BiteLess      https://apps.apple.com/us/app/biteless-nail-biting-alert/id6743394450
+//     (US App Store listing, fetched 2026-10-08; no separate vendor site found)
+//     CONFIRMED verbatim: "Automatically monitors your nail-biting actions and
+//       provides real-time alerts on your watch"; AI models "trained on hand
+//       motion data in 3D space" detecting "hand movements towards the face";
+//       "Alerts you with a vibration or alarm if it detects nail-biting for over
+//       1-2 seconds"; "Each session lasts up to one hour, and you can start
+//       unlimited sessions"; needs an Apple Watch and an iPhone (iOS 16.0+,
+//       watchOS 9.0+); in-app purchases Monthly $9.99 and Annual $69.99;
+//       "Currently, the app supports watches worn on the left wrist ... Right-
+//       wrist support will be available in an upcoming update."
+//     NOT FOUND: any free trial, any accuracy figure. The listing's rating (1
+//       rating at the check date) is deliberately not used.
+//
 //   Pavlok        https://pavlok.com and https://pavlok.com/pages/habit-nail-biting
 //     (both fetched 2026-10-08)
 //     CONFIRMED (home): "World's #1 Habit Breaking Wearable"; it "uses aversion
@@ -922,6 +936,67 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsBiteLessContent(): PageContent {
+  return {
+    title: 'Stop Biting vs BiteLess: Apple Watch or Webcam?',
+    subtitle: 'An Apple Watch app that senses hand movement towards your face versus a webcam app that watches your hand: compared honestly',
+    intro: 'BiteLess is the better fit if you wear an Apple Watch and bite away from your computer; Stop Biting is the better fit if you bite while you work and would rather not wear anything. BiteLess’s App Store listing describes an Apple Watch and iPhone app that uses AI trained on hand motion data to detect nail biting and alerts you with a vibration or alarm. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac or Windows in a browser. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every BiteLess detail here was checked against its US App Store listing on 8 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs BiteLess: what’s the difference?',
+        body: 'The difference is the sensor. BiteLess reads motion from a watch on your wrist; Stop Biting reads a camera feed of your hand and face. Each works where the other cannot: the watch away from a desk, the webcam without anything worn.\n\nBoth were checked on 8 October 2026. Prices and features change, so confirm on the listing before buying.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>BiteLess</th></tr></thead><tbody>' +
+          '<tr><td>What you need</td><td>A laptop or desktop with a webcam and a browser</td><td>An Apple Watch and an iPhone (iOS 16.0 and watchOS 9.0 or later)</td></tr>' +
+          '<tr><td>How it detects</td><td>On-device AI on webcam video of your hand and face</td><td>AI models on hand motion data, detecting hand movement towards the face</td></tr>' +
+          '<tr><td>Alert</td><td>An alarm (sound, flash or both)</td><td>A vibration or alarm on the watch, if it detects nail biting for over 1 to 2 seconds</td></tr>' +
+          '<tr><td>Where it works</td><td>Only in front of your computer webcam</td><td>Wherever you wear the watch, in sessions of up to one hour</td></tr>' +
+          '<tr><td>Wrist</td><td>Not applicable</td><td>Left wrist at the time of its listing; right wrist listed as an upcoming update</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free to download; in-app purchases of $9.99 monthly and $69.99 annual</td></tr>' +
+          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on its listing</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and BiteLess have in common?',
+        body: 'Both detect nail biting automatically and alert you at the moment it starts, rather than asking you to notice and log it. That alert is the awareness step habit reversal training depends on. Both are subscriptions after you start.',
+      },
+      {
+        heading: 'What does BiteLess do better than Stop Biting?',
+        body: 'It works away from your desk. A watch goes with you to the commute, the sofa and the meeting room, while Stop Biting can only act where a webcam can see your hand.\n\nIt needs no camera pointed at you. If a webcam feels like too much, a motion sensor on your wrist is a different trade-off.\n\nIt is built for people who already own an Apple Watch.',
+      },
+      {
+        heading: 'What does Stop Biting do better than BiteLess?',
+        body: 'It needs no watch. It runs in a browser tab on a Mac or Windows computer, so there is nothing to buy or wear, and the 3-day trial needs no card.\n\nIt does not need an Apple device. BiteLess’s listing requires an Apple Watch and an iPhone, so Android and Windows users are out.\n\nIt costs less over a year: $29 against the $69.99 annual purchase on BiteLess’s listing.\n\nIt is not limited to a wrist. BiteLess’s listing says it currently supports watches worn on the left wrist, with right-wrist support coming. We make no claim about how accurate either approach is, because we found no figure on its listing and have not tested it.\n\nThe honest limit: Stop Biting only sees biting that happens in front of your computer webcam.',
+      },
+      {
+        heading: 'How much do Stop Biting and BiteLess cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nBiteLess: free to download. Its US App Store listing on 8 October 2026 showed in-app purchases of $9.99 for a monthly subscription and $69.99 for an annual one. You also need an Apple Watch and an iPhone. App Store prices vary by storefront and change, so check the listing.',
+      },
+      faqSection(
+        'Every answer below uses the same 8 October 2026 check of the BiteLess App Store listing as the rest of this page.',
+        [
+          ['Does BiteLess need an Apple Watch?', 'Yes. Its listing says it runs primarily on a smartwatch and requires an Apple Watch and an iPhone, with iOS 16.0 and watchOS 9.0 or later. Stop Biting needs only a computer webcam.'],
+          ['Does BiteLess detect nail biting automatically?', 'Its listing says it automatically monitors your nail-biting actions and alerts you on your watch with a vibration or alarm if it detects nail biting for over 1 to 2 seconds. Stop Biting also detects it automatically, through your webcam.'],
+          ['Which works away from a computer?', 'BiteLess, because it is worn on your wrist. Stop Biting only works in front of a webcam.'],
+          ['Which is cheaper?', 'Stop Biting is $2.99/month or $29/year after a 3-day free trial. BiteLess’s listing shows $9.99 monthly or $69.99 annual, and does not state a trial.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or BiteLess?',
+        body: 'Pick BiteLess if you wear an Apple Watch, bite mostly away from a computer, and are fine with a left-wrist watch.\n\nPick Stop Biting if you bite while you work, do not own an Apple Watch, or want to try it free without a card.\n\nSome people could reasonably use both: the watch for the day, the webcam at the desk.',
+      },
+      verificationSection('Every BiteLess detail on this page (the description, how it alerts, the devices and software versions it needs, session length, the wrist limitation and the in-app purchase prices) was checked against its US App Store listing on 8 October 2026, and quoted phrases are the listing’s own. We looked for a free trial and an accuracy figure and did not find them, so we state none. We did not use its star rating. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on the App Store listing before buying.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/stop-biting-vs-pavlok', label: 'Stop Biting vs Pavlok: an alert or a shock?' },
+      { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/blog/nail-biting-wearable-technology', label: 'Wearable technology for nail biting' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 function getVsPavlokContent(): PageContent {
   return {
     title: 'Stop Biting vs Pavlok: An Alert or a Shock?',
@@ -974,6 +1049,7 @@ function getVsPavlokContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-biteless', label: 'Stop Biting vs BiteLess: Apple Watch or webcam?' },
       { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/blog/nail-biting-wearable-technology', label: 'Wearable technology for nail biting' },
@@ -1095,6 +1171,7 @@ function getVsHabitAwareContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-biteless', label: 'Stop Biting vs BiteLess: Apple Watch or webcam?' },
       { href: '/compare/stop-biting-vs-pavlok', label: 'Stop Biting vs Pavlok: an alert or a shock?' },
       { href: '/compare/stop-biting-vs-nailkeeper', label: 'Stop Biting vs NailKeeper: real-time detection or photo tracking?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -1115,6 +1192,7 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/stop-biting-vs-habitaware': getVsHabitAwareContent,
   '/compare/stop-biting-vs-nailkeeper': getVsNailKeeperContent,
   '/compare/stop-biting-vs-pavlok': getVsPavlokContent,
+  '/compare/stop-biting-vs-biteless': getVsBiteLessContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
