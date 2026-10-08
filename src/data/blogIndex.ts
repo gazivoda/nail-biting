@@ -1321,4 +1321,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-05",
     dateModified: "2026-10-05",
   },
+  {
+    slug: "nail-biting-teeth-damage",
+    title: "Does Nail Biting Damage Your Teeth? What Has Actually Been Measured",
+    description: "Less is measured than articles claim: one study on root resorption, one disputed on malocclusion, one on jaw signs. What is established and what is not.",
+    tag: "Health",
+    readingMinutes: 3,
+    datePublished: "2026-10-08",
+    dateModified: "2026-10-08",
+  },
 ];
