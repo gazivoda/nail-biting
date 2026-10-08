@@ -154,3 +154,13 @@ it serves the previous bundle.
 `CORE_PAGES` and `PAGE_SOURCES` in scripts/sync-seo.mjs (the file contains binary
 bytes: use `command grep -a`, and edit it in bytes), plus the llms core-route list.
 Commit the page first, then sync, then commit the generated files.
+
+## 2026-10-08 — Growth loop 3 (nail-habit-app)
+
+**Scope greps to the claim, not the topic.** A regex on 'onychotillomania' matched every citation in 150 posts and flooded the context. Search for the specific phrase, or count matches first.
+
+**Reusable copy goes stale faster than the site.** docs/off-site-kit still carried the removed desktop-app claim, the retired 'zero network requests' / '100% private' wording and a false 'no analytics' (the site runs Google Analytics). After any claim is removed from the site, grep the kit and drafts for it before they are pasted anywhere.
+
+**A subagent's confident correction can be wrong.** The GEO agent called `ai-input` an invalid Content-Signal key; the published spec lists search, ai-input and ai-train. Check the primary source before changing working config.
+
+**NCBI eutils is the fallback when PubMed pages need cookies.** `efetch.fcgi?db=pubmed&id=PMID&rettype=abstract&retmode=text` returns citation and abstract; when no abstract exists, cite the title only and do not describe the findings.
