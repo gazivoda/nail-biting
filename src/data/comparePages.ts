@@ -957,7 +957,7 @@ function getVsBiteLessContent(): PageContent {
       },
       {
         heading: 'What do Stop Biting and BiteLess have in common?',
-        body: 'Both detect nail biting automatically and alert you at the moment it starts, rather than asking you to notice and log it. That alert is the awareness step habit reversal training depends on. Both are subscriptions after you start.',
+        body: 'Both detect nail biting automatically and alert you at the moment it starts, rather than asking you to notice and log it. That alert is the awareness step habit reversal training depends on. Both sell a subscription.',
       },
       {
         heading: 'What does BiteLess do better than Stop Biting?',
