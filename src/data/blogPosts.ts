@@ -157,6 +157,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `For what has and has not been measured about nail biting and your teeth, see our page on whether nail biting damages your teeth.`,
         html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
       },
+      {
+        heading: `Where to go next`,
+        body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
+        html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -1565,6 +1570,11 @@ BLOG_POSTS.push({
       body: `Nail biting is not equivalent to deliberately consuming pathogens. The body's immune system handles most of the bacterial challenges from nail biting without incident in healthy adults. For most people, the long-term cumulative risks — dental damage, nail infections, nail damage — are greater than the acute infection risk from individual biting episodes.\n\nHowever, the risk is not zero. Acute paronychia is the well-documented consequence: nail biting is listed as a recognised risk factor for it in clinical guidance, and the relevant organisms when biting is the route are oral anaerobes (Leggit, 2017). What that guidance does not give is an incidence, a relative risk, or a figure for what share of biters ever develop one. Nor have we found a study quantifying risk for immunocompromised or pregnant readers specifically, so we are not going to attach numbers to those groups.\n\nUnderstanding the germ route is one of the strongest motivations many people report for stopping. Just note the shape of the evidence behind it: a documented colonisation difference in saliva, a documented risk-factor listing for nail-fold infection, and no measured per-episode risk at all.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://www.aafp.org/pubs/afp/issues/2017/0701/p44.html" target="_blank" rel="noopener noreferrer">Leggit JC. Acute and Chronic Paronychia. Am Fam Physician. 2017;96(1):44–51.</a></li></ul>`,
     },
+    {
+      heading: `Where to go next`,
+      body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
+      html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2844,6 +2854,11 @@ BLOG_POSTS.push({
         'Keeping nails filed short.',
         'Reducing overall biting frequency — the only intervention that addresses the ingestion pathway directly, rather than just reducing the microbial load per episode.',
       ],
+    },
+    {
+      heading: `Where to go next`,
+      body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
+      html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5991,6 +6006,38 @@ BLOG_POSTS.push({
       heading: `What should I do about it?`,
       body: `If you have braces, jaw pain, clicking, or a tooth that has changed, tell a dentist; they can examine what a general article cannot. Whether or not biting is harming your teeth, a habit that runs hundreds of times a day is worth interrupting, and the first step is noticing it.`,
       html: `<p>Related reading: <a href="/blog/nail-biting-braces">nail biting with braces</a>, <a href="/blog/nail-biting-jaw-pain-tmj">jaw pain and TMJ</a>, <a href="/blog/nail-biting-vs-teeth-grinding">nail biting and teeth grinding</a>, and <a href="/blog/nail-biting-health-risks">the wider health risks</a>. For the method, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/3859328/" target="_blank" rel="noopener noreferrer">Odenrick L, Brattström V. Nailbiting: frequency and association with root resorption during orthodontic treatment. Br J Orthod. 1985;12(2):78–81.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10601139/" target="_blank" rel="noopener noreferrer">Otsugu M, Sasaki Y, Mikasa Y, et al. Incompetent lip seal and nail biting as risk factors for malocclusion in Japanese preschool children aged 3–6 years. BMC Pediatr. 2023;23(1):532.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4576640/" target="_blank" rel="noopener noreferrer">Motghare V, Kumar J, Kamate S, et al. Association Between Harmful Oral Habits and Sign and Symptoms of Temporomandibular Joint Disorders Among Adolescents. J Clin Diagn Res. 2015;9(8):ZC45–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24809566/" target="_blank" rel="noopener noreferrer">Ellison R, Rahman S, Barker D, Larmour C. Onychophagia and subgingival foreign body embedment: a case report. Br Dent J. 2014;216(9):519–520.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'swallowing-fingernails',
+  title: `What Happens If You Swallow Your Fingernails?`,
+  seoTitle: 'What Happens If You Swallow Your Fingernails?',
+  description: `We found no study of what swallowed nail clippings do. What exists is one gastritis case report and association studies on germs and pinworm.`,
+  tag: 'Health',
+  readingMinutes: 3,
+  datePublished: '2026-10-08',
+  dateModified: '2026-10-08',
+  ogImage: '/og/swallowing-fingernails.png',
+  sections: [
+    {
+      heading: `What happens if you swallow your fingernails?`,
+      body: `We could not find a study that measures it. No trial or cohort we found follows swallowed nail fragments through the gut, so any article giving you a number or a timetable is going beyond the evidence. What does exist is narrower: one published case report of stomach inflammation attributed to nail biting, and association studies on germs and pinworm, which are more about what is on the nail than about the nail itself.\n\nAbsence of a study is not proof of safety, and it is not proof of harm either.`,
+    },
+    {
+      heading: `Has anyone reported harm from swallowing nails?`,
+      body: `One case report is titled "Granulomatous gastritis induced by onychophagia: First case report" (Morais et al., 2018). We could read only the title and citation record, not the abstract, so we will not describe the patient or the outcome. A single case report shows that something can happen, not how often.`,
+    },
+    {
+      heading: `What is actually travelling with the nail?`,
+      body: `Mostly what is under it. In a small cross-sectional study of 25 chronic nail biters and 34 non-biters, Enterobacteriaceae were detected in the saliva of 76% of the biters versus 26.5% of the non-biters (Baydaş et al., 2007). It sampled saliva, not nails, so it shows a difference in what was present rather than a traced transfer.\n\nFor pinworm, the studies are associations. In a Taiwanese case-control study of 429 infected children and 280 uninfected classmates, nail biting was among the factors associated with infection (odds ratio 2.1), alongside playing on the floor and not washing hands before meals (Sung et al., 2001). A Yemeni cross-sectional study of 402 children found an independent association for "nail biting or cutting by teeth" (Al-Adhroey et al., 2022). The CDC's pinworm prevention advice says to avoid biting nails and keep fingernails clean and short, as part of a hygiene bundle it does not rank.`,
+    },
+    {
+      heading: `What should I do?`,
+      body: `Keep nails short and clean, wash your hands before eating, and treat the habit itself as the thing to change. If you have ongoing stomach symptoms, speak to a clinician rather than relying on a general article.`,
+      html: `<p>More on the gut side: <a href="/blog/nail-biting-gut-health">nail biting and gut health</a> and <a href="/blog/nail-biting-bacteria-parasites">bacteria and parasites</a>; the wider picture is in <a href="/blog/nail-biting-health-risks">the real health risks of nail biting</a>. For the method, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/29054319/" target="_blank" rel="noopener noreferrer">Morais R, Nunes ACR, Rios E, Rodrigues S, Macedo G. Granulomatous gastritis induced by onychophagia: First case report. Gastroenterol Hepatol. 2018;41(8):498–500.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/11716114/" target="_blank" rel="noopener noreferrer">Sung JF, Lin RS, Huang KC, Wang SY, Lu YJ. Pinworm control and risk factors of pinworm infection among primary-school children in Taiwan. Am J Trop Med Hyg. 2001;65(5):558–562.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9458792/" target="_blank" rel="noopener noreferrer">Al-Adhroey AH, Al-Ansi YA, Al-Kholani MA, et al. Enterobiasis among Yemeni children: a cross-sectional study. J Parasit Dis. 2022;46(3):722–728.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/17241163/" target="_blank" rel="noopener noreferrer">Baydaş B, Uslu H, Yavuz I, Ceylan I, Dağsuyu IM. Effect of a chronic nail-biting habit on the oral carriage of Enterobacteriaceae. Oral Microbiol Immunol. 2007;22(1):1–4.</a></li><li><a href="https://www.cdc.gov/pinworm/prevention/index.html" target="_blank" rel="noopener noreferrer">CDC. Preventing Pinworm Infection.</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
