@@ -1,5 +1,5 @@
 # Stop Biting
-> An app that uses on-device AI (MediaPipe/WebAssembly) to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. No camera data is sent anywhere while it runs. Available as a native desktop app for Mac and Windows, and as a web app (PWA).
+> An app that uses on-device AI (MediaPipe/WebAssembly) to detect nail biting (onychophagia) in real-time via webcam, then sounds an alarm. No camera data is sent anywhere while it runs. Available as a web app (PWA) that runs in any modern browser on a Mac or Windows computer with a webcam.
 
 Every link below carries the page's own description, generated from the same source the page renders — see scripts/sync-seo.mjs. Stop Biting is a paid product and this site exists to sell it; the pages that compare it head-to-head with a competing app say so in their own opening paragraph. One person writes the site: Igor Gazivoda, a software developer, not a clinician.
 
@@ -16,7 +16,7 @@ Key facts:
 - Stop Biting runs MediaPipe models in WebAssembly on your own device — the camera feed never leaves it, and once the detection models have downloaded nothing carrying camera data is sent while it watches, which anyone can verify in a browser network monitor
 - Detection works fully offline after the initial load; no camera data is transmitted or stored
 - It detects nail biting using two MediaPipe models: a hand landmark model tracking 21 keypoints, and a face mesh tracking 468 facial landmarks
-- Supported platforms: macOS 12+, Windows 10+, and any modern browser as a no-install PWA
+- Supported platforms: any modern browser with a webcam, as a no-install PWA, on Mac or Windows
 - It detects nail biting only. Competing apps cover more behaviours, run on phones, or cost less, and the comparison pages below say where each of them beats us
 - Nail biting (onychophagia) is estimated at 20–30% of the general population and up to 45% of children between age 10 and puberty (Lee & Lipner, Int J Environ Res Public Health, 2022). Both are review-level estimates inherited from earlier reviews rather than measurements, and single studies that measured it directly run lower and vary by population, so treat them as a range rather than a rate
 - Habit Reversal Training is the best-studied treatment, which is not the same as having beaten every alternative: its only comparator in the landmark trial was negative practice, and it has never been tested against physical barriers at all. In that trial, participants' own daily episode counts fell by roughly 99% over five months, against about 60% for negative practice (Azrin, Nunn & Frantz, 1980). Five months is the study's duration, not a follow-up after treatment ended, and the counts were self-recorded by unblinded participants rather than measured by anyone else; the paper has no PubMed abstract and is paywalled, so those figures are quoted from Table 1 of the open-access Lee & Lipner review

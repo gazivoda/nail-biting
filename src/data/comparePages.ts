@@ -159,7 +159,7 @@ function getDeskWorkersContent(): PageContent {
       },
       {
         heading: 'How does a webcam app stop nail biting at your desk?',
-        body: 'It supplies the awareness self-monitoring couldn\'t: the app watches your existing webcam locally and fires an audible alarm the moment it detects your hand approaching your mouth.\n\nIf you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab (or as a desktop app in the system tray) using your existing webcam.\n\nThe app processes your webcam feed locally — nothing is transmitted — and fires an audible alarm when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting covers the hours where a large share of the habit lives — the time spent in front of a computer.',
+        body: 'It supplies the awareness self-monitoring couldn\'t: the app watches your existing webcam locally and fires an audible alarm the moment it detects your hand approaching your mouth.\n\nIf you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab using your existing webcam.\n\nThe app processes your webcam feed locally — nothing is transmitted — and fires an audible alarm when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting covers the hours where a large share of the habit lives — the time spent in front of a computer.',
       },
       {
         heading: 'What should you do when the alarm fires at your desk?',
@@ -174,7 +174,7 @@ function getDeskWorkersContent(): PageContent {
         'Short answers to the questions desk workers ask most, each one restating what the sections above explain in full.',
         [
           ['Where does most desk-worker nail biting happen?', 'During deep focus — debugging code, writing a difficult email, analyzing data — when the prefrontal cortex is fully occupied by the task and self-monitoring is offline.'],
-          ['Does Stop Biting work on a work laptop?', 'It runs in a browser tab, or as a desktop app in the system tray, using the webcam already on the machine.'],
+          ['Does Stop Biting work on a work laptop?', 'It runs in a browser tab, with no install, using the webcam already on the machine.'],
           ['Is my webcam footage sent anywhere?', 'No. The app processes your webcam feed locally — nothing is transmitted.'],
           ['How do I stop biting during video calls?', 'Interlace your fingers and press them together under the desk: the same physical incompatibility as the palm press, and invisible on camera. Hold it while the urge passes, typically 20–60 seconds.'],
         ],
@@ -243,7 +243,7 @@ function getGamersContent(): PageContent {
   return {
     title: 'Stop Nail Biting While Gaming',
     subtitle: 'Gaming flow state makes the habit invisible — AI detection works in the background',
-    intro: 'Gaming is one of the worst nail biting contexts because it\'s designed to capture exactly the cognitive state that makes automatic habits invisible: in flow, self-monitoring goes offline, and the highest-risk windows are loading screens and queue waits, high-stakes competitive moments, and the frustration after a death or loss. Bitter polish, gloves and phone reminders each need something gaming takes away — taste, finger precision, audibility, or spare attention. Stop Biting runs in a browser tab or the system tray beside the game, on the webcam you already have, with the alarm volume set loud enough to cut through headphones.',
+    intro: 'Gaming is one of the worst nail biting contexts because it\'s designed to capture exactly the cognitive state that makes automatic habits invisible: in flow, self-monitoring goes offline, and the highest-risk windows are loading screens and queue waits, high-stakes competitive moments, and the frustration after a death or loss. Bitter polish, gloves and phone reminders each need something gaming takes away — taste, finger precision, audibility, or spare attention. Stop Biting runs in a browser tab beside the game, on the webcam you already have, with the alarm volume set loud enough to cut through headphones.',
     sections: [
       {
         heading: 'Why do I bite my nails while gaming?',
@@ -261,17 +261,17 @@ function getGamersContent(): PageContent {
           '<tr><td>Gloves or finger wraps</td><td>Interfere with keyboard and mouse precision</td></tr>' +
           '<tr><td>Phone reminders</td><td>Inaudible under headphones, and they break flow</td></tr>' +
           '<tr><td>Willpower and self-monitoring</td><td>Gaming’s attentional demands are calibrated to exclude self-monitoring</td></tr>' +
-          '<tr><td>Stop Biting (webcam AI detection)</td><td>Runs in a browser tab or the system tray beside the game; alarm volume is adjustable so it cuts through headphones, and you return to play immediately</td></tr>' +
+          '<tr><td>Stop Biting (webcam AI detection)</td><td>Runs in a browser tab beside the game; alarm volume is adjustable so it cuts through headphones, and you return to play immediately</td></tr>' +
           '</tbody></table>',
       },
       {
         heading: 'Can an app detect nail biting while you play?',
-        body: 'Yes — if you\'re gaming on a computer, you already have the webcam it needs. Stop Biting runs in a browser tab or system tray alongside your game, using that webcam to detect nail biting and fire an audible alarm — without interrupting gameplay.\n\nThe alarm is loud enough to cut through headphones (adjust your alarm volume in settings). It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately. No interruption, no context switch required.\n\nOver several weeks of consistent alarm-based interruption during gaming sessions, the habit\'s automaticity in that specific context weakens.',
+        body: 'Yes — if you\'re gaming on a computer, you already have the webcam it needs. Stop Biting runs in a browser tab alongside your game, using that webcam to detect nail biting and fire an audible alarm — without interrupting gameplay.\n\nThe alarm is loud enough to cut through headphones (adjust your alarm volume in settings). It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately. No interruption, no context switch required.\n\nOver several weeks of consistent alarm-based interruption during gaming sessions, the habit\'s automaticity in that specific context weakens.',
       },
       faqSection(
         'Short answers to the questions gamers ask most, each one restating what the sections above explain in full.',
         [
-          ['Will the alarm interrupt my game?', 'It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately — no interruption and no context switch. The app runs in a browser tab or the system tray beside the game.'],
+          ['Will the alarm interrupt my game?', 'It breaks the automatic habit chain at the moment of occurrence, then you return to the game immediately — no interruption and no context switch. The app runs in a browser tab beside the game.'],
           ['Can I hear the alarm through headphones?', 'Yes. The alarm is loud enough to cut through headphones, and you set the volume in settings.'],
           ['Do I have to stop gaming to stop biting my nails?', 'No. Over several weeks of consistent alarm-based interruption during gaming sessions, the habit’s automaticity in that specific context weakens.'],
         ],
@@ -656,7 +656,7 @@ function getVsHandsOffContent(): PageContent {
         heading: 'Stop Biting vs Hands Off: what’s the difference?',
         body: 'Both are on-device webcam detectors. Hands Off covers five behaviours on Mac and Windows; Stop Biting focuses on nail biting and adds a no-install web app and an annual plan.\n\nBoth apps were checked side by side on 10 September 2026. Pricing and features change — always confirm on the vendor’s own site before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Hands Off</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Mac, Windows, web browser (PWA)</td><td>Mac, Windows desktop</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>Mac, Windows desktop</td></tr>' +
           '<tr><td>Behaviors detected</td><td>Nail biting (focused)</td><td>Five BFRBs — its site lists nail biting, skin picking, eyebrow or eyelash pulling, ear picking, and nose picking</td></tr>' +
           '<tr><td>Detection</td><td>On-device AI (MediaPipe/WebAssembly)</td><td>On-device AI — all processing local</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>€2.99/month (monthly plan only listed)</td></tr>' +
@@ -675,7 +675,7 @@ function getVsHandsOffContent(): PageContent {
       },
       {
         heading: 'What does Stop Biting do better than Hands Off?',
-        body: 'Stop Biting runs in the browser. Hands Off is a Mac/Windows download; Stop Biting works as a desktop app and as a no-install web app (PWA), which matters on locked-down work laptops where you can’t install software.\n\nStop Biting has an annual plan. Hands Off’s site lists a single €2.99/month subscription. Stop Biting is $2.99/month or $29/year — about $2.42/month if you commit, roughly 19% cheaper than paying monthly.\n\nStop Biting pairs detection with treatment content. The alarm is the awareness trigger; the library of over 100 science-backed guides on habit reversal training, competing responses, and trigger mapping turns that trigger into a method. Stop Biting also tracks bite-free streaks and keeps a timestamped incident history — but Hands Off ships a statistics tracker of its own, so treat this as a difference in what gets measured, not as a feature they lack.\n\nThe honest counterpoint: if your problem is skin picking or hair pulling rather than nail biting, Stop Biting is the wrong tool — it detects nail biting only.',
+        body: 'Stop Biting runs in the browser. Hands Off is a Mac/Windows download; Stop Biting works as a no-install web app (PWA), which matters on locked-down work laptops where you can’t install software.\n\nStop Biting has an annual plan. Hands Off’s site lists a single €2.99/month subscription. Stop Biting is $2.99/month or $29/year — about $2.42/month if you commit, roughly 19% cheaper than paying monthly.\n\nStop Biting pairs detection with treatment content. The alarm is the awareness trigger; the library of over 100 science-backed guides on habit reversal training, competing responses, and trigger mapping turns that trigger into a method. Stop Biting also tracks bite-free streaks and keeps a timestamped incident history — but Hands Off ships a statistics tracker of its own, so treat this as a difference in what gets measured, not as a feature they lack.\n\nThe honest counterpoint: if your problem is skin picking or hair pulling rather than nail biting, Stop Biting is the wrong tool — it detects nail biting only.',
       },
       {
         heading: 'How much do Stop Biting and Hands Off cost?',
@@ -728,7 +728,7 @@ function getVsNailedContent(): PageContent {
         heading: 'Stop Biting vs Nailed: what’s the difference?',
         body: 'Same detection engine, different scope: Nailed is a macOS-only menu bar app; Stop Biting adds Windows and the browser, streak tracking, incident history and a habit-reversal content library.\n\nDetails re-verified against nailedapp.io and Nailed’s Mac App Store listing on 10 September 2026. Pricing and features change — confirm on the vendor’s site before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Nailed</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Mac, Windows, web browser (PWA)</td><td>macOS only (menu bar app); its store listing requires macOS 12 or later and an Apple M1 chip or later</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>macOS only (menu bar app); its store listing requires macOS 12 or later and an Apple M1 chip or later</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>nailedapp.io advertises $4.99 one-time; its Mac App Store listing currently shows “Free”, with no in-app purchases</td></tr>' +
           '<tr><td>Free trial</td><td>3 days, no credit card</td><td>None listed</td></tr>' +
           '<tr><td>Detection engine</td><td>MediaPipe models via WebAssembly, on-device</td><td>MediaPipe models via WebAssembly, on-device</td></tr>' +
@@ -746,7 +746,7 @@ function getVsNailedContent(): PageContent {
       },
       {
         heading: 'Why choose Stop Biting over Nailed?',
-        body: 'Platforms: Nailed is macOS-only, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs on Mac, on Windows, and in any modern browser as a no-install web app, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial. Stop Biting’s 3-day trial requires no credit card, so you can test detection accuracy on your actual desk before paying. This is a smaller advantage than it looks right now — if Nailed’s store listing is free, trying it costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.',
+        body: 'Platforms: Nailed is macOS-only, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs as a no-install web app in any modern browser on Mac or Windows, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial. Stop Biting’s 3-day trial requires no credit card, so you can test detection accuracy on your actual desk before paying. This is a smaller advantage than it looks right now — if Nailed’s store listing is free, trying it costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.',
       },
       {
         heading: 'Which is cheaper, Stop Biting or Nailed?',
@@ -759,7 +759,7 @@ function getVsNailedContent(): PageContent {
       faqSection(
         'Every answer below rests on the same 10 September 2026 check of nailedapp.io and the Mac App Store listing that site links to.',
         [
-          ['Does Nailed work on Windows?', 'No — it’s a macOS menu bar app, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later. Stop Biting runs on Mac, on Windows and in any modern browser.'],
+          ['Does Nailed work on Windows?', 'No — it’s a macOS menu bar app, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later. Stop Biting runs as a web app in any modern browser on Mac or Windows.'],
           ['How much does Nailed cost?', 'Its site advertises $4.99 as a one-time purchase, while the Mac App Store listing it links to currently shows the app as a free download with no in-app purchases. Check the store page before assuming a price.'],
           ['Does Nailed track your progress?', 'Yes. Its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks or a reviewable incident history.'],
           ['Does Nailed have a free trial?', 'No free trial is listed. Its App Store listing showed the app as a free download when we checked, so trying it may cost nothing anyway; Stop Biting’s 3-day trial needs no credit card.'],
@@ -793,7 +793,7 @@ function getVsSmartBehaviorContent(): PageContent {
         heading: 'Stop Biting vs SmartBehavior: what’s the difference?',
         body: 'Platform, mostly. SmartBehavior has native iOS and Android apps plus Windows; Stop Biting covers Mac, Windows and the browser, and publishes its pricing.\n\nDetails re-verified against smart-behavior.com and SmartBehavior’s App Store listing on 10 September 2026. Pricing and features change — confirm on the vendor’s site before deciding.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>SmartBehavior</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Mac, Windows, web browser (PWA)</td><td>iOS, Android, Windows. No dedicated Mac app, but its App Store listing says the iPad app runs on a Mac with an Apple M1 chip or later</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>iOS, Android, Windows. No dedicated Mac app, but its App Store listing says the iPad app runs on a Mac with an Apple M1 chip or later</td></tr>' +
           '<tr><td>Native mobile app</td><td>No</td><td>Yes — iPhone and Android</td></tr>' +
           '<tr><td>Behaviors detected</td><td>Nail biting (focused)</td><td>Nail biting, skin picking, hair pulling, and other BFRBs</td></tr>' +
           '<tr><td>Detection</td><td>On-device (MediaPipe/WebAssembly); offline after initial load</td><td>On-device, 100% offline; claims 85% accuracy</td></tr>' +
@@ -819,7 +819,7 @@ function getVsSmartBehaviorContent(): PageContent {
       },
       {
         heading: 'Should I choose Stop Biting or SmartBehavior?',
-        body: 'Choose SmartBehavior if: most of your biting happens away from a computer, you want a native iPhone or Android app, or you also struggle with skin picking or hair pulling on the go.\n\nChoose Stop Biting if: most of your biting happens at a desk, you want a desktop app on a Mac rather than an iPad app running on one, you want a browser option for locked-down machines, you want published pricing with a free trial before paying, or you want habit-reversal coaching and incident history around the detector.',
+        body: 'Choose SmartBehavior if: most of your biting happens away from a computer, you want a native iPhone or Android app, or you also struggle with skin picking or hair pulling on the go.\n\nChoose Stop Biting if: most of your biting happens at a desk, you want a browser app on a Mac rather than an iPad app running on one, you want a browser option for locked-down machines, you want published pricing with a free trial before paying, or you want habit-reversal coaching and incident history around the detector.',
       },
       faqSection(
         'Every answer below rests on the same 10 September 2026 check of smart-behavior.com and its App Store listing.',
@@ -852,7 +852,7 @@ function getAiDetectionAppsContent(): PageContent {
         heading: 'Which apps detect nail biting in real time?',
         body: 'Four, as of 10 September 2026: Stop Biting, Hands Off, Nailed and SmartBehavior. All four process video on-device.\n\nAll details below were re-verified against each vendor’s public website, and their app store listings where those exist, on 10 September 2026. Pricing and features change — confirm before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Hands Off</th><th>Nailed</th><th>SmartBehavior</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Mac, Windows, web (PWA)</td><td>Mac, Windows</td><td>macOS only; needs macOS 12+ and Apple M1 or later</td><td>iOS, Android, Windows; iPad app also runs on Apple Silicon Macs</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>Mac, Windows</td><td>macOS only; needs macOS 12+ and Apple M1 or later</td><td>iOS, Android, Windows; iPad app also runs on Apple Silicon Macs</td></tr>' +
           '<tr><td>Behaviors</td><td>Nail biting</td><td>Five BFRBs (nail biting, skin picking, brow/lash pulling, ear picking, nose picking listed)</td><td>Nail biting</td><td>Nail biting, skin picking, hair pulling, other BFRBs</td></tr>' +
           '<tr><td>Detection</td><td>On-device (MediaPipe/WASM)</td><td>On-device, all processing local</td><td>On-device (MediaPipe/WASM)</td><td>On-device, 100% offline</td></tr>' +
           '<tr><td>Price</td><td>$2.99/mo or $29/yr</td><td>€2.99/mo</td><td>$4.99 one-time on its site; its App Store listing shows “Free”</td><td>Not published on site; US App Store listing showed $0.99</td></tr>' +
@@ -866,7 +866,7 @@ function getAiDetectionAppsContent(): PageContent {
       },
       {
         heading: 'Which app is best for nail biting at a computer?',
-        body: 'Stop Biting — our app, so read this row knowing that. It runs on Mac, Windows, and — uniquely in this group as of 10 September 2026 — in a web browser as a no-install PWA. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with no camera data sent during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.',
+        body: 'Stop Biting — our app, so read this row knowing that. It runs — uniquely in this group as of 10 September 2026 — as a no-install PWA in a web browser, on Mac or Windows. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with no camera data sent during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.',
       },
       {
         heading: 'Which app is best for multiple BFRBs on desktop?',
@@ -917,7 +917,7 @@ function getVsNailKeeperContent(): PageContent {
         body: 'NailKeeper describes photo tracking, a timer and reminders. Stop Biting describes real-time detection through a webcam. The two are built around different moments: one around checking in afterwards, the other around the moment of biting.\n\nBoth were checked on 6 October 2026. Prices and features change, so confirm on the vendor’s own pages before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>NailKeeper</th></tr></thead><tbody>' +
           '<tr><td>What it centres on</td><td>Real-time alarm when your hand nears your mouth</td><td>Photo tracking of nail growth, a time-since-quitting timer, and reminders to take photos</td></tr>' +
-          '<tr><td>Platforms</td><td>Mac, Windows, web browser (PWA); needs a webcam</td><td>iOS and Android; its App Store listing also shows iPad and Mac (Apple M1 or later)</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows; needs a webcam</td><td>iOS and Android; its App Store listing also shows iPad and Mac (Apple M1 or later)</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free to download; its App Store listing shows in-app purchases of $4.99, $9.99 and $19.99</td></tr>' +
           '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on the pages we checked</td></tr>' +
           '<tr><td>Real-time detection</td><td>Yes, on-device AI through your webcam</td><td>Not mentioned on its site or App Store listing</td></tr>' +
@@ -975,7 +975,7 @@ function getVsHabitAwareContent(): PageContent {
         heading: 'Stop Biting vs HabitAware: what’s the difference?',
         body: 'HabitAware sells a smart bracelet; Stop Biting is software that uses your webcam. One is worn, the other is only active while a screen is in front of you.\n\nBoth were checked on 5 October 2026. Prices and features change, so confirm on the vendor’s own site before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>HabitAware (Keen2)</th></tr></thead><tbody>' +
-          '<tr><td>What it is</td><td>Software: Mac, Windows and web browser (PWA)</td><td>A smart bracelet; its site also lists a separate “KeenLite: Apple Watch App”</td></tr>' +
+          '<tr><td>What it is</td><td>Software: a web app (PWA) in a browser on Mac or Windows</td><td>A smart bracelet; its site also lists a separate “KeenLite: Apple Watch App”</td></tr>' +
           '<tr><td>Behaviors</td><td>Nail biting (focused)</td><td>Hair pulling, skin picking and nail biting, as its site names them</td></tr>' +
           '<tr><td>How it alerts</td><td>On-screen and sound alert when your hand nears your mouth</td><td>The device vibrates on the wrist, “like a ‘hug’”, when it detects the behavior</td></tr>' +
           '<tr><td>Where it works</td><td>Only while you are in front of your computer webcam</td><td>Wherever you wear it</td></tr>' +
