@@ -139,6 +139,10 @@ const FAQS: { q: string; a: string }[] = [
     q: 'Do I need a Google account to use it?',
     a: 'Accounts are created through Google sign-in, which gives us your name, email address and profile picture and never your Google password. The live demo on the homepage needs no account at all.',
   },
+  {
+    q: 'Is there an app that detects nail biting with a webcam?',
+    a: 'Yes. Several apps now watch for hand-to-mouth movement through a camera and interrupt the habit as it happens: Stop Biting, Hands Off (Mac and Windows), Nailed (a Mac menu bar app) and SmartBehavior (iPhone, Android and Windows). They differ in platform, price and which behaviours they cover. Stop Biting is our own product: it runs in a browser on a laptop or desktop with a webcam and detects nail biting only. Our comparison pages say where each of the others is the better fit, with details checked against each vendor\'s own site.',
+  },
 ];
 
 // ── The page ────────────────────────────────────────────────────────────────
