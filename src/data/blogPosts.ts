@@ -5939,3 +5939,39 @@ BLOG_POSTS.push({
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-teeth-damage',
+  title: `Does Nail Biting Damage Your Teeth? What Has Actually Been Measured`,
+  seoTitle: 'Does Nail Biting Damage Your Teeth?',
+  description: `Less is measured than most articles claim: one orthodontic study on root resorption, one contested on malocclusion, one on jaw signs. What is established, what is not.`,
+  tag: 'Health',
+  readingMinutes: 3,
+  datePublished: '2026-10-08',
+  dateModified: '2026-10-08',
+  ogImage: '/og/nail-biting-teeth-damage.png',
+  sections: [
+    {
+      heading: `Does nail biting damage your teeth?`,
+      body: `Possibly, but the evidence is thinner than most articles about nail biting imply. A main clinical review lists gingival injury, increased incisor wear, malocclusion, apical root resorption and rotation of the incisors as dental complications (Lee & Lipner, 2022), but that is a list the review asserts, and only one item on it traces to a measurement we could find. Below is what has been measured, what is disputed, and what is repeated without support.`,
+    },
+    {
+      heading: `What has been measured?`,
+      body: `Root resorption, in orthodontic patients. In a Swedish study, 21 severe nail biters undergoing fixed orthodontic treatment had a significantly higher apical root resorption index than 21 matched patients without the habit, and the difference was already present before treatment started (Odenrick & Brattström, 1985). Everyone compared was an orthodontic patient, and the direction of the association is not established.\n\nJaw signs and symptoms. In 240 adolescents, nail biting was significantly associated with self-reported signs and symptoms of temporomandibular disorder (p = 0.001), alongside lip and object biting and tooth grinding, which the study does not separate (Motghare et al., 2015). It was cross-sectional, used a screening questionnaire and reported no effect size.`,
+    },
+    {
+      heading: `What is disputed?`,
+      body: `Malocclusion, meaning a bite that does not meet properly. The most recent primary study we found to test it directly assessed 503 Japanese preschoolers by examination, took habits from a parental questionnaire, and found nail biting significantly and negatively related to malocclusion. Its authors concluded it "may not necessarily be a deleterious habit for the occlusion" (Otsugu et al., 2023). We are not claiming nail biting protects teeth; it is one cross-sectional study of primary dentition. But anyone stating flatly that nail biting causes malocclusion is contradicted by the only recent study that measured it.`,
+    },
+    {
+      heading: `What is repeated without support?`,
+      body: `Incisor wear, chipped teeth and gum disease are widely repeated. We could not find a study that measured incisor wear in nail biters, and the review's own references for the dental items are another review and a quality-of-life study with no dental data. The general claim that nail biting causes gum disease traces, as far as we can follow it, to a single case report in which a bitten-off nail fragment lodged under the gum and produced a local periodontal infection; the tooth alongside was already non-vital, and the authors call such impactions "relatively rare" (Ellison et al., 2014). A case report shows something can happen, not how often.`,
+    },
+    {
+      heading: `What should I do about it?`,
+      body: `If you have braces, jaw pain, clicking, or a tooth that has changed, tell a dentist; they can examine what a general article cannot. Whether or not biting is harming your teeth, a habit that runs hundreds of times a day is worth interrupting, and the first step is noticing it.`,
+      html: `<p>Related reading: <a href="/blog/nail-biting-braces">nail biting with braces</a>, <a href="/blog/nail-biting-jaw-pain-tmj">jaw pain and TMJ</a>, <a href="/blog/nail-biting-vs-teeth-grinding">nail biting and teeth grinding</a>, and <a href="/blog/nail-biting-health-risks">the wider health risks</a>. For the method, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/3859328/" target="_blank" rel="noopener noreferrer">Odenrick L, Brattström V. Nailbiting: frequency and association with root resorption during orthodontic treatment. Br J Orthod. 1985;12(2):78–81.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10601139/" target="_blank" rel="noopener noreferrer">Otsugu M, Sasaki Y, Mikasa Y, et al. Incompetent lip seal and nail biting as risk factors for malocclusion in Japanese preschool children aged 3–6 years. BMC Pediatr. 2023;23(1):532.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4576640/" target="_blank" rel="noopener noreferrer">Motghare V, Kumar J, Kamate S, et al. Association Between Harmful Oral Habits and Sign and Symptoms of Temporomandibular Joint Disorders Among Adolescents. J Clin Diagn Res. 2015;9(8):ZC45–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24809566/" target="_blank" rel="noopener noreferrer">Ellison R, Rahman S, Barker D, Larmour C. Onychophagia and subgingival foreign body embedment: a case report. Br Dent J. 2014;216(9):519–520.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
