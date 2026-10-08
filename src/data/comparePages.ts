@@ -562,6 +562,22 @@ function getWindowsContent(): PageContent {
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
 //
+//   Pavlok        https://pavlok.com and https://pavlok.com/pages/habit-nail-biting
+//     (both fetched 2026-10-08)
+//     CONFIRMED (home): "World's #1 Habit Breaking Wearable"; it "uses aversion
+//       technology"; feedback is an electric shock, vibration or a chime; "Quit
+//       Nail Biting" is listed as a use case; a dedicated app syncs with the
+//       device; shown prices: Shock Clock 3 $134.99, Pavlok Ring $99.99, and a
+//       $19/month subscription option for the Shock Clock 3.
+//     CONFIRMED (nail-biting page): the user triggers the shock themselves:
+//       "Shock yourself via tapping the wristband or using the remote in the app
+//       while performing the behavior" and "Every time that you catch yourself
+//       biting or picking at your nails, shock yourself".
+//     NOT FOUND on the pages fetched: automatic detection of nail biting, a
+//       refund or guarantee, a price for the Pavlok 3. The page states what
+//       Pavlok describes and never says what a product lacks. Search snippets
+//       about study results or success rates were NOT used.
+//
 //   NailKeeper    https://nailkeeper.app and its App Store listing
 //     apps.apple.com/us/app/nailkeeper-stop-biting-nails/id1579004361 (both
 //     fetched 2026-10-06)
@@ -906,6 +922,67 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsPavlokContent(): PageContent {
+  return {
+    title: 'Stop Biting vs Pavlok: An Alert or a Shock?',
+    subtitle: 'A wearable that, by its own description, uses an electric shock you trigger yourself, versus a webcam app that sounds an alarm: compared honestly',
+    intro: 'They are built on opposite ideas. Pavlok describes itself as a habit-breaking wearable that uses aversion technology, with an electric shock, vibration or a chime, and its nail biting page describes you triggering the shock yourself when you catch yourself biting. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with no shock, on Mac or Windows in a browser. Pick Pavlok if you want a wearable that works anywhere and are comfortable with aversive feedback; pick Stop Biting if you bite at a computer and want an alert that catches the moment for you. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every Pavlok detail here was checked against pavlok.com on 8 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs Pavlok: what’s the difference?',
+        body: 'The core difference is the kind of feedback and who triggers it. Pavlok’s site describes a wearable with shock, vibration and chime feedback; its nail biting page describes the user delivering the shock when they notice themselves biting. Stop Biting detects the movement itself and sounds an alarm.\n\nBoth were checked on 8 October 2026. Prices and features change, so confirm on the vendor’s own site before buying.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Pavlok</th></tr></thead><tbody>' +
+          '<tr><td>What it is</td><td>Software: a web app (PWA) in a browser on Mac or Windows; needs a webcam</td><td>A wearable device with a companion app</td></tr>' +
+          '<tr><td>Feedback</td><td>An alarm (sound, flash or both); no shock</td><td>Electric shock, vibration or a chime, as its site describes</td></tr>' +
+          '<tr><td>Who triggers it</td><td>The app, when it detects your hand nearing your mouth</td><td>On its nail biting page, you: by tapping the wristband or using the app remote when you catch yourself</td></tr>' +
+          '<tr><td>Automatic nail biting detection</td><td>Yes, on-device AI through your webcam</td><td>Not described on the pages we checked</td></tr>' +
+          '<tr><td>Where it works</td><td>Only in front of your computer webcam</td><td>Wherever you wear it</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Its home page shows a Shock Clock 3 at $134.99, a Pavlok Ring at $99.99, and a $19/month subscription option</td></tr>' +
+          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on the pages we checked</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and Pavlok have in common?',
+        body: 'Both put an external signal between you and an automatic habit. Most nail biting happens without a decision, so a cue that makes you notice is the ingredient habit reversal training calls awareness. Both also come with a phone or web interface to follow what you are doing.',
+      },
+      {
+        heading: 'What does Pavlok do better than Stop Biting?',
+        body: 'It works away from your desk. A wearable goes with you to the commute, the sofa and the meeting room, while Stop Biting can only act where a webcam can see your hand.\n\nIt covers more habits. Its home page lists many, from waking up late to social media use, alongside nail biting. Stop Biting detects nail biting only.\n\nIt is a stronger deterrent for people who want one. If an aversive shock is what you are looking for, that is what Pavlok describes; Stop Biting deliberately does not use one.',
+      },
+      {
+        heading: 'What does Stop Biting do better than Pavlok?',
+        body: 'It catches the moment for you. On the nail biting page we read, Pavlok needs you to notice the biting and trigger the feedback yourself, which is the part that is hard when biting is automatic. Stop Biting detects the movement and alerts you without you having to catch it first. We found no automatic nail biting detection described on Pavlok’s pages, but we make no claim about every Pavlok model.\n\nIt needs no hardware and no shock. It runs in a browser tab, the 3-day trial needs no card, and the alarm is a sound or a flash.\n\nIt costs far less to try: $2.99/month or $29/year, against the device prices on Pavlok’s home page.\n\nThe honest limit: it only sees biting that happens in front of your computer webcam.',
+      },
+      {
+        heading: 'How much do Stop Biting and Pavlok cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nPavlok: its home page on 8 October 2026 showed a Shock Clock 3 at $134.99, a Pavlok Ring at $99.99 and a $19/month subscription option for the Shock Clock 3. It did not state a price for the Pavlok 3 or a refund or guarantee. Check pavlok.com for current prices.',
+      },
+      faqSection(
+        'Every answer below uses the same 8 October 2026 check of pavlok.com as the rest of this page.',
+        [
+          ['Does Pavlok use an electric shock?', 'Its home page describes feedback as an electric shock, vibration or a chime. Stop Biting uses none of these: it sounds an alarm, flashes the screen, or both.'],
+          ['Does Pavlok detect nail biting automatically?', 'The nail biting page we read describes the user triggering the shock when they catch themselves biting. We found no automatic nail biting detection described there, and we make no claim about every Pavlok model. Stop Biting’s detection is automatic.'],
+          ['Which works away from a computer?', 'Pavlok, because it is a wearable. Stop Biting only works in front of a webcam.'],
+          ['Which is cheaper to try?', 'Stop Biting: a 3-day free trial with no card, then $2.99/month or $29/year. Pavlok’s device prices on its home page start at $99.99 for the ring.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or Pavlok?',
+        body: 'Pick Pavlok if you want a wearable that works anywhere, you have several habits to change, and aversive feedback appeals to you.\n\nPick Stop Biting if you bite while you work at a computer, want the alert to come from the app rather than from you, and prefer not to use a shock.\n\nNeither is a medical treatment, and if your biting is severe or distressing, speak to a clinician.',
+      },
+      verificationSection('Every Pavlok detail on this page (what it describes itself as, the feedback types, the nail biting use, the app, and the prices) was checked against pavlok.com and pavlok.com/pages/habit-nail-biting on 8 October 2026, and quoted phrases are Pavlok’s own. We looked for automatic nail biting detection, a refund or guarantee, and a Pavlok 3 price, did not find them on those pages, and state none. We did not use claims about studies or success rates found in search results. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on pavlok.com before buying.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/blog/nail-biting-wearable-technology', label: 'Wearable technology for nail biting' },
+      { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best tools to stop nail biting, ranked by evidence' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 function getVsNailKeeperContent(): PageContent {
   return {
     title: 'Stop Biting vs NailKeeper: Real-Time Detection or Photo Tracking?',
@@ -956,6 +1033,7 @@ function getVsNailKeeperContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-pavlok', label: 'Stop Biting vs Pavlok: an alert or a shock?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
       { href: '/compare/habit-tracking-apps', label: 'Why habit tracking apps do not work for nail biting' },
@@ -1017,6 +1095,7 @@ function getVsHabitAwareContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-pavlok', label: 'Stop Biting vs Pavlok: an alert or a shock?' },
       { href: '/compare/stop-biting-vs-nailkeeper', label: 'Stop Biting vs NailKeeper: real-time detection or photo tracking?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
@@ -1035,6 +1114,7 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/stop-biting-vs-smartbehavior': getVsSmartBehaviorContent,
   '/compare/stop-biting-vs-habitaware': getVsHabitAwareContent,
   '/compare/stop-biting-vs-nailkeeper': getVsNailKeeperContent,
+  '/compare/stop-biting-vs-pavlok': getVsPavlokContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
