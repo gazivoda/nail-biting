@@ -6,7 +6,7 @@ Every competitor claim: fetch the vendor's own page, date it, log it in the FACT
 New pages: commit first, then `npm run seo:sync`, CORE_PAGES in scripts/sync-seo.mjs for compare/solutions pages (use `command grep -a`, edit in bytes). New posts auto-register via blogPosts.ts, OG PNG: run `npm run og:generate`, keep ONLY the new PNGs (git checkout -- public/og for the rest). No em dashes. One privacy claim. App detects NAIL BITING only.
 
 ## Iterations
-- [ ] 1. robots.txt Content-Signal: fetch the spec (contentsignals.org) and use only valid keys; GEO agent says `ai-input` is invalid, verify before changing.
+- [x] 1. robots.txt Content-Signal: fetch the spec (contentsignals.org) and use only valid keys; GEO agent says `ai-input` is invalid, verify before changing.
 - [ ] 2. Homepage FAQ (Landing FAQS + index.html JSON-LD together): "Is there an app that detects nail biting with a webcam?" naming only competitors already verified on our compare pages (Hands Off, Nailed, SmartBehavior), honest about where they win.
 - [ ] 3. /compare/stop-biting-vs-pavlok (fetch pavlok.com first; no snippet claims).
 - [ ] 4. /compare/stop-biting-vs-biteless (Apple Watch app; fetch App Store listing + vendor site).
@@ -21,3 +21,4 @@ New pages: commit first, then `npm run seo:sync`, CORE_PAGES in scripts/sync-seo
 Bitey compare (vendor claims need scrutiny: FDA/93%); printable tracker tool (needs a real PDF); StopBitingNails / HabitCam / Unbite compares; Hands Off alternatives page; BlogPost chunk split (918 KB); email capture (owner prerequisites); GSC recrawl of / (stale "Free AI Habit Tracker" title, owner); Google-Extended decision (owner).
 
 ## Log
+- it1: NO CHANGE. Searched the Content Signals spec coverage (contentsignals.org / Cloudflare, Sept 2025): the three valid signals are search, ai-input, ai-train, so our `search=yes, ai-input=yes, ai-train=no` is valid; the GEO agent's claim that ai-input is invalid (and that ai-retrieval/ai-personalization exist) was wrong. contentsignals.org itself returned only a heading to the fetcher. Note from the same sources: Google ignores the line and the AI vendors do not document reading it, so it is a stated preference, not enforcement.
