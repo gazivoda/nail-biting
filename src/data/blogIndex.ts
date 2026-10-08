@@ -1330,4 +1330,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-08",
     dateModified: "2026-10-08",
   },
+  {
+    slug: "swallowing-fingernails",
+    title: "What Happens If You Swallow Your Fingernails?",
+    description: "We found no study of what swallowed nail clippings do. What exists is one gastritis case report and association studies on germs and pinworm.",
+    tag: "Health",
+    readingMinutes: 3,
+    datePublished: "2026-10-08",
+    dateModified: "2026-10-08",
+  },
 ];
