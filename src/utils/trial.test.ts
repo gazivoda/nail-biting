@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { trialLeft } from './trial';
+import { trialLeft, trialEndedMessage } from './trial';
 
 const NOW = Date.UTC(2026, 8, 26, 12, 0, 0);
 const at = (ms: number) => new Date(NOW + ms).toISOString();
@@ -19,5 +19,17 @@ describe('trialLeft', () => {
   it('returns null when the trial is over or unknown', () => {
     expect(trialLeft(at(-1), NOW)).toBeNull();
     expect(trialLeft(null, NOW)).toBeNull();
+  });
+});
+
+describe('trialEndedMessage', () => {
+  it('says nothing about a count when nothing was logged', () => {
+    expect(trialEndedMessage(0)).toBe('Your free trial has ended. Your history is still saved on this device.');
+    expect(trialEndedMessage(NaN)).toBe('Your free trial has ended. Your history is still saved on this device.');
+    expect(trialEndedMessage(-3)).toBe('Your free trial has ended. Your history is still saved on this device.');
+  });
+  it('reports the real count, singular and plural', () => {
+    expect(trialEndedMessage(1)).toContain('It logged 1 alert, and');
+    expect(trialEndedMessage(41)).toContain('It logged 41 alerts, and');
   });
 });

@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
 import { Check, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
-import { trialLeft } from '../../utils/trial';
+import { trialLeft, trialEndedMessage } from '../../utils/trial';
+import { useAppStore } from '../../store/useAppStore';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 
@@ -128,6 +129,8 @@ export function PaywallPage({ onBack }: Props) {
   const trialLeftText = trialLeft(user?.trial_end_date);
 
   const isTrialExpired = !onBack;
+  // What the trial actually logged on this device (local history, never a server figure).
+  const loggedAlerts = useAppStore(s => s.incidents.length);
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col">
@@ -156,7 +159,7 @@ export function PaywallPage({ onBack }: Props) {
         {isTrialExpired && (
           <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl px-4 py-2.5 text-sm mb-8">
             <AlertTriangle size={14} />
-            <span>Your free trial has ended. Your history is still saved on this device.</span>
+            <span>{trialEndedMessage(loggedAlerts)}</span>
           </div>
         )}
 

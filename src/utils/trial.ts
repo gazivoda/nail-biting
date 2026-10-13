@@ -18,3 +18,17 @@ export function trialLeft(trialEndIso: string | null | undefined, now = Date.now
   }
   return 'Less than an hour left';
 }
+
+// The line on the paywall after a trial ends. It reports only what the device
+// logged: every incident in the history is an alert the alarm raised or one the
+// user logged by hand, so the count is called alerts, never "bites", which
+// would claim they were all real. With nothing logged there is nothing to say,
+// and no number is invented.
+export function trialEndedMessage(alertCount: number): string {
+  const base = 'Your free trial has ended.';
+  if (!Number.isFinite(alertCount) || alertCount < 1) {
+    return `${base} Your history is still saved on this device.`;
+  }
+  const n = Math.floor(alertCount);
+  return `${base} It logged ${n} alert${n === 1 ? '' : 's'}, and your history is still saved on this device.`;
+}
