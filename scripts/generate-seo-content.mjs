@@ -15,7 +15,7 @@
 //
 // Structural problems in the source data exit non-zero, which fails the build.
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -115,6 +115,29 @@ writeFileSync(
     editorialPolicy: EDITORIAL_POLICY,
   }),
 );
+// ─── dist/posts/<slug>.json — one file per article, for the client ──────────
+// BlogPost.tsx used to import src/data/blogPosts.ts, which put every article
+// (~1 MB) in the BlogPost chunk of every reader and in the service worker's
+// precache. It now fetches only the article it is showing, from here. The data
+// is the same object seo-content.json carries for the crawler HTML (title,
+// dates, sections, related links, product link), so there is still exactly one
+// source of truth and a field added to a post reaches the client only if it is
+// added to `posts` above. The slug set is checked against BLOG_POSTS so a post
+// can never be present in the app and missing here.
+const POSTS_DIR = join(DIST, 'posts');
+rmSync(POSTS_DIR, { recursive: true, force: true });
+mkdirSync(POSTS_DIR, { recursive: true });
+for (const [slug, post] of Object.entries(posts)) {
+  writeFileSync(join(POSTS_DIR, `${slug}.json`), JSON.stringify({ slug, ...post }));
+}
+const written = readdirSync(POSTS_DIR).filter(f => f.endsWith('.json')).map(f => f.slice(0, -5)).sort();
+const expected = BLOG_POSTS.map(p => p.slug).sort();
+if (written.length !== expected.length || written.some((slug, i) => slug !== expected[i])) {
+  console.error('generate-seo-content: dist/posts/ does not match BLOG_POSTS (stale files or missing posts).');
+  process.exit(1);
+}
+console.log(`generate-seo-content: posts/ — ${written.length} per-article files`);
+
 console.log(`generate-seo-content: seo-content.json — ${BLOG_POSTS.length} posts, ${Object.keys(comparePages).length} compare pages, ${Object.keys(pageUpdates).length} core-page dates`);
 
 // ─── dist/llms-full.txt — full article text for AI crawlers ──────────────────

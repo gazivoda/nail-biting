@@ -725,6 +725,15 @@ if (!existsSync(distPath)) {
     }));
   }
 
+  // Per-article JSON for BlogPost.tsx (written by scripts/generate-seo-content.mjs).
+  // Not a page: it must never be indexed in place of the article it describes,
+  // so it carries noindex and a short cache (the files change on every deploy
+  // but not between deploys).
+  app.use('/posts', express.static(join(distPath, 'posts'), {
+    maxAge: '5m',
+    setHeaders: res => res.setHeader('X-Robots-Tag', 'noindex'),
+  }));
+
   // ── Crawler-visible content: single source of truth ────────────────────────
   // dist/seo-content.json is generated at build time by
   // scripts/generate-seo-content.mjs (wired into vite.config.ts) directly from
