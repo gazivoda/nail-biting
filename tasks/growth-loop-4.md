@@ -5,7 +5,7 @@ Rules: one local commit per iteration on main, NO push (ask the owner at the end
 
 ## Iterations
 - [x] 1. /compare/stop-biting-vs-habitcam (habitcam.app: Windows 10+/AppImage Linux, $39.99/$19.99 lifetime launch special, 7-day trial; no Mac download found; maker not found). Re-fetch first.
-- [ ] 2. /compare/stop-biting-vs-nailbitemenu (github.com/killian31/NailBiteMenu: macOS 15.6+ menu bar app, open source, local; price/licence not found). Re-fetch first. Same shape as the Nailed page.
+- [x] 2. /compare/stop-biting-vs-nailbitemenu (github.com/killian31/NailBiteMenu: macOS 15.6+ menu bar app, open source, local; price/licence not found). Re-fetch first. Same shape as the Nailed page.
 - [ ] 3. Blog split step 1+2: generator writes dist/posts/<slug>.json (+ related), key-parity check vs BLOG_POSTS, server.js static mount for /posts. Crawler HTML must stay byte-identical (diff before/after).
 - [ ] 4. Blog split step 3+4: usePost(slug) hook (+test), BlogPost.tsx stops importing blogPosts.ts, keeps SSR block until loaded, real 404 only on HTTP 404. Real-browser check.
 - [ ] 5. Blog split step 5: SW runtimeCaching/denylist for /posts, drop stale comment, lesson in tasks/lessons.md, before/after chunk sizes in the log (baseline BlogPost 942,120 B raw / ~291 KB gz).
@@ -20,3 +20,4 @@ Onboarding tour timing; email capture prerequisites; Google-Extended decision; S
 
 ## Log
 - it1: /compare/stop-biting-vs-habitcam live. Re-fetched habitcam.app myself 2026-10-13 (matches the agent's fact sheet): detects hair pulling / face-focused skin picking / nail biting; Windows 10+ and Linux AppImage; Mac NOT found; local processing, internet only for license validation + updates; 7-day trial; lifetime $19.99 launch (regularly $39.99), 1 device, no subscription; maker NOT found. FACT-CHECK LOG entry added. Honest on where HabitCam wins (price over time, more behaviours, longer trial). Fixed my own price arithmetic before shipping. Linked from BiteLess, Windows, Hands Off pages; sitemap 177.
+- it2: /compare/stop-biting-vs-nailbitemenu live. Re-fetched README + project page myself 2026-10-13: macOS 15.6+ menu bar app, Core ML models + sensitivity slider, countdown overlay 'Stay mindful' (3 s / Enter) + optional notification, 'No accounts, no cloud, 100% local processing', DMG on GitHub releases (Open Anyway step), source described as open source. Price, licence name, accuracy, Windows/browser NOT FOUND. Honest on where it wins (no account, open source, native). Removed my own 'our code is closed' line: the gazivoda/nail-biting repo is public, I cannot assert that. Linked from Nailed, Mac, HabitCam pages; sitemap 178.
