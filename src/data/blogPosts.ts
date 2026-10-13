@@ -874,7 +874,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 7,
   datePublished: '2026-04-19',
-  dateModified: '2026-10-08',
+  dateModified: '2026-10-13',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
@@ -912,7 +912,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Full feature comparison table',
-      body: `Here is how all five approaches compare across the dimensions that matter most for a chronic nail biter: The last four rows are named products, checked against their vendors' own pages on the dates shown. "Not described" means we found nothing on those pages, and "Not assessed" means we have not tested it and make no claim.`,
+      body: `Here is how all five approaches compare across the dimensions that matter most for a chronic nail biter: The rows after Habitica and Streaks are named products, checked against their vendors' own pages or store listings on the dates shown. "Not described" means we found nothing on those pages, and "Not assessed" means we have not tested it and make no claim.`,
       html: `<table>
   <thead>
     <tr>
@@ -1004,6 +1004,30 @@ BLOG_POSTS.push({
       <td>Not described</td>
       <td>Not assessed</td>
       <td>In-app $9.99/mo or $69.99/yr (US App Store, 8 Oct 2026)</td>
+    </tr>
+    <tr>
+      <td><strong>Unbite</strong> (tap-logging tracker)</td>
+      <td>No — its listing describes logging urges and episodes with a tap, and mentions no camera or detection</td>
+      <td>Yes — iPhone and iPad app (iOS 16.4+)</td>
+      <td>Logs triggers such as stress, boredom or anxiety, per its listing</td>
+      <td>Not assessed</td>
+      <td>Free to download; premium by subscription after a free trial (US App Store, 13 Oct 2026)</td>
+    </tr>
+    <tr>
+      <td><strong>HabitCam</strong> (Windows and Linux webcam app)</td>
+      <td>Yes — webcam detection, processed locally, per its site</td>
+      <td>No — needs your webcam</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>$19.99 launch price for a lifetime license, regularly $39.99; 7-day trial (13 Oct 2026)</td>
+    </tr>
+    <tr>
+      <td><strong>NailBiteMenu</strong> (Mac menu bar app)</td>
+      <td>Yes — uses your Mac's camera, processed on-device, per its README</td>
+      <td>No — needs your Mac's camera</td>
+      <td>Not described</td>
+      <td>Not assessed</td>
+      <td>No price found; described as open source (13 Oct 2026)</td>
     </tr>
   </tbody>
 </table>`,

@@ -564,6 +564,15 @@ function getWindowsContent(): PageContent {
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
 //
+//   Unbite        Apple's own lookup API for the US App Store listing, id
+//     6748577284 (fetched 2026-10-13; the listing page itself rate-limited us)
+//     CONFIRMED: "Unbite: Stop Nail Biting", free to download, iOS 16.4 or later,
+//       version 1.2.1; "Log nail biting urges and episodes with just a tap";
+//       premium features "unlock with subscription after free trial"; "All data
+//       is stored locally on your device"; "No cloud sync, no tracking, no ads".
+//       The words "camera" and "detect" do not appear in the description.
+//     NOT VERIFIED BY US: the in-app purchase prices (the API does not return them).
+//
 //   NailBiteMenu  https://github.com/killian31/NailBiteMenu and
 //     https://killian31.github.io/NailBiteMenu/ (both fetched 2026-10-13)
 //     CONFIRMED verbatim: "A menu bar app that uses your Mac's camera to detect
