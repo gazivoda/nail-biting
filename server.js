@@ -933,6 +933,7 @@ if (!existsSync(distPath)) {
     ['/compare/stop-biting-vs-pavlok', 'Stop Biting vs Pavlok'],
     ['/compare/stop-biting-vs-biteless', 'Stop Biting vs BiteLess'],
     ['/compare/stop-biting-vs-habitcam', 'Stop Biting vs HabitCam'],
+    ['/compare/stop-biting-vs-nailbitemenu', 'Stop Biting vs NailBiteMenu'],
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
@@ -2370,6 +2371,11 @@ if (!existsSync(distPath)) {
     '/compare/stop-biting-vs-habitcam': {
       title: 'Stop Biting vs HabitCam: Browser Subscription or Lifetime License?',
       description: 'HabitCam is a Windows and Linux program with a lifetime license; Stop Biting is a browser app with a free trial, $2.99/mo or $29/yr. An honest comparison.',
+      date: '2026-10-13',
+    },
+    '/compare/stop-biting-vs-nailbitemenu': {
+      title: 'Stop Biting vs NailBiteMenu: Browser App or Open-Source Mac App?',
+      description: 'NailBiteMenu is an open-source macOS 15.6+ menu bar app with no account; Stop Biting runs in a browser on Mac or Windows, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-13',
     },
     '/compare/ai-detection-apps': {

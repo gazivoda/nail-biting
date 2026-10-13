@@ -424,6 +424,7 @@ function getMacContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailbitemenu', label: 'Stop Biting vs NailBiteMenu: browser app or open-source Mac menu bar app?' },
       { href: '/solutions/for-windows', label: 'Stop nail biting on Windows' },
       { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -562,6 +563,22 @@ function getWindowsContent(): PageContent {
 //     ADDED 2026-09-10 — price: that same US listing shows "$0.99". Reported
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
+//
+//   NailBiteMenu  https://github.com/killian31/NailBiteMenu and
+//     https://killian31.github.io/NailBiteMenu/ (both fetched 2026-10-13)
+//     CONFIRMED verbatim: "A menu bar app that uses your Mac's camera to detect
+//       nail-biting in real time, locally and privately."; requires macOS 15.6
+//       Sequoia or later; bundled Core ML models with a sensitivity threshold
+//       slider; on detection "A compact overlay with a countdown and 'Stay
+//       mindful' action" that dismisses after three seconds or on Enter, plus an
+//       optional macOS notification with sound; "All processing happens
+//       on-device. The camera feed never leaves your Mac."; "No accounts, no
+//       cloud, 100% local processing"; distributed as a DMG from GitHub
+//       releases (may need Open Anyway in System Settings for an unidentified
+//       developer warning); the "Swift source and Core ML models" are described
+//       as "now open source".
+//     NOT FOUND: a price or the word "free", a licence name, an accuracy figure,
+//       a Windows or browser version.
 //
 //   HabitCam      https://habitcam.app (fetched 2026-10-13)
 //     CONFIRMED verbatim: "Monitors your webcam to help you become aware of
@@ -815,6 +832,7 @@ function getVsNailedContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailbitemenu', label: 'Stop Biting vs NailBiteMenu: browser app or open-source Mac menu bar app?' },
       { href: '/solutions/for-mac', label: 'Stop nail biting on a Mac: webcam detection in your browser' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
@@ -952,6 +970,67 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsNailBiteMenuContent(): PageContent {
+  return {
+    title: 'Stop Biting vs NailBiteMenu: Browser App or Open-Source Mac Menu Bar App?',
+    subtitle: 'Two webcam detectors that process video on your device: one is a Mac-only menu bar app with open source code, the other runs in a browser on Mac or Windows',
+    intro: 'NailBiteMenu, by its own pages, is an open-source macOS menu bar app that uses your Mac’s camera to detect nail biting in real time, with no accounts and no cloud, and requires macOS 15.6 or later. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, needs a Google sign-in, and costs $2.99/month or $29/year after a 3-day trial with no card. Pick NailBiteMenu if you are on a recent Mac and want a local app with no account; pick Stop Biting if you use Windows or an older Mac, want nothing to install, or want streaks, history and habit reversal guides beside the alarm. Disclosure: Stop Biting is our product, and every NailBiteMenu detail here was checked against its GitHub README and project page on 13 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs NailBiteMenu: what’s the difference?',
+        body: 'Both watch a camera feed on your own machine. NailBiteMenu is a small native Mac app you install; Stop Biting is a web app you open in a browser. The practical differences are platform, account and price.\n\nBoth were checked on 13 October 2026. Details change, so confirm on the project’s own pages before relying on them.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>NailBiteMenu</th></tr></thead><tbody>' +
+          '<tr><td>What it is</td><td>A web app (PWA) in a browser on Mac or Windows</td><td>A macOS menu bar app, installed from a DMG on GitHub releases</td></tr>' +
+          '<tr><td>Platform</td><td>Mac or Windows, any modern browser, with a webcam</td><td>macOS 15.6 Sequoia or later</td></tr>' +
+          '<tr><td>Account</td><td>Google sign-in required</td><td>“No accounts, no cloud, 100% local processing”</td></tr>' +
+          '<tr><td>Alert</td><td>An alarm (sound, flash or both)</td><td>A compact overlay with a countdown and a “Stay mindful” action, plus an optional macOS notification with sound</td></tr>' +
+          '<tr><td>Source code</td><td>Closed</td><td>Swift source and Core ML models described as open source</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Not found on its pages</td></tr>' +
+          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not applicable: no price found</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and NailBiteMenu have in common?',
+        body: 'Both use a camera to catch the moment your hand nears your mouth, and both say the video is processed on your device. NailBiteMenu states that the camera feed never leaves your Mac; Stop Biting sends no camera data while it runs. Neither is a medical treatment.',
+      },
+      {
+        heading: 'What does NailBiteMenu do better than Stop Biting?',
+        body: 'It needs no account. Its pages say no accounts and no cloud, while Stop Biting requires a Google sign-in.\n\nIt is open source. Its pages say the Swift source and the models are open source, so you can read how it works. Stop Biting’s code is closed.\n\nIt is a native Mac menu bar app, which some people prefer to a browser tab.\n\nWe found no price on its pages, so we make no claim about cost.',
+      },
+      {
+        heading: 'What does Stop Biting do better than NailBiteMenu?',
+        body: 'It works on Windows and on Macs older than macOS 15.6. NailBiteMenu lists macOS 15.6 or later and nothing for Windows or a browser.\n\nIt needs no installation and no “Open Anyway” step for an unidentified developer warning, which its README describes for installing the DMG. That also helps on a locked-down work laptop.\n\nIt adds bite-free streaks, a timestamped incident history and a library of habit reversal guides around the alarm.\n\nThe honest limits: Stop Biting is a paid subscription after the trial, requires an account, and only sees biting in front of your computer webcam.',
+      },
+      {
+        heading: 'How much do Stop Biting and NailBiteMenu cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nNailBiteMenu: we found no price and no mention of the word free on its README or project page on 13 October 2026, only a DMG on GitHub releases and a note that the app is open source. We do not know its terms, so check its repository.',
+      },
+      faqSection(
+        'Every answer below uses the same 13 October 2026 check of the NailBiteMenu README and project page as the rest of this page.',
+        [
+          ['Does NailBiteMenu work on Windows?', 'We found nothing for Windows on its pages: it is described as a macOS menu bar app that requires macOS 15.6 or later. Stop Biting runs in a browser on Windows.'],
+          ['Does NailBiteMenu need an account?', 'Its pages say no accounts, no cloud. Stop Biting requires a Google sign-in.'],
+          ['Is NailBiteMenu open source?', 'Its README describes the Swift source and Core ML models as open source. We did not find a licence name.'],
+          ['Does either send my camera feed anywhere?', 'NailBiteMenu says the camera feed never leaves your Mac. Stop Biting sends no camera data while it runs.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or NailBiteMenu?',
+        body: 'Pick NailBiteMenu if you are on a Mac running macOS 15.6 or later, want an app with no account and visible source code, and are comfortable installing a DMG.\n\nPick Stop Biting if you use Windows or an older Mac, want to start in a browser tab, or want history and guides alongside the alarm.\n\nYou could try both on a recent Mac and keep the one that fits how you work.',
+      },
+      verificationSection('Every NailBiteMenu detail on this page (what it is, the macOS version, how the alert behaves, its privacy statements, its distribution and its open source statement) was checked against github.com/killian31/NailBiteMenu and killian31.github.io/NailBiteMenu on 13 October 2026, and quoted phrases are theirs. We looked for a price, a licence name and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Details change: confirm on the project’s pages before relying on them.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
+      { href: '/compare/stop-biting-vs-habitcam', label: 'Stop Biting vs HabitCam: browser subscription or installed lifetime license?' },
+      { href: '/solutions/for-mac', label: 'Stop nail biting on a Mac' },
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 function getVsHabitCamContent(): PageContent {
   return {
     title: 'Stop Biting vs HabitCam: Browser Subscription or Installed Lifetime License?',
@@ -1003,6 +1082,7 @@ function getVsHabitCamContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-nailbitemenu', label: 'Stop Biting vs NailBiteMenu: browser app or open-source Mac menu bar app?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
       { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
@@ -1271,6 +1351,7 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/stop-biting-vs-pavlok': getVsPavlokContent,
   '/compare/stop-biting-vs-biteless': getVsBiteLessContent,
   '/compare/stop-biting-vs-habitcam': getVsHabitCamContent,
+  '/compare/stop-biting-vs-nailbitemenu': getVsNailBiteMenuContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
