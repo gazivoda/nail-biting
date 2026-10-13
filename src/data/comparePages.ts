@@ -976,7 +976,7 @@ function getVsHabitCamContent(): PageContent {
       },
       {
         heading: 'What does HabitCam do better than Stop Biting?',
-        body: 'It is cheaper over time. A one-time license at $19.99 (regularly $39.99) costs less than two years of Stop Biting’s $29 annual plan, and there is no subscription, per its site.\n\nIt covers more behaviours. Its site lists hair pulling and face-focused skin picking alongside nail biting. Stop Biting detects nail biting only.\n\nIt offers a longer trial, 7 days against our 3.\n\nIt is an installed program, which some people prefer. Its site says it connects to the internet only for license validation and updates.',
+        body: 'It is cheaper over time. At the $19.99 launch price a one-time license costs less than one year of Stop Biting’s $29 annual plan, and at the regular $39.99 it costs less than two, with no subscription, per its site.\n\nIt covers more behaviours. Its site lists hair pulling and face-focused skin picking alongside nail biting. Stop Biting detects nail biting only.\n\nIt offers a longer trial, 7 days against our 3.\n\nIt is an installed program, which some people prefer. Its site says it connects to the internet only for license validation and updates.',
       },
       {
         heading: 'What does Stop Biting do better than HabitCam?',
