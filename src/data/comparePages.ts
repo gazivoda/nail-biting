@@ -984,7 +984,7 @@ function getVsNailBiteMenuContent(): PageContent {
           '<tr><td>Platform</td><td>Mac or Windows, any modern browser, with a webcam</td><td>macOS 15.6 Sequoia or later</td></tr>' +
           '<tr><td>Account</td><td>Google sign-in required</td><td>“No accounts, no cloud, 100% local processing”</td></tr>' +
           '<tr><td>Alert</td><td>An alarm (sound, flash or both)</td><td>A compact overlay with a countdown and a “Stay mindful” action, plus an optional macOS notification with sound</td></tr>' +
-          '<tr><td>Source code</td><td>Closed</td><td>Swift source and Core ML models described as open source</td></tr>' +
+          '<tr><td>Source code</td><td>Not part of this comparison</td><td>Swift source and Core ML models described as open source</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Not found on its pages</td></tr>' +
           '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not applicable: no price found</td></tr>' +
           '</tbody></table>',
@@ -995,7 +995,7 @@ function getVsNailBiteMenuContent(): PageContent {
       },
       {
         heading: 'What does NailBiteMenu do better than Stop Biting?',
-        body: 'It needs no account. Its pages say no accounts and no cloud, while Stop Biting requires a Google sign-in.\n\nIt is open source. Its pages say the Swift source and the models are open source, so you can read how it works. Stop Biting’s code is closed.\n\nIt is a native Mac menu bar app, which some people prefer to a browser tab.\n\nWe found no price on its pages, so we make no claim about cost.',
+        body: 'It needs no account. Its pages say no accounts and no cloud, while Stop Biting requires a Google sign-in.\n\nIt describes itself as open source. Its pages say the Swift source and the models are open source, so you can read how it works.\n\nIt is a native Mac menu bar app, which some people prefer to a browser tab.\n\nWe found no price on its pages, so we make no claim about cost.',
       },
       {
         heading: 'What does Stop Biting do better than NailBiteMenu?',
