@@ -932,6 +932,7 @@ if (!existsSync(distPath)) {
     ['/compare/stop-biting-vs-nailkeeper', 'Stop Biting vs NailKeeper'],
     ['/compare/stop-biting-vs-pavlok', 'Stop Biting vs Pavlok'],
     ['/compare/stop-biting-vs-biteless', 'Stop Biting vs BiteLess'],
+    ['/compare/stop-biting-vs-habitcam', 'Stop Biting vs HabitCam'],
     ['/solutions/for-desk-workers', 'Stop nail biting at your desk'],
     ['/solutions/for-adhd', 'Nail biting and ADHD'],
     ['/solutions/for-gamers', 'Stop nail biting while gaming'],
@@ -2365,6 +2366,11 @@ if (!existsSync(distPath)) {
       title: 'Stop Biting vs BiteLess: Apple Watch or Webcam?',
       description: 'BiteLess needs an Apple Watch and an iPhone and alerts you on your wrist; Stop Biting is a webcam alarm with no hardware, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-08',
+    },
+    '/compare/stop-biting-vs-habitcam': {
+      title: 'Stop Biting vs HabitCam: Browser Subscription or Lifetime License?',
+      description: 'HabitCam is a Windows and Linux program with a lifetime license; Stop Biting is a browser app with a free trial, $2.99/mo or $29/yr. An honest comparison.',
+      date: '2026-10-13',
     },
     '/compare/ai-detection-apps': {
       title: 'Best AI Apps to Stop Nail Biting: 2026 Comparison',

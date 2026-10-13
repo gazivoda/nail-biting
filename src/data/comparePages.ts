@@ -469,6 +469,7 @@ function getWindowsContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-habitcam', label: 'Stop Biting vs HabitCam: browser subscription or installed lifetime license?' },
       { href: '/solutions/for-mac', label: 'Stop nail biting on a Mac' },
       { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
       { href: '/solutions/for-remote-workers', label: 'Stop nail biting working from home' },
@@ -561,6 +562,20 @@ function getWindowsContent(): PageContent {
 //     ADDED 2026-09-10 — price: that same US listing shows "$0.99". Reported
 //       explicitly as a US App Store price, because storefront prices vary and
 //       the vendor's own site still publishes none.
+//
+//   HabitCam      https://habitcam.app (fetched 2026-10-13)
+//     CONFIRMED verbatim: "Monitors your webcam to help you become aware of
+//       repetitive behaviors including hair pulling, skin picking, and nail
+//       biting."; behaviours "Hair pulling (from scalp, eyebrows, eyelashes),
+//       face-focused skin picking, and nail biting behaviors that occur within
+//       your webcam's view"; downloads for Windows 10 and above and a Linux
+//       AppImage; "All video processing happens locally on your device - no
+//       webcam data is ever transmitted, stored, or shared"; "only connects to
+//       the internet for initial license validation and when you choose to
+//       check for updates"; 7-day free trial, no credit card; lifetime license
+//       $19.99 (launch special, regularly $39.99), "Use on 1 Device", "No
+//       Subscription".
+//     NOT FOUND: a Mac download, who makes it, any accuracy figure.
 //
 //   BiteLess      https://apps.apple.com/us/app/biteless-nail-biting-alert/id6743394450
 //     (US App Store listing, fetched 2026-10-08; no separate vendor site found)
@@ -734,6 +749,7 @@ function getVsHandsOffContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-habitcam', label: 'Stop Biting vs HabitCam: browser subscription or installed lifetime license?' },
       { href: '/solutions/for-windows', label: 'Stop nail biting on Windows: webcam detection in your browser' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
       { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
@@ -936,6 +952,66 @@ function getAiDetectionAppsContent(): PageContent {
   };
 }
 
+function getVsHabitCamContent(): PageContent {
+  return {
+    title: 'Stop Biting vs HabitCam: Browser Subscription or Installed Lifetime License?',
+    subtitle: 'Two webcam detectors that process video on your device: one runs in a browser tab, the other is installed on Windows or Linux with a one-time price',
+    intro: 'Both use your webcam and process the video on your device. HabitCam’s own site describes a Windows and Linux program that watches for hair pulling, skin picking and nail biting, sold as a lifetime license at a launch price of $19.99 (regularly $39.99), with a 7-day trial. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, detects nail biting only, and costs $2.99/month or $29/year after a 3-day trial with no card. Pick HabitCam if you are on Windows or Linux, want one purchase instead of a subscription, or have more than one of those behaviours; pick Stop Biting if you want nothing to install, use a Mac, or want to try it in a browser tab first. Disclosure: Stop Biting is our product, and every HabitCam detail here was checked against habitcam.app on 13 October 2026.',
+    sections: [
+      {
+        heading: 'Stop Biting vs HabitCam: what’s the difference?',
+        body: 'The detection idea is the same, a webcam watching for your hand. The differences are how you get it, what it covers and how you pay. HabitCam is software you download for Windows or Linux; Stop Biting runs in the browser.\n\nBoth were checked on 13 October 2026. Prices and features change, so confirm on the vendor’s own site before buying.',
+        html: '<table><thead><tr><th></th><th>Stop Biting</th><th>HabitCam</th></tr></thead><tbody>' +
+          '<tr><td>How you get it</td><td>A web app (PWA) in a browser on Mac or Windows; nothing to install</td><td>A download for Windows 10 and above, and a Linux AppImage; no Mac download found</td></tr>' +
+          '<tr><td>Behaviours</td><td>Nail biting only</td><td>Hair pulling, face-focused skin picking and nail biting, within your webcam’s view</td></tr>' +
+          '<tr><td>Detection</td><td>On-device AI on your webcam feed</td><td>Webcam, processed locally on your device, per its site</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Lifetime license: $19.99 launch special, regularly $39.99; one device; no subscription</td></tr>' +
+          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>7 days, no credit card</td></tr>' +
+          '<tr><td>Internet use</td><td>No camera data is sent while it runs</td><td>Connects for initial license validation and when you check for updates, per its site</td></tr>' +
+          '</tbody></table>',
+      },
+      {
+        heading: 'What do Stop Biting and HabitCam have in common?',
+        body: 'Both put a camera-based alert between you and an automatic habit, and both say the video stays on your device. Both offer a free trial without a card. Neither is a medical treatment.',
+      },
+      {
+        heading: 'What does HabitCam do better than Stop Biting?',
+        body: 'It is cheaper over time. A one-time license at $19.99 (regularly $39.99) costs less than two years of Stop Biting’s $29 annual plan, and there is no subscription, per its site.\n\nIt covers more behaviours. Its site lists hair pulling and face-focused skin picking alongside nail biting. Stop Biting detects nail biting only.\n\nIt offers a longer trial, 7 days against our 3.\n\nIt is an installed program, which some people prefer. Its site says it connects to the internet only for license validation and updates.',
+      },
+      {
+        heading: 'What does Stop Biting do better than HabitCam?',
+        body: 'It works on a Mac. We found no Mac download on HabitCam’s site, while Stop Biting runs in a browser on any Mac or Windows computer with a webcam.\n\nIt needs no installation, so it works on a locked-down work laptop where you cannot install software.\n\nIt pairs detection with a library of habit reversal guides, bite-free streaks and a timestamped incident history.\n\nThe honest limit: Stop Biting detects nail biting only and only in front of your webcam, and it is a subscription.',
+      },
+      {
+        heading: 'How much do Stop Biting and HabitCam cost?',
+        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nHabitCam: its site on 13 October 2026 showed a lifetime license at a $19.99 launch special price, regularly $39.99, for use on one device with no subscription, and a 7-day free trial with no credit card. Launch prices change, so check habitcam.app.',
+      },
+      faqSection(
+        'Every answer below uses the same 13 October 2026 check of habitcam.app as the rest of this page.',
+        [
+          ['Does HabitCam work on a Mac?', 'We found no Mac download on its site, which lists Windows 10 and above and a Linux AppImage. Stop Biting runs in a browser on a Mac.'],
+          ['Is HabitCam a subscription?', 'Its site says it is a lifetime license with no subscription, at a $19.99 launch price, regularly $39.99, for one device. Stop Biting is $2.99/month or $29/year.'],
+          ['Does HabitCam send my video anywhere?', 'Its site says all video processing happens locally and no webcam data is transmitted, stored or shared. Stop Biting also sends no camera data while it runs.'],
+          ['Which detects more than nail biting?', 'HabitCam, per its site: hair pulling and face-focused skin picking as well. Stop Biting detects nail biting only.'],
+        ],
+      ),
+      {
+        heading: 'Which should you pick: Stop Biting or HabitCam?',
+        body: 'Pick HabitCam if you are on Windows or Linux, want a one-off purchase, or want to cover hair pulling or skin picking too.\n\nPick Stop Biting if you use a Mac, want nothing to install, or want to start in a browser tab with a habit reversal guide beside it.\n\nBoth have a free trial, so the cheapest way to decide is to try the one that fits your computer.',
+      },
+      verificationSection('Every HabitCam detail on this page (what it detects, its platforms, how it processes video, its internet use, its price and its trial) was checked against habitcam.app on 13 October 2026, and quoted phrases are its own. We looked for a Mac download, who makes it and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitcam.app before buying.'),
+      MEDICAL_DISCLAIMER_SECTION,
+    ],
+    relatedPosts: [
+      { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
+      { href: '/compare/stop-biting-vs-hands-off', label: 'Stop Biting vs Hands Off: which should you pick?' },
+      { href: '/compare/stop-biting-vs-nailed', label: 'Stop Biting vs Nailed: subscription vs a Mac menu bar app' },
+      { href: '/solutions/for-windows', label: 'Stop nail biting on Windows' },
+      { href: '/how-it-works', label: 'How Stop Biting’s AI detection works' },
+    ],
+  };
+}
+
 function getVsBiteLessContent(): PageContent {
   return {
     title: 'Stop Biting vs BiteLess: Apple Watch or Webcam?',
@@ -988,6 +1064,7 @@ function getVsBiteLessContent(): PageContent {
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
+      { href: '/compare/stop-biting-vs-habitcam', label: 'Stop Biting vs HabitCam: browser subscription or installed lifetime license?' },
       { href: '/compare/stop-biting-vs-pavlok', label: 'Stop Biting vs Pavlok: an alert or a shock?' },
       { href: '/compare/stop-biting-vs-habitaware', label: 'Stop Biting vs HabitAware (Keen): wrist sensor or webcam?' },
       { href: '/compare/ai-detection-apps', label: 'All AI nail biting detection apps compared (2026)' },
@@ -1193,6 +1270,7 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/compare/stop-biting-vs-nailkeeper': getVsNailKeeperContent,
   '/compare/stop-biting-vs-pavlok': getVsPavlokContent,
   '/compare/stop-biting-vs-biteless': getVsBiteLessContent,
+  '/compare/stop-biting-vs-habitcam': getVsHabitCamContent,
   '/compare/ai-detection-apps': getAiDetectionAppsContent,
   '/solutions/for-desk-workers': getDeskWorkersContent,
   '/solutions/for-adhd': getAdhdContent,
