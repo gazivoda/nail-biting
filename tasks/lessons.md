@@ -166,3 +166,5 @@ Commit the page first, then sync, then commit the generated files.
 **NCBI eutils is the fallback when PubMed pages need cookies.** `efetch.fcgi?db=pubmed&id=PMID&rettype=abstract&retmode=text` returns citation and abstract; when no abstract exists, cite the title only and do not describe the findings.
 
 **Read the diff output before the commit runs.** I chained `cmp` checks and a `git commit` in one command; the HTML showed DIFFERENT (only because the rebuilt bundle changed the hashed asset filename) after the commit had already recorded 'byte-identical'. When comparing built HTML, normalise `/assets/<hash>` first, and do the comparison in a command that does not also commit.
+
+**New post fields must go through the generator.** BlogPost.tsx now renders from dist/posts/<slug>.json, which is built from the same `posts` object as seo-content.json in scripts/generate-seo-content.mjs. A field added to blogPosts.ts but not copied there will exist for the crawler build step but never reach the client. Edit the generator, then check the page in a browser.

@@ -108,7 +108,7 @@ export default defineConfig({
         // the service worker — they have their own loading logic and caching
         // them in the SW cache would break WASM instantiation on some browsers.
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//],
         runtimeCaching: [
           {
             // App shell JS/CSS chunks — cache first, background update
@@ -117,6 +117,20 @@ export default defineConfig({
             options: {
               cacheName: 'app-shell',
               expiration: { maxEntries: 50, maxAgeSeconds: 30 * 24 * 60 * 60 },
+            },
+          },
+          {
+            // One article's JSON (see hooks/usePost.ts). Network first, so a
+            // revised article is never served stale while online (these are
+            // health pages), with a short timeout and the last copy the reader
+            // saw as the fallback so a post already opened still works offline.
+            // Not precached: 149 files, and most readers open one or two.
+            urlPattern: /\/posts\/[a-z0-9-]+\.json$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'posts',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 30, maxAgeSeconds: 7 * 24 * 60 * 60 },
             },
           },
           {
