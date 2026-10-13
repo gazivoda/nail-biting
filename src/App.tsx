@@ -13,9 +13,9 @@ const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.S
 const PaywallPage = lazy(() =>
   import('./components/auth/PaywallPage').then(m => ({ default: m.PaywallPage })),
 );
-// BlogPost is the only route that renders article bodies, and blogPosts.ts is a
-// single ~700KB array literal that no bundler can tree-shake. Splitting it out
-// keeps every other route — the landing page above all — from paying for it.
+// BlogPost is the only route that renders article bodies. It no longer imports
+// them: each article is fetched from /posts/<slug>.json (see hooks/usePost.ts),
+// so a reader downloads the one they open, not all of them.
 const BlogPost = lazy(() =>
   import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
 );

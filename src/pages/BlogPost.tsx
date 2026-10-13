@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { ArrowLeft, Clock, ArrowRight } from 'lucide-react';
-import { BLOG_POSTS, getPost } from '../data/blogPosts';
-import { getRelated, PRODUCT_LINKS } from '../data/related';
+import { usePost } from '../hooks/usePost';
 import { AUTHOR_BIO } from '../data/editorialPolicy';
 import { AuthorBox } from './EditorialPolicyPage';
 import { buildPageTitle } from '../utils/pageTitle';
@@ -23,10 +22,14 @@ function formatDate(iso: string) {
 
 export function BlogPost({ slug }: Props) {
   useTheme('light');
-  const post = getPost(slug);
+  // The article is fetched on its own (see usePost): this chunk no longer
+  // carries the other 148. `related` and `productLink` come from the same JSON,
+  // computed at build time by the same functions the crawler HTML uses.
+  const state = usePost(slug);
+  const post = state.status === 'ok' ? state.post : undefined;
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
-  const related = post ? getRelated(BLOG_POSTS, slug) : [];
-  const productLink = PRODUCT_LINKS[slug];
+  const related = post?.related ?? [];
+  const productLink = post?.productLink ?? undefined;
 
   // Keep <title> and canonical current across client-side navigation.
   //
@@ -68,8 +71,26 @@ export function BlogPost({ slug }: Props) {
 
       <div className="sg-page"><SiteHeader current="blog" /></div>
 
-      {/* 404 */}
-      {!post && (
+      {/* Loading: header and an empty article column, so the page does not jump. */}
+      {state.status === 'loading' && (
+        <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-24" aria-busy="true">
+          <p className="sg-note">Loading the article…</p>
+        </main>
+      )}
+
+      {/* Could not load: not the same as "does not exist". */}
+      {state.status === 'error' && (
+        <main id="main" className="sg-container pt-32 pb-24 lg:pt-40">
+          <h1 className="sg-h2">We couldn't load this article.</h1>
+          <p className="sg-body sg-measure mt-4">
+            Check your connection and try again. The article is still on the blog.
+          </p>
+          <a href={`/blog/${slug}`} className="sg-btn mt-8">Try again</a>
+        </main>
+      )}
+
+      {/* 404: only when the server really said the article does not exist. */}
+      {state.status === 'notfound' && (
         // The skip link in SiteHeader targets #main on this branch too, and the
         // look matches the server's 404 page.
         <main id="main" className="sg-container pt-32 pb-24 lg:pt-40">
