@@ -1,0 +1,21 @@
+# Growth loop 4 (2026-10-13): 10 iterations, one every 3 minutes
+Rounds 1-3 are LIVE (health commit 34ff3a9 on 2026-10-13; IndexNow sent: 28 URLs, HTTP 200). Search engines still show the old title/snippet: owner must request recrawl in Search Console (Google ignores IndexNow).
+Inputs: Plan agent (blog bundle split design), seo-sxo agent (printable SERPs + dated competitor fact sheets 2026-10-13). Fact sheets are SECOND-HAND: re-fetch the primary page yourself in the iteration before writing a claim.
+Rules: one local commit per iteration on main, NO push (ask the owner at the end). `npm run build:web` (never plain build), seo:check, `npm test`, route smoke, real browser (unregister the localhost service worker first). Every competitor claim: primary page, dated, FACT-CHECK LOG entry, "not found" instead of guessing. New compare/solutions pages: commit first, then seo:sync; CORE_PAGES in scripts/sync-seo.mjs (`command grep -a`, edit bytes). New posts: og:generate, keep only new PNGs. No em dashes; one privacy claim ("no camera data is sent while it runs"); app detects nail biting only; web app only (no desktop app).
+
+## Iterations
+- [ ] 1. /compare/stop-biting-vs-habitcam (habitcam.app: Windows 10+/AppImage Linux, $39.99/$19.99 lifetime launch special, 7-day trial; no Mac download found; maker not found). Re-fetch first.
+- [ ] 2. /compare/stop-biting-vs-nailbitemenu (github.com/killian31/NailBiteMenu: macOS 15.6+ menu bar app, open source, local; price/licence not found). Re-fetch first. Same shape as the Nailed page.
+- [ ] 3. Blog split step 1+2: generator writes dist/posts/<slug>.json (+ related), key-parity check vs BLOG_POSTS, server.js static mount for /posts. Crawler HTML must stay byte-identical (diff before/after).
+- [ ] 4. Blog split step 3+4: usePost(slug) hook (+test), BlogPost.tsx stops importing blogPosts.ts, keeps SSR block until loaded, real 404 only on HTTP 404. Real-browser check.
+- [ ] 5. Blog split step 5: SW runtimeCaching/denylist for /posts, drop stale comment, lesson in tasks/lessons.md, before/after chunk sizes in the log (baseline BlogPost 942,120 B raw / ~291 KB gz).
+- [ ] 6. Printable 30-day nail biting tracker: a real PDF (print via headless Chrome) + preview PNG + landing page /tools/nail-biting-tracker-printable (SERP rewards a downloadable PDF with preview). No claims beyond a tracking sheet.
+- [ ] 7. best-apps table + Unbite (tap-logging tracker; App Store listing, free + IAP $2.99 weekly / $17.99 annual), HabitCam, NailBiteMenu rows from verified pages. Skip StopBitingNails (only a one-line repo description; domain does not resolve).
+- [ ] 8. Paywall: show the user's own logged catches from the trial ("You caught N bites") when N>0, honest zero-state otherwise; never invent a number. Check where incidents are stored first.
+- [ ] 9. Re-check the session when the original tab regains focus after sign-in in a new tab (AuthContext reads the session once on mount).
+- [ ] 10. Sweep (JSON-LD, orphans, internal links, sitemap), final verification, review; ask about push + IndexNow.
+
+## Deferred / owner
+Onboarding tour timing; email capture prerequisites; Google-Extended decision; Search Console recrawl of / and key pages; read each subreddit's live rules before posting drafts in docs/off-site-kit/reddit-and-community-drafts.md; app-store presence; Hands Off alternatives page.
+
+## Log
