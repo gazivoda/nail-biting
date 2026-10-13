@@ -4,7 +4,7 @@ Inputs: Plan agent (blog bundle split design), seo-sxo agent (printable SERPs + 
 Rules: one local commit per iteration on main, NO push (ask the owner at the end). `npm run build:web` (never plain build), seo:check, `npm test`, route smoke, real browser (unregister the localhost service worker first). Every competitor claim: primary page, dated, FACT-CHECK LOG entry, "not found" instead of guessing. New compare/solutions pages: commit first, then seo:sync; CORE_PAGES in scripts/sync-seo.mjs (`command grep -a`, edit bytes). New posts: og:generate, keep only new PNGs. No em dashes; one privacy claim ("no camera data is sent while it runs"); app detects nail biting only; web app only (no desktop app).
 
 ## Iterations
-- [ ] 1. /compare/stop-biting-vs-habitcam (habitcam.app: Windows 10+/AppImage Linux, $39.99/$19.99 lifetime launch special, 7-day trial; no Mac download found; maker not found). Re-fetch first.
+- [x] 1. /compare/stop-biting-vs-habitcam (habitcam.app: Windows 10+/AppImage Linux, $39.99/$19.99 lifetime launch special, 7-day trial; no Mac download found; maker not found). Re-fetch first.
 - [ ] 2. /compare/stop-biting-vs-nailbitemenu (github.com/killian31/NailBiteMenu: macOS 15.6+ menu bar app, open source, local; price/licence not found). Re-fetch first. Same shape as the Nailed page.
 - [ ] 3. Blog split step 1+2: generator writes dist/posts/<slug>.json (+ related), key-parity check vs BLOG_POSTS, server.js static mount for /posts. Crawler HTML must stay byte-identical (diff before/after).
 - [ ] 4. Blog split step 3+4: usePost(slug) hook (+test), BlogPost.tsx stops importing blogPosts.ts, keeps SSR block until loaded, real 404 only on HTTP 404. Real-browser check.
@@ -19,3 +19,4 @@ Rules: one local commit per iteration on main, NO push (ask the owner at the end
 Onboarding tour timing; email capture prerequisites; Google-Extended decision; Search Console recrawl of / and key pages; read each subreddit's live rules before posting drafts in docs/off-site-kit/reddit-and-community-drafts.md; app-store presence; Hands Off alternatives page.
 
 ## Log
+- it1: /compare/stop-biting-vs-habitcam live. Re-fetched habitcam.app myself 2026-10-13 (matches the agent's fact sheet): detects hair pulling / face-focused skin picking / nail biting; Windows 10+ and Linux AppImage; Mac NOT found; local processing, internet only for license validation + updates; 7-day trial; lifetime $19.99 launch (regularly $39.99), 1 device, no subscription; maker NOT found. FACT-CHECK LOG entry added. Honest on where HabitCam wins (price over time, more behaviours, longer trial). Fixed my own price arithmetic before shipping. Linked from BiteLess, Windows, Hands Off pages; sitemap 177.
