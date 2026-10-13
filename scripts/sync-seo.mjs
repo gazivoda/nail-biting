@@ -48,6 +48,7 @@ const CORE_PAGES = [
   { path: '/how-it-works',                      changefreq: 'monthly', priority: '0.8' },
   { path: '/pricing',                           changefreq: 'monthly', priority: '0.8' },
   { path: '/tools/nail-biting-cost-calculator', changefreq: 'monthly', priority: '0.7' },
+  { path: '/tools/nail-biting-tracker-printable', changefreq: 'monthly', priority: '0.7' },
   { path: '/about',                             changefreq: 'monthly', priority: '0.6' },
   { path: '/compare/bitter-polish-alternative', changefreq: 'monthly', priority: '0.8' },
   { path: '/compare/habit-tracking-apps',       changefreq: 'monthly', priority: '0.8' },
@@ -416,6 +417,7 @@ const PAGE_SOURCES = {
   '/how-it-works':           [ssrArticle('/how-it-works')],
   '/pricing':                [ssrArticle('/pricing')],
   '/tools/nail-biting-cost-calculator': [ssrArticle('/tools/nail-biting-cost-calculator')],
+  '/tools/nail-biting-tracker-printable': [ssrArticle('/tools/nail-biting-tracker-printable')],
   '/about':                  [ssrArticle('/about')],
   // /editorial-policy renders from a data module, not from literals in the
   // handler, so the module IS the page: its title, standfirst, sections,
@@ -726,7 +728,7 @@ const sitemapUrls = new Set();
 function keyPageEntries() {
   const server = readWorkTree(SERVER) ?? '';
   const entries = [];
-  for (const path of ['/', '/how-it-works', '/pricing', '/tools/nail-biting-cost-calculator', '/about', '/blog', '/editorial-policy']) {
+  for (const path of ['/', '/how-it-works', '/pricing', '/tools/nail-biting-cost-calculator', '/tools/nail-biting-tracker-printable', '/about', '/blog', '/editorial-policy']) {
     const meta = routeMeta(server, path);
     if (!meta) {
       problems.push(`llms.txt: cannot read the injectMeta title/description for ${path} in server.js — the extractor no longer matches the handler`);

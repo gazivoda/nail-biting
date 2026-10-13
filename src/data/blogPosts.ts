@@ -205,6 +205,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `When nail biting meets clinical thresholds — significant physical damage, marked distress, or co-occurring anxiety disorder — referral to a child psychologist or behavioural therapist experienced with body-focused repetitive behaviours is appropriate. The TLC Foundation for Body-Focused Repetitive Behaviors maintains a directory of BFRB-informed clinicians at bfrb.org. Habit Reversal Training adapted for children (which emphasises the awareness and competing response components while reducing the social support component) has good evidence for ages 8 and above.\n\nIt is also worth knowing that in one psychiatrically referred sample of children who bite their nails, ADHD was the most common co-occurring diagnosis (Ghanizadeh, 2008) — a reminder that persistent nail biting sometimes travels with conditions that deserve their own assessment.\n\nFor children with co-occurring OCD or anxiety disorder, treatment of the primary condition — typically CBT for childhood OCD/anxiety — often produces parallel reductions in nail biting without targeting the habit directly. Parents should avoid the common error of treating the nail biting as an isolated behaviour when it may be a symptom of a broader anxiety pattern that warrants its own assessment.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011.</a></li><li><a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer">The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org)</a></li></ul>`,
       },
+      {
+        heading: `Where to go next`,
+        body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+        html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -1883,6 +1888,11 @@ BLOG_POSTS.push({
       body: `Week 4 is maintenance. Most people at this point are seeing significant reductions but experiencing biting spikes during high-stress events or when the monitoring routine slips. This is expected. The task in week 4 is: notice the spike, understand what caused it, adjust, and continue.\n\nAfter 30 days: if your frequency is trending down week-over-week, continue with the current approach for another 2–4 weeks before reducing monitoring. If frequency has not changed meaningfully, reassess — the most common issue is an awareness gap (not catching enough episodes to make the competing response automatic). Increasing detection frequency or adding an external awareness tool usually resolves this. Long-term, most successful HRT practitioners maintain light monitoring during high-stress periods indefinitely.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289–300.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
+    {
+      heading: `Where to go next`,
+      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2114,6 +2124,11 @@ BLOG_POSTS.push({
       heading: 'When the numbers surprise you',
       body: `The most consistent report from people who begin systematic nail biting tracking is surprise at the actual frequency. People who haven't tracked usually estimate a handful of episodes a day, and the logged number is typically much higher. We have no published figures to put on either side of that gap — any specific numbers you see quoted for it, here or elsewhere, are not from a study.\n\nThis discrepancy is not a failure of self-awareness — it's a feature of automatic habits. The episodes that don't reach consciousness don't register in self-report. Seeing the actual frequency number, particularly when it's significantly higher than expected, produces a qualitative shift in how the habit is understood. It stops feeling like occasional weakness and starts being understood as an automatic behaviour that requires specific systematic intervention. That reframing is often what makes people commit to the treatment rather than continuing with periodic unsuccessful willpower attempts.`,
           html: `<p>If you would rather not log by hand, <a href="/compare/habit-tracking-apps">our comparison of habit tracking apps</a> covers which ones automate the counting.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3622,6 +3637,11 @@ BLOG_POSTS.push({
     {
       heading: `Keeping this in perspective`,
       body: `Modeling is one candidate factor among several, not a guarantee — many children of nail-biting parents never develop the habit themselves, and most nail biters do not have a family history of it: in that 743-child community sample, fewer than four in ten of the children who bit their nails had any family member who did. The practical takeaway isn't that parents who bite their nails are directly responsible for a child's habit, but that addressing your own nail biting, if you have one, removes one plausible contributing factor and sets a genuinely useful example about how habits get changed — which has value independent of whether it measurably changes your child's own risk.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],

@@ -930,6 +930,7 @@ if (!existsSync(distPath)) {
     ['/how-it-works', 'How AI nail biting detection works'],
     ['/pricing', 'Pricing: free trial, $2.99/month or $29/year'],
     ['/tools/nail-biting-cost-calculator', 'Nail biting cost calculator'],
+    ['/tools/nail-biting-tracker-printable', 'Free printable nail biting tracker'],
     ['/about', 'About Stop Biting'],
     ['/compare/bitter-polish-alternative', 'Stop Biting vs bitter nail polish'],
     ['/compare/habit-tracking-apps', 'Why habit tracking apps do not work for nail biting'],
@@ -2520,10 +2521,64 @@ if (!existsSync(distPath)) {
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(path));
   });
 
+  // Free printable tracker: a landing page for the downloadable sheet in
+  // public/files (built from docs/tracker). The page is a real article for
+  // crawlers, and the PDF and its preview image are same-origin files.
+  app.get('/tools/nail-biting-tracker-printable', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const path = '/tools/nail-biting-tracker-printable';
+    const description = 'A free one-page printable 30-day nail biting tracker (PDF): tally each catch, note what was going on, and see your patterns. No sign-up.';
+    let injected = injectMeta(indexHtml, {
+      title: 'Free Printable Nail Biting Tracker (30-Day PDF)',
+      description,
+      canonical: `https://stopbiting.today${path}`,
+    });
+    const toolSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `https://stopbiting.today${path}`,
+      url: `https://stopbiting.today${path}`,
+      name: 'Free printable nail biting tracker',
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': WEBSITE_ID },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: 'https://stopbiting.today/files/nail-biting-30-day-tracker-preview.png',
+        width: 816,
+        height: 1056,
+        caption: 'Preview of the 30-day nail biting tracker sheet.',
+      },
+      ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['Printable nail biting tracker', `https://stopbiting.today${path}`],
+    ]);
+    injected = injected.replace('</head>', `    ${schemaTag(toolSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    injected = injectSsrArticle(injected,
+      '<h1>Free printable nail biting tracker</h1>' +
+      '<p class="article-summary">A one-page, 30-day log for noticing when you bite and what is going on at the time. ' +
+      'Print it, keep it on your desk, and tally each catch. It is free, with no sign-up.</p>' +
+      '<p><a href="/files/nail-biting-30-day-tracker.pdf">Download the PDF</a> (one US Letter page).</p>' +
+      '<section><h2>How to use it</h2><ol>' +
+      '<li>Each time you notice your hand at your mouth, make a mark in that day’s tally box.</li>' +
+      '<li>Tick what was going on: stress, deep focus, boredom or something else.</li>' +
+      '<li>Tick the competing-response box if you did something else with your hands instead.</li>' +
+      '<li>After a week, look for the moments that keep coming up.</li></ol>' +
+      '<p>Keeping a self-monitoring log is the usual first step in awareness training, the first component of habit reversal training. ' +
+      'Our <a href="/blog/habit-reversal-training-guide">habit reversal guide</a> covers the full method.</p></section>' +
+      '<section><h2>What a paper log can and cannot do</h2>' +
+      '<p>A paper log only records what you notice, and much nail biting happens without noticing. If you work at a computer, ' +
+      'Stop Biting watches through your webcam and sounds an alarm the moment your hand reaches your mouth, so the catches are logged for you. ' +
+      'It detects nail biting only, and only in front of your webcam. A log is a way to notice a habit, not a treatment.</p></section>');
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(path));
+  });
+
   // Known valid routes for soft-404 protection
   const KNOWN_ROUTES = new Set([
     '/', '/blog', '/about', '/how-it-works', '/pricing', '/privacy',
-    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH, '/tools/nail-biting-cost-calculator',
+    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH, '/tools/nail-biting-cost-calculator', '/tools/nail-biting-tracker-printable',
     ...Object.keys(COMPARE_META),
     ...Object.keys(BLOG_POSTS).map(slug => `/blog/${slug}`),
   ]);

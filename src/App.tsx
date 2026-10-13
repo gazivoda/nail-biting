@@ -32,6 +32,7 @@ import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
 import { CostCalculator } from './pages/CostCalculator';
+import { PrintableTracker } from './pages/PrintableTracker';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
@@ -158,6 +159,11 @@ export default function App() {
   // Pricing
   if (path === '/pricing') {
     return <PricingPage />;
+  }
+
+  // Free printable tracker
+  if (path === '/tools/nail-biting-tracker-printable') {
+    return <PrintableTracker />;
   }
 
   // Free cost calculator
