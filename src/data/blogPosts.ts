@@ -205,6 +205,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: ``,
         html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -241,6 +246,11 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Tier 4: Limited evidence — Mindfulness and stress reduction',
         body: `Mindfulness-based approaches — meditation, breathing exercises, body scanning — target the anxiety that drives stress-triggered nail biting. Mindfulness practice may reduce that anxiety, though this has not been tested directly for nail biting.\n\nHowever, mindfulness does not address the automaticity of the habit and provides no mechanism for interrupting biting in the moment. It is best conceptualised as an upstream intervention that reduces trigger frequency, complementary to but not substitutable for direct habit intervention. Those with anxiety-driven nail biting are the most likely to benefit from adding a mindfulness practice to their HRT protocol.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-hypnosis">Does hypnotherapy for nail biting work?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting: what N-acetylcysteine can and cannot do</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-gloves">Do gloves stop nail biting?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -283,6 +293,11 @@ export const BLOG_POSTS: BlogPost[] = [
           'Cognitive restructuring — addresses the high-standards, low-frustration-tolerance pattern often described alongside nail biting, though the link has not been tested directly.',
           'Structured worry time — reduces diffuse anxiety that raises baseline stress throughout the day.',
         ],
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety: when treating anxiety is the key</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping: find out when you actually bite</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -2634,6 +2649,11 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
