@@ -293,7 +293,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Science",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-15",
   },
   {
     slug: "grow-nails-after-nail-biting",
