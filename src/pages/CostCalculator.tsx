@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { track } from '../utils/track';
 import { MONTHLY_PER_YEAR, YEARLY_PRICE, yearlyCost } from '../utils/costCalc';
 
 // /tools/nail-biting-cost-calculator. The server (server.js) injects the head
@@ -42,6 +43,11 @@ export function CostCalculator() {
   const entered = [manicures, price, other].some(v => v.trim() !== '');
   const r = yearlyCost({ manicuresPerYear: num(manicures), manicurePrice: num(price), otherPerYear: num(other) });
   const less = r.vsYearlyPlan < 0;
+
+  // One event the first time someone fills in a number, not one per keystroke.
+  useEffect(() => {
+    if (entered) track('calculator_use');
+  }, [entered]);
 
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">

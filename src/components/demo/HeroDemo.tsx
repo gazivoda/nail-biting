@@ -167,6 +167,7 @@ export function HeroDemo({ autoStart = false }: Props) {
 
   // Why the session could not run. Derived rather than stored, so the effect
   // below fires once per distinct failure.
+  const failureKind = error ? error.kind : 'model';
   const failureNow = error
     ? CAMERA_ERROR_MESSAGE[error.kind]
     : status === 'error'
@@ -186,7 +187,18 @@ export function HeroDemo({ autoStart = false }: Props) {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- see above
     setFailure(failureNow);
     dispatch({ type: 'reset' });
-  }, [failureNow]);
+    // The error kind is a fixed label ('permission-denied', 'no-camera', ...).
+    track('demo_camera_failed', failureKind);
+  }, [failureNow, failureKind]);
+
+  // The minute ran out. Fires once per run: the phase only becomes `finished`
+  // through the clock, and `start` leaves it again. Whether it caught anything
+  // is the one thing worth knowing, so it is the label.
+  const finishedCatches = state.phase === 'finished' ? state.catches : null;
+  useEffect(() => {
+    if (finishedCatches === null) return;
+    track('demo_complete', finishedCatches > 0 ? 'caught' : 'no_catch');
+  }, [finishedCatches]);
 
   const isRunning = state.phase === 'running';
   const isFinished = state.phase === 'finished';

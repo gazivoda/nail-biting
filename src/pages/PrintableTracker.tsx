@@ -2,6 +2,7 @@ import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { track } from '../utils/track';
 
 // /tools/nail-biting-tracker-printable. The server (server.js) injects the head
 // and the crawler-visible copy; like /pricing, this page does not touch
@@ -31,7 +32,7 @@ export function PrintableTracker() {
               on your desk, and tally each catch. It is free, with no sign-up.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a href={PDF} download className="sg-btn">Download the PDF</a>
+              <a href={PDF} download onClick={() => track('tracker_pdf_download')} className="sg-btn">Download the PDF</a>
               <span className="sg-note">One US Letter page, about 160 KB</span>
             </div>
 
