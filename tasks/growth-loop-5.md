@@ -1,0 +1,19 @@
+# Growth loop 5 (2026-10-15): 10 iterations, one every 3 minutes
+Rounds 1-4 are LIVE (health commit 54d2926; IndexNow sent 2026-10-13). Owner items still open: Search Console recrawl, subreddit rules, email capture, Google-Extended.
+Inputs: seo-geo audit (live bugs + schema), Growth Hacker (funnel), seo-sxo (SERP/new page, pending when this was written). Agent claims are SECOND-HAND: verify in the repo or on the primary page before building or writing a claim.
+Rules: one local commit per iteration on main, NO push (ask the owner at the end). `npm run build:web` (never plain build), seo:check, `npm test`, route smoke, real browser for UI changes (unregister the localhost service worker first). Every outside claim: primary page, dated, FACT-CHECK LOG. No em dashes; one privacy claim ("no camera data is sent while it runs"); web app only. Trial/price wording must be read from the code (Landing.tsx OFFER_LINE / pricing), not from an agent.
+
+## Iterations
+- [x] 1. Live bug: 23 "Where to go next" sections where `body` and `html` repeat the same text; nail-biting-health-risks has two identical h2s. Empty the duplicate, merge, bump dateModified. Verify in crawler HTML and the post JSON.
+- [ ] 2. HowTo JSON-LD on the habit reversal training guide (server.js ~1287-1322) must mirror visible text only (step count, no unsourced "4-8 weeks"/"majority" claims).
+- [ ] 3. Privacy wording: stop-biting-app-review "nothing is ever transmitted", /privacy meta "ever transmitted to any server"; /pricing meta 203 chars (and make seo:check cover page metas); robots.txt named AI-bot groups also Disallow /api/.
+- [ ] 4. Funnel events in track.ts (demo_camera_denied, demo_complete, blog_cta_click, tracker_pdf_download, calculator_use) + end-of-demo CTA if HeroDemo has none. Read HeroDemo/TrialButton first.
+- [ ] 5. Blog post -> demo link with ?src=blog-<slug> (React render only, not crawler HTML) and a plain demo line on the tracker and calculator pages.
+- [ ] 6. Internal links: 3-4 contextual in-body links in each hub post (children, stress, best remedies, bfrb-guide).
+- [ ] 7. Tracker page: DigitalDocument schema + OG image (og:generate, keep only the new PNG).
+- [ ] 8. nail-biting-statistics "Key numbers" table from figures the page already cites; question-form first H2 + direct answer on the top few posts that lack one.
+- [ ] 9. New page chosen from the SERP research (primary-source facts only); fall back to the tics/Tourette or nail-bed post only with a primary source fetched that day.
+- [ ] 10. Sweep (JSON-LD, orphans, links, sitemap, snippet lengths), final verification, review; delete cron bfc32b77; ask about push + IndexNow.
+
+## Log
+- it1: 23 'Where to go next' sections had `body` and `html` saying the same thing (both render). Blanked the body in all 23 (the html carries the link), BlogPost.tsx and server.js renderSectionsHtml now skip empty paragraphs, and nail-biting-health-risks' two identical h2s are one section with both links. Verified on a built server: health-risks and braces each show 'Where to go next' once, no empty <p>, links present, post JSON has one section. build:web, seo:check, 97 tests pass. dateModified NOT bumped: the visible change is removing a repeated sentence, not new content. Agent reports in: seo-sxo says its six example themes already have pages (it found zero-match themes instead: ICD-10 code, kids reward chart printable, short nail beds/regrowth, rubber band snap, body language, driving); its facts are second-hand, re-fetch before use (iteration 9).

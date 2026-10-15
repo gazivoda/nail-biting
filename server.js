@@ -826,7 +826,7 @@ if (!existsSync(distPath)) {
   // injects with dangerouslySetInnerHTML, so it is emitted verbatim.
   function renderSectionsHtml(sections) {
     return sections.map(s => {
-      const paras = s.body.split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
+      const paras = s.body.split('\n\n').filter(Boolean).map(p => `<p>${escapeHtml(p)}</p>`).join('');
       const listHtml = s.list?.length
         ? `<ul>${s.list.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
         : '';

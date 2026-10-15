@@ -176,7 +176,7 @@ export function BlogPost({ slug }: Props) {
                   {section.heading}
                 </h2>
 
-                {section.body.split('\n\n').map((para, j) => (
+                {section.body.split('\n\n').filter(Boolean).map((para, j) => (
                   <p key={j} className="sg-body mb-4">
                     {para}
                   </p>

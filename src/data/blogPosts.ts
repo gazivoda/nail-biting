@@ -154,13 +154,8 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: `Where to go next`,
-        body: `For what has and has not been measured about nail biting and your teeth, see our page on whether nail biting damages your teeth.`,
-        html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
-      },
-      {
-        heading: `Where to go next`,
-        body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
-        html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
+        body: ``,
+        html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p><p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -207,7 +202,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: `Where to go next`,
-        body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+        body: ``,
         html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -328,7 +323,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: `Where to go next`,
-        body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+        body: ``,
         html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -489,7 +484,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       },
       {
         heading: `Where to go next`,
-        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        body: ``,
         html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -1044,7 +1039,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      body: ``,
       html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -1512,7 +1507,7 @@ Understanding nail biting as emotional regulation explains why the intervention 
     },
     {
       heading: `Where to go next`,
-      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -1648,7 +1643,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
+      body: ``,
       html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -1811,7 +1806,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      body: ``,
       html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -1914,7 +1909,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      body: ``,
       html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2151,7 +2146,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      body: ``,
       html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2237,7 +2232,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If you work from home, our guide for remote workers covers how webcam detection fits a remote workday.`,
+      body: ``,
       html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2396,7 +2391,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2520,7 +2515,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If most of your biting happens alone at a laptop, our guide for students covers how webcam detection fits a study week.`,
+      body: ``,
       html: `<p>If most of your biting happens alone at a laptop, our <a href="/solutions/for-students">guide for students</a> covers how webcam detection fits a study week.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2637,7 +2632,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If you are wondering whether nail biting counts as self-harm, see our page on the difference.`,
+      body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -2953,7 +2948,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `For what happens if you swallow bitten nails, and what has and has not been measured, see our page on swallowing fingernails.`,
+      body: ``,
       html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -3075,7 +3070,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `For what has and has not been measured about nail biting and your teeth, see our page on whether nail biting damages your teeth.`,
+      body: ``,
       html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -3297,7 +3292,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+      body: ``,
       html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -3664,7 +3659,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `Where to go next`,
-      body: `A free printable 30-day tracker is available if you want a paper log of your biting.`,
+      body: ``,
       html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
@@ -4930,7 +4925,7 @@ BLOG_POSTS.push(
       },
       {
         heading: `Where to go next`,
-        body: `For what has and has not been measured about nail biting and your teeth, see our page on whether nail biting damages your teeth.`,
+        body: ``,
         html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -4972,7 +4967,7 @@ BLOG_POSTS.push(
       },
       {
         heading: `Where to go next`,
-        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        body: ``,
         html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -5106,7 +5101,7 @@ BLOG_POSTS.push(
       },
       {
         heading: `Where to go next`,
-        body: `If your habit is picking at the nails or cuticles rather than biting them, see our page on nail and cuticle picking.`,
+        body: ``,
         html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
@@ -5724,7 +5719,7 @@ BLOG_POSTS.push(
       },
       {
         heading: `Where to go next`,
-        body: `For what has and has not been measured about nail biting and your teeth, see our page on whether nail biting damages your teeth.`,
+        body: ``,
         html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
