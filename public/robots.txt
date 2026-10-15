@@ -10,15 +10,19 @@ Disallow: /api/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /api/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /api/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /api/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /api/
 
 # Block AI training crawlers (not search/citations)
 # Note: CCBot is unblocked — blog content is public and we want Common Crawl indexing

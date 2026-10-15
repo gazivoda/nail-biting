@@ -1655,7 +1655,7 @@ if (!existsSync(distPath)) {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
       name: 'Stop Biting in 30 seconds',
-      description: 'A 30-second overview of Stop Biting: a webcam and on-device AI that sound an alarm the moment a finger reaches your mouth, with video that never leaves your device, and a 3-day free trial.',
+      description: 'A 30-second overview of Stop Biting: on-device AI watches your webcam and sounds an alarm when a finger reaches your mouth. Camera video stays on your device.',
       thumbnailUrl: 'https://stopbiting.today/video/stop-biting-poster.webp',
       contentUrl: 'https://stopbiting.today/video/stop-biting.mp4',
       uploadDate: '2026-10-02',
@@ -2057,7 +2057,7 @@ if (!existsSync(distPath)) {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
       title: 'Pricing — $2.99/month or $29/year | Stop Biting',
-      description: 'Stop Biting pricing: 3-day free trial, no credit card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Unlimited AI detection, streak tracking, full incident history. Cancel anytime.',
+      description: 'Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.',
       canonical: 'https://stopbiting.today/pricing',
     });
     // This page used to declare its own SoftwareApplication with its own copy of
@@ -2302,7 +2302,7 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-remote-workers': {
       title: 'Stop Nail Biting Working From Home | Stop Biting',
-      description: 'Remote work means long focused stretches, idle hands and nobody watching. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
+      description: 'Remote work means long focused stretches, idle hands and nobody watching. Stop Biting sounds an alarm the moment your hand reaches your mouth.',
     },
     '/solutions/for-mac': {
       title: 'Stop Nail Biting on a Mac | Stop Biting',
@@ -2356,7 +2356,7 @@ if (!existsSync(distPath)) {
     },
     '/compare/stop-biting-vs-pavlok': {
       title: 'Stop Biting vs Pavlok: An Alert or a Shock?',
-      description: 'Pavlok is a wearable whose site describes shock, vibration or chime feedback you trigger yourself; Stop Biting is a webcam alarm, $2.99/mo or $29/yr. An honest comparison.',
+      description: 'Pavlok is a wearable whose site describes shock, vibration or chime feedback; Stop Biting is a webcam alarm, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-08',
     },
     '/compare/stop-biting-vs-biteless': {
