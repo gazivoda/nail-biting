@@ -2477,6 +2477,7 @@ if (!existsSync(distPath)) {
       title: 'Nail Biting Cost Calculator: What It Costs You a Year',
       description,
       canonical: `https://stopbiting.today${path}`,
+      ogImage: 'https://stopbiting.today/og/tools-nail-biting-cost-calculator.png',
     });
     const toolSchema = {
       '@context': 'https://schema.org',
@@ -2518,6 +2519,7 @@ if (!existsSync(distPath)) {
       title: 'Free Printable Nail Biting Tracker (30-Day PDF)',
       description,
       canonical: `https://stopbiting.today${path}`,
+      ogImage: 'https://stopbiting.today/og/tools-nail-biting-tracker-printable.png',
     });
     const toolSchema = {
       '@context': 'https://schema.org',
@@ -2534,6 +2536,18 @@ if (!existsSync(distPath)) {
         width: 816,
         height: 1056,
         caption: 'Preview of the 30-day nail biting tracker sheet.',
+      },
+      // The sheet itself, so the PDF is described as a free document and not
+      // only linked. Every field here is visible on the page.
+      mainEntity: {
+        '@type': 'DigitalDocument',
+        name: 'Nail biting 30-day tracker',
+        description: 'A one-page, 30-day log for noticing when you bite and what is going on at the time.',
+        url: 'https://stopbiting.today/files/nail-biting-30-day-tracker.pdf',
+        encodingFormat: 'application/pdf',
+        isAccessibleForFree: true,
+        inLanguage: 'en',
+        thumbnailUrl: 'https://stopbiting.today/files/nail-biting-30-day-tracker-preview.png',
       },
       ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
     };

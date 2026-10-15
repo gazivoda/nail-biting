@@ -615,6 +615,12 @@ async function collectTargets() {
     });
   }
 
+  // The two free tools. Titles equal the injectMeta titles in server.js.
+  targets.push(
+    { file: 'tools-nail-biting-tracker-printable.png', title: 'Free Printable Nail Biting Tracker (30-Day PDF)', tag: 'Free tool', meta: '' },
+    { file: 'tools-nail-biting-cost-calculator.png', title: 'Nail Biting Cost Calculator: What It Costs You a Year', tag: 'Free tool', meta: '' },
+  );
+
   // The site card: /, /about, /how-it-works, /pricing, /blog and every other
   // route without its own card. index.html and SCHEMA_IMAGE point at it.
   targets.push({ file: 'site.png', title: 'A webcam alarm for nail biting', tag: 'Stop Biting', meta: '' });
