@@ -746,6 +746,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         body: `For nail biters with established, automatic habits, bitter preparations frequently fail as a standalone treatment for a predictable reason: the behavior is executed below the threshold of conscious awareness, and the aversive taste arrives after the bite has already begun. The automatic habit chain — cue, hand movement, mouth contact, bite — is interrupted only at the last step. This late-stage interruption is less effective than early-stage interruption (catching the urge or the hand movement before mouth contact) because the habit routine has already been initiated.\n\nAdditionally, many nail biters report habituating to the bitterness over time, particularly if they are consuming the substance repeatedly throughout the day — a commonly described pattern rather than a documented trial finding. Rotating between products (using different bitter preparations on alternate weeks) is often suggested as a partial answer to that, but there is no trial evidence either way. For established habits, bitter preparations are best understood as a supplementary tool rather than a primary intervention.`,
             html: `<p>If bitter polish has already failed you, we wrote up <a href="/compare/bitter-polish-alternative">what to try instead of bitter polish</a> and why those approaches hold up better.</p>`,
     },
+      {
+        heading: `Where to go next`,
+        body: ``,
+        html: `<p>Bitter polish is a mild aversion. For the other common version of that idea, see <a href="/blog/rubber-band-snap-nail-biting">does snapping a rubber band stop nail biting</a>.</p>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6230,6 +6235,43 @@ BLOG_POSTS.push({
       heading: `Will Stop Biting catch nail picking?`,
       body: `Probably not, and we would rather say so. Stop Biting watches for a fingertip close to your mouth, so it is built for nail biting. Picking that happens away from your mouth, with one hand working on the other, does not trigger it. If your picking is the main problem, the awareness and competing-response steps still apply, but you will need to do the noticing yourself.`,
       html: `<p>Related reading: <a href="/blog/nail-biting-cuticle-damage">cuticle damage from biting</a>, <a href="/blog/nail-biting-hangnails">hangnails and how to deal with them</a>, <a href="/blog/nail-biting-vs-skin-picking">nail biting vs skin picking</a>, <a href="/blog/nac-nail-biting">N-acetylcysteine and nail biting</a> and <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'rubber-band-snap-nail-biting',
+  title: `Does Snapping a Rubber Band Stop Nail Biting? What the Trials Tested`,
+  seoTitle: 'Rubber Band Snapping for Nail Biting: Does It Work?',
+  description: `No trial found tested snapping a rubber band for nail biting. What the trials of mild aversion and competing responses did find, and what to try instead.`,
+  tag: 'Treatment',
+  readingMinutes: 3,
+  datePublished: '2026-10-15',
+  dateModified: '2026-10-15',
+  ogImage: '/og/rubber-band-snap-nail-biting.png',
+  sections: [
+    {
+      heading: `Does snapping a rubber band stop nail biting?`,
+      body: `Nobody has shown that it does. A PubMed search run on 15 October 2026 for rubber band, wrist band or snapping together with nail biting or onychophagia returned no results, so snapping a band at the wrist has no controlled trial behind it as far as that search shows.\n\nThat is not the same as proof that it fails. It means the advice rests on habit and anecdote. What has been tested is close by, and worth knowing about, because snapping a band is a form of the same idea.`,
+    },
+    {
+      heading: `What is aversion, and what did the trials test?`,
+      body: `The main clinical review describes aversion therapy as the repeated pairing of an unwanted behavior with discomfort to break the habit (Lee & Lipner, 2022). In the nail biting trials, the discomfort was a bitter-tasting polish painted on the nails, not a snapped band.\n\nIn a four-week trial of 21 people, seven per group, both a mild aversion (bitter polish) and a competing response improved nail length, while self-monitoring alone did not (Silber & Haynes, 1992). In a 12-week trial of 45 chronic biters, mild aversion produced a significant gain in nail length, and the competing response just failed to reach significance on that measure (Allen, 1996). The two small trials did not agree on which was better.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li></ul>`,
+    },
+    {
+      heading: `Why is a competing response the better-supported alternative?`,
+      body: `In the Silber and Haynes trial the competing response also improved skin damage and the participants' own ratings of their control over the habit, which the other two conditions did not. The review adds that aversion is discouraged in younger children because it may provoke opposition and increase biting to get attention, and that its success depends on consistent reapplication.\n\nA competing response gives your hands something to do that cannot happen alongside biting, such as clenching a fist, instead of adding a penalty. The size of the evidence is modest, because these are small trials. For the full method, see the habit reversal training guide.`,
+    },
+    {
+      heading: `What should you do if you already snap a band?`,
+      body: `This page cannot tell you that it is harmful or that it works. If you use one, treat it as a reminder that you reached for your mouth, and pair it with a specific competing response you do straight away. If it leaves marks or hurts, stop and try something else. A doctor or a therapist who treats body-focused repetitive behaviors can help if the habit is hard to shift.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
