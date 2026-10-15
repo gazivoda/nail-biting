@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import {
   ArrowRight, Camera, ChevronDown, Loader2,
   ShieldCheck,
@@ -165,6 +165,14 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
   // Stays false until the visitor asks for the demo: the lazy import is only
   // ever triggered by this flag, which is what keeps MediaPipe off a page view.
   const [demoStarted, setDemoStarted] = useState(false);
+
+  // Links from blog posts, the calculator and the tracker point at /#live-demo.
+  // The page is client-rendered after the session check, so the browser's own
+  // hash scroll has nothing to land on when it runs.
+  useEffect(() => {
+    if (window.location.hash !== '#live-demo') return;
+    document.getElementById('live-demo')?.scrollIntoView({ block: 'center' });
+  }, []);
 
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">

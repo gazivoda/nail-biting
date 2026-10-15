@@ -12,6 +12,7 @@ export type FunnelEvent =
   | 'trial_click'
   | 'signin_click'
   | 'phone_link_click'
+  | 'demo_link_click'
   | 'tracker_pdf_download'
   | 'calculator_use';
 

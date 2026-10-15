@@ -9,6 +9,7 @@ import { TAG_PILL } from '../components/blog/tagPill';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { track } from '../utils/track';
 
 interface Props {
   slug: string;
@@ -213,7 +214,15 @@ export function BlogPost({ slug }: Props) {
                 Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when
                 your hand moves toward your mouth. The video stays on your computer. 3 days free,
                 no card. Read <a href="/how-it-works" className="sg-link">how it works</a> or{' '}
-                <a href="/pricing" className="sg-link">see pricing</a>.
+                <a href="/pricing" className="sg-link">see pricing</a>. Or{' '}
+                <a
+                  href="/#live-demo"
+                  onClick={() => track('demo_link_click', `blog-${slug}`)}
+                  className="sg-link"
+                >
+                  try the 60 second demo
+                </a>{' '}
+                first, no account.
               </p>
             </div>
             <TrialButton source="blog_post" />
