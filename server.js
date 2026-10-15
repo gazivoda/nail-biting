@@ -1285,40 +1285,26 @@ if (!existsSync(distPath)) {
     if (postFaq) schemaBlocks.push(schemaTag(faqPageSchema(canonical, postFaq.heading, postFaq.pairs)));
 
     if (slug === 'habit-reversal-training-guide') {
-      const howTo = {
-        '@context': 'https://schema.org',
-        '@type': 'HowTo',
-        name: 'How to Stop Nail Biting Using Habit Reversal Training',
-        description: 'A three-step evidence-based protocol (HRT) shown in controlled trials to substantially reduce nail biting with consistent practice over 4–8 weeks.',
-        totalTime: 'P8W',
-        step: [
-          {
-            '@type': 'HowToStep',
-            position: 1,
-            name: 'Start awareness training',
-            text: 'Keep a habit diary for one week, recording every nail biting episode — time, context, emotional state, and trigger. Practise noticing the precursor movements (hand rising, fingers touching lips) before the bite. This phase alone produces measurable reductions and is the most impactful component of HRT.',
-          },
-          {
-            '@type': 'HowToStep',
-            position: 2,
-            name: 'Choose and practise a competing response',
-            text: 'Select a behaviour physically incompatible with nail biting that you can maintain for at least one minute in any context — pressing fingertips to a flat surface, clenching a fist, or gripping an object. At the moment you notice the urge or the habit beginning, immediately perform the competing response and hold it for 1–3 minutes until the urge passes.',
-          },
-          {
-            '@type': 'HowToStep',
-            position: 3,
-            name: 'Add external awareness support',
-            text: 'Use a real-time alert system — a support person, a phone habit tracker, or an AI-powered detection app — to flag instances you miss during the awareness gap. This closes the loop for automatic biting episodes that occur below conscious threshold, which account for the majority of daily biting in most people.',
-          },
-          {
-            '@type': 'HowToStep',
-            position: 4,
-            name: 'Maintain practice for 4–8 weeks',
-            text: 'Biting frequency falls as the competing response becomes more automatic with practice. No controlled trial has measured week-by-week frequency during self-directed practice, so treat any specific schedule as an expectation rather than a measured result. Continue daily monitoring through high-stress periods, when the original habit is most likely to resurface.',
-          },
-        ],
-      };
-      schemaBlocks.push(schemaTag(howTo));
+      // Steps are read from the page's own "Step N:" sections, so the markup
+      // can only describe text a reader can see (no separate copy to drift).
+      const steps = post.sections
+        .map(s => ({ m: /^Step (\d+):\s*(.+)$/.exec(s.heading), body: s.body }))
+        .filter(x => x.m)
+        .map((x, i) => ({
+          '@type': 'HowToStep',
+          position: i + 1,
+          name: x.m[2],
+          text: x.body.replace(/\s*\n\n\s*/g, ' '),
+        }));
+      if (steps.length) {
+        schemaBlocks.push(schemaTag({
+          '@context': 'https://schema.org',
+          '@type': 'HowTo',
+          name: 'How to Stop Nail Biting Using Habit Reversal Training',
+          description: 'A three-step procedure: notice every episode, have a competing response ready, and get an external signal.',
+          step: steps,
+        }));
+      }
     }
 
     const schemas = schemaBlocks.join('\n    ');
