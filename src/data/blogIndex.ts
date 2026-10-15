@@ -1357,4 +1357,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-08",
     dateModified: "2026-10-08",
   },
+  {
+    slug: "rubber-band-snap-nail-biting",
+    title: "Does Snapping a Rubber Band Stop Nail Biting? What the Trials Tested",
+    description: "No trial found tested snapping a rubber band for nail biting. What the trials of mild aversion and competing responses did find, and what to try instead.",
+    tag: "Treatment",
+    readingMinutes: 3,
+    datePublished: "2026-10-15",
+    dateModified: "2026-10-15",
+  },
 ];
