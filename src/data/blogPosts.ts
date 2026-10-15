@@ -1406,9 +1406,14 @@ BLOG_POSTS.push({
   tag: 'Science',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-15',
   ogImage: '/og/nail-biting-statistics.png',
   sections: [
+    {
+      heading: "Key numbers at a glance",
+      body: `The headline figures from this page in one place. Each is explained, with its limits, in the sections below: the samples differ, so the rows are not directly comparable.`,
+      html: `<table><thead><tr><th>Group</th><th>Figure</th><th>Source</th><th>Year</th></tr></thead><tbody><tr><td>Adults</td><td>20–30% bite their nails</td><td>Halteh, Scher &amp; Lipner</td><td>2017</td></tr><tr><td>Children aged 10 to puberty</td><td>Up to 45%</td><td>Lee &amp; Lipner</td><td>2022</td></tr><tr><td>Schoolchildren, community sample</td><td>22.3% bite their nails</td><td>Ghanizadeh &amp; Shekoohi</td><td>2011</td></tr><tr><td>Clinic-referred children who bite</td><td>74.6% also have ADHD</td><td>Ghanizadeh</td><td>2008</td></tr><tr><td>25 chronic biters vs 34 controls</td><td>Enterobacteriaceae in saliva: 76% vs 26.5%</td><td>Baydaş et al.</td><td>2007</td></tr><tr><td>Adults in the 1980 habit reversal trial</td><td>Self-recorded episodes down about 99% over five months, vs about 60% for negative practice</td><td>Azrin, Nunn &amp; Frantz (as cited in Lee &amp; Lipner 2022)</td><td>1980</td></tr><tr><td>13 and 12 adults, placebo-controlled trial</td><td>Nail length 22% above baseline after treatment and 19% at five-month follow-up, vs 3% and 0% for placebo</td><td>Twohig et al.</td><td>2003</td></tr></tbody></table>`,
+    },
     {
       heading: "Prevalence: how common is nail biting?",
       body: `Nail biting is one of the most common human habits. Research estimates vary based on the definition used (any biting vs. chronic biting vs. clinically significant biting), but the published literature consistently finds:\n\nApproximately 20–30% of the general population is affected by nail biting (Halteh, Scher & Lipner, Journal of Dermatological Treatment, 2017). Prevalence peaks before adulthood — up to 45% of children between age 10 and puberty bite their nails, making it one of the most common repetitive behaviors in that age group. The rate then decreases with age, though some people continue the habit into adulthood and some begin it there (Lee & Lipner, 2022). In other words, many childhood biters stop, and a large minority carry the habit into adult life.`,
@@ -4625,7 +4630,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-dopamine.png',
     sections: [
       {
-        heading: 'A habit that survives because it pays',
+        heading: 'Why does nail biting persist when you want it gone?',
         body: `Behaviours that persist for decades despite the person actively wanting them gone are almost never simply "bad habits." They persist because something about them is being reinforced. Nail biting is a clear example: it produces a small, immediate, reliable payoff, and the brain systems that shape automatic behaviour respond far more strongly to small immediate payoffs than to large delayed ones.\n\nThat is the whole asymmetry in one sentence. The relief arrives in under a second. The nice hands arrive months later — and nobody has actually measured how many, so we are not going to pretend to know. Your habit machinery is not weighing those two things fairly, and it was never going to.`,
       },
       {
@@ -4696,7 +4701,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-myths.png',
     sections: [
       {
-        heading: 'Why the myths matter',
+        heading: 'Which nail biting myths are worth clearing out?',
         body: `Most nail biting advice is folk wisdom passed around unchecked. Some of it is merely useless. A few pieces are actively counterproductive, because they lead people to try the wrong intervention, blame the wrong cause, or conclude they have failed when they are in fact progressing normally.\n\nThese are the ones worth clearing out before you start.`,
       },
       {
@@ -5799,7 +5804,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-camera-setup.png',
     sections: [
       {
-        heading: 'Setup beats hardware',
+        heading: 'Does camera quality matter for detection?',
         body: `People assume detection quality is mostly about camera quality. It is not. A standard laptop webcam in good conditions substantially outperforms an expensive camera in bad ones.\n\nThe models being used need to resolve landmarks on your hand and face. What determines whether they can is lighting, framing, and angle. Resolution beyond a certain point contributes very little — detection samples at a modest resolution by design, because that is ample for landmark placement and dramatically cheaper to process.`,
       },
       {
