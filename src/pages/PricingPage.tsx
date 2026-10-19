@@ -108,7 +108,8 @@ export function PricingPage() {
             <p className="sg-h3">Try it free for 3 days.</p>
             <p className="sg-small mt-1">
               No card to start. Curious first? Read{' '}
-              <a href="/how-it-works" className="sg-link">how the detection works</a>.
+              <a href="/how-it-works" className="sg-link">how the detection works</a>, or{' '}
+              <a href="/tools/nail-biting-cost-calculator" className="sg-link">work out what biting costs you</a>.
             </p>
           </div>
           <TrialButton source="pricing_page" />

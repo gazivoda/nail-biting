@@ -2144,7 +2144,8 @@ if (!existsSync(distPath)) {
       '<p>Secure payment via Paddle. Cancel anytime — see the <a href="/refund-policy">refund policy</a>. ' +
       'The 3-day free trial includes full detection and tracking features with no credit card required.</p></section>' +
       '<section><h2>Start free</h2>' +
-      '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>.</p></section>');
+      '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>. ' +
+      'To see what biting costs you first, use the <a href="/tools/nail-biting-cost-calculator">nail biting cost calculator</a>.</p></section>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/pricing'));
   });
 
