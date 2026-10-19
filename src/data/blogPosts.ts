@@ -341,6 +341,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: ``,
         html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -2703,7 +2708,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3456,6 +3461,11 @@ BLOG_POSTS.push({
       heading: `A general practitioner as a starting point`,
       body: `If you're unsure which specialist is appropriate, or if the nail biting is one part of a broader picture involving anxiety, depression, or another BFRB, a general practitioner is a reasonable first stop — they can assess the physical damage directly, refer to dermatology if needed, and refer to therapy or provide a preliminary screen for anxiety or mood symptoms if those seem relevant. This is particularly useful for parents unsure whether a child's nail biting warrants professional attention, since a pediatrician can make that judgment in the context of the child's overall development rather than the habit in isolation.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9158250/" target="_blank" rel="noopener noreferrer">Moritz S, Penney D, Ahmed K, Schmotz S. A Head-to-Head Comparison of Three Self-Help Techniques to Reduce Body-Focused Repetitive Behaviors. Behav Modif. 2022;46(4):894–912.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6385,6 +6395,44 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-vs-tics-tourette',
+  title: `Is Nail Biting a Tic? Nail Biting vs Tics and Tourette Syndrome`,
+  seoTitle: 'Is Nail Biting a Tic? Tourette and Nail Biting',
+  description: `Nail biting is a body-focused repetitive behaviour, not a tic, though the two can overlap. In 535 children with Tourette syndrome, 56.6% bit their nails.`,
+  tag: 'Clinical',
+  readingMinutes: 3,
+  datePublished: '2026-10-19',
+  dateModified: '2026-10-19',
+  ogImage: '/og/nail-biting-vs-tics-tourette.png',
+  sections: [
+    {
+      heading: `Is nail biting a tic?`,
+      body: `The clinical sources treat them as separate conditions. A 2026 neurology handbook chapter lists habits, body-focused repetitive behaviours (BFRBs) and motor stereotypies as conditions that can be confused with tics, and says that telling them apart matters because they can coexist in the same person and the treatment approaches may differ (Singer, Mahate & Morris-Berry, 2026). Nail biting is a BFRB.\n\nThat does not make the two unrelated. The same chapter notes that some people with Tourette syndrome also have skin picking, nail biting or hair pulling.`,
+    },
+    {
+      heading: `How common is nail biting in children with Tourette syndrome?`,
+      body: `One hospital study in Taiwan counted it. Among outpatients aged 4 to 18, nail biting was recorded in 56.6% of 535 patients with Tourette syndrome, 27.4% of 230 with a provisional tic disorder and 15.0% of 1,460 controls without a neurological or psychiatric disorder (Hsueh & Chen, 2022).\n\nInside the Tourette group, nail biting was more common with ADHD than without (75.0% against 47.6%), and it started later in children with ADHD (at 5.3 years against 3.8). In patients with Tourette syndrome, nail biting began earlier than the tics, whether or not they had ADHD (Hsueh & Chen, 2022).\n\nRead those figures with their limits. It is one centre, the data were looked at retrospectively, and the children were hospital outpatients, so the rates describe that clinic and not children in general. The study shows that the two occur together and which came first on average. It does not show that nail biting causes tics or the other way round.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/36109039/" target="_blank" rel="noopener noreferrer">Hsueh CW, Chen CW. Prevalence of nail biting and its chronological relationship with tics in child and adolescent outpatients with Tourette syndrome: a single-centre, retrospective observational study. BMJ Open. 2022;12(9):e063874.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/41633748/" target="_blank" rel="noopener noreferrer">Singer HS, Mahate S, Morris-Berry C. Repetitive and restricted behaviors, habits, body-focused repetitive behaviors, and motor stereotypies. Handb Clin Neurol. 2026;215:63-71.</a></li></ul>`,
+    },
+    {
+      heading: `What is habit-tic nail deformity?`,
+      body: `Despite the name, it is described as a body-focused repetitive behaviour too, alongside nail biting (onychophagia) and nail picking (onychotillomania). In habit-tic nail deformity a person repeatedly rubs the skin at the base of a nail, often a thumbnail, with the adjacent index finger, which leaves a groove running along the nail plate. A 2022 case report says these patients are typically unaware that they are doing it, whereas nail biters usually bite several nails and know they are doing it (Cohen, 2022).\n\nThat report describes three patients, so it shows what the conditions look like, not how common they are.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35382180/" target="_blank" rel="noopener noreferrer">Cohen PR. Nail-Associated Body-Focused Repetitive Behaviors: Habit-Tic Nail Deformity, Onychophagia, and Onychotillomania. Cureus. 2022;14(3):e22818.</a></li></ul>`,
+    },
+    {
+      heading: `Does the difference change what you should do?`,
+      body: `It can, because the handbook chapter says the treatment approaches may differ between the conditions (Singer, Mahate & Morris-Berry, 2026). For nail biting on its own, the approach with trials behind it is habit reversal training, which starts with noticing each episode.\n\nIf you are not sure whether what you or your child does is nail biting, a habit or a tic, that is a question for a doctor, not for a website. Our page on when to see a doctor lists what is worth raising.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li><li><a href="/blog/nail-biting-adhd">Nail biting and ADHD</a></li><li><a href="/blog/nail-biting-ocd-connection">Nail biting and OCD</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
