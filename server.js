@@ -1554,7 +1554,7 @@ if (!existsSync(distPath)) {
       'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam. ' +
       'Detection runs on your device and sends no camera data while it runs. Sign in with Google (it opens in a new tab). Cancel anytime.</p>' +
       '<section><h2>Try the detector right now</h2>' +
-      '<p>Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About 20 MB of ' +
+      '<p>Runs on your own camera for 60 seconds, no account needed. Your browser will ask for camera access first. Turn your sound on. About 20 MB of ' +
       'AI models download once; after that, no video leaves the page.</p></section>' +
       '<section><h2>Every catch ends up in History</h2>' +
       '<p>Each alarm and each bite you log lands here with the time. Tag what set it off ' +

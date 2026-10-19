@@ -242,7 +242,8 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                   </>
                 )}
                 <p className="sg-small mt-4 max-w-[46ch]">
-                  Runs on your own camera for 60 seconds, no account needed. Turn your sound on. About
+                  Runs on your own camera for 60 seconds, no account needed. Your browser will ask for camera
+                  access first. Turn your sound on. About
                   20 MB of AI models download once; after that, no video leaves the page.
                 </p>
               </section>
