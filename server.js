@@ -2244,6 +2244,11 @@ if (!existsSync(distPath)) {
       // body states a setup time, so the one claim here with no counterpart
       // below does not get made more quotable than the page can support.
       'Setup takes under two minutes.</p>' +
+      // The same real capture, alt text and caption as the React page and the landing.
+      '<figure><img src="/shots/app-watch-1280.webp" srcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
+      'sizes="(min-width: 1024px) 48rem, 100vw" width="1280" height="792" loading="lazy" decoding="async" ' +
+      'alt="Stop Biting Watch screen after a catch, with a streak counter and a prompt asking what set it off.">' +
+      '<figcaption>The app right after a catch, shown with example data.</figcaption></figure>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
       '<p>Most biting episodes happen without you noticing: the habit is automatic, ' +
       'and it runs below the threshold of conscious awareness. ' +

@@ -98,6 +98,25 @@ export function HowItWorks() {
           </p>
         </header>
 
+        {/* A real capture of the app (public/shots), the same one and the same
+            alt/caption as the landing page; mirrored in server.js. */}
+        <figure className="mt-10 max-w-3xl">
+          <img
+            src="/shots/app-watch-1280.webp"
+            srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
+            sizes="(min-width: 1024px) 48rem, 100vw"
+            width={1280}
+            height={792}
+            loading="lazy"
+            decoding="async"
+            alt="Stop Biting Watch screen after a catch, with a streak counter and a prompt asking what set it off."
+            className="w-full h-auto rounded-lg border border-[color:var(--sg-rule)]"
+          />
+          <figcaption className="sg-note mt-2">
+            The app right after a catch, shown with example data.
+          </figcaption>
+        </figure>
+
         <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-10">
           <section aria-labelledby="awareness-heading" className="lg:col-span-4">
             <h2 id="awareness-heading" className="sg-h3">Why awareness is the bottleneck</h2>
