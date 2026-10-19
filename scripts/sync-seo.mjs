@@ -692,7 +692,24 @@ const sitemapUrls = new Set();
         href: `${ORIGIN}/blog/${p.slug}`,
         title: p.title,
         note: firstSentence(p.description),
+        group: p.tag,
       })),
+    };
+    // The 150 posts are one long list; group them under their own `tag` so a
+    // reader (or a model) can find the cluster it wants. Largest groups first,
+    // posts keep their order inside a group.
+    const groupOrder = group => {
+      const counts = new Map();
+      for (const e of group) counts.set(e.group, (counts.get(e.group) ?? 0) + 1);
+      return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([g]) => g);
+    };
+    const renderEntries = entries => {
+      if (!entries.some(e => e.group)) return entries.map(e => `- [${e.title}](${e.href}): ${e.note}`);
+      return groupOrder(entries).flatMap(g => [
+        `### ${g}`, '',
+        ...entries.filter(e => e.group === g).map(e => `- [${e.title}](${e.href}): ${e.note}`),
+        '',
+      ]).slice(0, -1);
     };
     let out = lines.slice(0, firstHeading);
     for (const [heading, entries] of Object.entries(sections)) {
@@ -701,7 +718,7 @@ const sitemapUrls = new Set();
         problems.push(`llms.txt: "${heading}" section not found — cannot regenerate it`);
         continue;
       }
-      out = out.concat(heading, '', entries.map(e => `- [${e.title}](${e.href}): ${e.note}`), '');
+      out = out.concat(heading, '', renderEntries(entries), '');
     }
     // Anything after the last generated section (there is nothing today) would
     // be dropped silently, so say so rather than deleting a reader's section.
