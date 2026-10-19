@@ -46,7 +46,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-in-children",
     title: "Nail Biting in Kids: When It's Normal, When to Step In, and What Actually Helps",
-    description: "Clinical reviews estimate up to 45% of children between age 10 and puberty bite their nails. Most grow out of it — how to tell, and what to do if they don't.",
+    description: "Clinical reviews estimate up to 45% of children between age 10 and puberty bite their nails. Most grow out of it: how to tell, and what to do if they don't.",
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-04-03",
@@ -64,7 +64,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stress-and-nail-biting",
     title: "The Stress–Nail Biting Connection: Why Anxiety Drives the Habit and How to Break the Loop",
-    description: "In a survey of 339 medical students, 65.7% of nail biters reported tension before biting, 42% pleasure after — self-report, not measured relief. How the loop works.",
+    description: "In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after: self-report, not measured relief. How the loop works.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-03",
@@ -73,7 +73,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-ocd-connection",
     title: "Nail Biting and OCD: Understanding the Link Between Nail Biting and Obsessive-Compulsive Disorder",
-    description: "The DSM-5 files clinically severe nail biting under Other Specified Obsessive-Compulsive and Related Disorder — near OCD, not OCD. What that means for treatment.",
+    description: "The DSM-5 files clinically severe nail biting under Other Specified Obsessive-Compulsive and Related Disorder: near OCD, not OCD. What that means for treatment.",
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-04-03",
@@ -91,7 +91,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-during-focus-and-work",
     title: "Nail Biting at Work: Why Deep Focus and Concentration Trigger the Habit",
-    description: "Many people bite their nails during focused work — coding, reading, meetings. Learn the focus-habit loop and how to interrupt it without breaking flow.",
+    description: "Many people bite their nails during focused work: coding, reading, meetings. Learn the focus-habit loop and how to interrupt it without breaking flow.",
     tag: "Productivity",
     readingMinutes: 3,
     datePublished: "2026-04-03",
@@ -118,7 +118,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stopping-nail-biting-for-good",
     title: "Stopping Nail Biting for Good: What Relapses Mean and How to Build Lasting Change",
-    description: "New habits took 18 to 254 days to become automatic in Lally's 2010 study, median 66 — not a nail-biting figure. Why lapses happen, and what makes change hold.",
+    description: "New habits took 18 to 254 days to become automatic in Lally's 2010 study, median 66 (not a nail-biting figure). Why lapses happen and what makes change hold.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-07",
@@ -145,7 +145,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-adults-why-persists",
     title: "Why Nail Biting Persists into Adulthood — and What Makes It Different to Childhood Habits",
-    description: "In a survey of 4,335 college students, body-focused repetitive behaviours tended to be chronic — present for over a year. Why adult nail biting is harder to shift.",
+    description: "In a survey of 4,335 college students, body-focused repetitive behaviours tended to be chronic, lasting over a year. Why adult nail biting is harder to shift.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -199,7 +199,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-laptop-working-from-home",
     title: "You're Biting Your Nails Again. Your Laptop Saw the Whole Thing.",
-    description: "A funny, honest look at why working on a laptop turns even calm, rational adults into compulsive nail biters — and how AI detection can finally break the cycle.",
+    description: "A funny, honest look at why working on a laptop turns even calm, rational adults into compulsive nail biters, and how AI detection can finally break the cycle.",
     tag: "Humor",
     readingMinutes: 6,
     datePublished: "2026-04-17",
@@ -208,7 +208,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "best-apps-to-stop-nail-biting",
     title: "5 Best Tools to Stop Nail Biting in 2026 — Ranked by Evidence",
-    description: "Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers — what each does for an automatic habit, and what each costs.",
+    description: "Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers. What each does for an automatic habit, and its cost.",
     tag: "Comparison",
     readingMinutes: 7,
     datePublished: "2026-04-19",
@@ -217,7 +217,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stop-biting-vs-mavala-stop",
     title: "Stop Biting vs Mavala Stop: AI Detection vs Bitter Polish (2026)",
-    description: "Mavala Stop uses bitter taste to deter nail biting. Stop Biting uses AI to detect it in real-time. Here's an honest comparison — which works for established habits?",
+    description: "Mavala Stop uses bitter taste to deter nail biting. Stop Biting uses AI to detect it in real-time. An honest comparison: which works for established habits?",
     tag: "Comparison",
     readingMinutes: 4,
     datePublished: "2026-04-19",
@@ -226,7 +226,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-adhd",
     title: "Nail Biting and ADHD: Why the Habit Is Harder to Stop — and What Actually Helps",
-    description: "In a psychiatrically referred sample of nail-biting children, 74.6% also had ADHD — the most common co-occurring diagnosis. Why the habit resists, and what helps.",
+    description: "In a psychiatrically referred sample of nail-biting children, 74.6% also had ADHD, the most common co-occurring diagnosis. Why the habit resists and what helps.",
     tag: "Psychology",
     readingMinutes: 6,
     datePublished: "2026-04-21",
@@ -307,7 +307,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-emotional-regulation",
     title: "Why Nail Biting Feels Calming: The Emotional Regulation Mechanism Explained",
-    description: "In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after — self-report, not physiology. What a replacement has to match.",
+    description: "In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after: self-report, not physiology. What a replacement must match.",
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-21",
@@ -334,7 +334,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-bacteria-parasites",
     title: "What Lives Under Your Fingernails: The Real Germ Risk of Nail Biting",
-    description: "Enterobacteriaceae were detected in the saliva of 76% of 25 chronic nail biters against 26.5% of 34 non-biters — a difference in detection, not a traced transfer.",
+    description: "Enterobacteriaceae were found in the saliva of 76% of 25 chronic nail biters against 26.5% of 34 non-biters: a difference in detection, not a traced transfer.",
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-23",
@@ -406,7 +406,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-personality",
     title: "What Your Nail Biting Says About Your Personality",
-    description: "Nail biting correlates with perfectionism, anxiety sensitivity and sensation seeking — but the perfectionism link rests on one study of 24 people. What holds up.",
+    description: "Nail biting correlates with perfectionism, anxiety sensitivity and sensation seeking, but the perfectionism link rests on one study of 24 people. What holds up.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
@@ -424,7 +424,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-fidget-toys",
     title: "Fidget Toys for Nail Biting: Which Competing Responses Actually Work",
-    description: "Fidget toys are popular competing responses for nail biting — but most don't work. Here's which ones do, which don't, and why the match matters.",
+    description: "Fidget toys are popular competing responses for nail biting, but most don't work. Here's which ones do, which don't, and why the match matters.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -433,7 +433,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-interview-anxiety",
     title: "How to Stop Nail Biting Before Interviews and High-Pressure Situations",
-    description: "Nail biting spikes before interviews and presentations. Here's how to manage anxiety-triggered biting in high-stakes situations — including same-day techniques.",
+    description: "Nail biting spikes before interviews and presentations. Here's how to manage anxiety-triggered biting in high-stakes situations, including same-day techniques.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -451,7 +451,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-men",
     title: "Men and Nail Biting: Why It's Underreported and What Actually Helps",
-    description: "No reliable sex difference has been shown: 28% of boys vs 26% of girls in 1,131 twin pairs, 20.1% vs 24.4% in 743 schoolchildren — neither gap significant.",
+    description: "No reliable sex difference has been shown: 28% of boys vs 26% of girls in 1,131 twin pairs, 20.1% vs 24.4% in 743 schoolchildren. Neither gap was significant.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -460,7 +460,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-screen-time",
     title: "How Phones and Screens Make Nail Biting Worse — and What to Do",
-    description: "Screen time and nail biting have not been studied together in large-scale research. 15 Android users logged 63.5 notifications a day — scale, not prevalence.",
+    description: "Screen time and nail biting have not been studied together in large-scale research. 15 Android users logged 63.5 notifications a day: scale, not prevalence.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -496,7 +496,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-quiz",
     title: "How Severe Is Your Nail Biting? A Self-Assessment",
-    description: "A short, evidence-informed nail biting self-assessment covering frequency, damage, and triggers — see how severe your habit is and which approach fits.",
+    description: "A short, evidence-informed nail biting self-assessment covering frequency, damage, and triggers. See how severe your habit is and which approach fits.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -505,7 +505,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-toddler",
     title: "Nail Biting in Toddlers: What's Normal at Ages 2–4",
-    description: "Parents reported nail biting in 23% of 3- to 6-year-olds in a small US interview study — common, not a precise rate. What is typical at 2 to 4, and what helps.",
+    description: "Parents reported nail biting in 23% of 3- to 6-year-olds in a small US interview study: common, not a precise rate. What is typical at 2 to 4, and what helps.",
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -514,7 +514,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-during-exams",
     title: "Nail Biting During Exams: Why Stress Season Makes It Worse",
-    description: "In four conditions, 40 undergraduate biters bit most when left alone and on maths problems — better evidenced triggers than stress. Exam-week tactics.",
+    description: "In four conditions, 40 undergraduate biters bit most when left alone and on maths problems: better evidenced triggers than stress. Exam-week tactics.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -550,7 +550,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-new-years-resolution",
     title: "Why 'Stop Biting My Nails' Resolutions Fail — and What Works Instead",
-    description: "In a survey of 339 medical students, 92.2% of nail biters described their own behaviour as automatic — which is why willpower resolutions fail. What to do instead.",
+    description: "In 339 medical students, 92.2% of nail biters described their own behaviour as automatic, which is why willpower resolutions fail. What to do instead.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -568,7 +568,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-vs-pen-chewing",
     title: "Nail Biting vs Pen Chewing: Are They the Same Habit?",
-    description: "Pen chewing and nail biting look similar but differ in mechanism and risk. A comparison of the two oral habits — and whether one can replace the other.",
+    description: "Pen chewing and nail biting look similar but differ in mechanism and risk. A comparison of the two oral habits, and whether one can replace the other.",
     tag: "Comparison",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -595,7 +595,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-after-quitting-smoking",
     title: "Why Nail Biting Increases After Quitting Smoking",
-    description: "We have not found a study tracking nail biting before and after quitting smoking. 40 undergraduate biters bit most when left alone — the gap a cigarette filled.",
+    description: "We have not found a study tracking nail biting before and after quitting smoking. 40 undergraduate biters bit most when left alone: the gap a cigarette filled.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -604,7 +604,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-reddit",
     title: "What Actually Worked for People Who Quit Nail Biting, According to Online Communities",
-    description: "Across three BFRB self-help techniques, four-week completion ran 53.5% to 68.6% — sticking with one is the hard part. Which community advice matches the research.",
+    description: "Across three BFRB self-help techniques, four-week completion ran 53.5% to 68.6%, so sticking with one is hard. Which community advice matches the research.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-07-16",
@@ -622,7 +622,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "products-to-stop-nail-biting",
     title: "Products to Stop Nail Biting: A Complete Buyer's Guide",
-    description: "From bitter polish to fidget rings to AI apps — a categorised guide to products that stop nail biting, and what's actually worth buying for your pattern.",
+    description: "From bitter polish to fidget rings to AI apps: a categorised guide to products that stop nail biting, and what's actually worth buying for your pattern.",
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -640,7 +640,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-braces",
     title: "Nail Biting with Braces: Why It's Worse and What to Do",
-    description: "In 21 severe nail biters against 21 matched orthodontic patients, root resorption was higher before and after treatment — direction unproven. What to do about it.",
+    description: "In 21 severe nail biters against 21 matched orthodontic patients, root resorption was higher before and after treatment, direction unproven. What to do.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -649,7 +649,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stop-nail-biting-challenge",
     title: "30-Day Nail Biting Challenge: A Day-by-Day Guide",
-    description: "A day-by-day guide to the 30-day stop nail biting challenge — specific daily actions, milestones to hit, and how to handle the days you don't stick to it.",
+    description: "A day-by-day guide to the 30-day stop nail biting challenge: specific daily actions, milestones to hit, and how to handle the days you don't stick to it.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -685,7 +685,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cuticle-damage",
     title: "Cuticle Damage from Nail Biting: What Happens and How to Repair It",
-    description: "Cuticle tissue regenerates, but only once biting stops — repair cannot outpace an active habit. Oil and moisturiser are standard; we found no trial with a timeline.",
+    description: "Cuticle tissue regenerates, but only once biting stops; repair cannot outpace an active habit. Oil and moisturiser are standard; we found no trial with a timeline.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -694,7 +694,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cost",
     title: "The Real Cost of Nail Biting: What Chronic Biting Costs Over Time",
-    description: "Nail biting has a real financial cost — dental repairs, manicures, damaged devices, and more. Adding up what chronic biting actually costs over the years.",
+    description: "Nail biting has a real financial cost: dental repairs, manicures, damaged devices, and more. Adding up what chronic biting actually costs over the years.",
     tag: "Products",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -757,7 +757,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-caffeine",
     title: "Does Caffeine Make Nail Biting Worse?",
-    description: "Nobody has studied caffeine and nail biting together, and the arousal premise is shaky — a stress induction failed to raise urges where boredom did.",
+    description: "Nobody has studied caffeine and nail biting together, and the arousal premise is shaky: a stress induction failed to raise urges where boredom did.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -766,7 +766,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-alcohol",
     title: "Nail Biting and Alcohol: Why Drinking Can Increase the Habit",
-    description: "In a survey of 339 medical students, 92.2% of biters called the habit automatic. Alcohol dampens the oversight that might catch it — we found no study on the pair.",
+    description: "In 339 medical students, 92.2% of biters called the habit automatic. Alcohol dampens the oversight that might catch it, but we found no study on the pair.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -775,7 +775,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-parents-modeling",
     title: "If You Bite Your Nails, Should You Hide It From Your Kids?",
-    description: "In 743 schoolchildren, 36.8% of biters had a family member who bit too — but a twin study put 50% of the variance on genes. Copying is plausible, not demonstrated.",
+    description: "In 743 schoolchildren, 36.8% of biters had a family member who bit too, but a twin study put 50% of the variance on genes. Copying is plausible, not proven.",
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -793,7 +793,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "press-on-nails-to-stop-nail-biting",
     title: "Can Press-On Nails Stop Nail Biting? A Practical Look",
-    description: "Press-ons deter the way acrylics do — harder to bite through, different under the teeth — and cost far less. No controlled trial has tested artificial nails.",
+    description: "Press-ons deter the way acrylics do (harder to bite through, different under the teeth) and cost far less. No controlled trial has tested artificial nails.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -802,7 +802,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "how-to-help-someone-who-bites-their-nails",
     title: "How to Help a Partner or Friend Who Bites Their Nails (Without Nagging)",
-    description: "In the only experiment we found, 40 undergraduate biters bit least when watched — conversation or reprimand. That is suppression, not change. What actually helps.",
+    description: "In the only experiment we found, 40 undergraduate biters bit least when watched in conversation or reprimanded. That is suppression, not change. What helps.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -928,7 +928,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-teachers",
     title: "Nail Biting for Teachers: Managing It in Front of a Classroom",
-    description: "Teachers face unique nail biting triggers — constant visibility, classroom stress, little downtime. Practical strategies that suit a teaching schedule.",
+    description: "Teachers face unique nail biting triggers: constant visibility, classroom stress, little downtime. Practical strategies that suit a teaching schedule.",
     tag: "Productivity",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -964,7 +964,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-seniors-elderly",
     title: "Nail Biting in Older Adults: A Less-Discussed Pattern",
-    description: "Nail growth slows with age on thin evidence — one physician measured his own thumbnail for 35 years: 0.123 mm a day at 32, 0.095 at 67. Biting can also start late.",
+    description: "Nail growth slows with age on thin evidence: one physician measured his own thumbnail for 35 years, 0.123 mm a day at 32, 0.095 at 67. Biting can start late.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -982,7 +982,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-major-life-changes",
     title: "Nail Biting During Major Life Changes: Job Loss, Moving, Breakups, and Grief",
-    description: "Stress is the weakest-evidenced part of this. In a controlled induction, urges rose under boredom and frustration but not stress — and transitions supply waiting.",
+    description: "Stress is the weakest-evidenced part of this. In a controlled induction, urges rose under boredom and frustration but not stress; transitions supply waiting.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -1000,7 +1000,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-fungal-infection",
     title: "Nail Biting and Fungal Infections: What to Know",
-    description: "Yeasts grew from the subungual space of 69.0% of 26 ordinary adults — colonisation, not infection. Biting breaks the barrier; the next step is unmeasured.",
+    description: "Yeasts grew from the subungual space of 69.0% of 26 ordinary adults: colonisation, not infection. Biting breaks the barrier; the next step is unmeasured.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -1018,7 +1018,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-dopamine",
     title: "Nail Biting and Dopamine: Why the Habit Rewards Itself",
-    description: "Nail biting persists because it is reinforced, not because you lack discipline. Here is how the brain reward system keeps the habit alive — and what that means.",
+    description: "Nail biting persists because it is reinforced, not because you lack discipline. Here is how the brain reward system keeps the habit alive, and what that means.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1027,7 +1027,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-oral-fixation",
     title: "Is Nail Biting an Oral Fixation? What That Idea Gets Right and Wrong",
-    description: "A survey of 281 pediatric patients put median onset at 5 years, range 1 to 13 — mostly well after the proposed oral stage. The oral self-soothing part holds.",
+    description: "A survey of 281 pediatric patients put median onset at 5 years, range 1 to 13, mostly well after the proposed oral stage. The oral self-soothing part holds.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1072,7 +1072,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-warts",
     title: "Nail Biting and Warts: What the Evidence Actually Shows",
-    description: "Beta-HPV DNA turned up in 61.1% of 185 fingernail samples — but those are cutaneous types, not wart types, and the authors cannot tell infection from deposition.",
+    description: "Beta-HPV DNA turned up in 61.1% of 185 fingernail samples, but those are cutaneous types, not wart types, and the authors cannot tell infection from deposition.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1081,7 +1081,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-jaw-pain-tmj",
     title: "Nail Biting and Jaw Pain: The TMJ Connection",
-    description: "In 240 adolescents, nail biting was significantly associated with TMD signs and symptoms (p = 0.001) — cross-sectional, so it cannot show the biting came first.",
+    description: "In 240 adolescents, nail biting was significantly associated with TMD signs and symptoms (p = 0.001). Cross-sectional, so it cannot show biting came first.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1252,7 +1252,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-detection-accuracy",
     title: "How Accurate Is AI Nail Biting Detection? A Straight Answer",
-    description: "It detects fingertip-to-mouth proximity, not teeth on a nail: five frames a second, three consecutive positives — about 600 milliseconds — before an alert fires.",
+    description: "It detects fingertip-to-mouth proximity, not teeth on a nail: five frames a second, three consecutive positives, about 600 milliseconds, before an alert fires.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1270,7 +1270,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-app-battery-performance",
     title: "Does Running Nail Biting Detection Slow Down Your Computer?",
-    description: "Inference runs five times a second, not sixty — roughly a twelvefold cut in compute — at about 640 by 480, with no video uploaded. The cost is real but modest.",
+    description: "Inference runs five times a second, not sixty, roughly a twelvefold cut in compute, at about 640 by 480, with no video uploaded. The cost is real but modest.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
