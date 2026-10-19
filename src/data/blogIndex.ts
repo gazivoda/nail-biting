@@ -941,7 +941,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-10-19",
   },
   {
     slug: "nail-biting-evolutionary-psychology",
