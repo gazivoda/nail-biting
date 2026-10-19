@@ -1092,10 +1092,9 @@ if (!existsSync(distPath)) {
   // HTML — they point at the server-rendered article (#ssr-page-content):
   // its <h1> and the standfirst paragraph, which carries the article-summary
   // class in blogArticleHtml()/homeArticleHtml()/compareArticleHtml() and in
-  // the inline articles for /blog, /about, /pricing and /how-it-works. Only
-  // pages that actually ship that article emit it — /privacy,
-  // /terms-and-conditions and /refund-policy inject no SSR article, so the
-  // selectors would resolve against nothing and the spec is omitted there.
+  // the inline articles for /blog, /about, /pricing and /how-it-works, and for
+  // the legal and tool pages. Only pages that actually ship that article emit
+  // it; a route without one must omit the spec.
   // A route that adds `speakable` MUST add `class="article-summary"` to its
   // standfirst in the same change; a selector matching nothing is worse than
   // no selector at all.
@@ -1819,9 +1818,9 @@ if (!existsSync(distPath)) {
   // that identified no node of their own, so the only entities on them were the
   // sitewide shell's. This adds a WebPage keyed by the page's own canonical and
   // the breadcrumb that places it under the homepage — nothing beyond the title,
-  // description and freshness date the served HTML already carries. No
-  // `speakable`: these routes inject no SSR article, so its selectors would
-  // resolve against nothing.
+  // description and freshness date the served HTML already carries. These
+  // routes now inject an SSR article (h1 + `.article-summary`), so the shared
+  // speakable selectors resolve here too.
   function legalPageSchemas(path, name, description) {
     const canonical = `https://stopbiting.today${path}`;
     const webPage = {
@@ -1833,6 +1832,7 @@ if (!existsSync(distPath)) {
       description,
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': ORG_ID },
+      speakable: SCHEMA_SPEAKABLE,
       ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
     };
     const breadcrumb = breadcrumbSchema([
@@ -2512,6 +2512,17 @@ if (!existsSync(distPath)) {
       description,
       inLanguage: 'en',
       isPartOf: { '@id': WEBSITE_ID },
+      speakable: SCHEMA_SPEAKABLE,
+      // The tool itself, as the page describes it: a free calculator that runs
+      // in the browser on the visitor's own numbers.
+      mainEntity: {
+        '@type': 'WebApplication',
+        name: 'Nail Biting Cost Calculator',
+        url: `https://stopbiting.today${path}`,
+        operatingSystem: 'Any (web browser)',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
       ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
     };
     const breadcrumb = breadcrumbSchema([
@@ -2554,6 +2565,7 @@ if (!existsSync(distPath)) {
       description,
       inLanguage: 'en',
       isPartOf: { '@id': WEBSITE_ID },
+      speakable: SCHEMA_SPEAKABLE,
       primaryImageOfPage: {
         '@type': 'ImageObject',
         url: 'https://stopbiting.today/files/nail-biting-30-day-tracker-preview.png',
