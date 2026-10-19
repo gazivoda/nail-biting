@@ -502,6 +502,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         body: ``,
         html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -2641,6 +2646,11 @@ BLOG_POSTS.push({
       heading: `Finding a therapist who treats BFRBs`,
       body: `Not every CBT-trained therapist has specific experience with body-focused repetitive behaviours — it's a narrower specialty than general anxiety or depression treatment. When looking for a therapist, it's reasonable to ask directly whether they have experience treating BFRBs (nail biting, skin picking, hair pulling) specifically, since the techniques and framing differ somewhat from general CBT for mood or anxiety disorders.\n\nOrganisations focused on BFRBs maintain therapist directories that are a more targeted starting point than a general therapy search. For milder presentations, self-directed CBT-informed resources (workbooks, structured self-monitoring) can be a reasonable starting point before or instead of formal therapy, escalating to professional support if progress stalls.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5367,6 +5377,11 @@ BLOG_POSTS.push(
         body: `There is a structural problem with relying on mindfulness alone, and it is worth being honest about it.\n\nThe episodes you most need to catch are the ones occurring while your attention is fully committed elsewhere — deep work, absorbing conversation, an engrossing film. Those are precisely the moments when self-monitoring is least available. You cannot be absorbed in something and monitoring yourself at the same time; that is close to a definition of absorption.\n\nThis is why the clinical protocol does not rely on the person's own attention alone. Habit reversal's third component is social support — someone else in the loop, flagging what you miss and acknowledging the competing response when you use it. Anything that reliably marks the moment from outside — including an automated alarm — is doing that job, and it complements mindfulness practice rather than competing with it. The practice builds the capacity to respond; the signal supplies the moments to respond to.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21659318/" target="_blank" rel="noopener noreferrer">Moritz S, Treszl A, Rufer M. A randomized controlled trial of a novel self-help technique for impulse control disorders: a study on nail-biting. Behav Modif. 2011;35(5):468–485.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6333,6 +6348,43 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'acceptance-commitment-therapy-nail-biting',
+  title: `Acceptance and Commitment Therapy for Nail Biting: What the Evidence Covers`,
+  seoTitle: 'ACT for Nail Biting: Is There Any Evidence?',
+  description: `No trial found tested acceptance and commitment therapy for nail biting. What hair pulling and skin picking trials found, and what that can and cannot tell you.`,
+  tag: 'Treatment',
+  readingMinutes: 3,
+  datePublished: '2026-10-19',
+  dateModified: '2026-10-19',
+  ogImage: '/og/acceptance-commitment-therapy-nail-biting.png',
+  sections: [
+    {
+      heading: `Is there evidence that acceptance and commitment therapy works for nail biting?`,
+      body: `Not directly. A PubMed search run on 19 October 2026 for acceptance and commitment together with nail biting, nail-biting or onychophagia returned no results, so as far as that search shows, no trial has tested acceptance and commitment therapy (ACT) for nail biting.\n\nThe ACT research on body-focused repetitive behaviours (BFRBs) sits in other conditions, mainly hair pulling (trichotillomania) and skin picking. That is the nearest evidence there is. It is not evidence about nail biting itself.`,
+    },
+    {
+      heading: `What do ACT-based treatments for BFRBs involve?`,
+      body: `In the trichotillomania and skin picking work the treatment is called ACT-enhanced behavior therapy. A 2025 review describes it as combining a model that targets psychological inflexibility with the traditional behavioral procedures used to reduce non-focused, automatic behaviors (Twohig & Capel, 2025).\n\nSo the version with the strongest research behind it is not ACT instead of behavior therapy. It is ACT added to behavior therapy.`,
+    },
+    {
+      heading: `What have the trials found for hair pulling and skin picking?`,
+      body: `The 2025 review calls ACT-enhanced behavior therapy the most empirically supported treatment of trichotillomania, and describes its support for skin picking as budding. It counts 17 studies of the approach across ages and ways of delivering treatment, from more than one research team (Twohig & Capel, 2025). A 2024 review reached a similar split: results supporting ACT for trichotillomania, and limited evidence for skin picking (Twohig, Capel & Levin, 2024).\n\nTwo individual studies show the scale of the evidence. In a randomized trial of ACT alone for trichotillomania, 39 eligible adults and adolescents were randomized to treatment or a waitlist and 25 completed. After a 10-session protocol, symptom severity and daily hairs pulled changed significantly, but daily urges and psychological flexibility did not (Lee et al., 2018). In a small study of a deliberately limited ACT protocol for chronic skin picking, four of five participants reached near zero picking by the end of treatment, but the gains were not fully maintained for three of those four at follow-up (Twohig, Hayes & Masuda, 2006).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/40738530/" target="_blank" rel="noopener noreferrer">Twohig MP, Capel LK. Acceptance and Commitment Therapy-Enhanced Behavior Therapy as an Intervention for Trichotillomania and Excoriation Disorder (Skin Picking): A Review. Psychiatr Clin North Am. 2025;48(3):505-519.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/39505449/" target="_blank" rel="noopener noreferrer">Twohig MP, Capel LK, Levin ME. A Review of Research on Acceptance and Commitment Therapy for Anxiety and Obsessive-Compulsive and Related Disorders. Psychiatr Clin North Am. 2024;47(4):711-722.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/30117327/" target="_blank" rel="noopener noreferrer">Lee EB, Homan KJ, Morrison KL, Ong CW, Levin ME, Twohig MP. Acceptance and Commitment Therapy for Trichotillomania: A Randomized Controlled Trial of Adults and Adolescents. Behav Modif. 2018;44(1):70-91.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/16368072/" target="_blank" rel="noopener noreferrer">Twohig MP, Hayes SC, Masuda A. A preliminary investigation of acceptance and commitment therapy as a treatment for chronic skin picking. Behav Res Ther. 2006;44(10):1513-1522.</a></li></ul>`,
+    },
+    {
+      heading: `Can that evidence be applied to nail biting?`,
+      body: `Only with care. Hair pulling and skin picking are different conditions from nail biting, and the reviews above do not cover nail biting. What can be said is narrower: ACT-style ideas have been tested alongside behavior therapy in two related BFRBs, with encouraging results in one and limited evidence in the other. Whether they add anything for nail biting has not been tested.\n\nThe approach with nail biting trials behind it is habit reversal training: awareness training and a competing response. If you want to try ACT-based ideas, treat them as a plausible complement to that, not a replacement, and say so to a therapist who treats BFRBs, who can tell you whether they fit your pattern.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
