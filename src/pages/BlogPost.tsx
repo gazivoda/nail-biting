@@ -225,7 +225,7 @@ export function BlogPost({ slug }: Props) {
                 first, no account.
               </p>
             </div>
-            <TrialButton source="blog_post" />
+            <TrialButton source={`blog-${slug}`} />
           </div>
 
           {/* Product link: the compare/solutions page that answers what this post leaves open */}
