@@ -1238,6 +1238,11 @@ BLOG_POSTS.push({
       body: `If you want to begin today: pick your competing response first. Not tomorrow — now. The most common reason HRT-style approaches fail in the first week is that the person catches themselves biting but has nothing prepared to do instead, so they just stop and the urge returns 60 seconds later.\n\nPressing both palms flat on whatever surface you're near is the simplest default competing response. It's always available, requires no equipment, and is physically incompatible with biting. Decide that this is what you'll do every time you catch yourself. Then add your awareness mechanism — a detection tool for screen time, a wristband you can touch when you notice an urge, or a phone-based self-monitoring log. The combination of prepared competing response plus external awareness cuing is the fastest path to a meaningful reduction in week one.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289–300.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -1362,6 +1367,11 @@ BLOG_POSTS.push({
       heading: "How to choose the right alternative for you",
       body: `The most useful selection criterion in practice is sensory match — not because trials show a match is necessary, but because it makes the substitute feel worth doing. Ask what sensory channel your nail biting primarily uses. If it's mostly jaw and mouth (you bite rather than peel), choose an oral alternative: gum, seeds, textured lip balm. If it's mostly finger and nail (you pick or peel more than bite), choose a tactile alternative: fidget rings, smooth stones, mesh balls. If it's tension-based (you notice it happens when stressed), choose a physical tension-release alternative: fist clenching, cold water, progressive relaxation.\n\nYou also need to match the context. A competing response needs to be available during the high-risk situations where biting happens. Fist-clenching works at a desk; it's impractical during a handshake. A fidget ring works during a call; gum doesn't in a quiet meeting. Think through your three highest-risk contexts and choose an alternative that's usable in all three.\n\nFinally, have the alternative physically present before you need it. The deciding factor for most competing responses isn't whether they work but whether they're available at the moment the habit fires. Gum in a drawer you never open doesn't help. The alternative needs to be where the habit happens: on your desk, in your pocket, on your wrist.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289–300.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1584,6 +1594,11 @@ BLOG_POSTS.push({
       body: `Acrylic and gel nails are a legitimate nail biting intervention with a real mechanism — not a placebo or a gimmick. They work best for people with sensory-triggered habits, sufficient motivation to maintain extensions, and the willingness to combine them with behavioral habit work during the extension period. For people with deeply automatic habits driven by stress or concentration states, acrylics alone are unlikely to produce lasting change without simultaneous awareness training.\n\nIf you're considering acrylics as a starting strategy, use the time under extensions actively: track your urges, identify your triggers, and build a competing response. The extensions give you a window. Whether that window produces lasting change depends on what you do with the automatic habits that don't respond to a physical barrier.\n\nStop Biting provides the awareness layer that acrylics can't. It catches the moments when the habit fires below conscious attention during screen time — the sessions where acrylics don't help because you're not even noticing you're trying to bite. Start with a free 3-day trial to see how often those moments actually occur.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21873368/" target="_blank" rel="noopener noreferrer">Koritzky G, Yechiam E. On the value of nonremovable reminders for behavior modification: an application to nail-biting (onychophagia). Behav Modif. 2011;35(6):511–530.</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -1625,6 +1640,11 @@ BLOG_POSTS.push({
     {
       heading: 'The fastest path to permanent remission',
       body: `The shortest documented path to lasting remission combines real-time awareness detection with a prepared competing response, sustained for 8–12 weeks. The real-time detection provides immediate awareness for screen-time biting — the most common context — while the competing response is practiced consistently every time an episode is detected.\n\nStop Biting uses your webcam to detect the exact moment your hand approaches your mouth and fires an alert — giving you the awareness window that the competing response requires. All processing happens on your device; no camera data is ever transmitted. The three-day free trial gives you accurate data on how often the habit actually fires during screen time — which is almost always more than people expect. That gap between expected and actual frequency is itself the first and most important data point on the path to stopping for good.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1755,6 +1775,11 @@ BLOG_POSTS.push({
     {
       heading: 'A practical starting point for teens and their parents',
       body: `For teenagers who want to stop and have parental support, the most effective starting combination is: a structured awareness practice (keeping a simple log of when and where biting occurs for one week) plus a single pre-chosen competing response practiced consistently. The log reveals the contexts — most teenagers are surprised by how specifically their biting clusters around particular situations — and the competing response is trained for exactly those contexts.\n\nFor teenagers who bite primarily during screen time (increasingly the majority, given screen-based studying), real-time detection during computer use provides the external awareness that neither self-monitoring nor parental signals can reliably deliver. Stop Biting's three-day free trial works on any webcam-equipped device, requires no download, and gives immediate data on when the habit fires during study sessions. That data — seeing exactly how many times the hand moves to the mouth during a two-hour study block — is often the most eye-opening and motivating starting point available.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3032,6 +3057,11 @@ BLOG_POSTS.push({
       ],
           html: `<p>Two comparisons worth reading before you buy: <a href="/compare/bitter-polish-alternative">alternatives to bitter polish</a> and <a href="/compare/habit-tracking-apps">how habit tracking apps compare</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+    },
   ],
 });
 
@@ -3268,6 +3298,11 @@ BLOG_POSTS.push({
       heading: `Combining it with other methods`,
       body: `Gel works best as one layer of a broader approach rather than a standalone fix — pairing it with awareness training or a competing response addresses the automatic habit loop that the manicure alone doesn't touch. Many people report that the combination of a smoother, harder nail surface (removing the physical trigger of a rough edge) plus active habit-reversal work produces better results than either alone, since the manicure removes one common initiating trigger while the behavioural work addresses the loop itself.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4126,6 +4161,11 @@ BLOG_POSTS.push({
       heading: `A reasonable way to decide`,
       body: `If you have a specific reason to avoid commercial polish (a known sensitivity to its ingredients, a strong preference for natural products), a well-diluted neem oil application is a reasonable alternative to try, applied consistently and reapplied more frequently than you would a commercial product. If durability and minimal reapplication effort matter more to you than ingredient source, a commercial bitter-taste product is the better-studied option — the controlled nail-biting comparisons that tested aversion used painted-on bitter preparations, and no study has tested a DIY oil. Better-studied is not the same as more effective, and even for commercial polish the two controlled comparisons disagree about how it ranks against a competing response. Either way, this category works best as one layer of a broader approach — pairing the aversive taste with awareness training addresses the automatic habit loop that taste alone doesn't touch.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5593,6 +5633,11 @@ BLOG_POSTS.push(
         heading: 'Using it as part of something larger',
         body: `As with all barrier methods, tape prevents the behaviour without weakening the habit. The cue fires, the urge occurs, the hand still travels, and the pathway is maintained. Remove the tape and the habit is unchanged.\n\nThe way to get more out of it is to treat the taped period as protected time for the actual work: letting damaged tissue heal so there are fewer physical triggers, practising a competing response each time you notice the reach, and tracking how often the reach happens so you have a baseline. Barriers are most valuable when they are buying time for something else to take effect, rather than standing in for it.`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      },
     ],
   },
 
@@ -5935,6 +5980,11 @@ BLOG_POSTS.push(
           'Whatever you pick, give it six weeks and count episodes rather than judging by feel.',
         ],
         html: `<p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> and <a href="/blog/products-to-stop-nail-biting">the full product buyer's guide</a>.</p>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
