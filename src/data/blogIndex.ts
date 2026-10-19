@@ -1384,4 +1384,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-19",
     dateModified: "2026-10-19",
   },
+  {
+    slug: "inositol-nail-biting",
+    title: "Inositol for Nail Biting: Is There Any Evidence?",
+    description: "No trial found tested inositol for nail biting. What the reviews say about inositol in hair pulling and skin picking, and what is supported for nail biting.",
+    tag: "Treatment",
+    readingMinutes: 3,
+    datePublished: "2026-10-19",
+    dateModified: "2026-10-19",
+  },
 ];
