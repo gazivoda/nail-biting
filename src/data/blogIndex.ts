@@ -1402,4 +1402,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-19",
     dateModified: "2026-10-19",
   },
+  {
+    slug: "staph-mrsa-nail-biting",
+    title: "Staph, MRSA and Nail Biting: What the Studies Found",
+    description: "No study measured staph carriage in nail biters. What finger infection cultures, a hospital worker study and a case report show, and when to see a doctor.",
+    tag: "Health",
+    readingMinutes: 4,
+    datePublished: "2026-10-19",
+    dateModified: "2026-10-19",
+  },
 ];
