@@ -51,7 +51,7 @@ export const BLOG_POSTS: BlogPost[] = [
     ogImage: '/og/why-do-people-bite-their-nails.png',
     sections: [
       {
-        heading: 'More people do this than you think',
+        heading: 'How common is nail biting?',
         body: `Somewhere between 20% and 30% of adults bite their nails regularly — not just occasionally, but as a genuine habit. It peaks in the pre-teen and teenage years (up to 45% of children between age 10 and puberty) and then tends to fade for some people and just... stick around for others.\n\nMost people who still bite their nails as adults have been doing it since they were kids. Most have tried to stop at some point. Most found that trying to stop didn't work, or worked briefly before the habit crept back. That's not a character flaw. It's how this type of habit behaves.`,
       },
       {
@@ -2439,7 +2439,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-quiz.png',
   sections: [
     {
-      heading: `Why severity matters before you pick a method`,
+      heading: `Why does severity matter before you pick a method?`,
       body: `Not every nail biting habit needs the same intervention. Someone who bites occasionally during exam week needs a lighter touch than someone with near-constant, damaging biting that's been running for fifteen years. Matching the intervention to the actual severity of the habit — rather than reaching for the most intensive option by default, or the mildest one out of hope it'll be enough — produces better results with less wasted effort.\n\nThe questions below aren't a diagnostic tool; they're a structured way to notice patterns most nail biters have never explicitly mapped out. Go through them honestly, and use the scoring guide afterward to get a rough sense of where your habit sits.`,
     },
     {
@@ -3170,7 +3170,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-vs-hair-pulling.png',
   sections: [
     {
-      heading: `Two BFRBs, one underlying mechanism`,
+      heading: `Are nail biting and hair pulling the same kind of behaviour?`,
       body: `Nail biting (onychophagia) and hair pulling (trichotillomania) are both classified as body-focused repetitive behaviours, and both run on the same basic habit-loop mechanism: an automatic behaviour triggered by stress, boredom, or focus states, encoded in the basal ganglia, and difficult to interrupt through willpower alone because it typically occurs with limited real-time awareness.\n\nDespite the shared mechanism, they present quite differently in practice, which affects how each is typically discussed, diagnosed, and treated — trichotillomania has historically received more dedicated clinical research attention as a distinct condition than nail biting has, partly because its visible consequences (noticeable hair loss, bald patches) tend to prompt earlier professional evaluation.`,
     },
     {
@@ -3346,7 +3346,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-cost.png',
   sections: [
     {
-      heading: `Why the cost angle is worth thinking about`,
+      heading: `Why is the cost angle worth thinking about?`,
       body: `Health risks and social discomfort are the most commonly discussed motivations for stopping nail biting, but the financial cost — while less dramatic — is concrete, cumulative, and often underestimated because each individual expense feels small in isolation. Adding them up over years reframes nail biting as an ongoing cost centre rather than just a free, if unwanted, habit, which is a genuinely different kind of motivation for some people than health risk alone.`,
     },
     {
@@ -3971,7 +3971,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-musicians.png',
   sections: [
     {
-      heading: `Why nails matter mechanically for musicians`,
+      heading: `Why do nails matter mechanically for musicians?`,
       body: `For many instrumentalists, fingernails aren't just cosmetic — they're a functional part of technique. Classical and fingerstyle guitarists use the nail edge to pluck strings, producing a brighter, more articulate tone than flesh alone provides; pianists rely on short, even nails to avoid nails clicking against keys or interfering with finger-pad contact; and string players generally need consistent, predictable nail length on the fretting hand for accurate intonation. Nail biting doesn't just create uneven length — it creates unpredictable, constantly changing length and shape, which is a specific problem for any technique that depends on nail consistency from one practice session to the next.`,
     },
     {
@@ -4004,7 +4004,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-flights-travel.png',
   sections: [
     {
-      heading: `Why travel is a concentrated trigger environment`,
+      heading: `Why is travel a concentrated trigger environment for nail biting?`,
       body: `Air travel stacks several plausible nail biting triggers into a short, unavoidable window — and one of them, extended sedentary waiting, is the trigger with the strongest experimental support behind it. The list: anticipatory anxiety (about the flight itself, for people with any degree of flight-related nervousness), extended sedentary waiting with limited productive activity, disrupted routine and sleep, and — particularly during the flight itself — a genuinely confined physical environment with few competing-response options available (limited space to fidget, use a stress ball, or move around freely).`,
     },
     {
@@ -4179,7 +4179,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-panic-disorder.png',
   sections: [
     {
-      heading: `How panic disorder differs from general anxiety`,
+      heading: `How does panic disorder differ from general anxiety?`,
       body: `Panic disorder is a distinct clinical condition characterised by recurrent, discrete panic attacks — sudden episodes of intense fear accompanied by acute physical symptoms (racing heart, shortness of breath, chest tightness, a sense of impending doom) that typically peak within minutes — along with persistent worry about having further attacks. This differs meaningfully from generalised anxiety, which tends to involve more diffuse, ongoing worry without the same discrete, acute physiological spike that defines a panic attack specifically.`,
     },
     {
@@ -4214,7 +4214,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-ptsd.png',
   sections: [
     {
-      heading: `How PTSD affects the nervous system`,
+      heading: `How does PTSD affect the nervous system?`,
       body: `Post-traumatic stress disorder involves persistent dysregulation of the body's threat-detection and stress-response systems, often producing a state of hypervigilance — an elevated, ongoing sense of alertness to potential danger — along with intrusive thoughts, heightened startle responses, and difficulty with emotional regulation. This represents a more chronic and pervasive form of nervous system activation than ordinary situational stress, and it can create a more persistent baseline vulnerability to stress-driven repetitive behaviours, including nail biting, than typical daily stressors produce.`,
     },
     {
@@ -4250,7 +4250,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-chefs-food-service.png',
   sections: [
     {
-      heading: `Why food service raises the stakes`,
+      heading: `Why does food service raise the stakes for nail biting?`,
       body: `Food safety rules commonly address nail length and hand hygiene for food handlers. Check your own jurisdiction's code rather than relying on us — we have not surveyed them, and the strength of the underlying link between nail cleanliness and illness risk is not something we found quantified. Chronic nail biting works against this in two ways: it damages the nail and surrounding skin in ways that create additional bacterial harbourage (torn cuticles, hangnails, irregular nail surfaces are all harder to clean effectively than intact, smooth nails), and the biting behaviour itself introduces the same direct oral-transfer pathway for pathogens discussed for nail biting generally — except in this context, the same hands are also handling food that others will consume.`,
     },
     {
@@ -4287,7 +4287,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-teachers.png',
   sections: [
     {
-      heading: `Why teaching is a distinct high-risk occupation`,
+      heading: `Why is teaching a distinct high-risk occupation for nail biting?`,
       body: `Teaching combines several nail biting risk factors specific to the role: near-constant visibility to an audience (students, and often parents and colleagues) throughout the working day, which is a form of sustained mild performance pressure quite different from the discrete, occasional performance anxiety discussed for public speaking generally; genuinely limited discretionary breaks during the school day, reducing opportunities for the kind of proactive self-care or reset that helps manage stress-driven habits in other occupations; and classroom management stress, which is a specific, recurring source of acute stress spikes throughout the day rather than a single daily pressure point.`,
     },
     {
@@ -4321,7 +4321,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-wearable-technology.png',
   sections: [
     {
-      heading: `A different detection approach than webcam-based tools`,
+      heading: `How does wearable detection differ from webcam-based tools?`,
       body: `Webcam-based detection tools (like MediaPipe-powered apps) identify nail biting visually, tracking hand and face landmarks to detect the specific hand-to-mouth proximity pattern. Wrist-worn wearables — smartwatches and dedicated habit-tracking bands — take a fundamentally different approach: using accelerometer and gyroscope data to detect the specific motion signature of a hand moving to the mouth and staying there, independent of any camera or visual input.`,
     },
     {
@@ -4389,7 +4389,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-knuckle-cracking.png',
   sections: [
     {
-      heading: `Two hand habits, very different mechanisms`,
+      heading: `How do nail biting and knuckle cracking differ?`,
       body: `Nail biting and knuckle cracking are both extremely common, frequently self-conscious hand habits, but they work through essentially unrelated mechanisms. Nail biting is an oral-motor BFRB, involving the hand-to-mouth movement and the biting action itself, and produces its calming effect through the oral-motor and stress-discharge pathway discussed for BFRBs generally. Knuckle cracking is purely a joint-mechanical behaviour — the sound and sensation come from gas bubble formation and release within the synovial fluid of the joint (a process called cavitation) when the joint capsule is stretched — with no oral component and a different underlying trigger profile, more tied to a specific tactile/proprioceptive urge in the joint itself than to the broader stress-and-boredom triggers that drive nail biting.`,
     },
     {
@@ -5113,7 +5113,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-dermatophagia.png',
     sections: [
       {
-        heading: 'A different behaviour with a similar appearance',
+        heading: 'Is biting the skin around your nails the same as nail biting?',
         body: `A lot of people describe themselves as nail biters when what they actually do is bite and chew the skin around their nails — the sides of the fingers, the cuticle area, the pads of the fingertips. The nails themselves may be relatively intact.\n\nThis is dermatophagia, and it is worth naming separately. It sits in the same family of body-focused repetitive behaviours as nail biting, skin picking, and hair pulling, and it often coexists with nail biting. But the risk profile and the practical strategies differ enough that treating it as identical leads people to approaches that cannot work.`,
       },
       {
@@ -5259,7 +5259,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-support-groups.png',
     sections: [
       {
-        heading: 'Why community matters more than it seems',
+        heading: 'Why does community matter more than it seems?',
         body: `Social support is one of the three components of habit reversal training as the trials define it — awareness training, competing response training, social support — and it is the one people most often skip. It is also the one that is hardest to arrange privately, since nail biting is a habit most people would rather not announce.\n\nThe value is not primarily motivational. It is that a group provides accountability, normalises a behaviour people tend to feel disproportionate shame about, and supplies practical detail — which competing responses people actually sustained, what the second month felt like — that is difficult to get from articles.`,
       },
       {
@@ -5483,7 +5483,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-care-routine-for-nail-biters.png',
     sections: [
       {
-        heading: 'Why generic nail advice does not fit',
+        heading: 'Why does generic nail advice not fit nail biters?',
         body: `Most nail care guidance is written for people with intact nails they want to keep nice. It assumes length to shape, cuticles in reasonable condition, and no ongoing source of trauma.\n\nA nail biter has none of those. The nails are short and irregular, the surrounding skin is damaged, and — crucially — the damage is being renewed continuously. That changes what the routine is for. This is not primarily cosmetic maintenance. It is trigger reduction. Dermatology reviews of onychophagia management make the same point as a practical recommendation: preventative nail filing and trimming reduce the appearance of splintered cuticles and so reduce nail-biting temptations. What share of episodes that removes has not been measured.\n\nRemove the irregularities and you remove some of the episodes. Not all of them, and nobody has put a number on it.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
@@ -5691,7 +5691,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-vs-cheek-biting.png',
     sections: [
       {
-        heading: 'Two habits that trade places',
+        heading: 'Are nail biting and cheek biting related?',
         body: `Chronic cheek and lip biting — sometimes referred to clinically as morsicatio buccarum and morsicatio labiorum — sits in the same family of repetitive oral behaviours as nail biting, and the two co-occur far more often than chance would suggest.\n\nMore importantly for anyone trying to stop, they substitute for each other. It is a common and frustrating experience to successfully reduce nail biting and find cheek biting increasing to fill the gap. That is not coincidence or bad luck; it is what you would expect if both behaviours are meeting the same underlying regulatory need.`,
       },
       {
@@ -5732,7 +5732,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-vs-teeth-grinding.png',
     sections: [
       {
-        heading: 'Both are parafunctional, and both load the same joint',
+        heading: 'Why are nail biting and teeth grinding grouped together?',
         body: `Dentists group nail biting and bruxism together as parafunctional activities — using the jaw for something other than eating and speaking. They are distinct behaviours, but they share a driver profile and they impose overlapping loads on the same structures.\n\nThe practical upshot is that someone doing both is placing considerably more cumulative demand on their jaw than someone doing either alone, and jaw symptoms in that situation are hard to attribute to one or the other without addressing both.`,
       },
       {
