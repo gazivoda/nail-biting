@@ -4417,7 +4417,7 @@ BLOG_POSTS.push({
   tag: 'Technology',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-10-19',
   ogImage: '/og/nail-biting-wearable-technology.png',
   sections: [
     {
@@ -4426,7 +4426,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `How motion-based detection works`,
-      body: `The accelerometer and gyroscope in a wrist-worn device continuously track wrist orientation, movement velocity, and rotation. Nail biting produces a fairly distinctive motion signature — a rise of the wrist toward face height, a specific rotation as fingers reach the mouth, and a period of relative stillness while biting occurs — that can, with appropriately trained detection algorithms, be distinguished from other everyday wrist movements (eating, adjusting glasses, scratching an unrelated part of the face) with reasonable though not perfect accuracy.`,
+      body: `The accelerometer and gyroscope in a wrist-worn device continuously track wrist orientation, movement velocity, and rotation. Nail biting involves a rise of the wrist toward face height, a rotation as the fingers reach the mouth, and a period of relative stillness while biting occurs, and a detection algorithm could in principle tell that apart from other everyday wrist movements such as eating, adjusting glasses or scratching the face. We found no published accuracy figures for nail biting detection by a wrist sensor, so how well that works in practice is not something this page can state.`,
     },
     {
       heading: `Advantages over webcam-based detection`,
@@ -4434,11 +4434,21 @@ BLOG_POSTS.push({
     },
     {
       heading: `Limitations of the motion-based approach`,
-      body: `The main limitation is specificity: motion alone is a less direct signal than visual confirmation of the hand actually reaching the mouth and biting occurring, so a well-tuned webcam-based tool watching directly can typically achieve higher precision (fewer false positives and false negatives) than a motion-inference-based wearable, which has to distinguish nail biting from a range of other similar wrist movements using indirect data. Wearable-based detection is also generally a newer, less mature category than webcam-based computer-vision detection, with less established track record and typically less advanced algorithms behind it, at least as of now.`,
+      body: `The main limitation is specificity: motion alone is a less direct signal than visual confirmation of the hand actually reaching the mouth and biting occurring, so a camera has more direct information to work with than a motion sensor does, and a wrist device has to tell nail biting apart from other similar wrist movements using indirect data. Whether that makes one approach more accurate than the other has not been shown: we found no study comparing the two for nail biting.`,
+    },
+    {
+      heading: `Is there evidence that wearables work for nail biting?`,
+      body: `Not from trials that we could find. A PubMed search run on 19 October 2026 for smartwatch, wearable, accelerometer or wrist-worn together with nail biting, body-focused repetitive behaviours or hand-to-mouth returned 35 results. We read the first four abstracts: one was relevant, and the other three were about hand-to-mouth movement in stroke and birth-injury rehabilitation.\n\nThe relevant one is a 2025 content analysis of 173 online reviews of three vibration wearables for body-focused repetitive behaviours (BFRBs), including the HabitAware Keen. Of the clinical comments in those reviews, 96% were positive, and 8% reported complete remission of BFRBs (Marini et al., 2025). That is user feedback, not a controlled trial: reviewers choose to write, nothing was measured independently, and the devices were not compared with anything.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41988436/" target="_blank" rel="noopener noreferrer">Marini C, Hermann JC, Gold ND, et al. Manual Content Analysis of Online Customer Reviews on Wearable Technologies for the Treatment of Body-Focused Repetitive Behaviours. Arch Psychiatry Res. 2025;61(2):155-160.</a></li></ul>`,
+    },
+    {
+      heading: `What does one maker say about its own device?`,
+      body: `HabitAware's homepage, read on 19 October 2026, describes its Keen bracelet as having its own screen and vibrating to alert you, and refers to hair pulling, skin picking and nail biting. The page we read did not say which sensors it uses or give any accuracy figure. For a dated side-by-side with Stop Biting, including prices and the Apple Watch app, see our comparison page.`,
+      html: `<p><a href="/compare/stop-biting-vs-habitaware">Stop Biting vs HabitAware (Keen): wrist sensor or webcam?</a></p><p><strong>Source:</strong> <a href="https://habitaware.com" target="_blank" rel="noopener noreferrer">HabitAware homepage, read 19 October 2026.</a></p>`,
     },
     {
       heading: `Which is right for your situation`,
-      body: `If your biting happens predominantly at a desk or in front of a screen — during work, studying, gaming — a webcam-based detection tool is likely to offer more precise, direct detection for the context where most of your episodes actually occur. If your biting happens across a broader range of contexts throughout the day, away from any single screen, a wrist-worn wearable's ability to monitor continuously regardless of location may be more valuable despite somewhat lower precision per detection. Some people find using both, matched to context, provides the most complete coverage — though this is a more involved and costly setup than most people need to get started.`,
+      body: `If your biting happens predominantly at a desk or in front of a screen — during work, studying, gaming — a webcam-based detection tool watches the context where most of your episodes actually occur. If your biting happens across a broader range of contexts throughout the day, away from any single screen, a wrist-worn wearable's ability to monitor continuously regardless of location may be more valuable. Some people find using both, matched to context, provides the most complete coverage — though this is a more involved and costly setup than most people need to get started.`,
           html: `<p>If your biting happens mostly at a keyboard, a webcam already points at your hands — our <a href="/solutions/for-desk-workers">guide for desk workers</a> covers that setup.</p>`,
     },
   ],
