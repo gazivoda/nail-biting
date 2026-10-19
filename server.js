@@ -1899,7 +1899,7 @@ if (!existsSync(distPath)) {
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
   app.get('/about', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const aboutDescription = 'Stop Biting was built by Igor Gazivoda — a developer who bit his nails for 20 years. On-device AI detection that sends no camera data anywhere while it runs.';
+    const aboutDescription = 'Stop Biting was built by Igor Gazivoda, a developer who bit his nails for 20 years. On-device AI detection that sends no camera data anywhere while it runs.';
     let injected = injectMeta(indexHtml, {
       title: 'About Stop Biting | Built by Igor Gazivoda',
       description: aboutDescription,
@@ -2095,7 +2095,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/pricing',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
-      description: 'Pricing for Stop Biting — 3-day free trial, then $2.99/month or $29/year.',
+      description: 'Pricing for Stop Biting: 3-day free trial, then $2.99/month or $29/year.',
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
       // Selectors resolve against the SSR <h1> and the `article-summary`
@@ -2204,7 +2204,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/how-it-works',
       url: 'https://stopbiting.today/how-it-works',
       name: 'How AI nail biting detection works',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — on your device, and no camera data is sent anywhere while it runs.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': ORG_ID },
       speakable: SCHEMA_SPEAKABLE,
@@ -2258,7 +2258,7 @@ if (!existsSync(distPath)) {
     const condition = visibleConditionSchema(article);
     let injected = injectMeta(indexHtml, {
       title: 'How AI Nail Biting Detection Works | Stop Biting',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time — on your device, and no camera data is sent anywhere while it runs.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.',
       canonical: 'https://stopbiting.today/how-it-works',
     });
     if (condition) injected = injectSchema(injected, condition);
@@ -2295,7 +2295,7 @@ if (!existsSync(distPath)) {
       // The old wording inverted the page's own argument — you cannot log an
       // episode you didn't notice, which is precisely why manual tracking
       // undercounts. The body says "you can only log episodes you notice".
-      description: 'Most biters catch fewer than half their daily episodes, so a manual log is a sample. Stop Biting logs what the camera sees — after 7 days, your real frequency.',
+      description: 'Most biters catch fewer than half their daily episodes, so a manual log is a sample. Stop Biting logs what the camera sees: after 7 days, your real frequency.',
     },
     '/solutions/for-desk-workers': {
       title: 'Stop Nail Biting at Your Desk | Stop Biting',
@@ -2315,7 +2315,7 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-gamers': {
       title: 'Stop Nail Biting While Gaming | Stop Biting',
-      description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm — without interrupting your session.',
+      description: 'Gaming flow state makes nail biting invisible. Stop Biting runs in the background and sounds an alarm without interrupting your session.',
     },
     '/solutions/for-students': {
       title: 'Stop Nail Biting as a Student | Stop Biting',
@@ -2340,7 +2340,7 @@ if (!existsSync(distPath)) {
     // comes from the freshness ledger (src/data/pageUpdates.json).
     '/compare/stop-biting-vs-hands-off': {
       title: 'Stop Biting vs Hands Off: AI Nail Biting Apps Compared',
-      description: 'Stop Biting ($2.99/mo, $29/yr) vs Hands Off (€2.99/mo, five BFRBs): an honest comparison of two on-device AI webcam apps — platforms, price, privacy, 3-day trials.',
+      description: 'Stop Biting ($2.99/mo, $29/yr) vs Hands Off (€2.99/mo, five BFRBs): an honest comparison of two on-device AI webcam apps: platforms, price, privacy, 3-day trials.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-nailed': {
@@ -2353,7 +2353,7 @@ if (!existsSync(distPath)) {
       // subtitled "Offline nail-biting tracking", so "Stop Biting adds
       // tracking" understated a competitor that ships it.
       title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
-      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free — we report both. Stop Biting adds Windows, the browser and deeper tracking. An honest comparison.',
+      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free; we report both. Stop Biting adds Windows, the browser and deeper tracking. An honest comparison.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-smartbehavior': {
@@ -2397,7 +2397,7 @@ if (!existsSync(distPath)) {
     },
     '/compare/ai-detection-apps': {
       title: 'Best AI Apps to Stop Nail Biting: 2026 Comparison',
-      description: 'Every AI webcam app that detects nail biting in 2026 — Stop Biting, Hands Off, Nailed, and SmartBehavior — compared on platforms, price, and privacy.',
+      description: 'Every AI webcam app that detects nail biting in 2026 (Stop Biting, Hands Off, Nailed and SmartBehavior) compared on platforms, price and privacy.',
       date: '2026-08-11',
     },
   };
