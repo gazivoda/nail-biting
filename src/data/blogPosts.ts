@@ -1093,7 +1093,7 @@ BLOG_POSTS.push({
   ogImage: '/og/stop-biting-vs-mavala-stop.png',
   sections: [
     {
-      heading: 'Two tools, one problem',
+      heading: 'How do Mavala Stop and Stop Biting differ?',
       body: `Both Mavala Stop and Stop Biting target the same problem: interrupting nail biting. But they work through completely different mechanisms — and that difference matters for whether they'll work for you.\n\nMavala Stop uses denatonium benzoate (the bitterest known substance) as a chemical deterrent. Stop Biting uses MediaPipe AI running on your webcam to detect the moment your hand approaches your mouth. One works at the point of contact; the other fires before the bite begins.`,
     },
     {
@@ -1544,7 +1544,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-emotional-regulation.png',
   sections: [
     {
-      heading: "Nail biting works — that's why you do it",
+      heading: "Why is nail biting so hard to stop?",
       body: `The first thing to understand about why nail biting is so hard to stop is that people experience it as doing something for them. It's not an irrational behavior. But it is worth being precise about what has actually been measured: in a survey of 339 medical students, 65.7% of nail biters reported tension before biting and 42% reported pleasure afterwards — self-report, not physiology. And when Roberts and colleagues (2015) induced moods experimentally in 24 people with a body-focused repetitive behaviour and 23 controls, urges rose under boredom and frustration but not under stress. So "it relieves stress" is how biting is described rather than something anyone has demonstrated.\n\nThis is often framed as a character flaw — "you bite your nails because you lack willpower" or "it's just a nervous habit you haven't bothered to fix." Both framings are wrong. Nail biting persists because the brain has learned that it works. The habit loop is maintained by genuine short-term reinforcement, which is one of the most powerful mechanisms for learning in the human brain. Understanding this is not an excuse for the habit; it's the explanation for why generic "just stop" advice consistently fails.`,
     },
     {
@@ -2050,7 +2050,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-personality.png',
   sections: [
     {
-      heading: 'Nail biting is not a personality type — but it correlates with several',
+      heading: 'Is nail biting a personality type?',
       body: `Nail biting itself is not a personality trait. It's a behaviour that people with many different personality profiles engage in. But it does have consistent statistical correlations with certain personality dimensions that appear across independent studies — correlations strong enough to suggest that personality partly shapes which people are vulnerable to developing and maintaining the habit.`,
     },
     {
@@ -2291,7 +2291,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-screen-time.png',
   sections: [
     {
-      heading: 'The screen time-nail biting link',
+      heading: 'Is there a link between screen time and nail biting?',
       body: `Screen time and nail biting have not been studied together in large-scale research, but the connection is well-supported by the established psychology of each. Screen devices — phones, tablets, computers, televisions — create the exact cognitive conditions that have been shown to facilitate habitual behaviour: partial engagement (occupied but not fully), intermittent micro-stress (notifications, social comparison, news), and reduced self-monitoring (attention directed outward).\n\nScreen time is a plausible high-risk context on this mechanism, though we have found no study measuring how it ranks against the others. This is consistent with the mechanism: any activity that occupies the brain enough to suppress self-monitoring while not demanding enough physical activity to keep hands away from the face is a nail biting catalyst.`,
     },
     {
@@ -3619,7 +3619,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-nail-technicians.png',
   sections: [
     {
-      heading: `It's a routine, not unusual, request`,
+      heading: `Is it unusual to ask a nail technician about nail biting?`,
       body: `Nail technicians work with clients managing nail biting on a near-daily basis — it's one of the most common reasons clients seek regular manicure or extension services, and experienced technicians have well-developed approaches for it. Feeling embarrassed to mention it at an appointment is common but unnecessary; most technicians would rather know upfront so they can plan the service around the actual state of your nails rather than assume a level of length or health that isn't there.`,
     },
     {
@@ -4878,7 +4878,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-which-fingers.png',
     sections: [
       {
-        heading: 'Nobody bites all ten equally',
+        heading: 'Do nail biters bite all ten fingers equally?',
         body: `Look at the hands of a long-term nail biter and you will rarely find uniform damage. The clinical description matches: patients with onychophagia typically present with "abnormally short and uneven nails, absent or ragged cuticles, and nail folds in different stages of healing" (Lee & Lipner, 2022). What nobody appears to have published is the distribution — which fingers get bitten most, and in what proportion. The pattern described below is what biters report and what clinicians describe. It is not a measured ranking.\n\nPeople rarely notice this about themselves until someone points it out, and it is one of the more useful things you can observe about your own habit.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
@@ -4914,7 +4914,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-famous-people.png',
     sections: [
       {
-        heading: 'A habit that does not discriminate',
+        heading: 'Does nail biting only affect certain kinds of people?',
         body: `One of the more quietly demoralising features of chronic nail biting is the sense that it marks you out as nervous, unprofessional, or lacking self-control. It is worth putting that belief up against the base rate, with the caveat that the base rate is softer than it looks. A 2022 review estimates that onychophagia affects up to 20–30% of the general population, but that figure is inherited from earlier reviews rather than measured, and the review's own primary citation for it — a survey of 339 medical students — actually found 46.9% had bitten their nails at some point and 19.2% currently did. Where a clinically-significant threshold has been applied, the number is much smaller: 6% of 1,378 Australian adults in an online survey.\n\nThat proportion does not stop at any particular career threshold. Among any large group of people you consider accomplished, a substantial minority bite their nails. Many manage it in public and do it privately. Some have discussed it openly in interviews; far more simply keep their hands out of shot.`,
       },
       {
@@ -5099,7 +5099,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-hangnails.png',
     sections: [
       {
-        heading: 'The most under-discussed trigger',
+        heading: 'Can a hangnail set off nail biting?',
         body: `Ask nail biters what starts an episode and a lot of them will not say stress. They will say they felt something rough and went after it.\n\nHangnails — the small strips of torn skin along the side of the nail — are one of the most reliable physical initiators of a biting episode. They are also, very often, produced by biting in the first place. That circularity is the reason this is worth treating as its own problem rather than a footnote to the habit.`,
       },
       {
@@ -5175,6 +5175,11 @@ BLOG_POSTS.push(
         heading: 'What actually helps',
         body: `Trauma spots resolve on their own. They cannot be treated directly, because the affected nail is already formed — it simply has to grow out. We are dropping the "four to six months" figure this page used to give. No study we could find states how long a fingernail takes to grow out. What exists is a rate, measured in 22 healthy young adults who marked their own nails and re-measured one to three months later: about 3.47 mm a month for fingernails, against 1.62 mm for toenails (Yaemsiri et al., 2010). Turning a rate into a duration requires assuming a nail length, and that arithmetic would be ours, not the researchers'.\n\nWhat you can influence is whether new ones keep appearing. That means reducing the repeated minor trauma to the matrix: leaving the cuticle and nail base alone, not pushing cuticles back aggressively, and reducing biting and picking generally.\n\nWhich is the same conclusion most nail damage arrives at. The visible marks are a lagging indicator of behaviour from weeks or months ago, and the only intervention that changes the picture later is the one applied to the behaviour today.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19744178/" target="_blank" rel="noopener noreferrer">Yaemsiri S, Hou N, Slining MM, He K. Growth rate of human fingernails and toenails in healthy American young adults. J Eur Acad Dermatol Venereol. 2010;24(4):420–423.</a></li></ul>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5563,7 +5568,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-accountability-partner.png',
     sections: [
       {
-        heading: 'The component people leave out',
+        heading: 'Which part of habit reversal training do people leave out?',
         body: `Habit reversal training has three parts, and the trials name them explicitly: awareness training, competing response training, and social support. The first two get all the attention. The third gets quietly dropped, usually because asking someone to help you stop biting your nails feels embarrassing in a way that using an app does not.\n\nIt was included for a reason. The two functions usually described for a support person — flagging occurrences you missed, and acknowledging the competing response when you use it — both address the same underlying gap: you cannot reliably observe your own automatic behaviour. That is how the component is commonly implemented; the primary reports of the original nail-biting trials are not openly available, so we are not going to claim it as a description of their protocol.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
@@ -5692,7 +5697,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-finger-tape.png',
     sections: [
       {
-        heading: 'The most practical barrier method',
+        heading: 'Is finger tape a practical barrier against nail biting?',
         body: `Of the physical barrier options, tape and plasters on individual fingers are the most sustainable for daytime use. They are cheap, they are discreet enough to wear at work, they do not meaningfully interfere with typing, and they can be applied to only the fingers you actually target.\n\nThat last point matters more than it sounds. Almost nobody bites all ten nails equally — most people have two or three fingers that take the majority of the damage. A method that addresses only those has a far better chance of being maintained than one that treats all ten.`,
       },
       {
@@ -6087,7 +6092,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-mistakes.png',
     sections: [
       {
-        heading: 'The habit repeats itself. So do the failures.',
+        heading: 'Why do people keep making the same mistakes when they try to stop?',
         body: `Ask people how they tried to stop biting their nails and you hear the same short list: decided to stop, bought the bitter polish, lasted a while, drifted back. Sometimes several times a year, for decades.\n\nThe interesting thing is that these attempts fail in structured, predictable ways — not because the people attempting them are weak-willed, but because the obvious approach to stopping a habit contains several reasonable-sounding moves that turn out to be wrong for this specific kind of habit. Here are the five that do the most damage.`,
       },
       {
@@ -6136,7 +6141,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-gym-sports.png',
     sections: [
       {
-        heading: 'The one place chronic biters get a break',
+        heading: 'Do chronic nail biters bite during exercise?',
         body: `Ask someone who bites their nails when they last did it mid-squat, mid-lap, or mid-rally, and you get a blank look. Almost nobody bites during actual exercise — including people who bite through every meeting and every evening.\n\nNo discipline is involved. The mechanics simply exclude it: both hands are gripping, pushing, or balancing; breathing is elevated; and the idle, hand-near-face posture where biting lives never occurs. Chalk, sweat, and gym-floor grime add a layer of deterrent that no bitter polish matches.\n\nThat makes exercise one of the few genuinely biting-proof contexts in the week — and it is worth understanding what that does and does not buy you.`,
       },
       {
