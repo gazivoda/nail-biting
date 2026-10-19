@@ -1393,4 +1393,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-19",
     dateModified: "2026-10-19",
   },
+  {
+    slug: "pinworm-nail-biting",
+    title: "Can You Get Pinworms From Biting Your Nails? What the Studies Show",
+    description: "Studies link nail biting to pinworm in children, but only as an association. What three studies and two reviews found, and what to do if you suspect it.",
+    tag: "Health",
+    readingMinutes: 4,
+    datePublished: "2026-10-19",
+    dateModified: "2026-10-19",
+  },
 ];
