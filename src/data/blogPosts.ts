@@ -1772,7 +1772,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-at-work-meetings.png',
   sections: [
     {
-      heading: 'Why work and meetings are such high-risk contexts for nail biting',
+      heading: 'Why are work meetings such high-risk contexts for nail biting?',
       body: `Work meetings present a particular combination of nail biting triggers: performance anxiety (being evaluated, needing to contribute appropriately), concentration demands (following complex discussions), and enforced passivity (listening for extended periods without an active role). Each of these is an independent trigger for nail biting, and meetings combine all three simultaneously.\n\nVideo calls add a paradoxical element: you can see yourself on screen, which should increase self-monitoring, but many people report that self-monitoring fatigue from constant visual self-assessment during calls actually depletes the inhibitory control available for catching the habit. Research on video call cognitive load (documented extensively during the COVID-19 remote work shift) found that the continuous self-presentation demands of video meetings significantly reduce available working memory — exactly the cognitive resource needed to notice and interrupt an automatic behavior.`,
     },
     {
@@ -2111,7 +2111,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-interview-anxiety.png',
   sections: [
     {
-      heading: 'Why interviews trigger nail biting so reliably',
+      heading: 'Why do interviews trigger nail biting so reliably?',
       body: `Job interviews, presentations, and high-stakes meetings create a confluence of nail biting triggers that is difficult to match in everyday life. Performance anxiety activates the sympathetic nervous system. The passive, waiting element — sitting, listening, having nothing to do with your hands — removes the competing activities that naturally suppress the habit during active work. The physical environment is often unfamiliar, which elevates baseline arousal. And the cognitive load of managing self-presentation depletes the inhibitory resources that would otherwise catch the habit.\n\nFor nail biters whose habit is anxiety-driven, interviews represent the highest-stakes, highest-frequency nail biting context. It's not unusual for a person who bites occasionally during normal days to find themselves in a waiting room before an interview, having bitten multiple nails to the point of visible damage.`,
     },
     {
@@ -2563,7 +2563,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-night-guard.png',
   sections: [
     {
-      heading: `What a night guard is and why it comes up`,
+      heading: `What is a night guard and why does it come up?`,
       body: `A night guard is a removable dental appliance, typically a custom or over-the-counter plastic tray, worn over the teeth during sleep. Dentists most commonly prescribe them for bruxism — teeth grinding and clenching — to protect enamel from the wear caused by involuntary jaw movement during sleep. Because some people who grind their teeth at night also bite their nails, and because both are repetitive oral-motor behaviours, night guards sometimes come up as a suggested tool for nighttime nail biting too, even though that's not their primary designed purpose.`,
     },
     {
@@ -2686,7 +2686,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-new-years-resolution.png',
   sections: [
     {
-      heading: `Why nail biting is such a common resolution`,
+      heading: `Why is nail biting such a common resolution?`,
       body: `"Stop biting my nails" shows up on New Year's resolution lists year after year for the same reason many habit-related resolutions do: it's a behaviour people are consciously unhappy with, feels theoretically simple to control ("I just need to not do it"), and has a clear, visible marker of success (nails growing out). Unlike more abstract goals, it seems like something you should just be able to decide to stop.\n\nThat apparent simplicity is exactly what sets people up to fail. Nail biting isn't primarily a decision-making problem, which means a resolution built entirely around deciding to stop is targeting the wrong mechanism from day one.`,
     },
     {
@@ -3469,7 +3469,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-public-speaking.png',
   sections: [
     {
-      heading: `Why performance situations trigger biting so reliably`,
+      heading: `Why do performance situations trigger biting so reliably?`,
       body: `Public speaking, presentations and performances involve sustained social evaluation, and plenty of people report that this is when they bite. It is worth being honest about how well evidenced the mechanism is, though, because the experimental record does not line up neatly with it. When Roberts and colleagues (2015) induced boredom/frustration, stress and relaxation in 24 people with a body-focused repetitive behaviour and 23 controls, urges rose under boredom and frustration but not under the stress condition. And in an earlier randomised observation of 40 undergraduate nail biters, biting was least frequent of all when participants were engaged in conversation or reprimanded, and most frequent when they were simply left alone. So the better-supported reading of performance-related biting is not "anxiety drives it" but "the waiting does" — which is what the next section describes.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1016/j.jbtep.2014.10.007" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li><li><a href="https://doi.org/10.1016/j.brat.2006.07.013" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989–995.</a></li></ul>`,
     },
@@ -3642,7 +3642,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-alcohol.png',
   sections: [
     {
-      heading: `Why alcohol is relevant to an automatic habit`,
+      heading: `Why is alcohol relevant to an automatic habit?`,
       body: `Alcohol's primary relevant effect here is reduced self-monitoring and inhibition — it dampens activity in the prefrontal cortex, the brain region responsible for conscious behavioural control and impulse inhibition, while leaving more automatic, habit-driven behaviours in the basal ganglia relatively less affected. Since nail biting is largely automatic even sober — 92.2% of the nail biters in a survey of 339 medical students described their own behaviour that way — reducing the prefrontal oversight that might otherwise catch or interrupt an episode plausibly increases both the frequency of biting and, specifically, how much of it goes unnoticed in the moment. That last step is an inference: we have not found a study measuring nail biting and alcohol together.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li></ul>`,
     },
@@ -3718,7 +3718,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-menopause.png',
   sections: [
     {
-      heading: `Why menopause is relevant to a habit like nail biting`,
+      heading: `Why is menopause relevant to a habit like nail biting?`,
       body: `Perimenopause and menopause involve significant fluctuations in estrogen and progesterone, hormones that influence mood regulation, stress reactivity, and sleep quality. Those three are routinely named as nail biting triggers, but we should say clearly that we found no study measuring any of them against biting frequency, and none at all on menopause and nail biting. This means the hormonal transition itself, even without any new external stressor, can shift someone's underlying vulnerability to habit-driven behaviours like nail biting, similar in mechanism (though different in cause) to the hormonal fluctuations discussed in relation to pregnancy.`,
     },
     {
@@ -3823,7 +3823,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-healthcare-workers.png',
   sections: [
     {
-      heading: `Why occupation changes the risk calculus`,
+      heading: `Why does occupation change the infection risk of nail biting?`,
       body: `Nail biting carries some baseline infection risk for anyone due to the bacteria-dense subungual space, but that risk isn't uniform — it scales with the pathogen load someone is routinely exposed to. Healthcare workers have more contact with patients, bodily fluids and shared clinical surfaces than most people, and it is reasonable to think that changes what biting puts into the mouth. Nobody has quantified it. We found no study measuring infection risk from nail biting in any occupation, so what follows is exposure reasoning rather than a measured risk difference.`,
     },
     {
