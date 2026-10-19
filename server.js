@@ -1011,7 +1011,10 @@ if (!existsSync(distPath)) {
         .replace(/<meta property="og:image" content="[^"]*"/, () => `<meta property="og:image" content="${img}"`)
         .replace(/<meta name="twitter:image" content="[^"]*"/, () => `<meta name="twitter:image" content="${img}"`)
         // The shell's alt text describes the site card, not this page's image.
-        .replace(/\s*<meta (?:property="og:image:alt"|name="twitter:image:alt") content="[^"]*" \/>/g, '');
+        // These cards are rendered from the page title, so the title is the
+        // truthful alt text; dropping the tag left 171 pages with no alt.
+        .replace(/(<meta property="og:image:alt" content=")[^"]*"/, (_m, pre) => `${pre}${t}"`)
+        .replace(/(<meta name="twitter:image:alt" content=")[^"]*"/, (_m, pre) => `${pre}${t}"`);
     }
     return out;
   }
