@@ -1366,4 +1366,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-15",
     dateModified: "2026-10-15",
   },
+  {
+    slug: "acceptance-commitment-therapy-nail-biting",
+    title: "Acceptance and Commitment Therapy for Nail Biting: What the Evidence Covers",
+    description: "No trial found tested acceptance and commitment therapy for nail biting. What hair pulling and skin picking trials found, and what that can and cannot tell you.",
+    tag: "Treatment",
+    readingMinutes: 3,
+    datePublished: "2026-10-19",
+    dateModified: "2026-10-19",
+  },
 ];
