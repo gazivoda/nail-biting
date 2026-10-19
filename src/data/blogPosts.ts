@@ -160,7 +160,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1724,7 +1724,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3924,6 +3924,11 @@ BLOG_POSTS.push({
       heading: `Practical strategies for a clinical work environment`,
       body: `Beyond general nail biting management, a few things are specifically relevant in a healthcare setting: treating nail biting cessation as having genuine occupational-health value, not just a cosmetic concern, which can be a stronger motivator in this context than in the general population; being especially attentive to any nail-fold irritation or infection given the elevated exposure, and seeking prompt treatment rather than letting it linger; and, given how demanding and high-stress healthcare work often is, recognising that workplace stress is likely a significant driver of biting frequency, making stress-reduction strategies (adequate breaks, sleep protection around shift work) a meaningful complement to direct habit-reversal techniques.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -4966,6 +4971,11 @@ BLOG_POSTS.push(
       {
         heading: 'The part that actually prevents recurrence',
         body: `Treating an episode is the easy half. Chronic nail biters frequently get repeated paronychia in the same fingers, because the underlying cause — the repeated barrier breach — is still happening every week.\n\nThe clinical prevention advice is short and unglamorous: "Avoid nail trauma, biting, picking, and manipulation, and finger sucking" (Leggit, 2017). In practice that means leaving cuticles alone rather than trimming or pushing them, since the proximal nail fold and cuticle are the seal doing the work; keeping nails filed smooth so there are fewer rough edges prompting episodes; and moisturising, because dry cracked skin around the nail breaches more easily.\n\nBut the durable fix is reducing the biting itself. Every other measure is managing the consequences of an ongoing behaviour. That is worth doing, and it is not the same as addressing the cause — which is a habit problem rather than a dermatological one, and responds to habit interventions accordingly.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6547,6 +6557,49 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-gut-health">Nail biting and gut health</a></li><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'staph-mrsa-nail-biting',
+  title: `Staph, MRSA and Nail Biting: What the Studies Found`,
+  seoTitle: 'Staph and MRSA From Nail Biting: What Studies Found',
+  description: `No study measured staph carriage in nail biters. What finger infection cultures, a hospital worker study and a case report show, and when to see a doctor.`,
+  tag: 'Health',
+  readingMinutes: 4,
+  datePublished: '2026-10-19',
+  dateModified: '2026-10-19',
+  ogImage: '/og/staph-mrsa-nail-biting.png',
+  sections: [
+    {
+      heading: `Can nail biting give you a staph or MRSA infection?`,
+      body: `Staphylococcus aureus is the bacterium most often grown from paronychia, the nail-fold infection that is linked to nail biting. But we could not find a study that measured how often people who bite their nails carry Staphylococcus aureus or MRSA compared with people who do not.\n\nA PubMed search run on 19 October 2026 for nail biting or onychophagia together with Staphylococcus, MRSA or S. aureus returned eight records. We could read seven, and none measured Staphylococcus aureus or MRSA carriage in nail biters (one looked at resistant staph in saliva and is described below; the eighth record could not be retrieved). What exists is indirect, and it is set out below.`,
+    },
+    {
+      heading: `Which bacteria are found in infected fingers?`,
+      body: `In a retrospective study at a children's emergency department in Boston, 266 patients aged 1 month to 20 years had a paronychia drained and cultured over 25 years. The most common bacterium was methicillin-sensitive Staphylococcus aureus (40%), followed by MRSA (26%). The authors conclude that Staphylococcus aureus accounts for the majority of pathogens in paronychia, with streptococci and gram-negative bacteria also common (Kimia et al., 2021).\n\nAn older British study cultured the pus of 116 patients with paronychia. Aerobic bacteria, mainly Staphylococcus aureus, grew from 81, and anaerobic bacteria from 35. The anaerobes were the kind found as normal inhabitants of the mouth and throat (Whitehead, Eykyn & Phillips, 1981).\n\nThe picture is different in children whose hand infections needed surgery. In 32 such infections at Boston Children's Hospital, Staphylococcus aureus was the main organism in only 37%, group A Streptococcus was present in 20%, and 7 cultures grew a mix of aerobic and anaerobic organisms. Chronic nail biting was recorded as the cause of 2 of the infections (Harness & Blazar, 2005).\n\nRead these as descriptions of infected fingers, not of biters. These patients were not selected for nail biting, and the percentages describe people sick enough to need drainage or surgery, not everyone who gets a sore nail fold.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/33714052/" target="_blank" rel="noopener noreferrer">Kimia R, Voskoboynik B, Hudgins JD, et al. Is lymphangitic streaking associated with different pathogens? Am J Emerg Med. 2021;46:34-37.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7237072/" target="_blank" rel="noopener noreferrer">Whitehead SM, Eykyn SJ, Phillips I. Anaerobic paronychia. Br J Surg. 1981;68(6):420-422.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/16344191/" target="_blank" rel="noopener noreferrer">Harness N, Blazar PE. Causative microorganisms in surgically treated pediatric hand infections. J Hand Surg Am. 2005;30(6):1294-1297.</a></li></ul>`,
+    },
+    {
+      heading: `Is nail biting linked to carrying resistant staph?`,
+      body: `One study found a link, with a catch. In a survey of 149 health care workers at a cancer hospital in Brazil, 19.5% had methicillin-resistant Staphylococcus in saliva samples, and the habit of nail biting was one of the risk factors identified (p = 0.04), along with wearing dentures and preparing or giving antimicrobial drugs. All of the resistant bacteria were Staphylococcus epidermidis, not Staphylococcus aureus (Costa et al., 2014).\n\nSo it points to the mouth as a place where resistant staph can sit in people who bite their nails, in one hospital's workers, and it says nothing about MRSA.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25477910/" target="_blank" rel="noopener noreferrer">Costa DM, Kipnis A, Leao-Vasconcelos LSNO, et al. Methicillin-resistant Staphylococcus sp. colonizing health care workers of a cancer hospital. Braz J Microbiol. 2014;45(3):799-805.</a></li></ul>`,
+    },
+    {
+      heading: `Can a nail biting infection become serious?`,
+      body: `It can, rarely. A 1994 case report describes a 39-year-old man who developed osteomyelitis (a bone infection) of the right thumb as a result of nail biting. Cultures grew Staphylococcus aureus, and three weeks of intravenous antibiotics cured it (Tosti et al., 1994).\n\nThat is one case. It shows that a deep infection is possible, not how often it happens, and no rate is published.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/7915463/" target="_blank" rel="noopener noreferrer">Tosti A, Peluso AM, Bardazzi F, Morelli R, Bassi F. Phalangeal osteomyelitis due to nail biting. Acta Derm Venereol. 1994;74(3):206-207.</a></li></ul>`,
+    },
+    {
+      heading: `What should you do about an infected finger?`,
+      body: `The practical advice does not depend on which bacterium it is. A red, swollen, painful nail fold, pus, spreading redness or fever is a reason to see a doctor, who can decide whether it needs draining or antibiotics. Our paronychia page lists the signs and what usually helps early on.\n\nFor the habit itself, the approach with trials behind it is habit reversal training.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-paronychia">Paronychia: the infection nail biters get most often</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-healthcare-workers">Nail biting in healthcare workers</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
