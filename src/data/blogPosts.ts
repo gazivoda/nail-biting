@@ -6351,7 +6351,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-10-08',
-  dateModified: '2026-10-08',
+  dateModified: '2026-10-19',
   ogImage: '/og/nail-and-cuticle-picking.png',
   sections: [
     {
@@ -6361,6 +6361,21 @@ BLOG_POSTS.push({
     {
       heading: `What helps?`,
       body: `The review lists habit reversal training, which combines awareness training with a competing response, as the behavioral approach, and N-acetylcysteine, selective serotonin reuptake inhibitors and tricyclic antidepressants such as clomipramine as medication options. It is also direct about the limits: because of "the dearth of clinical trials for treatment of nail biting and nail picking," the authors say there are currently no standardized treatments, and most of the medication evidence comes from limited case reports rather than robust trials.\n\nIn practice that means habit reversal is the sensible place to start, and medication is a conversation for a clinician, not something to self-prescribe from an article.`,
+    },
+    {
+      heading: `How common is nail picking?`,
+      body: `We could not find a general-population figure. The two we found come from specific patient groups, so they show that it occurs, not how common it is in everyone.\n\nAmong 382 people with nail psoriasis assessed in a multicentre study, 4.45% also had onychotillomania and 5.24% had onychophagia (Pacifico et al., 2024). In a national survey of 143 people with neurofibromatosis type 1, 73.4% reported at least one body-focused repetitive behaviour, including onychophagia (39.8%) and onychotillomania (35.2%), and those with any such behaviour had a worse dermatology-related quality of life (Chalupczak et al., 2026).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38700647/" target="_blank" rel="noopener noreferrer">Pacifico A, Iorizzo M, Pasch M, et al. Telemedicine in Nail Psoriasis: Validation of a New Tool to Monitor Nail Psoriasis Severity in Patients with Concurrent Onychophagia and Onychotillomania. Dermatol Ther (Heidelb). 2024;14(5):1161-1172.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/42454219/" target="_blank" rel="noopener noreferrer">Chalupczak N, Golbasi NC, Curtis KL, Lipner SR. Body-Focused Repetitive Behaviors in Patients with Neurofibromatosis Type 1: A National Cross-Sectional Survey-Based Study. Skin Appendage Disord. 2026.</a></li></ul>`,
+    },
+    {
+      heading: `Is nail picking a single condition?`,
+      body: `A 2023 dermatology review describes self-induced nail disorders as a broad group of conditions that share one trait: they are caused, more or less voluntarily, by the patient. It treats them as distinct conditions within the clinical spectrum of onychotillomania, says most patients diagnosed with them have psychiatric comorbidities, and recommends a multidisciplinary approach (Starace et al., 2023).\n\nA case report of three patients adds a practical point: some people with a nail-focused repetitive behaviour do not want any intervention that might change their nail condition (Cohen, 2022). That is worth knowing if you are trying to help someone else, because wanting to stop has to come from them.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37813711/" target="_blank" rel="noopener noreferrer">Starace M, Cedirian S, Alessandrini A, Bruni F, Piraccini BM, Iorizzo M. Self-induced nail disorders (SINDs): What do we know so far? Ann Dermatol Venereol. 2023;150(4):253-259.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/35382180/" target="_blank" rel="noopener noreferrer">Cohen PR. Nail-Associated Body-Focused Repetitive Behaviors: Habit-Tic Nail Deformity, Onychophagia, and Onychotillomania. Cureus. 2022;14(3):e22818.</a></li></ul>`,
+    },
+    {
+      heading: `Do self-help programmes work for nail biting and picking?`,
+      body: `A 2025 narrative review of randomized trials of internet-based self-help for BFRBs in adults screened 1,033 studies and included 12. It found that self-guided habit reversal training and a technique called decoupling consistently reduced symptoms and improved quality of life, with decoupling named as especially effective for trichotillomania and nail biting, and that engagement and how often people used the tools mattered for results (Murase, Raygani & Murase, 2025).\n\nThe review covers BFRBs as a group, so it does not give a separate result for nail picking. It also notes that therapist-guided treatment may offer more personalized care.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/40102374/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811-818.</a></li></ul>`,
     },
     {
       heading: `Will Stop Biting catch nail picking?`,
