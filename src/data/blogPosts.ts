@@ -1324,6 +1324,11 @@ BLOG_POSTS.push({
       body: `NAC is inexpensive and widely available without prescription. It is not side-effect free: the 2022 review cited below reports that side effects are dose dependent, with nausea, vomiting, diarrhoea and constipation reported below 2400mg/day and fever, chills, skin rash and headache above it, and advises that NAC "should be used with caution in asthmatics or patients prone to anaphylactic reactions and patients susceptible to fluid overload (e.g., congestive heart failure)". Within those limits, the risk-benefit calculation is reasonable for people who've had limited success with behavioral approaches alone.\n\nThe expectation should be modest: not a cure, but a potential reduction in urge intensity that makes behavioral strategies more manageable. Given the evidence for trichotillomania and skin picking — the closest behavioral relatives to nail biting — the extrapolation is scientifically reasonable, but be clear-eyed that large nail biting-specific trials do not yet exist.\n\nIf you try it, keep a simple log of biting frequency during the trial period. NAC's effects are subtle enough that they can be difficult to notice without a baseline comparison. A week of baseline data before starting, then comparison at weeks 4, 8, and 12, gives you something concrete to evaluate rather than relying on subjective impression.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, et al. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23651231/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Derakhshan N, Berk M. N-acetylcysteine versus placebo for treating nail biting: a double-blind randomized placebo-controlled clinical trial. Antiinflamm Antiallergy Agents Med Chem. 2013;12(3):223–228.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19773711/" target="_blank" rel="noopener noreferrer">Berk M, Jeavons S, Dean OM, et al. Nail-biting stuff? The effect of N-acetyl cysteine on nail-biting. CNS Spectr. 2009;14(7):357–360.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9180086/" target="_blank" rel="noopener noreferrer">The Potential of N-Acetylcysteine for Treatment of Trichotillomania, Excoriation Disorder, Onychophagia, and Onychotillomania: An Updated Literature Review. 2022.</a></li><li><a href="https://www.bfrb.org/post/n-acetylcysteine-for-hair-pulling-skin-picking-and-nail-biting" target="_blank" rel="noopener noreferrer">TLC Foundation for BFRBs: N-acetylcysteine for Hair Pulling, Skin Picking, and Nail Biting.</a></li></ul><p><em>This article is general information, not medical advice. Talk to a healthcare provider before starting NAC or any supplement, especially if you have existing conditions, take medication, or are pregnant.</em></p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/inositol-nail-biting">Inositol for nail biting: is there any evidence?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -4223,6 +4228,11 @@ BLOG_POSTS.push({
       heading: `Where supplementation fits in an overall plan`,
       body: `If anxiety is a clear driver of your nail biting pattern, magnesium is a low-risk, reasonably evidence-informed thing to discuss with a doctor as one piece of a broader anxiety-management approach — alongside, not instead of, direct behavioural work on the habit itself. It's not a standalone fix for nail biting and shouldn't be expected to produce noticeable habit-frequency change on its own; its plausible value is in supporting the upstream anxiety-reduction side of the equation, similar in role to other stress-management measures like sleep and exercise, rather than functioning as a direct habit-reversal tool the way a competing response or detection tool does.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/inositol-nail-biting">Inositol for nail biting: is there any evidence?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -5255,6 +5265,11 @@ BLOG_POSTS.push(
         body: `Be prepared for the possibility that a general practitioner has not fielded this question often. Body-focused repetitive behaviours are common but under-discussed, and referral to someone familiar with them — often a psychiatrist or a psychologist specialising in this area — is a reasonable thing to ask for.\n\nIt also helps to arrive with data rather than impressions. A record of how often the behaviour occurs, in what contexts, and what you have already tried is considerably more useful to a clinician than "I bite my nails a lot." Frequency logs are exactly the sort of thing that turns a vague complaint into an assessable one — and gathering them accurately requires catching the episodes you currently miss, which is where automated detection earns its place regardless of what treatment you end up pursuing.`,
             html: `<p>Medication rarely does this on its own. Our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> sets out what to pair it with day to day.</p>`,
     },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/inositol-nail-biting">Inositol for nail biting: is there any evidence?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6433,6 +6448,43 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li><li><a href="/blog/nail-biting-adhd">Nail biting and ADHD</a></li><li><a href="/blog/nail-biting-ocd-connection">Nail biting and OCD</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'inositol-nail-biting',
+  title: `Inositol for Nail Biting: Is There Any Evidence?`,
+  seoTitle: 'Inositol for Nail Biting: Any Evidence?',
+  description: `No trial found tested inositol for nail biting. What the reviews say about inositol in hair pulling and skin picking, and what is supported for nail biting.`,
+  tag: 'Treatment',
+  readingMinutes: 3,
+  datePublished: '2026-10-19',
+  dateModified: '2026-10-19',
+  ogImage: '/og/inositol-nail-biting.png',
+  sections: [
+    {
+      heading: `Is there evidence that inositol helps nail biting?`,
+      body: `We could not find any. A PubMed search run on 19 October 2026 for inositol together with nail biting, nail-biting or onychophagia returned two results. Both are systematic reviews of drug treatment in several conditions, and neither is a trial of inositol for nail biting.\n\nThe nearest evidence is in other body-focused repetitive behaviours (BFRBs), mainly hair pulling (trichotillomania) and skin picking, and it is thin.`,
+    },
+    {
+      heading: `What does the evidence for inositol in hair pulling and skin picking look like?`,
+      body: `A 2001 report of inositol in trichotillomania and compulsive skin picking is a letter containing case reports, which is the weakest kind of evidence (Seedat, Stein & Harvey, 2001). A 2011 systematic review of complementary and self-help treatments for obsessive-compulsive disorder and trichotillomania found mixed evidence for myo-inositol, and said that while several studies in the review were positive, they were unreplicated and commonly used small samples (Sarris, Camfield & Berk, 2011).\n\nA 2019 review of drug trials in trichotillomania, skin picking and nail biting lists inositol among the drugs used in trichotillomania, and concludes that treatment of all three conditions is still rather disappointing (Sani et al., 2019). A 2023 review of randomized trials in psychodermatologic disorders counts inositol among the seven medication classes studied, but the treatments its abstract says are supported by that evidence are antidepressants, antipsychotics and N-acetylcysteine, not inositol (Turk et al., 2023).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/11235935/" target="_blank" rel="noopener noreferrer">Seedat S, Stein DJ, Harvey BH. Inositol in the treatment of trichotillomania and compulsive skin picking. J Clin Psychiatry. 2001;62(1):60-61.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21620478/" target="_blank" rel="noopener noreferrer">Sarris J, Camfield D, Berk M. Complementary medicine, self-help, and lifestyle interventions for obsessive compulsive disorder (OCD) and the OCD spectrum: a systematic review. J Affect Disord. 2011;138(3):213-221.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/30892151/" target="_blank" rel="noopener noreferrer">Sani G, Gualtieri I, Paolini M, et al. Drug Treatment of Trichotillomania (Hair-Pulling Disorder), Excoriation (Skin-picking) Disorder, and Nail-biting (Onychophagia). Curr Neuropharmacol. 2019;17(8):775-786.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/36802832/" target="_blank" rel="noopener noreferrer">Turk T, Liu C, Fujiwara E, et al. Pharmacological Interventions for Primary Psychodermatologic Disorders: An Evidence Mapping and Appraisal of Randomized Controlled Trials. J Cutan Med Surg. 2023;27(2):140-149.</a></li></ul>`,
+    },
+    {
+      heading: `What do the trials support for nail biting itself?`,
+      body: `The 2023 review found two randomized trials for nail biting among its 21, and the medications it reports as supported for pathologic nail biting are clomipramine and desipramine (Turk et al., 2023). Those are prescription antidepressants, and whether any drug is appropriate is a decision for a doctor. Our page on medication for nail biting covers what the trials were and how small they were.\n\nFor nail biting on its own, the approach with trials behind it is habit reversal training, not a supplement.`,
+    },
+    {
+      heading: `Should you take inositol for nail biting?`,
+      body: `This page cannot recommend it. No trial we found tested it for nail biting, and the nearest evidence is mixed and from small studies in other conditions. If you are thinking about any supplement, ask a doctor or pharmacist first, particularly if you take other medication.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-medication">Is there medication for nail biting?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting</a></li><li><a href="/blog/nail-biting-magnesium">Magnesium for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
