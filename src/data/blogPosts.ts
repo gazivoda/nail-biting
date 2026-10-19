@@ -6323,7 +6323,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-10-08',
-  dateModified: '2026-10-08',
+  dateModified: '2026-10-19',
   ogImage: '/og/is-nail-biting-self-harm.png',
   sections: [
     {
@@ -6333,6 +6333,16 @@ BLOG_POSTS.push({
     {
       heading: `What does the research say?`,
       body: `A study of 1,523 people compared non-suicidal self-injury (NSSI) with BFRBs, including 487 people in a nail biting group (Mathew et al., 2020). It notes that the two are recognised as distinct categories in the DSM-5. People in the NSSI group were more likely to act for social-affective reasons, such as getting out of doing something or receiving attention, and to act to regulate tension and feelings of emptiness and to feel relief during the act. People in the BFRB groups were more likely to act automatically without reflective awareness, to reduce boredom, or to fix appearance. The NSSI group also scored significantly higher on stress, anxiety, depression and harm avoidance.\n\nThe authors also note that definitions of NSSI sometimes encompass behaviors similar to BFRBs, so the boundary is not always drawn cleanly.`,
+    },
+    {
+      heading: `How do clinicians tell a BFRB from self-injury?`,
+      body: `In a 2024 survey of 50 experts on body-focused repetitive behaviours, most agreed with classifying them as obsessive-compulsive and related disorders, and more than 60% agreed that nail biting counts as one. To tell a BFRB from non-suicidal self-injury, the experts said the motive behind the urge should be considered: self-harm or injury on one side, release of tension on the other (Moritz et al., 2024).\n\nThat is expert opinion from a survey, not a diagnostic test, and the authors say the criteria need further refinement. It does match the TLC Foundation's distinction above, which turns on intent.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/39426247/" target="_blank" rel="noopener noreferrer">Moritz S, Hoyer LN, Sarna N, et al. Quo vadis DSM-6? An expert survey on the classification, diagnosis, and differential diagnosis of body-focused repetitive behaviors. Compr Psychiatry. 2024;136:152534.</a></li></ul>`,
+    },
+    {
+      heading: `Do people with nail biting get help?`,
+      body: `Mostly not. In a 2026 survey of 971 people with BFRBs recruited online, only 13.5% had sought professional help. The barriers they reported included lack of awareness, thinking their symptoms were not severe enough, shame and distrust of treatment. Self-help was common (72.2%), but only a minority used structured, evidence-based techniques such as habit reversal training or decoupling, and among those who had professional care, around 40% received no evidence-based advice (Moritz et al., 2026).\n\nA multicentre study of 675 people with self-induced nail disorders at Turkish dermatology clinics found the same gap: 19.1% had sought medical treatment, although 56.0% felt severe discomfort about the habit, and patients were frequently aware of what they were doing (Güldiken Doğruel et al., 2025).\n\nBoth samples cover body-focused repetitive behaviours in general, not nail biting alone, and the first is a self-selected online sample. The point they support is simple: if shame is what is stopping you from asking, you are in the majority.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/42447654/" target="_blank" rel="noopener noreferrer">Moritz S, Borgmann L, Rojahn KM, Jelinek L, Schmotz S. The silent struggle: Barriers, delays, and missed opportunities in the treatment of body-focused repetitive behaviors. Compr Psychiatry. 2026;149:152733.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/40207805/" target="_blank" rel="noopener noreferrer">Güldiken Doğruel G, Atış G, Esen M, et al. Self-Induced Nail Disorders: Clinical and Demographical Features. Int J Dermatol. 2025;64(8):1409-1415.</a></li></ul>`,
     },
     {
       heading: `What if my biting hurts or feels out of control?`,
