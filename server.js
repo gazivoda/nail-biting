@@ -2304,7 +2304,7 @@ if (!existsSync(distPath)) {
       // the time you spend in front of the camera", and the page's evidence
       // section now says the trial record "cuts both ways" rather than clearly
       // favouring either approach.
-      description: 'AI detection catches what bitter polish can\'t: unconscious biting. Polish has two small trials that disagree; habit reversal has 18 studies across habit disorders.',
+      description: 'AI detection catches what polish can\'t: unconscious biting. Polish has two small trials that disagree; habit reversal has 18 studies across habit disorders.',
     },
     '/compare/habit-tracking-apps': {
       title: 'Why Habit Apps Don\'t Work for Nail Biting | Stop Biting',
@@ -2319,7 +2319,7 @@ if (!existsSync(distPath)) {
       // claims. The body is explicit that webcam detection covers only "the
       // time you spend in front of the camera" — "a large share of the habit"
       // for a desk worker, not all of it.
-      description: 'Desk workers bite during deep focus, when self-monitoring goes offline. Stop Biting watches your webcam locally and sounds an alarm as your hand nears your mouth.',
+      description: 'Desk workers bite during deep focus, when self-monitoring goes offline. Stop Biting watches your webcam locally and alarms as your hand nears your mouth.',
     },
     '/solutions/for-adhd': {
       title: 'Nail Biting and ADHD: AI Detection That Works | Stop Biting',
@@ -2335,7 +2335,7 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-students': {
       title: 'Stop Nail Biting as a Student | Stop Biting',
-      description: 'Students bite most alone, at a laptop and on hard problems. Stop Biting uses your webcam and on-device AI to sound an alarm the moment your hand reaches your mouth.',
+      description: 'Students bite most alone, at a laptop and on hard problems. Stop Biting uses your webcam and on-device AI to sound an alarm as your hand reaches your mouth.',
     },
     '/solutions/for-remote-workers': {
       title: 'Stop Nail Biting Working From Home | Stop Biting',
@@ -2343,11 +2343,11 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-mac': {
       title: 'Stop Nail Biting on a Mac | Stop Biting',
-      description: 'Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm the moment your hand reaches your mouth. 3-day free trial.',
+      description: 'Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
     },
     '/solutions/for-windows': {
       title: 'Stop Nail Biting on Windows | Stop Biting',
-      description: 'Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm the moment your hand reaches your mouth. 3-day free trial.',
+      description: 'Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own
@@ -2356,7 +2356,7 @@ if (!existsSync(distPath)) {
     // comes from the freshness ledger (src/data/pageUpdates.json).
     '/compare/stop-biting-vs-hands-off': {
       title: 'Stop Biting vs Hands Off: AI Nail Biting Apps Compared',
-      description: 'Stop Biting ($2.99/mo, $29/yr) vs Hands Off (€2.99/mo, five BFRBs): an honest comparison of two on-device AI webcam apps: platforms, price, privacy, 3-day trials.',
+      description: 'Stop Biting ($2.99/mo, $29/yr) vs Hands Off (€2.99/mo, five BFRBs): two on-device AI webcam apps compared on platforms, price, privacy, 3-day trials.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-nailed': {
@@ -2369,7 +2369,7 @@ if (!existsSync(distPath)) {
       // subtitled "Offline nail-biting tracking", so "Stop Biting adds
       // tracking" understated a competitor that ships it.
       title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
-      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free; we report both. Stop Biting adds Windows, the browser and deeper tracking. An honest comparison.',
+      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free; we report both. Stop Biting adds Windows, the browser, deeper tracking. An honest comparison.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-smartbehavior': {
@@ -2378,7 +2378,7 @@ if (!existsSync(distPath)) {
       // differentiator from the body. Framing the split as "Desktop and Web vs
       // Mobile", and listing Windows only on our side, put that claim back.
       title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
-      description: 'SmartBehavior has native iPhone, Android and Windows apps and showed $0.99 on the US App Store; Stop Biting is $2.99/mo or $29/yr on Mac, Windows and the browser.',
+      description: 'SmartBehavior has native iPhone, Android and Windows apps and showed $0.99 on the US App Store; Stop Biting is $2.99/mo or $29/yr on Mac, Windows and browser.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-habitaware': {
@@ -2388,7 +2388,7 @@ if (!existsSync(distPath)) {
     },
     '/compare/stop-biting-vs-nailkeeper': {
       title: 'Stop Biting vs NailKeeper: Live Alarm or Photo Tracking?',
-      description: 'NailKeeper describes photo tracking, a timer and reminders on iPhone and Android; Stop Biting is a real-time webcam alarm, $2.99/mo or $29/yr. An honest comparison.',
+      description: 'NailKeeper describes photo tracking, a timer and reminders on iPhone and Android; Stop Biting is a real-time webcam alarm, $2.99/mo or $29/yr. Compared fairly.',
       date: '2026-10-06',
     },
     '/compare/stop-biting-vs-pavlok': {
@@ -2398,7 +2398,7 @@ if (!existsSync(distPath)) {
     },
     '/compare/stop-biting-vs-biteless': {
       title: 'Stop Biting vs BiteLess: Apple Watch or Webcam?',
-      description: 'BiteLess needs an Apple Watch and an iPhone and alerts you on your wrist; Stop Biting is a webcam alarm with no hardware, $2.99/mo or $29/yr. An honest comparison.',
+      description: 'BiteLess needs an Apple Watch and iPhone and alerts you on your wrist; Stop Biting is a webcam alarm with no hardware, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-08',
     },
     '/compare/stop-biting-vs-habitcam': {
@@ -2408,7 +2408,7 @@ if (!existsSync(distPath)) {
     },
     '/compare/stop-biting-vs-nailbitemenu': {
       title: 'Stop Biting vs NailBiteMenu: Browser or Open-Source Mac App?',
-      description: 'NailBiteMenu is an open-source macOS 15.6+ menu bar app with no account; Stop Biting runs in a browser on Mac or Windows, $2.99/mo or $29/yr. An honest comparison.',
+      description: 'NailBiteMenu is an open-source macOS 15.6+ menu bar app with no account; Stop Biting runs in a browser on Mac or Windows, $2.99/mo or $29/yr. Honest comparison.',
       date: '2026-10-13',
     },
     '/compare/ai-detection-apps': {
