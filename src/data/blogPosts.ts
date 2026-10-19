@@ -157,6 +157,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: ``,
         html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p><p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -208,7 +213,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1716,6 +1721,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -3035,6 +3045,11 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6490,6 +6505,48 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-medication">Is there medication for nail biting?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting</a></li><li><a href="/blog/nail-biting-magnesium">Magnesium for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'pinworm-nail-biting',
+  title: `Can You Get Pinworms From Biting Your Nails? What the Studies Show`,
+  seoTitle: 'Pinworms and Nail Biting: What Studies Show',
+  description: `Studies link nail biting to pinworm in children, but only as an association. What three studies and two reviews found, and what to do if you suspect it.`,
+  tag: 'Health',
+  readingMinutes: 4,
+  datePublished: '2026-10-19',
+  dateModified: '2026-10-19',
+  ogImage: '/og/pinworm-nail-biting.png',
+  sections: [
+    {
+      heading: `Can you get pinworms from biting your nails?`,
+      body: `Possibly, but the studies show an association, not a proven route. In several studies of children, nail biting was more common among those with pinworm (Enterobius vermicularis) infection. A 2019 review lists nail biting among the main risk factors, alongside age 4 to 11, contact between the anus, fingers and mouth, unsupervised body hygiene and poor hand hygiene (Wendt et al., 2019).\n\nA 2025 review adds that egg transmission is mainly by the fecal-oral route, and that infections come back often, likely through repeated reinfection, particularly autoinfection. It lists avoiding finger-sucking, nail biting and scratching the anal area among the preventive measures, with handwashing and clipping the nails (Leung et al., 2025).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/31064642/" target="_blank" rel="noopener noreferrer">Wendt S, Trawinski H, Schubert S, Rodloff AC, Mossner J, Lubbert C. The Diagnosis and Treatment of Pinworm Infection. Dtsch Arztebl Int. 2019;116(13):213-219.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/38288810/" target="_blank" rel="noopener noreferrer">Leung AKC, Lam JM, Barankin B, Wong AHC, Leong KF, Hon KL. Pinworm (Enterobius vermicularis) Infestation: An Updated Review. Curr Pediatr Rev. 2025;21(4):333-347.</a></li></ul>`,
+    },
+    {
+      heading: `What did the individual studies find?`,
+      body: `In a Taiwanese case-control study of fourth-graders, 429 children who had been infected were compared with 280 uninfected classmates. Nail biting was one of the factors significantly associated with infection (odds ratio 2.1), alongside playing on the floor (2.5) and failing to wash hands before meals (1.7) (Sung et al., 2001).\n\nA cross-sectional survey of 402 children aged 1 to 12 in Yemen found 29.4% infected. The habit of nail biting or cutting nails with the teeth was independently associated with infection (prevalence ratio 1.61, 95% confidence interval 1.18 to 2.21), as were irregular handwashing before meals (2.01) and putting toys or pens in the mouth (1.58) (Al-Adhroey et al., 2022).\n\nNot every study could separate it out. A survey of 211 children in Argentina found the risk of Enterobius infection was greater in children with onychophagia (odds ratio 1.6), but the 95% confidence interval ran from 0.7 to 3.7, which includes no effect (Cociancic, Zonta & Navone, 2017).\n\nAll three are observational. They show that nail biting and infection go together, in different countries, but not that biting caused the infection, because a child who bites nails may also wash hands less often.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/11716114/" target="_blank" rel="noopener noreferrer">Sung JF, Lin RS, Huang KC, Wang SY, Lu YJ. Pinworm control and risk factors of pinworm infection among primary-school children in Taiwan. Am J Trop Med Hyg. 2001;65(5):558-562.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/36091264/" target="_blank" rel="noopener noreferrer">Al-Adhroey AH, Al-Ansi YA, Al-Kholani MA, et al. Enterobiasis among Yemeni children: a cross-sectional study. J Parasit Dis. 2022;46(3):722-728.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/28984036/" target="_blank" rel="noopener noreferrer">Cociancic P, Zonta ML, Navone GT. A cross-sectional study of intestinal parasitoses in dogs and children of the periurban area of La Plata (Buenos Aires, Argentina). Zoonoses Public Health. 2018;65(1):e44-e53.</a></li></ul>`,
+    },
+    {
+      heading: `How common is pinworm in children?`,
+      body: `Reviews give broad estimates. The German review puts the prevalence among kindergarten and primary-school pupils in Europe generally near 20%, with infants, adolescents and adults only sporadically affected (Wendt et al., 2019). The 2025 review says it affects approximately 30% of children worldwide and up to 60% in some developing countries, and that 30 to 40% of infected people have no symptoms. When there are symptoms, the most common is itching around the anus at night (Leung et al., 2025).\n\nThose are estimates from reviews, and rates differ a lot by country and setting.`,
+    },
+    {
+      heading: `What should you do if you suspect pinworm?`,
+      body: `See a doctor, who can confirm it. The 2025 review says the diagnosis is best made with the cellophane tape test, and that a single test has a sensitivity of around 50%, rising to about 90% when it is done on three different mornings. Both reviews describe treatment with prescription anthelmintic medicines and say treating everyone in the household should be considered, because reinfection is common (Leung et al., 2025; Wendt et al., 2019). Which medicine and how much is a decision for the doctor or pharmacist.`,
+    },
+    {
+      heading: `Does stopping nail biting prevent pinworm?`,
+      body: `Nobody has shown it on its own. The preventive advice in the reviews is a package: handwashing, especially after the toilet and before meals, short nails, and avoiding finger-sucking, nail biting and scratching. None of the studies we found tested whether stopping nail biting alone changes infection rates.\n\nIf nail biting is part of the picture, habit reversal training is the approach with trials behind it.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-gut-health">Nail biting and gut health</a></li><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
