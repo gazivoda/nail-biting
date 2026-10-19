@@ -1355,7 +1355,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-10-08",
-    dateModified: "2026-10-08",
+    dateModified: "2026-10-19",
   },
   {
     slug: "rubber-band-snap-nail-biting",
