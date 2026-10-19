@@ -1286,27 +1286,35 @@ if (!existsSync(distPath)) {
     const postFaq = visibleFaqSection(post);
     if (postFaq) schemaBlocks.push(schemaTag(faqPageSchema(canonical, postFaq.heading, postFaq.pairs)));
 
-    if (slug === 'habit-reversal-training-guide') {
-      // Steps are read from the page's own "Step N:" sections, so the markup
-      // can only describe text a reader can see (no separate copy to drift).
-      const steps = post.sections
-        .map(s => ({ m: /^Step (\d+):\s*(.+)$/.exec(s.heading), body: s.body }))
-        .filter(x => x.m)
-        .map((x, i) => ({
-          '@type': 'HowToStep',
-          position: i + 1,
-          name: x.m[2],
-          text: x.body.replace(/\s*\n\n\s*/g, ' '),
-        }));
-      if (steps.length) {
-        schemaBlocks.push(schemaTag({
-          '@context': 'https://schema.org',
-          '@type': 'HowTo',
-          name: 'How to Stop Nail Biting Using Habit Reversal Training',
-          description: 'A three-step procedure: notice every episode, have a competing response ready, and get an external signal.',
-          step: steps,
-        }));
-      }
+    // HowTo for any post whose own sections are numbered "Step N: ..." (two or
+    // more). Steps are read from those sections, so the markup can only describe
+    // text a reader can see (no separate copy to drift). Name and description
+    // default to the post's title and meta description; the HRT guide keeps the
+    // hand-set pair below because its lead sentence is what the page says.
+    const HOWTO_TEXT = {
+      'habit-reversal-training-guide': {
+        name: 'How to Stop Nail Biting Using Habit Reversal Training',
+        description: 'A three-step procedure: notice every episode, have a competing response ready, and get an external signal.',
+      },
+    };
+    const howToSteps = post.sections
+      .map(s => ({ m: /^Step (\d+):\s*(.+)$/.exec(s.heading), body: s.body }))
+      .filter(x => x.m && x.body)
+      .map((x, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: x.m[2],
+        text: x.body.replace(/\s*\n\n\s*/g, ' '),
+      }));
+    if (howToSteps.length >= 2) {
+      const text = HOWTO_TEXT[slug] || { name: post.title, description: post.description };
+      schemaBlocks.push(schemaTag({
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: text.name,
+        description: text.description,
+        step: howToSteps,
+      }));
     }
 
     const schemas = schemaBlocks.join('\n    ');
