@@ -1844,19 +1844,29 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/privacy',
     });
     injected = injected.replace('</head>', legalPageSchemas('/privacy', 'Privacy Policy', description));
+    injected = injectSsrArticle(injected,
+      '<h1>Privacy Policy</h1>' +
+      '<p class="article-summary">Last updated September 26, 2026. Stop Biting is designed so that your camera feed never leaves your device, and your habit log stays in your own browser. This policy explains exactly what data exists, where it is kept, which third parties see any of it, and why.</p>' +
+      '<h2>In this policy</h2>' +
+      '<ul><li>Overview</li><li>Camera and Video Data</li><li>Data We Collect</li><li>How We Use Your Data</li><li>Authentication</li><li>Payment Processing</li><li>Third Parties</li><li>Data Storage</li><li>Data Retention</li><li>Cookies</li><li>Your Rights</li><li>Children&#39;s Privacy</li><li>Changes to This Policy</li><li>Contact</li></ul>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/privacy'));
   });
 
   // Terms of Service page
   app.get('/terms-and-conditions', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const description = 'Terms of Service for Stop Biting — the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.';
+    const description = 'Terms of Service for Stop Biting, the on-device AI nail biting detection app. Read our usage terms, subscription terms, and user rights.';
     let injected = injectMeta(indexHtml, {
       title: 'Terms of Service | Stop Biting',
       description,
       canonical: 'https://stopbiting.today/terms-and-conditions',
     });
     injected = injected.replace('</head>', legalPageSchemas('/terms-and-conditions', 'Terms of Service', description));
+    injected = injectSsrArticle(injected,
+      '<h1>Terms of Service</h1>' +
+      '<p class="article-summary">Last updated April 9, 2026. These are the terms for using Stop Biting at stopbiting.today, including the free trial, subscriptions and billing, refunds, acceptable use and governing law.</p>' +
+      '<h2>In this policy</h2>' +
+      '<ul><li>Acceptance of Terms</li><li>Description of Service</li><li>Free Trial</li><li>Subscriptions and Billing</li><li>Refunds</li><li>User Accounts</li><li>Acceptable Use</li><li>Privacy</li><li>Disclaimer of Warranties</li><li>Limitation of Liability</li><li>Changes to Terms</li><li>Governing Law</li><li>Contact</li></ul>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/terms-and-conditions'));
   });
 
@@ -1870,6 +1880,11 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/refund-policy',
     });
     injected = injected.replace('</head>', legalPageSchemas('/refund-policy', 'Refund Policy', description));
+    injected = injectSsrArticle(injected,
+      '<h1>Refund Policy</h1>' +
+      '<p class="article-summary">Last updated April 9, 2026. This policy outlines when and how refunds are issued for Stop Biting subscription payments. All new users get a 3-day free trial with no credit card required.</p>' +
+      '<h2>In this policy</h2>' +
+      '<ul><li>Overview</li><li>Free Trial</li><li>Refund Eligibility</li><li>How to Request a Refund</li><li>Processing</li><li>Cancellation</li><li>Exceptional Circumstances</li><li>Contact</li></ul>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/refund-policy'));
   });
 

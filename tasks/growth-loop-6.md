@@ -5,7 +5,7 @@ Rules: one local commit per iteration on main, NO push (ask the owner at the end
 
 ## Iterations
 - [x] 1. Trust: replace "Zero data leaves your device" in index.html JSON-LD (and grep for the same phrase elsewhere); fix /refund-policy meta to match RefundPage.
-- [ ] 2. Crawler h1 + summary for /privacy, /terms-and-conditions, /refund-policy (server.js ~1838-1877), text copied from the React pages only.
+- [x] 2. Crawler h1 + summary for /privacy, /terms-and-conditions, /refund-policy (server.js ~1838-1877), text copied from the React pages only.
 - [ ] 3. Link the cost calculator from nail-biting-cost and nail-biting-statistics bodies; link /pricing <-> calculator.
 - [ ] 4. Verify then fix: nail-biting-by-situation missing ogImage; robots meta max-image-preview:large, max-snippet:-1; three compare titles over 64 chars.
 - [ ] 5. article:published_time / modified_time in injectMeta for posts.
@@ -17,3 +17,4 @@ Rules: one local commit per iteration on main, NO push (ask the owner at the end
 
 ## Log
 - it1: index.html had two unscoped claims, JSON-LD SoftwareApplication 'Zero data leaves your device.' and og:description 'Zero data sent to servers.' (Google sign-in and Analytics do send data). Both now say 'No camera data is sent while it runs.' The other index.html lines say 'video never leaves your device' (camera-scoped, kept). /refund-policy meta said 'Cancel anytime, no questions asked' (with an em dash) while RefundPage says full refund within 14 days of first payment, by email: meta now 'cancel anytime, and request a full refund within 14 days of your first payment.' (141 chars). Built server: refund meta correct, 0 'Zero data' on /. build:web, seo:check, 99 tests pass.
+- it2: /privacy, /terms-and-conditions, /refund-policy now send an <h1>, a summary and an 'In this policy' list of the page's own section names in crawler HTML (injectSsrArticle, same mechanism as /about; the React page replaces it on mount). Summary sentences are the pages' own opening text plus their 'last updated' dates; no new policy claims. Also removed an em dash from the Terms meta. Built server: each page has one h1 with the right text, one canonical, 38-44 li. The privacy meta line 'No camera data is ever transmitted to any server' is camera-scoped, kept. Not browser-checked for flash of the SSR block (same mechanism as /about). build:web, seo:check, 99 tests pass.
