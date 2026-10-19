@@ -1863,7 +1863,7 @@ if (!existsSync(distPath)) {
   // Refund Policy page
   app.get('/refund-policy', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const description = 'Refund and cancellation policy for Stop Biting subscriptions. Cancel anytime — no questions asked.';
+    const description = 'Refund and cancellation policy for Stop Biting subscriptions: cancel anytime, and request a full refund within 14 days of your first payment.';
     let injected = injectMeta(indexHtml, {
       title: 'Refund Policy | Stop Biting',
       description,

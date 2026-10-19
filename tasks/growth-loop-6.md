@@ -1,0 +1,19 @@
+# Growth loop 6 (2026-10-19): 10 iterations, one every 3 minutes
+Rounds 1-5 are LIVE (health commit 4abf41f; IndexNow sent 2026-10-15). Owner items still open: Search Console recrawl, GA check of the round 5 events, subreddit rules, email capture, Google-Extended.
+Inputs: seo-geo repo audit (evidence by file:line) and Growth Hacker (funnel). Agent claims are SECOND-HAND: verify in the repo before changing anything. Already confirmed by me: index.html SoftwareApplication says "Zero data leaves your device"; refund meta says "no questions asked" while RefundPage says 14 days by email; no blog post body links the cost calculator (0 matches in blogPosts.ts).
+Rules: one local commit per iteration on main, NO push (ask the owner at the end). `npm run build:web` (never plain build), seo:check, `npm test`, route smoke. Commit content BEFORE `npm run seo:sync`. No em dashes; one privacy claim ("no camera data is sent while it runs"); web app only.
+
+## Iterations
+- [x] 1. Trust: replace "Zero data leaves your device" in index.html JSON-LD (and grep for the same phrase elsewhere); fix /refund-policy meta to match RefundPage.
+- [ ] 2. Crawler h1 + summary for /privacy, /terms-and-conditions, /refund-policy (server.js ~1838-1877), text copied from the React pages only.
+- [ ] 3. Link the cost calculator from nail-biting-cost and nail-biting-statistics bodies; link /pricing <-> calculator.
+- [ ] 4. Verify then fix: nail-biting-by-situation missing ogImage; robots meta max-image-preview:large, max-snippet:-1; three compare titles over 64 chars.
+- [ ] 5. article:published_time / modified_time in injectMeta for posts.
+- [ ] 6. Descriptions: remove em dashes from post descriptions; trim those over 160; tighten vitest guard.
+- [ ] 7. Question-form H2s, batch 1 (5-10 posts, only where the opening paragraph already answers it).
+- [ ] 8. Question-form H2s, batch 2.
+- [ ] 9. Funnel: verify, then add quiz-page trial CTA with its own source label if missing; "verify it yourself" privacy block only if wording matches the approved claim.
+- [ ] 10. Sweep (all sitemap URLs, JSON-LD, links), review, delete cron, ask about push + IndexNow.
+
+## Log
+- it1: index.html had two unscoped claims, JSON-LD SoftwareApplication 'Zero data leaves your device.' and og:description 'Zero data sent to servers.' (Google sign-in and Analytics do send data). Both now say 'No camera data is sent while it runs.' The other index.html lines say 'video never leaves your device' (camera-scoped, kept). /refund-policy meta said 'Cancel anytime, no questions asked' (with an em dash) while RefundPage says full refund within 14 days of first payment, by email: meta now 'cancel anytime, and request a full refund within 14 days of your first payment.' (141 chars). Built server: refund meta correct, 0 'Zero data' on /. build:web, seo:check, 99 tests pass.
