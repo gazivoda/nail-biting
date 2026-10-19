@@ -6039,6 +6039,7 @@ BLOG_POSTS.push(
   },
   {
     slug: 'nail-biting-by-situation',
+    ogImage: '/og/nail-biting-by-situation.png',
     title: 'Nail Biting by Situation: What Changes for Children, Musicians, Nurses and Desk Workers',
     seoTitle: 'Nail Biting: What Changes by Age and Job',
     description: 'The method does not change from person to person. What changes is which triggers dominate your day and which tools you are actually able to use.',

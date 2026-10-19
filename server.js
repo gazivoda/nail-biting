@@ -2366,7 +2366,7 @@ if (!existsSync(distPath)) {
       date: '2026-10-05',
     },
     '/compare/stop-biting-vs-nailkeeper': {
-      title: 'Stop Biting vs NailKeeper: Real-Time Detection or Photo Tracking?',
+      title: 'Stop Biting vs NailKeeper: Live Alarm or Photo Tracking?',
       description: 'NailKeeper describes photo tracking, a timer and reminders on iPhone and Android; Stop Biting is a real-time webcam alarm, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-06',
     },
@@ -2381,12 +2381,12 @@ if (!existsSync(distPath)) {
       date: '2026-10-08',
     },
     '/compare/stop-biting-vs-habitcam': {
-      title: 'Stop Biting vs HabitCam: Browser Subscription or Lifetime License?',
+      title: 'Stop Biting vs HabitCam: Subscription or Lifetime License?',
       description: 'HabitCam is a Windows and Linux program with a lifetime license; Stop Biting is a browser app with a free trial, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-13',
     },
     '/compare/stop-biting-vs-nailbitemenu': {
-      title: 'Stop Biting vs NailBiteMenu: Browser App or Open-Source Mac App?',
+      title: 'Stop Biting vs NailBiteMenu: Browser or Open-Source Mac App?',
       description: 'NailBiteMenu is an open-source macOS 15.6+ menu bar app with no account; Stop Biting runs in a browser on Mac or Windows, $2.99/mo or $29/yr. An honest comparison.',
       date: '2026-10-13',
     },
