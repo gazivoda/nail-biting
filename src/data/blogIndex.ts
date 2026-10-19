@@ -100,7 +100,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "breaking-any-habit-science",
     title: "Why Habits Are So Hard to Break, and What That Means for Nail Biting",
-    description: "Lally's 2010 study: the 39 whose data fitted the model took a median 66 days to reach 95% of their automaticity plateau, range 18 to 254. Why nail biting is harder.",
+    description: "Lally's 2010 study: the 39 whose data fitted the model took a median 66 days to reach 95% of the automaticity plateau, range 18 to 254. Why nail biting differs.",
     tag: "Science",
     readingMinutes: 4,
     datePublished: "2026-04-03",
@@ -127,7 +127,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-anxiety-treatment",
     title: "Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit",
-    description: "In 339 medical students, anxiety disorder was diagnosed in 22.5% of those with lifetime nail biting against 26.2% of those without. Is anxiety really your driver?",
+    description: "In 339 medical students, anxiety disorder was diagnosed in 22.5% of those with lifetime nail biting against 26.2% of those without. Is anxiety your driver?",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -136,7 +136,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "how-long-to-stop-nail-biting",
     title: "How Long Does It Take to Stop Nail Biting? A Realistic Timeline",
-    description: "In the one trial with a real follow-up, treated nail length was 22% above baseline at the end and still 19% above five months later, against 3% and 0% for placebo.",
+    description: "In the one trial with a real follow-up, treated nail length was 22% above baseline at the end and 19% above five months later, against 3% and 0% for placebo.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -163,7 +163,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-during-sleep",
     title: "Nail Biting During Sleep: Does It Happen and What Can You Do?",
-    description: "We could not find a study measuring sleep nail biting: no prevalence figure, no sleep-stage data, no comparison with waking biting. How to tell, and what may help.",
+    description: "We could not find a study measuring sleep nail biting: no prevalence figure, no sleep-stage data, no waking comparison. How to tell, and what may help.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -181,7 +181,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-genetics",
     title: "Is Nail Biting Genetic? What the Research Says About Hereditary Habit Risk",
-    description: "In 1,131 pairs of 12-year-old Japanese twins, 50% of the variance in nail biting was attributed to genetic influences. What that does and doesn't mean for stopping.",
+    description: "In 1,131 pairs of 12-year-old Japanese twins, 50% of the variance in nail biting was attributed to genes. What that does and doesn't mean for quitting.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -190,7 +190,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "mediapipe-ai-detection-explained",
     title: "How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer",
-    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, running on your device five times a second. The detection stack.",
+    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, on your device five times a second. The detection stack.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -253,7 +253,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-hypnosis",
     title: "Does Hypnotherapy for Nail Biting Work? What the Research Actually Shows",
-    description: "Hypnotherapy for nail biting has no large controlled trials behind it, only case reports and uncontrolled series. What that supports, and what has better evidence.",
+    description: "Hypnotherapy for nail biting has no large controlled trials, only case reports and uncontrolled series. What that supports, and what has better evidence.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
@@ -289,7 +289,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-statistics",
     title: "Nail Biting Statistics: How Common Is It, Really? (2026 Data)",
-    description: "Reviews estimate 20–30% of adults and up to 45% of children aged 10 to puberty bite their nails. Prevalence, co-occurrence and treatment figures, with their limits.",
+    description: "Reviews estimate 20–30% of adults and up to 45% of children aged 10 to puberty bite their nails. Prevalence, co-occurrence and treatment figures, and limits.",
     tag: "Science",
     readingMinutes: 5,
     datePublished: "2026-04-21",
@@ -298,7 +298,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "grow-nails-after-nail-biting",
     title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
-    description: "Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails is a several-month project.",
+    description: "Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails takes several months.",
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
@@ -388,7 +388,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-30-day-plan",
     title: "Stop Nail Biting in 30 Days: A Week-by-Week Plan",
-    description: "We found no published data pinning down which weeks of practice produce the steepest drop, so 30 days is a review point, not a finish line. The plan, week by week.",
+    description: "We found no published data pinning down which weeks of practice give the steepest drop, so 30 days is a review point, not a finish line. The plan, week by week.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-05-12",
@@ -415,7 +415,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-evening",
     title: "Why You Bite Your Nails More at Night: The Science Explained",
-    description: "No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when simply left alone. Why evenings supply exactly that.",
+    description: "No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when left alone. Why evenings supply exactly that.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
@@ -541,7 +541,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "bfrb-guide",
     title: "Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide",
-    description: "Habit reversal pooled a large effect (d = 0.80) over 18 studies and 575 participants, across six behaviour classes rather than nail biting alone. What BFRBs share.",
+    description: "Habit reversal pooled a large effect (d = 0.80) over 18 studies and 575 participants, across six behaviour classes, not nail biting alone. What BFRBs share.",
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -586,7 +586,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-college-students",
     title: "Nail Biting in College: Why Dorm Life Makes It Worse",
-    description: "Prevalence data show no college peak: 17.6% of university students against 29.2% of high schoolers in a 3,475-student Turkish survey. What does change on campus.",
+    description: "Prevalence data show no college peak: 17.6% of university students against 29.2% of high schoolers in a 3,475-student Turkish survey. What changes on campus.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -613,7 +613,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-gut-health",
     title: "Nail Biting and Gut Health: What Swallowing Bacteria Does to Your Microbiome",
-    description: "Research linking nail biting to microbiome disruption is limited. What is measured: yeasts under the nail in 69.0% of subjects, and raised pinworm odds in children.",
+    description: "Research linking nail biting to microbiome disruption is limited. Measured: yeasts under the nail in 69.0% of subjects, and raised pinworm odds in children.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -631,7 +631,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-thumb-sucking",
     title: "From Thumb Sucking to Nail Biting: How One Habit Becomes the Other",
-    description: "In 1,131 pairs of 12-year-old Japanese twins, finger-sucking and nail biting co-occurred in 17.7% of males and 15.7% of females. Why one habit becomes the other.",
+    description: "In 1,131 pairs of 12-year-old Japanese twins, finger-sucking and nail biting co-occurred in 17.7% of males and 15.7% of females. Why one habit becomes another.",
     tag: "Parenting",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -667,7 +667,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cortisol",
     title: "Nail Biting and Cortisol: The Stress Hormone Connection Explained",
-    description: "No study we found has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting and 42% pleasure after.",
+    description: "No study we found has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting, 42% pleasure after.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -676,7 +676,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-gel-manicure",
     title: "Can a Gel Manicure Stop Nail Biting? What to Expect",
-    description: "Gel deters rather than interrupts: a smooth coating removes the ragged edges that start episodes, but not a bite on contact. No controlled manicure trial exists.",
+    description: "Gel deters rather than interrupts: a coating removes the ragged edges that start episodes, but not a bite on contact. No controlled manicure trial exists.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -685,7 +685,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cuticle-damage",
     title: "Cuticle Damage from Nail Biting: What Happens and How to Repair It",
-    description: "Cuticle tissue regenerates, but only once biting stops; repair cannot outpace an active habit. Oil and moisturiser are standard; we found no trial with a timeline.",
+    description: "Cuticle tissue regenerates, but only once biting stops; repair cannot outpace an active habit. Oil and moisturiser are standard; no trial gives a timeline.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -703,7 +703,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "when-to-see-a-doctor-for-nail-biting",
     title: "When to See a Doctor About Nail Biting (And Which Kind)",
-    description: "Most nail biting doesn't need a doctor. This article explains the specific signs that do warrant a visit, and whether to see a dermatologist, therapist, or GP first.",
+    description: "Most nail biting doesn't need a doctor. The specific signs that do warrant a visit, and whether to see a dermatologist, therapist, or GP first.",
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -712,7 +712,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-app-vs-therapy",
     title: "Nail Biting App vs Therapy: Which Is Right for You?",
-    description: "Detection apps and professional therapy both treat nail biting, but differ in cost, access, and intensity. This article compares them honestly to help you choose.",
+    description: "Detection apps and professional therapy both treat nail biting, but differ in cost, access, and intensity. This compares them honestly to help you choose.",
     tag: "Comparison",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -730,7 +730,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-fingerprints",
     title: "Does Nail Biting Affect Your Fingerprints?",
-    description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could theoretically alter them.",
+    description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could alter them.",
     tag: "Science",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -748,7 +748,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-eczema",
     title: "Nail Biting and Eczema: How the Two Conditions Interact",
-    description: "Eczema around the nails and nail biting can worsen each other in a specific feedback loop. This article explains the interaction and how to manage both together.",
+    description: "Eczema around the nails and nail biting can worsen each other in a specific feedback loop. The interaction, and how to manage both together.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -784,7 +784,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-menopause",
     title: "Nail Biting During Menopause: Why Hormonal Changes Can Trigger It",
-    description: "No study has looked at menopause and nail biting, or measured stress, sleep or mood against biting frequency. Here is the plausible chain, labelled as plausible.",
+    description: "No study has looked at menopause and nail biting, or measured stress, sleep or mood against biting frequency. The plausible chain, labelled as plausible.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -811,7 +811,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-healthcare-workers",
     title: "Nail Biting Risks for Healthcare Workers: What to Know",
-    description: "We found no study on nail biting infection risk in any occupation. In healthcare workers, subungual organisms outnumbered surface ones: mean log10 4.9 against 3.7.",
+    description: "We found no study on nail biting infection risk in any occupation. In healthcare workers, subungual organisms outnumbered surface ones: mean log10 4.9 vs 3.7.",
     tag: "Health",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -865,7 +865,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-contagious",
     title: "Is Nail Biting Contagious Among Friends and Partners?",
-    description: "Family clustering has been measured; social spread has not. Of 743 children, 36.8% of biters had a relative who bit, and a twin study put 50% of variance on genes.",
+    description: "Family clustering has been measured; social spread has not. Of 743 children, 36.8% of biters had a relative who bit; a twin study put 50% of variance on genes.",
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -892,7 +892,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-magnesium",
     title: "Magnesium for Nail Biting: Can It Help With Anxiety-Driven Biting?",
-    description: "No trial has tested magnesium for nail biting. NAC has one: 42 children and adolescents, 5.21 mm of nail gained against 1.18 mm at one month, no difference at two.",
+    description: "No trial has tested magnesium for nail biting. NAC has one: 42 children and adolescents, 5.21 mm of nail gained against 1.18 mm at one month, none at two.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -910,7 +910,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-ptsd",
     title: "Nail Biting and PTSD: Understanding the Hypervigilance Connection",
-    description: "For some people with PTSD, nail biting is tied to hypervigilance and nervous system dysregulation rather than ordinary stress. This article explains the connection.",
+    description: "For some people with PTSD, nail biting is tied to hypervigilance and nervous system dysregulation rather than ordinary stress. The connection, explained.",
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
@@ -919,7 +919,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-chefs-food-service",
     title: "Nail Biting for Chefs and Food Service Workers: The Hygiene Stakes",
-    description: "Some food codes bar artificial nails: a potential pathogen grew from 87% of healthcare workers with acrylics against 43% of controls, but not in greater quantity.",
+    description: "Some food codes bar artificial nails: a potential pathogen grew from 87% of healthcare workers with acrylics against 43% of controls, not in greater quantity.",
     tag: "Health",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -1009,7 +1009,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-boredom",
     title: "Boredom Biting: Why an Empty Moment Sends Your Hand to Your Mouth",
-    description: "In four conditions, 40 undergraduate biters bit most when bored or frustrated, least in conversation or reprimand. A separate study found urges no higher in stress.",
+    description: "Four conditions: 40 undergraduate biters bit most when bored or frustrated, least in conversation or reprimand. Another study found no higher urges in stress.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-07-24",
@@ -1036,7 +1036,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-myths",
     title: "Ten Nail Biting Myths That Make It Harder to Stop",
-    description: "Anxiety disorder was diagnosed in 22.5% of lifetime nail biters against 26.2% of non-biters in one 339-student survey. That myth, the 21-day rule, and eight others.",
+    description: "Anxiety disorder was found in 22.5% of lifetime nail biters against 26.2% of non-biters in one 339-student survey. That myth, the 21-day rule, and eight more.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1045,7 +1045,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-which-fingers",
     title: "Which Fingers Do Nail Biters Bite Most, and Why It Is Not Random",
-    description: "Nobody appears to have published which fingers get bitten most, so what follows is report, not ranking. Your own distribution is still a record of your triggers.",
+    description: "Nobody appears to have published which fingers get bitten most, so this is report, not ranking. Your own distribution is still a record of your triggers.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1054,7 +1054,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-famous-people",
     title: "Famous Nail Biters: The Habit Is More Common at the Top Than You Think",
-    description: "The 20–30% figure is inherited from older reviews, not measured. With a clinical threshold applied, 6% of 1,378 Australian adults met it. Success does not end it.",
+    description: "The 20–30% figure is inherited from older reviews, not measured. With a clinical threshold, 6% of 1,378 Australian adults met it. Success doesn't end it.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1063,7 +1063,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-paronychia",
     title: "Paronychia: The Infection Nail Biters Get Most Often",
-    description: "Acute paronychia is one of the most common hand infections, and nail biting is a listed risk factor. No rate in biters is published. How to recognise and treat it.",
+    description: "Acute paronychia is one of the most common hand infections, and nail biting is a listed risk factor. No rate in biters is published. How to spot and treat it.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1099,7 +1099,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-white-spots",
     title: "White Spots on Bitten Nails: What They Are and What They Are Not",
-    description: "White marks are conventionally attributed to matrix trauma, not a calcium or zinc shortfall. They grow out at about 3.47 mm a month and cannot be treated directly.",
+    description: "White marks are conventionally attributed to matrix trauma, not a calcium or zinc lack. They grow out at about 3.47 mm a month and can't be treated directly.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1225,7 +1225,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-punishing-children",
     title: "Why Punishing a Child for Nail Biting Backfires",
-    description: "In a randomised experiment, 40 undergraduate nail biters bit least in conversation and when reprimanded. That is suppression; punished children learn to hide it.",
+    description: "In a randomised experiment, 40 undergraduate biters bit least in conversation and when reprimanded. That is suppression; punished children learn to hide it.",
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-07-24",
@@ -1297,7 +1297,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-gym-sports",
     title: "Nail Biting at the Gym and During Sports: What Helps and What Backfires",
-    description: "Almost nobody bites mid-workout. Across 36 trials, one exercise session shifted state anxiety by g = 0.16, which the authors call small. The risk sits either side.",
+    description: "Almost nobody bites mid-workout. In 36 trials, one exercise session shifted state anxiety by g = 0.16, which the authors call small. The risk is either side.",
     tag: "Psychology",
     readingMinutes: 4,
     datePublished: "2026-08-12",
