@@ -1375,4 +1375,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-19",
     dateModified: "2026-10-19",
   },
+  {
+    slug: "nail-biting-vs-tics-tourette",
+    title: "Is Nail Biting a Tic? Nail Biting vs Tics and Tourette Syndrome",
+    description: "Nail biting is a body-focused repetitive behaviour, not a tic, though the two can overlap. In 535 children with Tourette syndrome, 56.6% bit their nails.",
+    tag: "Clinical",
+    readingMinutes: 3,
+    datePublished: "2026-10-19",
+    dateModified: "2026-10-19",
+  },
 ];
