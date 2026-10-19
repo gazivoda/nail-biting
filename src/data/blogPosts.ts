@@ -2150,7 +2150,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-habit-tracking.png',
   sections: [
     {
-      heading: 'What tracking does, and what it does not do on its own',
+      heading: 'What does tracking do, and what does it not do on its own?',
       body: `Measuring a behaviour tends to change it, and awareness training — which is fundamentally what tracking is — is the first component of habit reversal training and the one the rest of the protocol is built on. It is worth being straight about the limits of that, because the nail-biting evidence is not flattering to tracking on its own: in both controlled comparisons that used self-monitoring alone as the control condition, the self-monitoring groups showed no significant improvement in nail length while the active treatment arms did. Tracking is what makes the rest of the protocol possible. On the evidence available it is not a treatment by itself.\n\nWhen you track nail biting, you introduce consciousness into an automatic process. The habit runs automatically precisely because there is no conscious observation of it. The moment you begin observing and recording, the automaticity is disrupted. Tracking is not passive measurement — it is intervention.`,
     },
     {
@@ -2756,7 +2756,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-vs-pen-chewing.png',
   sections: [
     {
-      heading: `What pen chewing and nail biting have in common`,
+      heading: `What do pen chewing and nail biting have in common?`,
       body: `Both are oral-motor habits that engage the mouth and jaw repetitively, both are frequently triggered by focus, boredom, or mild stress, and both tend to run automatically — performed with little conscious awareness, especially during absorbing tasks like reading, studying, or problem-solving. In terms of underlying mechanism, they're close cousins: both likely function partly as a way of discharging low-level physiological arousal through repetitive oral-motor activity, and both are common enough that most people have done at least one at some point without it becoming a persistent issue.`,
     },
     {
@@ -3047,7 +3047,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-thumb-sucking.png',
   sections: [
     {
-      heading: `The developmental link between thumb sucking and nail biting`,
+      heading: `How are thumb sucking and nail biting developmentally linked?`,
       body: `Thumb sucking and nail biting are both classified as non-nutritive oral habits — behaviours that engage the mouth for self-soothing rather than feeding — and the two do travel together. In a study of 1,131 pairs of 12-year-old Japanese twins, finger-sucking and nail-biting co-occurred in 17.7% of males and 15.7% of females, which the author attributed partly to common genetic or environmental factors; the same study put 50% of the variance in nail biting down to genetic influences in both sexes. In a separate US interview study of 3- to 6-year-olds, parents reported thumb-sucking in 25% of children and nail-biting in 23%. Both behaviours plausibly draw on the same developmental drive toward oral self-regulation, and for some children, one transitions fairly directly into the other as social pressure to stop thumb sucking increases with age.`,
     },
     {
@@ -3123,7 +3123,7 @@ BLOG_POSTS.push({
   ogImage: '/og/stop-nail-biting-challenge.png',
   sections: [
     {
-      heading: `Why a day-by-day structure helps`,
+      heading: `Why does a day-by-day structure help?`,
       body: `A week-by-week habit plan tells you the broad phase you're in; a day-by-day challenge tells you exactly what to do today. For a habit as automatic as nail biting, that level of specificity matters — vague weekly goals ("build awareness this week") are easy to let slide on any individual day, while a concrete daily instruction ("log every episode today, nothing else") is harder to skip without noticing.\n\nThis isn't a different method from Habit Reversal Training — it's the same evidence-based components (awareness training, a competing response, and social support) broken into daily units so there's never a day without a clear, small task.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
@@ -3205,7 +3205,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-cortisol.png',
   sections: [
     {
-      heading: `What cortisol actually does`,
+      heading: `What does cortisol actually do?`,
       body: `Cortisol is the body's primary stress hormone, released by the adrenal glands as part of the hypothalamic-pituitary-adrenal (HPA) axis in response to perceived stress or threat. It mobilises energy (raising blood glucose), heightens alertness, and temporarily suppresses non-essential functions like digestion — the classic physiological signature of the "fight or flight" response, though in modern daily life it's usually triggered by psychological stressors (a deadline, a difficult email, social evaluation) rather than physical danger.\n\nCortisol follows a natural daily rhythm — highest shortly after waking, gradually declining through the day — with acute spikes layered on top whenever a stressor occurs. Those acute spikes are what's most relevant to nail biting.`,
     },
     {
@@ -4355,7 +4355,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-evolutionary-psychology.png',
   sections: [
     {
-      heading: `Nail biting isn't uniquely human`,
+      heading: `Is nail biting unique to humans?`,
       body: `Self-directed grooming and repetitive behaviours — fur or hair pulling, over-grooming, and similar self-focused actions — are frequently described in other mammals, particularly in captive or stressed populations. Set expectations before reading on: this article is an interpretive frame rather than a summary of evidence about nail biting. The comparative and evolutionary literature sits outside the source base we have verified for this site, and none of it studied human nail biting.`,
     },
     {
@@ -4423,7 +4423,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-seniors-elderly.png',
   sections: [
     {
-      heading: `Why this age group is rarely discussed`,
+      heading: `Why is this age group rarely discussed?`,
       body: `Most nail biting content, research, and public discussion focuses on children, teenagers, and working-age adults, leaving older adults as a comparatively under-discussed group despite the habit persisting — or in some cases newly emerging or intensifying — later in life. This gap likely reflects both lower research interest in this demographic for a generally non-life-threatening habit and older adults being somewhat less likely to seek out or discuss habit-change resources online, rather than the pattern being genuinely rare in this age group.`,
     },
     {
@@ -4458,7 +4458,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-birth-control.png',
   sections: [
     {
-      heading: `Why hormonal contraception is relevant here`,
+      heading: `Why is hormonal contraception relevant to nail biting?`,
       body: `Hormonal birth control — pills, patches, rings, hormonal IUDs, implants — works by altering the body's natural hormonal cycle, typically suppressing the normal fluctuation of estrogen and progesterone that occurs across a natural menstrual cycle. Because natural hormonal fluctuation is linked to mood, stress reactivity, and sleep for many people (as discussed for both the menstrual cycle and menopause), it's a reasonable question whether flattening or altering that fluctuation through hormonal contraception could plausibly affect nail biting frequency, even though this specific connection hasn't been directly studied.`,
     },
     {
@@ -4528,7 +4528,7 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-dry-skin-winter.png',
   sections: [
     {
-      heading: `The seasonal pattern many nail biters notice`,
+      heading: `Why do many nail biters report worse biting in winter?`,
       body: `A number of nail biters report their habit noticeably worsening during winter months, and there's a plausible, fairly direct physical explanation beyond any seasonal mood changes: cold outdoor air combined with dry indoor heating significantly reduces ambient humidity, which dries out skin and nails more than most other times of year, creating more of the rough edges, hangnails, and cracked cuticles that commonly serve as the specific physical trigger initiating a biting episode.`,
     },
     {
@@ -4680,7 +4680,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-oral-fixation.png',
     sections: [
       {
-        heading: 'Where the phrase comes from',
+        heading: 'Where does the phrase oral fixation come from?',
         body: `"Oral fixation" is Freudian vocabulary. In the original psychosexual development model, a child who was over- or under-gratified during the oral stage of infancy would carry an unresolved fixation forward into adulthood, expressed later as smoking, overeating, thumb sucking, or nail biting.\n\nThe phrase has long outlived the theory. It gets used casually to mean "a habit involving the mouth," which is fine as loose description but tends to smuggle in the original causal claim — that adult nail biting reflects something that went wrong in infancy. That specific claim has not survived contact with evidence.`,
       },
       {
@@ -5301,7 +5301,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-mindfulness.png',
     sections: [
       {
-        heading: 'Why mindfulness is a plausible fit',
+        heading: 'Why is mindfulness a plausible fit for nail biting?',
         body: `Most interventions recommended for nail biting are aimed at the wrong layer — they try to motivate a behaviour that is not being decided. Mindfulness is one of the few that targets the actual problem, which is that the behaviour runs below conscious attention.\n\nAwareness training is the first component of habit reversal training — the other two being a competing response and social support — and mindfulness practice is essentially training in noticing what is happening as it happens. Which of the three does most of the work has not been isolated in a controlled trial. On paper the match is close to exact.\n\nIn practice, most people apply it in a way that cannot work, which is why "I tried meditation and it did not help my nail biting" is such a common report.`,
       },
       {
@@ -5397,7 +5397,7 @@ BLOG_POSTS.push(
     ogImage: '/og/nail-biting-habit-stacking.png',
     sections: [
       {
-        heading: 'What habit stacking is and where it fits',
+        heading: 'What is habit stacking and where does it fit?',
         body: `Habit stacking is the practice of attaching a new behaviour to an existing, reliably-occurring one: after I pour my coffee, I will do X. It works because the hard part of building a habit is remembering to do it, and an established routine solves that by supplying a dependable cue.\n\nIt is popular, well-suited to adding behaviours, and slightly awkward to apply to removing one. Nail biting already has cues — that is the problem. Stacking a new behaviour onto them requires a bit of adaptation.`,
       },
       {
