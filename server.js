@@ -1730,6 +1730,11 @@ if (!existsSync(distPath)) {
       post,
     });
     if (condition) injected = injectSchema(injected, condition);
+    // Same two dates the BlogPosting JSON-LD and sitemap lastmod carry, as the
+    // Open Graph article tags that Bing, Copilot and Perplexity read.
+    injected = injected.replace('</head>', () =>
+      `    <meta property="article:published_time" content="${escapeHtml(post.datePublished)}" />\n` +
+      `    <meta property="article:modified_time" content="${escapeHtml(post.dateModified)}" />\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
