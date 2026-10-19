@@ -104,7 +104,8 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       </div>
 
       <p className="sg-small mt-8 max-w-4xl">
-        Payments go through Paddle. Cancel anytime in Settings.
+        Payments go through Paddle. Cancel anytime in Settings. You can ask for a full refund within 14 days of
+        your first payment: see the <a href="/refund-policy" className="sg-link">refund policy</a>.
       </p>
     </section>
   );

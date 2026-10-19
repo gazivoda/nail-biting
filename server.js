@@ -1592,7 +1592,7 @@ if (!existsSync(distPath)) {
       '<p>Start with a 3-day free trial, no credit card required. ' +
       'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +
       'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. ' +
-      'Secure payment via Paddle, cancel anytime. See <a href="/pricing">pricing details</a>.</p></section>' +
+      'Secure payment via Paddle, cancel anytime. You can ask for a full refund within 14 days of your first payment (<a href="/refund-policy">refund policy</a>). See <a href="/pricing">pricing details</a>.</p></section>' +
       `<section><h2>Questions people ask about nail biting</h2>${faqs}</section>` +
       '<section><h2>Learn more</h2><ul>' +
       '<li><a href="/blog">Evidence-based nail biting guides</a></li>' +
@@ -2157,7 +2157,7 @@ if (!existsSync(distPath)) {
       '<li>Detection runs on your device; no camera data leaves it</li>' +
       '</ul></section>' +
       '<section><h2>Payments and cancellation</h2>' +
-      '<p>Secure payment via Paddle. Cancel anytime — see the <a href="/refund-policy">refund policy</a>. ' +
+      '<p>Secure payment via Paddle. Cancel anytime, and you can ask for a full refund within 14 days of your first payment: see the <a href="/refund-policy">refund policy</a>. ' +
       'The 3-day free trial includes full detection and tracking features with no credit card required.</p></section>' +
       '<section><h2>Start free</h2>' +
       '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>. ' +
