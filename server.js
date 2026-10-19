@@ -2556,6 +2556,61 @@ if (!existsSync(distPath)) {
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(path));
   });
 
+  // Free nail growth timeline calculator. The arithmetic runs in the browser
+  // (src/utils/nailGrowth.ts) on the visitor's own number; the only figures are
+  // the two average rates from Yaemsiri et al. 2010 (PubMed 19744178), stated
+  // on the page with their source and sample.
+  app.get('/tools/nail-growth-timeline-calculator', (_req, res) => {
+    if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+    const path = '/tools/nail-growth-timeline-calculator';
+    const description = 'Free calculator: how long to grow nails back, from the average rates in a 22-person study: 3.47 mm a month for fingernails, 1.62 for toenails.';
+    let injected = injectMeta(indexHtml, {
+      title: 'Nail Growth Timeline Calculator: How Long to Regrow Nails',
+      description,
+      canonical: `https://stopbiting.today${path}`,
+      ogImage: 'https://stopbiting.today/og/tools-nail-growth-timeline-calculator.png',
+    });
+    const toolSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `https://stopbiting.today${path}`,
+      url: `https://stopbiting.today${path}`,
+      name: 'Nail Growth Timeline Calculator',
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': WEBSITE_ID },
+      speakable: SCHEMA_SPEAKABLE,
+      mainEntity: {
+        '@type': 'WebApplication',
+        name: 'Nail Growth Timeline Calculator',
+        url: `https://stopbiting.today${path}`,
+        operatingSystem: 'Any (web browser)',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
+      ...(pageLastmod(path) ? { dateModified: pageLastmod(path) } : {}),
+    };
+    const breadcrumb = breadcrumbSchema([
+      ['Home', 'https://stopbiting.today/'],
+      ['Nail growth timeline calculator', `https://stopbiting.today${path}`],
+    ]);
+    injected = injected.replace('</head>', `    ${schemaTag(toolSchema)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    injected = injectSsrArticle(injected,
+      '<h1>How long will it take to grow your nails back?</h1>' +
+      '<p class="article-summary">A free calculator: enter how much nail you want to grow, in millimetres, and it divides the length by the average growth rate ' +
+      'measured in one published study. It is an estimate, not a promise.</p>' +
+      '<section><h2>Where does the rate come from?</h2>' +
+      '<p>A study of 22 healthy young adults in the United States who marked their nails and measured the distance one to three months later: ' +
+      '3.47 mm a month for fingernails and 1.62 mm a month for toenails (Yaemsiri et al., 2010). It is a small sample of young, healthy people, ' +
+      'and the little fingernail grew slower than the others. The same study found faster growth with younger age, male gender and onychophagia, ' +
+      'but none of those differences was statistically significant.</p></section>' +
+      '<section><h2>What does it leave out?</h2>' +
+      '<p>The calculator knows nothing about how damaged your nails are. It only divides a length by an average, and it runs in your browser and sends nothing anywhere. ' +
+      'Read <a href="/blog/grow-nails-after-nail-biting">how to grow your nails after nail biting</a> for what to expect week by week, or ' +
+      '<a href="/tools/nail-biting-cost-calculator">work out what biting costs you</a>. Stop Biting is not a medical treatment.</p></section>');
+    sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(path));
+  });
+
   // Free printable tracker: a landing page for the downloadable sheet in
   // public/files (built from docs/tracker). The page is a real article for
   // crawlers, and the PDF and its preview image are same-origin files.
@@ -2627,7 +2682,7 @@ if (!existsSync(distPath)) {
   // Known valid routes for soft-404 protection
   const KNOWN_ROUTES = new Set([
     '/', '/blog', '/about', '/how-it-works', '/pricing', '/privacy',
-    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH, '/tools/nail-biting-cost-calculator', '/tools/nail-biting-tracker-printable',
+    '/terms-and-conditions', '/refund-policy', EDITORIAL_POLICY_PATH, '/tools/nail-biting-cost-calculator', '/tools/nail-growth-timeline-calculator', '/tools/nail-biting-tracker-printable',
     ...Object.keys(COMPARE_META),
     ...Object.keys(BLOG_POSTS).map(slug => `/blog/${slug}`),
   ]);

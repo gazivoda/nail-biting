@@ -619,6 +619,7 @@ async function collectTargets() {
   targets.push(
     { file: 'tools-nail-biting-tracker-printable.png', title: 'Free Printable Nail Biting Tracker (30-Day PDF)', tag: 'Free tool', meta: '' },
     { file: 'tools-nail-biting-cost-calculator.png', title: 'Nail Biting Cost Calculator: What It Costs You a Year', tag: 'Free tool', meta: '' },
+    { file: 'tools-nail-growth-timeline-calculator.png', title: 'Nail Growth Timeline Calculator: How Long to Regrow Nails', tag: 'Free tool', meta: '' },
   );
 
   // The site card: /, /about, /how-it-works, /pricing, /blog and every other

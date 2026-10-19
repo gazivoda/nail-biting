@@ -32,6 +32,7 @@ import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
 import { CostCalculator } from './pages/CostCalculator';
+import { NailGrowthCalculator } from './pages/NailGrowthCalculator';
 import { PrintableTracker } from './pages/PrintableTracker';
 import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
@@ -169,6 +170,9 @@ export default function App() {
   // Free cost calculator
   if (path === '/tools/nail-biting-cost-calculator') {
     return <CostCalculator />;
+  }
+  if (path === '/tools/nail-growth-timeline-calculator') {
+    return <NailGrowthCalculator />;
   }
 
   // Compare pages
