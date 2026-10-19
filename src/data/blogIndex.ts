@@ -878,7 +878,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 2,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-19",
   },
   {
     slug: "nail-biting-essential-oils",
