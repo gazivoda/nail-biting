@@ -18,7 +18,7 @@ export interface BlogPostMeta {
 export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "why-do-people-bite-their-nails",
-    title: "Why Do People Bite Their Nails — And Why Is It So Hard to Stop?",
+    title: "Why Do People Bite Their Nails, and Why Is It So Hard to Stop?",
     description: "Reviews estimate 20–30% of adults bite their nails, and up to 45% of children between 10 and puberty. What drives the habit, and why willpower rarely works.",
     tag: "Psychology",
     readingMinutes: 3,
@@ -99,7 +99,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "breaking-any-habit-science",
-    title: "Why Habits Are So Hard to Break — and What That Means for Nail Biting",
+    title: "Why Habits Are So Hard to Break, and What That Means for Nail Biting",
     description: "Lally's 2010 study: the 39 whose data fitted the model took a median 66 days to reach 95% of their automaticity plateau, range 18 to 254. Why nail biting is harder.",
     tag: "Science",
     readingMinutes: 4,
@@ -144,7 +144,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-adults-why-persists",
-    title: "Why Nail Biting Persists into Adulthood — and What Makes It Different to Childhood Habits",
+    title: "Why Nail Biting Persists into Adulthood, and What Makes It Different to Childhood Habits",
     description: "In a survey of 4,335 college students, body-focused repetitive behaviours tended to be chronic, lasting over a year. Why adult nail biting is harder to shift.",
     tag: "Psychology",
     readingMinutes: 3,
@@ -207,7 +207,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "best-apps-to-stop-nail-biting",
-    title: "5 Best Tools to Stop Nail Biting in 2026 — Ranked by Evidence",
+    title: "5 Best Tools to Stop Nail Biting in 2026, Ranked by Evidence",
     description: "Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers. What each does for an automatic habit, and its cost.",
     tag: "Comparison",
     readingMinutes: 7,
@@ -225,7 +225,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-adhd",
-    title: "Nail Biting and ADHD: Why the Habit Is Harder to Stop — and What Actually Helps",
+    title: "Nail Biting and ADHD: Why the Habit Is Harder to Stop, and What Actually Helps",
     description: "In a psychiatrically referred sample of nail-biting children, 74.6% also had ADHD, the most common co-occurring diagnosis. Why the habit resists and what helps.",
     tag: "Psychology",
     readingMinutes: 6,
@@ -459,7 +459,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-screen-time",
-    title: "How Phones and Screens Make Nail Biting Worse — and What to Do",
+    title: "How Phones and Screens Make Nail Biting Worse, and What to Do",
     description: "Screen time and nail biting have not been studied together in large-scale research. 15 Android users logged 63.5 notifications a day: scale, not prevalence.",
     tag: "Psychology",
     readingMinutes: 4,
@@ -549,7 +549,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-new-years-resolution",
-    title: "Why 'Stop Biting My Nails' Resolutions Fail — and What Works Instead",
+    title: "Why 'Stop Biting My Nails' Resolutions Fail, and What Works Instead",
     description: "In 339 medical students, 92.2% of nail biters described their own behaviour as automatic, which is why willpower resolutions fail. What to do instead.",
     tag: "Psychology",
     readingMinutes: 3,
@@ -837,7 +837,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-toenails",
-    title: "Do People Bite Their Toenails? Yes — Here's What to Know",
+    title: "Do People Bite Their Toenails? Yes. Here's What to Know",
     description: "The standard review says biting usually occurs in the fingernails, as toenails are rarely bitten. A recognised but uncommon variant, with no prevalence figure.",
     tag: "Health",
     readingMinutes: 2,
@@ -1044,7 +1044,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-which-fingers",
-    title: "Which Fingers Do Nail Biters Bite Most — And Why It Is Not Random",
+    title: "Which Fingers Do Nail Biters Bite Most, and Why It Is Not Random",
     description: "Nobody appears to have published which fingers get bitten most, so what follows is report, not ranking. Your own distribution is still a record of your triggers.",
     tag: "Science",
     readingMinutes: 3,
