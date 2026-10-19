@@ -4155,12 +4155,17 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-19',
   ogImage: '/og/nail-biting-fsa-hsa.png',
   sections: [
     {
       heading: `Are nail biting treatments FSA or HSA eligible?`,
       body: `Flexible Spending Accounts (FSA) and Health Savings Accounts (HSA) generally cover expenses that qualify as a "medical expense" under IRS guidelines — broadly, costs for the diagnosis, treatment, or prevention of disease, or costs that affect a structure or function of the body. Because chronic nail biting (onychophagia) is a recognised condition with a formal classification, treatments specifically aimed at addressing it have a reasonable case for eligibility, though — as with many borderline categories — actual approval can depend on documentation and the specific plan administrator's interpretation.`,
+    },
+    {
+      heading: `What do the IRS publications actually say?`,
+      body: `This page is for US taxpayers and is not tax advice. IRS Publication 502 (2025), Medical and Dental Expenses, describes medical expenses as the costs of diagnosis, cure, mitigation, treatment or prevention of disease, plus treatments that affect a part or function of the body. It says medical care expenses \"must be primarily to alleviate or prevent a physical or mental disability or illness\" and do not include expenses \"merely beneficial to general health, such as vitamins or a vacation.\" It allows psychiatric care, and says cosmetic procedures aimed at improving appearance, which do not meaningfully promote the proper function of the body or prevent or treat illness, generally cannot be included.\n\nIRS Publication 969 (2025), on health savings accounts and other tax-favored health plans, defines qualified expenses for an HSA and a health FSA by reference to medical care as defined in section 213(d) of the tax code. On the page we read, it does not repeat the definition or mention a letter of medical necessity.\n\nNeither publication names nail biting treatments, bitter polish or detection apps. Whether a given purchase counts is a question for your plan administrator or a tax adviser, and the practical points below describe how such claims are usually approached, not text from the IRS.`,
+      html: `<p><strong>Sources for this section (both read on 19 October 2026):</strong></p><ul><li><a href="https://www.irs.gov/publications/p502" target="_blank" rel="noopener noreferrer">Internal Revenue Service. Publication 502 (2025), Medical and Dental Expenses.</a></li><li><a href="https://www.irs.gov/publications/p969" target="_blank" rel="noopener noreferrer">Internal Revenue Service. Publication 969 (2025), Health Savings Accounts and Other Tax-Favored Health Plans.</a></li></ul>`,
     },
     {
       heading: `What tends to qualify more easily`,
