@@ -93,7 +93,7 @@ function getBitterPolishContent(): PageContent {
 function getHabitTrackingContent(): PageContent {
   return {
     title: 'Why Habit Tracking Apps Don\'t Work for Nail Biting',
-    subtitle: 'Manual logging vs automatic AI detection — why automation changes outcomes',
+    subtitle: 'Manual logging vs automatic AI detection: why automation changes outcomes',
     intro: 'Habit tracking apps don’t work well for nail biting because you can only log the episodes you notice, and most biters catch fewer than half their daily episodes through self-monitoring — so a manual log records a sample, not the habit. They are popular, and they work well for deliberate behaviors you want to build or break consciously. Automatic detection writes the entry instead: after 7 days the log shows actual peak times, actual context patterns and actual frequency, measured in bite-free hours and minutes rather than the whole days a daily streak counts.',
     sections: [
       {
@@ -150,7 +150,7 @@ function getDeskWorkersContent(): PageContent {
     // "solves it" outran the body, which says detection covers "the hours where
     // a large share of the habit lives" — the time in front of the camera, not
     // the whole habit. The verb the body actually uses is "interrupts".
-    subtitle: 'Why desk workers bite during deep focus — and how webcam detection interrupts it',
+    subtitle: 'Why desk workers bite during deep focus, and how webcam detection interrupts it',
     intro: 'To stop nail biting at your desk, let your webcam do the noticing: Stop Biting fires an alarm as your hand approaches your mouth, and you answer it by pressing both palms flat on the desk for 60 seconds — long enough for the urge to pass, which typically takes 20–60 seconds. Desk workers have a specific problem: the mental states that make work productive are the same states that make nail biting invisible. Deep focus, meeting fatigue, and long keyboard sessions are among the highest-risk contexts for the habit.',
     sections: [
       {
@@ -194,7 +194,7 @@ function getDeskWorkersContent(): PageContent {
 function getAdhdContent(): PageContent {
   return {
     title: 'Nail Biting and ADHD: AI Detection That Works With Your Brain',
-    subtitle: 'Why standard approaches fail for ADHD nail biters — and what actually helps',
+    subtitle: 'Why standard approaches fail for ADHD nail biters, and what actually helps',
     intro: 'ADHD makes nail biting harder to stop in three specific ways: executive function gaps reduce awareness, dopamine-seeking reinforces the habit, and hyperfocus states deplete self-monitoring most severely. Real-time AI detection compensates for exactly these gaps: the camera catches episodes independently of your attention state, so the only step left is running the competing response — which for ADHD often works better as sensory input, a textured fidget or chewing gum, than as physical incompatibility alone.',
     sections: [
       {
@@ -242,7 +242,7 @@ function getAdhdContent(): PageContent {
 function getGamersContent(): PageContent {
   return {
     title: 'Stop Nail Biting While Gaming',
-    subtitle: 'Gaming flow state makes the habit invisible — AI detection works in the background',
+    subtitle: 'Gaming flow state makes the habit invisible, and AI detection works in the background',
     intro: 'Gaming is one of the worst nail biting contexts because it\'s designed to capture exactly the cognitive state that makes automatic habits invisible: in flow, self-monitoring goes offline, and the highest-risk windows are loading screens and queue waits, high-stakes competitive moments, and the frustration after a death or loss. Bitter polish, gloves and phone reminders each need something gaming takes away — taste, finger precision, audibility, or spare attention. Stop Biting runs in a browser tab beside the game, on the webcam you already have, with the alarm volume set loud enough to cut through headphones.',
     sections: [
       {
@@ -720,7 +720,7 @@ function faqSection(body: string, pairs: [string, string][]): { heading: string;
 function getVsHandsOffContent(): PageContent {
   return {
     title: 'Stop Biting vs Hands Off: Which Should You Pick?',
-    subtitle: 'Two on-device AI apps that catch nail biting through your webcam — compared honestly on platforms, coverage, price, and privacy',
+    subtitle: 'Two on-device AI apps that catch nail biting through your webcam, compared honestly on platforms, coverage, price, and privacy',
     intro: 'Pick Hands Off if you have several body-focused repetitive behaviours and live on the desktop; pick Stop Biting if nail biting is your specific problem, or you want a browser version or an annual plan. Monthly they cost the same — $2.99 for Stop Biting, €2.99 for Hands Off, each with a 3-day free trial — but Hands Off’s site lists no annual option, while Stop Biting’s is $29/year, about $2.42/month. Stop Biting and Hands Off solve the same core problem the same way: on-device AI watches your webcam and interrupts nail biting the moment it starts, without sending camera data anywhere. The real differences are coverage and platform. Hands Off covers five body-focused repetitive behaviors on Mac and Windows; Stop Biting focuses on nail biting, adds a no-install web app and a large habit-reversal content library. Disclosure: Stop Biting is our product — this is our honest attempt at a fair comparison, with every Hands Off claim re-verified against handsoffapp.com on 10 September 2026.',
     sections: [
       {
@@ -793,7 +793,7 @@ function getVsNailedContent(): PageContent {
     // that is its only download button shows the app as Free. A heading must
     // not assert the one thing the page it heads says cannot be asserted.
     title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
-    subtitle: 'Two apps built on the same detection engine, with very different scopes — a minimal Mac menu bar utility vs a cross-platform habit system',
+    subtitle: 'Two apps built on the same detection engine, with very different scopes: a minimal Mac menu bar utility vs a cross-platform habit system',
     intro: 'Choose Nailed if you’re on an Apple Silicon Mac — its store listing requires macOS 12 or later and an Apple M1 chip or later — and want nothing recurring; choose Stop Biting, at $2.99/month or $29/year, if you need Windows, an Intel Mac or a browser version, or you want streaks, incident history and habit-reversal content around the detector. Nailed and Stop Biting share more DNA than any other two apps in this category: both use Google’s MediaPipe machine learning models running via WebAssembly, entirely on-device. The difference is scope. Nailed is a deliberately minimal macOS menu bar app; Stop Biting is a subscription that adds Windows, a browser version, streak tracking, incident history, and a habit-reversal content library. One caveat before any of the comparisons below: nailedapp.io advertises $4.99, but the Mac App Store listing that is its only download link currently shows the app as a free download with no in-app purchases. Check the store page before you assume a price. Disclosure: Stop Biting is our product — we re-verified every Nailed claim here against nailedapp.io and its App Store listing on 10 September 2026 and tried to represent it fairly.',
     sections: [
       {
@@ -859,7 +859,7 @@ function getVsSmartBehaviorContent(): PageContent {
     // The title now states the decision the page actually makes, which no
     // platform correction can falsify.
     title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
-    subtitle: 'The clearest split in the category: where do you actually bite your nails — at a computer, or everywhere else?',
+    subtitle: 'The clearest split in the category: where do you actually bite your nails: at a computer, or everywhere else?',
     intro: 'Choose SmartBehavior if most of your biting happens away from a computer — it’s the only app here with native iPhone and Android apps, and though its own website publishes no price, its US App Store listing showed $0.99. Choose Stop Biting, at $2.99/month or $29/year with a 3-day free trial, if you bite at a desk, on Mac, Windows or in a browser. Both use on-device AI to catch nail biting through a camera, and both keep processing entirely local — SmartBehavior claims 85% accuracy and runs 100% offline. The decision between them is mostly about platform. SmartBehavior has native iPhone and Android apps plus Windows; Stop Biting covers Mac, Windows, and the browser. Disclosure: Stop Biting is our product — this comparison aims to be honest, and every SmartBehavior claim was re-verified against smart-behavior.com and its App Store listing on 10 September 2026.',
     sections: [
       {
@@ -918,7 +918,7 @@ function getVsSmartBehaviorContent(): PageContent {
 function getAiDetectionAppsContent(): PageContent {
   return {
     title: 'AI Apps That Detect Nail Biting: Every Option Compared',
-    subtitle: 'Four apps now use on-device AI to catch nail biting in real time. Here’s the honest head-to-head — including where ours loses.',
+    subtitle: 'Four apps now use on-device AI to catch nail biting in real time. Here’s the honest head-to-head, including where ours loses.',
     intro: 'Real-time AI nail biting detection went from one app to a real category: four products now watch for hand-to-mouth movement through a camera and interrupt the habit as it happens — Stop Biting ($2.99/month or $29/year), Hands Off (€2.99/month), Nailed ($4.99 on its own site, but shown as a free download on the Mac App Store listing that site links to) and SmartBehavior (no price on its website; $0.99 on its US App Store listing). All four process video on-device. This page compares them directly; our per-app pages go deeper on each match-up. Disclosure: Stop Biting is our product. Every competitor claim below was re-verified against the vendors’ own websites and app store listings on 10 September 2026, and we’ve noted honestly where each alternative beats us.',
     sections: [
       {

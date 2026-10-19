@@ -1759,7 +1759,7 @@ if (!existsSync(distPath)) {
   app.get('/blog', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
-      title: 'Nail Biting Resources — Evidence-Based Guides | Stop Biting',
+      title: 'Nail Biting Resources: Evidence-Based Guides | Stop Biting',
       description: 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.',
       canonical: 'https://stopbiting.today/blog',
     });
@@ -2079,7 +2079,7 @@ if (!existsSync(distPath)) {
   app.get('/pricing', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
-      title: 'Pricing — $2.99/month or $29/year | Stop Biting',
+      title: 'Pricing: $2.99/month or $29/year | Stop Biting',
       description: 'Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.',
       canonical: 'https://stopbiting.today/pricing',
     });
