@@ -112,7 +112,7 @@ export function HowItWorks() {
             height={792}
             loading="lazy"
             decoding="async"
-            alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running."
+            alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running."
             className="w-full h-auto rounded-lg border border-[color:var(--sg-rule)]"
           />
           <figcaption className="sg-note mt-2">

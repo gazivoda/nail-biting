@@ -255,7 +255,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                     height={792}
                     fetchPriority="high"
                     decoding="async"
-                    alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running."
+                    alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running."
                     className="w-full rounded-3xl"
                   />
                   <figcaption className="sg-note mt-3">

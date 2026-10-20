@@ -2247,7 +2247,7 @@ if (!existsSync(distPath)) {
       // The same real capture, alt text and caption as the React page and the landing.
       '<figure><img src="/shots/app-watch-1280.webp" srcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
       'sizes="(min-width: 1024px) 48rem, 100vw" width="1280" height="792" loading="lazy" decoding="async" ' +
-      'alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running.">' +
+      'alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running.">' +
       '<figcaption>The Watch screen, shown with example data.</figcaption></figure>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
       '<p>Most biting episodes happen without you noticing: the habit is automatic, ' +
