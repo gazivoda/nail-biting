@@ -260,7 +260,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-hypnosis">Does hypnotherapy for nail biting work?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting: what N-acetylcysteine can and cannot do</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-gloves">Do gloves stop nail biting?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-hypnosis">Does hypnotherapy for nail biting work?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting: what N-acetylcysteine can and cannot do</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-gloves">Do gloves stop nail biting?</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1196,7 +1196,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-stimming.png',
   sections: [
     {
@@ -1220,7 +1220,7 @@ BLOG_POSTS.push({
       heading: 'Effective sensory substitutes for nail biting',
       body: `The best substitutes for sensory-driven nail biting are those that deliver oral motor and/or fingertip tactile input, since these are the primary sensory channels the habit uses.`,
       list: [
-        "Chewing gum — The closest oral motor substitute. Provides continuous jaw proprioception and keeps the mouth occupied. Xylitol-containing gums also benefit dental health, offsetting some of the dental risks of nail biting.",
+        "Chewing gum: a common oral substitute that people try. No study has tested gum for nail biting, and jaw studies count gum chewing as an oral habit linked with jaw pain, so watch your jaw (see our chewing gum page).",
         "Textured fidget rings — Worn on fingers, these provide constant fingertip tactile input. Particularly effective during screen time where the hands are otherwise idle.",
         "Textured lip balm — Applied to lips, provides ongoing oral sensory input. Most useful for people who describe a lip-touching component to their biting.",
         "Mesh or ridged fidget tools — Items like mesh sensory balls or ridged tubes provide fingertip edge-detection input similar to feeling for rough nail edges.",
@@ -1232,6 +1232,11 @@ BLOG_POSTS.push({
       heading: 'When to consider professional support',
       body: `If nail biting is serving a strong sensory regulatory function and competing responses alone aren't providing adequate relief, it may indicate broader sensory processing differences that benefit from occupational therapy assessment. OTs specializing in sensory integration can provide a comprehensive sensory diet — a set of activities calibrated to your specific sensory needs throughout the day — that reduces the urgency of biting as a regulatory tool.\n\nFor people with ADHD or autism, treating the co-occurring condition concurrently with the habit typically produces better outcomes than addressing the habit in isolation. ADHD medication, sensory accommodation, or autism-informed therapy reduces the baseline regulatory demand that nail biting is compensating for, making competing responses more effective.`,
           html: `<p>Where the biting is bound up with ADHD stimming, our <a href="/solutions/for-adhd">guide for ADHD nail biters</a> goes further into working with the urge instead of suppressing it.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1366,7 +1371,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-11',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-alternatives.png',
   sections: [
     {
@@ -1388,7 +1393,7 @@ BLOG_POSTS.push({
       body: `These alternatives work best when biting happens during deep work, screen time, or concentration states where the habit runs automatically alongside mental engagement.`,
       list: [
         "Textured fidget rings — Worn on fingers, provide continuous fingertip input without interrupting focus. The texture satisfies the tactile edge-seeking behavior that drives focus-state biting. Silicone and stainless steel ridged rings are the most effective designs.",
-        "Chewing gum — The oral motor engagement directly substitutes for the jaw movement component of nail biting. Keeps the mouth occupied during screen time. Xylitol gum has the additional benefit of reducing the dental risks associated with biting.",
+        "Chewing gum: people try it to keep the mouth occupied during screen time. No study has tested gum for nail biting, and jaw studies count gum chewing as an oral habit linked with jaw pain (see our chewing gum page).",
         "Mesh fidget balls — Squeezing a mesh sensory ball provides fingertip pressure input comparable to the pressure used when biting. Best for people whose biting includes significant finger-to-tooth contact pressure.",
         "Keeping a smooth stone at the desk — Running fingertips over a smooth polished stone provides constant low-level tactile input that reduces the urge to seek texture in nails.",
       ],
@@ -1411,7 +1416,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2189,6 +2194,11 @@ BLOG_POSTS.push({
       heading: 'Why any competing response only works with awareness',
       body: `The critical point about competing responses — fidget toys or otherwise — is that they only activate when you're aware the habit is occurring. Nail biting episodes typically begin automatically, below the threshold of awareness. No competing response, however well-matched, can interrupt a habit episode you don't know is happening.\n\nThat is the argument for pairing a competing response with something that marks the moment from outside — an alarm, a detection tool, a person who has agreed to signal. It is an argument, not a result: the trials pair the competing response with awareness training and, in the adult nail-biting trial, with social support (Twohig et al., 2003), and none of them tested an automated external signal or ranked one package against another. So treat the pairing as reasoning from the awareness gap rather than as a measured winner. Fidget toys placed on your desk as reminders don't solve the awareness problem — they just make the competing response available once awareness arrives through some other means. The sequence matters: awareness first, competing response second.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3165,7 +3175,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
     },
   ],
 });
@@ -5192,6 +5202,11 @@ BLOG_POSTS.push(
         heading: `Where to go next`,
         body: ``,
         html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -7297,6 +7312,50 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-habit-stacking">Habit stacking for nail biting</a></li><li><a href="/blog/nail-biting-30-day-plan">A 30 day plan to stop nail biting</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop biting your nails</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-chewing-gum',
+  title: `Does Chewing Gum Stop Nail Biting? What the Evidence Shows`,
+  seoTitle: 'Does Chewing Gum Stop Nail Biting? The Evidence',
+  description: `No study has tested chewing gum for nail biting. What gum did for smokers' cravings, why gum chewing shows up in jaw pain studies, and what to try instead.`,
+  tag: 'Treatment',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-chewing-gum.png',
+  sections: [
+    {
+      heading: `Does chewing gum stop nail biting?`,
+      body: `We could not find a study that tested it. On 20 October 2026 we searched PubMed for "chewing gum nail biting" and got 23 results. We read the first 10, and all of them were studies of oral habits and jaw problems, or other topics. None gave gum to nail biters to see whether they bit less. We did not read the other 13, so a trial among them cannot be ruled out, but we found no trial in the part we did read. Gum is a common suggestion as an oral substitute, but as a nail biting treatment it is untested.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "chewing gum nail biting", run 20 October 2026: 23 results, first 10 read.</li></ul>`,
+    },
+    {
+      heading: `Did gum help with cravings in any study?`,
+      body: `In one study of cigarette cravings, yes, in the short term. In a double-blind trial of 45 smokers who abstained for 4 hours, those who chewed nicotine gum and those who chewed placebo gum reported significantly lower craving scores than those given nothing, and the two kinds of gum worked equally well (Davies et al., 2004). That suggests the chewing itself may have helped, but it was a different habit, a short test and a small sample.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/15107189/" target="_blank" rel="noopener noreferrer">Davies GM, Willner P, James DL, Morgan MJ. Influence of nicotine gum on acute cravings for cigarettes. J Psychopharmacol. 2004;18(1):83-7. doi:10.1177/0269881104040240</a></li></ul>`,
+    },
+    {
+      heading: `Why does gum chewing show up in jaw pain studies?`,
+      body: `Dental researchers count it as an oral habit. In 1,094 adolescents aged 12 to 14, parafunctional habits (nail, pen, lip and cheek biting, resting the head on the hand and gum chewing) were significantly associated with painful temporomandibular disorders (TMD, jaw joint and muscle pain), and the odds rose when sleep bruxism, awake bruxism and these habits occurred together: 4.6 times with two of them and 13.7 times with all three (Fernandes et al., 2016). In 90 people, painful jaw clicking was associated with gum chewing, nail biting and awake bruxism (Poluha et al., 2021). These are cross-sectional studies, so they show a link and not that gum causes jaw pain, and gum was grouped with several other habits.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/26910021/" target="_blank" rel="noopener noreferrer">Fernandes G, Franco-Micheloni AL, Siqueira JTT, Goncalves DAG, Camparis CM. Parafunctional habits are associated cumulatively to painful temporomandibular disorders in adolescents. Braz Oral Res. 2016;30. doi:10.1590/1807-3107BOR-2016.vol30.0015</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/34378672/" target="_blank" rel="noopener noreferrer">Poluha RL, Canales GT, Bonjardim LR, Conti PCR. Oral behaviors, bruxism, malocclusion and painful temporomandibular joint clicking: is there an association? Braz Oral Res. 2021;35:e090. doi:10.1590/1807-3107bor-2021.vol35.0090</a></li></ul>`,
+    },
+    {
+      heading: `So should you chew gum instead of biting?`,
+      body: `The evidence cannot tell you. Gum might give the mouth something to do, as it appeared to for smoking cravings, but nobody has tested it for nail biting, and chewing for hours adds a different jaw habit. If you try it, keep it to the moments you usually bite, watch for jaw soreness or clicking, and stop and see a dentist or doctor if they appear. Treat the result as your own observation.`,
+    },
+    {
+      heading: `What has been tested instead?`,
+      body: `A competing response, a physical action you do when you feel the urge. In a four-week trial of 21 nail biters, a competing response group improved nail length and skin damage more than a bitter-polish group or a monitoring-only control (Silber and Haynes, 1992). It is a small, old trial, and its abstract does not say what the competing response was, so it is not evidence for gum.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15-22. doi:10.1016/0005-7967(92)90091-t</a></li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-alternatives">Alternatives to nail biting</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/products-to-stop-nail-biting">Products to stop nail biting</a></li><li><a href="/blog/best-nail-biting-remedies">Nail biting remedies ranked by evidence</a></li><li><a href="/blog/nail-biting-jaw-pain-tmj">Nail biting and jaw pain</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
