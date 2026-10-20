@@ -4887,6 +4887,11 @@ BLOG_POSTS.push(
         heading: 'What is actually true',
         body: `Stripped of the folklore, the reliable picture is fairly simple — and smaller than the headline numbers suggest. Chronic nail biting is a body-focused repetitive behaviour. The figure usually quoted, that it affects up to 20–30% of the general population, comes from a 2022 review that inherited it from earlier reviews rather than from a measurement; when an online survey of 1,378 Australian adults applied a clinically-significant threshold, 6% met it for nail biting. It is usually automatic rather than deliberate: 92.2% of the biters in a 339-student survey described their own behaviour that way. The intervention with the strongest evidence base is habit reversal training, whose active ingredient is awareness at the moment of occurrence, paired with a competing response.\n\nAlmost everything else — the polish, the gloves, the motivational reasoning — is either supporting that mechanism or substituting for it. Approaches that supply awareness and a substitute behaviour tend to work. Approaches that rely on you consciously overriding an unconscious behaviour tend not to.`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -5015,7 +5020,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5059,6 +5064,11 @@ BLOG_POSTS.push(
       {
         heading: 'The cycle worth breaking',
         body: `There is a self-sustaining loop here that is worth naming explicitly, because people often miss it while focusing on the wart itself. Biting damages skin. Damaged skin admits the virus. The wart creates a raised irregularity, and raised irregularities are among the most reliable triggers for a biting episode. Biting the wart spreads it and re-traumatises the site.\n\nBreaking any link helps, and covering the lesion is a reasonable immediate step. But the link that ends the cycle rather than pausing it is the biting, which puts this firmly in the category of dermatological problems with a behavioural solution — the treatment addresses what is there now, and the habit work is what stops it coming back.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5204,7 +5214,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
