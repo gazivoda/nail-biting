@@ -496,11 +496,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-quiz",
     title: "How Severe Is Your Nail Biting? A Self-Assessment",
-    description: "A short, evidence-informed nail biting self-assessment covering frequency, damage, and triggers. See how severe your habit is and which approach fits.",
+    description: "A short nail biting self-assessment covering frequency, damage and triggers, with our own rough score bands. Not validated and not a diagnosis.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-11",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-toddler",
