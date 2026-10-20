@@ -968,3 +968,18 @@ Follow-ups (not done: feature-sized or owner decisions)
 - [ ] "Incident" vs "bite" glossary across Dashboard/History/chart
 - [ ] /pricing, /how-it-works, /about still on the old Inter/cream look
 - [ ] Real alarm-moment photo and a photo of Igor (owner assets)
+
+## 2026-10-20 Batch 2: 10 more PubMed-sourced posts (SEO/GEO optimised)
+Topics checked against 178 existing slugs (no title overlap):
+- [x] nail-biting-relapse (why do I start biting again after stopping)
+- [x] nail-biting-vaping-nicotine
+- [x] nail-biting-lack-of-sleep
+- [x] nail-biting-hand-cream-moisturiser (hand cream, cuticle oil and bitten nails)
+- [x] nail-biting-nail-hardeners (strengtheners/hardeners)
+- [x] nail-biting-exercise
+- [x] nail-biting-dating-relationships
+- [x] nail-biting-gum-disease (gums and oral health)
+- [x] nail-biting-hand-sanitizer (alcohol gel on nails you bite)
+- [x] nail-biting-self-esteem
+Pipeline: writers -> newposts2/p11..p20.json -> insert -> inbound links -> seo-content + seo-geo review -> og:generate -> sync-seo -> build, vitest, eslint, local sweep. No commit/push/IndexNow without approval.
+Review: 10 posts inserted, 40+ SEO/GEO edits applied (verified against abstracts by seo-content), 188 posts / 219 URLs, vitest 115, build ok, local sweep 0 problems, 0 posts without inbound link. NOT committed/pushed, IndexNow not pinged.
