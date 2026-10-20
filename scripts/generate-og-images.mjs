@@ -95,6 +95,9 @@ const C = {
   stone900: 'oklch(15% 0.010 120)',
   forest500: 'oklch(46% 0.130 148)',
   forest600: 'oklch(38% 0.120 148)',
+  deep: 'oklch(25% 0.05 162)',
+  lime: 'oklch(90% 0.2 124)',
+  white: 'oklch(100% 0 0)',
 };
 
 // ─── Fonts ───────────────────────────────────────────────────────────────────
@@ -106,14 +109,12 @@ const C = {
 // whichever subset holds the glyph, which is what we want on a page that is
 // never served and where correctness beats byte count.
 const FONT_FILES = [
-  ['Inter', 400, 'inter-latin.woff2'],
-  ['Inter', 400, 'inter-latin-ext.woff2'],
-  ['Inter', 600, 'inter-latin.woff2'],
-  ['Inter', 600, 'inter-latin-ext.woff2'],
-  ['Instrument Serif', 400, 'instrument-serif-latin.woff2'],
-  ['Instrument Serif', 400, 'instrument-serif-latin-ext.woff2'],
-  ['JetBrains Mono', 500, 'jetbrains-mono-latin.woff2'],
-  ['JetBrains Mono', 500, 'jetbrains-mono-latin-ext.woff2'],
+  ['Bricolage Grotesque', '200 800', 'bricolage-latin.woff2'],
+  ['Bricolage Grotesque', '200 800', 'bricolage-latin-ext.woff2'],
+  ['Geist', '100 900', 'geist-latin.woff2'],
+  ['Geist', '100 900', 'geist-latin-ext.woff2'],
+  ['Geist Mono', '100 900', 'geist-mono-latin.woff2'],
+  ['Geist Mono', '100 900', 'geist-mono-latin-ext.woff2'],
 ];
 
 function fontFaceCss() {
@@ -130,7 +131,7 @@ function fontFaceCss() {
 // A forest bar down the left edge, an eyebrow (tag · reading time) in the mono
 // face, the headline in Inter 600 — the same face and weight the article's own
 // <h1> uses in BlogPost.tsx, so card and page agree visually — and a rule above
-// the brand mark. The nail glyph is the path data from public/logo.svg.
+// the brand mark (the lens from public/logo.svg).
 //
 // Type size is not hardcoded: fitTitle() in the template shrinks the headline
 // until it fits its slot, which is what keeps a 12-word title inside the canvas
@@ -140,28 +141,26 @@ function fontFaceCss() {
 // widths are accounted for. A square box centred on that (197, 189) with a few
 // units of air is 45 37 304 304 — anything tighter shaves the outer arch.
 const LOGO_SVG =
-  '<svg viewBox="45 37 304 304" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-  '<path d="M77 324V174C77 107.726 130.726 54 197 54C263.274 54 317 107.726 317 174V324" ' +
-  'stroke="currentColor" stroke-width="26" stroke-linecap="round" fill="none"/>' +
-  '<path d="M107 174C107 124.294 147.294 84 197 84C246.706 84 287 124.294 287 174V249C287 282.136 ' +
-  '260.136 309 227 309H167C133.863 309 107 282.136 107 249V174Z" fill="none" ' +
-  'stroke="currentColor" stroke-width="18"/></svg>';
+  '<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+  '<circle cx="48" cy="48" r="30" fill="currentColor"/>' +
+  '<circle cx="48" cy="48" r="16" fill="oklch(25% 0.05 162)"/>' +
+  '<circle cx="54" cy="42" r="5" fill="currentColor"/></svg>';
 
 function templateHtml() {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
 ${fontFaceCss()}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${WIDTH}px;height:${HEIGHT}px;overflow:hidden}
-body{background:${C.cream100};-webkit-font-smoothing:antialiased}
+body{background:${C.deep};-webkit-font-smoothing:antialiased}
 #card{position:relative;width:${WIDTH}px;height:${HEIGHT}px;display:flex;flex-direction:column;
   padding:72px 80px 64px 104px}
 /* Full-bleed accent down the left edge: the one element that still identifies
    the card as this site at 320px wide, where the type has gone to mush. */
-#bar{position:absolute;left:0;top:0;bottom:0;width:24px;background:${C.forest500}}
-#eyebrow{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono';font-weight:500;
-  font-size:21px;letter-spacing:0.13em;text-transform:uppercase;color:${C.forest600};flex:none}
-#eyebrow .sep{width:5px;height:5px;border-radius:50%;background:${C.stone400};flex:none}
-#eyebrow .meta{color:${C.stone500};letter-spacing:0.1em}
+#bar{position:absolute;left:0;top:0;bottom:0;width:24px;background:${C.lime}}
+#eyebrow{display:flex;align-items:center;gap:14px;font-family:'Geist Mono';font-weight:600;
+  font-size:21px;letter-spacing:0.13em;text-transform:uppercase;color:${C.lime};flex:none}
+#eyebrow .sep{width:5px;height:5px;border-radius:50%;background:${C.lime};flex:none}
+#eyebrow .meta{color:oklch(100% 0 0 / 0.6);letter-spacing:0.1em}
 #eyebrow.bare .sep,#eyebrow.bare .meta{display:none}
 /* The headline box is a fixed slot. fitTitle() picks the largest size whose
    scrollHeight fits it, so overflow is impossible rather than unlikely. */
@@ -175,15 +174,15 @@ body{background:${C.cream100};-webkit-font-smoothing:antialiased}
    break-word so a single unbreakable token — a long hyphen-free compound, a
    pasted URL — wraps instead of running off the right edge; it only engages
    when the word cannot fit a line on its own, so normal titles are untouched. */
-#title h1{font-family:'Inter';font-weight:600;letter-spacing:-0.022em;line-height:1.14;
-  color:${C.stone900};width:100%;overflow-wrap:break-word}
+#title h1{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-0.035em;line-height:1.06;
+  color:${C.white};width:100%;overflow-wrap:break-word}
 #foot{flex:none;display:flex;align-items:center;justify-content:space-between;
-  border-top:2px solid ${C.stone200};padding-top:26px;margin-top:34px}
+  border-top:2px solid oklch(100% 0 0 / 0.16);padding-top:26px;margin-top:34px}
 #brand{display:flex;align-items:center;gap:16px}
-#brand svg{width:40px;height:40px;color:${C.forest500};flex:none}
-#brand .name{font-family:'Instrument Serif';font-size:38px;line-height:1;color:${C.stone800}}
-#url{font-family:'JetBrains Mono';font-weight:500;font-size:20px;letter-spacing:0.04em;
-  color:${C.stone500}}
+#brand svg{width:48px;height:48px;color:${C.lime};flex:none}
+#brand .name{font-family:'Bricolage Grotesque';font-weight:800;letter-spacing:-0.03em;font-size:36px;line-height:1;color:${C.white}}
+#url{font-family:'Geist Mono';font-weight:600;font-size:20px;letter-spacing:0.04em;
+  color:oklch(100% 0 0 / 0.6)}
 </style></head><body><div id="card">
 <div id="bar"></div>
 <div id="eyebrow"><span class="tag"></span><span class="sep"></span><span class="meta"></span></div>
@@ -266,6 +265,8 @@ async function launchChrome() {
     '--disable-lcd-text',
     '--disable-gpu',
     '--hide-scrollbars',
+    // Containers run as root, where Chrome refuses to start with its sandbox.
+    ...(process.env.CHROME_NO_SANDBOX ? ['--no-sandbox'] : []),
     // Keep a real profile's background chatter out of the run.
     '--no-first-run',
     '--no-default-browser-check',
@@ -681,7 +682,8 @@ try {
 } finally {
   cdp.close();
   child.kill();
-  rmSync(profile, { recursive: true, force: true });
+  // Chrome may still be flushing its profile as it exits; retry rather than crash after the work is done.
+  rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
 
 // Anything in public/og that no page claims is a leftover from a renamed or

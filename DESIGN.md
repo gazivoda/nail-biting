@@ -75,11 +75,12 @@ journal primitives (`.ed-*`) read the same fonts, colours and radii.
 - **Streak card**: the largest thing in the app. Bricolage 92px numerals on deep,
   lime unit labels.
 - **Nav**: deep (lime in dark mode) pill for the active item.
-- **Logo**: an alarm target (lime ring with a centre dot) with a bite taken out
-  of the ring, on a deep-forest tile (`public/logo.svg`; `logo-dark.svg` inverts
-  it for dark grounds). Abstract on purpose: ring and dot say "detection", the
-  bite says what it stops. The same geometry produces the favicon, app icon and
-  PNG icons. Avoid anything finger- or nail-shaped.
+- **Logo**: a camera lens: a solid lime ring around a deep centre with one
+  highlight dot, on a deep-forest tile (`public/logo.svg`; `logo-dark.svg` inverts
+  it for dark grounds). It says "something is watching for you" and stays legible
+  at 16px. One geometry produces the favicon, app icon, PNG icons and the social
+  card mark (`scripts/generate-og-images.mjs`). Avoid anything finger- or
+  nail-shaped.
 
 ## Do
 

@@ -30,15 +30,15 @@ export async function sendWelcomeEmail({ name, email, trial_end_date }) {
   <meta name="viewport" content="width=device-width">
   <title>Welcome to Stop Biting Nails</title>
 </head>
-<body style="margin:0;padding:0;background:#F7F3EE;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F3EE;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#F7F7F1;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F7F1;padding:40px 20px;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
           <tr>
             <td style="padding:32px 0 24px;text-align:center;">
               <span style="font-size:18px;font-weight:700;color:#1a1a1a;letter-spacing:-0.5px;">
-                stop biting <span style="color:#1D5C38;letter-spacing:2px;text-transform:uppercase;font-size:16px;">NAILS</span>
+                stop biting <span style="color:#0B2A1E;letter-spacing:2px;text-transform:uppercase;font-size:16px;">NAILS</span>
               </span>
             </td>
           </tr>
@@ -59,7 +59,7 @@ export async function sendWelcomeEmail({ name, email, trial_end_date }) {
                 Your trial ends on <strong style="color:#374151;">${trialEnd}</strong>.
               </p>
               <div style="margin-top:32px;text-align:center;">
-                <a href="${APP_URL}" style="display:inline-block;background:#1D5C38;color:#F7F3EE;font-weight:600;font-size:15px;text-decoration:none;padding:14px 36px;border-radius:14px;">
+                <a href="${APP_URL}" style="display:inline-block;background:#0B2A1E;color:#F7F7F1;font-weight:600;font-size:15px;text-decoration:none;padding:14px 36px;border-radius:14px;">
                   Open the App
                 </a>
               </div>
@@ -94,15 +94,15 @@ export async function sendFeedbackEmail({ name, email }) {
   <meta name="viewport" content="width=device-width">
   <title>How was your trial?</title>
 </head>
-<body style="margin:0;padding:0;background:#F7F3EE;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F3EE;padding:40px 20px;">
+<body style="margin:0;padding:0;background:#F7F7F1;font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F7F7F1;padding:40px 20px;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
           <tr>
             <td style="padding:32px 0 24px;text-align:center;">
               <span style="font-size:18px;font-weight:700;color:#1a1a1a;letter-spacing:-0.5px;">
-                stop biting <span style="color:#1D5C38;letter-spacing:2px;text-transform:uppercase;font-size:16px;">NAILS</span>
+                stop biting <span style="color:#0B2A1E;letter-spacing:2px;text-transform:uppercase;font-size:16px;">NAILS</span>
               </span>
             </td>
           </tr>
@@ -120,14 +120,14 @@ export async function sendFeedbackEmail({ name, email }) {
               <p style="margin:0 0 24px;font-size:15px;line-height:1.7;color:#374151;">
                 Honest feedback — good or bad — helps a lot. Just hit reply and let me know what you think.
               </p>
-              <div style="background:#F7F3EE;border-radius:12px;padding:20px 24px;margin-bottom:28px;">
-                <p style="margin:0 0 8px;font-size:13px;font-weight:600;color:#1D5C38;text-transform:uppercase;letter-spacing:0.5px;">If the app helped you</p>
+              <div style="background:#F7F7F1;border-radius:12px;padding:20px 24px;margin-bottom:28px;">
+                <p style="margin:0 0 8px;font-size:13px;font-weight:600;color:#0B2A1E;text-transform:uppercase;letter-spacing:0.5px;">If the app helped you</p>
                 <p style="margin:0;font-size:14px;line-height:1.6;color:#374151;">
                   A short review goes a long way for a tiny indie app. Even a sentence or two would mean the world.
                 </p>
               </div>
               <div style="text-align:center;">
-                <a href="mailto:gazivodai61@gmail.com?subject=Feedback%20on%20Stop%20Biting" style="display:inline-block;background:#1D5C38;color:#F7F3EE;font-weight:600;font-size:15px;text-decoration:none;padding:14px 32px;border-radius:14px;margin-bottom:12px;">
+                <a href="mailto:gazivodai61@gmail.com?subject=Feedback%20on%20Stop%20Biting" style="display:inline-block;background:#0B2A1E;color:#F7F7F1;font-weight:600;font-size:15px;text-decoration:none;padding:14px 32px;border-radius:14px;margin-bottom:12px;">
                   Reply with Feedback
                 </a>
                 <br>
