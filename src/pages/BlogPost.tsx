@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { ArrowLeft, Clock, ArrowRight } from 'lucide-react';
 import { usePost } from '../hooks/usePost';
 import { AUTHOR_BIO } from '../data/editorialPolicy';
@@ -9,6 +9,8 @@ import { TAG_PILL } from '../components/blog/tagPill';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { BlogMidCta } from '../components/site/BlogMidCta';
+import { midCtaAfterIndex, midCtaEligible } from '../components/site/blogMidCta';
 import { track } from '../utils/track';
 
 interface Props {
@@ -28,6 +30,8 @@ export function BlogPost({ slug }: Props) {
   // computed at build time by the same functions the crawler HTML uses.
   const state = usePost(slug);
   const post = state.status === 'ok' ? state.post : undefined;
+  const showMidCta = !!post && midCtaEligible(slug, post.tag, post.sections.length);
+  const midIndex = post ? midCtaAfterIndex(post.sections.length) : -1;
   const canonicalUrl = `https://stopbiting.today/blog/${slug}`;
   const related = post?.related ?? [];
   const productLink = post?.productLink ?? undefined;
@@ -172,7 +176,8 @@ export function BlogPost({ slug }: Props) {
           {/* Article body */}
           <article className="mt-10">
             {post.sections.map((section, i) => (
-              <section key={i} className="mb-10">
+              <Fragment key={i}>
+              <section className="mb-10">
                 <h2 className="mb-4 text-[1.5rem] font-extrabold leading-tight tracking-[-0.02em]">
                   {section.heading}
                 </h2>
@@ -201,6 +206,8 @@ export function BlogPost({ slug }: Props) {
                   />
                 )}
               </section>
+              {showMidCta && i === midIndex && <BlogMidCta slug={slug} />}
+              </Fragment>
             ))}
           </article>
 
