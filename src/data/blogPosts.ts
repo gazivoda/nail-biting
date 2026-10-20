@@ -561,7 +561,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1595,6 +1595,11 @@ Understanding nail biting as emotional regulation explains why the intervention 
       body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -1785,6 +1790,11 @@ BLOG_POSTS.push({
       heading: 'Starting is simpler than the social burden makes it seem',
       body: `The social shame associated with nail biting can paradoxically make starting treatment harder. Shame tends to narrow attention and reduce perceived self-efficacy — "I've had this for 20 years, it's just who I am." The clinical literature on BFRB treatment consistently finds that reducing shame (treating the habit as a neurological pattern, not a character flaw) is a prerequisite for effective engagement with treatment.\n\nThe practical starting point is awareness — catching the habit at the moment it occurs, rather than noticing it after the fact. Most of it runs outside awareness: 92.2% of the biters in the 339-student survey described their own behaviour as automatic. Closing this awareness gap is the first step and the most therapeutically active component of the process. Stop Biting provides this automatically during screen time: using your webcam to detect hand-to-mouth behavior and alert you in real time. Three days free, no setup, no credit card required. The awareness data alone — seeing exactly how often and in what contexts the habit fires — changes the relationship with it.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://acta-apa.mf.uni-lj.si/journals/acta-dermatovenerol-apa/papers/10.15570/actaapa.2021.4/actaapa.2021.4.pdf" target="_blank" rel="noopener noreferrer">Erdogan HK, Arslantas D, Atay E, Eyuboglu D, Unsal A, Dagtekin G, Kilinc A. Prevalence of onychophagia and its relation to stress and quality of life. Acta Dermatovenerol Alp Pannonica Adriat. 2021;30(1):15–19.</a></li><li><a href="https://doi.org/10.1016/j.comppsych.2018.06.014" target="_blank" rel="noopener noreferrer">Solley K, Turner C. Prevalence and correlates of clinically significant body-focused repetitive behaviors in a non-clinical sample. Compr Psychiatry. 2018;86:9–18.</a></li><li><a href="https://doi.org/10.1016/j.psychres.2018.10.002" target="_blank" rel="noopener noreferrer">Houghton DC, Alexander JR, Bauer CC, Woods DW. Body-focused repetitive behaviors: More prevalent than once thought? Psychiatry Research. 2018;270:389–393.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008;2(1):13.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2800,6 +2810,11 @@ BLOG_POSTS.push({
       heading: `A realistic first-30-days framework`,
       body: `Week one: observe and log every episode without trying to change anything yet — this builds the awareness the rest of the plan depends on. Week two: introduce a single, specific competing response for episodes you catch. Week three: use your first two weeks of data to identify your top two or three trigger contexts, and set up a small preemptive step for each (an alarm during work hours, a fidget object during evening TV). Week four: continue, and expect — without discouragement — that a bad week will happen; the plan is to notice it and continue, not to treat it as a resolution broken.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5495,6 +5510,11 @@ BLOG_POSTS.push(
         body: `Communities are supplements, not substitutes. If the behaviour is causing repeated infections or significant tissue damage, if it is taking up substantial daily time, or if it is materially affecting your work or social life, that warrants professional assessment rather than another forum thread.\n\nSimilarly, if you have been in communities for a long time without the behaviour changing, that is worth noticing rather than continuing. Engagement with a topic is not the same as intervention on it, and it is genuinely possible to spend years reading about nail biting while doing nothing that changes the habit loop.\n\nThe thing that changes the loop is unglamorous and consistent: catching the moment it happens, and doing something else with your hands.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9158250/" target="_blank" rel="noopener noreferrer">Moritz S, Penney D, Ahmed K, Schmotz S. A Head-to-Head Comparison of Three Self-Help Techniques to Reduce Body-Focused Repetitive Behaviors. Behav Modif. 2022;46(4):894–912.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6219,6 +6239,11 @@ BLOG_POSTS.push(
         heading: 'What a serious attempt looks like',
         body: `Invert the five mistakes and the shape of a working attempt falls out: an external source of awareness for the episodes you cannot see; polish or barriers in a supporting role rather than the lead; a weekly frequency target instead of a purity streak; an episode count you did not have to remember to keep; and a rehearsed competing response so the urge has somewhere to go.\n\nThat is habit reversal training plus honest measurement, which is the combination the clinical literature has backed for four decades — in the original trial, participants' self-recorded episode counts fell by roughly 99% over five months, and a later meta-analysis across 18 studies found a large pooled post-treatment effect. None of it requires heroic willpower. All of it requires giving the attempt the structure the habit's own design demands.`,
         html: `<p><strong>Sources:</strong></p><ul><li>Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Behav Res Ther. 1980;18(4):281–285</a>. PubMed holds no abstract for this record and the full text is paywalled, so the 99% and 60% figures quoted on this page are taken from Table 1 of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Int J Environ Res Public Health. 2022;19(6):3392</a>, which is open access.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li></ul>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -7153,6 +7178,56 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers</a></li><li><a href="/blog/nail-biting-parents-modeling">Parents modeling nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-shame-self-compassion',
+  title: `Shame and Nail Biting: Does Self-Criticism Make It Worse?`,
+  seoTitle: 'Shame and Nail Biting: What Studies Show',
+  description: `Shame raised the urge to bite in a small BFRB experiment. What studies say about shame and nail biting, and why no study tests self-compassion for it.`,
+  tag: 'Psychology',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-shame-self-compassion.png',
+  sections: [
+    {
+      heading: `Does shame make the urge to bite stronger?`,
+      body: `In one small experiment it did. Researchers compared 18 women with body-focused repetitive behaviors (BFRBs, such as hair pulling, skin picking and nail biting), 18 with binge eating and 18 community controls. A shame-inducing condition raised the urge to engage in BFRBs, but not the urge to binge eat, and the BFRB group reported more shame after engaging in their behavior. The authors say larger studies with other shame-inducing conditions are needed (Houazene et al., 2021). It is a lab study with 54 women in all, so treat it as a signal, not a rule.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/33454578/" target="_blank" rel="noopener noreferrer">Houazene S, Leclerc JB, O&#39;Connor K, Aardema F. "Shame on you": The impact of shame in body-focused repetitive behaviors and binge eating. Behav Res Ther. 2021;138:103804. doi:10.1016/j.brat.2021.103804</a></li></ul>`,
+    },
+    {
+      heading: `Could shame keep the habit going?`,
+      body: `A 2023 perspective article in BMJ Mental Health proposes that it might. It says BFRBs, which include nail biting, are stigmatised and cause intense shame and isolation for those who have them, and hypothesizes that shame is both a consequence and a maintainer of the disorder. It describes this as a hypothesis, and says stigma is the main barrier to testing it (Mackay, 2023).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37734751/" target="_blank" rel="noopener noreferrer">Mackay CE. Trichotillomania: a perspective synthesised from neuroscience and lived experience. BMJ Ment Health. 2023;26(1). doi:10.1136/bmjment-2023-300795</a></li></ul>`,
+    },
+    {
+      heading: `Is shame linked to how severe the habit is?`,
+      body: `In teenagers with hair pulling or skin picking, yes, in two cross-sectional studies. In 107 adolescents with trichotillomania or skin-picking disorder, social anxiety was linked to more shame, shame to more difficulty regulating emotions, and that to more severe BFRBs, though the authors say this does not establish cause or order (Ermis et al., 2026). In 128 adolescents who pull their hair, shame partly explained the link between severity and depression and fully explained the link with anxiety (Mayerson et al., 2025). Neither study was about nail biting.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/42856086/" target="_blank" rel="noopener noreferrer">Ermis DK, Aydin EP, Kasar N, Guney O. Social Anxiety Symptoms and Body-Focused Repetitive Behaviour Severity in Adolescents: A Serial Mediation Analysis of Shame and Emotion Regulation Difficulties. Clin Psychol Psychother. 2026;33(5):e70350. doi:10.1002/cpp.70350</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/42291681/" target="_blank" rel="noopener noreferrer">Mayerson TF, Mackay C, Waite P. The mediating role of shame in the relationship between adolescent hairpulling and co-occurring anxiety and depressive symptomology. JCPP Adv. 2025;6(2):e70041. doi:10.1002/jcv2.70041</a></li></ul>`,
+    },
+    {
+      heading: `What do people with BFRBs say about shame?`,
+      body: `Shame comes up often. In an analysis of 166 reader comments on a New York Times article about skin picking, treatment was the most common topic, followed by shame and the impact on appearance, and 23.6% of commenters reported nail biting (Stewart and Lipner, 2020). In interviews with 20 adults with hair pulling, people described dismissive practitioners, and said that good experiences came with empathy, validation and tailored advice (Jenkins and Roomaney, 2026). Comments and interviews show what people report, not how common it is.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/32078025/" target="_blank" rel="noopener noreferrer">Stewart C, Lipner SR. Insights into recurrent body-focused repetitive behaviors: evidenced by New York Times commenters. Arch Dermatol Res. 2020;312(9):629-634. doi:10.1007/s00403-020-02045-6</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/42742352/" target="_blank" rel="noopener noreferrer">Jenkins D, Roomaney R. "They Looked at Me Like I Was Crazy": Practitioner Experiences Among People Engaging in Hair-Pulling. Issues Ment Health Nurs. 2026;47(10):1131-1139. doi:10.1080/01612840.2026.2714289</a></li></ul>`,
+    },
+    {
+      heading: `Can self-help tools cause shame or pressure?`,
+      body: `They can, according to a trial of an unguided internet self-help program for BFRBs. Among 141 participants, 70% reported at least one positive effect, and negative effects were reported by 14 to 92% depending on the effect. Time or performance pressure was reported by 20.9% and shame by 16.3%. People who used habit reversal reported no more negative effects than those who did not (Baumeister et al., 2023). That applies to any tracker or app, ours included, and it is a reason to read your own reaction to streaks and alerts.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38216227/" target="_blank" rel="noopener noreferrer">Baumeister A, Schmotz S, Weidinger S, Moritz S. Is Self-Help Dangerous? Examination of Adverse Effects of a Psychological Internet-Based Self-Help Intervention for Body-Focused Repetitive Behavior (Free From BFRB). Behav Ther. 2023;55(1):136-149. doi:10.1016/j.beth.2023.05.013</a></li></ul>`,
+    },
+    {
+      heading: `Does self-compassion help with nail biting?`,
+      body: `We do not know. On 20 October 2026 PubMed returned no results for "self-compassion" with nail biting. Searching self-compassion with trichotillomania found one paper, a qualitative study of practitioner experiences, and with skin picking found one paper on eating disorders. We found no trial that tested self-compassion training for any BFRB, so we cannot say it reduces biting. What the evidence above does suggest, cautiously, is that shame may raise the urge, which is consistent with a non-punishing approach, though no study has shown that being kind to yourself leads to less biting.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "self-compassion" with nail biting, 0 results; with trichotillomania, 1 result; with skin picking, 1 result (an eating disorder study).</li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li><li><a href="/blog/nail-biting-social-confidence">Nail biting and social confidence</a></li><li><a href="/blog/nail-biting-mistakes">Mistakes people make when trying to stop</a></li><li><a href="/blog/nail-biting-emotional-regulation">Nail biting and emotional regulation</a></li><li><a href="/blog/nail-biting-support-groups">Support groups for nail biting</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
