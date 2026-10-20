@@ -26,7 +26,7 @@ Key facts:
 
 ## Key pages
 
-- [Stop Nail Biting with AI](https://stopbiting.today/): Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. Video never leaves your device. 3-day free trial.
+- [Stop Nail Biting with AI](https://stopbiting.today/): Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.
 - [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.
 - [Pricing: $2.99/month or $29/year](https://stopbiting.today/pricing): Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.
 - [Nail Biting Cost Calculator: What It Costs You a Year](https://stopbiting.today/tools/nail-biting-cost-calculator): Free calculator: add up what nail biting costs you each year in manicures and repairs, using your own numbers, and compare it with the $29 yearly plan.
@@ -54,7 +54,7 @@ Key facts:
 - [Stop Nail Biting Working From Home: Laptops, Calls and Home Offices](https://stopbiting.today/solutions/for-remote-workers): Working from home removes the audience that used to stop you biting: how webcam detection fits a remote workday
 - [Stop Nail Biting on a Mac: Webcam Detection in Your Browser](https://stopbiting.today/solutions/for-mac): Your Mac already has the sensor this needs: how on-device webcam detection works in a browser tab, and where it stops
 - [Stop Nail Biting on Windows: Webcam Detection in Your Browser](https://stopbiting.today/solutions/for-windows): A Windows laptop or desktop with a webcam is all this needs: how on-device detection works in a browser tab, and where it stops
-- [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.
+- [Privacy Policy](https://stopbiting.today/privacy): Stop Biting processes your webcam feed on-device. No camera data is sent while it runs. Read our full privacy policy.
 - [Full content](https://stopbiting.today/llms-full.txt): Complete article text of every guide and comparison page, generated from the same source the site renders
 
 ## Blog articles
@@ -101,6 +101,9 @@ Key facts:
 - [Stimulus Control for Nail Biting: Changing What Sets It Off](https://stopbiting.today/blog/nail-biting-stimulus-control): Stimulus control is first-line for hair pulling and skin picking.
 - [Does Chewing Gum Stop Nail Biting? What the Evidence Shows](https://stopbiting.today/blog/nail-biting-chewing-gum): No study has tested chewing gum for nail biting.
 - [Does Keeping Your Nails Short or Filed Stop Nail Biting?](https://stopbiting.today/blog/nail-biting-short-nails-trimming): No trial has tested trimming or filing alone for nail biting.
+- [Can Vinegar, Hot Sauce or Garlic on Nails Stop Nail Biting?](https://stopbiting.today/blog/nail-biting-home-remedies): No study has tested vinegar, garlic or hot sauce on nail biting.
+- [Is It Better to Quit Nail Biting Cold Turkey or Gradually?](https://stopbiting.today/blog/nail-biting-cold-turkey-or-gradual): No study has compared quitting nail biting abruptly or gradually.
+- [Can CBD or Cannabis Help With Nail Biting? What Studies Show](https://stopbiting.today/blog/cbd-cannabis-nail-biting): No study has tested CBD or cannabis for nail biting.
 
 ### Psychology
 
@@ -143,6 +146,8 @@ Key facts:
 - [The Urge Before the Bite: What Is a Premonitory Urge?](https://stopbiting.today/blog/nail-biting-premonitory-urge): No study has measured the premonitory urge in nail biting.
 - [Urge Surfing for Nail Biting: What the Evidence Shows](https://stopbiting.today/blog/nail-biting-urge-surfing): No study has tested urge surfing for nail biting.
 - [Shame and Nail Biting: Does Self-Criticism Make It Worse?](https://stopbiting.today/blog/nail-biting-shame-self-compassion): Shame raised the urge to bite in a small BFRB experiment.
+- [If I Stop Biting My Nails, Will I Start Picking My Skin Instead?](https://stopbiting.today/blog/nail-biting-substitute-habits): No study we found tests whether quitting nail biting leads to skin picking.
+- [Does Nail Biting Get Worse Before Your Period? What We Know](https://stopbiting.today/blog/nail-biting-before-period): No study has tested nail biting across the menstrual cycle.
 
 ### Health
 
@@ -179,6 +184,11 @@ Key facts:
 - [Dark Line on a Bitten Nail: Habit Mark or Something to Check?](https://stopbiting.today/blog/nail-biting-dark-line-on-nail): Nail biting can rarely cause a dark band on a nail, but so can melanoma.
 - [Ridges and Grooves in Bitten Nails: Habit-Tic, Beau's Lines or Something Else?](https://stopbiting.today/blog/nail-biting-nail-ridges-grooves): Ridges and grooves are common in bitten nails, but not every groove comes from biting.
 - [Does Nail Biting Spread Colds, Flu or Norovirus?](https://stopbiting.today/blog/nail-biting-colds-flu-norovirus): No study links nail biting to colds, flu or norovirus.
+- [Why Is My Nail Lifting From the Nail Bed? Biting or Else?](https://stopbiting.today/blog/nail-biting-onycholysis): Onycholysis has many causes: trauma, psoriasis, fungal infection, medicines.
+- [Can Nail Biting Give You a Cold Sore on Your Finger?](https://stopbiting.today/blog/nail-biting-herpetic-whitlow): Herpetic whitlow is a herpes infection of the fingertip.
+- [Are UV and LED Nail Lamps Safe if You Wear Gel to Stop Biting?](https://stopbiting.today/blog/uv-nail-lamps-safety): Case reports, lamp measurements and cell studies on UV and LED nail lamps, plus acrylate allergy in gel products.
+- [Does biotin help bitten nails, and affect blood tests?](https://stopbiting.today/blog/biotin-bitten-nails): No study has tested biotin in nail biters.
+- [Is It Harmful to Swallow Nail Polish When You Bite?](https://stopbiting.today/blog/swallowing-nail-polish-biting): No study covers flakes of polish, gel or acrylic swallowed by adult nail biters.
 
 ### Clinical
 
