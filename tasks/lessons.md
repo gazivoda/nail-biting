@@ -168,3 +168,15 @@ Commit the page first, then sync, then commit the generated files.
 **Read the diff output before the commit runs.** I chained `cmp` checks and a `git commit` in one command; the HTML showed DIFFERENT (only because the rebuilt bundle changed the hashed asset filename) after the commit had already recorded 'byte-identical'. When comparing built HTML, normalise `/assets/<hash>` first, and do the comparison in a command that does not also commit.
 
 **New post fields must go through the generator.** BlogPost.tsx now renders from dist/posts/<slug>.json, which is built from the same `posts` object as seo-content.json in scripts/generate-seo-content.mjs. A field added to blogPosts.ts but not copied there will exist for the crawler build step but never reach the client. Edit the generator, then check the page in a browser.
+
+**Judge TypeScript by `npm run build:web`, not `tsc --noEmit -p .`.** The root tsconfig only has project references, so the quick check passes while `tsc -b` fails. Round 8 committed a broken build once (a `BlogMidCta.tsx` and a `blogMidCta.ts` that clash on a case-insensitive filesystem); the rule is: run build:web before every commit, and never name two files in one folder the same apart from case.
+
+**Restart the local server after every build before a browser check.** server.js caches dist/index.html at startup, so a server started before the rebuild serves old asset hashes and the React app renders nothing.
+
+**Add the post first, then run the link helper, then verify per post in dist/posts/<slug>.json.** A scripted insertion that searched for the next `\n  ],\n});` ran past the end of posts in the older 4-space layout and put links into neighbouring posts. The helper (scratchpad addlinks.py) now stays inside the post's own region and refuses duplicates; still check the built JSON of every target.
+
+**A 'no study found' claim needs a clean query.** OR-joined PubMed queries return millions of meaningless hits and over-specific ones return zero. Run single-topic queries, say how many results and how many were read, and write the date.
+
+**Do not tick a plan item you did not do.** In round 8 the audit item folded into slot 28 was replaced in my head by the older Web Share idea; I built that and only noticed when logging. Re-read the item text from the plan file before starting each iteration.
+
+**Check scripts' date edits with `git diff` before committing.** A replace of '2026-04-03' hit `datePublished` instead of `dateModified`; the diff showed it.
