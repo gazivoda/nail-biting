@@ -31,11 +31,11 @@ export function SessionGoal() {
   if (!cameraEnabled && elapsedMs === 0) return null;
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-7 shadow-card dark:shadow-card-dark">
+    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-7 shadow-card dark:shadow-card-dark">
       <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-4">Session</p>
 
       <div className="flex items-baseline gap-1.5 mb-1">
-        <span className="font-mono text-[32px] font-medium leading-none tabular-nums text-stone-800 dark:text-stone-100 tracking-tight">
+        <span className="font-display text-[44px] font-extrabold leading-none tabular-nums text-stone-900 dark:text-stone-100 tracking-[-0.04em]">
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </span>
         <span className="text-sm text-stone-500 dark:text-stone-400">/ 25m goal</span>
@@ -47,7 +47,7 @@ export function SessionGoal() {
           className="h-full rounded-full transition-all duration-1000"
           style={{
             width: `${progress * 100}%`,
-            background: done ? 'oklch(46% 0.130 148)' : 'oklch(58% 0.130 148)',
+            background: done ? 'oklch(25% 0.05 162)' : 'oklch(46% 0.13 148)',
           }}
         />
       </div>

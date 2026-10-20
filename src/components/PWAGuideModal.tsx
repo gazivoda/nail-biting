@@ -165,7 +165,7 @@ export function PWAGuideModal() {
               <button
                 onClick={handleInstall}
                 disabled={!canInstall}
-                className="w-full flex items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 disabled:opacity-40 disabled:cursor-not-allowed text-cream-100 font-semibold rounded-xl px-5 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.35)] mb-5"
+                className="w-full flex items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-deep font-semibold rounded-full px-5 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.35)] mb-5"
               >
                 <Download size={15} />
                 Install Stop Biting

@@ -248,7 +248,7 @@ export function HeroDemo({ autoStart = false }: Props) {
         // untrue after a denial and undercuts the privacy claim beside it. The
         // plate keeps the same box, so nothing moves.
         <div
-          className="animate-fade-in flex aspect-video w-full flex-col items-center justify-center gap-5 rounded-2xl bg-[color:var(--sg-ink)] px-6 text-center"
+          className="animate-fade-in flex aspect-video w-full flex-col items-center justify-center gap-5 rounded-2xl bg-[color:var(--sg-deep-2)] px-6 text-center"
           role={failure ? 'alert' : undefined}
           aria-live={failure ? undefined : 'polite'}
         >

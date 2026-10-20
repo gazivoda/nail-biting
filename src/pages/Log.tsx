@@ -12,7 +12,7 @@ import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
 // bites right beside the chart.
-const BAR_FILL = { light: 'oklch(46% 0.13 148)', dark: 'oklch(62% 0.13 148)' };
+const BAR_FILL = { light: 'oklch(25% 0.05 162)', dark: 'oklch(90% 0.2 124)' };
 
 // Two words, used the same way everywhere:
 // Alarm = auto-detected and not yet reviewed (amber)
@@ -96,12 +96,12 @@ function WeekChart() {
     : `${total} ${total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week, most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`;
 
   const tickColor = isDark ? '#6b7280' : '#78716c';
-  const tooltipBg = isDark ? 'oklch(18% 0.010 200)' : '#fafaf9';
-  const tooltipBorder = isDark ? 'oklch(9% 0.005 200)' : '#e7e5e4';
+  const tooltipBg = isDark ? 'oklch(18% 0.02 165)' : '#fafaf9';
+  const tooltipBorder = isDark ? 'oklch(30% 0.02 165)' : '#e7e5e4';
   const tooltipLabel = isDark ? '#d1d5db' : '#57534e';
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
+    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-6 shadow-card dark:shadow-card-dark">
       <div className="flex items-center justify-between mb-1">
         <h2 className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</h2>
         <SegmentedControl<StatsMetric>
@@ -127,7 +127,7 @@ function WeekChart() {
             itemStyle={{ color: BAR_FILL[isDark ? 'dark' : 'light'] }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
           />
-          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[4, 4, 0, 0]} fill={BAR_FILL[isDark ? 'dark' : 'light']} />
+          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[8, 8, 0, 0]} fill={BAR_FILL[isDark ? 'dark' : 'light']} />
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -245,7 +245,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           <button
             type="button"
             onClick={onGoToWatch}
-            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl bg-forest-600 px-5 text-sm font-semibold text-cream-100 transition-colors hover:bg-forest-500"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-forest-600 px-5 text-sm font-semibold text-white dark:text-deep transition-colors hover:bg-forest-500"
           >
             Go to Watch
             <ArrowRight size={15} aria-hidden="true" />
@@ -273,7 +273,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3 px-1">{date}</h3>
                   {/* One card per day, rows divided: a separate shadowed tile
                       for every entry fit six on a screen and read as a pile. */}
-                  <div className="overflow-hidden rounded-[18px] border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
+                  <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
@@ -329,7 +329,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           {incidents.length > 0 && <WeekChart />}
 
           {incidents.length > 0 && (
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 shadow-card dark:shadow-card-dark">
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-6 shadow-card dark:shadow-card-dark">
               <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">

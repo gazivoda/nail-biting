@@ -1,382 +1,94 @@
 ---
 name: Stop Biting
-description: A webcam alarm for nail biting, explained the way a safety sign explains a hazard.
+description: "Signal": one bold design language shared by the marketing site and the tracking app.
 colors:
-  sign-white: "oklch(98.5% 0.004 85)"
-  plate-white: "oklch(100% 0 0)"
-  pictogram-ink: "oklch(19% 0.014 255)"
-  ink-secondary: "oklch(40% 0.014 255)"
-  plate-rule: "oklch(89% 0.006 255)"
-  warning-yellow: "oklch(86% 0.175 92)"
-  action-green: "oklch(46% 0.13 148)"
-  action-green-pressed: "oklch(39% 0.12 148)"
-  action-green-tint: "oklch(95% 0.03 148)"
-  safe-green: "oklch(46% 0.13 148)"
-  safe-green-tint: "oklch(96% 0.03 148)"
+  paper: "oklch(97.6% 0.008 105)"
+  surface: "oklch(100% 0 0)"
+  ink: "oklch(19% 0.03 160)"
+  ink-secondary: "oklch(42% 0.025 160)"
+  line: "oklch(90% 0.01 130)"
+  deep: "oklch(25% 0.05 162)"
+  deep-raised: "oklch(31% 0.06 160)"
+  brand: "oklch(46% 0.13 148)"
+  signal: "oklch(90% 0.2 124)"
+  alert: "oklch(60% 0.2 28)"
 typography:
-  display:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem)"
-    fontWeight: 850
-    lineHeight: 0.96
-    letterSpacing: "-0.035em"
-  headline:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem)"
-    fontWeight: 800
-    lineHeight: 1.04
-    letterSpacing: "-0.025em"
-  title:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "1.25rem"
-    fontWeight: 750
-    lineHeight: 1.25
-    letterSpacing: "-0.01em"
-  figure:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem)"
-    fontWeight: 850
-    lineHeight: 1
-    letterSpacing: "-0.03em"
-    fontFeature: "'tnum' 1"
-  lede:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "clamp(1.15rem, 1rem + 0.55vw, 1.4rem)"
-    fontWeight: 400
-    lineHeight: 1.45
-  body:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 400
-    lineHeight: 1.6
-  small:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 400
-    lineHeight: 1.5
-  label:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 650
-    lineHeight: 1.45
-  measurement:
-    fontFamily: "'Overpass Mono', ui-monospace, monospace"
-    fontSize: "0.8125rem"
-    fontWeight: 700
-    letterSpacing: "0.02em"
-    fontFeature: "'tnum' 1"
-  app-title:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "2rem"
-    fontWeight: 800
-    lineHeight: 1.1
-    letterSpacing: "-0.025em"
-  app-streak:
-    fontFamily: "'Overpass Mono', ui-monospace, monospace"
-    fontSize: "56px"
-    fontWeight: 500
-    lineHeight: 1
-  app-streak-compact:
-    fontFamily: "'Overpass Mono', ui-monospace, monospace"
-    fontSize: "44px"
-    fontWeight: 500
-    lineHeight: 1
-  app-streak-colon:
-    fontFamily: "'Overpass Mono', ui-monospace, monospace"
-    fontSize: "40px"
-    fontWeight: 300
-    lineHeight: 1
-  app-timer:
-    fontFamily: "'Overpass Mono', ui-monospace, monospace"
-    fontSize: "32px"
-    fontWeight: 500
-    lineHeight: 1
-  app-count:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "28px"
-    fontWeight: 600
-    lineHeight: 1
-  article-section:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "1.5rem"
-    fontWeight: 800
-    lineHeight: 1.2
-    letterSpacing: "-0.02em"
-  app-meta:
-    fontFamily: "Overpass, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 400
-    lineHeight: 1.4
-rounded:
-  tag: "0.25rem"
-  button: "0.375rem"
-  focus: "0.5rem"
-  safe-plate: "0.5rem"
-  safe-sign: "0.6rem"
-  field: "0.75rem"
-  plate: "1.5rem"
-  disc: "999px"
-spacing:
-  gutter: "clamp(1.25rem, 4vw, 2.5rem)"
-  container: "76rem"
-  measure: "62ch"
-  plate-padding: "2rem"
-  heading-gap: "3rem"
-  column-gap: "2.5rem"
-  section: "5rem"
-  section-lg: "7rem"
-components:
-  button-primary:
-    backgroundColor: "{colors.action-green}"
-    textColor: "{colors.plate-white}"
-    typography: "{typography.label}"
-    rounded: "{rounded.button}"
-    padding: "0 1.6rem"
-    height: "3.25rem"
-  button-primary-hover:
-    backgroundColor: "{colors.action-green-pressed}"
-    textColor: "{colors.plate-white}"
-  button-primary-sm:
-    backgroundColor: "{colors.action-green}"
-    textColor: "{colors.plate-white}"
-    rounded: "{rounded.button}"
-    padding: "0 1.1rem"
-    height: "2.75rem"
-  button-ink:
-    backgroundColor: "{colors.plate-white}"
-    textColor: "{colors.pictogram-ink}"
-    rounded: "{rounded.button}"
-    padding: "0 1.6rem"
-    height: "3.25rem"
-  button-ink-hover:
-    backgroundColor: "{colors.pictogram-ink}"
-    textColor: "{colors.plate-white}"
-  button-light:
-    backgroundColor: "{colors.plate-white}"
-    textColor: "{colors.action-green}"
-    rounded: "{rounded.button}"
-    padding: "0 1.6rem"
-    height: "3.25rem"
-  button-light-hover:
-    backgroundColor: "{colors.action-green-tint}"
-    textColor: "{colors.action-green}"
-  sign-mandatory:
-    backgroundColor: "{colors.action-green}"
-    textColor: "{colors.plate-white}"
-    rounded: "{rounded.disc}"
-    size: "3.25rem"
-  sign-safe:
-    backgroundColor: "{colors.safe-green}"
-    textColor: "{colors.plate-white}"
-    rounded: "{rounded.safe-sign}"
-    size: "3.25rem"
-  plate:
-    backgroundColor: "{colors.plate-white}"
-    textColor: "{colors.pictogram-ink}"
-    rounded: "{rounded.plate}"
-    padding: "{spacing.plate-padding}"
-  plate-safe:
-    backgroundColor: "{colors.safe-green-tint}"
-    textColor: "{colors.pictogram-ink}"
-    rounded: "{rounded.safe-plate}"
-    padding: "2.5rem"
-  plate-safe-header:
-    backgroundColor: "{colors.safe-green}"
-    textColor: "{colors.plate-white}"
-    padding: "2.5rem"
-  plan-tag:
-    backgroundColor: "{colors.action-green}"
-    textColor: "{colors.plate-white}"
-    rounded: "{rounded.tag}"
-    padding: "0.25rem 0.625rem"
-  input-field:
-    backgroundColor: "{colors.plate-white}"
-    textColor: "{colors.pictogram-ink}"
-    typography: "{typography.body}"
-    rounded: "{rounded.field}"
-    padding: "0.75rem 1rem"
-  cta-band:
-    backgroundColor: "{colors.action-green}"
-    textColor: "{colors.plate-white}"
-    padding: "{spacing.section} 0"
-  nav-bar:
-    backgroundColor: "{colors.sign-white}"
-    textColor: "{colors.ink-secondary}"
-    height: "4rem"
+  display: { fontFamily: "Bricolage Grotesque", fontWeight: 800, letterSpacing: "-0.045em", lineHeight: 0.92 }
+  heading: { fontFamily: "Bricolage Grotesque", fontWeight: 750, letterSpacing: "-0.04em", lineHeight: 1 }
+  body: { fontFamily: "Geist", fontWeight: 400, lineHeight: 1.65 }
+  measure: { fontFamily: "Geist Mono", fontWeight: 600 }
+rounded: { card: "1.75rem", hero: "3rem", pill: "999px" }
 ---
 
-# Design System: Stop Biting
+# Design System: Signal
 
-## Overview
+## Idea
 
-**Creative North Star: "The Safety Sign"**
+The product is an alarm, so the design is a signal: a deep forest ground, one
+lime highlight, enormous confident numerals, and nothing decorative. It borrows
+from the health and habit products that earn daily use (Whoop and Oura for big
+numerals on dark ground, Headspace for saturated colour blocks and fully
+rounded pills, Opal and Streaks for a single streak as the hero of the screen),
+and keeps the layout calm and flat like Linear or Things.
 
-The homepage borrows the plainness of safety signage: a colour means one thing, and the page says what the product is in one sentence. Green "mandatory" plates are the things the visitor does. Forest-green "safe condition" plates are privacy. Everything else is black ink on sign-white enamel. The hero shows the real app (a captured screen, labelled as example data), never an illustration of the visitor's habit: a drawn hand-to-mouth pictogram was tried and removed on 2026-09-25 because it read as mocking the person it is for.
+One system serves every surface. Tokens live in `src/index.css` (`:root`),
+`tailwind.config.js` maps the app's `cream` / `stone` / `ink` / `forest` / `lime`
+/ `deep` scales onto them, and the marketing primitives (`.sg-*`) and the
+journal primitives (`.ed-*`) read the same fonts, colours and radii.
 
-The material is enamel plate: flat, printed, with keylines set in from the edge the way a road sign carries its border. Nothing glows, nothing floats, nothing is glassy except the fixed navigation bar. Density is low and legible from a distance: heavy, tight Overpass headings (Overpass descends from Highway Gothic, the US road-sign face), open body copy, generous section bands that alternate between sign-white and plate-white. One thing moves on the page: the pictogram hand rising to the mouth, crossing the dashed threshold ring, and the warning plate flashing. The surface is light only; it is read at a desk in daylight.
+## Colour
 
-This system is scoped to the sign surface (the homepage and the shared pricing block, which carries the tokens on /pricing too). The rest of the site lives in two other worlds that this file does not restate: the editorial "journal" world (`.ed-*` primitives in `src/index.css`, Instrument Serif / Inter / JetBrains Mono) still serves /blog, /pricing chrome, /how-it-works and the policy pages; the signed-in app (dashboard and friends) is its own incumbent system built on Tailwind `cream` / `ink` / `forest` tokens with Inter, in light and dark. Neither should borrow sign-system colors, and the sign surface should not borrow theirs.
+- **Deep forest** (`deep`, `#0B2A1E`): the loud surface. Landing hero, privacy
+  and closing-CTA cards, the app's streak card, the trial card and the active
+  nav item. Always paired with white text and lime accents.
+- **Signal lime** (`signal` / `lime-300`, `#C6F24E`): the single highlight.
+  Primary buttons on deep surfaces, the key word of a headline, units on the
+  streak, the logo nail. Never used as text on paper.
+- **Brand green** (`brand` / `forest-500`): links, focus rings, toggles and
+  chart accents on paper.
+- **Paper and surface**: a faintly warm off-white page with white cards, separated
+  by ground change and a hairline, never by shadow.
+- **Alert** (`alert-*`): bites and alarms only. Amber marks alarms awaiting review.
+- Dark mode (app only): forest-black ground, lime replaces deep as the active fill.
 
-**Key Characteristics:**
-- Three sign kinds with fixed meanings: yellow warning (the alarm), green mandatory (actions), green safe condition (privacy). Actions and privacy share one green since the 2026-09-25 accent change (formerly a action green); the plate shape, not the hue, tells them apart.
-- Enamel-plate buttons: green plate, white keyline inset 3px to 5px, 0.375rem corners.
-- Overpass throughout, heavy (750 to 850) and tightly tracked for headings; Overpass Mono only for measurements.
-- Flat: no drop shadows; depth is inset keylines and 1px rules.
-- No decorative motion and no scroll-reveal; the page is still until the visitor starts the demo.
-- Light only, on a warm sign-white ground.
+## Type
 
-## Colors
+- **Bricolage Grotesque** (display): every h1 to h3, big numerals, buttons, the
+  wordmark. Heavy (750 to 800), tracking -0.03 to -0.045em.
+- **Geist** (text): body, UI, forms. **Geist Mono**: only for measured values.
+- Fonts are self-hosted variable files in `public/fonts`.
 
-A near-monochrome ink-on-enamel palette with three saturated sign colors, each bound to a single meaning.
+## Shape and depth
 
-### Primary
-- **Action Green** (oklch(46% 0.13 148), the site forest green, about #16663A): every action the visitor takes. The filled trial button, the numbered step discs and the section discs, the recommended plan's 2px inset outline and its tag, text links, focus rings, and the one full-bleed call-to-action band.
-- **Action Green, Pressed** (oklch(39% 0.12 148)): hover and pressed state of filled green buttons and of links.
-- **Action Green Tint** (oklch(95% 0.03 148)): hover fill of the light (white) button on the green band. Nothing else.
-
-### Secondary
-- **Safe Green** (oklch(46% 0.13 148), about #076B29): the safe-condition sign. The privacy plate's header band and 2px inset border, the square safe sign, and the small check / shield icons that mark trust statements (trust list, plan features, pricing terms, form success message).
-- **Safe Green Tint** (oklch(96% 0.03 148)): the body ground of the privacy plate. Its inner divider is safe green at 20% alpha.
-
-### Tertiary
-- **Warning Yellow** (oklch(86% 0.175 92), about #FACC08): reserved; today it is only the text selection highlight on the sign surface.
-
-### Neutral
-- **Sign-White** (oklch(98.5% 0.004 85), #FBFAF7): the page ground and the navigation bar (at 90% alpha).
-- **Plate-White** (oklch(100% 0 0)): plates, alternate section bands (how it works, pricing, footer), inputs, and the face of ink and light buttons.
-- **Pictogram Ink** (oklch(19% 0.014 255), about #10141A): headings, primary text, the triangle border and pictogram, the ink button outline, the finished-demo plate.
-- **Secondary Ink** (oklch(40% 0.014 255), about #43484F): lede, body, small copy, notes, nav links at rest.
-- **Plate Rule** (oklch(89% 0.006 255), about #D8DBDF): every 1px divider, section top border, plate border, and field border.
-
-### Named Rules
-**The One Warning Rule.** Warning yellow belongs to the alarm. Today it only highlights selected text; it appears nowhere else: no yellow buttons, badges, backgrounds or highlights of "important" copy.
-
-**The Green Means Do Rule.** Filled action green marks something the visitor does. If an element is not an action or a step toward one, it is not a filled green button. The full green field is used once per page, for the closing call to action.
-
-**The Green Means Safe Rule.** Green only ever says "this is safe / this is private / this is included". It is never a success-flavored action color.
-
-## Typography
-
-**Display Font:** Overpass (variable, weights 400 to 900, self-hosted), with -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
-**Body Font:** Overpass, same stack
-**Label/Mono Font:** Overpass Mono (500 and 700, self-hosted), with ui-monospace, monospace
-
-**Character:** A road-sign face used at two temperatures: heavy and tight like sign lettering for anything you should read from across the room, regular and open for anything you read up close.
-
-### Hierarchy
-- **Display** (850, clamp(2.75rem, 1.4rem + 4.6vw, 5.25rem), 0.96, -0.035em, balanced): the one h1.
-- **Headline** (800, clamp(1.9rem, 1.25rem + 2.2vw, 3.1rem), 1.04, -0.025em, balanced): section headings, also on the green band and inside the green plate header.
-- **Title** (750, 1.25rem, 1.25, -0.01em): step titles, plan names, the demo heading.
-- **Figure** (850, clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem), 1, -0.03em, tabular): prices.
-- **Lede** (400, clamp(1.15rem, 1rem + 0.55vw, 1.4rem), 1.45, secondary ink): the sentence under the h1 and under the pricing heading.
-- **Body** (400, 1.0625rem, 1.6, secondary ink): running copy, capped at 62ch.
-- **Small** (400, 0.9375rem, 1.5, secondary ink): footnotes, plan features, trust terms, footer copy.
-- **Label** (650, 0.9375rem, 1.45, secondary ink): the offer line beside every trial button, demo instructions, citations. Nav and footer links, trust items and form labels sit at the same 0.9375rem size in 600 to 700.
-- **Measurement** (Overpass Mono 700, 0.8125rem, +0.02em, tabular): timestamps and durations only.
-
-### App ramp (signed-in app, Overpass on `.app-type`)
-- **App title** (800, 2rem, 1.1, -0.025em): the one page title per tab (greeting, History, Settings).
-- **Streak** (Overpass Mono 500, 56px, 44px under sm; colon 40px/32px at 300): the current-streak clock, the largest thing in the app.
-- **Timer** (Overpass Mono 500, 32px, tabular): the session clock.
-- **Count** (Overpass 600, 28px, tabular): today's alarms and bites.
-- **Card title** (600, 0.875rem): card and section titles, sentence case, no tracking.
-- **App meta** (400, 0.75rem): the floor. Captions, subtitles, sidebar footer lines; nothing in the app is set smaller than 12px.
-- **Article section** (800, 1.5rem, -0.02em): h2 inside blog posts.
-
-### Named Rules
-**The Measurement Mono Rule.** Overpass Mono is for numbers that measure something (a countdown, a timestamp, a duration). Labels, offers and citations are set in Overpass at 650, the sign's own face.
-
-**The Comma Offer Rule.** Offer and meta lines separate their parts with commas ("3 days free, no card, then $2.99/month"). Overpass sets the middle dot hard against the following word, so dotted lines read as broken.
-
-## Layout
-
-A 12-column grid at `lg` (1024px) inside a centered container of 76rem with a fluid side gutter (clamp(1.25rem, 4vw, 2.5rem)). Common splits: hero 6/6 (headline and trial button left, the real Watch screen and the demo right), science 7/5 (argument left, evidence right), FAQ and contact 4/8 (heading left, content right). Pricing is a centered 4xl pair of plates.
-
-Sections are full-width bands separated by a 1px plate-rule top border, alternating sign-white and plate-white grounds, padded 5rem vertically and 7rem from `lg` (the hero clears the fixed 4rem nav with 7rem / 9rem top padding). Headings sit 3rem above their content; grid gaps are 2.5rem to 3rem; body copy is capped at 62ch.
-
-Responsive behavior: below `lg` everything stacks to one column. On a phone the order is headline, lede, trial button and offer line, then the app screen and demo, so the trial button reaches the first screen first. Nav links collapse below `md`, leaving the logo and a small trial button.
-
-Every interactive element keeps a 44px minimum hit area (`min-h-11`), including inline text links.
-
-## Elevation & Depth
-
-The system is flat. There are no drop shadows anywhere on the sign surface. Depth and grouping come from three devices only: a 1px plate-rule border or divider, a change of ground between sign-white and plate-white, and inset keylines (box-shadow `inset`) that draw a sign's border inside its edge. The only translucency is the fixed nav bar: sign-white at 90% over a medium backdrop blur, so content scrolling under it stays legible.
-
-### Shadow Vocabulary
-- **Enamel keyline** (`box-shadow: inset 0 0 0 3px <plate color>, inset 0 0 0 5px oklch(100% 0 0 / 0.9)`): filled green buttons and mandatory discs. A 2px white line set 3px in from the edge.
-- **Reverse keyline** (`box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px <action green>`): the light button on the green band.
-- **Outline plate** (`box-shadow: inset 0 0 0 2px <color>`): ink buttons (pictogram ink), the recommended plan plate (action green), the privacy plate (safe green), the safe sign inside the green header (white).
-
-### Named Rules
-**The Flat Enamel Rule.** Signs are printed, not lit. Never add an outer shadow, glow or gradient to a plate or button; draw borders inside the edge with an inset keyline.
-
-## Shapes
-
-Corners encode what kind of object something is. Buttons are nearly square enamel plates (0.375rem). Content plates, like the pricing cards, are large softly rounded boards (1.5rem). The safe-condition family is squarer: the privacy plate (0.5rem) and the green square sign (0.6rem). Mandatory signs are perfect circles (999px). The plan tag is almost sharp (0.25rem). Form fields sit between (0.75rem) because they must read as affordances, not signs. Focus outlines round at 0.5rem.
-
-Product screenshots sit on the ground with a 1px rule border and 0.5rem corners: no device frame, no browser chrome, no shadow.
+- Surfaces use large radii: cards 1.75rem (`rounded-2xl`), hero and CTA cards up
+  to 3rem, controls and buttons are pills.
+- Flat: no outer shadows or glows. Depth is ground colour plus a 1px hairline.
+- Tailwind's `rounded-lg/xl/2xl/3xl` are redefined in `tailwind.config.js`, so the
+  whole app follows from one change.
 
 ## Components
 
-### Buttons
-Enamel sign plates: flat, keylined, decisive.
-- **Shape:** nearly square corners (0.375rem), 3.25rem tall, 1.6rem side padding, Overpass 750 at 1.0625rem, icon gap 0.6rem.
-- **Primary (green):** action green with the enamel keyline and white text. Reserved for starting the trial. Every trial button carries an arrow that nudges 2px right on hover, and has the offer line (label style) directly beside or below it.
-- **Hover / Focus / Active:** hover darkens to pressed green (keyline follows); active drops 1px; transitions are 150ms ease-out on background, shadow and transform, removed under reduced motion. Focus is a 3px action-green outline offset 3px (white on the green band).
-- **Ink:** plate-white face, 2px inset ink outline, ink text; hover inverts to an ink fill with white text. Used for every non-trial action (live demo, monthly plan, contact submit) so the green fill stays the trial's.
-- **Light:** plate-white face with the reverse keyline and green text, only on the green band; hover fills with green tint.
-- **Small:** 2.75rem tall, 1.1rem padding, 0.9375rem text (nav).
+- **Primary button**: deep-forest pill with white text on paper; lime pill with
+  deep text on dark surfaces (`.sg-btn`, scoped by `.sg-dark`). One per view.
+- **Secondary button**: outlined pill (`.sg-btn-ink`).
+- **Hero card** (`.sg-hero.sg-dark`): deep forest, 3rem radius, lime highlight word.
+- **Streak card**: the largest thing in the app. Bricolage 92px numerals on deep,
+  lime unit labels.
+- **Nav**: deep (lime in dark mode) pill for the active item.
+- **Logo**: a solid lime nail with a single inner arch on a deep-forest tile
+  (`public/logo.svg`; `logo-dark.svg` inverts it for dark grounds). The same
+  geometry produces the favicon, app icon and PNG icons.
 
-### Chips
-- **Plan tag:** a small action-green label (0.25rem corners, 0.8125rem bold white text) pinned over the top edge of the recommended plan. One per pricing block.
+## Do
 
-### Cards / Containers
-- **Plate:** plate-white, 1px plate-rule border, 1.5rem corners, 1.75rem to 2rem padding. The recommended plan adds the 2px green inset outline.
-- **Safe-condition plate (privacy):** a green-tint board with a 2px safe-green inset border and 0.5rem corners, headed by a solid safe-green band carrying the white-keylined square sign and the section headline in white. Padding 1.5rem, 2.5rem from `sm`.
-- **Evidence rule:** statistics sit under a 2px pictogram-ink top rule rather than in a card.
+- Use `.sg-dark` for any deep surface so text, rules and buttons re-point
+  automatically.
+- Keep one lime moment per surface.
+- Keep screenshots on the landing page real: recapture them from the running app
+  (`public/shots`) whenever the app UI changes.
 
-### Inputs / Fields
-- **Style:** plate-white field, 1px plate-rule border, 0.75rem corners, 0.75rem by 1rem padding, body-size ink text; placeholder in a mid grey (oklch(54% 0.012 255)). Labels are Overpass 700 at 0.9375rem above the field.
-- **Focus:** border turns action green with a 2px green ring at 30% alpha; the browser outline is suppressed only because this ring replaces it.
-- **Disabled:** the submit drops to 50% opacity with a not-allowed cursor.
+## Don't
 
-### Navigation
-- **Style:** fixed, 4rem tall, sign-white at 90% with backdrop blur, 1px plate-rule bottom border. Logo and wordmark (Overpass 800) left, section links in label weight and secondary ink center-right, small green trial button right. Links darken to ink on hover. Below `md` only the logo and trial button remain.
-
-### Mandatory and Safe Signs
-- **Mandatory disc:** a 3.25rem action-green circle with the enamel keyline and a white icon. Used once, beside "How to start", to say "this is something you do". Never as decoration beside other headings.
-- **Safe square:** a 3.25rem safe-green square (0.6rem corners) with a white icon; inside the green header it takes a 2px white inset keyline.
-
-### Product screenshot (signature)
-The real app, captured from a running build with example data and labelled as such: the Watch screen in the hero (it becomes the live demo in place when the visitor asks) and the History screen on a phone beside its explanation. Provenance is embedded in each WebP under public/shots.
-
-## Do's and Don'ts
-
-### Do:
-- **Do** bind each sign color to its one meaning: yellow for the alarm, green for actions, green for privacy and inclusion.
-- **Do** put the offer line ("3 days free, no card, then $2.99/month") beside every trial button, in the label style.
-- **Do** draw button and sign borders as inset keylines (white 2px line, 3px in) on flat fills.
-- **Do** mark a section with a mandatory disc or safe square beside its heading when the section is an instruction or a privacy statement.
-- **Do** say short sequences as a sentence ("sign in, allow the camera, keep working") rather than a numbered grid.
-- **Do** keep every section visible at first paint and every hit area at least 44px.
-- **Do** keep Overpass Mono for measured numbers only; tabular figures for prices and timers.
-
-### Don't:
-- **Don't** use warning yellow for anything but the alarm sign and text selection.
-- **Don't** fill a second button green beside the trial button; secondary actions are ink-outlined.
-- **Don't** add drop shadows, glows, gradients or glassy surfaces (the fixed nav's blur is the only translucency).
-- **Don't** print ISO sign codes (W01, M01, E01) or section numbers in the UI; they were removed from the UI for clarity.
-- **Don't** put eyebrows or kickers above headings; the sign beside the heading does that job.
-- **Don't** build the wellness-app hero: no gradient field, no phone mockup, no grid of icon feature cards.
-- **Don't** add scroll-reveal or ambient motion.
-- **Don't** illustrate the habit itself (a drawn hand at a mouth, a cartoon biter): show the real app instead. The owner found the animated pictogram insulting.
-- **Don't** give the sign surface a dark theme or borrow the app's cream / forest tokens or the journal's `.ed-*` type.
-
-## Authenticity rules (2026-09-25 loop)
-
-- Show the real product: captured app screens with labelled example data, provenance embedded (public/shots).
-- A person is on the page: the "Why this exists" note from Igor, facts from /about only.
-- Say the limits plainly ("Before you start"), each line checked against the code.
-- No icon-plus-label triplets, no stat callouts in big bold numbers, no stock phrases ("We'd love to hear from you"), no icon badges beside headings.
-- Never illustrate the habit itself.
-
+- Don't put lime text on paper, or add gradients, glows or drop shadows.
+- Don't introduce a new font family or radius outside the tokens.
+- Don't illustrate the habit itself (a hand at a mouth); show the real app.

@@ -117,7 +117,7 @@ export function PaywallPage({ onBack }: Props) {
           <p className="text-stone-500 dark:text-stone-400 mb-6">Your subscription can take a few seconds to activate.</p>
           <button
             onClick={() => refreshProfile()}
-            className="inline-flex min-h-11 items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-2.5 text-sm transition-colors duration-150"
+            className="inline-flex min-h-11 items-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-semibold rounded-full px-6 py-2.5 text-sm transition-colors duration-150"
           >
             Open the app
           </button>
@@ -236,7 +236,7 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_YEARLY)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-11 items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-semibold rounded-full px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Subscribe yearly
               </button>

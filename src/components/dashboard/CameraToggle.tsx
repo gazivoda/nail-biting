@@ -11,44 +11,25 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
     return (
       <button
         onClick={() => setCameraEnabled(true)}
-        className="btn-shimmer group w-full rounded-2xl p-6 flex items-center gap-5 transition-all duration-200 active:scale-[0.99] text-left"
-        style={{
-          background: 'oklch(46% 0.130 148)',
-          boxShadow: '0 8px 32px oklch(46% 0.130 148 / 0.28), 0 2px 8px oklch(46% 0.130 148 / 0.15), inset 0 1px 0 oklch(100% 0 0 / 0.12)',
-        }}
+        className="group w-full rounded-3xl bg-deep p-5 sm:p-6 flex items-center gap-5 transition-all duration-200 hover:bg-deep-2 active:scale-[0.99] text-left"
       >
-        {/* Icon with breathing glow */}
-        <div className="relative shrink-0">
-          <div
-            className="absolute inset-0 rounded-full animate-pulse-slow"
-            style={{ background: 'oklch(100% 0 0 / 0.12)', transform: 'scale(1.6)' }}
-          />
-          <div
-            className="relative w-14 h-14 rounded-full flex items-center justify-center"
-            style={{ background: 'oklch(100% 0 0 / 0.15)', border: '1px solid oklch(100% 0 0 / 0.20)' }}
-          >
-            <Camera size={26} className="text-white" />
-          </div>
+        <div className="relative w-14 h-14 shrink-0 rounded-full bg-lime-300 text-deep flex items-center justify-center">
+          <Camera size={26} />
         </div>
 
-        {/* Label */}
         <div className="flex-1 min-w-0">
-          <p className="text-[17px] font-semibold tracking-tight text-white leading-tight">
+          <p className="font-display text-xl font-bold tracking-[-0.02em] text-white leading-tight">
             Start detection
           </p>
-          <div className="flex items-center gap-1.5 mt-1.5" style={{ color: 'oklch(100% 0 0 / 0.65)' }}>
-            <ShieldCheck size={12} />
+          <div className="flex items-center gap-1.5 mt-1.5 text-white/70">
+            <ShieldCheck size={13} />
             <span className="text-xs">Video stays on this device</span>
           </div>
         </div>
 
-        {/* Arrow */}
-        <div
-          className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
-          style={{ background: 'oklch(100% 0 0 / 0.15)' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="text-white">
-            <path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 text-lime-300 flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5">
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+            <path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </button>

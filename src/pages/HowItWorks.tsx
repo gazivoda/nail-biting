@@ -109,11 +109,11 @@ export function HowItWorks() {
             height={792}
             loading="lazy"
             decoding="async"
-            alt="Stop Biting Watch screen after a catch, with a streak counter and a prompt asking what set it off."
+            alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running."
             className="w-full h-auto rounded-lg border border-[color:var(--sg-rule)]"
           />
           <figcaption className="sg-note mt-2">
-            The app right after a catch, shown with example data.
+            The Watch screen, shown with example data.
           </figcaption>
         </figure>
 

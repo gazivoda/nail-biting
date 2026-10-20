@@ -274,7 +274,7 @@ export function OnboardingTour() {
               ref={nextRef}
               type="button"
               onClick={next}
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 text-sm font-semibold rounded-xl transition-colors duration-150"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep text-sm font-semibold rounded-full transition-colors duration-150"
             >
               {step >= STEPS.length - 1 ? 'Done' : <>Next <ArrowRight size={14} aria-hidden="true" /></>}
             </button>

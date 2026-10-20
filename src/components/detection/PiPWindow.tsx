@@ -48,7 +48,7 @@ export function PiPWindow({ pipWindow, status }: Props) {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
           cameraEnabled
             ? 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-            : 'bg-forest-600 text-cream-100 hover:bg-forest-500'
+            : 'bg-forest-600 text-white dark:text-deep hover:bg-forest-500'
         }`}
       >
         <Power size={12} />

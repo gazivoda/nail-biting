@@ -6,8 +6,8 @@ export function SiteFooter() {
         <div className="flex flex-col justify-between gap-10 sm:flex-row">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
-              <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />
-              <span className="text-lg font-extrabold tracking-tight">Stop Biting</span>
+              <img src="/logo.svg" alt="" className="h-8 w-8 flex-shrink-0" />
+              <span className="font-display text-xl font-extrabold tracking-[-0.03em]">Stop Biting</span>
             </div>
             <p className="sg-small mt-4">
               An awareness alarm for nail biting (onychophagia), made by{' '}
