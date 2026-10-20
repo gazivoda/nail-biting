@@ -1429,4 +1429,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-dark-line-on-nail",
+    title: "Dark Line on a Bitten Nail: Habit Mark or Something to Check?",
+    description: "Nail biting can rarely cause a dark band on a nail, but so can melanoma. What case reports and two dermatology reviews say, and when to see a doctor.",
+    tag: "Health",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
