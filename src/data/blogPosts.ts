@@ -349,7 +349,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1479,6 +1479,11 @@ BLOG_POSTS.push({
       html: `<p>Prevalence figures say how common the habit is, not what it costs one person. The <a href="/tools/nail-biting-cost-calculator">nail biting cost calculator</a> turns your own repair spending into a yearly total.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+    },
   ],
 });
 
@@ -2440,6 +2445,11 @@ BLOG_POSTS.push({
       html: `<p>For that, see <a href="/blog/how-to-stop-nail-biting">the complete guide to stopping nail biting</a>, which covers Habit Reversal Training and how the other options compare.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+    },
   ],
 });
 
@@ -2522,6 +2532,11 @@ BLOG_POSTS.push({
       body: `Severity isn't fixed — it shifts with stress levels, sleep, life circumstances, and how consistently you're applying an intervention. Retaking this same self-assessment after four to six weeks of consistent effort is a useful way to check whether your approach is working, independent of how it feels day-to-day (which is often noisier than the underlying trend).\n\nA meaningful drop in your total score, even without complete cessation, indicates real progress. If your score hasn't moved after six to eight weeks of consistent effort, it's a signal to add the piece most commonly missing — usually an external awareness tool — rather than to conclude the habit is unfixable.`,
     },
     MEDICAL_DISCLAIMER_SECTION,
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+    },
   ],
 });
 
@@ -2728,7 +2743,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3490,7 +3505,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6645,6 +6660,55 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-paronychia">Paronychia: the infection nail biters get most often</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-healthcare-workers">Nail biting in healthcare workers</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-mental-disorder',
+  title: `Is Nail Biting a Mental Disorder? What the Classification Says`,
+  seoTitle: 'Is Nail Biting a Mental Disorder? DSM-5 and ICD-11',
+  description: `Most nail biting is a habit, not a diagnosis. How DSM-5 and ICD-11 treat it, what experts say, and when it counts as a disorder, from four sources.`,
+  tag: 'Psychology',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-mental-disorder.png',
+  sections: [
+    {
+      heading: `Is nail biting a mental disorder?`,
+      body: `Not by default. Nail biting is very common, and most people who do it never meet a diagnosis. When it is frequent, hard to stop and causes distress or damage, clinicians can treat it as a body-focused repetitive behavior (BFRB) disorder, which sits in the obsessive-compulsive and related disorders group. A 2022 review of onychophagia says the DSM-5 does not list nail biting as a separate diagnosis. It falls under the subcategory called "Other Specified Obsessive-Compulsive and Related Disorders", and the criteria are met when the habit causes clinically significant distress or impairment in social or occupational functioning (Lee and Lipner, 2022). So the honest answer is: it can be, when it causes real distress or harm, and for many people it is simply a habit.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6). doi:10.3390/ijerph19063392</a></li></ul>`,
+    },
+    {
+      heading: `What does DSM-5 actually say?`,
+      body: `DSM-5, published in 2013, was the first edition to combine conditions such as trichotillomania (hair pulling) and skin picking into one category of body-focused repetitive behavior disorders (Moritz et al., 2024). Those two are the named diagnoses. Nail biting is not a named diagnosis of its own, which is why it is coded under the "other specified" subcategory when it is severe enough to need clinical attention (Lee and Lipner, 2022). A 2023 review adds that BFRBs hold a controversial place in psychiatric classification systems, and that studies are hampered by small samples and high rates of other psychiatric conditions among participants (Okumus and Akdemir, 2023).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/39426247/" target="_blank" rel="noopener noreferrer">Moritz S, Hoyer LN, Sarna N, et al. Quo vadis DSM-6? An expert survey on the classification, diagnosis, and differential diagnosis of body-focused repetitive behaviors. Compr Psychiatry. 2024;136:152534. doi:10.1016/j.comppsych.2024.152534</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/36970962/" target="_blank" rel="noopener noreferrer">Okumus HG, Akdemir D. Body Focused Repetitive Behavior Disorders: Behavioral Models and Neurobiological Mechanisms. Turk Psikiyatri Derg. 2023;34(1):50-59. doi:10.5080/u26213</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. 2022 (above).</a></li></ul>`,
+    },
+    {
+      heading: `Do experts agree that nail biting is a BFRB?`,
+      body: `Mostly. In a 2024 survey of 50 experts on body-focused repetitive behaviors, most agreed with the current classification of BFRBs as obsessive-compulsive and related disorders. More than 60% agreed that trichotillomania, skin picking, dermatophagia, nail biting and lip and cheek biting count as BFRBs. Opinion was mixed on awake bruxism and adult thumb sucking, and only a minority counted night-time teeth grinding or knuckle cracking. The authors also say the DSM criteria need refining, including a clearer list of which conditions qualify (Moritz et al., 2024).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/39426247/" target="_blank" rel="noopener noreferrer">Moritz S, et al. 2024 (above).</a></li></ul>`,
+    },
+    {
+      heading: `What does ICD-11 say?`,
+      body: `ICD-11, the World Health Organization's classification, also has an obsessive-compulsive and related disorders grouping. A 2016 paper by the working group behind it lists trichotillomania and excoriation (skin picking) disorder as the body-focused repetitive behavior disorders in that grouping (Stein et al., 2016), and an earlier paper recommended that these conditions belong there, with descriptions that largely mirror DSM-5 (Grant and Stein, 2014). Neither abstract names nail biting. We did not check the ICD-11 text itself, so we do not say how or whether it codes nail biting.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/26590514/" target="_blank" rel="noopener noreferrer">Stein DJ, Kogan CS, Atmaca M, et al. The classification of Obsessive-Compulsive and Related Disorders in the ICD-11. J Affect Disord. 2016;190:663-674. doi:10.1016/j.jad.2015.10.061</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/25388613/" target="_blank" rel="noopener noreferrer">Grant JE, Stein DJ. Body-focused repetitive behavior disorders in ICD-11. Braz J Psychiatry. 2014;36 Suppl 1:59-64. doi:10.1590/1516-4446-2013-1228</a></li></ul>`,
+    },
+    {
+      heading: `Is nail biting the same as OCD or anxiety?`,
+      body: `No, and the data on the overlap are inconsistent. The 2022 review reports that one study found only 25% of nail biters had a comorbid OCD or anxiety disorder, and another found OCD in 3.1% of nail biters, close to the rate in the general population. Several studies do link onychophagia with other coexisting psychiatric conditions (Lee and Lipner, 2022). The review also says the condition is often underrecognized or misdiagnosed because of limited awareness, embarrassment and comorbid conditions.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. 2022 (above).</a></li></ul>`,
+    },
+    {
+      heading: `When is it worth getting help?`,
+      body: `A label matters less than the effect. If biting causes pain, infections, shame that keeps you from social situations, or you keep failing to stop, a doctor or a therapist who knows habit reversal training can assess it. The 2022 review notes there is a lack of large clinical trials for nail biting treatment, so no single therapy is standardized for it (Lee and Lipner, 2022). If it is mild and you simply want to stop, a self-help approach is a reasonable start, and the app is one tool among several on this site, not a treatment.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/onychophagia">Onychophagia: the medical term for nail biting</a></li><li><a href="/blog/bfrb-guide">What are body-focused repetitive behaviors?</a></li><li><a href="/blog/nail-biting-ocd-connection">Nail biting and OCD</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Nail biting vs tics and Tourette</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">Finding a therapist</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
