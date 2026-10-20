@@ -1420,4 +1420,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-cancer",
+    title: "Can Nail Biting Cause Cancer? What the Studies Show",
+    description: "No study shows nail biting causes cancer. What a case report, a 261-patient nail cancer study and a melanonychia study found, and which signs need a doctor.",
+    tag: "Health",
+    readingMinutes: 4,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
