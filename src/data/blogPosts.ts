@@ -2589,16 +2589,21 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-quiz',
   title: `How Severe Is Your Nail Biting? A Self-Assessment`,
-  description: "A short, evidence-informed nail biting self-assessment covering frequency, damage, and triggers. See how severe your habit is and which approach fits.",
+  description: "A short nail biting self-assessment covering frequency, damage and triggers, with our own rough score bands. Not validated and not a diagnosis.",
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-11',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-quiz.png',
   sections: [
     {
       heading: `Why does severity matter before you pick a method?`,
-      body: `Not every nail biting habit needs the same intervention. Someone who bites occasionally during exam week needs a lighter touch than someone with near-constant, damaging biting that's been running for fifteen years. Matching the intervention to the actual severity of the habit — rather than reaching for the most intensive option by default, or the mildest one out of hope it'll be enough — produces better results with less wasted effort.\n\nThe questions below aren't a diagnostic tool; they're a structured way to notice patterns most nail biters have never explicitly mapped out. Go through them honestly, and use the scoring guide afterward to get a rough sense of where your habit sits.`,
+      body: `Not every nail biting habit needs the same intervention. Someone who bites occasionally during exam week needs a lighter touch than someone with near-constant, damaging biting that's been running for fifteen years. Matching the intervention to the actual severity of the habit — rather than reaching for the most intensive option by default, or the mildest one out of hope it'll be enough — is our own reasoning, not an approach that has been tested for nail biting.\n\nThe questions below aren't a diagnostic tool; they're a structured way to notice patterns most nail biters have never explicitly mapped out. Go through them honestly, and use the scoring guide afterward to get a rough sense of where your habit sits.`,
+    },
+    {
+      heading: `How was this self-assessment made?`,
+      body: `This is our own six-question checklist. It has not been validated, and the score bands below (0 to 5, 6 to 11 and 12 to 18) are our own rough groupings, not clinical cut-offs. A validated eight-item self-report instrument exists for body-focused repetitive behaviors, the Generic Body-Focused Repetitive Behavior Scale-8 (GBS-8), which researchers have tested for reliability and validity in people with these behaviors (Okumus et al., 2025). We do not reproduce it here. If your biting causes pain, infection, distress or avoidance of social situations, see a doctor or a therapist rather than relying on a score from this page.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41613022/" target="_blank" rel="noopener noreferrer">Okumus HG, Oksuzoglu ME, Kasak M, et al. Body-Focused Repetitive Behaviors in Adolescents and Young Adults: Co-Occurrence Patterns, Psychiatric Comorbidities and Turkish Validity and Reliability Study of the Generic Body-Focused Repetitive Behavior Scale-8. Noro Psikiyatr Ars. 2025;63:119-128. doi:10.29399/npa.29099</a></li></ul>`,
     },
     {
       heading: `Rate yourself on each of these`,
