@@ -59,12 +59,15 @@ type Tab = 'dashboard' | 'log' | 'settings';
 // a spinner, a flash, and then another spinner.
 function AppLoading() {
   return (
-    <div className="app-type flex items-center justify-center min-h-dvh bg-cream-200 dark:bg-ink-100">
-      <div className="flex items-center gap-3 text-stone-600">
-        <img src="/logo.svg" alt="" className="w-6 h-6 animate-pulse dark:hidden" />
-        <img src="/logo-dark.svg" alt="" className="hidden w-6 h-6 animate-pulse dark:block" />
-        <span className="text-sm">Loading…</span>
-      </div>
+    <div
+      role="status"
+      aria-live="polite"
+      className="app-type flex min-h-dvh flex-col items-center justify-center gap-5 bg-cream-200 dark:bg-ink-100"
+    >
+      <img src="/logo.svg" alt="" className="h-16 w-16 motion-safe:animate-pulse dark:hidden" />
+      <img src="/logo-dark.svg" alt="" className="hidden h-16 w-16 motion-safe:animate-pulse dark:block" />
+      <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Stop Biting</span>
+      <span className="sr-only">Loading…</span>
     </div>
   );
 }

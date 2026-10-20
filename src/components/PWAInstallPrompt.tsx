@@ -32,20 +32,20 @@ export function PWAInstallPrompt() {
         show ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}
     >
-      <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-xl shadow-card-md dark:shadow-card-md-dark p-4 flex items-start gap-3">
+      <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-4 flex items-start gap-3">
         <img
           src="/icons/icon-192x192.png"
           alt="Stop Biting"
-          className="w-10 h-10 rounded-lg flex-shrink-0"
+          className="w-11 h-11 rounded-xl flex-shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Install Stop Biting</p>
-          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+          <p className="font-display text-base font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Install Stop Biting</p>
+          <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">
             Add to home screen for quick access, no app store needed.
           </p>
           <button
             onClick={handleInstall}
-            className="-mb-2 mt-0.5 inline-flex min-h-11 items-center gap-1.5 text-xs font-medium text-forest-600 dark:text-forest-400 hover:text-forest-500 dark:hover:text-forest-300 transition-colors"
+            className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full bg-deep px-5 font-display text-sm font-bold text-white transition-colors hover:bg-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
           >
             <Download className="w-3.5 h-3.5" />
             Install app

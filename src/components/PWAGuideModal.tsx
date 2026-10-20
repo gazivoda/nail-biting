@@ -99,10 +99,10 @@ export function PWAGuideModal() {
             <img
               src="/icons/icon-192x192.png"
               alt="Stop Biting icon"
-              className="w-12 h-12 rounded-2xl shadow-card flex-shrink-0"
+              className="w-12 h-12 rounded-2xl flex-shrink-0"
             />
             <div>
-              <h2 className="text-base font-bold text-stone-800 dark:text-stone-100 tracking-tight leading-snug">
+              <h2 className="font-display text-xl font-extrabold text-stone-900 dark:text-stone-100 tracking-[-0.035em] leading-[1.05]">
                 Stop Biting works best<br />as an installed app
               </h2>
               <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
@@ -115,7 +115,7 @@ export function PWAGuideModal() {
           <div className="space-y-2.5 mb-6">
             {BENEFITS.map(({ icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-lg bg-forest-100 dark:bg-forest-900/40 flex items-center justify-center text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full bg-deep dark:bg-lime-300 flex items-center justify-center text-lime-300 dark:text-deep flex-shrink-0 mt-0.5">
                   {icon}
                 </div>
                 <div>
@@ -132,13 +132,13 @@ export function PWAGuideModal() {
           {/* Platform-specific instructions */}
           {platform === 'ios' ? (
             <>
-              <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-3">
+              <p className="font-display text-base font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100 mb-3">
                 How to install on iOS
               </p>
               <ol className="space-y-3 mb-5">
                 {IOS_STEPS.map((step, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-forest-600 dark:bg-forest-700 flex items-center justify-center text-cream-100 flex-shrink-0 text-xs font-bold">
+                    <div className="w-8 h-8 rounded-full bg-deep dark:bg-lime-300 flex items-center justify-center text-white dark:text-deep flex-shrink-0 text-xs font-bold">
                       {i + 1}
                     </div>
                     <div className="flex-1 flex items-center gap-2.5">
@@ -153,19 +153,19 @@ export function PWAGuideModal() {
                   </li>
                 ))}
               </ol>
-              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-4 py-2.5 text-xs text-amber-700 dark:text-amber-400 mb-5">
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-2xl px-4 py-3 text-xs text-amber-700 dark:text-amber-400 mb-5">
                 Make sure you're using <strong>Safari</strong>. Only Safari supports installation on iOS.
               </div>
             </>
           ) : (
             <>
-              <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-3">
+              <p className="font-display text-base font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100 mb-3">
                 Install in one click
               </p>
               <button
                 onClick={handleInstall}
                 disabled={!canInstall}
-                className="w-full flex items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-deep font-semibold rounded-full px-5 py-3 text-sm transition-colors duration-150 mb-5"
+                className="w-full flex items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-deep font-display font-bold rounded-full px-5 min-h-12 text-sm transition-colors duration-150 mb-5"
               >
                 <Download size={15} />
                 Install Stop Biting

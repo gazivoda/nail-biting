@@ -74,6 +74,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
         showFlash={showFlash}
         onRetry={handleRetry}
         cameraError={cameraError}
+        flush
       >
         {/* PiP button — keeps detection alive when tab is minimized */}
         {cameraEnabled && pipSupported && !cameraError && !modelFailed && (

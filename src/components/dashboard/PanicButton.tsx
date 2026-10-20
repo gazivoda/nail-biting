@@ -75,7 +75,7 @@ export function PanicButton() {
     return (
       <>
       {announcer}
-      <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 shadow-card dark:shadow-card-dark animate-fade-up">
+      <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 animate-fade-up">
         <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
         <div className="grid grid-cols-2 gap-2">
           {tags.map(tag => (
@@ -83,7 +83,7 @@ export function PanicButton() {
               key={tag.id}
               type="button"
               onClick={() => handleLog(tag.id, tag.label)}
-              className="flex items-center gap-2 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-3 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
+              className="flex items-center gap-2 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 active:scale-95 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-4 py-2.5 text-sm text-stone-700 dark:text-stone-300 transition-all duration-150"
             >
               <TagMark tag={tag} size={18} />
               <span>{tag.label}</span>
@@ -109,7 +109,7 @@ export function PanicButton() {
       type="button"
       data-tour="panic-button"
       onClick={() => setShowTags(true)}
-      className="w-full select-none rounded-full border-2 border-alert-400 bg-alert-100 py-5 font-display text-lg font-bold tracking-[-0.01em] text-alert-600 transition-all duration-150 hover:border-alert-600 hover:bg-alert-100/80 active:scale-95 dark:border-alert-800 dark:bg-alert-900/30 dark:text-alert-400 dark:hover:bg-alert-900/50"
+      className="w-full select-none rounded-full bg-alert-600 min-h-14 py-4 font-display text-lg font-bold tracking-[-0.01em] text-white transition-colors duration-150 hover:bg-alert-800 active:scale-[0.99] motion-reduce:active:scale-100 dark:bg-alert-400 dark:text-alert-900 dark:hover:bg-alert-100"
     >
       I just bit my nails
     </button>

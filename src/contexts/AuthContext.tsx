@@ -110,6 +110,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return () => window.removeEventListener('electron-auth', onElectronAuth);
     }
 
+    // Local design preview (dev server only; the import is removed from
+    // production builds): ?preview=trial|subscribed|paywall. It replaces the
+    // session lookup, which would 401 here and sign the fixture user out.
+    if (import.meta.env.DEV && /[?&]preview=/.test(window.location.search)) {
+      let live = true;
+      void import('../dev/preview').then(({ previewKind, previewUser, seedPreviewData }) => {
+        const kind = previewKind(window.location.search);
+        if (!live || !kind) return;
+        seedPreviewData();
+        applyUser(previewUser(kind));
+      });
+      return () => { live = false; window.removeEventListener('electron-auth', onElectronAuth); };
+    }
+
     // Attempt to load the current session (cookie on web, localStorage on Electron)
     apiFetch('/api/user/me')
       .then(applyUser)

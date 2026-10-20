@@ -1,4 +1,3 @@
-import { PageHeader } from '../components/layout/PageHeader';
 import { StreakHero } from '../components/dashboard/StreakHero';
 import { CameraPanel } from '../components/dashboard/CameraPanel';
 import { TodayStats } from '../components/dashboard/TodayStats';
@@ -21,7 +20,15 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
     <div className="p-5 sm:p-8 pb-10">
       {/* No "On-device" pill: the detection card says "Runs on this device"
           and the sidebar footer says it again; a third time was noise. */}
-      <PageHeader title={`${greeting}, ${firstName}.`} />
+      {/* One marked word, the person's name, like the homepage headline: a
+          lime swash on paper, plain lime on the dark ground (lime text is
+          for dark surfaces only). */}
+      <header className="mb-7">
+        <h1 className="font-display text-[2.25rem] sm:text-[3rem] font-extrabold leading-[1] tracking-[-0.045em] text-stone-900 dark:text-stone-100">
+          {greeting},{' '}
+          <span className="sg-mark whitespace-nowrap dark:![background:none]">{firstName}</span>.
+        </h1>
+      </header>
 
       {/* The sidebar's trial card only exists from lg up; below that (a
           half-width window beside your work, a tablet) this is the only place

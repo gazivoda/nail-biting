@@ -29,7 +29,7 @@ const STEPS: Step[] = [
     target: 'streak-card',
     title: 'Your streak',
     body: "How long you've gone without a bite. An alarm doesn't reset it; a bite you confirm or log does.",
-    side: 'left',
+    side: 'bottom',
   },
   {
     target: 'panic-button',
@@ -47,7 +47,7 @@ const STEPS: Step[] = [
 
 const TOUR_KEY = 'onboarding_v1_done';
 const SPOTLIGHT_PAD = 10;
-const TOOLTIP_W = 272;
+const TOOLTIP_W = 288;
 
 /** Find the first element with the given data-tour attr that is actually visible */
 function findTarget(name: string): Element | null {
@@ -175,7 +175,7 @@ export function OnboardingTour() {
     tooltipTop = rect.bottom + SPOTLIGHT_PAD + GAP;
   } else if (side === 'top') {
     tooltipLeft = Math.min(Math.max(rect.left + rect.width / 2 - TOOLTIP_W / 2, 12), vw - TOOLTIP_W - 12);
-    tooltipTop = Math.max(rect.top - SPOTLIGHT_PAD - GAP - 200, 12);
+    tooltipTop = Math.max(rect.top - SPOTLIGHT_PAD - GAP - 230, 12);
   } else if (side === 'right') {
     tooltipLeft = rect.right + SPOTLIGHT_PAD + GAP;
     tooltipTop = Math.min(Math.max(rect.top + rect.height / 2 - 90, 12), vh - 220);
@@ -199,7 +199,7 @@ export function OnboardingTour() {
         <defs>
           <mask id="tour-spotlight-mask">
             <rect x="0" y="0" width="100%" height="100%" fill="white" />
-            <rect x={sx} y={sy} width={sw} height={sh} rx="14" fill="black" />
+            <rect x={sx} y={sy} width={sw} height={sh} rx="20" fill="black" />
           </mask>
         </defs>
         <rect x="0" y="0" width="100%" height="100%" fill="rgba(0,0,0,0.65)" mask="url(#tour-spotlight-mask)" />
@@ -208,10 +208,10 @@ export function OnboardingTour() {
       {/* Spotlight ring */}
       <div
         aria-hidden="true"
-        className="absolute pointer-events-none rounded-[14px] transition-all duration-300"
+        className="absolute pointer-events-none rounded-[20px] transition-all duration-300"
         style={{
           left: sx, top: sy, width: sw, height: sh,
-          boxShadow: '0 0 0 2px rgba(255,255,255,0.3), 0 0 24px rgba(255,255,255,0.08)',
+          boxShadow: '0 0 0 2px rgba(255,255,255,0.35)',
         }}
       />
 
@@ -230,7 +230,7 @@ export function OnboardingTour() {
           {/* Progress bar */}
           <div className="h-0.5 bg-stone-100 dark:bg-ink-fill">
             <div
-              className="h-full bg-forest-500 transition-all duration-500 ease-out"
+              className="h-full bg-deep dark:bg-lime-300 transition-all duration-500 ease-out"
               style={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -245,10 +245,10 @@ export function OnboardingTour() {
                     key={i}
                     className={`block rounded-full transition-all duration-300 ${
                       i === step
-                        ? 'w-4 h-1.5 bg-forest-500'
+                        ? 'w-5 h-2 bg-deep dark:bg-lime-300'
                         : i < step
-                        ? 'w-1.5 h-1.5 bg-forest-300 dark:bg-forest-700'
-                        : 'w-1.5 h-1.5 bg-stone-200 dark:bg-ink-fill'
+                        ? 'w-2 h-2 bg-forest-500 dark:bg-forest-400'
+                        : 'w-2 h-2 bg-stone-300 dark:bg-ink-400'
                     }`}
                   />
                 ))}
@@ -257,16 +257,16 @@ export function OnboardingTour() {
                 ref={skipRef}
                 type="button"
                 onClick={finish}
-                className="-mr-2 min-h-8 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+                className="-mr-3 -my-2 min-h-11 px-3 text-xs text-stone-600 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
               >
                 Skip tour
               </button>
             </div>
 
-            <h2 id="tour-title" className="text-sm font-bold text-stone-800 dark:text-stone-100 tracking-tight mb-1.5">
+            <h2 id="tour-title" className="font-display text-xl font-extrabold leading-[1.05] text-stone-900 dark:text-stone-100 tracking-[-0.035em] mb-2">
               {title}
             </h2>
-            <p id="tour-body" className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+            <p id="tour-body" className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
               {body}
             </p>
 
@@ -274,7 +274,7 @@ export function OnboardingTour() {
               ref={nextRef}
               type="button"
               onClick={next}
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep text-sm font-semibold rounded-full transition-colors duration-150"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-display text-sm font-bold rounded-full transition-colors duration-150"
             >
               {step >= STEPS.length - 1 ? 'Done' : <>Next <ArrowRight size={14} aria-hidden="true" /></>}
             </button>

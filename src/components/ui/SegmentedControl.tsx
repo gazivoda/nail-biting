@@ -11,9 +11,11 @@ interface Props<T extends string> {
   onChange: (v: T) => void;
   /** Names the group for assistive tech, e.g. "Sensitivity". */
   ariaLabel: string;
+  /** Sits on a deep forest surface (white track, lime selection). */
+  onDeep?: boolean;
 }
 
-export function SegmentedControl<T extends string>({ options, value, onChange, ariaLabel }: Props<T>) {
+export function SegmentedControl<T extends string>({ options, value, onChange, ariaLabel, onDeep }: Props<T>) {
   return (
     // A radio group, not a row of loose buttons: assistive tech hears the
     // group's name and which option is selected. 44px tall on touch screens.
@@ -21,7 +23,9 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
       role="radiogroup"
       aria-label={ariaLabel}
       onKeyDown={e => radioGroupKeyDown(e, options.map(o => o.value), value, onChange)}
-      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 rounded-full">
+      className={`inline-flex items-center gap-0.5 p-[3px] rounded-full ${
+        onDeep ? 'bg-white/10' : 'bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400'
+      }`}>
       {options.map(opt => (
         <button
           key={opt.value}
@@ -30,10 +34,14 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
           aria-checked={value === opt.value}
           tabIndex={radioTabIndex(value === opt.value)}
           onClick={() => onChange(opt.value)}
-          className={`min-h-11 sm:min-h-8 px-3 py-1 text-[13px] rounded-full transition-all duration-[140ms] ${
+          className={`min-h-11 px-4 py-1 text-sm rounded-full transition-colors duration-[140ms] ${
             value === opt.value
-              ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 font-semibold border border-stone-200 dark:border-ink-400'
-              : 'text-stone-500 dark:text-stone-400 font-medium hover:text-stone-700 dark:hover:text-stone-200'
+              ? onDeep
+                ? 'bg-lime-300 text-deep font-semibold'
+                : 'bg-deep text-white dark:bg-deep-2 dark:text-lime-300 font-semibold'
+              : onDeep
+                ? 'text-white/75 hover:text-white font-medium'
+                : 'text-stone-600 dark:text-stone-300 font-medium hover:text-stone-900 dark:hover:text-stone-100'
           }`}
         >
           {opt.label}

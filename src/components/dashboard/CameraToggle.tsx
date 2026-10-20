@@ -8,31 +8,33 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
   if (!cameraEnabled) {
+    // Paper card, one deep pill: the streak above is the screen's deep moment.
     return (
-      <button
-        onClick={() => setCameraEnabled(true)}
-        className="group w-full rounded-3xl bg-deep p-5 sm:p-6 flex items-center gap-5 transition-all duration-200 hover:bg-deep-2 active:scale-[0.99] text-left"
-      >
-        <div className="relative w-14 h-14 shrink-0 rounded-full bg-lime-300 text-deep flex items-center justify-center">
-          <Camera size={26} />
-        </div>
-
-        <div className="flex-1 min-w-0">
-          <p className="font-display text-xl font-bold tracking-[-0.02em] text-white leading-tight">
+      <div className="p-6 sm:p-7">
+        <h2 className="font-display text-[1.75rem] sm:text-[2rem] font-extrabold leading-[1.05] tracking-[-0.04em] text-stone-900 dark:text-stone-100">
+          Start the alarm
+        </h2>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-stone-600 dark:text-stone-300">
+          Your browser will ask to use the camera. Keep this tab open while you work; the alarm
+          sounds when a hand reaches your mouth.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <button
+            type="button"
+            onClick={() => setCameraEnabled(true)}
+            className="group inline-flex min-h-14 items-center gap-3 rounded-full bg-deep pl-3 pr-6 font-display text-lg font-bold tracking-[-0.01em] text-white transition-colors duration-150 hover:bg-forest-500 active:scale-[0.99] motion-reduce:active:scale-100 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-lime-300 text-deep dark:bg-deep dark:text-lime-300">
+              <Camera size={20} aria-hidden="true" />
+            </span>
             Start detection
-          </p>
-          <div className="flex items-center gap-1.5 mt-1.5 text-white/70">
-            <ShieldCheck size={13} />
-            <span className="text-xs">No camera data is sent while it runs</span>
-          </div>
+          </button>
+          <span className="flex items-center gap-1.5 text-xs text-stone-600 dark:text-stone-300">
+            <ShieldCheck size={13} aria-hidden="true" />
+            No camera data is sent while it runs
+          </span>
         </div>
-
-        <div className="shrink-0 w-10 h-10 rounded-full bg-white/10 text-lime-300 flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5">
-          <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
-            <path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </button>
+      </div>
     );
   }
 
@@ -40,30 +42,26 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
   return (
     <div
       data-tour="camera-toggle"
-      className={`w-full overflow-hidden ${
-        cameraProblem
-          ? 'bg-alert-100/60 dark:bg-alert-900/20'
-          : 'bg-forest-50 dark:bg-forest-800/50'
-      }`}
+      className="w-full overflow-hidden bg-deep text-white"
     >
       {/* Status row */}
-      <div className="flex items-center justify-between px-5 py-4">
+      <div className="flex items-center justify-between gap-3 px-5 py-4">
         <div className="flex items-center gap-3.5">
           {/* Live dot while watching; a warning sign, not just a red dot,
               when nothing is (colour alone can't carry the state). */}
           {cameraProblem ? (
-            <AlertTriangle size={16} aria-hidden="true" className="shrink-0 text-alert-600 dark:text-alert-400" />
+            <AlertTriangle size={16} aria-hidden="true" className="shrink-0 text-amber-400" />
           ) : (
             <div className="relative flex h-2.5 w-2.5 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-500 opacity-70" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-forest-500" />
+              <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-lime-300 opacity-60" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime-300" />
             </div>
           )}
           <div>
-            <p className={`text-[13px] font-semibold ${cameraProblem ? 'text-alert-600 dark:text-alert-400' : 'text-forest-700 dark:text-forest-300'}`}>
+            <p className="font-display text-lg font-bold leading-tight tracking-[-0.02em] text-white">
               {problem ?? 'Detection active'}
             </p>
-            <p className={`text-xs mt-0.5 ${cameraProblem ? 'text-stone-600 dark:text-stone-400' : 'text-forest-600 dark:text-forest-400'}`}>
+            <p className="mt-0.5 text-xs text-white/75">
               {cameraProblem ? 'See below for how to fix it' : 'Runs on this device'}
             </p>
           </div>
@@ -72,7 +70,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
         <button
           type="button"
           onClick={() => setCameraEnabled(false)}
-          className="flex min-h-11 items-center gap-1.5 px-4 rounded-full text-sm font-medium text-stone-700 dark:text-stone-300 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
+          className="flex min-h-11 items-center gap-1.5 px-4 rounded-full text-sm font-semibold text-white bg-white/15 hover:bg-white/25 transition-colors duration-150"
         >
           <Square size={11} fill="currentColor" aria-hidden="true" />
           Stop
@@ -88,20 +86,20 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
         aria-checked={showCameraFeed}
         data-tour="hide-feed"
         onClick={() => setShowCameraFeed(!showCameraFeed)}
-        className={`flex min-h-12 w-full items-center justify-between px-5 border-t text-left transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.03] ${cameraProblem ? 'border-alert-400/30 dark:border-alert-800/60' : 'border-forest-200/60 dark:border-forest-800/60'}`}
+        className={`flex min-h-12 w-full items-center justify-between px-5 border-t text-left transition-colors hover:bg-white/5 border-white/15`}
       >
-        <span className="flex items-center gap-2 text-stone-600 dark:text-stone-300">
+        <span className="flex items-center gap-2 text-white/85">
           {showCameraFeed ? <Eye size={14} aria-hidden="true" /> : <EyeOff size={14} aria-hidden="true" />}
           <span className="text-sm">Show camera feed</span>
         </span>
         <span
           aria-hidden="true"
           className={`relative h-[18px] w-9 shrink-0 rounded-full transition-colors duration-200 ${
-            showCameraFeed ? 'bg-forest-500' : 'bg-stone-300 dark:bg-ink-400'
+            showCameraFeed ? 'bg-lime-300' : 'bg-white/25'
           }`}
         >
           <span
-            className="absolute top-0.5 left-0.5 h-3.5 w-3.5 rounded-full bg-white shadow-sm transition-transform duration-200"
+            className={`absolute top-0.5 left-0.5 h-3.5 w-3.5 rounded-full transition-transform duration-200 ${showCameraFeed ? 'bg-deep' : 'bg-white'}`}
             style={{ transform: showCameraFeed ? 'translateX(18px)' : 'translateX(0)' }}
           />
         </span>

@@ -14,6 +14,8 @@ interface DetectionSurfaceProps {
   showFeed: boolean;
   showFlash: boolean;
   onRetry?: () => void;
+  /** Square corners: the surface sits edge to edge inside a card that already rounds them. */
+  flush?: boolean;
   /**
    * Why the camera didn't start, already in words for the user. While set, the
    * frame shows it with a retry instead of the video or the "Watching…" wave:
@@ -42,6 +44,7 @@ export function DetectionSurface({
   showFeed,
   showFlash,
   onRetry,
+  flush = false,
   cameraError = null,
   children,
 }: DetectionSurfaceProps) {
@@ -56,10 +59,10 @@ export function DetectionSurface({
       <AlertOverlay visible={showFlash} />
 
       <div
-        className={`relative bg-stone-100 dark:bg-ink-50 rounded-2xl overflow-hidden border transition-all duration-300 ${
+        className={`relative bg-stone-100 dark:bg-ink-50 ${flush ? 'rounded-none' : 'rounded-2xl'} overflow-hidden border-2 transition-colors duration-300 ${
           isAlerting
-            ? 'border-alert-400 shadow-[0_0_0_3px_oklch(55%_0.22_25/0.35)] animate-[alert-ring_1s_ease-in-out_infinite]'
-            : 'border-stone-200 dark:border-ink-400'
+            ? 'border-alert-400'
+            : 'border-transparent'
         }`}
       >
         {/* Video element always present for MediaPipe, visibility toggled */}
@@ -85,7 +88,7 @@ export function DetectionSurface({
               <button
                 type="button"
                 onClick={onRetry}
-                className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-stone-600 px-5 py-2.5 text-sm font-semibold text-stone-100 transition-colors hover:border-stone-300"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-stone-100 transition-colors hover:border-stone-300"
               >
                 <RotateCcw size={14} aria-hidden="true" />
                 Try again

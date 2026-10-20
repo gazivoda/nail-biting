@@ -145,45 +145,45 @@ export function PaywallPage({ onBack }: Props) {
         </div>
         <div className="flex items-center gap-3">
           {onBack && (
-            <button onClick={onBack} className="flex min-h-11 items-center gap-1.5 px-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors">
+            <button onClick={onBack} className="flex min-h-11 items-center gap-1.5 px-2 text-sm text-stone-600 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
               <ArrowLeft size={14} />
               Back to app
             </button>
           )}
-          <button onClick={signOut} className="min-h-11 px-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors">
+          <button onClick={signOut} className="min-h-11 px-2 text-sm text-stone-600 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-100 transition-colors">
             Sign out
           </button>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-10 sm:py-12">
         {/* Trial expired notice */}
         {isTrialExpired && (
-          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-full px-5 py-2.5 text-sm mb-6">
-            <AlertTriangle size={14} />
+          <div className="mb-6 flex w-full max-w-4xl items-center gap-2.5 rounded-full border border-stone-200 bg-white px-5 py-2.5 text-sm text-stone-600 dark:border-ink-400 dark:bg-ink-50 dark:text-stone-300">
+            <AlertTriangle size={14} aria-hidden="true" className="shrink-0 text-amber-600 dark:text-amber-400" />
             <span>{trialEndedMessage(loggedAlerts)}</span>
           </div>
         )}
 
-        <div className="bite relative mb-10 flex w-full max-w-2xl flex-col items-start overflow-hidden rounded-[3rem] bg-deep p-8 text-white sm:p-12">
-        <Rings className="-bottom-60 -right-52 h-[32rem] w-[32rem]" />
-        <h1 className="relative font-display text-[2.75rem] sm:text-6xl font-extrabold leading-[0.95] tracking-[-0.045em] mb-4">
-          {onBack ? <>Choose a <span className="text-lime-300">plan</span></> : <>Keep the alarm <span className="text-lime-300">running</span></>}
+        <div className="sg-hero sg-dark bite relative mb-10 flex w-full max-w-4xl flex-col items-start overflow-hidden p-7 sm:p-10 lg:p-14">
+        <Rings className="-bottom-72 -right-60 h-[40rem] w-[40rem]" />
+        <h1 className="sg-h1-md relative mb-5 max-w-[14ch] pr-6">
+          {onBack ? <>Choose a <span className="sg-hl">plan</span></> : <>Keep the alarm <span className="sg-hl">running</span></>}
         </h1>
-        <p className="relative text-white/75 max-w-md text-lg leading-snug">
+        <p className="sg-lede relative max-w-md">
           $2.99 a month, or $29 a year. No camera data is sent while it runs.
         </p>
         {/* Mid-trial, the free days left are the first thing to know, not a
             footnote under the fold on a phone. */}
         {onBack && trialLeftText && (
-          <p className="relative mt-4 inline-flex rounded-full bg-lime-300 px-3 py-1 text-sm font-bold text-deep">
+          <p className="relative mt-5 inline-flex min-h-8 items-center rounded-full border border-white/25 px-4 text-sm font-semibold text-white">
             {trialLeftText} in your free trial.
           </p>
         )}
         </div>
 
         {!plansConfigured && (
-          <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-5 py-4 mb-8 max-w-lg w-full">
+          <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-5 py-4 mb-8 max-w-4xl w-full">
             <AlertTriangle size={16} className="text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
             <div>
               {/* Customer-facing: the config details (VITE_PADDLE_PRICE_ID_*)
@@ -206,29 +206,29 @@ export function PaywallPage({ onBack }: Props) {
         {/* Above the plans: it explains why their buttons are disabled, and on
             a phone the space below them is two screens down. */}
         {error && (
-          <div role="alert" className="mb-8 max-w-lg w-full text-sm text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/20 border border-alert-400 dark:border-alert-800 rounded-xl px-4 py-3">
+          <div role="alert" className="mb-8 max-w-4xl w-full text-sm text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/20 border border-alert-400 dark:border-alert-800 rounded-xl px-4 py-3">
             {error}
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
           {/* Yearly first at every width, as on /pricing. */}
-          <div className="rounded-2xl p-7 flex flex-col bg-deep text-white relative">
+          <div className="sg-dark relative flex flex-col rounded-2xl bg-deep p-7 text-white dark:bg-deep-2 sm:p-9">
             <p className="absolute -top-3.5 left-7 rounded-full bg-lime-300 px-3 py-1 text-[0.8125rem] font-bold text-deep">
               Best value: save 19%
             </p>
             <div className="mb-4">
-              <p className="font-display text-lg font-bold text-white">Yearly</p>
+              <p className="sg-h3">Yearly</p>
             </div>
-            <div className="mb-1">
-              <span className="font-display text-5xl font-extrabold tracking-[-0.04em]">$29.00</span>
-              <span className="text-white/65 text-sm"> / year</span>
-            </div>
-            <p className="text-white/65 text-sm mb-4">$2.42/month, billed yearly</p>
-            <ul className="space-y-2 mb-6 flex-1">
+            <p className="mt-1 flex items-baseline gap-1.5">
+              <span className="sg-figure">$29.00</span>
+              <span className="sg-small">/ year</span>
+            </p>
+            <p className="sg-small mt-2">$2.42/month, billed yearly</p>
+            <ul className="mt-7 mb-8 flex-1 space-y-2.5">
               {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm text-white/85">
-                  <Check size={13} className="text-lime-300 shrink-0" />{f}
+                <li key={f} className="sg-small flex items-center gap-2.5 !text-white">
+                  <Check size={17} aria-hidden="true" className="shrink-0 text-lime-300" />{f}
                 </li>
               ))}
             </ul>
@@ -236,7 +236,7 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_YEARLY)}
-                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-deep font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="sg-btn group w-full disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Subscribe yearly
                 <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
@@ -244,19 +244,19 @@ export function PaywallPage({ onBack }: Props) {
             )}
           </div>
           {/* Monthly */}
-          <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col bg-white dark:bg-ink-50">
+          <div className="flex flex-col rounded-2xl border border-stone-200 bg-white p-7 dark:border-ink-400 dark:bg-ink-50 sm:p-9">
             <div className="mb-4">
-              <p className="font-display text-lg font-bold text-stone-900 dark:text-stone-100">Monthly</p>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
+              <p className="sg-h3 text-stone-900 dark:text-stone-100">Monthly</p>
             </div>
-            <div className="mb-4">
-              <span className="font-display text-5xl font-extrabold tracking-[-0.04em] text-stone-900 dark:text-stone-100">$2.99</span>
-              <span className="text-stone-500 dark:text-stone-400 text-sm"> / month</span>
-            </div>
-            <ul className="space-y-2 mb-6 flex-1">
+            <p className="mt-1 flex items-baseline gap-1.5 text-stone-900 dark:text-stone-100">
+              <span className="sg-figure">$2.99</span>
+              <span className="text-sm text-stone-600 dark:text-stone-300">/ month</span>
+            </p>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">Billed monthly</p>
+            <ul className="mt-7 mb-8 flex-1 space-y-2.5">
               {PLAN_FEATURES.map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                  <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
+                <li key={f} className="flex items-center gap-2.5 text-[0.9375rem] leading-[1.55] text-stone-700 dark:text-stone-300">
+                  <Check size={17} aria-hidden="true" className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
                 </li>
               ))}
             </ul>
@@ -264,7 +264,7 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_MONTHLY)}
-                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 border-2 border-stone-900 dark:border-stone-200 hover:bg-stone-900 hover:text-white dark:hover:bg-stone-200 dark:hover:text-stone-900 text-stone-900 dark:text-stone-100 font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="sg-btn group w-full !bg-transparent border-2 border-stone-900 text-stone-900 dark:border-stone-200 hover:!bg-stone-900 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 dark:text-stone-100 dark:hover:!bg-stone-200 dark:hover:text-stone-900"
               >
                 Subscribe monthly
                 <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />

@@ -235,11 +235,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
       aria-hidden="true"
     >
       {/* Waveform card */}
-      <div className="relative rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 overflow-hidden px-4 pt-3 pb-2 shadow-card">
-
-        {/* Gradient fade on left & right edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-white/80 dark:from-ink-50/80 to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white/80 dark:from-ink-50/80 to-transparent z-10" />
+      <div className="relative rounded-2xl border border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-50 overflow-hidden px-4 pt-3 pb-2">
 
         <svg
           viewBox={`0 0 100 ${CFG.height}`}
@@ -249,16 +245,16 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
         >
           <defs>
             <linearGradient ref={gradRef} id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stopColor="oklch(58% 0.130 148)" stopOpacity="0" />
+              <stop offset="0%"   stopColor="oklch(58% 0.130 148)" stopOpacity="1" />
               <stop offset="15%"  stopColor="oklch(58% 0.130 148)" stopOpacity="1" />
               <stop offset="85%"  stopColor="oklch(58% 0.130 148)" stopOpacity="1" />
-              <stop offset="100%" stopColor="oklch(58% 0.130 148)" stopOpacity="0" />
+              <stop offset="100%" stopColor="oklch(58% 0.130 148)" stopOpacity="1" />
             </linearGradient>
             <linearGradient ref={grad2Ref} id="wave-grad-ghost" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stopColor="oklch(58% 0.130 148)" stopOpacity="0" />
+              <stop offset="0%"   stopColor="oklch(58% 0.130 148)" stopOpacity="0.35" />
               <stop offset="15%"  stopColor="oklch(58% 0.130 148)" stopOpacity="0.35" />
               <stop offset="85%"  stopColor="oklch(58% 0.130 148)" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="oklch(58% 0.130 148)" stopOpacity="0" />
+              <stop offset="100%" stopColor="oklch(58% 0.130 148)" stopOpacity="0.35" />
             </linearGradient>
           </defs>
 
@@ -286,7 +282,6 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
           <span
             ref={dotRef}
             className="w-1.5 h-1.5 rounded-full bg-forest-400 transition-colors duration-300"
-            style={{ boxShadow: '0 0 6px currentColor' }}
           />
           <span
             ref={labelRef}

@@ -49,23 +49,23 @@ export function ReplacementPrompt() {
   };
 
   return (
-    <div className="order-first md:order-none bg-white dark:bg-ink-50 border border-forest-200 dark:border-forest-800 rounded-3xl p-7 shadow-card-md dark:shadow-card-md-dark animate-fade-up">
+    <div className="order-first md:order-none bg-white dark:bg-ink-50 border border-forest-200 dark:border-forest-800 rounded-2xl p-6 sm:p-7 animate-fade-up">
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
-          <h2 className="text-[15px] font-semibold text-stone-800 dark:text-stone-100">
+          <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">
             Alarm: try this instead
           </h2>
         </div>
         <button
           onClick={() => answer()}
           aria-label="Close. The alarm stays in History to review"
-          className="flex h-11 w-11 -m-2 items-center justify-center rounded-lg text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
+          className="flex h-11 w-11 -m-2 items-center justify-center rounded-full text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />
         </button>
       </div>
 
-      <p className="text-[13px] text-stone-700 dark:text-stone-200 leading-relaxed bg-forest-50 dark:bg-forest-900/20 rounded-xl px-4 py-3 border border-forest-100 dark:border-forest-800/50">
+      <p className="text-[13px] text-stone-700 dark:text-stone-200 leading-relaxed bg-forest-50 dark:bg-forest-900/20 rounded-2xl px-4 py-3 border border-forest-100 dark:border-forest-800/50">
         {suggestion}
       </p>
 
@@ -77,7 +77,7 @@ export function ReplacementPrompt() {
           <button
             key={tag.id}
             onClick={() => answer(tag.id)}
-            className="flex min-h-11 items-center gap-2 rounded-xl border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-fill px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-400"
+            className="flex min-h-11 items-center gap-2 rounded-full border border-stone-200 dark:border-ink-400 bg-stone-100 dark:bg-ink-fill px-3 text-[13px] text-stone-700 dark:text-stone-300 transition-colors hover:bg-stone-200 dark:hover:bg-ink-400"
           >
             <TagMark tag={tag} />
             <span>{tag.label}</span>
@@ -86,7 +86,7 @@ export function ReplacementPrompt() {
       </div>
       <button
         onClick={notABite}
-        className="mt-2 min-h-11 w-full rounded-xl text-[13px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
+        className="mt-2 min-h-11 w-full rounded-full text-[13px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
       >
         Not a bite, just my hand nearby
       </button>

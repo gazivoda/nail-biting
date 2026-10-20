@@ -72,7 +72,8 @@ export function useCamera(enabled: boolean) {
         setError(null);
       } catch (err) {
         if (!cancelled) {
-          console.error('Camera start failed:', err);
+          // A denied permission is a normal state, not an application error.
+          console.warn('Camera start failed:', err);
           setError(toCameraError(err));
         }
       }

@@ -1,28 +1,41 @@
 import { useEffect, useState, useRef } from 'react';
-import { Bell, BellRing, Bird, Music, Vibrate, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, CreditCard, ExternalLink, Zap, RefreshCw, Tag, Plus, X, type LucideIcon } from 'lucide-react';
+import { Bell, BellRing, Bird, Music, Vibrate, Sun, ShieldCheck, Sliders, Trash2, Volume2, VolumeX, ExternalLink, Zap, RefreshCw, Tag, Plus, X, type LucideIcon } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 import { requestNotificationPermission } from '../hooks/useNotifications';
 import { useAuth, apiFetch } from '../contexts/AuthContext';
 import type { CustomTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Theme } from '../types';
-import { PageHeader } from '../components/layout/PageHeader';
+import { PageTitle } from '../components/ui/PageTitle';
+import { Rings } from '../components/site/Rings';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { trialLeft } from '../utils/trial';
 import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
 
-function Section({ title, icon: Icon, children, fullWidth }: {
+function Section({ title, icon: Icon, children, fullWidth, danger }: {
   title: string;
   icon: typeof Bell;
   children: React.ReactNode;
   fullWidth?: boolean;
+  danger?: boolean;
 }) {
   return (
-    <div className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl overflow-hidden shadow-card dark:shadow-card-dark ${fullWidth ? 'md:col-span-2' : ''}`}>
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100 dark:border-ink-400">
-        <Icon size={15} className="text-stone-500 dark:text-stone-400" />
-        <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200">{title}</h2>
+    <section
+      className={`rounded-2xl border bg-white p-5 sm:p-6 dark:bg-ink-50 ${
+        danger ? 'border-alert-400 dark:border-alert-800' : 'border-stone-200 dark:border-ink-400'
+      } ${fullWidth ? 'md:col-span-2' : ''}`}
+    >
+      <div className="mb-5 flex items-center gap-3">
+        <span
+          aria-hidden="true"
+          className={`inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full ${
+            danger ? 'bg-alert-100 text-alert-600 dark:bg-alert-900/30 dark:text-alert-400' : 'bg-stone-100 text-stone-700 dark:bg-ink-fill dark:text-stone-200'
+          }`}
+        >
+          <Icon size={16} />
+        </span>
+        <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{title}</h2>
       </div>
-      <div className="p-4 space-y-4">{children}</div>
-    </div>
+      <div className="space-y-5">{children}</div>
+    </section>
   );
 }
 
@@ -34,8 +47,8 @@ function Row({ label, description, children }: {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
       <div className="min-w-0">
-        <p className="text-sm text-stone-800 dark:text-stone-200">{label}</p>
-        {description && <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">{description}</p>}
+        <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{label}</p>
+        {description && <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">{description}</p>}
       </div>
       {children}
     </div>
@@ -43,6 +56,7 @@ function Row({ label, description, children }: {
 }
 
 function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: boolean) => void; label: string }) {
+  // The button is the 44px target; the pill inside is the visible track.
   return (
     <button
       type="button"
@@ -50,9 +64,11 @@ function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: bool
       role="switch"
       aria-checked={value}
       onClick={() => onChange(!value)}
-      className={`relative flex-shrink-0 w-12 h-6 rounded-full transition-colors duration-200 ${value ? 'bg-forest-500' : 'bg-stone-200 dark:bg-ink-400'}`}
+      className="group flex h-11 w-16 flex-shrink-0 items-center justify-center rounded-full"
     >
-      <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-200 shadow-sm ${value ? 'translate-x-6' : 'translate-x-0'}`} />
+      <span className={`relative h-8 w-14 rounded-full transition-colors duration-200 ${value ? 'bg-deep dark:bg-lime-300' : 'bg-stone-300 dark:bg-ink-400'}`}>
+        <span className={`absolute left-1 top-1 h-6 w-6 rounded-full transition-transform duration-200 ${value ? 'translate-x-6 bg-lime-300 dark:bg-deep' : 'translate-x-0 bg-white dark:bg-stone-300'}`} />
+      </span>
     </button>
   );
 }
@@ -159,10 +175,10 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
         return (
           <div
             key={opt.value}
-            className={`flex flex-col items-center rounded-xl border text-center transition-colors duration-150 last:col-span-2 sm:last:col-span-1 ${
+            className={`flex flex-col items-center rounded-2xl border text-center transition-colors duration-150 last:col-span-2 sm:last:col-span-1 ${
               isSelected
-                ? 'bg-forest-50 dark:bg-forest-900/40 border-forest-400 dark:border-forest-700'
-                : 'bg-stone-50 dark:bg-ink-100 border-stone-200 dark:border-ink-400 hover:border-stone-300 dark:hover:border-ink-300'
+                ? 'bg-deep border-deep dark:bg-deep-2 dark:border-lime-300'
+                : 'bg-stone-50 dark:bg-ink-100 border-stone-200 dark:border-ink-400 hover:border-stone-400 dark:hover:border-ink-300'
             }`}
           >
             <button
@@ -171,30 +187,30 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
               aria-checked={isSelected}
               tabIndex={radioTabIndex(isSelected)}
               onClick={() => onChange(opt.value)}
-              className="flex w-full flex-col items-center gap-2 rounded-xl px-3 pt-3 pb-2"
+              className="flex w-full flex-col items-center gap-2 rounded-2xl px-3 pt-4 pb-2"
             >
               <Icon
                 size={22}
                 aria-hidden="true"
-                className={isSelected ? 'text-forest-600 dark:text-forest-400' : 'text-stone-500 dark:text-stone-400'}
+                className={isSelected ? 'text-white dark:text-lime-300' : 'text-stone-600 dark:text-stone-300'}
               />
               <span className="space-y-0.5">
-                <span className={`block text-xs font-medium ${isSelected ? 'text-forest-700 dark:text-forest-300' : 'text-stone-700 dark:text-stone-300'}`}>
+                <span className={`block font-display text-base font-bold ${isSelected ? 'text-white' : 'text-stone-800 dark:text-stone-200'}`}>
                   {opt.label}
                 </span>
-                <span className="block text-xs text-stone-500 dark:text-stone-400 leading-snug">{opt.description}</span>
+                <span className={`block text-xs leading-snug ${isSelected ? 'text-white/80' : 'text-stone-600 dark:text-stone-300'}`}>{opt.description}</span>
               </span>
             </button>
             <button
               type="button"
               onClick={() => handlePreview(opt.value)}
               aria-label={`Preview ${opt.label}`}
-              className={`mb-3 flex min-h-11 items-center gap-1 rounded-full px-3 text-xs transition-colors duration-150 ${
+              className={`mb-3 flex min-h-11 items-center gap-1 rounded-full px-4 text-xs font-semibold transition-colors duration-150 ${
                 isPreviewing
-                  ? 'bg-forest-500 text-white'
+                  ? 'bg-brand text-white'
                   : isSelected
-                    ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 hover:bg-forest-100 dark:hover:bg-ink-100'
-                    : 'bg-stone-200 dark:bg-ink-fill text-stone-600 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-ink-400'
+                    ? 'bg-white text-deep hover:bg-lime-100'
+                    : 'bg-stone-200 dark:bg-ink-fill text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-ink-400'
               }`}
             >
               <Volume2 size={11} aria-hidden="true" />
@@ -235,7 +251,7 @@ function VolumeSlider({ value, onChange, sound }: { value: number; onChange: (v:
         value={Math.round(value * 100)}
         onChange={handleChange}
         aria-label="Alarm volume"
-        className="flex-1 accent-forest-500 h-1.5"
+        className="h-11 flex-1 accent-forest-500 dark:accent-lime-300"
       />
       <span className="text-xs tabular-nums text-stone-500 dark:text-stone-400 w-9 text-right">
         {Math.round(value * 100)}%
@@ -279,7 +295,7 @@ function ReasonsSection() {
 
   return (
     <Section title="Bite reasons" icon={Tag} fullWidth>
-      <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">
+      <p className="-mt-2 text-sm text-stone-600 dark:text-stone-300">
         Add your own reasons to choose from when logging a bite, alongside the built-in options (stress, focus, boredom, not sure).
       </p>
 
@@ -288,7 +304,7 @@ function ReasonsSection() {
           {customTags.map(tag => (
             <span
               key={tag.id}
-              className="inline-flex items-center gap-1.5 pl-3 pr-1 py-1 rounded-full text-xs bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
+              className="inline-flex items-center gap-1.5 pl-4 pr-1 rounded-full text-sm font-medium bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 text-stone-700 dark:text-stone-300"
             >
               <span aria-hidden="true">{tag.emoji}</span>
               <span>{tag.label}</span>
@@ -296,7 +312,7 @@ function ReasonsSection() {
                 type="button"
                 onClick={() => remove(tag)}
                 aria-label={`Remove ${tag.label}`}
-                className="-my-1 inline-flex h-8 w-8 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors"
               >
                 <X size={12} />
               </button>
@@ -328,7 +344,7 @@ function ReasonsSection() {
           placeholder="🏷️"
           maxLength={4}
           aria-label="Emoji"
-          className="w-12 text-center bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-2 py-2 text-sm placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="w-14 text-center text-lg bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-2 text-sm placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <input
           type="text"
@@ -337,14 +353,14 @@ function ReasonsSection() {
           placeholder="e.g. Tiredness"
           maxLength={30}
           aria-label="Reason label"
-          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-xl px-3 py-2 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-4 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <button
           type="submit"
           disabled={!label.trim()}
-          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:hover:bg-deep text-white dark:text-deep font-semibold rounded-full px-3 py-2 text-xs transition-colors"
+          className="flex-shrink-0 inline-flex min-h-11 items-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:bg-stone-200 disabled:text-stone-500 disabled:hover:bg-stone-200 dark:disabled:bg-ink-400 dark:disabled:text-stone-400 dark:disabled:hover:bg-ink-400 text-white dark:text-deep font-semibold rounded-full px-5 text-sm transition-colors"
         >
-          <Plus size={13} />
+          <Plus size={14} aria-hidden="true" />
           Add
         </button>
       </form>
@@ -354,12 +370,12 @@ function ReasonsSection() {
 
 // ── Plan section ─────────────────────────────────────────────────────────────
 
-const STATUS_BADGE: Record<string, { label: string; className: string }> = {
-  trial:     { label: 'Free trial', className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
-  active:    { label: 'Active',     className: 'bg-forest-100 dark:bg-forest-800/50 text-forest-700 dark:text-forest-400 border border-forest-200 dark:border-forest-700' },
-  paused:    { label: 'Paused',     className: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-700' },
-  cancelled: { label: 'Cancelled',  className: 'bg-stone-100 dark:bg-ink-fill text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
-  expired:   { label: 'Expired',    className: 'bg-stone-100 dark:bg-ink-fill text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-ink-400' },
+const STATUS_BADGE: Record<string, { label: string }> = {
+  trial:     { label: 'Free trial' },
+  active:    { label: 'Active' },
+  paused:    { label: 'Paused' },
+  cancelled: { label: 'Cancelled' },
+  expired:   { label: 'Expired' },
 };
 
 function fmt(iso: string) {
@@ -391,66 +407,62 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 
   const canManage = subscription_status === 'active' || subscription_status === 'paused' || subscription_status === 'cancelled';
 
+  const headline = subscription_status === 'trial'
+    ? (trialLeftText ?? 'Trial ended')
+    : subscription_status === 'active' || subscription_status === 'paused'
+      ? (subscription_plan === 'yearly' ? 'Yearly' : subscription_plan === 'monthly' ? 'Monthly' : badge.label)
+      : badge.label;
+  const detail = subscription_status === 'trial' && trial_end_date
+    ? (trialLeftText ? `In your free trial, ends ${fmt(trial_end_date)}` : 'Your free trial has ended')
+    : subscription_status === 'active' && subscription_end_date
+      ? `Renews ${fmt(subscription_end_date)}`
+      : (subscription_status === 'paused' || subscription_status === 'cancelled') && subscription_end_date
+        ? `Access until ${fmt(subscription_end_date)}`
+        : '';
+
+  // The plan plate, like the landing page's: deep forest, the status in big
+  // Bricolage type. The one lime action (Choose a plan) sits at the bottom, so
+  // the bitten top-right corner stays empty.
   return (
-    <Section title="Plan" icon={CreditCard} fullWidth>
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-
-        {/* Status + detail */}
-        {/* The section header already carries the card icon, and the badge
-            already says the status: no second icon, no product name where a
-            plan name belongs. */}
+    <section className="bite sg-dark relative overflow-hidden rounded-2xl border border-transparent bg-deep p-6 text-white sm:p-8 md:col-span-2 dark:border-ink-400">
+      <Rings className="-bottom-28 right-0 h-80 w-80 sm:h-[26rem] sm:w-[26rem]" />
+      <div className="relative">
         <div className="flex items-center gap-3">
-          <div>
-            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${badge.className}`}>
-                {badge.label}
-              </span>
-              {(subscription_status === 'active' || subscription_status === 'paused') && subscription_plan && (
-                <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
-                  Subscribed · {subscription_plan === 'yearly' ? 'Yearly' : 'Monthly'}
-                </span>
-              )}
-            </div>
-            <p className="text-xs text-stone-500 dark:text-stone-400">
-              {subscription_status === 'trial' && trial_end_date && (
-                trialLeftText
-                  ? `${trialLeftText} in trial, ends ${fmt(trial_end_date)}`
-                  : 'Trial has ended'
-              )}
-              {subscription_status === 'active' && subscription_end_date && `Renews ${fmt(subscription_end_date)}`}
-              {subscription_status === 'paused' && subscription_end_date && `Access until ${fmt(subscription_end_date)}`}
-              {subscription_status === 'cancelled' && subscription_end_date && `Access until ${fmt(subscription_end_date)}`}
-            </p>
+          <h2 className="font-display text-xl font-bold tracking-[-0.02em]">Plan</h2>
+          <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
+            {badge.label}
+          </span>
+        </div>
+        <p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-0.045em] sm:text-6xl">{headline}</p>
+        {detail && <p className="mt-3 text-base text-white/80">{detail}</p>}
+
+        {(accessStatus === 'trial_active' && onUpgrade) || canManage ? (
+          <div className="mt-6 flex flex-wrap items-center gap-2">
+            {accessStatus === 'trial_active' && onUpgrade && (
+              <button
+                onClick={onUpgrade}
+                type="button"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-lime-300 px-6 font-display text-base font-bold text-deep transition-colors hover:bg-lime-200"
+              >
+                <Zap size={15} aria-hidden="true" />
+                Choose a plan
+              </button>
+            )}
+            {canManage && (
+              <button
+                onClick={openPortal}
+                disabled={portalLoading}
+                type="button"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/40 px-6 text-sm font-semibold text-white transition-colors hover:bg-white/10 disabled:opacity-50"
+              >
+                {portalLoading ? <RefreshCw size={13} className="animate-spin" aria-hidden="true" /> : <ExternalLink size={13} aria-hidden="true" />}
+                {portalLoading ? 'Opening…' : 'Manage subscription'}
+              </button>
+            )}
           </div>
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          {accessStatus === 'trial_active' && onUpgrade && (
-            <button
-              onClick={onUpgrade}
-              type="button"
-              className="inline-flex min-h-11 items-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-semibold rounded-full px-4 text-sm transition-colors duration-150"
-            >
-              <Zap size={14} aria-hidden="true" />
-              Choose a plan
-            </button>
-          )}
-          {canManage && (
-            <button
-              onClick={openPortal}
-              disabled={portalLoading}
-              type="button"
-              className="inline-flex min-h-11 items-center gap-1.5 border border-stone-200 dark:border-ink-400 text-stone-600 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-ink-100 rounded-xl px-4 text-sm transition-colors disabled:opacity-50"
-            >
-              {portalLoading ? <RefreshCw size={12} className="animate-spin" /> : <ExternalLink size={12} />}
-              {portalLoading ? 'Opening…' : 'Manage subscription'}
-            </button>
-          )}
-        </div>
-
+        ) : null}
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -483,7 +495,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
   return (
     <div className="p-5 sm:p-8 pb-10 max-w-5xl">
-      <PageHeader title="Settings" />
+      <PageTitle mark="Settings" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
       {/* Plan */}
@@ -526,15 +538,15 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           <Toggle label="Enable reminders" value={remindersEnabled} onChange={handleReminderToggle} />
         </Row>
         {notifStatus && (
-          <p className="text-xs text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-3 py-2">
+          <p className="text-sm text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-2xl px-4 py-3">
             {notifStatus}
           </p>
         )}
         {remindersEnabled && (
           <Row label="Interval">
-            <SegmentedControl
+            <SegmentedControl<string>
               ariaLabel="Reminder interval"
-              value={String(reminderIntervalMinutes) as any}
+              value={String(reminderIntervalMinutes)}
               onChange={(v) => setReminderInterval(Number(v) as ReminderInterval)}
               options={[
                 { label: '5m', value: '5' },
@@ -550,7 +562,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Alarm sound, full width */}
       <Section title="Alarm sound" icon={Volume2} fullWidth>
-        <p className="text-xs text-stone-500 dark:text-stone-400 -mt-1">The sound the alarm makes when your hand reaches your mouth. Press Preview to hear each one.</p>
+        <p className="-mt-2 text-sm text-stone-600 dark:text-stone-300">The sound the alarm makes when your hand reaches your mouth. Press Preview to hear each one.</p>
         <SoundPicker value={alertSound} onChange={(s) => setAlertSound(s as AlertSound)} volume={alertVolume} />
         <Row label="Volume" description="How loud the alarm plays">
           <div className="w-full sm:w-56">
@@ -580,11 +592,11 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Privacy */}
       <Section title="Privacy" icon={ShieldCheck}>
-        <div className="flex items-start gap-3 bg-forest-50 dark:bg-forest-800/50 border border-forest-200 dark:border-forest-800 rounded-xl p-3">
-          <ShieldCheck size={18} className="text-forest-600 dark:text-forest-400 flex-shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-4 dark:border-ink-400 dark:bg-ink-100">
+          <ShieldCheck size={18} aria-hidden="true" className="mt-0.5 flex-shrink-0 text-brand dark:text-lime-300" />
           <div>
-            <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
-            <p className="text-xs text-forest-700 dark:text-forest-400 mt-0.5">
+            <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">Detection runs on your computer</p>
+            <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
               Your camera is processed in this browser. No camera data is sent while it runs; your alarm and bite log stays in this browser too.
             </p>
           </div>
@@ -592,7 +604,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
       </Section>
 
       {/* Danger zone */}
-      <Section title="Data" icon={Trash2} fullWidth>
+      <Section title="Data" icon={Trash2} fullWidth danger>
         {showConfirm ? (
           <div className="space-y-3">
             <p className="text-sm text-alert-600 dark:text-alert-400">This erases your history, streak, bite reasons and every setting on this device. It can't be undone.</p>
@@ -600,7 +612,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
               <button
                 type="button"
                 onClick={() => { clearAllData(); setShowConfirm(false); }}
-                className="min-h-11 px-5 font-semibold bg-alert-600 hover:bg-alert-800 rounded-xl py-2 text-sm text-cream-100 transition-colors"
+                className="min-h-11 px-6 font-semibold bg-alert-600 hover:bg-alert-800 rounded-full text-sm text-cream-100 transition-colors"
               >
                 Yes, clear everything
               </button>
@@ -608,7 +620,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
                 type="button"
                 autoFocus
                 onClick={() => setShowConfirm(false)}
-                className="min-h-11 px-5 bg-stone-100 dark:bg-ink-fill hover:bg-stone-200 dark:hover:bg-ink-400 border border-stone-200 dark:border-ink-400 rounded-xl py-2 text-sm text-stone-600 dark:text-stone-300 transition-colors"
+                className="min-h-11 px-6 font-semibold border border-stone-300 dark:border-ink-400 hover:bg-stone-100 dark:hover:bg-ink-fill rounded-full text-sm text-stone-700 dark:text-stone-200 transition-colors"
               >
                 Cancel
               </button>
@@ -618,9 +630,9 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           <button
             onClick={() => setShowConfirm(true)}
             type="button"
-            className="inline-flex min-h-11 items-center justify-center gap-2 px-5 text-alert-600 dark:text-alert-400 hover:text-alert-800 dark:hover:text-alert-100 bg-alert-100 dark:bg-alert-900/20 hover:bg-alert-100 dark:hover:bg-alert-900/30 border border-alert-400 dark:border-alert-800 rounded-xl text-sm transition-colors"
+            className="inline-flex min-h-11 items-center justify-center gap-2 px-6 font-semibold text-alert-600 dark:text-alert-400 hover:text-alert-800 dark:hover:text-alert-100 bg-alert-100 dark:bg-alert-900/20 hover:bg-alert-100 dark:hover:bg-alert-900/30 border border-alert-400 dark:border-alert-800 rounded-full text-sm transition-colors"
           >
-            <Trash2 size={14} />
+            <Trash2 size={14} aria-hidden="true" />
             Clear all data
           </button>
         )}

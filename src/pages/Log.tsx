@@ -4,7 +4,8 @@ import { useAppStore } from '../store/useAppStore';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
-import { PageHeader } from '../components/layout/PageHeader';
+import { Rings } from '../components/site/Rings';
+import { PageTitle } from '../components/ui/PageTitle';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { PRESET_TAGS } from '../components/dashboard/triggerTags';
 import { topTrigger, peakHour, hourRange } from '../utils/insights';
@@ -12,7 +13,8 @@ import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
 // bites right beside the chart.
-const BAR_FILL = { light: 'oklch(25% 0.05 162)', dark: 'oklch(90% 0.2 124)' };
+// The chart card is deep forest in both themes, so the bars are always lime.
+const BAR_FILL = 'oklch(90% 0.2 124)';
 
 // Two words, used the same way everywhere:
 // Alarm = auto-detected and not yet reviewed (amber)
@@ -51,7 +53,7 @@ function BiteInsights() {
     ? [...PRESET_TAGS, ...customTags].find(t => t.id === trigger.tag)?.label ?? trigger.tag
     : null;
   return (
-    <div className="mt-3 space-y-2 border-t border-stone-100 pt-3 dark:border-ink-400">
+    <div className="mt-4 space-y-2 border-t border-stone-200 pt-4 text-sm dark:border-ink-400">
       {trigger && (
         <div className="flex justify-between gap-4">
           <span className="text-stone-600 dark:text-stone-300">Top trigger</span>
@@ -71,9 +73,7 @@ function BiteInsights() {
 }
 
 function WeekChart() {
-  const { incidents, theme, weekChartMetric, setWeekChartMetric } = useAppStore();
-  const isDark = theme === 'dark' ||
-    (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const { incidents, weekChartMetric, setWeekChartMetric } = useAppStore();
 
   const relevantIncidents = weekChartMetric === 'confirmed'
     ? incidents.filter(isConfirmedBite)
@@ -95,17 +95,26 @@ function WeekChart() {
     ? `No ${noun === 'bite' ? 'bites' : 'entries'} in the last 7 days.`
     : `${total} ${total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week, most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`;
 
-  const tickColor = isDark ? 'oklch(72% 0.02 160)' : 'oklch(42% 0.025 160)';
-  const tooltipBg = isDark ? 'oklch(18% 0.02 165)' : 'oklch(100% 0 0)';
-  const tooltipBorder = isDark ? 'oklch(30% 0.018 165)' : 'oklch(90% 0.01 130)';
-  const tooltipLabel = isDark ? 'oklch(85% 0.01 160)' : 'oklch(42% 0.025 160)';
+  const tickColor = 'oklch(100% 0 0 / 0.72)';
+  const tooltipBg = 'oklch(31% 0.06 160)';
+  const tooltipBorder = 'oklch(100% 0 0 / 0.16)';
 
   return (
-    <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-6 shadow-card dark:shadow-card-dark">
-      <div className="flex items-center justify-between mb-1">
-        <h2 className="text-stone-700 dark:text-stone-200 font-semibold">Last 7 days</h2>
+    <div className="bite sg-dark relative overflow-hidden rounded-2xl border border-transparent bg-deep p-6 text-white dark:border-ink-400">
+      <h2 className="font-display text-lg font-bold tracking-[-0.02em]">Last 7 days</h2>
+      <p className="mt-3 flex items-baseline gap-3">
+        <span className="font-display text-7xl font-extrabold leading-none tracking-[-0.045em] tabular-nums">{total}</span>
+        <span className="text-base font-medium text-white/75">
+          {total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week
+        </span>
+      </p>
+      <p className="mt-2 text-sm text-white/75">
+        {weekChartMetric === 'confirmed' ? 'Bites per day' : 'Alarms and bites per day'}. {total === 0 ? summary : `Most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`}
+      </p>
+      <div className="mt-4">
         <SegmentedControl<StatsMetric>
           ariaLabel="Chart shows"
+          onDeep
           value={weekChartMetric}
           onChange={setWeekChartMetric}
           options={[
@@ -114,22 +123,21 @@ function WeekChart() {
           ]}
         />
       </div>
-      <p className="text-stone-500 dark:text-stone-400 text-xs mb-6">
-        {weekChartMetric === 'confirmed' ? 'Bites per day' : 'Alarms and bites per day'}. {summary}
-      </p>
-      <ResponsiveContainer width="100%" height={160}>
-        <BarChart data={days} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-          <XAxis dataKey="day" tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} allowDecimals={false} />
-          <Tooltip
-            contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 16, fontSize: 12 }}
-            labelStyle={{ color: tooltipLabel }}
-            itemStyle={{ color: BAR_FILL[isDark ? 'dark' : 'light'] }}
-            cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
-          />
-          <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[8, 8, 0, 0]} fill={BAR_FILL[isDark ? 'dark' : 'light']} />
-        </BarChart>
-      </ResponsiveContainer>
+      <div className="mt-5">
+        <ResponsiveContainer width="100%" height={160}>
+          <BarChart data={days} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+            <XAxis dataKey="day" tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} allowDecimals={false} />
+            <Tooltip
+              contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 16, fontSize: 12 }}
+              labelStyle={{ color: tickColor }}
+              itemStyle={{ color: BAR_FILL }}
+              cursor={{ fill: 'rgba(255,255,255,0.06)' }}
+            />
+            <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[8, 8, 0, 0]} fill={BAR_FILL} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
@@ -144,12 +152,12 @@ function ClearAllButton() {
 
   if (confirming) {
     return (
-      <div className="flex flex-wrap items-center justify-end gap-2 text-xs">
+      <div className="flex flex-wrap items-center justify-end gap-2 text-sm">
         <span className="text-stone-600 dark:text-stone-300">Clear all history? This can't be undone.</span>
         <button
           type="button"
           onClick={() => { clearHistory(); setConfirming(false); }}
-          className="min-h-10 px-3 rounded-lg bg-alert-600 hover:bg-alert-800 text-cream-100 font-semibold transition-colors"
+          className="min-h-11 rounded-full bg-alert-600 px-5 font-semibold text-cream-100 transition-colors hover:bg-alert-800"
         >
           Yes, clear
         </button>
@@ -157,7 +165,7 @@ function ClearAllButton() {
           type="button"
           autoFocus
           onClick={() => { setConfirming(false); setReturnFocus(true); }}
-          className="min-h-10 px-3 rounded-lg border border-stone-200 dark:border-ink-400 text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
+          className="min-h-11 rounded-full border border-stone-300 px-5 font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
         >
           Cancel
         </button>
@@ -170,9 +178,9 @@ function ClearAllButton() {
       type="button"
       autoFocus={returnFocus}
       onClick={() => setConfirming(true)}
-      className="flex min-h-11 items-center gap-1.5 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-colors"
+      className="flex min-h-11 items-center gap-1.5 rounded-full border border-stone-300 px-4 text-sm font-semibold text-stone-700 transition-colors hover:border-alert-600 hover:text-alert-600 dark:border-ink-400 dark:text-stone-200 dark:hover:border-alert-400 dark:hover:text-alert-400"
     >
-      <Trash2 size={12} />
+      <Trash2 size={14} aria-hidden="true" />
       Clear all
     </button>
   );
@@ -214,16 +222,16 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
 
   return (
     <div className="p-5 sm:p-8 pb-10">
-      <PageHeader title="History" />
+      <PageTitle mark="History" />
 
       <div role="status" aria-live="polite">
         {lastDeleted && (
-          <div className="-mt-3 mb-5 flex items-center justify-between gap-3 rounded-xl border border-stone-200 bg-white px-4 py-1 text-sm shadow-card dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark">
+          <div className="-mt-3 mb-5 flex items-center justify-between gap-3 rounded-full border border-stone-200 bg-white py-1 pl-5 pr-3 text-sm dark:border-ink-400 dark:bg-ink-50">
             <span className="text-stone-700 dark:text-stone-200">Entry from {formatTime(lastDeleted.timestamp)} deleted.</span>
             <button
               type="button"
               onClick={undoDelete}
-              className="inline-flex min-h-10 items-center px-2 font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
+              className="inline-flex min-h-11 items-center px-2 font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
             >
               Undo
             </button>
@@ -236,21 +244,24 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           chart column. Otherwise: chart left, incident list right, stacking
           on narrow viewports. */}
       {incidents.length === 0 ? (
-      <div className="flex max-w-md flex-col items-start pt-4">
-        <h2 className="text-lg font-semibold text-stone-800 dark:text-stone-100">No history yet</h2>
-        <p className="mt-2 text-pretty text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-          Alarms from the Watch tab and bites you log with “I just bit my nails” appear here, day by day. Tag them and this page shows what sets you off.
-        </p>
-        {onGoToWatch && (
-          <button
-            type="button"
-            onClick={onGoToWatch}
-            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-deep px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
-          >
-            Go to Watch
-            <ArrowRight size={15} aria-hidden="true" />
-          </button>
-        )}
+      <div className="bite sg-dark relative max-w-2xl overflow-hidden rounded-[2rem] border border-transparent bg-deep p-7 text-white sm:p-10 dark:border-ink-400">
+        <Rings className="-bottom-24 -left-24 h-72 w-72 sm:h-96 sm:w-96" />
+        <div className="relative flex flex-col items-start">
+          <h2 className="font-display text-4xl font-extrabold leading-[0.95] tracking-[-0.045em] sm:text-5xl">No history yet</h2>
+          <p className="mt-4 max-w-md text-pretty text-base leading-relaxed text-white/80">
+            Alarms from the Watch tab and bites you log with “I just bit my nails” appear here, day by day. Tag them and this page shows what sets you off.
+          </p>
+          {onGoToWatch && (
+            <button
+              type="button"
+              onClick={onGoToWatch}
+              className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-lime-300 px-6 font-display text-base font-bold text-deep transition-colors hover:bg-lime-200"
+            >
+              Go to Watch
+              <ArrowRight size={16} aria-hidden="true" />
+            </button>
+          )}
+        </div>
       </div>
       ) : (
       <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-8 items-start">
@@ -262,7 +273,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
             <div className="space-y-6">
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between gap-3 px-1">
-                <p className="shrink-0 whitespace-nowrap text-sm font-medium text-stone-600 dark:text-stone-300">
+                <p className="shrink-0 whitespace-nowrap text-sm font-semibold text-stone-700 dark:text-stone-200">
                   {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />
@@ -270,10 +281,10 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
 
               {grouped.map(({ date, items }) => (
                 <div key={date}>
-                  <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3 px-1">{date}</h3>
+                  <h3 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100 mb-3 px-1">{date}</h3>
                   {/* One card per day, rows divided: a separate shadowed tile
                       for every entry fit six on a screen and read as a pile. */}
-                  <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-card divide-y divide-stone-100 dark:border-ink-400 dark:bg-ink-50 dark:shadow-card-dark dark:divide-ink-400">
+                  <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white divide-y divide-stone-200 dark:border-ink-400 dark:bg-ink-50 dark:divide-ink-400">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
                       const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
@@ -283,13 +294,13 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                       return (
                         <div
                           key={inc.id}
-                          className="group flex items-center gap-3 px-5 py-2"
+                          className="group flex items-center gap-3 px-5 py-2.5"
                         >
                           {/* Time and tag together on the left, actions in
                               their own group on the right: hidden actions
                               used to push every tag to a different x. */}
-                          <span className="w-20 flex-shrink-0 text-stone-500 dark:text-stone-400 text-sm tabular-nums">{formatTime(inc.timestamp)}</span>
-                          <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full border ${tagColor}`}>
+                          <span className="w-20 flex-shrink-0 font-mono text-[13px] font-semibold text-stone-600 dark:text-stone-300 tabular-nums">{formatTime(inc.timestamp)}</span>
+                          <span className={`inline-flex items-center gap-1 text-[13px] font-semibold px-3 py-1 rounded-full border ${tagColor}`}>
                             {inc.tag === 'auto-detected' && bite && <Check size={12} aria-hidden="true" />}
                             {tagLabel}
                           </span>
@@ -299,7 +310,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                                 onClick={() => confirmIncident(inc.id)}
                                 aria-label={`Confirm alarm at ${formatTime(inc.timestamp)} as a bite`}
                                 title="This was an actual bite"
-                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 items-center gap-1 px-2 text-xs text-amber-800 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
+                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 items-center gap-1 px-2 text-xs text-amber-800 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
                               >
                                 <CheckCircle size={13} />
                                 <span>Bite</span>
@@ -308,7 +319,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                             <button
                               onClick={() => removeEntry(inc)}
                               aria-label={`Delete entry from ${formatTime(inc.timestamp)}`}
-                              className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-10 min-w-10 items-center justify-center text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
+                              className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 min-w-11 items-center justify-center text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
                             >
                               <Trash2 size={14} />
                             </button>
@@ -329,23 +340,23 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           {incidents.length > 0 && <WeekChart />}
 
           {incidents.length > 0 && (
-            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-6 shadow-card dark:shadow-card-dark">
-              <h2 className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-3">Summary</h2>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-amber-800 dark:text-amber-400">Alarms to review</span>
-                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
-                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-alert-600 dark:text-alert-400">Bites</span>
-                  <span className="text-stone-700 dark:text-stone-200 font-semibold tabular-nums">
+            <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6">
+              <h2 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">Summary</h2>
+              <div className="mt-4 grid grid-cols-2 gap-4">
+                <div>
+                  <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
                     {incidents.filter(isConfirmedBite).length}
-                  </span>
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-alert-600 dark:text-alert-400">Bites</p>
                 </div>
-                <BiteInsights />
+                <div>
+                  <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
+                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
+                  </p>
+                  <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">Alarms to review</p>
+                </div>
               </div>
+              <BiteInsights />
             </div>
           )}
         </div>

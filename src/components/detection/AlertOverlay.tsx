@@ -18,7 +18,7 @@ export function AlertOverlay({ visible }: Props) {
           {/* An instruction, not a scolding: the alarm also fires on the
               occasional false catch, and a competing response is what
               habit reversal asks for in this moment. */}
-          <p className="text-2xl font-bold text-cream-100">Hands down</p>
+          <p className="font-display text-3xl font-extrabold tracking-[-0.04em] text-cream-100">Hands down</p>
           <p className="text-alert-100 text-sm">Press your thumb to each fingertip.</p>
         </div>
       </div>

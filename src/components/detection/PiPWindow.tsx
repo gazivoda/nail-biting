@@ -31,8 +31,7 @@ export function PiPWindow({ pipWindow, status }: Props) {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            border: '3px solid oklch(62% 0.18 25)',
-            animation: 'alert-ring 1s ease-in-out infinite',
+            border: '4px solid oklch(62% 0.18 25)',
           }}
         />
       )}
@@ -45,7 +44,7 @@ export function PiPWindow({ pipWindow, status }: Props) {
       {/* Stop / Start button */}
       <button
         onClick={() => setCameraEnabled(!cameraEnabled)}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+        className={`flex items-center gap-1.5 px-4 min-h-9 rounded-full text-xs font-semibold transition-all duration-150 ${
           cameraEnabled
             ? 'bg-stone-800 text-stone-300 hover:bg-stone-700'
             : 'bg-forest-600 text-white hover:bg-forest-500'
