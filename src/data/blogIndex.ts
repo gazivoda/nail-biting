@@ -90,12 +90,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-during-focus-and-work",
-    title: "Nail Biting at Work: Why Deep Focus and Concentration Trigger the Habit",
-    description: "Many people bite their nails during focused work: coding, reading, meetings. Learn the focus-habit loop and how to interrupt it without breaking flow.",
+    title: "Nail Biting During Deep Focus: Why Concentration Triggers the Habit",
+    description: "Many people bite their nails during deep focus: coding, writing, reading. Learn the focus-habit loop and how to interrupt it without breaking flow.",
     tag: "Productivity",
     readingMinutes: 3,
     datePublished: "2026-04-03",
-    dateModified: "2026-04-03",
+    dateModified: "2026-10-20",
   },
   {
     slug: "breaking-any-habit-science",
