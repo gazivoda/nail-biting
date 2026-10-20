@@ -415,7 +415,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-evening",
     title: "Why Do You Bite Your Nails in the Evening? What Is and Is Not Known",
-    description: "No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when left alone. Why evenings supply exactly that.",
+    description: "No study has measured when nail biting peaks. What has been measured: boredom and frustration brought the most biting in 40 undergraduates.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
