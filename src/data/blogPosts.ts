@@ -307,7 +307,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety: when treating anxiety is the key</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping: find out when you actually bite</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety: when treating anxiety is the key</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping: find out when you actually bite</a></li><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection explained</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming: the emotional regulation mechanism</a></li><li><a href="/blog/nail-biting-panic-disorder">Nail biting and panic disorder: when biting clusters around panic attacks</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -609,6 +609,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: 'The optimal approach: treat both',
         body: `For most anxiety-driven nail biters, the optimal outcome comes from treating both the anxiety and the habit directly. Anxiety treatment reduces trigger frequency and intensity; HRT dismantles the automatic habit loop itself. Either alone produces partial results; both together produce the most durable and complete change.\n\nA practical sequencing recommendation: begin HRT immediately (awareness training and competing response practice), while simultaneously initiating an anxiety management practice. The HRT produces faster visible results — reducing biting frequency within 2–4 weeks — which itself reduces the shame-driven anxiety component, creating a positive feedback loop that makes the anxiety management work more effectively.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1576,11 +1581,11 @@ BLOG_POSTS.push({
   slug: 'nail-biting-emotional-regulation',
   title: "Why Nail Biting Feels Calming: The Emotional Regulation Mechanism Explained",
   seoTitle: 'Nail Biting and Emotional Regulation',
-  description: 'In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after: self-report, not physiology. What a replacement must match.',
+  description: 'Why nail biting feels calming: the reinforcement loop, why regulation strategies often fail to replace it, and how to match a replacement to the mechanism.',
   tag: 'Psychology',
   readingMinutes: 5,
   datePublished: '2026-04-21',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-emotional-regulation.png',
   sections: [
     {
@@ -1618,7 +1623,7 @@ Understanding nail biting as emotional regulation explains why the intervention 
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3367,11 +3372,11 @@ BLOG_POSTS.push({
   slug: 'nail-biting-cortisol',
   title: `Nail Biting and Cortisol: The Stress Hormone Connection Explained`,
   seoTitle: 'Nail Biting and Cortisol: The Stress Link',
-  description: "No study we found has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting, 42% pleasure after.",
+  description: "No study we found has measured cortisol and nail biting together. What cortisol does, why relief is short-lived, and why stress management alone is not enough.",
   tag: 'Science',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-cortisol.png',
   sections: [
     {
@@ -3394,6 +3399,11 @@ BLOG_POSTS.push({
     {
       heading: `Why cortisol management alone isn't enough`,
       body: `Lowering cortisol reactivity reduces how often the trigger for biting fires, but it doesn't address the conditioned behavioural response itself — the well-worn cue-routine-reward pathway that connects "arousal" to "biting" remains in place even at lower average stress levels, and will still activate when a spike does occur. This is the same principle behind why stress management alone produces modest, inconsistent results for nail biting: it's an upstream intervention on the trigger, not a direct intervention on the automatic response. The most effective approach combines both — reducing cortisol spike frequency through lifestyle factors, and directly retraining the automatic response through Habit Reversal Training.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4427,6 +4437,11 @@ BLOG_POSTS.push({
     {
       heading: `When to seek evaluation`,
       body: `If your nail biting seems to cluster specifically around discrete episodes of acute fear or physical panic symptoms — rather than general daily stress — and especially if you're also avoiding certain places or situations because of fear of having another episode there, it's worth discussing this pattern with a doctor or therapist rather than treating it purely as a nail biting issue. Panic disorder is a well-defined, treatable condition, and addressing it directly is likely to do more for this specific biting pattern than any nail-biting-focused intervention applied in isolation.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
