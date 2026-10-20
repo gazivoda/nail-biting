@@ -414,12 +414,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-evening",
-    title: "Why You Bite Your Nails More at Night: The Science Explained",
+    title: "Why Do You Bite Your Nails in the Evening? What Is and Is Not Known",
     description: "No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when left alone. Why evenings supply exactly that.",
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-fidget-toys",
