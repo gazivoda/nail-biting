@@ -12,19 +12,15 @@ import {
 } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { spawn, ChildProcess } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ─── Load .env early so secrets are available before anything else ────────────
-// In dev the .env sits at the project root; in production it's copied into
-// the app's Resources directory alongside the asar by electron-builder.
+// Dev only: the .env sits at the project root. It is deliberately not packaged
+// into the app, so a release build carries no secrets.
 function loadEnv() {
   const candidates = [
-    // Production: Resources/.env (next to app.asar)
-    path.join(__dirname, '..', '.env'),
-    // Dev: project root
     path.join(__dirname, '..', '..', '.env'),
   ];
   for (const envPath of candidates) {
@@ -55,8 +51,6 @@ const RENDERER_FILE = path.join(__dirname, '..', 'dist', 'index.html');
 const API_BASE = isDev
   ? `http://localhost:${process.env.PORT || 3000}`
   : (process.env.API_BASE_URL || 'https://stopbiting.today');
-// Derive port for local dev proxy
-const SERVER_PORT = 3000;
 
 // Custom protocol for OAuth deep-link redirect
 const PROTOCOL = 'stopbiting';
@@ -65,7 +59,6 @@ const PROTOCOL = 'stopbiting';
 
 let mainWindow: BrowserWindow | null = null;
 let tray: Tray | null = null;
-let serverProcess: ChildProcess | null = null;
 let quitting = false;
 
 // ─── Deep-link / protocol ────────────────────────────────────────────────────
@@ -99,52 +92,9 @@ if (!gotLock) {
 }
 
 // ─── Backend server ───────────────────────────────────────────────────────────
-
-function startBackendServer() {
-  // In development, assume the server is started separately with `npm run dev`
-  if (isDev) return;
-
-  // In production, if API_BASE_URL is set, we use the hosted server — no local process needed.
-  if (process.env.API_BASE_URL) {
-    console.log('[main] Using hosted API at', process.env.API_BASE_URL);
-    return;
-  }
-
-  // Fallback: spawn a local server (only if no hosted API is configured)
-  const serverPath = path.join(__dirname, 'server.js');
-  if (!existsSync(serverPath)) {
-    console.error('Bundled server not found at', serverPath);
-    return;
-  }
-
-  serverProcess = spawn(process.execPath, [serverPath], {
-    env: {
-      ...process.env,
-      PORT: String(SERVER_PORT),
-      APP_URL: `http://localhost:${SERVER_PORT}`,
-      ELECTRON_PROTOCOL: PROTOCOL,
-    },
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-
-  serverProcess.stdout?.on('data', (data: Buffer) => {
-    console.log('[server]', data.toString().trim());
-  });
-  serverProcess.stderr?.on('data', (data: Buffer) => {
-    console.error('[server]', data.toString().trim());
-  });
-  serverProcess.on('exit', (code) => {
-    console.log('[server] exited with code', code);
-    serverProcess = null;
-  });
-}
-
-function stopBackendServer() {
-  if (serverProcess) {
-    serverProcess.kill();
-    serverProcess = null;
-  }
-}
+// None is started here. Dev runs the server separately (`npm run dev`); the
+// packaged app talks to the hosted API (API_BASE above), so no server code or
+// secrets ship inside the app bundle.
 
 // ─── Deep-link handler ───────────────────────────────────────────────────────
 
@@ -413,7 +363,6 @@ app.on('ready', async () => {
       app.dock?.setIcon(nativeImage.createFromPath(iconPath));
     }
   }
-  startBackendServer();
   setupIPC();
   await createWindow();
   createTray();
@@ -436,7 +385,6 @@ app.on('open-url', (event, url) => {
 
 app.on('before-quit', () => {
   quitting = true;
-  stopBackendServer();
 });
 
 // On Windows/Linux, quit when all windows are closed
