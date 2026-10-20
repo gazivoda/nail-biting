@@ -3510,7 +3510,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4717,6 +4717,11 @@ BLOG_POSTS.push({
       heading: `Reducing risk going forward`,
       body: `Beyond treating any existing infection, general fungal-infection risk reduction complements standard nail biting management: keeping nails dry (fungal organisms are generally described as favouring warm, moist environments), avoiding sharing nail tools or files without cleaning them between uses, and — as with the general infection-risk reduction discussed for nail biting broadly — reducing biting frequency itself, since intact, undamaged nail and skin barrier is meaningfully more resistant to fungal colonisation in the first place than repeatedly traumatised tissue.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -5020,7 +5025,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5214,7 +5219,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li></ul>`,
+        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6773,6 +6778,60 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-warts">Nail biting and warts</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li><li><a href="/blog/nail-biting-myths">Nail biting myths</a></li><li><a href="/blog/nail-biting-cuticle-damage">Cuticle damage from nail biting</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-dark-line-on-nail',
+  title: `Dark Line on a Bitten Nail: Habit Mark or Something to Check?`,
+  seoTitle: 'Dark Line on a Bitten Nail: When to See a Doctor',
+  description: `Nail biting can rarely cause a dark band on a nail, but so can melanoma. What case reports and two dermatology reviews say, and when to see a doctor.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-dark-line-on-nail.png',
+  sections: [
+    {
+      heading: `Can nail biting cause a dark line on a nail?`,
+      body: `It can, according to case reports, but it is uncommon in the literature and you cannot assume it is the cause. A dark brown or black band running along the nail is called longitudinal melanonychia. Reports describe it after nail biting in a 13-year-old girl (Anolik et al., 2011), a 44-year-old woman with nine affected fingernails (Salmon-Ehr et al., 1999), a young adult who also had splinter hemorrhages and white spots (Ficicioglu and Korkmaz, 2018), and six cases of nail biting and picking (Baran, 1990). In a Korean series of 53 people with onychophagia, 30.2% had longitudinal melanonychia and 32.1% had linear or pinpoint hemorrhage (Shin et al., 2021).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/21692839/" target="_blank" rel="noopener noreferrer">Anolik RB, Shah K, Rubin AI. Onychophagia-induced longitudinal melanonychia. Pediatr Dermatol. 2011;29(4):488-9. doi:10.1111/j.1525-1470.2011.01496.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/10095892/" target="_blank" rel="noopener noreferrer">Salmon-Ehr V, Mohn C, Bernard P. Secondary longitudinal melanonychia secondary to onychophagia. Ann Dermatol Venereol. 1999;126(1):44-5.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29666714/" target="_blank" rel="noopener noreferrer">Ficicioglu S, Korkmaz S. Onychophagia Induced Melanonychia, Splinter Hemorrhages, Leukonychia, and Pterygium Inversum Unguis Concurrently. Case Rep Dermatol Med. 2018;2018:3230582. doi:10.1155/2018/3230582</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/2242780/" target="_blank" rel="noopener noreferrer">Baran R. Nail biting and picking as a possible cause of longitudinal melanonychia. A study of 6 cases. Dermatologica. 1990;181(2):126-8. doi:10.1159/000247900</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/34416026/" target="_blank" rel="noopener noreferrer">Shin JO, Roh D, Son JH, et al. Onychophagia: detailed clinical characteristics. Int J Dermatol. 2021;61(3):331-336. doi:10.1111/ijd.15861</a></li></ul>`,
+    },
+    {
+      heading: `Why would biting darken a nail?`,
+      body: `The author of the six-case study proposed that finger nails respond like toe nails, where the melanocytes (pigment cells) in the nail matrix can be stimulated by repeated trauma. Under the microscope the pigment was melanin, with more melanin in the cells but no increase in their number (Baran, 1990). That is a likely explanation put forward from a small series, not something shown in a large study.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/2242780/" target="_blank" rel="noopener noreferrer">Baran R. 1990 (above).</a></li></ul>`,
+    },
+    {
+      heading: `Does the line go away when you stop biting?`,
+      body: `Sometimes, and the reports disagree on how fast. The 1999 case report says such lesions may disappear several months after stopping the habit (Salmon-Ehr et al., 1999). The 1990 series says the stimulation of the pigment cells can apparently persist long after the trauma has stopped (Baran, 1990). We found no study that followed people after they stopped biting, so we cannot give a time frame.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/10095892/" target="_blank" rel="noopener noreferrer">Salmon-Ehr V, et al. 1999 (above).</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/2242780/" target="_blank" rel="noopener noreferrer">Baran R. 1990 (above).</a></li></ul>`,
+    },
+    {
+      heading: `Why can't you assume it is the habit?`,
+      body: `Because a dark nail has a broad list of causes, from harmless to dangerous. A 2022 hand surgery review says the list runs from common self-limiting conditions such as a bruise under the nail (subungual hematoma) and infection to subungual melanoma, and that clinical assessment, dermoscopy and imaging are usually not enough to settle the diagnosis, so a biopsy is often needed (Das De et al., 2022). A 2025 clinical review by a nail expert group says a high index of suspicion is needed because benign bands and nail unit melanoma can look alike, especially in children, where a conservative approach with close follow-up is recommended (Ricardo et al., 2025). Fungal infection can also darken a nail (Starace et al., 2021).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/36050195/" target="_blank" rel="noopener noreferrer">Das De S, Tan KB, Ho SJE, Athanasian EA, Puhaindran ME. Pigmented Nail Lesions: When to Observe, When to Biopsy, When to Widely Excise, and When to Amputate? J Hand Surg Am. 2022;47(10):988-997. doi:10.1016/j.jhsa.2022.06.029</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/40023404/" target="_blank" rel="noopener noreferrer">Ricardo JW, Bellet JS, Jellinek N, et al. Evaluation and diagnosis of longitudinal melanonychia: A clinical review by a nail expert group. J Am Acad Dermatol. 2025;93(1):176-187. doi:10.1016/j.jaad.2025.02.075</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/33405264/" target="_blank" rel="noopener noreferrer">Starace M, Ambrogio F, Bruni F, Piraccini BM, Alessandrini A. Dermatophytic melanonychia: A case series of an increasing disease. Mycoses. 2021;64(5):511-519. doi:10.1111/myc.13237</a></li></ul>`,
+    },
+    {
+      heading: `What will a doctor do about a dark line?`,
+      body: `The 2025 expert review names onychoscopy (a close look with a dermatoscope) and examination of nail clippings as useful first steps that can avoid or guide a biopsy, and says a biopsy of the nail matrix is the gold standard for ruling out melanoma (Ricardo et al., 2025). Tell the doctor about the biting even if you are embarrassed. The case reports stress that patients often do not mention it, and may deny it when asked, which can send the work-up in the wrong direction (Ficicioglu and Korkmaz, 2018; Anolik et al., 2011).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/40023404/" target="_blank" rel="noopener noreferrer">Ricardo JW, et al. 2025 (above).</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29666714/" target="_blank" rel="noopener noreferrer">Ficicioglu S, Korkmaz S. 2018 (above).</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21692839/" target="_blank" rel="noopener noreferrer">Anolik RB, et al. 2011 (above).</a></li></ul>`,
+    },
+    {
+      heading: `When should you get a dark nail line checked?`,
+      body: `Have a dermatologist look at any new dark band on a nail that you cannot explain, and do not wait to see whether it fades after you stop biting. Any band in a child is also a reason to be seen, because the 2025 review recommends close follow-up for children rather than assuming it is harmless. Our page on nail cancer covers what a 2026 study of nail squamous cell carcinoma found.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer?</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li><li><a href="/blog/nail-biting-white-spots">White spots on nails from biting</a></li><li><a href="/blog/nail-biting-fungal-infection">Fungal infection and nail biting</a></li><li><a href="/blog/nail-biting-paronychia">Paronychia</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
