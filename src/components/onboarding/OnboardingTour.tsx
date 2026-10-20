@@ -16,7 +16,7 @@ const STEPS: Step[] = [
     // camera prompt is still up or after it was refused, so it cannot promise
     // that detection is running. The card it points at says whether it is.
     title: 'This is the detector',
-    body: 'Once your browser lets it use the camera, it watches for your hands and sounds the alarm when one reaches your mouth. The video never leaves this computer.',
+    body: 'Once your browser lets it use the camera, it watches for your hands and sounds the alarm when one reaches your mouth. No camera data is sent while it runs.',
     side: 'bottom',
   },
   {
@@ -220,7 +220,7 @@ export function OnboardingTour() {
 
       {/* Tooltip */}
       <div
-        className="absolute z-10 bg-white dark:bg-ink-50 rounded-2xl shadow-2xl"
+        className="absolute z-10 bg-white dark:bg-ink-50 rounded-2xl border border-stone-200 dark:border-ink-400"
         style={{ left: tooltipLeft, top: tooltipTop, width: TOOLTIP_W }}
         onClick={(e) => e.stopPropagation()}
       >

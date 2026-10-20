@@ -8,13 +8,13 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
   return (
     <nav
       aria-label="Site navigation"
-      className="fixed inset-x-0 top-0 z-50 bg-[color:var(--sg-ground)]/85 backdrop-blur-md"
+      className="fixed inset-x-0 top-0 z-50 bg-[color:var(--sg-ground)]"
     >
       {/* First focusable thing on every marketing page: past the nav, to the
           page's <main id="main">. Invisible until focused. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-[color:var(--sg-ink)]"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-[color:var(--sg-ink)]"
       >
         Skip to content
       </a>

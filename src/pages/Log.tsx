@@ -95,10 +95,10 @@ function WeekChart() {
     ? `No ${noun === 'bite' ? 'bites' : 'entries'} in the last 7 days.`
     : `${total} ${total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week, most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`;
 
-  const tickColor = isDark ? '#6b7280' : '#78716c';
-  const tooltipBg = isDark ? 'oklch(18% 0.02 165)' : '#fafaf9';
-  const tooltipBorder = isDark ? 'oklch(30% 0.02 165)' : '#e7e5e4';
-  const tooltipLabel = isDark ? '#d1d5db' : '#57534e';
+  const tickColor = isDark ? 'oklch(72% 0.02 160)' : 'oklch(42% 0.025 160)';
+  const tooltipBg = isDark ? 'oklch(18% 0.02 165)' : 'oklch(100% 0 0)';
+  const tooltipBorder = isDark ? 'oklch(30% 0.018 165)' : 'oklch(90% 0.01 130)';
+  const tooltipLabel = isDark ? 'oklch(85% 0.01 160)' : 'oklch(42% 0.025 160)';
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-3xl p-6 shadow-card dark:shadow-card-dark">
@@ -122,7 +122,7 @@ function WeekChart() {
           <XAxis dataKey="day" tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} />
           <YAxis tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} allowDecimals={false} />
           <Tooltip
-            contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 8, fontSize: 12 }}
+            contentStyle={{ background: tooltipBg, border: `1px solid ${tooltipBorder}`, borderRadius: 16, fontSize: 12 }}
             labelStyle={{ color: tooltipLabel }}
             itemStyle={{ color: BAR_FILL[isDark ? 'dark' : 'light'] }}
             cursor={{ fill: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)' }}
@@ -245,7 +245,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           <button
             type="button"
             onClick={onGoToWatch}
-            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-forest-600 px-5 text-sm font-semibold text-white dark:text-deep transition-colors hover:bg-forest-500"
+            className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-deep px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
           >
             Go to Watch
             <ArrowRight size={15} aria-hidden="true" />

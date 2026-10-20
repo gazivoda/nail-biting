@@ -8,7 +8,7 @@ export function SiteFooter({ cta = true }: { cta?: boolean } = {}) {
   return (
     <>
     {cta && <ClosingCta />}
-    <footer className="sg-dark relative overflow-hidden rounded-t-[2.5rem] bg-[color:var(--sg-deep)] pb-10 pt-14 lg:rounded-t-[3.5rem]">
+    <footer className="sg-dark relative overflow-hidden rounded-t-[3rem] bg-[color:var(--sg-deep)] pb-10 pt-14">
       <Rings className="-bottom-80 -left-40 h-[44rem] w-[44rem]" />
       <div className="sg-container relative">
         <div className="flex flex-col justify-between gap-10 sm:flex-row">

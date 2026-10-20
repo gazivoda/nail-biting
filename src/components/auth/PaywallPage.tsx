@@ -164,13 +164,13 @@ export function PaywallPage({ onBack }: Props) {
           </div>
         )}
 
-        <div className="bite relative mb-10 flex w-full max-w-2xl flex-col items-start overflow-hidden rounded-[2.5rem] bg-deep p-8 text-white sm:p-12">
+        <div className="bite relative mb-10 flex w-full max-w-2xl flex-col items-start overflow-hidden rounded-[3rem] bg-deep p-8 text-white sm:p-12">
         <Rings className="-bottom-60 -right-52 h-[32rem] w-[32rem]" />
         <h1 className="relative font-display text-[2.75rem] sm:text-6xl font-extrabold leading-[0.95] tracking-[-0.045em] mb-4">
           {onBack ? <>Choose a <span className="text-lime-300">plan</span></> : <>Keep the alarm <span className="text-lime-300">running</span></>}
         </h1>
         <p className="relative text-white/75 max-w-md text-lg leading-snug">
-          $2.99 a month, or $29 a year. Detection runs on your computer, and no video ever leaves it.
+          $2.99 a month, or $29 a year. No camera data is sent while it runs.
         </p>
         {/* Mid-trial, the free days left are the first thing to know, not a
             footnote under the fold on a phone. */}
@@ -212,7 +212,7 @@ export function PaywallPage({ onBack }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
           {/* Yearly first at every width, as on /pricing. */}
-          <div className="rounded-[2rem] p-7 flex flex-col bg-deep text-white relative">
+          <div className="rounded-2xl p-7 flex flex-col bg-deep text-white relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <span className="bg-lime-300 text-deep text-xs font-bold px-3 py-1 rounded-full">
                 Best value: save 19%
@@ -245,7 +245,7 @@ export function PaywallPage({ onBack }: Props) {
             )}
           </div>
           {/* Monthly */}
-          <div className="border border-stone-200 dark:border-ink-400 rounded-[2rem] p-7 flex flex-col bg-white dark:bg-ink-50">
+          <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col bg-white dark:bg-ink-50">
             <div className="mb-4">
               <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
               <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
@@ -278,7 +278,7 @@ export function PaywallPage({ onBack }: Props) {
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-xs text-stone-500 dark:text-stone-400">
           <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>
           <div className="flex items-center gap-1.5"><Check size={11} /><span>Cancel anytime in Settings</span></div>
-          <div className="flex items-center gap-1.5"><Check size={11} /><span>Camera stays on-device</span></div>
+          <div className="flex items-center gap-1.5"><Check size={11} /><span>No camera data is sent while it runs</span></div>
         </div>
 
       </main>

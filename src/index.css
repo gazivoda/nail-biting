@@ -112,6 +112,11 @@
   :where(.dark) :where(a, button, summary, [role="tab"], [tabindex]):focus-visible {
     outline-color: oklch(70% 0.11 148);
   }
+  /* On a deep surface the brand-green ring nearly vanishes; use the signal lime. */
+  .sg-dark :where(a, button, summary, [role="tab"], [tabindex]):focus-visible,
+  .bg-deep :where(a, button, summary, [role="tab"], [tabindex]):focus-visible {
+    outline-color: var(--c-signal);
+  }
 }
 @tailwind utilities;
 
@@ -220,26 +225,6 @@ html.dark {
 .reveal.revealed-fast,
 .reveal-card.revealed-fast {
   transition-duration: 0.22s;
-}
-
-/* Shimmer sweep on primary CTA button */
-.btn-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-shimmer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    oklch(100% 0 0 / 0.18) 50%,
-    transparent 70%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2.4s linear infinite;
 }
 
 /* ── CameraView alert-ring pulse ─────────────────────────────────────────── */
@@ -542,11 +527,6 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
     transition: none;
   }
 
-  .btn-shimmer::after {
-    animation: none;
-    display: none;
-  }
-
   .ed-rule-draw {
     transform: none;
     transition: none;
@@ -728,3 +708,11 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 .sg-tape__item { display: inline-flex; align-items: center; gap: 2rem; padding-right: 2rem; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.04em; font-size: clamp(2rem, 1.2rem + 3.2vw, 4.25rem); line-height: 1; white-space: nowrap; }
 @keyframes sg-tape { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .sg-tape__track { animation: none; } }
+
+/* The alarm flash holds steady instead of fading in and out, and short
+   transitions replace long ones, for people who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .alert-flash { animation: none; opacity: 1; }
+  .sg-btn:active { transform: none; }
+  * { transition-duration: 0.01ms !important; }
+}

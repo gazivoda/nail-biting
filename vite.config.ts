@@ -76,9 +76,9 @@ export default defineConfig({
       // Manual registration (in main.tsx) defers SW from the critical path.
       injectRegister: null,
       manifest: {
-        name: 'Stop Biting — AI Nail Habit Tracker',
+        name: 'Stop Biting: AI Nail Habit Tracker',
         short_name: 'Stop Biting',
-        description: 'Break the nail biting habit with on-device AI detection. Real-time webcam monitoring, 100% private.',
+        description: 'Break the nail biting habit with on-device AI detection. Real-time webcam monitoring. No camera data is sent while it runs.',
         theme_color: '#F7F7F1',
         background_color: '#F7F7F1',
         display: 'standalone',

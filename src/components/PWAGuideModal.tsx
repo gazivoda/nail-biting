@@ -69,13 +69,13 @@ export function PWAGuideModal() {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60"
         onClick={() => snooze(3)}
       />
 
       {/* Sheet */}
       <div
-        className={`relative w-full sm:max-w-md mx-0 sm:mx-4 bg-white dark:bg-ink-50 rounded-t-2xl sm:rounded-2xl shadow-2xl transition-transform duration-300 ease-out ${
+        className={`relative w-full sm:max-w-md mx-0 sm:mx-4 bg-white dark:bg-ink-50 rounded-t-2xl sm:rounded-2xl border border-stone-200 dark:border-ink-400 transition-transform duration-300 ease-out ${
           mounted ? 'translate-y-0' : 'translate-y-6'
         }`}
       >
@@ -87,7 +87,7 @@ export function PWAGuideModal() {
         {/* Close */}
         <button
           onClick={() => snooze(3)}
-          className="absolute right-4 top-4 text-stone-500 hover:text-stone-600 dark:text-stone-400 dark:hover:text-stone-300 transition-colors"
+          className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center text-stone-500 hover:text-stone-600 dark:text-stone-400 dark:hover:text-stone-300 transition-colors"
           aria-label="Dismiss"
         >
           <X size={18} />
@@ -154,7 +154,7 @@ export function PWAGuideModal() {
                 ))}
               </ol>
               <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl px-4 py-2.5 text-xs text-amber-700 dark:text-amber-400 mb-5">
-                Make sure you're using <strong>Safari</strong> — only Safari supports installation on iOS.
+                Make sure you're using <strong>Safari</strong>. Only Safari supports installation on iOS.
               </div>
             </>
           ) : (
@@ -165,7 +165,7 @@ export function PWAGuideModal() {
               <button
                 onClick={handleInstall}
                 disabled={!canInstall}
-                className="w-full flex items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-deep font-semibold rounded-full px-5 py-3 text-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_oklch(38%_0.12_148/0.35)] mb-5"
+                className="w-full flex items-center justify-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-deep font-semibold rounded-full px-5 py-3 text-sm transition-colors duration-150 mb-5"
               >
                 <Download size={15} />
                 Install Stop Biting
@@ -180,7 +180,7 @@ export function PWAGuideModal() {
             </p>
             <button
               onClick={() => snooze(7)}
-              className="text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+              className="min-h-11 px-2 text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
             >
               Maybe later
             </button>

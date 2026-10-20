@@ -189,7 +189,7 @@ function SoundPicker({ value, onChange, volume }: { value: AlertSound; onChange:
               type="button"
               onClick={() => handlePreview(opt.value)}
               aria-label={`Preview ${opt.label}`}
-              className={`mb-3 flex min-h-8 items-center gap-1 rounded-md px-2 text-xs transition-colors duration-150 ${
+              className={`mb-3 flex min-h-11 items-center gap-1 rounded-full px-3 text-xs transition-colors duration-150 ${
                 isPreviewing
                   ? 'bg-forest-500 text-white'
                   : isSelected
@@ -585,7 +585,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           <div>
             <p className="text-sm text-forest-800 dark:text-forest-300 font-medium">Detection runs on your computer</p>
             <p className="text-xs text-forest-700 dark:text-forest-400 mt-0.5">
-              Your camera is processed in this browser. Video never leaves your device; your alarm and bite log stays in this browser too.
+              Your camera is processed in this browser. No camera data is sent while it runs; your alarm and bite log stays in this browser too.
             </p>
           </div>
         </div>

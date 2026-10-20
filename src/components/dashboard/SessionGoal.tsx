@@ -44,11 +44,8 @@ export function SessionGoal() {
       {/* Progress bar */}
       <div className="mt-4 h-1.5 bg-stone-100 dark:bg-ink-400 rounded-full overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-1000"
-          style={{
-            width: `${progress * 100}%`,
-            background: done ? 'oklch(25% 0.05 162)' : 'oklch(46% 0.13 148)',
-          }}
+          className={`h-full rounded-full transition-all duration-1000 motion-reduce:transition-none ${done ? 'bg-deep dark:bg-lime-300' : 'bg-forest-500'}`}
+          style={{ width: `${progress * 100}%` }}
         />
       </div>
 

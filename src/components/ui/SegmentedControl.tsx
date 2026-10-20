@@ -21,7 +21,7 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
       role="radiogroup"
       aria-label={ariaLabel}
       onKeyDown={e => radioGroupKeyDown(e, options.map(o => o.value), value, onChange)}
-      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 rounded-[11px]">
+      className="inline-flex items-center gap-0.5 p-[3px] bg-stone-100 dark:bg-ink-fill border border-stone-200 dark:border-ink-400 rounded-full">
       {options.map(opt => (
         <button
           key={opt.value}
@@ -30,9 +30,9 @@ export function SegmentedControl<T extends string>({ options, value, onChange, a
           aria-checked={value === opt.value}
           tabIndex={radioTabIndex(value === opt.value)}
           onClick={() => onChange(opt.value)}
-          className={`min-h-11 sm:min-h-8 px-3 py-1 text-[13px] rounded-[8px] transition-all duration-[140ms] ${
+          className={`min-h-11 sm:min-h-8 px-3 py-1 text-[13px] rounded-full transition-all duration-[140ms] ${
             value === opt.value
-              ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 font-semibold shadow-[0_1px_2px_rgba(0,0,0,0.06)]'
+              ? 'bg-white dark:bg-ink-50 text-forest-700 dark:text-forest-300 font-semibold border border-stone-200 dark:border-ink-400'
               : 'text-stone-500 dark:text-stone-400 font-medium hover:text-stone-700 dark:hover:text-stone-200'
           }`}
         >

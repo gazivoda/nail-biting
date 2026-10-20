@@ -40,7 +40,7 @@ export function StreakHero() {
 
   return (
     <div
-      className="bite relative overflow-hidden bg-deep text-white rounded-3xl p-6 sm:p-8 [--bite:44px]"
+      className="bite relative overflow-hidden bg-deep text-white rounded-[3rem] p-6 sm:p-8"
       data-tour="streak-card"
     >
       <Rings className="-bottom-52 -right-40 h-[28rem] w-[28rem]" />

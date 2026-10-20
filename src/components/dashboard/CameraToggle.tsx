@@ -23,7 +23,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
           </p>
           <div className="flex items-center gap-1.5 mt-1.5 text-white/70">
             <ShieldCheck size={13} />
-            <span className="text-xs">Video stays on this device</span>
+            <span className="text-xs">No camera data is sent while it runs</span>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
         <button
           type="button"
           onClick={() => setCameraEnabled(false)}
-          className="flex min-h-11 items-center gap-1.5 px-4 rounded-lg text-sm font-medium text-stone-500 dark:text-stone-400 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
+          className="flex min-h-11 items-center gap-1.5 px-4 rounded-full text-sm font-medium text-stone-700 dark:text-stone-300 bg-stone-200/50 dark:bg-ink-400/50 hover:bg-stone-200 dark:hover:bg-ink-400 transition-colors duration-150"
         >
           <Square size={11} fill="currentColor" aria-hidden="true" />
           Stop

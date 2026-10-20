@@ -180,3 +180,5 @@ Commit the page first, then sync, then commit the generated files.
 **Do not tick a plan item you did not do.** In round 8 the audit item folded into slot 28 was replaced in my head by the older Web Share idea; I built that and only noticed when logging. Re-read the item text from the plan file before starting each iteration.
 
 **Check scripts' date edits with `git diff` before committing.** A replace of '2026-04-03' hit `datePublished` instead of `dateModified`; the diff showed it.
+
+**Run `node --check server.js` after merging any branch that touches it.** The design branch's server.js had an unescaped apostrophe ("today's") in a single-quoted string, so the server would not have started in production; nobody had run that branch. Treat an unrun branch as untested, not just unreviewed: after a merge run node --check, the full sweep (scratchpad sweep8.py), a curl of every new asset path, and a browser pass before pushing.

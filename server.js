@@ -803,13 +803,14 @@ if (!existsSync(distPath)) {
   const SSR_ARTICLE_HEAD =
     '<style>' +
     '#ssr-page-content{max-width:42rem;margin:0 auto;padding:48px 24px;' +
-    'font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;' +
-    'line-height:1.65;color:#292524}' +
-    '#ssr-page-content h1{font-size:1.9rem;line-height:1.25}' +
+    'font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;' +
+    'line-height:1.65;color:oklch(19% 0.03 160)}' +
+    '#ssr-page-content h1,#ssr-page-content h2{font-family:"Bricolage Grotesque",Geist,sans-serif;letter-spacing:-0.03em}' +
+    '#ssr-page-content h1{font-size:1.9rem;line-height:1.15}' +
     '#ssr-page-content h2{font-size:1.25rem;margin-top:2rem}' +
     '#ssr-page-content table{border-collapse:collapse;width:100%;font-size:.85rem}' +
-    '#ssr-page-content th,#ssr-page-content td{border:1px solid #d6d3d1;padding:6px 8px;text-align:left;vertical-align:top}' +
-    '@media (prefers-color-scheme:dark){#ssr-page-content{color:#d6d3d1}}' +
+    '#ssr-page-content th,#ssr-page-content td{border:1px solid oklch(90% 0.01 130);padding:6px 8px;text-align:left;vertical-align:top}' +
+    '@media (prefers-color-scheme:dark){#ssr-page-content{color:oklch(90% 0.01 130)}}' +
     'html.js #ssr-page-content{display:none}' +
     '</style>' +
     '<script>document.documentElement.classList.add("js")</script>';

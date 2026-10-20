@@ -23,7 +23,7 @@ export default {
       boxShadow: {
         // Flat system: cards are separated by ground and a hairline, not shadow.
         'card': 'none',
-        'card-md': '0 1px 0 oklch(0% 0 0 / 0.04)',
+        'card-md': 'none',
         'card-dark': 'none',
         'card-md-dark': 'none',
       },
@@ -99,8 +99,14 @@ export default {
         },
         // ── Warm amber for streak/trophy ──────────────────────────────────
         amber: {
+          50:  'oklch(97%   0.020  85 / <alpha-value>)',
+          100: 'oklch(94%   0.050  85 / <alpha-value>)',
+          200: 'oklch(88%   0.090  82 / <alpha-value>)',
           400: 'oklch(76%   0.155  75 / <alpha-value>)',
           500: 'oklch(68%   0.160  75 / <alpha-value>)',
+          700: 'oklch(45%   0.100  65 / <alpha-value>)',
+          800: 'oklch(38%   0.090  62 / <alpha-value>)',
+          900: 'oklch(30%   0.070  60 / <alpha-value>)',
         },
         // ── Alert red (softer, warmer) ────────────────────────────────────
         alert: {

@@ -59,7 +59,7 @@ export function ReplacementPrompt() {
         <button
           onClick={() => answer()}
           aria-label="Close. The alarm stays in History to review"
-          className="p-2.5 -m-1.5 rounded-lg text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
+          className="flex h-11 w-11 -m-2 items-center justify-center rounded-lg text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />
         </button>

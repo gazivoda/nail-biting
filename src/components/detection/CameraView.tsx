@@ -79,10 +79,10 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
         {cameraEnabled && pipSupported && !cameraError && !modelFailed && (
           <button
             onClick={togglePiP}
-            title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window — detection keeps running when you switch apps'}
-            className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 ${
+            title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window. Detection keeps running when you switch apps'}
+            className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 ${
               pipActive
-                ? 'bg-forest-600 text-cream-100 shadow-md ring-1 ring-forest-400/40'
+                ? 'bg-forest-600 text-cream-100 ring-1 ring-forest-400/40'
                 : 'bg-white/90 text-stone-700 hover:bg-white border border-stone-200 dark:bg-ink-100/90 dark:text-stone-200 dark:hover:bg-ink-100 dark:border-ink-400'
             }`}
           >

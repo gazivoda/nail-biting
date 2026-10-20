@@ -41,7 +41,7 @@ export function PWAInstallPrompt() {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Install Stop Biting</p>
           <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-            Add to home screen for quick access — no app store needed.
+            Add to home screen for quick access, no app store needed.
           </p>
           <button
             onClick={handleInstall}

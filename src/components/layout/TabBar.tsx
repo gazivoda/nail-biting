@@ -81,7 +81,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
             </p>
             <button
               onClick={onUpgrade}
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-lime-300 hover:bg-lime-200 text-deep text-xs font-bold transition-colors duration-150"
+              className="w-full flex items-center justify-center gap-1.5 min-h-11 px-3 py-2 rounded-full bg-lime-300 hover:bg-lime-200 text-deep text-xs font-bold transition-colors duration-150"
             >
               <Zap size={11} />
               Upgrade
@@ -109,7 +109,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
             </div>
             <button
               onClick={signOut}
-              className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors"
+              className="w-full flex items-center gap-2 min-h-11 px-2 py-2 rounded-lg text-xs text-stone-500 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors"
             >
               <LogOut size={12} />
               Sign out
@@ -122,7 +122,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
           <div className="mx-3 mb-2">
             <button
               onClick={triggerInstall}
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors border border-stone-200 dark:border-ink-400"
+              className="w-full flex items-center gap-2 min-h-11 px-3 py-2.5 rounded-xl text-xs text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-ink-50 transition-colors border border-stone-200 dark:border-ink-400"
             >
               <Download size={13} />
               Install app
@@ -134,7 +134,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
         <div className="p-4 border-t border-stone-200 dark:border-ink-400">
           <div className="flex items-center gap-1.5 text-stone-500 dark:text-stone-400 text-xs">
             <ShieldCheck size={11} />
-            <span>Camera stays on-device</span>
+            <span>No camera data is sent while it runs</span>
           </div>
         </div>
       </aside>
@@ -142,7 +142,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
       {/* ── Mobile bottom nav (< lg) ──────────────────────────────────────── */}
       <nav
         aria-label="Main navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-ink-200/95 backdrop-blur-md border-t border-stone-200 dark:border-ink-400 flex items-stretch"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-ink-200 border-t border-stone-200 dark:border-ink-400 flex items-stretch"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         {tabs.map(({ id, label, icon: Icon }) => {
@@ -153,14 +153,16 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
               data-tour={id === 'log' ? 'history-tab' : undefined}
               onClick={() => onChange(id)}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex-1 flex flex-col items-center gap-1 py-3 transition-colors ${
+              className={`flex-1 flex flex-col items-center gap-1 py-2.5 transition-colors ${
                 isActive
-                  ? 'text-deep dark:text-lime-300 font-bold'
+                  ? 'text-deep dark:text-lime-300'
                   : 'text-stone-500 dark:text-stone-400 active:text-stone-600 dark:active:text-stone-300'
               }`}
             >
-              <Icon size={20} />
-              <span className="text-xs font-medium">{label}</span>
+              <span className={`flex h-8 items-center rounded-full px-5 transition-colors ${isActive ? 'bg-deep text-white dark:bg-lime-300 dark:text-deep' : ''}`}>
+                <Icon size={20} />
+              </span>
+              <span className={`text-xs ${isActive ? 'font-semibold' : 'font-medium'}`}>{label}</span>
             </button>
           );
         })}

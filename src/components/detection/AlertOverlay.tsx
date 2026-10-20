@@ -13,7 +13,7 @@ export function AlertOverlay({ visible }: Props) {
       <div className="absolute inset-0 border-8 border-alert-400 alert-flash rounded-none" />
       {/* Center message */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="alert-flash bg-alert-900/90 border border-alert-400 rounded-2xl px-8 py-6 flex flex-col items-center gap-3 shadow-2xl">
+        <div className="alert-flash bg-alert-900/90 border border-alert-400 rounded-2xl px-8 py-6 flex flex-col items-center gap-3">
           <AlertTriangle className="text-alert-400" size={48} />
           {/* An instruction, not a scolding: the alarm also fires on the
               occasional false catch, and a competing response is what
