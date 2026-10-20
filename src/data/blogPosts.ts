@@ -160,7 +160,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -3421,6 +3421,11 @@ BLOG_POSTS.push({
       html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+    },
   ],
 });
 
@@ -3505,7 +3510,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3986,6 +3991,11 @@ BLOG_POSTS.push({
       body: `No. For the substantial majority of nail biters, the physical damage — however alarming it looks at its worst — sits on the nail plate, and the plate is replaced continuously. Stopping at any point, even after many years, should allow nail and cuticle recovery over a period of months; we say "should" because no study has followed nail biters to recovery and counted.\n\nThis is worth knowing both as reassurance (the damage you're looking at right now is very likely reversible) and as motivation (the sooner biting stops, the less cumulative matrix trauma accumulates, keeping you further from the less common but real threshold where damage does become harder to fully reverse).`,
     },
     MEDICAL_DISCLAIMER_SECTION,
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+    },
   ],
 });
 
@@ -5005,7 +5015,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5194,7 +5204,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li></ul>`,
+        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6709,6 +6719,50 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/onychophagia">Onychophagia: the medical term for nail biting</a></li><li><a href="/blog/bfrb-guide">What are body-focused repetitive behaviors?</a></li><li><a href="/blog/nail-biting-ocd-connection">Nail biting and OCD</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Nail biting vs tics and Tourette</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">Finding a therapist</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-cancer',
+  title: `Can Nail Biting Cause Cancer? What the Studies Show`,
+  seoTitle: 'Can Nail Biting Cause Cancer? What Studies Show',
+  description: `No study shows nail biting causes cancer. What a case report, a 261-patient nail cancer study and a melanonychia study found, and which signs need a doctor.`,
+  tag: 'Health',
+  readingMinutes: 4,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-cancer.png',
+  sections: [
+    {
+      heading: `Can nail biting cause cancer?`,
+      body: `We could not find a study showing that it does. On 20 October 2026 we searched PubMed for "nail biting cancer" and got nine results. Only one was a case report linking nail biting to a nail cancer. The rest did not test it: a cyst case report, a melanonychia study, a staph study, a lung cancer letter, a news item on drug trials, and old papers with no abstract that carry the nail biting tag. No cohort or case-control study has measured whether people who bite their nails get nail cancer more often. So the accurate answer is that cancer is not a known consequence of nail biting, and a nail cancer in someone who bites their nails is very rare.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "nail biting cancer", run 20 October 2026: 9 results.</li></ul>`,
+    },
+    {
+      heading: `Is there any case of nail biting and cancer on record?`,
+      body: `Yes, one old case report. A 1988 paper describes a squamous cell carcinoma of the nail bed in a 37-year-old man that the author attributed to chronic nail biting. The report says malignancies of the nail bed are rare, with only 52 cases in the English literature up to 1986, and that the lesion is often misdiagnosed because other chronic nail bed problems look similar (Schwartz, 1988). A single case cannot show cause and effect, and we found no later study that tested the idea.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/3174228/" target="_blank" rel="noopener noreferrer">Schwartz GB. Subungual squamous cell carcinoma of a nailbed. A case report. Orthop Rev. 1988;17(9):883-5.</a></li></ul>`,
+    },
+    {
+      heading: `What do we know about nail cancer?`,
+      body: `Nail squamous cell carcinoma is the most common nail malignancy, but it is under-recognized because it can look like other things. A 2026 multicenter study of 261 patients found it mostly affected men in their sixties, and mainly the index and middle fingers and the thumbs. Signs of HPV (human papillomavirus) infection were found in about a third of the tumors, and HPV-related cases were typically the early, non-invasive kind. The abstract describes the tumor as either a warty papule or plaque beside the nail or an oozing, ulcerating tumor under it. Nail biting is not mentioned in the abstract, so that study does not tell us whether the habit plays a part (Lipner et al., 2026).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/42105921/" target="_blank" rel="noopener noreferrer">Lipner SR, Ricardo JW, de Berker D, et al. Nail unit squamous cell carcinoma: A multicenter, retrospective study of 261 patients. J Am Acad Dermatol. 2026;95(3):642-650. doi:10.1016/j.jaad.2026.04.1996</a></li></ul>`,
+    },
+    {
+      heading: `What about dark lines in a bitten nail?`,
+      body: `Most are not cancer. In a Korean clinic study of 275 patients with melanonychia (dark pigment in the nail), the most common causes were bleeding under the nail (29.1%), a nail matrix nevus (21.8%) and trauma-induced pigmentation (14.5%). Melanoma was diagnosed in 6.2%. The researchers recorded nail biting as one kind of trauma history, but the abstract does not report results for nail biting alone. It is one clinic's records, so the percentages will differ elsewhere (Jin et al., 2016). A new dark streak is still worth having examined.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/26830866/" target="_blank" rel="noopener noreferrer">Jin H, Kim JM, Kim GW, et al. Diagnostic criteria for and clinical review of melanonychia in Korean patients. J Am Acad Dermatol. 2016;74(6):1121-7. doi:10.1016/j.jaad.2015.12.039</a></li></ul>`,
+    },
+    {
+      heading: `When should you see a doctor?`,
+      body: `See a doctor or dermatologist about any nail change that is new, painful, oozing, growing, wart-like or a sore that is not healing, or when part of the nail plate is lost. In the 2026 study, oozing from under the nail was associated with the invasive form of nail cancer, and pain and nail plate loss were associated with it in a simpler analysis (Lipner et al., 2026). Most bitten nails are only damaged, but a lesion that does not settle once you stop biting is worth checking rather than watching.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-warts">Nail biting and warts</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li><li><a href="/blog/nail-biting-myths">Nail biting myths</a></li><li><a href="/blog/nail-biting-cuticle-damage">Cuticle damage from nail biting</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
