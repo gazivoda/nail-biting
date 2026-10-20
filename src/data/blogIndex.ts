@@ -770,7 +770,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 2,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-parents-modeling",
@@ -977,7 +977,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-08-11",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-major-life-changes",
@@ -995,7 +995,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 2,
     datePublished: "2026-07-16",
-    dateModified: "2026-07-16",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-fungal-infection",
