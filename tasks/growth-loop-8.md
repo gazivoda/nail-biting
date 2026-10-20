@@ -1,0 +1,41 @@
+# Growth loop 8 (2026-10-20): 30 iterations, one every 3 minutes
+Rounds 1-7 are LIVE (health commit 8088876; IndexNow sent). Owner items still open: Search Console recrawl, GA check of events, subreddit rules, email capture, Google-Extended, Content-Signal.
+Inputs: Growth Hacker (funnel), Content Strategist (gaps and cannibalization), seo-geo repo audit (folded into items 16, 25, 28, 29). Agent claims are SECOND-HAND: verify in the repo before changing anything. Agent word counts and grep counts are approximate; re-grep before writing.
+Rules: one local commit per iteration on main, NO push (ask the owner at the end). `npm run build:web` (never plain build), seo:check, `npm test`, route smoke. Commit content BEFORE `npm run seo:sync`, then commit the sync. No em dashes; one privacy claim ("no camera data is sent while it runs"); web app only; descriptions <= 160. Primary sources fetched the same iteration (PubMed MCP, then Europe PMC or official pages); a "no study found" post states the exact query and date; skip an item with no citable source and log why. No habit illustrations. Check the slug list in blogIndex.ts before adding any post.
+
+## Iterations
+- [x] 1. Funnel: open HeroDemo.tsx; if no post-demo card exists, add one (offer line, TrialButton source `demo_complete`, run-again link; email-me-the-link variant on `demo_camera_failed`). No new claims.
+- [ ] 2. Measurement: pricing_view / section_view events in track.ts (aggregate only, no identifiers); re-read privacy wording first, skip if it conflicts.
+- [ ] 3. Post: "Is nail biting a mental disorder?" (DSM-5-TR and ICD-11 category verified on the official page; TLC Foundation). Inbound: onychophagia, bfrb-guide, ocd-connection, when-to-see-a-doctor, quiz, statistics.
+- [ ] 4. Post: can nail biting cause cancer? (PubMed periungual/subungual SCC and HPV; NCI/AAD). Honest about rarity; inbound from warts, health-risks, permanent-damage, myths, cuticle-damage.
+- [ ] 5. Post: dark line or streak on a bitten nail (AAD / MedlinePlus; PubMed on melanonychia). When-to-see-a-doctor framing, no diagnosis.
+- [ ] 6. Post: ridges, grooves and Beau's lines from biting (StatPearls/NIH, PubMed).
+- [ ] 7. Post: premonitory urge in nail biting (PubMed on tics/BFRBs, ComB model).
+- [ ] 8. Post: urge surfing for nail biting (PubMed); keep distinct from the mindfulness post.
+- [ ] 9. Post: online / teletherapy for nail biting and BFRBs (PubMed on internet or tele-delivered HRT; TLC provider page).
+- [ ] 10. Post: reward charts for a child's nail biting (AAP/pediatric source, PubMed).
+- [ ] 11. Post: self-compassion, shame and nail biting (PubMed on BFRB samples).
+- [ ] 12. Post: stimulus control, setting up your environment (PubMed on stimulus control in HRT/ComB).
+- [ ] 13. Post: chewing gum for nail biting (be honest if no direct trial exists).
+- [ ] 14. Post: do short nails or a clipper routine help (AAD guidance; state evidence gap).
+- [ ] 15. Post: does nail biting spread colds, flu and norovirus (CDC hand hygiene, PubMed on hand-to-mouth contact).
+- [ ] 16. AUDIT 1 (trust, do first): unsourced stat 'most biters catch fewer than half their daily episodes' at comparePages.ts:97, :101 and server.js:2314. Find a PubMed source or rewrite all three as a qualitative point.
+- [ ] 17. Cannibalization: work cluster (at-work-meetings, focus-and-work, laptop-working-from-home). Re-measure overlap first, then differentiate intros/headings and cross-link. No redirects without owner approval.
+- [ ] 18. Cannibalization: how-to-stop head terms (how-to-stop, stop-fast, best-remedies, mistakes, products). Make how-to-stop the hub through anchored links.
+- [ ] 19. Cannibalization: 30-day-plan vs challenge; clear the split in titles and first paragraphs, cross-link.
+- [ ] 20. Cannibalization: stress cluster hub (stress-and-nail-biting as hub; cortisol, emotional-regulation, panic-disorder as narrow pages with hub links).
+- [ ] 21. Cannibalization: evening vs during-sleep split of intent, cross-link.
+- [ ] 22. Thin posts (dry-skin-winter, alcohol, birth-control, subconscious-habit): expand with sourced material only where a source is found; log the rest.
+- [ ] 23. Shareable calculator results (query-string inputs, Copy link, canonical stays the bare path; verify server.js canonical ignores query).
+- [ ] 24. Blog CTA: mid-article block with source `blog-<slug>-mid`; exclude self-harm, OCD, PTSD, panic and pediatric posts. Keep crawler HTML in step.
+- [ ] 25. AUDIT 5+7: nail-biting-evening contradiction (description vs 7pm-midnight sentence; rename heading to a question) and nail-biting-statistics (question first heading, link the 20-30% figure from posts that state it).
+- [ ] 26. Tool: competing-response picker using only responses already in the HRT guide and sourced posts.
+- [ ] 27. Tool: self-check quiz page with shareable result URL (no diagnosis, no scale claim without a fetched instrument).
+- [ ] 28. AUDIT 12: wrong readingMinutes (health-risks, best-apps, statistics, bacteria-parasites) feeding timeRequired; derive it or add a vitest check.
+- [ ] 29. AUDIT 3+4+9+11: link the vendor URLs named on the 11 compare pages (re-fetch the 10 September checks), retitle stopping-for-good and evolutionary-psychology away from pillar queries, README for the GitHub sameAs repo only if owner-approved (log otherwise). Other audit items not scheduled: sources for 14 thin posts (item 22 covers 4), in-text links for 84 posts, FAQ blocks, buried openings, robots.txt inconsistency (owner).
+- [ ] 30. Sweep (all sitemap URLs, JSON-LD, links, meta lengths), Review section, delete cron, ask about push + IndexNow.
+
+Not planned (owner decisions): email capture (new personal data, policy change), Google-Extended and Content-Signal policy, FAQPage JSON-LD for SERP features (Google limits them to government and health authority sites, per the funnel agent's fetch on 2026-10-20, to be re-verified if used).
+
+## Log
+- it1: verified before building. HeroDemo.tsx already has everything the funnel agent proposed (it did not open the file): on `finished` it shows the result line, a TrialLink, 'Run it again' and the offer line (lines 260-279); mid-run after the first catch it shows a TrialLink (300-306); on camera failure it shows 'You can still start the free trial' with source `demo_failure` and a how-detection-works link (310-329). Nothing to build; no code change. Funnel agent's item 2 closed as already done.
