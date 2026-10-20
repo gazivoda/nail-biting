@@ -1531,7 +1531,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li></ul>`,
+      html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2448,7 +2448,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
     },
   ],
 });
@@ -3994,7 +3994,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
     },
   ],
 });
@@ -5219,7 +5219,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li></ul>`,
+        html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6452,6 +6452,11 @@ BLOG_POSTS.push({
       body: `Probably not, and we would rather say so. Stop Biting watches for a fingertip close to your mouth, so it is built for nail biting. Picking that happens away from your mouth, with one hand working on the other, does not trigger it. If your picking is the main problem, the awareness and competing-response steps still apply, but you will need to do the noticing yourself.`,
       html: `<p>Related reading: <a href="/blog/nail-biting-cuticle-damage">cuticle damage from biting</a>, <a href="/blog/nail-biting-hangnails">hangnails and how to deal with them</a>, <a href="/blog/nail-biting-vs-skin-picking">nail biting vs skin picking</a>, <a href="/blog/nac-nail-biting">N-acetylcysteine and nail biting</a> and <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -6832,6 +6837,60 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer?</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li><li><a href="/blog/nail-biting-white-spots">White spots on nails from biting</a></li><li><a href="/blog/nail-biting-fungal-infection">Fungal infection and nail biting</a></li><li><a href="/blog/nail-biting-paronychia">Paronychia</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-nail-ridges-grooves',
+  title: `Ridges and Grooves in Bitten Nails: Habit-Tic, Beau's Lines or Something Else?`,
+  seoTitle: 'Ridges in Nails From Biting: What Studies Say',
+  description: `Ridges and grooves are common in bitten nails, but not every groove comes from biting. What a 53-patient series and reviews say, and when to see a doctor.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-nail-ridges-grooves.png',
+  sections: [
+    {
+      heading: `Can nail biting cause ridges and grooves in your nails?`,
+      body: `It is a common finding. In a Korean hospital series of 53 people with onychophagia, 28.3% had a transverse groove, 13.2% had a washboard nail (a row of ridges), 28.3% had brittle nails and 50.9% had generalized or patchy rough areas. Short nails with ragged edges were found in all of them (Shin et al., 2021). It is a single-center retrospective study of people who came to a hospital, so the percentages will not match what you would see in everyone who bites.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/34416026/" target="_blank" rel="noopener noreferrer">Shin JO, Roh D, Son JH, et al. Onychophagia: detailed clinical characteristics. Int J Dermatol. 2021;61(3):331-336. doi:10.1111/ijd.15861</a></li></ul>`,
+    },
+    {
+      heading: `Is a groove down the middle of the thumbnail from biting?`,
+      body: `Often it is a different habit. A 2022 case report describes habit-tic nail deformity: people repeatedly rub the skin at the base of the nail, usually with the neighbouring index finger, and this leaves a lengthwise depressed groove along the whole nail, typically on one or both thumbs. These patients are usually unaware that they do it. Nail biters, by contrast, usually bite several nails and know they are doing it (Cohen, 2022). Both are body-focused repetitive behaviors, and some people have both.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35382180/" target="_blank" rel="noopener noreferrer">Cohen PR. Nail-Associated Body-Focused Repetitive Behaviors: Habit-Tic Nail Deformity, Onychophagia, and Onychotillomania. Cureus. 2022;14(3):e22818. doi:10.7759/cureus.22818</a></li></ul>`,
+    },
+    {
+      heading: `What are Beau's lines, and does biting cause them?`,
+      body: `Beau's lines are sideways (transverse) grooves in the nail plate. A 2024 systematic review describes them as resulting from a temporary interruption of growth in the proximal nail matrix after severe disease (Agouridis et al., 2024). A case report links them to chemotherapy drugs that suppress nail matrix growth, and the lines disappeared in the treatment-free intervals (Ben-Dayan et al., 1994). A French review lists them among the nail changes psoriasis can cause at the proximal matrix (Baran, 2014). We found no study that showed nail biting causes true Beau's lines. The Korean series above counted transverse grooves in biters, but its abstract does not say how they arose.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38535608/" target="_blank" rel="noopener noreferrer">Agouridis AP, Mastori-Kourmpani C, Antoniou P, et al. Beau&#39;s Lines and COVID-19; A Systematic Review on Their Association. Pathogens. 2024;13(3). doi:10.3390/pathogens13030265</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/7517608/" target="_blank" rel="noopener noreferrer">Ben-Dayan D, Mittelman M, Floru S, Djaldetti M. Transverse nail ridgings (Beau&#39;s lines) induced by chemotherapy. Acta Haematol. 1994;91(2):89-90.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/25443636/" target="_blank" rel="noopener noreferrer">Baran R. How to diagnose and treat psoriasis of the nails. Presse Med. 2014;43(11):1251-9. doi:10.1016/j.lpm.2014.06.011</a></li></ul>`,
+    },
+    {
+      heading: `Will the ridges grow out?`,
+      body: `We could not find a study that answers this. On 20 October 2026 we searched PubMed for nail biting together with nail dystrophy, matrix damage and regrowth and got no results, so there is no published time frame for ridges from biting. Our nail growth calculator uses published growth rates to show how long a full fingernail takes to grow out, which is the only time frame we can give.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "nail biting" with nail dystrophy, matrix damage and regrowth, run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `Can vitamins fix ridged nails?`,
+      body: `The evidence is limited. A 2023 review of 49 studies on vitamins for nail disease, covering conditions such as brittle nails and habit-tic nail deformity, found good evidence only for topical tazarotene and vitamin D analogs in nail psoriasis, and limited evidence for the other nail disorders (Curtis and Lipner, 2023). If the cause is a habit that keeps injuring the nail, a supplement does not remove the cause.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38572190/" target="_blank" rel="noopener noreferrer">Curtis KL, Lipner SR. Vitamins for the Management of Nail Disease: A Literature Review. Skin Appendage Disord. 2023;10(2):104-122. doi:10.1159/000534972</a></li></ul>`,
+    },
+    {
+      heading: `When should you see a doctor about nail ridges?`,
+      body: `See a doctor or dermatologist if grooves appear on many nails at once, if they follow an illness or a new medicine, if the nail is changing color or coming away, or if the area is painful or infected. The reviews above tie transverse grooves to illness and to some drugs, so tell the doctor about both, and about any biting or picking, which patients often do not volunteer.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/grow-nails-after-nail-biting">How to grow your nails after nail biting</a></li><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li><li><a href="/blog/nail-and-cuticle-picking">Nail and cuticle picking</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail</a></li><li><a href="/blog/nail-biting-white-spots">White spots on nails from biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
