@@ -113,6 +113,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `Week one is often strange. You'll notice more biting than you thought you were doing — not because you've started doing it more, but because you're actually catching it now. This is the awareness training working. It's supposed to feel like this.\n\nBiting frequency starts dropping meaningfully around weeks 2–4 for most people. By 6–8 weeks, the competing response starts feeling natural and the urge to bite in the first place starts fading. The Azrin and Nunn trial ran for five months, and the reduction in self-recorded episodes held across that period; the study with a genuine post-treatment follow-up is Twohig et al. (2003), where a 22% gain in nail length immediately after treatment — against a 3% gain in the placebo group — was still a 19% gain five months later, by which point the placebo group was back at 0%.`,
         html: `<p><strong>Sources:</strong></p><ul><li>Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Behav Res Ther. 1980;18(4):281–285</a>. PubMed holds no abstract for this record and the full text is paywalled, so the 99% and 60% figures quoted on this page are taken from Table 1 of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Int J Environ Res Public Health. 2022;19(6):3392</a>, which is open access.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -2743,7 +2748,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5495,7 +5500,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li></ul>`,
+        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5551,6 +5556,11 @@ BLOG_POSTS.push(
         body: `The point of the exercise is targeting. Instead of trying to not bite your nails in general, which is a vague commitment across all sixteen waking hours, you get two or three specific contexts to address with specific arrangements.\n\nFor each high-frequency context, decide in advance what your hands will do there instead, and make it available before the context begins. A textured object kept in the car. A drink to hold during evening viewing. A rule about where your hands rest while reading.\n\nThen re-map after a month. Two things usually happen: the targeted contexts drop substantially, and a context you had not noticed rises up the list. That is not failure — it is what progress looks like in a habit that redistributes before it disappears.`,
             html: `<p>Once the map is done, <a href="/compare/habit-tracking-apps">a habit tracking app</a> is the usual way to keep it current without the notebook.</p>`,
     },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6303,6 +6313,11 @@ BLOG_POSTS.push({
       body: `Three approaches, from simplest to most external.\n\nKeep a tally for a week. Each time you catch yourself, mark it and note the situation. The number is usually higher than people expect, and the pattern of situations is the useful part.\n\nPrepare a competing response for the situations you find, such as pressing your palms flat or holding something, so that catching yourself has somewhere to go.\n\nAdd an external signal for the times you will not catch it yourself. A bitter polish adds a taste cue; a reminder app only works if you notice it; a webcam app such as ours sounds an alarm the moment your hand nears your mouth, which supplies the awareness step from outside. It only works where a webcam can see your hand.`,
       html: `<p>Read <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> for the full method, or <a href="/how-it-works">how Stop Biting's detection works</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -6568,6 +6583,11 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li><li><a href="/blog/nail-biting-adhd">Nail biting and ADHD</a></li><li><a href="/blog/nail-biting-ocd-connection">Nail biting and OCD</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6891,6 +6911,50 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/grow-nails-after-nail-biting">How to grow your nails after nail biting</a></li><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li><li><a href="/blog/nail-and-cuticle-picking">Nail and cuticle picking</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail</a></li><li><a href="/blog/nail-biting-white-spots">White spots on nails from biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-premonitory-urge',
+  title: `The Urge Before the Bite: What Is a Premonitory Urge?`,
+  seoTitle: 'Premonitory Urge and Nail Biting: What Studies Say',
+  description: `No study has measured the premonitory urge in nail biting. What research on skin picking, hair pulling and tics shows about the urge before a habit.`,
+  tag: 'Psychology',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-premonitory-urge.png',
+  sections: [
+    {
+      heading: `What is a premonitory urge?`,
+      body: `It is the unpleasant feeling or tension that comes before a tic or a repetitive behavior and drives it. A 2020 review notes that most people with Tourette syndrome report premonitory urges driving their tics, and that similar sensory symptoms are reported in body-focused repetitive behaviors (BFRBs), especially hair pulling and skin picking. Across these conditions a sense of mounting inner tension, then gratification and relief when the behavior is carried out, appears to play a part. The review also says the urge can be temporarily suppressed by people with Tourette syndrome and some BFRBs (Badenoch et al., 2020).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/33086129/" target="_blank" rel="noopener noreferrer">Badenoch J, Searle T, Watson I, Cavanna AE. Sensory symptoms in body-focused repetitive behaviors, restless legs syndrome, and Tourette syndrome: An overlap? Neurosci Biobehav Rev. 2020;119:320-332. doi:10.1016/j.neubiorev.2020.10.008</a></li></ul>`,
+    },
+    {
+      heading: `Has anyone measured the urge in nail biting?`,
+      body: `We could not find a study that did. On 20 October 2026 we searched PubMed for "premonitory urge" together with nail biting and got no results. Searching for the urge together with hair pulling and skin picking returned one review (above), and a search on BFRBs returned three papers in all. So what follows is evidence from related behaviors, and it may or may not describe what you feel before you bite.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "premonitory urge" with nail biting, 0 results; with body-focused repetitive behaviors, 3 results; with hair pulling and skin picking, 1 result.</li></ul>`,
+    },
+    {
+      heading: `What did the skin picking study find about urges?`,
+      body: `A small experiment asked 15 people with skin picking disorder to rate their urge continuously for 20 minutes while either picking freely or trying to suppress it. Most reported physical urge sensations (80%), "just right" visual feelings (80%) and urge-only sensations (80%), similar to what people with Tourette syndrome and OCD describe. Urge intensity was related to the appearance of picking (R = 0.23), and that relationship weakened when picking was suppressed (R = 0.06). The authors conclude that picking is maintained by urges, and that this cycle can be at least partly broken by suppressing the behavior (Dieringer et al., 2019). With 15 participants and a modest correlation, it is a first look, not a settled finding.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/31605885/" target="_blank" rel="noopener noreferrer">Dieringer M, Beck C, Verrel J, Munchau A, Zurowski B, Brandt V. Quality and temporal properties of premonitory urges in patients with skin picking disorder. Cortex. 2019;121:125-134. doi:10.1016/j.cortex.2019.08.015</a></li></ul>`,
+    },
+    {
+      heading: `Do thoughts about the habit trigger it too?`,
+      body: `In one study they did, according to the participants. People with Tourette syndrome (18), chronic tic disorders (42) and a BFRB comparison group (36) rated which thoughts they felt triggered their tic or behavior, such as thoughts anticipating it or thinking they had permission to do it. The ranking of those thoughts was similar in the tic and BFRB groups, and the authors say these thoughts seem independent of premonitory sensations. Ratings of the thoughts fell after behavioural treatment (O&#39;Connor et al., 2014). The study did not single out nail biting.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25161066/" target="_blank" rel="noopener noreferrer">O&#39;Connor K, St-Pierre-Delorme ME, Leclerc J, Lavoie M, Blais MT. Meta-cognitions in tourette syndrome, tic disorders, and body-focused repetitive disorder. Can J Psychiatry. 2014;59(8):417-25. doi:10.1177/070674371405900804</a></li></ul>`,
+    },
+    {
+      heading: `What does this mean if you bite your nails?`,
+      body: `Nothing proven about nail biting, but it gives you something specific to watch for. If the urge comes before the bite for you, as it does in the related conditions, then the moment just before your hand moves is the earliest point where you could notice it. Many people bite without noticing at all, which is why our habit reversal and trigger mapping pages start with awareness. Treat what you find as your own observation, not as a finding from a nail biting study.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-subconscious-habit">Nail biting as a subconscious habit</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Nail biting vs tics and Tourette</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping for nail biting</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/bfrb-guide">What are body-focused repetitive behaviors?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
