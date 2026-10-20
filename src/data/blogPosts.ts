@@ -218,7 +218,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1829,7 +1829,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2585,6 +2585,11 @@ BLOG_POSTS.push({
     {
       heading: `When to loop in a pediatrician`,
       body: `Most toddler nail biting resolves naturally without medical involvement. It's worth mentioning at a routine pediatric visit — not necessarily a separate appointment — if the biting is causing bleeding or infection, if it's accompanied by other repetitive self-directed behaviours (hair pulling, skin picking, head banging), if it seems tied to significant ongoing distress rather than an isolated stressful period, or if it persists unchanged well past the toddler years into ages 6–7 with no improvement.\n\nIn nearly all cases, reassurance and time, combined with the gentle strategies above, are sufficient. Escalating to formal intervention is rarely necessary this early.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3822,6 +3827,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -3927,6 +3937,11 @@ BLOG_POSTS.push({
     {
       heading: `If they haven't asked for help`,
       body: `Not everyone who bites their nails wants active help with it, and that's worth respecting — unsolicited intervention, even framed supportively, can feel intrusive for a habit that many people are already privately self-conscious about. If someone hasn't raised wanting to stop, the most supportive default is simply not commenting on it at all, being available if they do bring it up themselves, and — if you're genuinely curious whether they'd want support — asking directly and respecting either answer, rather than assuming they want help just because you'd find it easy to offer.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5885,6 +5900,11 @@ BLOG_POSTS.push(
         body: `Most childhood nail biting is developmentally ordinary, and two findings support taking it calmly. In a community sample of 743 children aged 7–10, most biting was low-frequency: 45.8% of the biters bit on just one day a week, and only 5.0% of the whole sample bit more than three days a week. And in a clinical study of 63 nail-biting children referred to a child psychiatry service, comorbid psychiatric disorder was unrelated to the age biting started, to how often the child bit, and to whether there was gross physical damage — how bad the nails look is not a guide to what else is going on. Some situations still warrant professional input: biting that causes bleeding, repeated infections, or damage to the surrounding skin; biting accompanied by other signs of significant anxiety; behaviour that the child is distressed by and cannot change despite wanting to; or a sudden marked escalation, which is often worth understanding as a signal about something else.\n\nA GP is a reasonable starting point, and for more entrenched cases a clinician familiar with body-focused repetitive behaviours can deliver an age-adapted version of habit reversal training — which involves no punishment at all.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011;4:116.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008;2(1):13.</a></li><li><a href="https://doi.org/10.1016/j.brat.2006.07.013" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989–995.</a></li><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -7088,6 +7108,51 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-finding-a-therapist">Finding a therapist for nail biting</a></li><li><a href="/blog/nail-biting-app-vs-therapy">App vs therapy for nail biting</a></li><li><a href="/blog/how-to-choose-nail-biting-treatment">How to choose a nail biting treatment</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-fsa-hsa">Nail biting and FSA or HSA funds</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-reward-chart-children',
+  title: `Reward Charts for a Child's Nail Biting: What Evidence Exists`,
+  seoTitle: 'Reward Charts for Nail Biting in Kids: The Evidence',
+  description: `No study has tested reward charts for children's nail biting. What a pediatric review and a small trial of habit reversal in children say, and what to avoid.`,
+  tag: 'Parenting',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-reward-chart-children.png',
+  sections: [
+    {
+      heading: `Do reward charts help a child stop biting their nails?`,
+      body: `We could not find a study that tested them. On 20 October 2026 we searched PubMed for "reward chart nail biting children" and got no results, so nobody has published a measurement of whether sticker or star charts reduce nail biting. The closest evidence is a pediatric review that lists positive reinforcement among treatment approaches, and a small trial of habit reversal in children. Both are described below.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "reward chart nail biting children", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `What does the pediatric literature say about reinforcement?`,
+      body: `A 1990 review in Clinical Pediatrics says care of the nails and cuticles, behavioral modification techniques, positive reinforcement and regular follow-up are important aspects of treatment, and that treatment should be aimed at any precipitating causes of stress. It also says reminders should only be used with the consent of the child. It is a narrative review, not a trial, and it notes a surprising lack of literature on nail biting (Leung and Robson, 1990). It gives no figures for how well any of these approaches work.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/2276242/" target="_blank" rel="noopener noreferrer">Leung AK, Robson WL. Nailbiting. Clin Pediatr (Phila). 1990;29(12):690-2. doi:10.1177/000992289002901201</a></li></ul>`,
+    },
+    {
+      heading: `What has been tested in children?`,
+      body: `Habit reversal training. In a randomized trial of 26 children with chronic oral-digital habits, one group learned habit reversal with a similar competing response, another with a dissimilar competing response, and a third waited. Both treated groups showed significantly less oral-digital behavior afterwards than the wait-list group, and the two treated groups did not differ from each other in gains or acceptability. It is a small trial, and its abstract does not say whether rewards were part of the program (Woods et al., 1999). Our habit reversal page explains the method.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/10759325/" target="_blank" rel="noopener noreferrer">Woods DW, Murray LK, Fuqua RW, Seif TA, Boyer LJ, Siah A. Comparing the effectiveness of similar and dissimilar competing responses in evaluating the habit reversal treatment for oral-digital habits in children. J Behav Ther Exp Psychiatry. 1999;30(4):289-300. doi:10.1016/s0005-7916(99)00031-2</a></li></ul>`,
+    },
+    {
+      heading: `Is nail biting in a child a sign of a problem?`,
+      body: `Not usually. A review of nail tic disorders says they very often occur in psychologically normal children but may sometimes be associated with anxiety, and that a full assessment should include the child's mental health (Singal and Daulatabad, 2017). The 1990 review estimates that 28 to 33% of children aged 7 to 10 years and 45% of adolescents bite their nails (Leung and Robson, 1990), though that figure is old.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/27320768/" target="_blank" rel="noopener noreferrer">Singal A, Daulatabad D. Nail tic disorders: Manifestations, pathogenesis and management. Indian J Dermatol Venereol Leprol. 2017;83(1):19-26. doi:10.4103/0378-6323.184202</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/2276242/" target="_blank" rel="noopener noreferrer">Leung AK, Robson WL. 1990 (above).</a></li></ul>`,
+    },
+    {
+      heading: `What should a parent do instead of guessing?`,
+      body: `Because no chart has been tested, treat one as an experiment you run with your child, not a proven method. Take from the sources what they do say: involve the child and get their agreement before using reminders (Leung and Robson, 1990), look for sources of stress, and consider habit reversal if the habit persists (Woods et al., 1999). Watch the fingers as well as the habit. A 2026 case report describes a 10-year-old whose chronic nail biting led from a hangnail to paronychia, then a felon (a fingertip abscess) and finally a suspected bone infection, so an infection that does not respond to first treatment needs a doctor (Riyadh et al., 2026).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/42326165/" target="_blank" rel="noopener noreferrer">Riyadh S, Dull A, Reynolds J. From Nail Biting to Osteomyelitis: A Pediatric Case of Distal Phalanx Infection Secondary to Onychophagia. Cureus. 2026;18(5):e109220. doi:10.7759/cureus.109220</a></li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers</a></li><li><a href="/blog/nail-biting-parents-modeling">Parents modeling nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
