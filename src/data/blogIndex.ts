@@ -239,7 +239,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-20",
   },
   {
     slug: "stop-nail-biting-fast",
@@ -275,7 +275,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-11",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-pregnancy",
@@ -1496,6 +1496,15 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     slug: "nail-biting-stimulus-control",
     title: "Stimulus Control for Nail Biting: Changing What Sets It Off",
     description: "Stimulus control is first-line for hair pulling and skin picking. What a case report and two trials show, and what no study has tested for nail biting.",
+    tag: "Treatment",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
+  {
+    slug: "nail-biting-chewing-gum",
+    title: "Does Chewing Gum Stop Nail Biting? What the Evidence Shows",
+    description: "No study has tested chewing gum for nail biting. What gum did for smokers' cravings, why gum chewing shows up in jaw pain studies, and what to try instead.",
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-10-20",
