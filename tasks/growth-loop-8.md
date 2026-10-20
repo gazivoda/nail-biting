@@ -5,7 +5,7 @@ Rules: one local commit per iteration on main, NO push (ask the owner at the end
 
 ## Iterations
 - [x] 1. Funnel: open HeroDemo.tsx; if no post-demo card exists, add one (offer line, TrialButton source `demo_complete`, run-again link; email-me-the-link variant on `demo_camera_failed`). No new claims.
-- [ ] 2. Measurement: pricing_view / section_view events in track.ts (aggregate only, no identifiers); re-read privacy wording first, skip if it conflicts.
+- [x] 2. Measurement: pricing_view / section_view events in track.ts (aggregate only, no identifiers); re-read privacy wording first, skip if it conflicts.
 - [ ] 3. Post: "Is nail biting a mental disorder?" (DSM-5-TR and ICD-11 category verified on the official page; TLC Foundation). Inbound: onychophagia, bfrb-guide, ocd-connection, when-to-see-a-doctor, quiz, statistics.
 - [ ] 4. Post: can nail biting cause cancer? (PubMed periungual/subungual SCC and HPV; NCI/AAD). Honest about rarity; inbound from warts, health-risks, permanent-damage, myths, cuticle-damage.
 - [ ] 5. Post: dark line or streak on a bitten nail (AAD / MedlinePlus; PubMed on melanonychia). When-to-see-a-doctor framing, no diagnosis.
@@ -39,3 +39,4 @@ Not planned (owner decisions): email capture (new personal data, policy change),
 
 ## Log
 - it1: verified before building. HeroDemo.tsx already has everything the funnel agent proposed (it did not open the file): on `finished` it shows the result line, a TrialLink, 'Run it again' and the offer line (lines 260-279); mid-run after the first catch it shows a TrialLink (300-306); on camera failure it shows 'You can still start the free trial' with source `demo_failure` and a how-detection-works link (310-329). Nothing to build; no code change. Funnel agent's item 2 closed as already done.
+- it2: privacy page already discloses Google Analytics recording page visits and says it never receives camera or habit-log data; track.ts policy is aggregate counts with a fixed label, so one new event fits. Added `pricing_view` (fires once when 40% of the pricing block is visible, IntersectionObserver, label `landing` or `pricing_page`, disconnects after firing, no-op without IntersectionObserver or gtag) in PricingSection.tsx and the FunnelEvent type. Not built: section_view and scroll_depth (more events than one question needs; add only if GA shows where the drop is) and a signup_complete event (needs the auth callback in server.js, owner call on what to count). In GA, compare pricing_view to trial_click with source pricing_yearly/pricing_monthly. tsc, eslint, build:web, seo:check, 103 tests pass; /, /pricing, /blog 200 on local server. Not browser-tested for the observer firing.

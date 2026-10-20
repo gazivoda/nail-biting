@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
 import { track } from '../utils/track';
@@ -37,8 +38,24 @@ function FeatureList({ features }: { features: string[] }) {
 }
 
 export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1' | 'h2' }) {
+  // One aggregate event the first time the plans scroll into view, with the
+  // page as its fixed label, so view-to-trial_click can be read per page.
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) {
+        track('pricing_view', window.location.pathname === '/pricing' ? 'pricing_page' : 'landing');
+        io.disconnect();
+      }
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="pricing" aria-labelledby="pricing-heading" className="sg-page">
+    <section ref={ref} id="pricing" aria-labelledby="pricing-heading" className="sg-page">
       {/* Left-aligned on the page's edge like every other section: centred
           and narrower, it read as a template block pasted in. */}
       <div className="max-w-4xl">
