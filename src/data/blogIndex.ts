@@ -1411,4 +1411,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-19",
     dateModified: "2026-10-19",
   },
+  {
+    slug: "nail-biting-mental-disorder",
+    title: "Is Nail Biting a Mental Disorder? What the Classification Says",
+    description: "Most nail biting is a habit, not a diagnosis. How DSM-5 and ICD-11 treat it, what experts say, and when it counts as a disorder, from four sources.",
+    tag: "Psychology",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
