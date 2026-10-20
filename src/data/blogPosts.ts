@@ -116,7 +116,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -780,6 +780,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         heading: `Where to go next`,
         body: ``,
         html: `<p>Bitter polish is a mild aversion. For the other common version of that idea, see <a href="/blog/rubber-band-snap-nail-biting">does snapping a rubber band stop nail biting</a>.</p>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -2027,6 +2032,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<p>If you want a paper log, there is a <a href="/tools/nail-biting-tracker-printable">free printable 30-day nail biting tracker</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2428,6 +2438,11 @@ BLOG_POSTS.push({
       heading: `Frequently asked questions`,
       body: `The questions that come up most often about stopping.`,
       html: `<h3>How long does it take to stop biting your nails?</h3><p>No controlled trial has measured week-by-week biting frequency during self-directed Habit Reversal Training, so any specific schedule is an expectation rather than a measured result. The closest evidenced anchor is how long a new response takes to become automatic: in Lally et al. (2010), the median was 66 days with a range of 18 to 254, and that is a general habit-formation figure rather than a nail-biting one.</p><h3>Why can I not stop biting my nails?</h3><p>Because the behaviour is automatic rather than chosen. The bite is often already underway before awareness arrives, and you cannot override something you do not notice happening. That is why motivation alone rarely changes it, and why every method that works solves the noticing problem first.</p><h3>Does bitter nail polish stop nail biting?</h3><p>It helps some people and it is weaker on its own. In the six-week trial reported by Lee and Lipner (2022), a bitter-polish group had a higher drop-out rate, 26 percent, than a non-removable wristband group at 12 percent, while remaining equally effective among everyone who started. It works better as early support alongside Habit Reversal Training than as a replacement for it.</p><h3>Is nail biting the same as a nervous habit?</h3><p>Not quite. Stress and anxiety are one of three common contexts, alongside deep concentration and plain repetition in a familiar setting. Plenty of biting happens with no stress involved at all, which is why advice aimed only at calming down helps only part of the time.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5619,7 +5634,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5661,6 +5676,11 @@ BLOG_POSTS.push(
       {
         heading: 'What stacking cannot do',
         body: `Being honest about the limits: habit stacking arranges the environment. It does not interrupt an episode in progress, and it does nothing for episodes occurring in contexts you did not anticipate.\n\nThose still need the awareness component, which is the part of habit reversal training that stacking cannot substitute for. The realistic combination is stacking to reduce how often the situation arises, plus something that catches the episodes that happen anyway — because in the early weeks, most of them will happen anyway, and the ones you never notice are the ones keeping the pathway alive.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -7228,6 +7248,55 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li><li><a href="/blog/nail-biting-social-confidence">Nail biting and social confidence</a></li><li><a href="/blog/nail-biting-mistakes">Mistakes people make when trying to stop</a></li><li><a href="/blog/nail-biting-emotional-regulation">Nail biting and emotional regulation</a></li><li><a href="/blog/nail-biting-support-groups">Support groups for nail biting</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-stimulus-control',
+  title: `Stimulus Control for Nail Biting: Changing What Sets It Off`,
+  seoTitle: 'Stimulus Control for Nail Biting: What Evidence Exists',
+  description: `Stimulus control is first-line for hair pulling and skin picking. What a case report and two trials show, and what no study has tested for nail biting.`,
+  tag: 'Treatment',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-stimulus-control.png',
+  sections: [
+    {
+      heading: `What is stimulus control?`,
+      body: `In our own words, it means changing the cues in your surroundings that set off the habit, instead of relying on willpower in the moment. A 2018 review of hair pulling and skin picking calls habit reversal training and stimulus control the first-line behavioral treatments, usable at all severity levels and particularly helpful when the behavior happens with lowered awareness or intention (Jones et al., 2018). That review is about hair pulling and skin picking, not nail biting.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/30446196/" target="_blank" rel="noopener noreferrer">Jones G, Keuthen N, Greenberg E. Assessment and treatment of trichotillomania (hair pulling disorder) and excoriation (skin picking) disorder. Clin Dermatol. 2018;36(6):728-736. doi:10.1016/j.clindermatol.2018.08.008</a></li></ul>`,
+    },
+    {
+      heading: `Has stimulus control been tested for nail biting?`,
+      body: `Not on its own. On 20 October 2026 we searched PubMed for "stimulus control nail biting" and got one result, a small trial of bitter-tasting nail polish and a competing response, described below. We found no trial that isolated stimulus control for nail biting, so what follows is a case report, one nail biting trial of a related technique, and evidence on combining techniques.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "stimulus control nail biting", run 20 October 2026: 1 result.</li></ul>`,
+    },
+    {
+      heading: `What did the case report with nail biting find?`,
+      body: `A 2026 case report describes a 29-year-old man with skin-picking disorder and onychophagia. Self-monitoring at baseline showed 240 minutes a day of nail-related behavior, 30 episodes a day and high urge intensity. The clinicians mapped what came before the behavior, which was visual and tactile irregularities, and the times of day when urges were strongest. They delivered nine sessions over 20 weeks combining stimulus control, urge management routines and habit reversal training. Improvement was rapid after stimulus control began, and by the end daily picking time had fallen to 15 minutes, episodes to 5 a day and urge intensity to 4 out of 10 (Kawahito et al., 2026). It is one person, with several techniques at once, so it cannot show that stimulus control did the work.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41608476/" target="_blank" rel="noopener noreferrer">Kawahito M, Murayama K, Tomiyama H, Kato K, Nakao T. Case Report: Behavioral analysis guided intervention targeting triggers and urges in skin-picking disorder with comorbid onychophagia. Front Psychiatry. 2026;16:1738977. doi:10.3389/fpsyt.2025.1738977</a></li></ul>`,
+    },
+    {
+      heading: `What did the nail biting trial of bitter polish find?`,
+      body: `In a four-week trial with 21 nail biters, seven per group, one group painted a bitter substance on their nails, one learned a competing response to use when they felt the urge, and a control group only monitored their biting. Both treatments improved nail length, the competing response most, and the control group did not improve. The competing response group also improved on skin damage and on their own ratings of control (Silber and Haynes, 1992). It is a tiny, old trial, and changing the taste of the nail is only one way of changing the cue.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15-22. doi:10.1016/0005-7967(92)90091-t</a></li></ul>`,
+    },
+    {
+      heading: `Does combining techniques work better?`,
+      body: `Possibly. In a randomized trial of 334 people with at least one BFRB, self-help manuals teaching habit reversal, decoupling and decoupling in sensu were each significantly better than a wait-list over six weeks, and people using more techniques at once showed the strongest decline in symptoms. The authors recommend integrating the techniques with other procedures such as stimulus control, but the trial did not test stimulus control itself (Moritz et al., 2022).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/36415779/" target="_blank" rel="noopener noreferrer">Moritz S, Penney D, Bruhns A, Weidinger S, Schmotz S. Habit Reversal Training and Variants of Decoupling for Use in Body-Focused Repetitive Behaviors. A Randomized Controlled Trial. Cognit Ther Res. 2022;47(1):109-122. doi:10.1007/s10608-022-10334-9</a></li></ul>`,
+    },
+    {
+      heading: `How can you use this?`,
+      body: `Start where the case report started: record when, where and what comes before each episode, and look for cues you can change. That is what our trigger mapping page walks through. Treat each change as a test, keep the ones that cut your own episode count, and drop the rest. Nothing above shows which cue changes work for nail biting, so your own log is the evidence.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-habit-stacking">Habit stacking for nail biting</a></li><li><a href="/blog/nail-biting-30-day-plan">A 30 day plan to stop nail biting</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop biting your nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
