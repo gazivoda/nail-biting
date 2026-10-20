@@ -228,11 +228,11 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'best-nail-biting-remedies',
     title: 'Best Remedies to Stop Nail Biting: Every Method Ranked by Evidence',
     seoTitle: 'Best Nail Biting Remedies, Ranked by Evidence',
-    description: 'Habit reversal ranks first: self-recorded biting fell roughly 99% over five months in the 1980 trial. Every remedy ranked, from bitter polish to AI detection.',
+    description: 'Every nail biting remedy ranked by evidence: habit reversal first, then bitter polish, mindfulness and AI detection apps, and what each can and cannot do.',
     tag: 'Treatment',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-09-16',
+    dateModified: '2026-10-20',
     ogImage: '/og/best-nail-biting-remedies.png',
     sections: [
       {
@@ -260,7 +260,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-hypnosis">Does hypnotherapy for nail biting work?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting: what N-acetylcysteine can and cannot do</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-gloves">Do gloves stop nail biting?</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/nail-biting-hypnosis">Does hypnotherapy for nail biting work?</a></li><li><a href="/blog/nac-nail-biting">NAC for nail biting: what N-acetylcysteine can and cannot do</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/nail-biting-gloves">Do gloves stop nail biting?</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1291,7 +1291,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2467,7 +2467,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/stop-nail-biting-fast">How to stop nail biting fast: the quickest methods, ranked by evidence</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting: every method ranked by evidence</a></li><li><a href="/blog/nail-biting-mistakes">The 5 biggest mistakes people make when trying to stop nail biting</a></li><li><a href="/blog/products-to-stop-nail-biting">Products to stop nail biting: a buyer's guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3195,7 +3195,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li></ul>`,
     },
   ],
 });
@@ -6318,7 +6318,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
