@@ -1519,4 +1519,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-colds-flu-norovirus",
+    title: "Does Nail Biting Spread Colds, Flu or Norovirus?",
+    description: "No study links nail biting to colds, flu or norovirus. A cohort of 219 health care workers found no link with COVID-19, but did for nose picking.",
+    tag: "Health",
+    readingMinutes: 4,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
