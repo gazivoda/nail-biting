@@ -1447,4 +1447,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-premonitory-urge",
+    title: "The Urge Before the Bite: What Is a Premonitory Urge?",
+    description: "No study has measured the premonitory urge in nail biting. What research on skin picking, hair pulling and tics shows about the urge before a habit.",
+    tag: "Psychology",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
