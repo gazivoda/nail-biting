@@ -116,7 +116,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -558,6 +558,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         heading: 'When should you seek professional support?',
         body: `Self-directed HRT using apps, workbooks, or structured self-help protocols is effective for the majority of nail biters. Professional support is appropriate when: self-directed efforts have failed after two or more sincere 8-week attempts; the habit is causing significant physical damage (infections, dental damage, permanent nail changes); nail biting is accompanied by significant anxiety, depression, or other body-focused repetitive behaviours; or when the shame and distress associated with the habit is itself impairing quality of life.\n\nTherapists with specific BFRB training — rather than generalist CBT therapists — are generally the better fit, because BFRB treatment differs meaningfully from standard CBT protocols. The TLC Foundation for Body-Focused Repetitive Behaviors (bfrb.org) maintains a directory of BFRB-informed clinicians, and telehealth delivery of HRT is increasingly available, making geographic barriers less relevant.`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -635,6 +640,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         heading: 'What makes the timeline shorter or longer?',
         body: `Several factors reliably predict faster or slower progress. Factors that accelerate the timeline: high motivation and consistent daily practice, real-time external awareness feedback (detection apps, partners), low baseline stress levels, short habit duration (habit established within the last 2–3 years). Factors that extend the timeline: habit established in childhood (deeper encoding), high chronic stress (constant trigger activation), co-occurring anxiety disorder, previous failed attempts that have undermined self-efficacy.\n\nThe single strongest predictor of timeline is consistency of competing response practice. In a randomised head-to-head comparison of three self-help techniques in 113 people with body-focused repetitive behaviours, a dose-effect relationship emerged — most clearly for habit reversal — meaning the technique worked to the extent people actually used it. No trial has compared reactive practice (performing the competing response only after a bite is caught) against proactive practice in high-risk contexts, so treat the advice to rehearse it in advance as an extension of that dose-effect finding rather than a tested comparison.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9158250/" target="_blank" rel="noopener noreferrer">Moritz S, Penney D, Ahmed K, Schmotz S. A Head-to-Head Comparison of Three Self-Help Techniques to Reduce Body-Focused Repetitive Behaviors. Behav Modif. 2022;46(4):894–912.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5467,7 +5477,7 @@ BLOG_POSTS.push(
     tag: 'Treatment',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-10-20',
     ogImage: '/og/nail-biting-mindfulness.png',
     sections: [
       {
@@ -5490,7 +5500,7 @@ BLOG_POSTS.push(
       },
       {
         heading: 'Urge surfing and why it is the useful piece',
-        body: `The specific technique most relevant here comes from the addiction literature and is usually called urge surfing. The core observation is that urges behave like waves — they build, crest, and subside — and that they subside whether or not you act on them.\n\nThe practice is to notice an urge, name it, locate the physical sensation, and observe it without either acting or fighting it. Fighting is important to exclude: suppression tends to amplify, whereas observation tends to let the thing run its course.\n\nFor nail biting this is directly applicable, because the urge genuinely does pass, and most people have never found that out — they have acted on every urge they have noticed, which means they have no experiential evidence that not acting is survivable. There is some trial support for training this deliberately: in a randomised self-help study of 72 nail biters, the group taught decoupling made significant progress in withstanding the urge to bite compared with a progressive-muscle-relaxation control, although on the primary symptom measure the difference reached only trend level.`,
+        body: `The specific technique most relevant here comes from the addiction literature and is usually called urge surfing. The core observation is that urges behave like waves — they build, crest, and subside — and that they subside whether or not you act on them.\n\nThe practice is to notice an urge, name it, locate the physical sensation, and observe it without either acting or fighting it. The technique asks you not to fight the urge either; we found no nail biting study comparing observing an urge with resisting it.\n\nFor nail biting this may apply, because in the habits studied so far an urge can ease without being acted on, and most people have never found that out — they have acted on every urge they have noticed, which means they have no experiential evidence that not acting is survivable. We found no trial of urge surfing in nail biters (see our urge surfing page). The nearest nail biting trial, a randomised self-help study of 72 people, tested a different technique called decoupling, and its group showed more progress in withstanding the urge to bite than a progressive-muscle-relaxation control, although on the primary symptom measure the difference reached only trend level.`,
       },
       {
         heading: 'The limit of self-generated awareness',
@@ -5500,7 +5510,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6546,6 +6556,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">The habit reversal training guide</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -6955,6 +6970,65 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-subconscious-habit">Nail biting as a subconscious habit</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Nail biting vs tics and Tourette</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping for nail biting</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/bfrb-guide">What are body-focused repetitive behaviors?</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-urge-surfing',
+  title: `Urge Surfing for Nail Biting: What the Evidence Shows`,
+  seoTitle: 'Urge Surfing for Nail Biting: What Evidence Exists',
+  description: `No study has tested urge surfing for nail biting. What smoking, alcohol and urge studies show, and what the nearest nail biting trial tested instead.`,
+  tag: 'Psychology',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-urge-surfing.png',
+  sections: [
+    {
+      heading: `What is urge surfing?`,
+      body: `Urge surfing is a mindfulness technique from the addiction field, associated with Alan Marlatt. The idea, in our own summary, is to notice an urge and observe it without acting on it. The abstracts we read do not give a script for it. In the one trial we found that taught it, the researchers describe a brief mindfulness-based instruction set based on Marlatt's urge surfing technique (Bowen and Marlatt, 2009).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/20025372/" target="_blank" rel="noopener noreferrer">Bowen S, Marlatt A. Surfing the urge: brief mindfulness-based intervention for college student smokers. Psychol Addict Behav. 2009;23(4):666-71. doi:10.1037/a0017127</a></li></ul>`,
+    },
+    {
+      heading: `Has urge surfing been tested for nail biting?`,
+      body: `No. On 20 October 2026 we searched PubMed for "urge surfing" together with nail biting and got no results. A search for "urge surfing" alone returned 7 papers, about smoking, alcohol, an eating disorder case study, self-injury, a qualitative study of perinatal therapy and one unrelated climbing questionnaire. So every claim that urge surfing works for nail biting is an extrapolation from other behaviors.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "urge surfing" with nail biting, 0 results; "urge surfing" alone, 7 results.</li></ul>`,
+    },
+    {
+      heading: `Did it help smokers?`,
+      body: `A little, in one small study. Among 123 undergraduate smokers who wanted to change their smoking, one group got brief mindfulness instructions based on urge surfing before an exercise designed to provoke urges, and the other got no instruction. Urges did not differ between the groups, but the mindfulness group smoked significantly fewer cigarettes over the next 7 days. The authors suggest the technique may not reduce urges at first but may change the response to them, and they call the data preliminary (Bowen and Marlatt, 2009).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/20025372/" target="_blank" rel="noopener noreferrer">Bowen S, Marlatt A. 2009 (above).</a></li></ul>`,
+    },
+    {
+      heading: `Did it help with cravings for alcohol?`,
+      body: `Possibly, but it was one tool among several. In a 6-week smartphone study of 28 adults with an alcohol use disorder, the coping strategies the app delivered, listening to an urge surfing audio file and viewing reasons for changing drinking, were superior to using a strategy that was not from the app. The study did not isolate urge surfing from the other strategy, so it cannot tell you what the audio file did on its own (Dulin and Gonzalez, 2017).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/28703611/" target="_blank" rel="noopener noreferrer">Dulin PL, Gonzalez VM. Smartphone-based, momentary intervention for alcohol cravings amongst individuals with an alcohol use disorder. Psychol Addict Behav. 2017;31(5):601-607. doi:10.1037/adb0000292</a></li></ul>`,
+    },
+    {
+      heading: `Does an urge fade if you do not act on it?`,
+      body: `One study of people with non-suicidal self-injury suggests it can. In a 15-day smartphone study of 51 women, tension declined steadily after self-injury but not after resisting an urge. High-urge moments instead followed an inverted U pattern, rising and then falling, with negative affect and tension lower afterwards. The authors say this underlines the utility of urge surfing (Storkel et al., 2023). It is a different behavior from nail biting, so read it as supporting the general idea, not as a measurement of nail biting urges.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/36764164/" target="_blank" rel="noopener noreferrer">Storkel LM, Niedtfeld I, Schmahl C, Hepp J. Does self-harm have the desired effect? Comparing non-suicidal self-injury to high-urge moments in an ambulatory assessment design. Behav Res Ther. 2023;162:104273. doi:10.1016/j.brat.2023.104273</a></li></ul>`,
+    },
+    {
+      heading: `What did the nearest nail biting trial test?`,
+      body: `A different technique. A randomized trial of 72 people with excessive nail biting compared decoupling, a self-help method of performing motor sequences that rearrange the elements of the habit, with progressive muscle relaxation. After four weeks the decoupling group showed significantly more progress in withstanding the urge to bite, and the difference on the primary symptom scale reached only a trend level. The authors note methodological limitations (Moritz et al., 2011). That is not urge surfing, so it does not count as evidence for it.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/21659318/" target="_blank" rel="noopener noreferrer">Moritz S, Treszl A, Rufer M. A randomized controlled trial of a novel self-help technique for impulse control disorders: a study on nail-biting. Behav Modif. 2011;35(5):468-85. doi:10.1177/0145445511409395</a></li></ul>`,
+    },
+    {
+      heading: `Should you try it for nail biting?`,
+      body: `It is a reasonable thing to try alongside a proven method, and it costs nothing, but it is not a replacement for one. Habit reversal training is the behavioral method our habit reversal page covers, with its sources. If you try urge surfing, treat the results as your own observations.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/how-long-to-stop-nail-biting">How long does it take to stop nail biting?</a></li><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
