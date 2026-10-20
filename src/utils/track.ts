@@ -15,7 +15,8 @@ export type FunnelEvent =
   | 'demo_link_click'
   | 'tracker_pdf_download'
   | 'calculator_use'
-  | 'pricing_view';
+  | 'pricing_view'
+  | 'share_click';
 
 // Which button was clicked, so the demo-to-trial rate can be separated from the
 // plain landing-page rate. A fixed label, never anything about the visitor.

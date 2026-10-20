@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { ShareButton } from '../components/site/ShareButton';
+import { buildShareUrl, cleanNumberParam } from '../utils/shareLink';
 import { track } from '../utils/track';
 import { MONTHLY_PER_YEAR, YEARLY_PRICE, yearlyCost } from '../utils/costCalc';
 
@@ -36,17 +38,22 @@ function Field({ id, label, hint, value, onChange }: {
 
 export function CostCalculator() {
   useTheme('light');
-  const [manicures, setManicures] = useState('');
-  const [price, setPrice] = useState('');
-  const [other, setOther] = useState('');
+  // A shared link opens with the inputs filled in: ?m=4&p=60&o=20
+  const initial = (k: string) => cleanNumberParam(new URLSearchParams(window.location.search).get(k));
+  const [manicures, setManicures] = useState(() => initial('m'));
+  const [price, setPrice] = useState(() => initial('p'));
+  const [other, setOther] = useState(() => initial('o'));
 
   const entered = [manicures, price, other].some(v => v.trim() !== '');
   const r = yearlyCost({ manicuresPerYear: num(manicures), manicurePrice: num(price), otherPerYear: num(other) });
   const less = r.vsYearlyPlan < 0;
 
   // One event the first time someone fills in a number, not one per keystroke.
+  // A link opened with the inputs already filled in is not someone using the
+  // calculator, so it does not count.
+  const openedFilled = useRef(entered);
   useEffect(() => {
-    if (entered) track('calculator_use');
+    if (entered && !openedFilled.current) track('calculator_use');
   }, [entered]);
 
   return (
@@ -86,6 +93,10 @@ export function CostCalculator() {
                         ? `That equals the ${money(YEARLY_PRICE)} yearly plan.`
                         : `That is ${money(r.vsYearlyPlan)} more than the ${money(YEARLY_PRICE)} yearly plan (${money(MONTHLY_PER_YEAR)} if you pay monthly).`}
                   </p>
+                  <ShareButton
+                    source="cost_calculator"
+                    getUrl={() => buildShareUrl(window.location.origin, window.location.pathname, { m: manicures, p: price, o: other })}
+                  />
                 </>
               ) : (
                 <p className="sg-body">Fill in any field to see your yearly cost.</p>

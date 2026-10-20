@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { ShareButton } from '../components/site/ShareButton';
+import { buildShareUrl, cleanChoiceParam, cleanNumberParam } from '../utils/shareLink';
 import { track } from '../utils/track';
 import { FINGERNAIL_MM_PER_MONTH, TOENAIL_MM_PER_MONTH, monthsToGrow, type NailKind } from '../utils/nailGrowth';
 
@@ -15,16 +17,21 @@ const num = (s: string) => (s.trim() === '' ? 0 : Number(s));
 
 export function NailGrowthCalculator() {
   useTheme('light');
-  const [mm, setMm] = useState('');
-  const [kind, setKind] = useState<NailKind>('fingernail');
+  // A shared link opens with the inputs filled in: ?mm=10&type=toe
+  const [mm, setMm] = useState(() => cleanNumberParam(new URLSearchParams(window.location.search).get('mm')));
+  const [kind, setKind] = useState<NailKind>(() =>
+    cleanChoiceParam(new URLSearchParams(window.location.search).get('type'), ['fingernail', 'toenail'] as const, 'fingernail'));
 
   const entered = mm.trim() !== '';
   const r = monthsToGrow(num(mm), kind);
   const rate = kind === 'fingernail' ? FINGERNAIL_MM_PER_MONTH : TOENAIL_MM_PER_MONTH;
 
   // One event the first time someone fills in a number, not one per keystroke.
+  // A link opened with the inputs already filled in is not someone using the
+  // calculator, so it does not count.
+  const openedFilled = useRef(entered);
   useEffect(() => {
-    if (entered) track('calculator_use', 'nail_growth');
+    if (entered && !openedFilled.current) track('calculator_use', 'nail_growth');
   }, [entered]);
 
   return (
@@ -80,6 +87,10 @@ export function NailGrowthCalculator() {
                   <p className="sg-note">At the average rate, about</p>
                   <p className="mt-1 text-4xl font-bold text-[color:var(--sg-ink)]">{r.months} {r.months === 1 ? 'month' : 'months'}</p>
                   <p className="sg-body mt-3">That is about {r.weeks} {r.weeks === 1 ? 'week' : 'weeks'}, using {rate} mm a month for a {kind}.</p>
+                  <ShareButton
+                    source="nail_growth"
+                    getUrl={() => buildShareUrl(window.location.origin, window.location.pathname, { mm, type: kind })}
+                  />
                 </>
               ) : (
                 <p className="sg-body">Enter a length to see the estimate.</p>
