@@ -2311,7 +2311,7 @@ if (!existsSync(distPath)) {
       // The old wording inverted the page's own argument — you cannot log an
       // episode you didn't notice, which is precisely why manual tracking
       // undercounts. The body says "you can only log episodes you notice".
-      description: 'Most biters catch fewer than half their daily episodes, so a manual log is a sample. Stop Biting logs what the camera sees: after 7 days, your real frequency.',
+      description: 'A manual log only records the episodes you notice. Stop Biting logs what the camera sees: after 7 days, your real frequency.',
     },
     '/solutions/for-desk-workers': {
       title: 'Stop Nail Biting at Your Desk | Stop Biting',
