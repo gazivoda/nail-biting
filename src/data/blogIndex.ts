@@ -307,11 +307,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-emotional-regulation",
     title: "Why Nail Biting Feels Calming: The Emotional Regulation Mechanism Explained",
-    description: "In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after: self-report, not physiology. What a replacement must match.",
+    description: "Why nail biting feels calming: the reinforcement loop, why regulation strategies often fail to replace it, and how to match a replacement to the mechanism.",
     tag: "Psychology",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-20",
   },
   {
     slug: "acrylics-to-stop-nail-biting",
@@ -667,11 +667,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-cortisol",
     title: "Nail Biting and Cortisol: The Stress Hormone Connection Explained",
-    description: "No study we found has measured cortisol and nail biting together. In 339 medical students, 65.7% of biters reported tension before biting, 42% pleasure after.",
+    description: "No study we found has measured cortisol and nail biting together. What cortisol does, why relief is short-lived, and why stress management alone is not enough.",
     tag: "Science",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-gel-manicure",
