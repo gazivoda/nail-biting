@@ -753,6 +753,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
         heading: 'How to address sleep nail biting',
         body: `Physical barriers are the only category of intervention that could plausibly operate during sleep, since awareness-based approaches depend on being awake. Set expectations accordingly: there is no trial evidence for any of them in this context. Nothing below has been tested for sleep nail biting.\n\nFinger cots or gloves worn during sleep physically prevent the fingers from reaching the mouth in the habitual way. Bitter-tasting nail preparations applied before sleep provide aversive conditioning if the fingers do reach the mouth. Nail glue or acrylic overlays reduce the sensory reward of biting by altering the surface texture and resistance of the nail.\n\nAddressing underlying anxiety and improving sleep hygiene reduces the sleep arousal that facilitates sleep-related motor behaviors generally. Consistent sleep-wake timing, reducing alcohol consumption (which fragments sleep architecture and increases parasomnias), and stress management practices before bed all reduce the propensity for motor activity during light sleep.`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-evening">Why do you bite your nails in the evening? What is and is not known</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -2145,12 +2150,12 @@ BLOG_POSTS.push({
 
 BLOG_POSTS.push({
   slug: 'nail-biting-evening',
-  title: 'Why You Bite Your Nails More at Night: The Science Explained',
+  title: 'Why Do You Bite Your Nails in the Evening? What Is and Is Not Known',
   description: 'No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when left alone. Why evenings supply exactly that.',
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-evening.png',
   sections: [
     {
@@ -2173,6 +2178,11 @@ BLOG_POSTS.push({
     {
       heading: 'Evening-specific strategies that work',
       body: `Because evening biting has specific causes, it responds to specific interventions. The most effective approaches target the evening context directly rather than applying generic advice.\n\nFor television-triggered biting: keeping a competing response object (textured fidget, stress ball) next to your usual evening seating position. Make the competing response the path of least resistance in that context.\n\nFor ego depletion: accepting that evening willpower is lower and compensating with external awareness tools rather than relying on self-monitoring. If you use a detection app, running it during evening screen time specifically addresses the highest-risk window.\n\nFor stress carry-over: a brief structured wind-down — even 10 minutes of writing down tomorrow's tasks or a short breathing exercise — reduces the ruminative load that intensifies evening biting. Addressing the upstream emotional state is more durable than trying to intercept individual biting episodes in a depleted state.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-during-sleep">Nail biting during sleep: does it happen and what can you do?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
