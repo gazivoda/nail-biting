@@ -1465,4 +1465,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "online-therapy-nail-biting",
+    title: "Online Therapy for Nail Biting: What the Studies Show",
+    description: "No trial has tested online therapy for nail biting alone. What video habit reversal and an online self-help trial found for BFRBs, and what to ask a provider.",
+    tag: "Treatment",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
