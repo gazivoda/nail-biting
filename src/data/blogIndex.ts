@@ -1492,4 +1492,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-stimulus-control",
+    title: "Stimulus Control for Nail Biting: Changing What Sets It Off",
+    description: "Stimulus control is first-line for hair pulling and skin picking. What a case report and two trials show, and what no study has tested for nail biting.",
+    tag: "Treatment",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
