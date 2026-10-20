@@ -121,7 +121,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-home-remedies">Can Vinegar, Hot Sauce or Garlic on Nails Stop Nail Biting?</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li><li><a href="/blog/cbd-cannabis-nail-biting">Can CBD or Cannabis Help With Nail Biting? What Studies Show</a></li><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-home-remedies">Can Vinegar, Hot Sauce or Garlic on Nails Stop Nail Biting?</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li><li><a href="/blog/cbd-cannabis-nail-biting">Can CBD or Cannabis Help With Nail Biting? What Studies Show</a></li><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -312,7 +312,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety: when treating anxiety is the key</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping: find out when you actually bite</a></li><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection explained</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming: the emotional regulation mechanism</a></li><li><a href="/blog/nail-biting-panic-disorder">Nail biting and panic disorder: when biting clusters around panic attacks</a></li><li><a href="/blog/nail-biting-before-period">Does Nail Biting Get Worse Before Your Period? What We Know</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety: when treating anxiety is the key</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming</a></li><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping: find out when you actually bite</a></li><li><a href="/blog/nail-biting-cortisol">Nail biting and cortisol: the stress hormone connection explained</a></li><li><a href="/blog/nail-biting-emotional-regulation">Why nail biting feels calming: the emotional regulation mechanism</a></li><li><a href="/blog/nail-biting-panic-disorder">Nail biting and panic disorder: when biting clusters around panic attacks</a></li><li><a href="/blog/nail-biting-before-period">Does Nail Biting Get Worse Before Your Period? What We Know</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -571,7 +571,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -618,7 +618,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li></ul>`,
+        html: `<ul><li><a href="/blog/stress-and-nail-biting">The stress and nail biting connection: why anxiety drives the habit</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -659,7 +659,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -692,6 +692,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: 'The most effective approaches for long-established adult habits',
         body: `For adult nail biters with habits of 10+ years, the evidence points to a combination approach. HRT remains first-line, but with specific adaptations for adult contexts: competing responses designed for desk-work and meeting environments, habit diaries integrated into digital tools rather than paper notebooks, and awareness tools (including AI detection) that function during work hours without requiring behavioral overhead.\n\nFor deeply established habits in high-stress adults, augmenting HRT with stress management (particularly brief mindfulness practices and diaphragmatic breathing) accelerates outcomes. The stress reduction component lowers trigger frequency; the HRT component dismantles the automatic response. Neither alone produces the results that both together achieve. Adults with habits established in early childhood often need longer than the few weeks people expect, though we have not found a study that establishes a specific protocol length by habit duration, so any figure you see quoted for this is a rule of thumb rather than a finding.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -761,7 +766,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-evening">Why do you bite your nails in the evening? What is and is not known</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-evening">Why do you bite your nails in the evening? What is and is not known</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -804,7 +809,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-home-remedies">Can Vinegar, Hot Sauce or Garlic on Nails Stop Nail Biting?</a></li><li><a href="/blog/swallowing-nail-polish-biting">Is It Harmful to Swallow Nail Polish When You Bite?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-home-remedies">Can Vinegar, Hot Sauce or Garlic on Nails Stop Nail Biting?</a></li><li><a href="/blog/swallowing-nail-polish-biting">Is It Harmful to Swallow Nail Polish When You Bite?</a></li><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1789,7 +1794,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1834,7 +1839,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Shame and nail biting: does self-criticism make it worse?</a></li><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -1969,6 +1974,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<p>If you work from home, our <a href="/solutions/for-remote-workers">guide for remote workers</a> covers how webcam detection fits a remote workday.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2075,7 +2085,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/stop-nail-biting-challenge">30-day nail biting challenge: a day-by-day guide</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/stop-nail-biting-challenge">30-day nail biting challenge: a day-by-day guide</a></li><li><a href="/blog/nail-biting-cold-turkey-or-gradual">Is It Better to Quit Nail Biting Cold Turkey or Gradually?</a></li><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2200,7 +2210,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-during-sleep">Nail biting during sleep: does it happen and what can you do?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-during-sleep">Nail biting during sleep: does it happen and what can you do?</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2287,6 +2297,11 @@ BLOG_POSTS.push({
       heading: 'The long-term solution',
       body: `Short-term techniques are useful but are not a substitute for addressing the habit itself. The nail biting that surfaces most visibly before interviews is the same habit that runs throughout your day — the interview context just removes the suppressors that normally keep it less visible.\n\nHabit reversal is the treatment with the strongest evidence here, and it is worth being accurate about its size. In the one placebo-controlled trial with a genuine follow-up, participants' nail length was 22% above baseline at the end of treatment, against a 3% gain in the placebo group; five months later the treated group was still 19% above baseline and the placebo group was at 0%. That is a real, durable and fairly modest effect on an objective measure — enough to lower the baseline that interview stress gets added to, not enough to make a high-stakes situation a non-event. The goal is to arrive at a high-stakes situation with a habit that has already been reduced to low frequency — so that the additional stress of the event doesn't push it past the threshold of causing visible damage. Building that foundation is the actual problem to solve.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2587,6 +2602,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<p>If you are wondering whether nail biting counts as self-harm, see <a href="/blog/is-nail-biting-self-harm">is nail biting a form of self-harm</a>.</p>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -2851,7 +2871,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2968,6 +2988,11 @@ BLOG_POSTS.push({
       heading: `Addressing both at once`,
       body: `If you do both, the same underlying framework applies to each: identify the specific contexts that trigger each behaviour (they may not fully overlap), build awareness of when each is happening, and choose a genuinely different, low-risk competing response for the shared trigger states rather than treating the two habits as needing entirely separate solutions. Because both are oral-motor habits responding to similar underlying states, addressing the shared trigger — often focus or mild stress — tends to reduce both simultaneously more effectively than treating them as unrelated behaviours.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -3083,6 +3108,11 @@ BLOG_POSTS.push({
       heading: `How do you manage both changes at once?`,
       body: `Treat the nail biting as its own habit-change project. If it has already emerged or worsened after quitting smoking, don't assume it will resolve on its own once the transition period passes — for many people it doesn't, and instead consolidates into an independent habit that outlasts the original nicotine withdrawal by a wide margin.\n\nThe same core approach applies: awareness training, a specific competing response, and ideally an external tool that catches the episodes self-monitoring misses. That matters most during the early months, when both the smoking-cessation adjustment and the emerging nail biting pattern are competing for the same limited self-regulatory resources.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1016/j.brat.2006.07.013" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989–995.</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3233,7 +3263,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li><li><a href="/blog/uv-nail-lamps-safety">Are UV and LED Nail Lamps Safe if You Wear Gel to Stop Biting?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-chewing-gum">Does chewing gum stop nail biting? What the evidence shows</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a></li><li><a href="/blog/uv-nail-lamps-safety">Are UV and LED Nail Lamps Safe if You Wear Gel to Stop Biting?</a></li><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li></ul>`,
     },
   ],
 });
@@ -3315,6 +3345,11 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3562,7 +3597,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li></ul>`,
     },
   ],
 });
@@ -4125,7 +4160,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4901,6 +4936,11 @@ BLOG_POSTS.push({
       heading: `Practical winter-specific strategies`,
       body: `A few adjustments specifically target the seasonal drying mechanism: increasing hand and cuticle moisturising frequency during winter months, using a thicker, more occlusive hand cream than might be needed in warmer, more humid months; using a humidifier in frequently occupied indoor spaces (bedroom, home office) to counteract the drying effect of heating systems; and being more proactive about filing down any rough nail edges as soon as they appear during winter, since they'll develop more quickly and more often than during other seasons. Addressing the physical trigger doesn't replace ongoing habit-reversal work, but reducing how often a rough edge appears in the first place removes one of the most common episode-initiating triggers specifically elevated during this season.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -4939,7 +4979,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li><li><a href="/blog/nail-biting-onycholysis">Why Is My Nail Lifting From the Nail Bed? Biting or Else?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li><li><a href="/blog/nail-biting-onycholysis">Why Is My Nail Lifting From the Nail Bed? Biting or Else?</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4987,6 +5027,11 @@ BLOG_POSTS.push(
       {
         heading: 'A practical approach for boredom biting',
         body: `Start by identifying your dead-time contexts rather than your emotional states. Where do you routinely wait? Commuting, queuing, adverts, loading screens, the last ten minutes of a meeting you have nothing to add to. Those are your target moments, and they are far easier to predict than a stress spike.\n\nThen put something in those moments deliberately. A textured object in the pocket you actually reach into. A rule that your hands go around a cup rather than to your face while you wait. It matters that the substitute is available before the moment arrives — deciding what to do instead while your finger is already at your mouth is too late.\n\nThe awareness problem still applies, though. Boredom biting is, if anything, even less conscious than stress biting, because nothing is happening to mark the moment in memory. This is where an external signal does the work you cannot reliably do yourself: something that notices the hand movement during the exact moments your attention has drifted, and hands the moment back to you while there is still something to do with it.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5058,6 +5103,11 @@ BLOG_POSTS.push(
         heading: 'What to do with this framing',
         body: `The practical takeaway is that a good replacement behaviour for oral-driven nail biting is often itself oral, not manual. If the need being met is oral-sensory, a stress ball is answering a question nobody asked. Sugar-free gum, cold water, or something crunchy is a closer functional match, and people who identify their biting as oral-dominant usually find these substantially more effective than hand-based fidgets.\n\nThat said, matching the substitute only helps once you know the moment is happening. The characteristic feature of nail biting is that the hand arrives at the mouth before awareness does — so the reliable first step, regardless of which need the habit is meeting, is closing that gap so there is a moment in which to choose the substitute at all.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1007/s40257-018-0386-1" target="_blank" rel="noopener noreferrer">Winebrake JP, Grover K, Halteh P, Lipner SR. Pediatric Onychophagia: A Survey-Based Study of Prevalence, Etiologies, and Co-Morbidities. Am J Clin Dermatol. 2018;19(6):887–891.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3082216/" target="_blank" rel="noopener noreferrer">Ghanizadeh A, Shekoohi H. Prevalence of nail biting and its association with mental health in a community sample of children. BMC Res Notes. 2011;4:116.</a></li><li><a href="https://doi.org/10.1375/1832427054936637" target="_blank" rel="noopener noreferrer">Ooki S. Genetic and environmental influences on finger-sucking and nail-biting in Japanese twin children. Twin Res Hum Genet. 2005;8(4):320–327.</a></li><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008;2(1):13.</a></li></ul>`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5249,7 +5299,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li><li><a href="/blog/nail-biting-onycholysis">Why Is My Nail Lifting From the Nail Bed? Biting or Else?</a></li><li><a href="/blog/nail-biting-herpetic-whitlow">Can Nail Biting Give You a Cold Sore on Your Finger?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-dark-line-on-nail">Dark line on a bitten nail: habit mark or something to check?</a></li><li><a href="/blog/nail-biting-onycholysis">Why Is My Nail Lifting From the Nail Bed? Biting or Else?</a></li><li><a href="/blog/nail-biting-herpetic-whitlow">Can Nail Biting Give You a Cold Sore on Your Finger?</a></li><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5397,7 +5447,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5803,7 +5853,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-before-period">Does Nail Biting Get Worse Before Your Period? What We Know</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/nail-biting-before-period">Does Nail Biting Get Worse Before Your Period? What We Know</a></li><li><a href="/blog/nail-biting-lack-of-sleep">Does Lack of Sleep Make Nail Biting Worse? What Research Shows</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5894,6 +5944,11 @@ BLOG_POSTS.push(
         heading: 'Where a human partner cannot help',
         body: `Even a well-designed arrangement has obvious coverage gaps. Your partner is not present for most of your day. They will not notice most episodes even when present, because they are living their own life rather than watching your hands. And they are not there at all for the hours you spend alone with a screen in the evening — which matters a great deal if that is where your own log says your biting lives, and not at all if it isn't. We cannot tell you which, because nobody appears to have published a ranking of where nail biting happens; any "top three contexts" list you meet, here or elsewhere, is somebody's impression rather than a measurement.\n\nThis is not an argument against the arrangement — the reinforcement side of it is genuinely useful and hard to replicate. It is an argument for not expecting a person to provide continuous detection, which is a job better suited to something that does not get bored, does not feel awkward, and is present for all of your working day rather than a fraction of it.`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -5943,7 +5998,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li><li><a href="/blog/uv-nail-lamps-safety">Are UV and LED Nail Lamps Safe if You Wear Gel to Stop Biting?</a></li><li><a href="/blog/biotin-bitten-nails">Does biotin help bitten nails, and affect blood tests?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li><li><a href="/blog/uv-nail-lamps-safety">Are UV and LED Nail Lamps Safe if You Wear Gel to Stop Biting?</a></li><li><a href="/blog/biotin-bitten-nails">Does biotin help bitten nails, and affect blood tests?</a></li><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6168,7 +6223,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-substitute-habits">If I Stop Biting My Nails, Will I Start Picking My Skin Instead?</a></li><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -6498,6 +6553,11 @@ BLOG_POSTS.push(
         body: `Used deliberately, training earns a place in a plan — as displacement and as regulation, not as treatment.\n\nDisplacement is the strong effect: an hour of exercise placed inside your highest-risk window is an hour in which biting is mechanically impossible. For evening biters, a post-work session removes prime biting time outright, which no awareness technique matches. Regulation is the modest effect: a small, real reduction in state anxiety, useful support for a tension-driven pattern and nothing more.\n\nWhat exercise does not do is touch the mechanics of the habit. The automatic hand-to-mouth loop is intact and waiting in every other context, which is why the core of any serious attempt remains awareness plus a competing response. Worth stating our own limitation plainly here too: Stop Biting watches through a webcam at your computer, so it covers none of the territory in your gym bag. The two happen to divide the day neatly — detection for the desk hours where most focus-biting lives, training for a chunk of the rest.`,
         html: `<p>For biting that clusters around competitive play rather than training, see our <a href="/solutions/for-gamers">guide for gamers</a>.</p><p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> and <a href="/blog/nail-biting-30-day-plan">the 30-day plan</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25899389/" target="_blank" rel="noopener noreferrer">Ensari I, Greenlee TA, Motl RW, Petruzzello SJ. Meta-analysis of acute exercise effects on state anxiety: an update of randomized controlled trials over the past 25 years. Depress Anxiety. 2015;32(8):624–634.</a></li><li>Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Behav Res Ther. 1980;18(4):281–285</a>. PubMed holds no abstract for this record and the full text is paywalled, so the 99% and 60% figures quoted on this page are taken from Table 1 of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Int J Environ Res Public Health. 2022;19(6):3392</a>, which is open access.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-exercise">Does Exercise Help Nail Biting? What Research Shows</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6628,6 +6688,11 @@ BLOG_POSTS.push({
       body: `If you have braces, jaw pain, clicking, or a tooth that has changed, tell a dentist; they can examine what a general article cannot. Whether or not biting is harming your teeth, a habit that runs hundreds of times a day is worth interrupting, and the first step is noticing it.`,
       html: `<p>Related reading: <a href="/blog/nail-biting-braces">nail biting with braces</a>, <a href="/blog/nail-biting-jaw-pain-tmj">jaw pain and TMJ</a>, <a href="/blog/nail-biting-vs-teeth-grinding">nail biting and teeth grinding</a>, and <a href="/blog/nail-biting-health-risks">the wider health risks</a>. For the method, see <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/3859328/" target="_blank" rel="noopener noreferrer">Odenrick L, Brattström V. Nailbiting: frequency and association with root resorption during orthodontic treatment. Br J Orthod. 1985;12(2):78–81.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10601139/" target="_blank" rel="noopener noreferrer">Otsugu M, Sasaki Y, Mikasa Y, et al. Incompetent lip seal and nail biting as risk factors for malocclusion in Japanese preschool children aged 3–6 years. BMC Pediatr. 2023;23(1):532.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4576640/" target="_blank" rel="noopener noreferrer">Motghare V, Kumar J, Kamate S, et al. Association Between Harmful Oral Habits and Sign and Symptoms of Temporomandibular Joint Disorders Among Adolescents. J Clin Diagn Res. 2015;9(8):ZC45–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24809566/" target="_blank" rel="noopener noreferrer">Ellison R, Rahman S, Barker D, Larmour C. Onychophagia and subgingival foreign body embedment: a case report. Br Dent J. 2014;216(9):519–520.</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-gum-disease">Does Nail Biting Harm Your Gums or Mouth Bacteria</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -6663,7 +6728,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/swallowing-nail-polish-biting">Is It Harmful to Swallow Nail Polish When You Bite?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/swallowing-nail-polish-biting">Is It Harmful to Swallow Nail Polish When You Bite?</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -7453,6 +7518,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li><li><a href="/blog/nail-biting-social-confidence">Nail biting and social confidence</a></li><li><a href="/blog/nail-biting-mistakes">Mistakes people make when trying to stop</a></li><li><a href="/blog/nail-biting-emotional-regulation">Nail biting and emotional regulation</a></li><li><a href="/blog/nail-biting-support-groups">Support groups for nail biting</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li><li><a href="/blog/nail-biting-dating-relationships">Does Nail Biting Affect Dating and Romantic Relationships</a></li><li><a href="/blog/nail-biting-self-esteem">Does Nail Biting Affect Self-Esteem? What Studies Show</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7551,6 +7621,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-alternatives">Alternatives to nail biting</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/products-to-stop-nail-biting">Products to stop nail biting</a></li><li><a href="/blog/best-nail-biting-remedies">Nail biting remedies ranked by evidence</a></li><li><a href="/blog/nail-biting-jaw-pain-tmj">Nail biting and jaw pain</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7647,7 +7722,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-herpetic-whitlow">Can Nail Biting Give You a Cold Sore on Your Finger?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-herpetic-whitlow">Can Nail Biting Give You a Cold Sore on Your Finger?</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -7699,6 +7774,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: what the evidence says</a></li><li><a href="/blog/best-nail-biting-remedies">Nail biting remedies ranked by evidence</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-essential-oils">Essential oils for nail biting</a></li><li><a href="/blog/nail-biting-regular-nail-polish">Regular nail polish and nail biting</a></li><li><a href="/blog/nail-biting-myths">Nail biting myths</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-hand-cream-moisturiser">Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7747,6 +7827,11 @@ That trial tested a training package against a placebo. It did not compare quitt
       body: ``,
       html: `<ul><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-30-day-plan">A 30-day plan to stop nail biting</a></li><li><a href="/blog/stop-nail-biting-challenge">Stop nail biting challenge</a></li><li><a href="/blog/how-long-to-stop-nail-biting">How long does it take to stop nail biting?</a></li><li><a href="/blog/nail-biting-mistakes">Common nail biting mistakes</a></li><li><a href="/blog/stop-nail-biting-fast">Can you stop nail biting fast?</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-relapse">Why Do People Start Biting Their Nails Again After Stopping</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7793,6 +7878,11 @@ On 20 October 2026 we searched PubMed for "onychophagia onycholysis" and found 3
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor for nail biting</a></li><li><a href="/blog/does-nail-biting-cause-permanent-damage">Does nail biting cause permanent damage?</a></li><li><a href="/blog/nail-biting-fungal-infection">Nail biting and fungal infection</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Nail ridges and grooves from biting</a></li><li><a href="/blog/nail-biting-paronychia">Nail biting and paronychia</a></li><li><a href="/blog/nail-and-cuticle-picking">Nail and cuticle picking</a></li></ul>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -8022,6 +8112,11 @@ If a new habit starts to hurt, bleeds, looks infected or is spreading, see a doc
       body: ``,
       html: `<ul><li><a href="/blog/bfrb-guide">Body-focused repetitive behaviors guide</a></li><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-and-cuticle-picking">Nail and cuticle picking</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-dermatophagia">Nail biting and dermatophagia</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-vaping-nicotine">Are Vaping, Nicotine and Nail Biting Linked? What Exists</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -8087,6 +8182,11 @@ If your nails hurt, look infected, or have a changing mark or dark streak, see a
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-vitamin-deficiency">Is nail biting a sign of a vitamin deficiency?</a></li><li><a href="/blog/grow-nails-after-nail-biting">How to grow your nails back after nail biting</a></li><li><a href="/blog/nail-care-routine-for-nail-biters">A nail care routine for nail biters</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Nail ridges and grooves after nail biting</a></li><li><a href="/blog/nail-biting-short-nails-trimming">Keeping short nails trimmed</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -8146,6 +8246,11 @@ For adults who bite polished or gel nails, the honest position is that the resea
       body: ``,
       html: `<ul><li><a href="/blog/swallowing-fingernails">What happens if you swallow your fingernails?</a></li><li><a href="/blog/nail-biting-regular-nail-polish">Does regular nail polish help you stop biting?</a></li><li><a href="/blog/nail-biting-health-risks">Health risks of nail biting</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish review</a></li><li><a href="/blog/nail-biting-gel-manicure">Nail biting and gel manicures</a></li><li><a href="/blog/acrylics-to-stop-nail-biting">Acrylics to stop nail biting</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-nail-hardeners">Do Nail Hardeners Work for Bitten or Brittle Nails</a></li><li><a href="/blog/nail-biting-hand-sanitizer">Does Hand Sanitizer or Washing Clean Under Bitten Nails</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -8199,6 +8304,614 @@ A written record also helps if you decide to talk to someone. If premenstrual sy
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-birth-control">Can birth control affect nail biting?</a></li><li><a href="/blog/nail-biting-menopause">Nail biting and menopause</a></li><li><a href="/blog/nail-biting-pregnancy">Nail biting and pregnancy</a></li><li><a href="/blog/nail-biting-women">Nail biting in women</a></li><li><a href="/blog/stress-and-nail-biting">Stress and nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Mapping your nail biting triggers</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-relapse',
+  title: `Does Nail Biting Come Back After You Stop? What Studies Show`,
+  seoTitle: `Nail Biting Relapse: What the Evidence Shows`,
+  description: `No study we found measures how often nail biting returns after quitting. In one small trial, habit reversal gains mostly held at 5 months. What else exists.`,
+  tag: 'Science',
+  readingMinutes: 4,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-relapse.png',
+  sections: [
+    {
+      heading: `Do people who stop biting their nails go back to it?`,
+      body: `Some do, but no study I found has measured how often adult nail biters relapse after stopping, so nobody can give you an honest percentage. The closest evidence is a small trial of habit reversal for chronic nail biting that re-measured people 5 months later.
+
+On 20 October 2026 a PubMed search for "nail biting relapse" returned 7 results. I read all 7 abstracts. None followed people who had stopped biting to see who restarted: they covered orthodontic retainers, pinworm, an ADHD and braces review, a 1973 heart study and a few case reports.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail biting relapse", run 20 October 2026: 7 results, all 7 abstracts read, none a study of relapse after quitting.</li></ul>`,
+    },
+    {
+      heading: `What does the nail-biting follow-up data actually show?`,
+      body: `It shows that gains from habit reversal training were mostly still there 5 months later, in a very small trial. Thirty adults with chronic nail biting were randomly assigned to habit reversal (awareness training, a competing response, social support) or to a placebo conversation, with 2 hours of treatment over 3 sessions; 25 finished.
+
+Nail length in the habit reversal group was 22% above its starting point right after treatment and still 19% above it at the 5-month follow-up. The placebo group was at 3% and then 0%. That is a drop of 3 percentage points over those months, not a collapse, but it is 13 people in one study and 5 months, so it says little about what happens after a year or five.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40-8. doi:10.4088/jcp.v64n0109</a></li></ul>`,
+    },
+    {
+      heading: `What do hair-pulling studies say about relapse?`,
+      body: `They say keeping the gains is a recognised problem in a related habit disorder. Hair pulling (trichotillomania) is studied far more than nail biting, and its researchers describe maintenance as historically difficult.
+
+A 10-person open trial of habit reversal enhanced with dialectical behavior therapy skills followed people 3 and 6 months after a maintenance phase. Scores were still better than at baseline, but some measures had worsened since earlier time points, and 5 of 10 were full responders at 6 months. In a 6-month follow-up of an acceptance-enhanced behavior therapy trial (85 adults), symptoms did not worsen after treatment ended, yet the group that had received only supportive therapy ended up at similar levels. These are hair-pulling results, not nail-biting results, and the samples are small.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/21456040/" target="_blank" rel="noopener noreferrer">Keuthen NJ, Rothbaum BO, Falkenstein MJ, et al. DBT-enhanced habit reversal treatment for trichotillomania: 3- and 6-month follow-up results. Depress Anxiety. 2011;28(4):310-3. doi:10.1002/da.20778</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/38330639/" target="_blank" rel="noopener noreferrer">Barber KE, Woods DW, Ely LJ, et al. Long-term follow-up of acceptance-enhanced behavior therapy for trichotillomania. Psychiatry Res. 2024;333:115767. doi:10.1016/j.psychres.2024.115767</a></li></ul>`,
+    },
+    {
+      heading: `Do the gains last longer than a year?`,
+      body: `For young people with hair pulling or skin picking, one clinic reported gains held for 12 months. In a Stockholm specialist clinic, 56 children and adolescents received mostly habit reversal training, sometimes with medication, and symptom severity fell and stayed lower up to the 12-month follow-up.
+
+This was a clinic record, not a randomised trial, and it did not include nail biting as its own diagnosis. I found no nail-biting follow-up that runs past the 5 months above.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38418047/" target="_blank" rel="noopener noreferrer">Rautio D, Andren P, Bjureberg L, et al. Body-focused repetitive behavior disorders in children and adolescents: clinical characteristics and treatment outcomes in a naturalistic setting. Behav Ther. 2024;55(2):376-390. doi:10.1016/j.beth.2023.07.010</a></li></ul>`,
+    },
+    {
+      heading: `What do case reports say about relapse after medication?`,
+      body: `They show relapse happening in some severe cases, but they cannot tell you how common it is. One report of two women with deep skin ulcers from repetitive picking described healing on high-dose fluoxetine and relapses when the dose was lowered. Another case report of severe, injurious nail biting described a 70-year-old man with severe, injurious nail biting who was started on medication to reduce the urge, then relapsed and needed further amputation.
+
+These are single cases of extreme injury, not typical biters. Anything involving pain, infection or spreading redness needs a doctor, and decisions about medication belong to a clinician.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25585672/" target="_blank" rel="noopener noreferrer">Nico MM, Lourenco SV. Obsessive-compulsive behaviour related cutaneous ulcers: two cases with therapeutic considerations. Int Wound J. 2015;13(5):860-2. doi:10.1111/iwj.12393</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/39234372/" target="_blank" rel="noopener noreferrer">Akhavan AA, Catterall LC, Deune EG. Self-mutilating autocannibalistic onycophagia causing infectious compartment syndrome, osteomyelitis, and sepsis: a case report and review of the literature. J Hand Microsurg. 2024;16(4):100064. doi:10.1016/j.jham.2024.100064</a></li></ul>`,
+    },
+    {
+      heading: `What can you reasonably take from this?`,
+      body: `Relapse in nail biting is under-studied, so treat any firm claim about it with suspicion. What the evidence supports is modest: habit reversal outperformed a placebo conversation at 5 months in one small trial, and related hair-pulling research treats long-term maintenance as a known weak spot.
+
+If you slip, the data give no reason to read it as proof the change was fake. Whether a slip is best treated as a signal to restart a skill, see a therapist or just carry on is a question no nail-biting study has tested, so a clinician who treats habit disorders is the person to ask.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/habit-reversal-training-guide">Habit reversal training: how it works</a></li><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li><li><a href="/blog/nail-biting-trigger-mapping">Mapping your nail-biting triggers</a></li><li><a href="/blog/nail-biting-shame-self-compassion">Shame and self-compassion after a slip</a></li><li><a href="/blog/how-long-to-stop-nail-biting">How long does it take to stop nail biting?</a></li><li><a href="/blog/nail-biting-finding-a-therapist">Finding a therapist for nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-vaping-nicotine',
+  title: `Does Vaping or Nicotine Make Nail Biting Worse? The Evidence`,
+  seoTitle: `Does Vaping Make You Bite Your Nails More?`,
+  description: `No study we found looks at vaping and nail biting. One student survey linked smoking with biting, an older one found no link. What that can and cannot say.`,
+  tag: 'Science',
+  readingMinutes: 4,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-vaping-nicotine.png',
+  sections: [
+    {
+      heading: `Do vaping, nicotine and nail biting go together?`,
+      body: `We could not find a study that answers this directly. A PubMed search for "nail biting vaping", run on 20 October 2026, returned 0 results, and a search for "onychophagia nicotine" returned 1 result, which was a review of a supplement in psychiatry and not about nicotine use in nail biters.
+
+That means any claim that vaping causes nail biting, or that nicotine users bite more, is untested in the indexed literature. What exists is a handful of older or small studies on smoking, covered below, and they should not be stretched to cover vaping.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail biting vaping", run 20 October 2026: 0 results.</li><li>PubMed search "onychophagia nicotine", run 20 October 2026: 1 result (read in full: <a href="https://pubmed.ncbi.nlm.nih.gov/25957927/" target="_blank" rel="noopener noreferrer">Deepmala et al. Clinical trials of N-acetylcysteine in psychiatry and neurology: A systematic review. Neurosci Biobehav Rev. 2015;55:294-321. doi:10.1016/j.neubiorev.2015.04.015</a>). It concerns a supplement, not nicotine use in nail biters.</li></ul>`,
+    },
+    {
+      heading: `Is nail biting more common in people who smoke?`,
+      body: `Possibly: one recent student survey found smoking was linked with nail biting, while an older one found no link between the habits and tobacco use. The evidence is thin and cross-sectional, so it shows co-occurrence at one moment and cannot show cause.
+
+A 2025 cross-sectional study of 330 medical students in Egypt found that 57.3% reported actively practising nail biting. Among the 189 who did, 18 (9.5%) were smokers, and smoking was reported as significantly associated with nail biting, alongside family history and fear of public spaces. Perceived stress scores did not differ between biters and non-biters. The paper reports the association without giving a comparison rate for non-biters in its abstract, so we cannot say how large the gap was.
+
+An older survey of 310 college students (1993) asked about nail biting, pencil chewing, tobacco, caffeine, gum and exercise. Apart from object chewers drinking more cola, the habits were not significantly related to tobacco, caffeine or the other products asked about. That is a small sample, from decades ago, and it predates vaping.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41422174/" target="_blank" rel="noopener noreferrer">Mohammad AMA, Hammad RAAE, Elghazally NM. Prevalence and correlates of onychophagia among Egyptian medical students: a cross-sectional study. Discov Ment Health. 2025;5(1):195. doi:10.1007/s44192-025-00327-x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8332673/" target="_blank" rel="noopener noreferrer">Joubert CE. Incidence of some oral-based habits among college students and their correlations with use of oral stimulants. Psychol Rep. 1993;72(3 Pt 1):735-738. doi:10.2466/pr0.1993.72.3.735</a></li><li>PubMed search "nail biting smoking", run 20 October 2026: 18 results; abstracts of the first 15 were read, the other 3 were not retrieved.</li></ul>`,
+    },
+    {
+      heading: `Does quitting nicotine change hand-to-mouth habits?`,
+      body: `Nobody has measured it in nail biters. A PubMed search for "smoking cessation oral substitution behaviors nail biting", run on 20 October 2026, returned 0 results, and one for "electronic cigarette hand-to-mouth behavioral ritual smoking cessation" also returned 0. A search for "body-focused repetitive behaviors tobacco" returned 0 as well.
+
+So the common idea that biting rises when a nicotine habit stops is a plausible story people tell, not a measured result. We cover the smoking version of that story, and why it is unproven, in the post linked below.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "smoking cessation oral substitution behaviors nail biting", run 20 October 2026: 0 results.</li><li>PubMed search "electronic cigarette hand-to-mouth behavioral ritual smoking cessation", run 20 October 2026: 0 results.</li><li>PubMed search "body-focused repetitive behaviors tobacco", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `What does adjacent research say about hands and mouths?`,
+      body: `It says hand-to-mouth contact is common in adults, and that it clusters in gaps between tasks. This is exposure research, not habit research, so it is only a loose parallel.
+
+In a UK observational study, 48 workers at 8 worksites were watched for about 60 minutes each. Hand-to-mouth contacts averaged 6.3 per hour overall but 23.6 per hour while workers were between tasks. Smoking and nail biting, both gathered by interview, were among the factors linked to contact frequency. The sample was small, workers only, and the aim was measuring accidental ingestion of contaminants, not understanding habits.
+
+The finding that the in-between moments carry the most contacts fits the boredom pattern described in our other posts, but this study did not test that idea.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25352162/" target="_blank" rel="noopener noreferrer">Gorman Ng M, Davis A, van Tongeren M, Cowie H, Semple S. Inadvertent ingestion exposure: hand- and object-to-mouth behavior among workers. J Expo Sci Environ Epidemiol. 2015;26(1):9-16. doi:10.1038/jes.2014.71</a></li></ul>`,
+    },
+    {
+      heading: `What can you reasonably take from this?`,
+      body: `The question is open. No study we found follows nail biting through a change in nicotine use, and none looks at vaping at all.
+
+The only thing the evidence supports is a modest one: in some student samples, smoking and nail biting turned up together, and in another they did not. If you notice your own biting changes around nicotine, that is your own observation, and a record of when it happens is more informative than any study we could cite. `,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-after-quitting-smoking">Why nail biting increases after quitting smoking</a></li><li><a href="/blog/nail-biting-oral-fixation">Nail biting and oral fixation</a></li><li><a href="/blog/nail-biting-substitute-habits">Substitute habits for nail biting</a></li><li><a href="/blog/stress-and-nail-biting">Stress and nail biting</a></li><li><a href="/blog/nail-biting-boredom">Nail biting and boredom</a></li><li><a href="/blog/nail-biting-trigger-mapping">Mapping your nail biting triggers</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-lack-of-sleep',
+  title: `Does Lack of Sleep Make Nail Biting Worse? What Research Shows`,
+  seoTitle: `Does Lack of Sleep Make You Bite Your Nails?`,
+  description: `No study we found tests whether a bad night makes adults bite more. Child and hair-pulling studies link poor sleep with these habits, but cannot show cause.`,
+  tag: 'Science',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-lack-of-sleep.png',
+  sections: [
+    {
+      heading: `Does being tired or short on sleep go with more nail biting?`,
+      body: `We found no study in adults showing that short sleep increases nail biting. The closest evidence is from children and from people with hair pulling or skin picking, and it points to a link between sleep and these habits, not to proof that lack of sleep makes you bite more.
+
+On 20 October 2026 a PubMed search for "nail biting sleep" returned 31 results. None of the 15 I read was a study that asked adult nail biters about their sleep, or measured their biting after a short night. This post says what the adjacent studies found and where the gap is.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail biting sleep", run 20 October 2026: 31 results. I read the abstracts of the first 15 returned; most concerned jaw clenching, teeth grinding and oral habits in children.</li></ul>`,
+    },
+    {
+      heading: `Has anyone tested sleep deprivation and nail biting directly?`,
+      body: `No. A PubMed search for "onychophagia sleep deprivation", run on 20 October 2026, returned 0 results. I found no experiment where people were kept short of sleep and their nail biting was counted, and no diary study that tracked nights of sleep against days of biting.
+
+That means any claim that a bad night will make you bite more tomorrow is, for now, an everyday guess and not a finding. Many people report it about themselves, but self-report of that kind has not been tested in a published nail biting study that I could find.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "onychophagia sleep deprivation", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `Does poor sleep go with nail biting in young children?`,
+      body: `In one large Japanese study of 5-year-olds, later bedtimes and shorter sleep went with more reported problem behaviours, a group that included nail biting. Nail biting was only one item in that group, and the abstract does not report it on its own.
+
+The Japanese study used health-checkup records for 8,689 children aged 5. Late bedtime had an odds ratio of 1.07 (95% CI 1.03 to 1.11) for problem behaviours, and sleep duration had an odds ratio of 0.92 (95% CI 0.87 to 0.97), which the authors report as an adverse effect of short sleep. It was an observational design, so it cannot say which came first, and the effects are small. It tells us nothing about adults.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/32335978/" target="_blank" rel="noopener noreferrer">Suda M, Nagamitsu S, Obara H, et al. Association between children&#39;s sleep patterns and problematic behaviors at age 5. Pediatr Int. 2020. doi:10.1111/ped.14267</a></li></ul>`,
+    },
+    {
+      heading: `Is poor sleep linked to other body-focused repetitive behaviours?`,
+      body: `Yes, in several small studies, with the usual limit that they show association and not cause. These habits include hair pulling and skin picking, which sit in the same family as chronic nail biting.
+
+In a community sample of children, the 2022 study by Clark and colleagues found that sleep disturbance explained an extra 7.2% of the variation in BFRB severity after anxiety was accounted for. In adults, a 2019 survey of 234 people with trichotillomania, 170 with skin picking disorder and 146 controls found more sleep complaints in the two BFRB groups. They reported higher rates of sleep apnea and restless legs type problems, but no significant difference for insomnia. A 2024 parent survey of children aged 0 to 5 found more sleep disturbance in hair pullers than in controls, but not in skin pickers.
+
+None of these studies was about nail biting alone, and all were cross-sectional.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35307776/" target="_blank" rel="noopener noreferrer">Clark SDB, Lahoud AA, Gladstone TR, Wilton EP, Flessner CA. Sleep Disturbances in Pediatric Body-Focused Repetitive Behaviors: A Preliminary Investigation. Child Psychiatry Hum Dev. 2022;54(5):1396-1403. doi:10.1007/s10578-022-01346-3</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/30654305/" target="_blank" rel="noopener noreferrer">Ricketts EJ, Rozenman M, Snorrason &Iacute;, et al. Confirmatory factor analysis of the SLEEP-50 Questionnaire in Trichotillomania (Hair-Pulling Disorder) and Excoriation (Skin-Picking) Disorder. Psychiatry Res. 2019;273:197-205. doi:10.1016/j.psychres.2019.01.022</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/38450328/" target="_blank" rel="noopener noreferrer">Pendo K, Swisher VS, Leman TY, et al. Clinical Characteristics, Sleep, and Temperament in Infants and Young Children with Problematic Hair Pulling and Skin Picking. Cognit Ther Res. 2024. doi:10.1007/s10608-023-10435-z</a></li></ul>`,
+    },
+    {
+      heading: `Can a sleep disorder sit behind severe nail biting?`,
+      body: `In one case report I found, yes, and a single case is the weakest kind of evidence. A man with severe nail biting and finger damage had it resolve after severe obstructive sleep apnea was diagnosed and treated, according to the authors.
+
+One case cannot show that sleep apnea causes nail biting in general, and the authors call for further research. Treatment of any sleep problem is a matter for a doctor. If you snore heavily, stop breathing in your sleep, or feel very sleepy in the day, that is worth raising with one whatever your nails look like.
+
+For biting that happens while asleep, see our separate post on nail biting during sleep, which is not repeated here.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/23585754/" target="_blank" rel="noopener noreferrer">Nino G, Singareddy R. Severe onychophagia and finger mutilation associated with obstructive sleep apnea. J Clin Sleep Med. 2013. doi:10.5664/jcsm.2594</a></li></ul>`,
+    },
+    {
+      heading: `What does this mean if you are tired and biting?`,
+      body: `Tiredness and biting may travel together, and that research has not yet said which drives which. Anxiety is a common thread in the studies above, so a hard week could plausibly feed both, though none of them tested that.
+
+A reasonable low-stakes step is to note, for a couple of weeks, when you bite and how you slept. That gives you your own data on whether the pattern holds for you, which no study has done for nail biting. If biting is causing pain, signs of infection, or you are struggling to sleep for weeks, see a doctor or other clinician.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "body-focused repetitive behavior sleep", run 20 October 2026: 8 results; I read the abstracts of 7 plus the 2024 paper cited above.</li><li>PubMed search "trichotillomania sleep", run 20 October 2026: 28 results; I read only those that also appeared in the other searches.</li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-during-sleep">Nail biting during sleep</a></li><li><a href="/blog/stress-and-nail-biting">Stress and nail biting</a></li><li><a href="/blog/nail-biting-trigger-mapping">Mapping your nail biting triggers</a></li><li><a href="/blog/nail-biting-evening">Nail biting in the evening</a></li><li><a href="/blog/bfrb-guide">Guide to body-focused repetitive behaviours</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety treatment</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-hand-cream-moisturiser',
+  title: `Does Hand Cream or Cuticle Oil Help Bitten Nails and Skin?`,
+  seoTitle: `Does Cuticle Oil or Hand Cream Help Bitten Nails?`,
+  description: `No study we found tests hand cream or cuticle oil on bitten nails. Lab and review evidence on brittle nails and dry skin shows what is, and is not, known.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-hand-cream-moisturiser.png',
+  sections: [
+    {
+      heading: `Does hand cream or cuticle oil help bitten nails and cuticles?`,
+      body: `No study we found has tested it in nail biters. On 20 October 2026 we searched PubMed for "nail biting moisturizer", "nail biting hand cream" and "nail biting emollient" and each returned 0 results, so there is no trial of a cream, moisturiser or oil on bitten nails or on the skin around them.
+
+What exists is adjacent evidence about nail hydration, brittle nails and inflamed nail folds. It is worth reading, but none of it is about people who bite.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li>PubMed search "nail biting moisturizer", run 20 October 2026: 0 results.</li><li>PubMed search "nail biting hand cream", run 20 October 2026: 0 results.</li><li>PubMed search "nail biting emollient", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `Is there any evidence on cuticle oil specifically?`,
+      body: `We found none that we could confirm. The PubMed search "nail cuticle moisturizer" returned 0 results on 20 October 2026. The shorter search "cuticle oil" returned 183 results, but PubMed matched "cuticle" in every sense, including plant and insect cuticles, and we did not read them, so a nail study among them cannot be ruled out.
+
+What we can say is that we found no trial comparing cuticle oil with nothing, or with a plain cream, for the skin around the nail.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li>PubMed search "nail cuticle moisturizer", run 20 October 2026: 0 results.</li><li>PubMed search "cuticle oil", run 20 October 2026: 183 results, none read (the term also matches plant and insect cuticles).</li></ul>`,
+    },
+    {
+      heading: `Does a drier nail break more easily?`,
+      body: `In laboratory tests on nail clippings, yes, at the extremes. A materials study found human fingernails resisted tearing best at about 55% relative humidity, and that they were brittle when fully dry and tended to fracture and split when wet (Farran et al., 2008). A companion study reported that nails were more brittle at low humidity and more flexible at high moisture (Farran et al., 2009).
+
+These were clippings or lab conditions, not a test of any cream. They suggest that both very dry and very wet nails are weaker, which is not the same as showing that a product helps.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19011206/" target="_blank" rel="noopener noreferrer">Farran L, Ennos AR, Eichhorn SJ. The effect of humidity on the fracture properties of human fingernails. J Exp Biol. 2008;211(Pt 23):3677-81. doi:10.1242/jeb.023218</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19380141/" target="_blank" rel="noopener noreferrer">Farran L, Ennos AR, Starkie M, Eichhorn SJ. Tensile and shear properties of fingernails as a function of a changing humidity environment. J Biomech. 2009;42(9):1230-5. doi:10.1016/j.jbiomech.2009.03.020</a></li></ul>`,
+    },
+    {
+      heading: `Are brittle nails just dry nails?`,
+      body: `Not in the one study that measured it: brittle and normal nail clippings held about the same water, and frequent moisturiser use went with more brittle nails, not fewer. In 102 people, nails clipped from those with brittle nails held 12.48% water against 11.90% in normal nails, a difference that was not statistically significant (Stern et al., 2007). Frequent hand moisturiser use was associated with having brittle nails, as were professional manicures.
+
+This was a one-time comparison, so it cannot say which came first. People with fragile nails may simply use more moisturiser. The authors also noted that the clippings lost water before analysis, so the measured numbers may not match living nails.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/17412454/" target="_blank" rel="noopener noreferrer">Stern DK, Diamantis S, Smith E, et al. Water content and other aspects of brittle versus normal fingernails. J Am Acad Dermatol. 2007;57(1):31-6. doi:10.1016/j.jaad.2007.02.004</a></li></ul>`,
+    },
+    {
+      heading: `What does a review say about moisturisers for fragile nails?`,
+      body: `Cautiously: an expert review says moisturisers could be considered for fragile nails, but it is not a trial and is not about bitten nails. A 2019 expert review of brittle nails, a narrative review and not a trial, noted that nail fragility affects up to 20% of the population and that topical moisturisers and lacquers could be considered to restructure the affected nail plate and reduce the psychological impact (Chessa et al., 2019).
+
+That is an opinion drawn from the wider literature on brittle nails in general, so it does not address bitten nails, where the damage comes from teeth and not from dryness alone. For what biting does to the skin edge, see our post on cuticle damage.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/31749091/" target="_blank" rel="noopener noreferrer">Chessa MA, Iorizzo M, Richert B, et al. Pathogenesis, Clinical Signs and Treatment Recommendations in Brittle Nails: A Review. Dermatol Ther (Heidelb). 2019;10(1):15-27. doi:10.1007/s13555-019-00338-x</a></li></ul>`,
+    },
+    {
+      heading: `What happened when an emollient was tested on inflamed nail folds?`,
+      body: `It did less than the medicines it was compared with. In a 2008 unblinded randomised study of 45 people with chronic paronychia (long-standing swelling of the skin fold beside the nail), applied twice daily for 3 weeks, betamethasone and tacrolimus groups improved significantly more than the emollient group, in which 9 were stable and 6 did not respond (Rigopoulos et al., 2008). Protective measures were advised to everyone.
+
+A review by the same lead author says application of emollient lotions may be beneficial, and stresses avoiding irritants (Rigopoulos et al., 2008, review). Those were not nail biters, and chronic paronychia needs a doctor, not a home routine. If the skin around a nail is red, swollen, painful or leaking, see a doctor.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19120329/" target="_blank" rel="noopener noreferrer">Rigopoulos D, Gregoriou S, Belyayeva E, et al. Efficacy and safety of tacrolimus ointment 0.1% vs. betamethasone 17-valerate 0.1% in the treatment of chronic paronychia: an unblinded randomized study. Br J Dermatol. 2008;160(4):858-60. doi:10.1111/j.1365-2133.2008.08988.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/18297959/" target="_blank" rel="noopener noreferrer">Rigopoulos D, Larios G, Gregoriou S, Alevizos A. Acute and chronic paronychia. Am Fam Physician. 2008;77(3):339-46.</a></li><li>PubMed search "chronic paronychia emollient", run 20 October 2026: 2 results, both read.</li></ul>`,
+    },
+    {
+      heading: `So where does that leave a moisturiser for nail biters?`,
+      body: `It leaves it as an untested comfort, not a treatment. The evidence supports only a narrow point: in lab tests nail clippings were weakest when fully dry or wet, and a plain emollient alone did not shift inflamed nail folds. Nothing shows that any cream or oil reduces biting, speeds regrowth or heals bitten skin faster.
+
+If you do use one, treat it as your own observation. Stop if the skin stings or itches, and see a doctor for pain, pus, spreading redness or a nail that is changing.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-cuticle-damage">Nail biting and cuticle damage</a></li><li><a href="/blog/nail-care-routine-for-nail-biters">Nail care routine for nail biters</a></li><li><a href="/blog/nail-biting-paronychia">Nail biting and paronychia</a></li><li><a href="/blog/nail-biting-hangnails">Nail biting and hangnails</a></li><li><a href="/blog/nail-biting-dry-skin-winter">Nail biting and dry winter skin</a></li><li><a href="/blog/nail-biting-home-remedies">Nail biting home remedies</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-nail-hardeners',
+  title: `Do Nail Hardeners Work for Bitten or Brittle Nails?`,
+  seoTitle: `Do Nail Hardeners Work for Brittle Nails?`,
+  description: `No trial we found shows nail hardeners help brittle or bitten nails. In lab tests hardened clippings snapped sooner, and formaldehyde types can cause reactions.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-nail-hardeners.png',
+  sections: [
+    {
+      heading: `Do nail hardeners work for brittle nails?`,
+      body: `We could not find a clinical trial that shows whether nail hardeners help brittle nails or not. On 20 October 2026 we searched PubMed for "nail hardener randomized controlled trial" and got 3 results, and we read all three abstracts, none of which tested a hardener in brittle nails. One was a placebo-controlled trial of a chitosan nail lacquer in people with nail psoriasis, a different condition, and the other two were about systemic sclerosis and sheep bone repair. A search for "nail hardener nail biting" returned 0 results.
+
+So the claims on hardener packaging are not backed, in what we found, by trials in people with brittle or bitten nails. The sections below cover the lab, review and case evidence that does exist.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail hardener randomized controlled trial", run 20 October 2026: 3 results, all 3 read.</li><li>PubMed search "nail hardener nail biting", run 20 October 2026: 0 results.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24904219/" target="_blank" rel="noopener noreferrer">Cantoresi F, Caserini M, Bidoli A, et al. Randomized controlled trial of a water-soluble nail lacquer based on hydroxypropyl-chitosan (HPCH), in the management of nail psoriasis. Clin Cosmet Investig Dermatol. 2014;7:185-90. doi:10.2147/CCID.S61659</a></li></ul>`,
+    },
+    {
+      heading: `What did lab testing find about hardening nails?`,
+      body: `In one laboratory study, applying formaldehyde to nail clippings raised the nails' denaturation temperature, a sign of more crosslinking, and lowered the number of bending cycles they survived before breaking. The authors described this as a nail-hardening effect. In plain terms, in that test the hardened nails snapped sooner under repeated flexing.
+
+This was a method-development paper on clippings from adult volunteers, not a test on living nails, and some authors worked for a nail polish company. It tells us what the chemistry does to keratin in a dish. It does not tell us whether a product reduces splitting or chipping in daily life.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/38761132/" target="_blank" rel="noopener noreferrer">Malinauskyte E, Mateo K, Castro-Haly V, London L, Parikh N, Tu X. Expanding the frontiers of nail product evaluation: novel application of differential scanning calorimetry (DSC) for assessing crosslinking density and predicting nail brittleness and flexibility. Int J Cosmet Sci. 2024;46(5):815-830. doi:10.1111/ics.12969</a></li></ul>`,
+    },
+    {
+      heading: `What causes brittle nails in the first place?`,
+      body: `Often the environment, according to an expert review. Baran and Schoon (2004) described six clinical types of nail fragility, from longitudinal splitting to layered peeling at the tip, and wrote that brittleness is usually environmental in origin, with household daily chores particularly damaging. They also listed general causes such as low iron states, joint deformities of the fingers, poor circulation and hormone disorders.
+
+The same review listed hardeners among several approaches, alongside glove protection and biotin, and favoured types such as a modified base-coat varnish or dimethyl urea, which avoid the problems linked to formaldehyde. It is a narrative review by specialists, not a trial, so it shows what clinicians have used rather than what has been proven. Our post on biotin covers the supplement evidence, and a doctor can look for an underlying cause if nails change suddenly.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/17134427/" target="_blank" rel="noopener noreferrer">Baran R, Schoon D. Nail fragility syndrome and its treatment. J Cosmet Dermatol. 2004;3(3):131-7. doi:10.1111/j.1473-2130.2004.00076.x</a></li></ul>`,
+    },
+    {
+      heading: `Can formaldehyde nail hardeners cause reactions?`,
+      body: `Yes, reactions are described, but their frequency is unknown. A short report from Oslo noted that hardeners appeared in the 1960s as basically formaldehyde solutions, and that the first adverse effects were published in 1966. The reactions listed were onycholysis (the nail lifting from its bed), colour change, bleeding under the nail and thickening under the nail, with throbbing pain and, in inflammatory cases, swelling of the nail fold.
+
+A 2002 review by Baran said recent precise figures on adverse reactions to nail products were not available. It noted that some hardeners contain up to 5% formaldehyde and are meant to touch only the free edge, while others are modified enamels with nylon fibres, acrylate resin and hydrolysed proteins. A 2016 case report was titled "Allergic contact dermatitis and nail damage mimicking psoriasis caused by nail hardeners"; it has no abstract in PubMed, so we read only the title. Pain, spreading redness or pus around a nail needs a doctor.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/17868227/" target="_blank" rel="noopener noreferrer">Helsing P, Austad J, Talberg HJ. Onycholysis induced by nail hardener. Contact Dermatitis. 2007;57(4):280-1. doi:10.1111/j.1600-0536.2007.01121.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12358556/" target="_blank" rel="noopener noreferrer">Baran R. Nail cosmetics: allergies and irritations. Am J Clin Dermatol. 2002;3(8):547-55. doi:10.2165/00128071-200203080-00005</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/26332199/" target="_blank" rel="noopener noreferrer">Mestach L, Goossens A. Allergic contact dermatitis and nail damage mimicking psoriasis caused by nail hardeners. Contact Dermatitis. 2016;74(2):112-4. doi:10.1111/cod.12463 (title only, no abstract available)</a></li></ul>`,
+    },
+    {
+      heading: `Is formaldehyde always listed on the label?`,
+      body: `Not in the one analysis we found. Researchers bought 29 nail polishes, 28 of them advertised as formaldehyde-free or not listing it, and tested them with high-performance liquid chromatography. Five of the 29 contained formaldehyde above the 2 parts per million detection limit, and four of those five were advertised as formaldehyde-free.
+
+The sample was small, the products were polishes rather than hardeners, and the study did not measure how much reaches skin or whether anyone reacted. The authors called for appropriate labelling for people with skin sensitivities. A label alone may not settle what a bottle contains.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/31261225/" target="_blank" rel="noopener noreferrer">Voller LM, Persson L, Bruze M, Ericson ME, Hylwa SA. Formaldehyde in &quot;nontoxic&quot; nail polish. Dermatitis. 2019;30(4):259-263. doi:10.1097/DER.0000000000000493</a></li></ul>`,
+    },
+    {
+      heading: `What does this mean for people who bite their nails?`,
+      body: `We found no study of hardeners in nail biters, and no study measuring what happens when a person bites or swallows a coated nail. Biting leaves nails short, ragged and sometimes split, which can look like brittleness, but we found no evidence that a hardener addresses the habit itself.
+
+What the evidence does show is narrow: hardening in a lab can make clippings break sooner, formaldehyde-based products have caused nail and skin reactions in case reports, and labels may not tell the whole story. Our posts on bitter polish and swallowing polish cover products meant to be tasted or mouthed, and a doctor or dermatologist is the person to ask about nails that split, lift or hurt.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/biotin-bitten-nails">Does biotin help bitten nails?</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: what the evidence shows</a></li><li><a href="/blog/swallowing-nail-polish-biting">Swallowing nail polish while biting</a></li><li><a href="/blog/products-to-stop-nail-biting">Products to stop nail biting</a></li><li><a href="/blog/nail-biting-onycholysis">Nail biting and onycholysis</a></li><li><a href="/blog/nail-biting-paronychia">Nail biting and paronychia</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-exercise',
+  title: `Does Exercise Help Nail Biting? What Research Shows`,
+  seoTitle: `Can Exercise Help You Stop Biting Your Nails?`,
+  description: `No study we found tests exercise for nail biting. Trials link exercise with lower anxiety in diagnosed groups; whether that carries over to biting is untested.`,
+  tag: 'Science',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-exercise.png',
+  sections: [
+    {
+      heading: `Does exercise reduce nail biting?`,
+      body: `No study we found has tested it, so nobody can say yet. A PubMed search for exercise and nail biting returned 4 results on 20 October 2026, and none of them measured whether exercise changes how much people bite or how often they relapse.
+
+I read the abstracts of all four. One is a 1993 survey of 310 college students that asked about nail biting, exercise and other habits, and reported that the habits were not significantly correlated with one another. One is a 2024 survey of driving stress in Riyadh in which nail biting was linked with aggressive driving behaviour, not with exercise. The other two were a Nigerian study of intestinal worms in children (nail biting as a risk factor for infection) and a 1973 orthodontic note with no abstract. None answers the question.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "exercise nail biting", run 20 October 2026: 4 results.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8332673/" target="_blank" rel="noopener noreferrer">Incidence of some oral-based habits among college students and their correlations with use of oral stimulants. Psychol Rep. 1993. doi:10.2466/pr0.1993.72.3.735</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/39120241/" target="_blank" rel="noopener noreferrer">Driving Stress-Induced Effects on the Orofacial Region and Its Functions and Health Behaviors in Riyadh: A Cross-Sectional Survey. Healthcare (Basel). 2024. doi:10.3390/healthcare12151538</a></li></ul>`,
+    },
+    {
+      heading: `What does research on other body-focused repetitive behaviors say about exercise?`,
+      body: `It says very little, and nothing from a controlled trial of exercise alone. Searching for exercise together with trichotillomania returned 7 results, exercise with body-focused repetitive behaviors returned 1, and exercise with skin picking disorder returned 9. Most of those hits were unrelated papers that happened to mention both words.
+
+The relevant ones are a 2017 narrative review of alternative therapies for skin picking, and a 2021 systematic review of lifestyle interventions for obsessive-compulsive and related disorders, which covers trichotillomania and skin picking. The 2021 review found 33 randomised trials. Its promising signals were for the supplement N-acetylcysteine and for yoga in obsessive-compulsive disorder, and it said further high-quality lifestyle trials were needed. The abstract does not report any exercise trial in hair pulling or skin picking.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "exercise trichotillomania" 7 results; "exercise body-focused repetitive behaviors" 1 result; "exercise skin picking disorder" 9 results.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/34334731/" target="_blank" rel="noopener noreferrer">Brierley et al. Lifestyle Interventions in the Treatment of Obsessive-Compulsive and Related Disorders: A Systematic Review. Psychosom Med. 2021. doi:10.1097/PSY.0000000000000988</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/28183072/" target="_blank" rel="noopener noreferrer">Torales et al. Alternative Therapies for Excoriation (Skin Picking) Disorder: A Brief Update. Adv Mind Body Med. 2017.</a></li></ul>`,
+    },
+    {
+      heading: `Is there any claim that exercise helps these habits, and how strong is it?`,
+      body: `Yes, one claim, and it is reasoning rather than a result. The 2017 review of skin picking notes that these behaviours tend to worsen in times of negative mood and anxiety, and that exercise can improve mood and reduce anxiety, so it is likely to help and should be considered as an add-on therapy. The authors also say their own experience is mainly with yoga and aerobic exercise alongside psychotherapy and medication, and that solid long-term evidence needs more investigation.
+
+That is a narrative review drawing an inference from mood research. The abstract describes no trial in which people with a body-focused repetitive behavior were assigned to exercise and their symptoms measured. Treat it as a hypothesis.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/28183072/" target="_blank" rel="noopener noreferrer">Torales et al. Alternative Therapies for Excoriation (Skin Picking) Disorder: A Brief Update. Adv Mind Body Med. 2017.</a></li></ul>`,
+    },
+    {
+      heading: `Does exercise lower anxiety in general?`,
+      body: `Yes, in adults diagnosed with anxiety or depression, trials link exercise with lower anxiety symptoms, though none involved nail biters. A 2017 meta-analysis of 6 randomised trials (262 adults with anxiety or stress-related disorders) found a moderate effect favouring exercise over control conditions. A 2025 meta-analysis of 32 randomised trials in people diagnosed with depression or anxiety pooled 11 trials on anxiety and also found a moderate effect.
+
+The numbers are small, the control conditions differ, and the first review itself calls the earlier literature equivocal. Both concern diagnosed clinical groups, not people who bite their nails. Whether any anxiety change would carry over to biting has not been studied.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/28088704/" target="_blank" rel="noopener noreferrer">Stubbs et al. An examination of the anxiolytic effects of exercise for people with anxiety and stress-related disorders: A meta-analysis. Psychiatry Res. 2017;249:102-108. doi:10.1016/j.psychres.2016.12.020</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/40432290/" target="_blank" rel="noopener noreferrer">Banyard et al. The Effects of Aerobic and Resistance Exercise on Depression and Anxiety: Systematic Review With Meta-Analysis. Int J Ment Health Nurs. 2025;34(3):e70054. doi:10.1111/inm.70054</a></li></ul>`,
+    },
+    {
+      heading: `Can exercise itself become a problem for people with these habits?`,
+      body: `For a minority, possibly. A 2026 online survey of 382 adults with trichotillomania and/or skin picking disorder found that 10.2% (39 people) screened positive for compulsive exercise. They reported more impairment from their pulling or picking, and more anger and hostility, though the impairment link was not significant once personality traits were accounted for.
+
+This is a cross-sectional self-report survey, so it cannot show that exercise helps or harms. It does show that exercise is not automatically a neutral add-on for everyone with a repetitive habit.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41801304/" target="_blank" rel="noopener noreferrer">Boutouis et al. Compulsive exercise in adults with trichotillomania and skin picking disorder. J Behav Addict. 2026. doi:10.1556/2006.2025.00486</a></li></ul>`,
+    },
+    {
+      heading: `What can you take from this?`,
+      body: `No study we found has tested exercise as a way to bite less. What exists is general evidence that exercise is linked with lower anxiety in diagnosed groups, plus an untested suggestion that this might matter for body-focused habits. If you already exercise for other reasons, no study shows it makes biting worse or better.
+
+For biting itself, the better-studied approach is habit reversal training, covered in the guides below. If you have pain, bleeding, signs of infection or spreading redness around a nail, or the habit distresses you, see a doctor or a mental health professional. `,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-gym-sports">Nail biting at the gym and in sports</a></li><li><a href="/blog/stress-and-nail-biting">Stress and nail biting</a></li><li><a href="/blog/nail-biting-anxiety-treatment">Nail biting and anxiety treatment</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/bfrb-guide">Body-focused repetitive behaviors guide</a></li><li><a href="/blog/nail-biting-boredom">Nail biting and boredom</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-dating-relationships',
+  title: `Does Nail Biting Affect Dating and Romantic Relationships?`,
+  seoTitle: `Nail Biting and Dating: What Research Shows`,
+  description: `No study we found asks how dates see bitten nails. BFRB research shows worry about being judged is common and tracks hair-pulling and skin-picking severity.`,
+  tag: 'Psychology',
+  readingMinutes: 4,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-dating-relationships.png',
+  sections: [
+    {
+      heading: `Do bitten nails put off a date or partner?`,
+      body: `Nobody has measured it for nail biting, so no one can say how often a partner is put off. Three PubMed searches turned up no study of how romantic partners or dates judge bitten nails, so the question is open.
+
+I searched PubMed on 20 October 2026 for nail biting with the words romantic and partner (0 results), spouse (0 results) and attractiveness (0 results). Anything that claims a number for how many people find bitten nails unattractive did not come from those searches, so treat such numbers with care.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail biting romantic partner", run 20 October 2026: 0 results.</li><li>PubMed search "nail biting spouse", run 20 October 2026: 0 results.</li><li>PubMed search "nail biting attractiveness", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `What do we know about how people with BFRBs feel about being seen?`,
+      body: `People with body-focused repetitive behaviours often worry about how others see them, and researchers have started to measure that worry. A 2021 paper described a self-report scale, the SCIB, built from two samples of people with elevated BFRB symptoms, and found two kinds of concern: being seen as physically unattractive and being socially disapproved of.
+
+In that study the overall level of social concern explained part of the variation in hair pulling and skin picking severity, even after accounting for general social worry and emotional distress. Two limits matter here. It was a questionnaire study, so it shows an association, not that worry causes the habit. And the severity results were for hair pulling and skin picking, not nail biting specifically.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/33503548/" target="_blank" rel="noopener noreferrer">Mathew AS, Harvey AM, Lee HJ. Development of the social concerns in individuals with body-focused repetitive behaviors (SCIB) scale. J Psychiatr Res. 2021;135:218-229. doi:10.1016/j.jpsychires.2021.01.010</a></li></ul>`,
+    },
+    {
+      heading: `Does a BFRB affect relationships and daily life?`,
+      body: `For hair pulling and skin picking, yes, people often report wider effects, though the studies do not isolate romance. A 2016 study of 125 people with skin picking disorder and 152 with trichotillomania grouped them by level of psychosocial dysfunction. Worse impairment went with worse symptom severity in both groups, and in the hair pulling group with lower quality of life.
+
+A 2005 study of 28 people with trichotillomania, compared with 28 psychiatric patients and 28 healthy volunteers, asked about six life areas that included social interaction. Impairments were common; the gap with healthy volunteers was explained by depression, but some measures of functioning tracked pulling severity regardless of depression. These are small, older studies of other conditions, so they cannot tell you how nail biting shapes a relationship.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/27137963/" target="_blank" rel="noopener noreferrer">Grant JE, Redden SA, Leppink EW, Odlaug BL, Chamberlain SR. Psychosocial dysfunction associated with skin picking disorder and trichotillomania. Psychiatry Res. 2016;239:68-71. doi:10.1016/j.psychres.2016.03.004</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/15896284/" target="_blank" rel="noopener noreferrer">Diefenbach GJ, Tolin DF, Hannan S, Crocetto J, Worhunsky P. Trichotillomania: impact on psychosocial functioning and quality of life. Behav Res Ther. 2005;43(7):869-84. doi:10.1016/j.brat.2004.06.010</a></li></ul>`,
+    },
+    {
+      heading: `Does involving a partner help treatment?`,
+      body: `No trial I could find tests that for nail biting. The one related paper is a 2015 literature review of family functioning in children and teens with obsessive compulsive and related conditions, and it found hair pulling research scarce and skin picking too thin for firm conclusions. It was about families of young people, not adult partners.
+
+So the idea that a partner should remind, praise or police you is not backed by nail biting evidence. If you want company in the effort, the accountability partner post covers what is and is not known.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/26017183/" target="_blank" rel="noopener noreferrer">Murphy YE, Flessner CA. Family functioning in paediatric obsessive compulsive and related disorders. Br J Clin Psychol. 2015;54(4):414-34. doi:10.1111/bjc.12088</a></li><li>PubMed search "nail biting spouse", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `What can you do when you are worried about how a partner sees your hands?`,
+      body: `You can tell them, briefly and on your terms, and ask for the kind of help you actually want. That is common sense, not a finding. Telling a partner that this is a habit, not a lack of care, can take the mystery out of it. Ask them not to point at your hands in the moment, if that is what you prefer.
+
+If worry about hands is leading you to avoid dates, hide your hands or pull back from closeness, a therapist who knows habit problems can help. See a doctor for pain, bleeding, spreading redness or any nail that is changing, because these are health matters and not a dating matter.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-social-confidence">Nail biting and social confidence</a></li><li><a href="/blog/nail-biting-shame-self-compassion">Nail biting, shame and self-compassion</a></li><li><a href="/blog/nail-biting-accountability-partner">Accountability partners for nail biting</a></li><li><a href="/blog/bfrb-guide">BFRB guide</a></li><li><a href="/blog/nail-biting-interview-anxiety">Nail biting and interview anxiety</a></li><li><a href="/blog/how-to-choose-nail-biting-treatment">How to choose a nail biting treatment</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-gum-disease',
+  title: `Can Nail Biting Damage Your Gums? What Dental Studies Show`,
+  seoTitle: `Can Nail Biting Damage Your Gums?`,
+  description: `No trial shows nail biting causes gum disease. Case reports describe gum injury, and four small studies found more Enterobacteriaceae in nail biters' mouths.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-gum-disease.png',
+  sections: [
+    {
+      heading: `Does nail biting harm your gums?`,
+      body: `It can in rare cases: case reports describe nail fragments lodged under the gum causing an abscess or infection, and small surveys link biting with gum recession and bleeding, but no large study we found shows it causes gum disease. The best evidence is single cases and cross-sectional surveys, which cannot show cause and effect. On 20 October 2026 a PubMed search for nail biting and gingival returned 26 results, and a search for onychophagia and periodontal returned 27, none of them a trial of whether stopping nail biting improves gum health.
+
+If your gums bleed, hurt or swell, see a dentist. This page cannot tell you what is wrong.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li>PubMed search "nail biting gingival", run 20 October 2026: 26 results.</li><li>PubMed search "onychophagia periodontal", run 20 October 2026: 27 results.</li></ul>`,
+    },
+    {
+      heading: `Can a nail fragment injure the gum?`,
+      body: `Yes, in rare reported cases. A 2010 case report described a 5-year-old girl with gingival swelling and a fistula near two baby incisors, which the authors linked to fingernail fragments pushed into the gum crevice. Pus and blood were drained, and the dentist saw no more swelling after she stopped placing fragments there, although she kept biting her nails.
+
+A 2014 British Dental Journal case described a fingernail fragment embedded below the gum line in a teenager, with periodontal infection next to a non-vital tooth. The authors say such impactions are relatively rare. Two case reports show that it can happen, not how often.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/20228992/" target="_blank" rel="noopener noreferrer">Sousa D, Pinto D, Araujo R, Rego RO, Moreira-Neto J. Gingival abscess due to an unusual nail-biting habit: a case report. J Contemp Dent Pract. 2010;11(2):085-91.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/24809566/" target="_blank" rel="noopener noreferrer">Ellison R, Rahman S, Barker D, Larmour C. Onychophagia and subgingival foreign body embedment: a case report. Br Dent J. 2014;216(9):519-20. doi:10.1038/sj.bdj.2014.351</a></li></ul>`,
+    },
+    {
+      heading: `Is nail biting linked to gum recession or bleeding?`,
+      body: `In a few small studies, yes, as an association only. A 2025 cross-sectional study of 83 people with fixed lingual retainers found gum recession on the lower front teeth in 27 of them (32.53%), and recession was significantly associated with age and with nail, pen or pencil biting habits (p = 0.021). It cannot say the biting caused the recession, and it covers retainer wearers only.
+
+A study of 143 pairs of non-identical and 59 pairs of identical twins aged 3 to 15 found that, among identical twins, those who bit their nails had a significant difference in bleeding on probing compared with those who did not (p = 0.035), though the abstract does not say which group bled more. A case report from 2024 describes a 16-year-old with gum recession from a nail-scratching habit, which is scratching rather than biting.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41044988/" target="_blank" rel="noopener noreferrer">Tsiavaki C, Koumpia E, Pouliou MM, Batas L, Fragkioudakis I, Papadopoulos MA. Prevalence and Contributing Factors of Mandibular Labial Gingival Recession in Patients With Lingual Orthodontic Retainers: A Cross-Sectional Study. Orthod Craniofac Res. 2025;29(1):42-48. doi:10.1111/ocr.70045</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/37799885/" target="_blank" rel="noopener noreferrer">İlisulu SC, Birant S, Kasimoglu Y, Koruyucu M, Tuna İnce EB, Seymen F. Clinical assessment of deleterious oral habits and dental caries-periodontal parameters among Turkish twins. J Dent Sci. 2023;18(4):1859-1866. doi:10.1016/j.jds.2023.05.009</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/38435182/" target="_blank" rel="noopener noreferrer">Ansari N, Faraz F, Lamba AK, Tandon S, Dhingra S. A Multidisciplinary Approach to the Management of Unusual Bilateral Gingival Recession Due to a Factitious Nail-Scratching Habit: A Case Report. Cureus. 2024;16(2):e53439. doi:10.7759/cureus.53439</a></li></ul>`,
+    },
+    {
+      heading: `Do nail biters carry more gut bacteria in their mouths?`,
+      body: `Four small studies found Enterobacteriaceae, a family that includes E. coli, more often in the mouths of nail biters. In a 2013 study of children aged 11 to 15, they were found in the saliva of 80 of 122 chronic nail biters against 10 of 122 non-biters (p < 0.001). A 2007 study of 59 young people found them in 19 of 25 nail biters (76%) and 9 of 34 non-biters (26.5%).
+
+A 2015 study of 40 nail biters, 40 thumb suckers and 20 controls found that nail biting went with a higher plaque index and higher carriage, mostly E. coli. A 2019 study of 150 children found the most bacteria in those who both bit their nails and wore braces. A PubMed search for nail biting and Enterobacteriaceae on 20 October 2026 returned 5 results.
+
+These studies detected bacteria in saliva or rinse samples. They did not measure gum disease or infection, so carriage is not the same as harm.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/24250072/" target="_blank" rel="noopener noreferrer">Reddy S, Sanjai K, Kumaraswamy J, Papaiah L, Jeevan M. Oral carriage of enterobacteriaceae among school children with chronic nail-biting habit. J Oral Maxillofac Pathol. 2013;17(2):163-8. doi:10.4103/0973-029X.119743</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/17241163/" target="_blank" rel="noopener noreferrer">Baydaş B, Uslu H, Yavuz I, Ceylan I, Dağsuyu IM. Effect of a chronic nail-biting habit on the oral carriage of Enterobacteriaceae. Oral Microbiol Immunol. 2007;22(1):1-4. doi:10.1111/j.1399-302X.2007.00291.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/26097357/" target="_blank" rel="noopener noreferrer">Kamal FG, Bernard RA. Influence of nail biting and finger sucking habits on the oral carriage of Enterobacteriaceae. Contemp Clin Dent. 2015;6(2):211-4. doi:10.4103/0976-237X.156048</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/31824597/" target="_blank" rel="noopener noreferrer">Chinnasamy A, Ramalingam K, Chopra P, Gopinath V, Bishnoi GP, Chawla G. Chronic nail biting, orthodontic treatment and Enterobacteriaceae in the oral cavity. J Clin Exp Dent. 2019;11(12):e1157-e1162. doi:10.4317/jced.56059</a></li><li>PubMed search "nail biting Enterobacteriaceae", run 20 October 2026: 5 results.</li></ul>`,
+    },
+    {
+      heading: `Do fingernails hold bacteria in the first place?`,
+      body: `Yes. A 2023 study cultured samples from under the long fingernails of female students and isolated Staphylococcus aureus and Staphylococcus epidermidis. Its introduction says fingernails can harbour bacteria such as Salmonella, Shigella and E. coli, but those were not what it isolated, and it compared two detergent ingredients rather than nail biters. It is background only. We found no study that cultured the same bacteria from a person's nails and from their gums.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37203816/" target="_blank" rel="noopener noreferrer">Albureikan MOI, Alotaibi LMA. Antibacterial activity of chloroxylenol and thymol against pathogenic bacteria isolated from under long nails. Eur Rev Med Pharmacol Sci. 2023;27(9):3922-3930. doi:10.26355/eurrev_202305_32298</a></li></ul>`,
+    },
+    {
+      heading: `What should you do if your gums bleed or hurt?`,
+      body: `See a dentist. Bleeding gums, swelling, a pimple-like bump, pain or a loose tooth need a professional look, whatever the cause. Do not wait for the habit to change first, and take a child with any of these to a dentist too.
+
+The evidence does not show that stopping nail biting treats gum disease. It does give a reason to keep fingers and nail pieces away from the gum line. Our pages on teeth damage and braces cover the other dental side of the habit.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-teeth-damage">Does nail biting damage your teeth?</a></li><li><a href="/blog/nail-biting-braces">Nail biting and braces</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under bitten nails</a></li><li><a href="/blog/nail-biting-paronychia">Nail biting and paronychia</a></li><li><a href="/blog/nail-biting-vs-cheek-biting">Nail biting versus cheek biting</a></li><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-hand-sanitizer',
+  title: `Does Hand Sanitizer or Washing Clean Under Bitten Nails?`,
+  seoTitle: `Does Hand Sanitizer Clean Under Your Nails?`,
+  description: `Scrubbing and gel cut bacteria on hand skin far more than under the nail. Soap plus a nailbrush did best, gel least. No study we found looks at nail biters.`,
+  tag: 'Health',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-hand-sanitizer.png',
+  sections: [
+    {
+      heading: `Does washing or hand sanitizer clean under your nails?`,
+      body: `Not completely, according to the studies that measured it. Scrubbing and antiseptic products reduced bacteria on the skin of the hand much more than in the space under the nail, where most bacteria stayed in the lab tests described below.
+
+In a 1993 test with 3 minutes of brush scrubbing, antimicrobial detergents worked well on the hand surface, but most of the bacteria under the nails remained. A 1989 controlled trial found the same pattern: bacteria under the nails kept being recovered from the unsealed hand, and scrubbing reduced them far less than it did on the sealed hand. Both were small laboratory studies on hand washing, not on people who bite their nails.
+
+A 2003 food-safety study contaminated volunteers' hands with E. coli and a calicivirus stand-in, then compared methods. Soap plus a nailbrush gave the greatest reduction, and rubbing with alcohol gel gave the least. The authors concluded that scrubbing nails with soap and a brush was the best option among those tested. Alcohol gel was the weakest performer in that test.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/8478492/" target="_blank" rel="noopener noreferrer">Namura S, Nishijima S, McGinley KJ, Leyden JJ. A study of the efficacy of antimicrobial detergents for hand washing: using the full-hand touch plates method. J Dermatol. 1993;20(2):88-93. doi:10.1111/j.1346-8138.1993.tb03837.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/2809170/" target="_blank" rel="noopener noreferrer">Leyden JJ, McGinley KJ, Kates SG, Myung KB. Subungual bacteria of the hand: contribution to the glove juice test; efficacy of antimicrobial detergents. Infect Control Hosp Epidemiol. 1989;10(10):451-454. doi:10.1086/645920</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/14672227/" target="_blank" rel="noopener noreferrer">Lin CM, Wu FM, Kim HK, Doyle MP, Michael BS, Williams LK. A comparison of hand washing techniques to remove Escherichia coli and caliciviruses under natural or artificial fingernails. J Food Prot. 2003;66(12):2296-2301. doi:10.4315/0362-028x-66.12.2296</a></li></ul>`,
+    },
+    {
+      heading: `Does fingernail length change how many microbes stay behind?`,
+      body: `Yes, in several studies, longer nails went with more microbes. Shorter nails were linked to lower counts, though these studies looked at healthcare and food workers rather than people who bite.
+
+In a cross-sectional study of 465 Norwegian healthcare workers, Staphylococcus aureus carriage was higher with nails longer than 2 mm (odds ratio 2.17). In a two-year crossover trial in two intensive care units, nails longer than 2 mm, rings and lack of access to gel were each associated with more microbes on nurses' hands. A small 2018 pilot study found potentially pathogenic organisms on nails after hand disinfection were linked to nail length (odds ratio 7.1). A 2021 randomized trial of 40 health professionals and students found that longer nails had higher bacterial counts after a surgical scrub.
+
+These are associations measured in people who trim their nails on purpose. Bitten nails are often uneven or ragged, and no study we found compared bitten nails with trimmed ones, so we cannot say how they behave.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/20946569/" target="_blank" rel="noopener noreferrer">Fagernes M, Lingaas E. Factors interfering with the microflora on hands: a regression analysis of samples from 465 healthcare workers. J Adv Nurs. 2011;67(2):297-307. doi:10.1111/j.1365-2648.2010.05462.x</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/18171181/" target="_blank" rel="noopener noreferrer">Rupp ME, Fitzgerald T, Puumala S, et al. Prospective, controlled, cross-over trial of alcohol-based hand gel in critical care units. Infect Control Hosp Epidemiol. 2008;29(1):8-15. doi:10.1086/524333</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29969690/" target="_blank" rel="noopener noreferrer">Wa&#322;aszek MZ, Ko&#322;pa M, R&oacute;&#380;a&#324;ska A, et al. Nail microbial colonization following hand disinfection: a qualitative pilot study. J Hosp Infect. 2018;100(2):207-210. doi:10.1016/j.jhin.2018.06.023</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/34342893/" target="_blank" rel="noopener noreferrer">Anderson SL, Wisnieski L, Achilles SL, et al. The impact of gel fingernail polish application on the reduction of bacterial viability following a surgical hand scrub. Vet Surg. 2021;50(7):1525-1532. doi:10.1111/vsu.13703</a></li></ul>`,
+    },
+    {
+      heading: `Is swallowing alcohol gel residue from your fingers a concern?`,
+      body: `No study has measured it. A PubMed search for "hand sanitizer nail biting" on 20 October 2026 returned 0 results, so we found no report of how much gel residue ends up in the mouth from biting nails.
+
+The nearest evidence is about swallowing the product itself, not residue. A 2021 narrative review in children says unintentional or intentional ingestion of hand sanitizer can occur because of added colour, smell and flavour, and lists hypoglycaemia, apnoea and acidosis among the harms of alcohol consumption in children. A 2018 review describes poisonings from hand rub containing undeclared methanol, which is much more dangerous than ethanol. Both reviews cover swallowing a product, which is a different situation from traces on a fingertip, so neither tells us the risk from residue.
+
+If you are worried about something you or a child swallowed, ask a pharmacist or call your local poison line. For a child who may have swallowed hand sanitizer, call your poison line or emergency services promptly.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/34212752/" target="_blank" rel="noopener noreferrer">Khaliq O, Mkhize PZ, Moodley JM. Raising awareness about the unintended consequences of hand sanitiser in children. S Afr Fam Pract (2004). 2021;63(1):e1-e3. doi:10.4102/safp.v63i1.5278</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29987197/" target="_blank" rel="noopener noreferrer">Chan APL, Chan TYK. Methanol as an unlisted ingredient in supposedly alcohol-based hand rub can pose serious health risk. Int J Environ Res Public Health. 2018;15(7):1440. doi:10.3390/ijerph15071440</a></li><li>PubMed search "hand sanitizer nail biting", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `Does hand hygiene change what nail biting does to your health?`,
+      body: `There is no direct evidence, because no study we found compared nail biters who wash or sanitize with those who do not. The same PubMed search returned 0 results.
+
+What the adjacent research does show is limited. Hand hygiene products reduce microbes on hand skin, and the nail area is the hardest region to clean. So washing helps without fully clearing it. For what bacteria and parasites have been found in nail biters, see the related posts below, which cover those studies and their limits.
+
+If you notice pain, swelling, pus or spreading redness near a nail, or a sore that is changing, see a doctor rather than relying on sanitizer or soap.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "hand sanitizer nail biting", run 20 October 2026: 0 results.</li><li>PubMed search "subungual hand hygiene fingernails bacteria", run 20 October 2026: 5 results; four abstracts read (two cited in this post, one not relevant), one had no abstract.</li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-bacteria-parasites">What bacteria and parasites are found under bitten nails</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li><li><a href="/blog/nail-biting-healthcare-workers">Nail biting in healthcare workers</a></li><li><a href="/blog/nail-biting-fungal-infection">Nail biting and fungal infection</a></li><li><a href="/blog/swallowing-fingernails">Is swallowing fingernails harmful?</a></li><li><a href="/blog/swallowing-nail-polish-biting">Is it harmful to swallow nail polish when you bite?</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-self-esteem',
+  title: `Does Nail Biting Affect Self-Esteem? What Studies Show`,
+  seoTitle: `Nail Biting and Self-Esteem: What Studies Show`,
+  description: `No study we found shows nail biting lowers self-esteem. Surveys tie BFRBs to lower quality of life, and in one open trial self-esteem rose as the habit eased.`,
+  tag: 'Psychology',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-self-esteem.png',
+  sections: [
+    {
+      heading: `Does nail biting lower self-esteem?`,
+      body: `No study I found shows that nail biting on its own lowers self-esteem, and none shows the reverse. What exists is a handful of surveys and small trials that measured self-esteem alongside body-focused repetitive behaviors (BFRBs), and they point in different directions.
+
+The PubMed search "nail biting self-esteem", run on 20 October 2026, returned 14 results. Most were about something else, such as oral health or children's programs. I read the abstracts that touched on the question and report them below with their limits. Nothing here can say which comes first, the habit or the low mood about it.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search "nail biting self-esteem", run 20 October 2026: 14 results.</li><li>PubMed search "onychophagia self-esteem", run 20 October 2026: 16 results.</li></ul>`,
+    },
+    {
+      heading: `What do surveys say about quality of life in people with BFRBs?`,
+      body: `Adults with a probable BFRB reported more symptoms and lower quality of life in some areas than adults without one. In a 2018 online survey of 1,378 adults in Australia, 23% reported a probable BFRB, and 85 people (6%) reported nail biting.
+
+The BFRB group scored higher on depression, anxiety, obsessive-compulsive symptoms, body dysmorphic symptoms and fear of negative evaluation, and lower on some quality-of-life domains. The abstract says the BFRB groups did not differ from each other on quality of life, and that skin picking was linked to more body image concern than the other behaviors. The sample was self-selected, the measures were self-report, and the nail-biting group was small, so this describes association only.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/30041079/" target="_blank" rel="noopener noreferrer">Solley K, Turner C. Prevalence and correlates of clinically significant body-focused repetitive behaviors in a non-clinical sample. Compr Psychiatry. 2018;86:9-18. doi:10.1016/j.comppsych.2018.06.014</a></li></ul>`,
+    },
+    {
+      heading: `Is there data on self-esteem and appearance dissatisfaction in hair pulling?`,
+      body: `Yes, but it is about hair pulling, not nail biting, so treat it as adjacent evidence. A Chicago study compared 333 adults with trichotillomania to 90 healthy controls on the Quality of Life Inventory. The hair-pulling group had lower overall quality of life, and lower scores in several areas including self-esteem, friends and love.
+
+A 2025 case report from Poland describes trichotillomania as bringing a sense of unattractiveness, low self-esteem, dissatisfaction with body appearance, shame and embarrassment. That is one author group's description in one patient report, not a measured finding. Neither source tested nail biters, and I did not find an equivalent self-esteem comparison for them.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35166662/" target="_blank" rel="noopener noreferrer">Valle S, Grant JE. Quality of life in trichotillomania: An assessment of specific life domains. Ann Clin Psychiatry. 2022;34(1):27-32. doi:10.12788/acp.0052</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/42893374/" target="_blank" rel="noopener noreferrer">Januszko P, et al. Trichotillomania. Psychiatr Pol. 2025. Online ahead of print. doi:10.12740/PP/OnlineFirst/207614</a></li></ul>`,
+    },
+    {
+      heading: `Does embarrassment keep people from admitting the habit?`,
+      body: `A 2005 review says it can. Its authors write that people with hair pulling, skin picking and nail biting often fail to admit the self-inflicted nature of their physical damage out of shame and embarrassment, which makes the problems harder to recognize. A 2022 review of nail biting and nail picking says the same: limited awareness, patient embarrassment and other psychiatric conditions mean the problems are often underrecognized and misdiagnosed.
+
+Both are narrative reviews, so they summarize earlier work rather than test the idea. For the shame side of this, see our post on shame and self-compassion.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/16402755/" target="_blank" rel="noopener noreferrer">Bohne A, Keuthen N, Wilhelm S. Pathologic hairpulling, skin picking, and nail biting. Ann Clin Psychiatry. 2005;17(4):227-32. doi:10.1080/10401230500295354</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392. doi:10.3390/ijerph19063392</a></li></ul>`,
+    },
+    {
+      heading: `Is self-esteem a cause of grooming habits or a result?`,
+      body: `Neither is shown: in the one study I found that modelled it, contingent self-esteem predicted a shared grooming-habit factor, but the authors concluded the urge to groom, not low self-esteem, drives the habits. In a community survey of 2,705 people in Hungary, trichotillomania, skin picking and nail biting loaded on one shared "pathological grooming" factor. Impulsivity, psychiatric distress and contingent self-esteem each predicted that factor significantly. The authors concluded the urge to self-groom, rather than general distress or low self-esteem, seemed to drive the behaviors.
+
+This was a cross-sectional online survey, so it cannot show direction. It also looked at contingent self-esteem, meaning how much self-worth depends on outside approval, which is not the same as low self-esteem.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/28902896/" target="_blank" rel="noopener noreferrer">Maraz A, Hende B, Urban R, Demetrovics Z. Pathological grooming: Evidence for a single factor behind trichotillomania, skin picking and nail biting. PLoS One. 2017;12(9):e0183806. doi:10.1371/journal.pone.0183806</a></li></ul>`,
+    },
+    {
+      heading: `Does self-esteem improve when the habit improves?`,
+      body: `In one open trial it did, though the evidence is thin. In a 2018 Canadian study, 64 adults with hair pulling, nail biting or skin picking received 14 weeks of a cognitive psychophysiological therapy. The abstract reports a large effect on symptoms, and that mood and self-esteem also improved after treatment. There was a waitlist comparison, but it was an open trial, not a blinded one.
+
+In a 2023 online trial of 268 people with BFRBs, 36.6% of whom bit their nails, a self-help habit replacement technique beat a wait-list on the main symptom scale. Quality of life and depression showed only statistical trends. Whether self-esteem rises because the habit eases, or the other way around, is not answered by either study. In the 2018 trial, symptom gains held at 6 months and perfectionism fell further; our perfectionism post covers that link.`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/28815684/" target="_blank" rel="noopener noreferrer">O&#39;Connor K, Lavoie M, Desaulniers B, Audet JS. Cognitive psychophysiological treatment of bodily-focused repetitive behaviors in adults: An open trial. J Clin Psychol. 2018;74(3):273-285. doi:10.1002/jclp.22501</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/37466986/" target="_blank" rel="noopener noreferrer">Moritz S, et al. Self-Help Habit Replacement in Individuals With Body-Focused Repetitive Behaviors: A Proof-of-Concept Randomized Clinical Trial. JAMA Dermatol. 2023;159(9):992-995. doi:10.1001/jamadermatol.2023.2167</a></li></ul>`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-shame-self-compassion">Nail biting, shame and self-compassion</a></li><li><a href="/blog/nail-biting-social-confidence">Nail biting and social confidence</a></li><li><a href="/blog/nail-biting-and-perfectionism">Nail biting and perfectionism</a></li><li><a href="/blog/nail-biting-and-depression">Nail biting and depression</a></li><li><a href="/blog/bfrb-guide">The BFRB guide</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
