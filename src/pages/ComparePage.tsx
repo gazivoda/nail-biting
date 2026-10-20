@@ -86,6 +86,9 @@ export function ComparePage({ path }: Props) {
               {section.html && (
                 <div
                   className="mt-4 overflow-x-auto blog-html-block"
+                  role="region"
+                  aria-label={`${section.heading}, scrolls sideways on small screens`}
+                  tabIndex={0}
                   dangerouslySetInnerHTML={{ __html: section.html }}
                 />
               )}

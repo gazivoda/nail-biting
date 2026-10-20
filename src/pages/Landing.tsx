@@ -8,7 +8,6 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { Rings } from '../components/site/Rings';
-import { PromoVideo } from '../components/PromoVideo';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
@@ -246,7 +245,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 // WebAssembly and no MediaPipe model.
                 <figure className="relative w-full">
                   <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">3 days free, no card</span>
-                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 sm:-right-4">0 bytes of video sent</span>
+                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-sm:hidden sm:-right-4">No camera data is sent while it runs</span>
                   <img
                     src="/shots/app-watch-1280.webp"
                     srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
@@ -333,7 +332,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 { n: '02', t: 'Interrupt', d: 'It sounds the moment a fingertip reaches your lips, while the habit is still automatic.', cls: 'bg-deep text-white', num: 'text-lime-300' },
                 { n: '03', t: 'Replace', d: 'Press your palms flat or clench a fist. That part is yours, and it is what makes the habit fade.', cls: 'bg-ember text-deep', num: 'text-deep/90' },
               ].map(({ n, t, d, cls, num }) => (
-                <div key={n} className={`bite flex min-h-[22rem] flex-col justify-between rounded-[2rem] p-7 sm:p-8 [--bite:44px] ${cls}`}>
+                <div key={n} className={`bite flex min-h-[22rem] flex-col justify-between rounded-2xl p-7 sm:p-8 [--bite:44px] ${cls}`}>
                   <span className={`font-display text-[7.5rem] font-extrabold leading-[0.8] tracking-[-0.06em] ${num}`}>{n}</span>
                   <div>
                     <h3 className="font-display text-3xl font-extrabold tracking-[-0.03em]">{t}</h3>
@@ -362,7 +361,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               </p>
             </div>
             <figure className="relative mx-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:col-span-4 lg:col-start-8">
-              <span className="sg-sticker sg-sticker-ember -left-6 top-28 sm:-left-14">Tag what set it off</span>
+              <span className="sg-sticker sg-sticker-ember -left-6 top-28 max-sm:hidden sm:-left-14">Tag what set it off</span>
               <img
                 src="/shots/app-history-390.webp"
                 width={390}
@@ -370,28 +369,10 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 loading="lazy"
                 decoding="async"
                 alt="The History screen on a phone: each day's alarms and bites with their times, an alarm waiting to be reviewed, and bites tagged with what set them off, such as Deep focus."
-                className="w-full rounded-[2rem] border border-[color:var(--sg-rule)]"
+                className="w-full rounded-2xl border border-[color:var(--sg-rule)]"
               />
               <figcaption className="sg-note mt-3">Shown with example data.</figcaption>
             </figure>
-          </div>
-        </section>
-
-        {/* ── VIDEO ─────────────────────────────────────────────────────── */}
-        {/* After the product has been shown, before the setup steps: a 30 s
-            overview for people who would rather watch than read. Click to
-            play; the file is not requested until they do. */}
-        <section aria-labelledby="video-heading" className="pb-16 lg:pb-24">
-          <div className="sg-container grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-4">
-              <h2 id="video-heading" className="sg-h2 max-w-[14ch]">Thirty seconds, start to finish</h2>
-              <p className="sg-body sg-measure mt-5">
-                What Stop Biting does, how it keeps your camera private, and what the trial includes.
-              </p>
-            </div>
-            <div className="lg:col-span-8">
-              <PromoVideo />
-            </div>
           </div>
         </section>
 
@@ -401,7 +382,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             flow. The green "do this" sign appears here once. */}
         <section id="how" aria-labelledby="how-heading" className="py-4 lg:py-8">
           <div className="sg-container">
-          <div className="bite grid gap-6 rounded-[2rem] bg-[color:var(--sg-signal)] p-6 sm:p-10 lg:grid-cols-12 lg:items-start lg:gap-10 lg:rounded-[3rem] lg:p-14">
+          <div className="bite grid gap-6 rounded-2xl bg-[color:var(--sg-signal)] p-6 sm:p-10 lg:grid-cols-12 lg:items-start lg:gap-10 lg:rounded-[3rem] lg:p-14">
             <div className="flex items-center gap-4 lg:col-span-4">
               <span className="sg-sign sg-sign-m"><ArrowRight size={26} aria-hidden="true" /></span>
               <h2 id="how-heading" className="sg-h2">How to start</h2>
@@ -509,8 +490,8 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               <div className="grid gap-6 border-t border-[color:var(--sg-rule)] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:px-14">
                 <p className="sg-body text-[color:var(--sg-ink)]">
                   A camera pointed at you all day is a lot to trust an app with, so detection runs
-                  entirely in your browser, on your own computer: <strong className="whitespace-nowrap font-extrabold">0 bytes</strong> of
-                  camera data go to any server. Signing in and paying use the network; watching never does.
+                  entirely in your browser, on your own computer. No camera data is sent while it runs. Signing in and paying
+                  use the network; watching never does.
                 </p>
                 {/* "The list stays empty" was not true on a first run: starting
                     detection downloads the models. Say what a visitor will see. */}

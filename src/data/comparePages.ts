@@ -692,9 +692,9 @@ function verificationSection(body: string, sources: string[] = []): { heading: s
   // the same source. The date in `body` is the date of the check; adding a link
   // does not re-verify anything.
   const html = sources.length
-    ? `<p><strong>Sources checked:</strong> ${sources
-        .map(u => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u.replace(/^https:\/\//, '')}</a>`)
-        .join(', ')}</p>`
+    ? `<p class="sg-note"><strong>Sources checked:</strong> ${sources
+        .map(u => `<a class="sg-link" style="display:inline-block;padding-block:.35rem" href="${u}" target="_blank" rel="noopener noreferrer">${u.replace(/^https:\/\//, '')}</a>`)
+        .join(' ')}</p>`
     : undefined;
   return html ? { heading: 'How we verified this page', body, html } : { heading: 'How we verified this page', body };
 }

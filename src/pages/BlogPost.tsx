@@ -9,7 +9,6 @@ import { TAG_PILL } from '../components/blog/tagPill';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
-import { TrialButton } from '../components/site/TrialButton';
 import { BlogMidCta } from '../components/site/BlogMidCta';
 import { midCtaAfterIndex, midCtaEligible } from '../components/site/midCtaRules';
 import { track } from '../utils/track';
@@ -205,6 +204,9 @@ export function BlogPost({ slug }: Props) {
                 {section.html && (
                   <div
                     className="mt-4 overflow-x-auto blog-html-block"
+                    role="region"
+                    aria-label={`${section.heading}, scrolls sideways on small screens`}
+                    tabIndex={0}
                     dangerouslySetInnerHTML={{ __html: section.html }}
                   />
                 )}
@@ -214,29 +216,23 @@ export function BlogPost({ slug }: Props) {
             ))}
           </article>
 
-          {/* CTA: the same offer and button as every other page. */}
-          <div className="sg-page mt-14 flex flex-col items-start gap-4 rounded-2xl border border-[color:var(--sg-rule)] bg-white p-7 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              {/* Most readers arrive from search on a question, not on the
-                  product, so the card has to say what it is before asking. */}
-              <p className="sg-h3">A webcam alarm for nail biting.</p>
-              <p className="sg-small mt-1 max-w-[46ch]">
-                Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when
-                your hand moves toward your mouth. The video stays on your computer. 3 days free,
-                no card. Read <a href="/how-it-works" className="sg-link">how it works</a> or{' '}
-                <a href="/pricing" className="sg-link">see pricing</a>. Or{' '}
-                <a
-                  href="/#live-demo"
-                  onClick={() => track('demo_link_click', `blog-${slug}`)}
-                  className="sg-link"
-                >
-                  try the 60 second demo
-                </a>{' '}
-                first, no account.
-              </p>
-            </div>
-            <TrialButton source={`blog-${slug}`} />
-          </div>
+          {/* What the product is, in plain words: most readers arrive from search
+              on a question. The one closing call to action is the deep ClosingCta
+              the footer renders on every marketing page, so this is text only. */}
+          <p className="sg-small mt-14 max-w-[62ch]">
+            Stop Biting is a webcam alarm that runs in your browser on a laptop or desktop and sounds an
+            alarm when your hand moves toward your mouth. No camera data is sent while it runs. 3 days free,
+            no card. Read <a href="/how-it-works" className="sg-link">how it works</a>,{' '}
+            <a href="/pricing" className="sg-link">see pricing</a> or{' '}
+            <a
+              href="/#live-demo"
+              onClick={() => track('demo_link_click', `blog-${slug}`)}
+              className="sg-link"
+            >
+              try the 60 second demo
+            </a>{' '}
+            first, no account.
+          </p>
 
           {/* Product link: the compare/solutions page that answers what this post leaves open */}
           {productLink && (

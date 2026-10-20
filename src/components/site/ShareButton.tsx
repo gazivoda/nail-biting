@@ -24,7 +24,7 @@ export function ShareButton({ getUrl, source }: { getUrl: () => string; source: 
       <button
         type="button"
         onClick={onClick}
-        className="inline-flex items-center gap-2 rounded-xl border border-[color:var(--sg-rule)] bg-white px-4 py-2 text-[0.9375rem] font-semibold text-[color:var(--sg-ink)] hover:bg-[color:var(--sg-ground)]"
+        className="sg-btn sg-btn-ink sg-btn-sm"
       >
         <Link2 size={15} aria-hidden="true" />
         {copied ? 'Link copied' : 'Copy link to this result'}

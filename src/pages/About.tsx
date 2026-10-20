@@ -17,7 +17,7 @@ export function About() {
 
       <SiteHeader />
 
-      <main id="main" className="sg-container max-w-3xl pt-28 pb-20 lg:pt-32">
+      <main id="main" className="sg-container max-w-4xl pt-28 pb-20 lg:pt-32">
 
         <PageHero className="mb-14">
         {/* Breadcrumb */}

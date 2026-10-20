@@ -1560,8 +1560,6 @@ if (!existsSync(distPath)) {
       '<section><h2>Every catch ends up in History</h2>' +
       '<p>Each alarm and each bite you log lands here with the time. Tag what set it off ' +
       '(stress, boredom, deep focus) and after a week you can see which one is yours.</p></section>' +
-      '<section><h2>Thirty seconds, start to finish</h2>' +
-      '<p>What Stop Biting does, how it keeps your camera private, and what the trial includes.</p></section>' +
       '<section><h2>How to start</h2>' +
       '<p>Sign in with Google (it opens in a new tab), allow the camera, and get on with your work. When your hand ' +
       'reaches your mouth, it goes off. That\'s the whole setup. It runs in your desktop browser, so there\'s nothing ' +
@@ -1584,7 +1582,7 @@ if (!existsSync(distPath)) {
       'Behaviors lists BFRB-informed therapists.</p></section>' +
       '<section><h2>Your camera never leaves your device.</h2>' +
       '<p>A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, ' +
-      'on your own computer: 0 bytes of camera data go to any server. Signing in and paying use the network; watching never does.</p></section>' +
+      'on your own computer. No camera data is sent while it runs. Signing in and paying use the network; watching never does.</p></section>' +
       '<section><h2>Why this exists</h2>' +
       '<p>I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of it lasted, because ' +
       'I never noticed I was doing it until the damage was done. I write software and I had a webcam, so I built the ' +
@@ -1660,20 +1658,7 @@ if (!existsSync(distPath)) {
     // site, and this makes that explicit rather than leaving the one page they
     // all point at as the only one without a BreadcrumbList.
     const breadcrumb = breadcrumbSchema([['Home', 'https://stopbiting.today/']]);
-    // The 30 s overview in the page's Video section (PromoVideo.tsx). The file
-    // and poster are real and same-origin; duration is the encoded length.
-    const homeVideo = {
-      '@context': 'https://schema.org',
-      '@type': 'VideoObject',
-      name: 'Stop Biting in 30 seconds',
-      description: 'A 30-second overview of Stop Biting: on-device AI watches your webcam and sounds an alarm when a finger reaches your mouth. Camera video stays on your device.',
-      thumbnailUrl: 'https://stopbiting.today/video/stop-biting-poster.webp',
-      contentUrl: 'https://stopbiting.today/video/stop-biting.mp4',
-      uploadDate: '2026-10-02',
-      duration: 'PT30S',
-      isPartOf: { '@id': 'https://stopbiting.today/' },
-    };
-    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n    ${schemaTag(homeVideo)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
+    injected = injected.replace('</head>', `    ${schemaTag(homeWebPage)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/'));
   });

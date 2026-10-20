@@ -19,8 +19,8 @@ export function SiteFooter({ cta = true }: { cta?: boolean } = {}) {
             </div>
             <p className="sg-small mt-4">
               An awareness alarm for nail biting (onychophagia), made by{' '}
-              <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser
-              and no video is uploaded.
+              <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser.
+              No camera data is sent while it runs.
             </p>
           </div>
           {/* Written out one by one: these eight hrefs are the site's whole

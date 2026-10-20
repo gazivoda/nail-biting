@@ -17,7 +17,7 @@ interface FormState {
 const FIELD_CLASS =
   'w-full rounded-2xl border border-[color:var(--sg-rule)] bg-white px-5 py-3.5 text-[1.0625rem] ' +
   'text-[color:var(--sg-ink)] placeholder:text-[color:oklch(54%_0.02_160)] transition ' +
-  'focus:border-[color:var(--sg-accent)] focus:outline-none focus:ring-2 focus:ring-[color:var(--sg-accent)]/30';
+  'focus:border-[color:var(--sg-accent)] focus:outline-2 focus:outline-offset-2 focus:outline-[color:var(--sg-accent)]';
 
 const LABEL_CLASS = 'text-[0.9375rem] font-bold';
 

@@ -1,6 +1,7 @@
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { track } from '../utils/track';
 
@@ -18,25 +19,26 @@ export function PrintableTracker() {
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <SiteHeader />
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
-        <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
-          <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
-          <span aria-hidden="true">/</span>
-          <span className="text-[color:var(--sg-ink)]">Printable nail biting tracker</span>
-        </nav>
+        <PageHero className="mb-12">
+          <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
+            <a href="/" className="underline-offset-4 hover:underline">Home</a>
+            <span aria-hidden="true">/</span>
+            <span className="text-white">Printable nail biting tracker</span>
+          </nav>
+          <h1 className="sg-h1-md max-w-[18ch]">Free printable nail biting <span className="sg-hl">tracker</span></h1>
+          <p className="sg-lede mt-5 max-w-[48ch]">
+            A one-page, 30-day log for noticing when you bite and what is going on at the time. Print it, keep it
+            on your desk, and tally each catch. It is free, with no sign-up.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a href={PDF} download onClick={() => track('tracker_pdf_download')} className="sg-btn">Download the PDF</a>
+            <span className="sg-note">One US Letter page, about 160 KB</span>
+          </div>
+        </PageHero>
 
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-6">
-            <h1 className="sg-h1 max-w-[18ch]">Free printable nail biting tracker</h1>
-            <p className="sg-body sg-measure mt-5">
-              A one-page, 30-day log for noticing when you bite and what is going on at the time. Print it, keep it
-              on your desk, and tally each catch. It is free, with no sign-up.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a href={PDF} download onClick={() => track('tracker_pdf_download')} className="sg-btn">Download the PDF</a>
-              <span className="sg-note">One US Letter page, about 160 KB</span>
-            </div>
-
-            <section className="mt-12" aria-labelledby="how-heading">
+            <section aria-labelledby="how-heading">
               <h2 id="how-heading" className="sg-h3">How to use it</h2>
               <ol className="sg-body mt-4 list-decimal space-y-3 pl-5">
                 <li>Each time you notice your hand at your mouth, make a mark in that day&rsquo;s tally box.</li>
@@ -71,7 +73,7 @@ export function PrintableTracker() {
           </div>
 
           <div className="lg:col-span-6">
-            <a href={PDF} className="block rounded-xl border border-[color:var(--sg-rule)] bg-white p-3 shadow-sm" aria-label="Open the 30-day tracker PDF">
+            <a href={PDF} className="block rounded-2xl border border-[color:var(--sg-rule)] bg-white p-3" aria-label="Open the 30-day tracker PDF">
               <img
                 src={PREVIEW}
                 width={816}
