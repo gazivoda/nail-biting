@@ -649,11 +649,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "stop-nail-biting-challenge",
     title: "30-Day Nail Biting Challenge: A Day-by-Day Guide",
-    description: "A day-by-day guide to the 30-day stop nail biting challenge: specific daily actions, milestones to hit, and how to handle the days you don't stick to it.",
+    description: "The 30-day plan to stop nail biting as one small task a day, with milestones and what to do after a missed day. Our own structure, not a tested protocol.",
     tag: "Treatment",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-vs-hair-pulling",
