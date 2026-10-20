@@ -76,6 +76,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `The approach with the strongest evidence is called Habit Reversal Training, and its core insight is that awareness — real, in-the-moment awareness every single time — is the thing that actually breaks the automatic loop. Not motivation. Not punishment. Not bitter polish. Awareness at the exact moment the habit fires.\n\nThis is hard to achieve alone because the habit is, by definition, something you don't notice. The most effective interventions introduce an external signal at the moment of occurrence — something that catches what your own attention missed. Over weeks, the habit's automaticity weakens because it keeps getting interrupted rather than completed. That's the mechanism. It's not complicated, but it does require consistency.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://www.tandfonline.com/doi/full/10.1080/09546634.2016.1200711" target="_blank" rel="noopener noreferrer">Halteh P, Scher RK, Lipner SR. Onychophagia: A nail-biting conundrum for physicians. J Dermatolog Treat. 2017;28(2):166–172.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li>Azrin NH, Nunn RG, Frantz SE. Habit reversal vs. negative practice treatment of nailbiting. <a href="https://pubmed.ncbi.nlm.nih.gov/7436976/" target="_blank" rel="noopener noreferrer">Behav Res Ther. 1980;18(4):281–285</a>. PubMed holds no abstract for this record and the full text is paywalled, so the 99% and 60% figures quoted on this page are taken from Table 1 of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Int J Environ Res Public Health. 2022;19(6):3392</a>, which is open access.</li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -218,7 +223,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-toddler">Nail biting in toddlers: what is normal at ages 2 to 4</a></li><li><a href="/blog/nail-biting-punishing-children">Why punishing a child for nail biting backfires</a></li><li><a href="/blog/nail-biting-parents-modeling">If you bite your nails, should you hide it from your kids?</a></li><li><a href="/blog/nail-biting-teenagers">Nail biting in teenagers: what the evidence shows</a></li><li><a href="/blog/nail-biting-thumb-sucking">From thumb sucking to nail biting</a></li><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1490,12 +1495,12 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-statistics.png',
   sections: [
     {
-      heading: "Key numbers at a glance",
+      heading: "How common is nail biting? Key numbers at a glance",
       body: `The headline figures from this page in one place. Each is explained, with its limits, in the sections below: the samples differ, so the rows are not directly comparable.`,
       html: `<table><thead><tr><th>Group</th><th>Figure</th><th>Source</th><th>Year</th></tr></thead><tbody><tr><td>Adults</td><td>20–30% bite their nails</td><td>Halteh, Scher &amp; Lipner</td><td>2017</td></tr><tr><td>Children aged 10 to puberty</td><td>Up to 45%</td><td>Lee &amp; Lipner</td><td>2022</td></tr><tr><td>Schoolchildren, community sample</td><td>22.3% bite their nails</td><td>Ghanizadeh &amp; Shekoohi</td><td>2011</td></tr><tr><td>Clinic-referred children who bite</td><td>74.6% also have ADHD</td><td>Ghanizadeh</td><td>2008</td></tr><tr><td>25 chronic biters vs 34 controls</td><td>Enterobacteriaceae in saliva: 76% vs 26.5%</td><td>Baydaş et al.</td><td>2007</td></tr><tr><td>Adults in the 1980 habit reversal trial</td><td>Self-recorded episodes down about 99% over five months, vs about 60% for negative practice</td><td>Azrin, Nunn &amp; Frantz (as cited in Lee &amp; Lipner 2022)</td><td>1980</td></tr><tr><td>13 and 12 adults, placebo-controlled trial</td><td>Nail length 22% above baseline after treatment and 19% at five-month follow-up, vs 3% and 0% for placebo</td><td>Twohig et al.</td><td>2003</td></tr></tbody></table>`,
     },
     {
-      heading: "Prevalence: how common is nail biting?",
+      heading: "What do the prevalence studies show in detail?",
       body: `Nail biting is one of the most common human habits. Research estimates vary based on the definition used (any biting vs. chronic biting vs. clinically significant biting), but the published literature consistently finds:\n\nApproximately 20–30% of the general population is affected by nail biting (Halteh, Scher & Lipner, Journal of Dermatological Treatment, 2017). Prevalence peaks before adulthood — up to 45% of children between age 10 and puberty bite their nails, making it one of the most common repetitive behaviors in that age group. The rate then decreases with age, though some people continue the habit into adulthood and some begin it there (Lee & Lipner, 2022). In other words, many childhood biters stop, and a large minority carry the habit into adult life.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://www.tandfonline.com/doi/full/10.1080/09546634.2016.1200711" target="_blank" rel="noopener noreferrer">Halteh P, Scher RK, Lipner SR. Onychophagia: A nail-biting conundrum for physicians. J Dermatolog Treat. 2017;28(2):166–172. (PMID 27387832)</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
@@ -1869,7 +1874,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-reward-chart-children">Reward charts for a child's nail biting: what evidence exists</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2152,7 +2157,7 @@ BLOG_POSTS.push({
   slug: 'nail-biting-evening',
   title: 'Why Do You Bite Your Nails in the Evening? What Is and Is Not Known',
   seoTitle: 'Nail Biting in the Evening: What Is Known',
-  description: 'No time-of-day prevalence data has been published. What is measured: 40 undergraduate nail biters bit most when left alone. Why evenings supply exactly that.',
+  description: 'No study has measured when nail biting peaks. What has been measured: boredom and frustration brought the most biting in 40 undergraduates.',
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-05-12',
@@ -2160,25 +2165,32 @@ BLOG_POSTS.push({
   ogImage: '/og/nail-biting-evening.png',
   sections: [
     {
-      heading: 'The evening nail biting spike: what surveys show',
-      body: `Ask nail biters when they bite most and the answer is remarkably consistent: evenings, particularly between 7pm and midnight. This is not idiosyncratic — it reflects predictable patterns in cognitive function, physiological arousal, and habitual context that converge in the evening hours to create near-ideal conditions for the habit.\n\nAsk nail biters when their habit is worst and the evening dominates the answers — formal time-of-day prevalence data hasn't been published, but the pattern is one of the most consistent things biters report about themselves. Evening biting tends to be longer in duration and lower in conscious awareness than biting at other times of day.`,
+      heading: `Does nail biting get worse in the evening?`,
+      body: `We do not know. On 20 October 2026 a PubMed search for nail biting and time of day returned 3 papers, and none measured when people bite. So a claim that biting peaks at a particular hour, such as the 7pm to midnight window sometimes quoted, is not supported by published data. If evenings feel worst to you, that is your own observation, and the studies below suggest which evening situations could matter.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "nail biting time of day", run 20 October 2026: 3 results, none about when people bite.</li></ul>`,
     },
     {
-      heading: 'Ego depletion and inhibitory control',
-      body: `The mechanism usually offered for evening nail biting is ego depletion — the idea that self-regulatory capacity is a resource consumed across the day and replenished by sleep. It is worth flagging that this model has not replicated well and is contested, so treat it as a useful way of describing the experience rather than an established cause.\n\nBy evening, after a full day of decisions, emotional regulation, concentration, and social interaction, inhibitory control is substantially reduced. The prefrontal cortex — which in the morning can catch and interrupt habitual behaviour before it completes — is effectively less online in the evening. The basal ganglia, which stores and executes automatic habits, operates relatively unhindered. This is why habits that are manageable during the day become nearly uncontrollable at night.`,
+      heading: `What has been measured about when people bite?`,
+      body: `Situations, not hours. In a randomised experiment, 40 undergraduates who bit their nails bit most often when left alone (boredom) and when solving difficult maths problems (frustration), and least often during conversation or when reprimanded for the habit (Williams et al., 2007). In 24 people with body-focused repetitive behaviors, the urge to engage was stronger in a boredom and frustration condition than in a relaxation condition (Roberts et al., 2015).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/17010305/" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989-95. doi:10.1016/j.brat.2006.07.013</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/25460266/" target="_blank" rel="noopener noreferrer">Roberts S, O&#39;Connor K, Aardema F, Belanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189-97. doi:10.1016/j.jbtep.2014.10.007</a></li></ul>`,
     },
     {
-      heading: 'Television and passive screen time: the boredom-focus combination',
-      body: `Evening television and video streaming create a specific combination of cognitive states that is particularly permissive for nail biting: enough engagement to prevent deliberate activity, but not enough to recruit full attentional resources. This partial engagement state is ideal for habitual behaviour — the mind is occupied enough that it isn't generating competing activities, but not occupied enough to run self-monitoring.\n\nThe gap problem compounds this: during commercial breaks, loading screens, or less engaging scenes, boredom spikes. That matters because boredom is the single best-evidenced trigger for nail biting — in a randomised within-subject experiment, 40 undergraduate nail biters bit most often when they were simply left alone, and an independent mood-induction study found urges highest under boredom and frustration. Many nail biters report completing multiple full biting episodes during a single TV episode without any awareness of doing so.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://doi.org/10.1016/j.brat.2006.07.013" target="_blank" rel="noopener noreferrer">Williams TI, Rose R, Chisholm S. What is the function of nail biting: an analog assessment study. Behav Res Ther. 2007;45(5):989–995.</a></li><li><a href="https://doi.org/10.1016/j.jbtep.2014.10.007" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li></ul>`,
+      heading: `Could evening television matter?`,
+      body: `Possibly, as a boredom-prone setting, which is the condition with the most biting in the 2007 experiment. No study has tested television or any other evening activity for nail biting, so this is a reason to watch your own pattern, not a finding.`,
     },
     {
-      heading: 'Cortisol, stress carry-over, and evening rumination',
-      body: `Evening is also when the day's accumulated stress often surfaces. During working hours, cognitive engagement and social context suppress emotional processing. Once those external demands lift, unresolved stress and worry tend to emerge — creating exactly the emotional state that drives stress-triggered nail biting.\n\nRumination about the day's events, tomorrow's challenges, or ongoing concerns activates the same physiological stress response that triggers biting during the day — but without the external context that sometimes interrupts the habit. The sofa, the dimmed lighting, and the removal of social monitoring make biting less conspicuous and less interrupted than during daytime hours.`,
+      heading: `Does evening stress drive biting?`,
+      body: `The one study we found does not support that. In the 2015 experiment the urge was not significantly stronger in the stress condition than in the relaxation condition, although it was stronger under boredom and frustration (Roberts et al., 2015). Evening worry may still matter to some people, but we found no data on it.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25460266/" target="_blank" rel="noopener noreferrer">Roberts S, O&#39;Connor K, Aardema F, Belanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189-97. doi:10.1016/j.jbtep.2014.10.007</a></li></ul>`,
     },
     {
-      heading: 'Evening-specific strategies that work',
-      body: `Because evening biting has specific causes, it responds to specific interventions. The most effective approaches target the evening context directly rather than applying generic advice.\n\nFor television-triggered biting: keeping a competing response object (textured fidget, stress ball) next to your usual evening seating position. Make the competing response the path of least resistance in that context.\n\nFor ego depletion: accepting that evening willpower is lower and compensating with external awareness tools rather than relying on self-monitoring. If you use a detection app, running it during evening screen time specifically addresses the highest-risk window.\n\nFor stress carry-over: a brief structured wind-down — even 10 minutes of writing down tomorrow's tasks or a short breathing exercise — reduces the ruminative load that intensifies evening biting. Addressing the upstream emotional state is more durable than trying to intercept individual biting episodes in a depleted state.`,
+      heading: `Does willpower run out by evening?`,
+      body: `A popular explanation is ego depletion, the idea that self-control is used up across the day. That idea is contested, and on 20 October 2026 a PubMed search for ego depletion and nail biting returned no results, so we do not treat it as a cause. We also removed earlier statements here about brain regions being less active in the evening, because we could not source them.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "ego depletion nail biting", run 20 October 2026: 0 results.</li></ul>`,
+    },
+    {
+      heading: `What can you try in the evening?`,
+      body: `Nothing below has been tested for evening biting. Habit reversal training, with its competing response, is the approach with the most trial support for nail biting overall, and our habit reversal page covers it. Two evening-specific ideas are our own suggestions: keep a competing response object, such as a textured fidget, next to where you usually sit, and run a detection tool during evening screen time if you use one. Count your own episodes for a week before and after changing anything.`,
     },
     {
       heading: `Related reading`,
@@ -2829,7 +2841,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-vs-skin-picking">Nail biting vs skin picking</a></li><li><a href="/blog/nail-biting-vs-hair-pulling">Nail biting vs hair pulling</a></li><li><a href="/blog/nail-biting-dermatophagia">Dermatophagia: when you bite the skin, not the nail</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/nail-biting-finding-a-therapist">How to find a therapist who treats nail biting</a></li><li><a href="/blog/nail-biting-vs-tics-tourette">Is nail biting a tic? Nail biting vs tics and Tourette syndrome</a></li><li><a href="/blog/nail-biting-mental-disorder">Is nail biting a mental disorder? What the classification says</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5046,7 +5058,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -5119,6 +5131,11 @@ BLOG_POSTS.push(
       {
         heading: 'The more useful takeaway',
         body: `If you are self-conscious about your hands, the fact that a great many accomplished people share the habit is worth something, but not very much on its own. The more actionable point is that visible nail biting is common, that it is not read by others as the character judgement you fear, and that it is a mechanical habit rather than a personal failing.\n\nAnd mechanical habits respond to mechanical interventions. The evidence points consistently at awareness at the moment of occurrence plus a competing response — which works the same way regardless of who is doing it.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-statistics">Nail biting statistics: how common is it, really?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
