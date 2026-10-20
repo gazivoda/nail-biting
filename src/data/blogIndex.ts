@@ -55,11 +55,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "best-nail-biting-remedies",
     title: "Best Remedies to Stop Nail Biting: Every Method Ranked by Evidence",
-    description: "Habit reversal ranks first: self-recorded biting fell roughly 99% over five months in the 1980 trial. Every remedy ranked, from bitter polish to AI detection.",
+    description: "Every nail biting remedy ranked by evidence: habit reversal first, then bitter polish, mindfulness and AI detection apps, and what each can and cannot do.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-20",
   },
   {
     slug: "stress-and-nail-biting",
