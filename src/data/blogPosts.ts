@@ -396,13 +396,13 @@ export const BLOG_POSTS: BlogPost[] = [
 
   {
     slug: 'nail-biting-during-focus-and-work',
-    title: 'Nail Biting at Work: Why Deep Focus and Concentration Trigger the Habit',
+    title: 'Nail Biting During Deep Focus: Why Concentration Triggers the Habit',
     seoTitle: 'Nail Biting During Deep Focus: Why It Happens',
-    description: "Many people bite their nails during focused work: coding, reading, meetings. Learn the focus-habit loop and how to interrupt it without breaking flow.",
+    description: "Many people bite their nails during deep focus: coding, writing, reading. Learn the focus-habit loop and how to interrupt it without breaking flow.",
     tag: 'Productivity',
     readingMinutes: 3,
     datePublished: '2026-04-03',
-    dateModified: '2026-04-03',
+    dateModified: '2026-10-20',
     ogImage: '/og/nail-biting-during-focus-and-work.png',
     sections: [
       {
@@ -432,6 +432,11 @@ export const BLOG_POSTS: BlogPost[] = [
         body: `Tracking bite frequency across work sessions provides data that is both therapeutically useful and often surprising. Most people who bite primarily during work estimate their daily frequency at 5–15 bites; systematic monitoring typically reveals 30–60+ biting events per session in chronic cases — most of which were entirely unconscious.\n\nThis data is valuable beyond its shock value: it allows identification of specific work types that trigger the most biting (meetings vs. solo coding vs. email vs. reading), time-of-day patterns, and correlation with workload intensity. With this data, targeted interventions can be deployed in the highest-risk contexts rather than attempting constant vigilance across all activities — a strategy that is both more effective and more sustainable over the weeks required for habit change.`,
             html: `<p>Two related reads: our <a href="/solutions/for-desk-workers">guide for desk workers</a> for the setup side, and <a href="/blog/nail-biting-laptop-working-from-home">nail biting while working from home</a> for the day-to-day of it.</p>`,
     },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-at-work-meetings">How to stop nail biting at work and in meetings</a></li><li><a href="/blog/nail-biting-laptop-working-from-home">Stop nail biting while working from home (a lighter read)</a></li></ul>`,
+      },
     ],
   },
 
@@ -912,6 +917,11 @@ BLOG_POSTS.push({
       heading: 'The part where we get slightly serious for one paragraph',
       body: `Nail biting at a laptop is funny to describe and genuinely frustrating to live with. If you have tried to stop — through bitter polish, through gloves, through sheer willpower — and found that nothing holds, you are not failing. You are running the wrong intervention on the right problem.\n\nThe right intervention works with the architecture of your habit rather than against it. Stop Biting is free to try for three days, requires no installation, and runs entirely on your device. If you're going to be in front of your laptop anyway, you might as well let it do something useful.`,
           html: `<p>The full desk-based version of this, including what to do in meetings, is in our <a href="/solutions/for-desk-workers">guide for desk workers</a>.</p>`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-during-focus-and-work">Nail biting during deep focus: why concentration triggers the habit</a></li><li><a href="/blog/nail-biting-at-work-meetings">How to stop nail biting at work and in meetings</a></li></ul>`,
     },
   ],
 });
@@ -1889,6 +1899,11 @@ BLOG_POSTS.push({
     {
       heading: 'The one week plan to reduce biting at work',
       body: `Day 1–2: keep a simple habit log — note time and context for every episode. No competing response yet; just data collection. Most professionals are surprised by the specificity of the pattern this reveals.\n\nDay 3: choose one competing response matched to your highest-risk context. Practice it deliberately 5–10 times in a calm moment — before the habit fires, not after. Muscle memory for the competing response needs to exist before the stressful moment.\n\nDay 4–7: implement the competing response every time the habit fires in the high-risk context. Aim for consistency, not perfection. Even 60% application in week one produces measurable frequency reduction.\n\nFor screen-time work specifically: run Stop Biting's three-day free trial during your highest-concentration work periods. The awareness data from even one day of continuous monitoring is typically more informative than a week of self-reporting — catching the automatic episodes that self-monitoring consistently misses.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-during-focus-and-work">Nail biting during deep focus: why concentration triggers the habit</a></li><li><a href="/blog/nail-biting-laptop-working-from-home">Stop nail biting while working from home (a lighter read)</a></li></ul>`,
     },
   ],
 });
