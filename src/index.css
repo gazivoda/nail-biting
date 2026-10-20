@@ -84,6 +84,7 @@
   --c-signal: oklch(90% 0.2 124);         /* lime: highlight + CTA on deep, #C6F24E */
   --c-signal-press: oklch(84% 0.19 124);
   --c-alert: oklch(60% 0.2 28);           /* bites, alarms */
+  --c-ember: oklch(75% 0.16 50);          /* warm second accent: stickers, blocks */
   --radius-card: 1.75rem;
   --radius-pill: 999px;
 }
@@ -679,3 +680,50 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
   .sg-btn { transition: none; }
 }
 }
+
+/* ── Signature motifs ───────────────────────────────────────────────────────
+   The bite: a scalloped notch taken out of a card's top-right corner, the same
+   gesture as the logo. Use --bite to size it (default 64px). Anything inside
+   the notch is clipped, so keep content clear of the corner. */
+.bite {
+  --bite: 64px;
+  -webkit-mask:
+    radial-gradient(circle calc(var(--bite) * 0.95) at calc(100% - var(--bite) * 0.15) calc(var(--bite) * 0.15), #0000 98%, #000),
+    radial-gradient(circle calc(var(--bite) * 0.5) at calc(100% - var(--bite) * 1.35) calc(var(--bite) * -0.05), #0000 98%, #000),
+    radial-gradient(circle calc(var(--bite) * 0.45) at calc(100% + var(--bite) * 0.05) calc(var(--bite) * 1.4), #0000 98%, #000);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle calc(var(--bite) * 0.95) at calc(100% - var(--bite) * 0.15) calc(var(--bite) * 0.15), #0000 98%, #000),
+    radial-gradient(circle calc(var(--bite) * 0.5) at calc(100% - var(--bite) * 1.35) calc(var(--bite) * -0.05), #0000 98%, #000),
+    radial-gradient(circle calc(var(--bite) * 0.45) at calc(100% + var(--bite) * 0.05) calc(var(--bite) * 1.4), #0000 98%, #000);
+  mask-composite: intersect;
+}
+@media (max-width: 640px) { .bite { --bite: 40px; } }
+
+/* Detection-zone rings: dashed concentric circles, the "threshold" the alarm
+   watches. Decorative; sits behind content. */
+.rings { position: absolute; pointer-events: none; color: var(--c-signal); opacity: 0.2; }
+
+/* Marker highlight under a word on paper. */
+.sg-mark {
+  background: linear-gradient(transparent 56%, var(--c-signal) 56%, var(--c-signal) 92%, transparent 92%);
+  border-radius: 0.15em; padding-inline: 0.12em; margin-inline: -0.12em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+
+/* Stickers: slightly crooked pills that sit over a corner of something real. */
+.sg-sticker {
+  position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.1rem; border-radius: 999px; white-space: nowrap;
+  font-family: var(--font-display); font-weight: 750; font-size: 1rem; letter-spacing: -0.01em;
+}
+.sg-sticker-lime { background: var(--c-signal); color: var(--c-deep); transform: rotate(-6deg); }
+.sg-sticker-ember { background: var(--c-ember); color: var(--c-deep); transform: rotate(5deg); }
+.sg-sticker-white { background: #fff; color: var(--c-deep); transform: rotate(3deg); }
+
+/* Ticker tape: a crooked lime band of display words, drifting slowly. */
+.sg-tape { background: var(--c-signal); color: var(--c-deep); overflow: hidden; transform: rotate(-1.6deg); margin-inline: -4vw; padding-block: 1.1rem; }
+.sg-tape__track { display: flex; width: max-content; animation: sg-tape 38s linear infinite; }
+.sg-tape__item { display: inline-flex; align-items: center; gap: 2rem; padding-right: 2rem; font-family: var(--font-display); font-weight: 800; letter-spacing: -0.04em; font-size: clamp(2rem, 1.2rem + 3.2vw, 4.25rem); line-height: 1; white-space: nowrap; }
+@keyframes sg-tape { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .sg-tape__track { animation: none; } }

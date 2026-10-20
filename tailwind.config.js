@@ -92,6 +92,7 @@ export default {
           300: 'oklch(90%   0.20  124 / <alpha-value>)',
           400: 'oklch(84%   0.19  124 / <alpha-value>)',
         },
+        ember: 'oklch(75% 0.16 50 / <alpha-value>)',
         deep: {
           DEFAULT: 'oklch(25% 0.05 162 / <alpha-value>)',
           2: 'oklch(31% 0.06 160 / <alpha-value>)',

@@ -1,6 +1,7 @@
 import { Trophy } from 'lucide-react';
 import { useStreak } from '../../hooks/useStreak';
 import { useAppStore } from '../../store/useAppStore';
+import { Rings } from '../site/Rings';
 import { formatDate, formatTime } from '../../utils/time';
 
 function Segment({ value, label }: { value: number; label: string }) {
@@ -39,9 +40,10 @@ export function StreakHero() {
 
   return (
     <div
-      className="bg-deep text-white rounded-3xl p-6 sm:p-8 dark:border dark:border-white/10"
+      className="bite relative overflow-hidden bg-deep text-white rounded-3xl p-6 sm:p-8 [--bite:44px]"
       data-tour="streak-card"
     >
+      <Rings className="-bottom-52 -right-40 h-[28rem] w-[28rem]" />
       {/* Overline */}
       <div className="flex items-center gap-2 mb-6">
         <span className="w-2 h-2 rounded-full bg-lime-300 animate-pulse" />
@@ -49,12 +51,12 @@ export function StreakHero() {
           Current streak
         </p>
         {isGreat && (
-          <span className="ml-auto rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-deep">On a roll</span>
+          <span className="rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-deep">On a roll</span>
         )}
       </div>
 
       {/* Ticker */}
-      <div className="flex items-start gap-3 sm:gap-5">
+      <div className="relative flex items-start gap-3 sm:gap-5">
         {streakDays > 0 && (
           <>
             <Segment value={streakDays} label="days" />
@@ -65,7 +67,7 @@ export function StreakHero() {
         <Colon />
         <Segment value={streakMinutes} label="min" />
       </div>
-      <p className="mt-6 text-sm text-white/70">{since}</p>
+      <p className="relative mt-6 text-sm text-white/70">{since}</p>
 
       {/* Best streak */}
       <div className="mt-6 pt-5 border-t border-white/15 flex items-center gap-2 text-white/70 text-sm">

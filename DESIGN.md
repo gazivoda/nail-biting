@@ -82,6 +82,23 @@ journal primitives (`.ed-*`) read the same fonts, colours and radii.
   card mark (`scripts/generate-og-images.mjs`). Avoid anything finger- or
   nail-shaped.
 
+## Signature motifs
+
+What keeps the system from looking like any other wellness template:
+
+- **The bite** (`.bite`, `--bite` sizes it): a scalloped notch taken out of a card's
+  top-right corner, echoing the product and the logo. Used on the hero, privacy and
+  closing cards, the three-step cards and the app's streak card. Keep content out of
+  the corner, and don't use it on anything with elements that overhang its edge.
+- **Detection rings** (`<Rings />`): dashed concentric circles, the zone the alarm
+  watches, faint behind deep cards.
+- **Ticker tape** (`.sg-tape`): a crooked lime band of display words ("Notice it,
+  Interrupt it, Replace it, Repeat") between hero and content. Static under reduced motion.
+- **Stickers** (`.sg-sticker-*`): crooked pills over the corner of a real screenshot.
+- **Marker** (`.sg-mark`): a lime highlighter swash under one key word of a headline.
+- **Ember** (`--c-ember`, `bg-ember`): a warm coral second accent, only for stickers
+  and one block in a set. Never for actions.
+
 ## Do
 
 - Use `.sg-dark` for any deep surface so text, rules and buttons re-point
