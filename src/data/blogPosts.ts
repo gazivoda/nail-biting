@@ -165,7 +165,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li></ul>`,
+        html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-cancer">Can nail biting cause cancer? What the studies show</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -1759,7 +1759,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+      html: `<ul><li><a href="/blog/pinworm-nail-biting">Can you get pinworms from biting your nails?</a></li><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -2875,6 +2875,11 @@ BLOG_POSTS.push({
     {
       heading: `Practical risk reduction`,
       body: `If the immune angle is a meaningful part of your motivation to stop, the most effective interventions are the same ones that reduce infection risk generally: frequent, thorough hand washing (recommended on general hygiene grounds; we found no study measuring what it does to the protected space under the nail specifically), keeping nails filed short rather than bitten short (a shorter free edge means less protected space for bacteria to accumulate), and ultimately reducing biting frequency itself, which is the only intervention that addresses the direct oral-transfer route rather than just reducing the load available to be transferred.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4022,7 +4027,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li></ul>`,
+      html: `<ul><li><a href="/blog/staph-mrsa-nail-biting">Staph, MRSA and nail biting: what the studies found</a></li><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -4475,6 +4480,11 @@ BLOG_POSTS.push({
     {
       heading: `Practical strategies for kitchen work`,
       body: `A few things fit this environment specifically: keeping nails filed very short (which most kitchens require anyway) removes both the biting trigger and reduces subungual surface area, serving double duty for compliance and habit management; using workplace-compliant bitter-tasting polish where permitted, checking with a supervisor if unsure about policy; and treating the frequent, mandated hand washing already required in food service as a built-in opportunity to reduce bacterial load between any biting episodes that do occur, while working on reducing the underlying frequency through standard awareness and competing-response techniques.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -6793,6 +6803,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-gut-health">Nail biting and gut health</a></li><li><a href="/blog/nail-biting-in-children">Nail biting in children</a></li><li><a href="/blog/when-to-see-a-doctor-for-nail-biting">When to see a doctor about nail biting</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7420,6 +7435,50 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-care-routine-for-nail-biters">A nail care routine for nail biters</a></li><li><a href="/blog/nail-biting-hangnails">Hangnails and nail biting</a></li><li><a href="/blog/grow-nails-after-nail-biting">How to grow your nails after nail biting</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting</a></li><li><a href="/blog/nail-biting-regular-nail-polish">Regular nail polish and nail biting</a></li><li><a href="/blog/nail-biting-gel-manicure">Gel manicures and nail biting</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-colds-flu-norovirus',
+  title: `Does Nail Biting Spread Colds, Flu or Norovirus?`,
+  seoTitle: 'Does Nail Biting Spread Colds, Flu or Norovirus?',
+  description: `No study links nail biting to colds, flu or norovirus. A cohort of 219 health care workers found no link with COVID-19, but did for nose picking.`,
+  tag: 'Health',
+  readingMinutes: 4,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-colds-flu-norovirus.png',
+  sections: [
+    {
+      heading: `Does nail biting spread colds, flu or norovirus?`,
+      body: `We could not find a study that shows it. On 20 October 2026 we searched PubMed for nail biting together with norovirus, with influenza and with the common cold, and each search returned no results. A search for nail biting and respiratory infection returned 8 papers, and only one of them measured nail biting against infection. It was about COVID-19 and is described below.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "nail biting norovirus", "nail biting influenza" and "nail biting common cold", 0 results each; "nail biting respiratory infection", 8 results.</li></ul>`,
+    },
+    {
+      heading: `What did the health care worker study find?`,
+      body: `In a Dutch cohort of 404 hospital health care workers whose antibodies to SARS-CoV-2 were measured through 2020, 219 completed a survey about their habits. 34 of them (15.5%) became seropositive. Nail biting was not associated with infection, nor were wearing glasses or having a beard. Nose picking was: 17.3% of nose pickers became seropositive against 5.9% of those who did not pick, an odds ratio of 3.80 with a wide confidence interval of 1.05 to 24.52, adjusted for exposure to COVID-19 (Lavell et al., 2023).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37531335/" target="_blank" rel="noopener noreferrer">Lavell AHA, Tijdink J, Buis DTP, Smulders YM, Bomers MK, Sikkens JJ. Why not to pick your nose: Association between nose picking and SARS-CoV-2 incidence, a cohort study in hospital health care workers. PLoS One. 2023;18(8):e0288352. doi:10.1371/journal.pone.0288352</a></li></ul>`,
+    },
+    {
+      heading: `Does that mean nail biting is safe?`,
+      body: `No. The finding is that no association was observed, in a small group of 219 survey responders with only 34 infections, using a retrospective self-reported survey. A study that small can miss a modest effect. It looked at one virus in health care workers during the first phase of the pandemic, so it says nothing about flu, colds or norovirus, and nothing about people outside hospitals. We read it as a reason not to assume nail biting is a major route, not as proof that it is harmless.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37531335/" target="_blank" rel="noopener noreferrer">Lavell AHA, Tijdink J, Buis DTP, Smulders YM, Bomers MK, Sikkens JJ. Why not to pick your nose: Association between nose picking and SARS-CoV-2 incidence, a cohort study in hospital health care workers. PLoS One. 2023;18(8):e0288352. doi:10.1371/journal.pone.0288352</a></li></ul>`,
+    },
+    {
+      heading: `Why would hand-to-face contact matter at all?`,
+      body: `Because infection can enter through the mouth, nose and eyes. A modelling study estimated the probability of SARS-CoV-2 infection through hand-to-mouth, hand-to-nose and hand-to-eye contact after touching contaminated surfaces, and concluded that infection can occur through hand-to-face contact via a contaminated environment (Furuya, 2020). It is a mathematical model of one virus, not a measurement of nail biting, but it is why researchers look at habits that put fingers near the face.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/33300586/" target="_blank" rel="noopener noreferrer">Furuya H. Prediction of Potential Respiratory Tract Infection from SARS-CoV-2 Through Hand-to-face Contact Transmission. Tokai J Exp Clin Med. 2020;45(4):170-175.</a></li></ul>`,
+    },
+    {
+      heading: `What should you do about it?`,
+      body: `For prevention advice about colds, flu and norovirus, use your national health authority. We did not fetch their guidance for this page, so we give no hygiene instructions here. What we can say is that the evidence on nail biting and these infections is thin, and that the better-documented infection risks from nail biting are in the fingers, such as paronychia, which is covered on our other pages.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-health-risks">The health risks of nail biting</a></li><li><a href="/blog/nail-biting-immune-system">Nail biting and your immune system</a></li><li><a href="/blog/nail-biting-bacteria-parasites">Bacteria and parasites under the nails</a></li><li><a href="/blog/nail-biting-healthcare-workers">Nail biting in health care workers</a></li><li><a href="/blog/nail-biting-chefs-food-service">Nail biting in chefs and food service</a></li><li><a href="/blog/pinworm-nail-biting">Pinworms and nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
