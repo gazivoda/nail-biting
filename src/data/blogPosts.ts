@@ -116,7 +116,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li></ul>`,
+        html: `<ul><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/nail-biting-urge-surfing">Urge surfing for nail biting: what the evidence shows</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -2705,7 +2705,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li></ul>`,
+      html: `<ul><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting: what the evidence covers</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3568,6 +3568,11 @@ BLOG_POSTS.push({
       heading: `When should you switch from an app to therapy?`,
       body: `Start with an app or self-directed method if your nail biting is moderate, isn't tied to significant anxiety or depression, and you haven't yet given a structured approach a genuine multi-week try.\n\nMove to therapy if you have tried a structured self-directed approach consistently for 8–10 weeks without meaningful improvement, if the habit is closely entangled with anxiety, perfectionism or another BFRB that itself needs attention, or if the distress around the habit has become significant enough to affect daily functioning.\n\nThe two aren't mutually exclusive. Many people use an app for ongoing daily awareness and tracking while also working with a therapist on the underlying psychological drivers, getting the immediate practical support of one and the deeper clinical work of the other.`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -4222,6 +4227,11 @@ BLOG_POSTS.push({
     {
       heading: `Is it worth the effort?`,
       body: `For lower-cost items (an inexpensive polish, a basic tracking app), the administrative effort of documentation may not be worth pursuing relative to the modest tax benefit. For higher-cost treatment — a course of therapy, a more significant detection tool subscription, or dental repair work directly attributable to nail biting damage — the FSA/HSA route is more likely worth the paperwork, since the tax-advantaged savings scale with the expense and therapy in particular is a well-established, easily documented qualifying category.`,
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
     },
   ],
 });
@@ -5423,6 +5433,11 @@ BLOG_POSTS.push(
         body: `Therapy for this is largely a structured programme rather than an open conversation, and the between-session work carries much of the effect.\n\nThe single most useful thing you can bring is accurate frequency data — how often, when, in what context, doing what. The persistent obstacle is that self-report systematically undercounts and skews toward the memorable episodes, which are usually the emotional ones rather than the typical ones. We have not found a study that quantifies how large that shortfall is.\n\nWhich is where automated detection has an obvious role independent of any product claim: it produces an objective baseline and an objective trend, so both you and your therapist are working from what actually happened rather than what you remember happening.`,
         html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11971070/" target="_blank" rel="noopener noreferrer">Murase EM, Raygani S, Murase JE. Narrative Review of Internet-Based Self-Help Tools for Body-Focused Repetitive Behaviors: Recommendations for Clinical Practice. Dermatol Ther (Heidelb). 2025;15(4):811–818.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -6134,7 +6149,7 @@ BLOG_POSTS.push(
       {
         heading: `Related reading`,
         body: ``,
-        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li></ul>`,
+        html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/online-therapy-nail-biting">Online therapy for nail biting: what the studies show</a></li></ul>`,
       },
       MEDICAL_DISCLAIMER_SECTION,
     ],
@@ -7029,6 +7044,50 @@ BLOG_POSTS.push({
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-mindfulness">Mindfulness for nail biting</a></li><li><a href="/blog/nail-biting-premonitory-urge">The urge before the bite: what is a premonitory urge?</a></li><li><a href="/blog/acceptance-commitment-therapy-nail-biting">Acceptance and commitment therapy for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/how-long-to-stop-nail-biting">How long does it take to stop nail biting?</a></li><li><a href="/blog/stopping-nail-biting-for-good">Stopping nail biting for good</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'online-therapy-nail-biting',
+  title: `Online Therapy for Nail Biting: What the Studies Show`,
+  seoTitle: 'Online Therapy for Nail Biting: What Studies Show',
+  description: `No trial has tested online therapy for nail biting alone. What video habit reversal and an online self-help trial found for BFRBs, and what to ask a provider.`,
+  tag: 'Treatment',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/online-therapy-nail-biting.png',
+  sections: [
+    {
+      heading: `Does online therapy work for nail biting?`,
+      body: `We could not find a trial of therapist-delivered online therapy for nail biting. On 20 October 2026 we searched PubMed for "online therapy nail biting" and got 4 results, none of which tested it. The closest evidence is for related body-focused repetitive behaviors (BFRBs): video-delivered habit reversal training for hair pulling and skin picking, and an online self-help trial whose participants included nail biters. Both are described below, with their limits.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "online therapy nail biting", run 20 October 2026: 4 results.</li></ul>`,
+    },
+    {
+      heading: `What did video habit reversal training show?`,
+      body: `A 2026 analysis of real-world data looked at therapist-delivered video therapy using habit reversal training (HRT) in 543 people with trichotillomania (hair pulling) and 528 with excoriation (skin picking) disorder, across children, adolescents and adults. Treatment lasted about 14.5 weeks and 7.7 sessions on average. At weeks 14 to 16 the median severity reduction was 33.3% in both conditions, with large effects, and the improvements were maintained through week 52. The authors call the evidence promising. It is a real-world analysis, not a randomized trial, so it cannot prove the therapy caused the change, and most of the authors list NOCD, Inc, a company that delivers this kind of therapy, as their affiliation. It did not include nail biting (Feusner et al., 2026).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41532844/" target="_blank" rel="noopener noreferrer">Feusner JD, Beatty CC, Murphy C, et al. Therapist-Delivered Video Therapy Habit Reversal Training for Body-Focused Repetitive Behaviors: Clinical Outcomes From a Large Real-World Sample of Youth and Adults. J Clin Psychiatry. 2026;87(1). doi:10.4088/JCP.25m15834</a></li></ul>`,
+    },
+    {
+      heading: `Does online self-help work for nail biting?`,
+      body: `One randomized trial suggests it might. In 2022 researchers randomized 268 people with BFRBs, recruited through social media, to a 6-week online self-help technique called habit replacement or to a wait-list. 36.6% of the sample had nail biting. The habit replacement group improved significantly more on the primary scale, more of them reported improvement (52.8% vs 19.6%), and people with nail biting benefited particularly. The authors call it a proof of concept and list limits: no external assessment, no verified diagnoses and no follow-up data (Moritz et al., 2023).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/37466986/" target="_blank" rel="noopener noreferrer">Moritz S, Penney D, Missmann F, Weidinger S, Schmotz S. Self-Help Habit Replacement in Individuals With Body-Focused Repetitive Behaviors: A Proof-of-Concept Randomized Clinical Trial. JAMA Dermatol. 2023;159(9):992-995. doi:10.1001/jamadermatol.2023.2167</a></li></ul>`,
+    },
+    {
+      heading: `Why do so few people with BFRBs get treatment?`,
+      body: `A 2026 survey of 971 people with BFRBs, which included nail biting, found only 13.5% had sought professional help. Barriers included lack of awareness, perceived low severity, shame and distrust of treatment. Self-help was common (72.2%), but only a minority used structured techniques such as habit reversal training or decoupling. Among those who did get professional care, around 40% received no evidence-based advice (Moritz et al., 2026).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/42447654/" target="_blank" rel="noopener noreferrer">Moritz S, Borgmann L, Rojahn KM, Jelinek L, Schmotz S. The silent struggle: Barriers, delays, and missed opportunities in the treatment of body-focused repetitive behaviors. Compr Psychiatry. 2026;149:152733. doi:10.1016/j.comppsych.2026.152733</a></li></ul>`,
+    },
+    {
+      heading: `What should you ask an online provider?`,
+      body: `Ask whether they use habit reversal training, which was the technique most often recommended among people in the 2026 survey who received professional advice, and whether they have treated body-focused repetitive behaviors before. The survey found that around 40% of people who saw a professional were given no evidence-based advice, so the question is not a formality (Moritz et al., 2026). Our pages on finding a therapist and choosing a treatment go through the options.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-finding-a-therapist">Finding a therapist for nail biting</a></li><li><a href="/blog/nail-biting-app-vs-therapy">App vs therapy for nail biting</a></li><li><a href="/blog/how-to-choose-nail-biting-treatment">How to choose a nail biting treatment</a></li><li><a href="/blog/nail-biting-cognitive-behavioral-therapy">CBT for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-fsa-hsa">Nail biting and FSA or HSA funds</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
