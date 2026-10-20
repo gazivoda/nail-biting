@@ -1556,7 +1556,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li></ul>`,
+      html: `<ul><li><a href="/tools/nail-growth-timeline-calculator">Nail growth timeline calculator</a></li><li><a href="/blog/nail-biting-nail-ridges-grooves">Ridges and grooves in bitten nails: habit-tic, Beau's lines or something else?</a></li><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3417,7 +3417,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li></ul>`,
+      html: `<ul><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish for nail biting: does it work?</a></li><li><a href="/blog/best-nail-biting-remedies">Best remedies to stop nail biting, ranked by evidence</a></li><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -5250,6 +5250,11 @@ BLOG_POSTS.push(
         body: ``,
         html: `<p>If your habit is picking at the nails or cuticles rather than biting them, see <a href="/blog/nail-and-cuticle-picking">nail and cuticle picking</a>.</p>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -5786,6 +5791,11 @@ BLOG_POSTS.push(
         body: `The rate you are waiting on was measured in 22 healthy young adults who marked their own nails and re-measured one to three months later: about 3.47 mm a month for fingernails, against 1.62 mm for toenails (Yaemsiri et al., 2010). That is slow enough to be discouraging if you are not expecting it, and no study we could find measures how long a bitten nail takes to grow back, so we are not going to turn the rate into a date for you. The first genuinely noticeable improvement usually comes from the skin rather than the nails — nail folds settle down within a couple of weeks of consistent moisturising and reduced trauma, well before the nails look different.\n\nThere is also an awkward middle stage where nails are long enough to catch on things and snag, which is a high-risk period for relapse. Filing frequency matters more here than at any other point.\n\nAnd the routine does not address the habit itself. It removes physical triggers, which lowers the baseline rate and makes everything else more effective, but the episodes driven by stress, boredom, and deep focus are unaffected by how smooth your nails are. Those need the awareness work.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19744178/" target="_blank" rel="noopener noreferrer">Yaemsiri S, Hou N, Slining MM, He K. Growth rate of human fingernails and toenails in healthy American young adults. J Eur Acad Dermatol Venereol. 2010;24(4):420–423.</a></li></ul>`,
       },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
+      },
       MEDICAL_DISCLAIMER_SECTION,
     ],
   },
@@ -5911,6 +5921,11 @@ BLOG_POSTS.push(
       {
         heading: 'Where it sits among the options',
         body: `Regular polish belongs in the same category as gloves, tape, and bitter formulations: supporting measures that alter the physical situation without touching the habit loop. It is the mildest of them, which makes it the easiest to sustain and the least likely to be sufficient alone.\n\nIf you are already someone who paints their nails, using it deliberately as a trigger-reduction measure is sensible and cheap. If you are considering taking it up specifically to stop biting, it is worth knowing that the effect is real but small, and that it works by removing physical prompts rather than by changing the automatic sequence that produces the majority of episodes.`,
+      },
+      {
+        heading: `Related reading`,
+        body: ``,
+        html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
       },
     ],
   },
@@ -7313,6 +7328,11 @@ BLOG_POSTS.push({
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-trigger-mapping">Trigger mapping for nail biting</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li><li><a href="/blog/nail-biting-habit-stacking">Habit stacking for nail biting</a></li><li><a href="/blog/nail-biting-30-day-plan">A 30 day plan to stop nail biting</a></li><li><a href="/blog/bitter-nail-polish-review">Bitter nail polish: does it work?</a></li><li><a href="/blog/how-to-stop-nail-biting">How to stop biting your nails</a></li></ul>`,
     },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-short-nails-trimming">Does keeping your nails short or filed stop nail biting?</a></li></ul>`,
+    },
     MEDICAL_DISCLAIMER_SECTION,
   ],
 });
@@ -7349,13 +7369,57 @@ BLOG_POSTS.push({
     },
     {
       heading: `What has been tested instead?`,
-      body: `A competing response, a physical action you do when you feel the urge. In a four-week trial of 21 nail biters, a competing response group improved nail length and skin damage more than a bitter-polish group or a monitoring-only control (Silber and Haynes, 1992). It is a small, old trial, and its abstract does not say what the competing response was, so it is not evidence for gum.`,
-      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15-22. doi:10.1016/0005-7967(92)90091-t</a></li></ul>`,
+      body: `A competing response, a physical action you do when you feel the urge. In a four-week trial of 21 nail biters, a competing response group improved nail length and skin damage more than a bitter-polish group or a monitoring-only control (Silber and Haynes, 1992). It is a small, old trial, and a 2022 review describes its competing response as fist clenching, so it is not evidence for gum (Lee and Lipner, 2022).`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15-22. doi:10.1016/0005-7967(92)90091-t</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392. doi:10.3390/ijerph19063392</a></li></ul>`,
     },
     {
       heading: `Where to go next`,
       body: ``,
       html: `<ul><li><a href="/blog/nail-biting-alternatives">Alternatives to nail biting</a></li><li><a href="/blog/nail-biting-fidget-toys">Fidget toys for nail biting</a></li><li><a href="/blog/products-to-stop-nail-biting">Products to stop nail biting</a></li><li><a href="/blog/best-nail-biting-remedies">Nail biting remedies ranked by evidence</a></li><li><a href="/blog/nail-biting-jaw-pain-tmj">Nail biting and jaw pain</a></li><li><a href="/blog/habit-reversal-training-guide">Habit reversal training guide</a></li></ul>`,
+    },
+    MEDICAL_DISCLAIMER_SECTION,
+  ],
+});
+
+BLOG_POSTS.push({
+  slug: 'nail-biting-short-nails-trimming',
+  title: `Does Keeping Your Nails Short or Filed Stop Nail Biting?`,
+  seoTitle: 'Do Short Nails Stop Nail Biting? What Evidence Exists',
+  description: `No trial has tested trimming or filing alone for nail biting. What a 2022 review says about nail care, and what trials of wristbands and bitter polish found.`,
+  tag: 'Treatment',
+  readingMinutes: 5,
+  datePublished: '2026-10-20',
+  dateModified: '2026-10-20',
+  ogImage: '/og/nail-biting-short-nails-trimming.png',
+  sections: [
+    {
+      heading: `Does keeping your nails short stop nail biting?`,
+      body: `We could not find a trial that tested it. On 20 October 2026 we searched PubMed for combinations of nail biting with nail clippers, short nails and trimming, and with manicure and physical barriers, and each search returned no results. So whether short or filed nails reduce biting has not been measured on its own. What exists is a statement in a review, covered next.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed searches run 20 October 2026: "nail clipper nail biting", "nail biting short nails trimming nail care treatment" and "onychophagia management manicure physical barrier", 0 results each.</li></ul>`,
+    },
+    {
+      heading: `What does the review say about nail care?`,
+      body: `A 2022 review of onychophagia describes stimulus control as reducing outside triggers, such as splintered cuticles, and says preventive nail filing and trimming reduce the look of splintered cuticles and so decrease the temptation to bite. It adds that professional manicures can reduce nail biting in people motivated to keep the manicure, and hide damaged nails while they grow out (Lee and Lipner, 2022). Those are the reviewers' statements, citing another source, not results from a trial of trimming.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392. doi:10.3390/ijerph19063392</a></li></ul>`,
+    },
+    {
+      heading: `What about gloves, bandages and wristbands?`,
+      body: `The same review says gloves or bandages make biting physically harder, but some people find them unacceptable because they get in the way of daily activities, reduce fingertip sensation and may add to embarrassment in social settings (Lee and Lipner, 2022). A trial of 80 adult nail biters who had resolved to quit compared a wristband they could not remove, meant as a constant reminder, with a bitter-tasting aversion method. The wristband group had fewer dropouts and did as well overall, while among people who stayed in the trial the aversion method worked better. Follow-up ran to 5 months (Koritzky and Yechiam, 2011).`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392. doi:10.3390/ijerph19063392</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21873368/" target="_blank" rel="noopener noreferrer">Koritzky G, Yechiam E. On the value of nonremovable reminders for behavior modification: an application to nail-biting (onychophagia). Behav Modif. 2011;35(6):511-30. doi:10.1177/0145445511414869</a></li></ul>`,
+    },
+    {
+      heading: `Which method has the best nail biting trial results?`,
+      body: `A competing response did best in the small trial we found. In a four-week trial of 21 nail biters, seven per group, a competing response group improved nail length and skin damage more than a bitter-polish group or a monitoring-only control (Silber and Haynes, 1992). The 2022 review describes that competing response as fist clenching. It is a small, old trial, but it is the nail biting trial most relevant to what you do in the moment of the urge.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15-22. doi:10.1016/0005-7967(92)90091-t</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/35329078/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392. doi:10.3390/ijerph19063392</a></li></ul>`,
+    },
+    {
+      heading: `Should you keep your nails short anyway?`,
+      body: `It is a low-risk thing to try, and the review gives a reason: smooth edges remove a cue. It is not proven to cut biting, and it will not stop biting that is driven by stress or habit rather than ragged edges. If you try it, treat it as one cue change among several and count your own episodes before and after. Our nail care routine page covers the basics.`,
+    },
+    {
+      heading: `Where to go next`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-care-routine-for-nail-biters">A nail care routine for nail biters</a></li><li><a href="/blog/nail-biting-hangnails">Hangnails and nail biting</a></li><li><a href="/blog/grow-nails-after-nail-biting">How to grow your nails after nail biting</a></li><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting</a></li><li><a href="/blog/nail-biting-regular-nail-polish">Regular nail polish and nail biting</a></li><li><a href="/blog/nail-biting-gel-manicure">Gel manicures and nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
