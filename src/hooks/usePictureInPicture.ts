@@ -57,8 +57,8 @@ export function usePictureInPicture(videoRef: RefObject<HTMLVideoElement | null>
     if (hasDocPiP && window.documentPictureInPicture) {
       try {
         const win = await window.documentPictureInPicture.requestWindow({
-          width: 300,
-          height: 200,
+          width: 240,
+          height: 64,
         });
         copyStylesToWindow(win);
         win.addEventListener('pagehide', () => {

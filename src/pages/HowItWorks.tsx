@@ -18,7 +18,7 @@ const STEPS = [
   },
   {
     title: 'Grant camera access',
-    body: 'Allow webcam access. The video feed is processed entirely on your device by MediaPipe running in WebAssembly. The video never leaves your device.',
+    body: 'Allow webcam access. The video feed is processed entirely on your device by MediaPipe running in WebAssembly. No camera data is sent while it runs.',
   },
   {
     title: 'Position your camera',
@@ -45,7 +45,7 @@ const SPECS = [
 const FAQS = [
   {
     q: 'What happens to my camera data?',
-    a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. No frames, no thumbnails, no data of any kind is sent to any server. You can verify this by watching your network traffic while the app runs.',
+    a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
   },
   {
     q: 'Does it work on Mac, Windows, and Linux?',

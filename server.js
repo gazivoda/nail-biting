@@ -1604,7 +1604,7 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const homeDescription = 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. Video never leaves your device. 3-day free trial.';
+    const homeDescription = 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.';
     // The homepage FAQ names onychophagia and habit reversal training in flow,
     // so it earns the MedicalCondition entity — but which therapies it may list
     // is read off the article it actually renders, never assumed.
@@ -1839,7 +1839,7 @@ if (!existsSync(distPath)) {
   // Privacy policy page
   app.get('/privacy', (req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const description = 'Stop Biting processes your webcam feed entirely on-device. No camera data is ever transmitted to any server. Read our full privacy policy.';
+    const description = 'Stop Biting processes your webcam feed on-device. No camera data is sent while it runs. Read our full privacy policy.';
     let injected = injectMeta(indexHtml, {
       title: 'Privacy Policy | Stop Biting',
       description,
@@ -2124,7 +2124,7 @@ if (!existsSync(distPath)) {
       'https://stopbiting.today/pricing', 'Stop Biting pricing questions', PRICING_FAQS);
     injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(pricingFaq)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
-      '<h1>Stop Biting Pricing</h1>' +
+      '<h1>$2.99 a month, or $29 a year.</h1>' +
       '<p class="article-summary">Simple, honest pricing: start with a 3-day free trial — no credit card required — ' +
       'then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing.</p>' +
       // Answer target first: the question verbatim as a heading, then the
@@ -2161,7 +2161,7 @@ if (!existsSync(distPath)) {
     {
       q: 'What happens to my camera data?',
       a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. '
-        + 'No frames, no thumbnails, no data of any kind is sent to any server — you can verify this by watching your network traffic while the app runs.',
+        + 'No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
     },
     {
       q: 'Does it work on Mac, Windows, and Linux?',
@@ -2184,7 +2184,7 @@ if (!existsSync(distPath)) {
       totalTime: 'PT2M',
       step: [
         { '@type': 'HowToStep', position: 1, name: 'Open the app', text: 'Visit stopbiting.today in Chrome, Edge, or Firefox. There is nothing to install.' },
-        { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally and never leaves your device.' },
+        { '@type': 'HowToStep', position: 2, name: 'Grant camera access', text: 'Allow the app to use your webcam. The video is processed locally and no camera data is sent while it runs.' },
         { '@type': 'HowToStep', position: 3, name: 'Position your webcam', text: 'Make sure your face and hands are visible in the camera view. The AI tracks hand-to-mouth movements.' },
         { '@type': 'HowToStep', position: 4, name: 'Work normally', text: 'The app runs in the background. When it detects nail biting, an audible alarm fires immediately.' },
         { '@type': 'HowToStep', position: 5, name: 'Perform your competing response', text: 'When the alarm fires, do the hand exercise the app suggests, such as pressing your palms flat or clenching a fist: something your hands cannot do while biting.' },
