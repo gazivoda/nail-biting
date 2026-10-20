@@ -1474,4 +1474,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-reward-chart-children",
+    title: "Reward Charts for a Child's Nail Biting: What Evidence Exists",
+    description: "No study has tested reward charts for children's nail biting. What a pediatric review and a small trial of habit reversal in children say, and what to avoid.",
+    tag: "Parenting",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
