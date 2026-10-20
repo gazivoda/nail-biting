@@ -2055,7 +2055,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-stimulus-control">Stimulus control for nail biting: changing what sets it off</a></li><li><a href="/blog/stop-nail-biting-challenge">30-day nail biting challenge: a day-by-day guide</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3280,16 +3280,16 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'stop-nail-biting-challenge',
   title: `30-Day Nail Biting Challenge: A Day-by-Day Guide`,
-  description: "A day-by-day guide to the 30-day stop nail biting challenge: specific daily actions, milestones to hit, and how to handle the days you don't stick to it.",
+  description: "The 30-day plan to stop nail biting as one small task a day, with milestones and what to do after a missed day. Our own structure, not a tested protocol.",
   tag: 'Treatment',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-20',
   ogImage: '/og/stop-nail-biting-challenge.png',
   sections: [
     {
       heading: `Why does a day-by-day structure help?`,
-      body: `A week-by-week habit plan tells you the broad phase you're in; a day-by-day challenge tells you exactly what to do today. For a habit as automatic as nail biting, that level of specificity matters — vague weekly goals ("build awareness this week") are easy to let slide on any individual day, while a concrete daily instruction ("log every episode today, nothing else") is harder to skip without noticing.\n\nThis isn't a different method from Habit Reversal Training — it's the same evidence-based components (awareness training, a competing response, and social support) broken into daily units so there's never a day without a clear, small task.`,
+      body: `A week-by-week habit plan tells you the broad phase you're in; a day-by-day challenge tells you exactly what to do today. For a habit as automatic as nail biting, that level of specificity matters — vague weekly goals ("build awareness this week") are easy to let slide on any individual day, while a concrete daily instruction ("log every episode today, nothing else") is harder to skip without noticing.\n\nThis isn't a different method from Habit Reversal Training — it's the same evidence-based components (awareness training, a competing response, and social support) broken into daily units so there's never a day without a clear, small task. The daily split is our own structure, not a protocol that any trial has tested.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li></ul>`,
     },
     {
@@ -3319,6 +3319,11 @@ BLOG_POSTS.push({
         `Notice one thing that worked and one thing that didn't — don't just track frequency, track what's helping.`,
         `If today was a bad day, start tomorrow at the same step — don't restart from day 1.`,
       ],
+    },
+    {
+      heading: `Related reading`,
+      body: ``,
+      html: `<ul><li><a href="/blog/nail-biting-30-day-plan">Stop nail biting in 30 days: a week-by-week plan</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
