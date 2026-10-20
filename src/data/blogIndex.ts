@@ -1483,4 +1483,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-shame-self-compassion",
+    title: "Shame and Nail Biting: Does Self-Criticism Make It Worse?",
+    description: "Shame raised the urge to bite in a small BFRB experiment. What studies say about shame and nail biting, and why no study tests self-compassion for it.",
+    tag: "Psychology",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
