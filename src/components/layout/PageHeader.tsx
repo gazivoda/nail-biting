@@ -10,7 +10,7 @@ export function PageHeader({ title, right }: Props) {
     <header className="flex items-end justify-between gap-6 mb-7">
       <div>
         <h1
-          className="text-[2rem] font-extrabold leading-[1.1] tracking-[-0.025em] text-stone-800 dark:text-stone-100"
+          className="font-display text-[2.25rem] sm:text-[2.75rem] font-extrabold leading-[1] tracking-[-0.04em] text-stone-900 dark:text-stone-100"
         >
           {title}
         </h1>

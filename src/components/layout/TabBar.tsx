@@ -35,16 +35,16 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
   return (
     <>
       {/* ── Desktop sidebar (lg+) ─────────────────────────────────────────── */}
-      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white dark:bg-ink-200 border-r border-stone-200 dark:border-ink-400 flex-col z-50 shadow-[1px_0_0_0_oklch(88%_0.014_120/0.5)]">
+      <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-56 bg-white dark:bg-ink-200 border-r border-stone-200 dark:border-ink-400 flex-col z-50 ">
         {/* Brand */}
         <div className="px-5 py-5 border-b border-stone-200 dark:border-ink-400">
           <div className="flex items-center gap-2.5">
             {/* The site's arch mark, as on every marketing page and the
                 paywall, so the brand doesn't change the moment you sign in. */}
-            <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0 dark:hidden" />
-            <img src="/logo-dark.svg" alt="" className="hidden w-7 h-7 flex-shrink-0 dark:block" />
+            <img src="/logo.svg" alt="" className="w-8 h-8 flex-shrink-0 dark:hidden" />
+            <img src="/logo-dark.svg" alt="" className="hidden w-8 h-8 flex-shrink-0 dark:block" />
             <div>
-              <p className="text-[13.5px] font-semibold tracking-[-0.1px] text-stone-800 dark:text-stone-100">Stop Biting</p>
+              <p className="font-display text-lg font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Stop Biting</p>
             </div>
           </div>
         </div>
@@ -59,13 +59,13 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
                 data-tour={id === 'log' ? 'history-tab' : undefined}
                 onClick={() => onChange(id)}
                 aria-current={isActive ? 'page' : undefined}
-                className={`relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150 text-left overflow-hidden ${
+                className={`relative w-full flex items-center gap-3 px-3 py-3 rounded-full text-sm transition-all duration-150 text-left overflow-hidden ${
                   isActive
-                    ? 'bg-forest-50 dark:bg-forest-800/50 text-forest-700 dark:text-forest-300 font-semibold'
+                    ? 'bg-deep text-white dark:bg-lime-300 dark:text-deep font-semibold'
                     : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100/70 dark:hover:bg-ink-50/60'
                 }`}
               >
-                <Icon size={15} />
+                <Icon size={16} />
                 {label}
               </button>
             );
@@ -74,14 +74,14 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
 
         {/* Trial upgrade prompt */}
         {accessStatus === 'trial_active' && (
-          <div className="mx-3 mb-3 border border-forest-200 dark:border-forest-800 bg-forest-50 dark:bg-forest-800/50 rounded-xl p-3">
-            <p className="text-xs text-forest-700 dark:text-forest-400 font-medium mb-0.5">Free trial</p>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mb-2">
+          <div className="mx-3 mb-3 bg-deep rounded-3xl p-4">
+            <p className="text-sm text-white font-display font-bold mb-0.5">Free trial</p>
+            <p className="text-xs text-white/70 mb-3">
               {trialLeftText ?? 'Ends today'}
             </p>
             <button
               onClick={onUpgrade}
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-forest-600 hover:bg-forest-500 text-cream-100 text-xs font-medium transition-all duration-150 hover:shadow-[0_2px_8px_oklch(38%_0.12_148/0.4)]"
+              className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-lime-300 hover:bg-lime-200 text-deep text-xs font-bold transition-colors duration-150"
             >
               <Zap size={11} />
               Upgrade
@@ -155,7 +155,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
               aria-current={isActive ? 'page' : undefined}
               className={`flex-1 flex flex-col items-center gap-1 py-3 transition-colors ${
                 isActive
-                  ? 'text-forest-600 dark:text-forest-400'
+                  ? 'text-deep dark:text-lime-300 font-bold'
                   : 'text-stone-500 dark:text-stone-400 active:text-stone-600 dark:active:text-stone-300'
               }`}
             >

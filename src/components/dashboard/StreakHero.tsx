@@ -1,15 +1,16 @@
 import { Trophy } from 'lucide-react';
 import { useStreak } from '../../hooks/useStreak';
 import { useAppStore } from '../../store/useAppStore';
+import { Rings } from '../site/Rings';
 import { formatDate, formatTime } from '../../utils/time';
 
 function Segment({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col items-center min-w-[52px] sm:min-w-[64px]">
-      <span className="font-mono text-[44px] sm:text-[56px] font-medium leading-none tracking-[-2px] tabular-nums text-forest-700 dark:text-forest-300">
+    <div className="flex flex-col items-start min-w-[64px] sm:min-w-[96px]">
+      <span className="font-display text-[64px] sm:text-[92px] font-extrabold leading-[0.85] tracking-[-0.05em] tabular-nums text-white">
         {String(value).padStart(2, '0')}
       </span>
-      <span className="text-xs font-medium text-stone-500 dark:text-stone-400 mt-1.5">
+      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-lime-300 mt-3">
         {label}
       </span>
     </div>
@@ -18,7 +19,7 @@ function Segment({ value, label }: { value: number; label: string }) {
 
 function Colon() {
   return (
-    <span className="font-mono text-[32px] sm:text-[40px] font-light text-stone-300 dark:text-stone-600 leading-none self-start mt-1 select-none">
+    <span className="font-display text-[48px] sm:text-[68px] font-bold text-white/25 leading-[0.85] select-none">
       :
     </span>
   );
@@ -37,25 +38,25 @@ export function StreakHero() {
     ? `Since your last bite, ${midSentence(formatDate(lastBiteTime))} at ${formatTime(lastBiteTime)}.`
     : "Since you started. A bite resets it; an alarm doesn't.";
 
-  const ringClass = isGreat
-    ? 'ring-2 ring-forest-400/40 dark:ring-forest-500/30 shadow-[0_0_24px_oklch(58%_0.130_148/0.15)]'
-    : '';
-
   return (
     <div
-      className={`bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-[18px] p-6 sm:p-7 shadow-card dark:shadow-card-dark transition-shadow duration-700 ${ringClass}`}
+      className="bite relative overflow-hidden bg-deep text-white rounded-3xl p-6 sm:p-8 [--bite:44px]"
       data-tour="streak-card"
     >
+      <Rings className="-bottom-52 -right-40 h-[28rem] w-[28rem]" />
       {/* Overline */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="w-2 h-2 rounded-full bg-forest-500 animate-pulse" />
-        <p className="text-sm font-semibold text-stone-700 dark:text-stone-200">
+      <div className="flex items-center gap-2 mb-6">
+        <span className="w-2 h-2 rounded-full bg-lime-300 animate-pulse" />
+        <p className="text-sm font-semibold text-white/90">
           Current streak
         </p>
+        {isGreat && (
+          <span className="rounded-full bg-lime-300 px-3 py-1 text-xs font-bold text-deep">On a roll</span>
+        )}
       </div>
 
-      {/* Mono ticker */}
-      <div className="flex items-start gap-3 sm:gap-4">
+      {/* Ticker */}
+      <div className="relative flex items-start gap-3 sm:gap-5">
         {streakDays > 0 && (
           <>
             <Segment value={streakDays} label="days" />
@@ -66,12 +67,12 @@ export function StreakHero() {
         <Colon />
         <Segment value={streakMinutes} label="min" />
       </div>
-      <p className="mt-3 text-sm text-stone-500 dark:text-stone-400">{since}</p>
+      <p className="relative mt-6 text-sm text-white/70">{since}</p>
 
       {/* Best streak */}
-      <div className="mt-6 pt-5 border-t border-stone-100 dark:border-ink-400 flex items-center gap-2 text-stone-500 dark:text-stone-400 text-sm">
-        <Trophy size={14} className="text-amber-400" />
-        <span>Best: <span className="font-semibold text-stone-800 dark:text-stone-100">{formattedBest || 'none yet'}</span></span>
+      <div className="mt-6 pt-5 border-t border-white/15 flex items-center gap-2 text-white/70 text-sm">
+        <Trophy size={14} className="text-lime-300" />
+        <span>Best: <span className="font-semibold text-white">{formattedBest || 'none yet'}</span></span>
       </div>
     </div>
   );

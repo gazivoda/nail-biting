@@ -5,6 +5,7 @@ import { trialLeft, trialEndedMessage } from '../../utils/trial';
 import { useAppStore } from '../../store/useAppStore';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
+import { Rings } from '../site/Rings';
 
 interface Props {
   onBack?: () => void;
@@ -117,7 +118,7 @@ export function PaywallPage({ onBack }: Props) {
           <p className="text-stone-500 dark:text-stone-400 mb-6">Your subscription can take a few seconds to activate.</p>
           <button
             onClick={() => refreshProfile()}
-            className="inline-flex min-h-11 items-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-6 py-2.5 text-sm transition-colors duration-150"
+            className="inline-flex min-h-11 items-center gap-2 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-semibold rounded-full px-6 py-2.5 text-sm transition-colors duration-150"
           >
             Open the app
           </button>
@@ -135,11 +136,11 @@ export function PaywallPage({ onBack }: Props) {
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col">
       {/* Header */}
-      <header className="border-b border-stone-200 dark:border-ink-400 bg-white dark:bg-ink-200 px-6 py-4 flex items-center justify-between shadow-card">
+      <header className="px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img src="/logo.svg" alt="" className="w-7 h-7 flex-shrink-0 dark:hidden" />
           <img src="/logo-dark.svg" alt="" className="hidden w-7 h-7 flex-shrink-0 dark:block" />
-          <span className="text-sm font-semibold tracking-tight text-stone-800 dark:text-stone-100">Stop Biting</span>
+          <span className="font-display text-lg font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Stop Biting</span>
         </div>
         <div className="flex items-center gap-3">
           {onBack && (
@@ -157,23 +158,24 @@ export function PaywallPage({ onBack }: Props) {
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-12">
         {/* Trial expired notice */}
         {isTrialExpired && (
-          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-xl px-4 py-2.5 text-sm mb-8">
+          <div className="flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-700 dark:text-amber-400 rounded-full px-5 py-2.5 text-sm mb-6">
             <AlertTriangle size={14} />
             <span>{trialEndedMessage(loggedAlerts)}</span>
           </div>
         )}
 
-        <div className="mb-10 flex flex-col items-center">
-        <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-2 text-center tracking-tight">
-          {onBack ? 'Choose a plan' : 'Keep the alarm running'}
+        <div className="bite relative mb-10 flex w-full max-w-2xl flex-col items-start overflow-hidden rounded-[2.5rem] bg-deep p-8 text-white sm:p-12">
+        <Rings className="-bottom-60 -right-52 h-[32rem] w-[32rem]" />
+        <h1 className="relative font-display text-[2.75rem] sm:text-6xl font-extrabold leading-[0.95] tracking-[-0.045em] mb-4">
+          {onBack ? <>Choose a <span className="text-lime-300">plan</span></> : <>Keep the alarm <span className="text-lime-300">running</span></>}
         </h1>
-        <p className="text-stone-500 dark:text-stone-400 text-center max-w-md">
+        <p className="relative text-white/75 max-w-md text-lg leading-snug">
           $2.99 a month, or $29 a year. Detection runs on your computer, and no video ever leaves it.
         </p>
         {/* Mid-trial, the free days left are the first thing to know, not a
             footnote under the fold on a phone. */}
         {onBack && trialLeftText && (
-          <p className="mt-3 text-sm font-medium text-forest-700 dark:text-forest-300">
+          <p className="relative mt-4 inline-flex rounded-full bg-lime-300 px-3 py-1 text-sm font-bold text-deep">
             {trialLeftText} in your free trial.
           </p>
         )}
@@ -210,25 +212,25 @@ export function PaywallPage({ onBack }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
           {/* Yearly first at every width, as on /pricing. */}
-          <div className="border-2 border-forest-500 dark:border-forest-600 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card-md dark:shadow-card-md-dark relative">
+          <div className="rounded-[2rem] p-7 flex flex-col bg-deep text-white relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="bg-forest-600 text-cream-100 text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+              <span className="bg-lime-300 text-deep text-xs font-bold px-3 py-1 rounded-full">
                 Best value: save 19%
               </span>
             </div>
             <div className="mb-4">
-              <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Yearly</p>
-              <p className="text-xs text-stone-500 dark:text-stone-400">Billed once a year</p>
+              <p className="font-display text-lg font-bold text-white">Yearly</p>
+              <p className="text-xs text-white/65">Billed once a year</p>
             </div>
             <div className="mb-1">
-              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$29.00</span>
-              <span className="text-stone-500 dark:text-stone-400 text-sm"> / year</span>
+              <span className="font-display text-5xl font-extrabold tracking-[-0.04em]">$29.00</span>
+              <span className="text-white/65 text-sm"> / year</span>
             </div>
-            <p className="text-forest-600 dark:text-forest-400 text-xs mb-4 font-medium">About $2.42 a month</p>
+            <p className="text-lime-300 text-xs mb-4 font-semibold">About $2.42 a month</p>
             <ul className="space-y-2 mb-6 flex-1">
               {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
-                <li key={f} className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                  <Check size={13} className="text-forest-500 dark:text-forest-400 shrink-0" />{f}
+                <li key={f} className="flex items-center gap-2 text-sm text-white/85">
+                  <Check size={13} className="text-lime-300 shrink-0" />{f}
                 </li>
               ))}
             </ul>
@@ -236,20 +238,20 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_YEARLY)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-12 items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-deep font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Subscribe yearly
               </button>
             )}
           </div>
           {/* Monthly */}
-          <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-6 flex flex-col bg-white dark:bg-ink-50 shadow-card dark:shadow-card-dark">
+          <div className="border border-stone-200 dark:border-ink-400 rounded-[2rem] p-7 flex flex-col bg-white dark:bg-ink-50">
             <div className="mb-4">
               <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
               <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
             </div>
             <div className="mb-4">
-              <span className="text-3xl font-bold text-stone-800 dark:text-stone-100 tracking-tight">$2.99</span>
+              <span className="font-display text-5xl font-extrabold tracking-[-0.04em] text-stone-900 dark:text-stone-100">$2.99</span>
               <span className="text-stone-500 dark:text-stone-400 text-sm"> / month</span>
             </div>
             <ul className="space-y-2 mb-6 flex-1">
@@ -263,7 +265,7 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_MONTHLY)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 dark:bg-stone-200 dark:hover:bg-stone-100 text-cream-100 dark:text-stone-900 font-semibold rounded-xl px-5 py-2.5 text-sm transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex min-h-11 items-center justify-center gap-2 border-2 border-stone-900 dark:border-stone-200 hover:bg-stone-900 hover:text-white dark:hover:bg-stone-200 dark:hover:text-stone-900 text-stone-900 dark:text-stone-100 font-display font-bold rounded-full px-6 py-3 text-base min-h-12 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Subscribe monthly
               </button>

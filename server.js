@@ -1650,7 +1650,7 @@ if (!existsSync(distPath)) {
         url: 'https://stopbiting.today/shots/app-watch-1280.webp',
         width: 2560,
         height: 1584,
-        caption: 'The Stop Biting Watch screen after a catch, shown with example data.',
+        caption: 'The Stop Biting Watch screen, shown with example data.',
       },
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/') ? { dateModified: pageLastmod('/') } : {}),
@@ -2122,7 +2122,7 @@ if (!existsSync(distPath)) {
         url: 'https://stopbiting.today/shots/app-watch-1280.webp',
         width: 2560,
         height: 1584,
-        caption: 'The Stop Biting Watch screen after a catch, shown with example data.',
+        caption: 'The Stop Biting Watch screen, shown with example data.',
       },
       // Same date sitemap.xml and the Last-Modified header carry.
       ...(pageLastmod('/pricing') ? { dateModified: pageLastmod('/pricing') } : {}),
@@ -2247,8 +2247,8 @@ if (!existsSync(distPath)) {
       // The same real capture, alt text and caption as the React page and the landing.
       '<figure><img src="/shots/app-watch-1280.webp" srcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
       'sizes="(min-width: 1024px) 48rem, 100vw" width="1280" height="792" loading="lazy" decoding="async" ' +
-      'alt="Stop Biting Watch screen after a catch, with a streak counter and a prompt asking what set it off.">' +
-      '<figcaption>The app right after a catch, shown with example data.</figcaption></figure>' +
+      'alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running.">' +
+      '<figcaption>The Watch screen, shown with example data.</figcaption></figure>' +
       '<section><h2>Why awareness is the bottleneck</h2>' +
       '<p>Most biting episodes happen without you noticing: the habit is automatic, ' +
       'and it runs below the threshold of conscious awareness. ' +
@@ -2702,33 +2702,37 @@ if (!existsSync(distPath)) {
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
     @font-face {
-      font-family: Overpass; font-style: normal; font-weight: 100 900; font-display: swap;
-      src: url(/fonts/overpass-latin.woff2) format('woff2');
+      font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 200 800; font-display: swap;
+      src: url(/fonts/bricolage-latin.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: Geist; font-style: normal; font-weight: 100 900; font-display: swap;
+      src: url(/fonts/geist-latin.woff2) format('woff2');
     }
     :root {
-      --ground: oklch(98.5% 0.004 85); --ink: oklch(19% 0.014 255);
-      --ink-2: oklch(40% 0.014 255); --rule: oklch(89% 0.006 255);
-      --accent: oklch(46% 0.13 148); --accent-press: oklch(39% 0.12 148);
+      --ground: oklch(97.6% 0.008 105); --ink: oklch(19% 0.03 160);
+      --ink-2: oklch(42% 0.025 160); --rule: oklch(90% 0.01 130);
+      --accent: oklch(25% 0.05 162); --accent-press: oklch(46% 0.13 148);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0; min-height: 100vh; background: var(--ground); color: var(--ink);
-      font-family: Overpass, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
     }
     header { border-bottom: 1px solid var(--rule); }
     .bar, main { max-width: 64rem; margin: 0 auto; padding: 0 20px; }
     .bar { display: flex; align-items: center; gap: 10px; min-height: 64px; }
     .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink);
-      text-decoration: none; font-weight: 800; font-size: 1.0625rem; }
+      text-decoration: none; font-family: 'Bricolage Grotesque', Geist, sans-serif; font-weight: 800; font-size: 1.125rem; letter-spacing: -0.02em; }
     main { padding-top: clamp(4rem, 12vh, 8rem); padding-bottom: 6rem; }
-    h1 { font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem); font-weight: 850;
-      line-height: 1.02; letter-spacing: -0.03em; margin: 0; max-width: 16ch; }
+    h1 { font-family: 'Bricolage Grotesque', Geist, sans-serif; font-size: clamp(2.4rem, 1.4rem + 4vw, 4.5rem); font-weight: 800;
+      line-height: 0.96; letter-spacing: -0.045em; margin: 0; max-width: 16ch; }
     p { font-size: 1.0625rem; line-height: 1.6; color: var(--ink-2); margin: 1.25rem 0 0; max-width: 44ch; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2rem; }
     .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px;
-      border-radius: 0.375rem; font-weight: 750; font-size: 1rem; text-decoration: none; }
-    .btn-solid { background: var(--accent); color: #fff; box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 4px #fff; }
+      border-radius: 999px; font-family: 'Bricolage Grotesque', Geist, sans-serif; font-weight: 700; font-size: 1rem; text-decoration: none; }
+    .btn-solid { background: var(--accent); color: #fff; }
     .btn-solid:hover { background: var(--accent-press); }
     .btn-line { color: var(--ink); border: 2px solid var(--ink); }
     .btn-line:hover { background: #fff; }

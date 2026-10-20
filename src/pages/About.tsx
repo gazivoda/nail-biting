@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 
 export function About() {
@@ -18,6 +19,7 @@ export function About() {
 
       <main id="main" className="sg-container max-w-3xl pt-28 pb-20 lg:pt-32">
 
+        <PageHero className="mb-14">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
@@ -25,14 +27,15 @@ export function About() {
           <span className="text-[color:var(--sg-ink)]">About</span>
         </nav>
 
-        <header className="mb-14">
-          <h1 className="sg-h2">
-            About Stop Biting
+        <header>
+          <h1 className="sg-h1-md">
+            About Stop <span className="sg-hl">Biting</span>
           </h1>
           <p className="sg-lede sg-measure mt-5">
             Built by a nail biter, for nail biters. Here's why this app exists.
           </p>
         </header>
+        </PageHero>
 
         {/* Founder story */}
         <section className="mb-12 border-t border-[color:var(--sg-rule)] pt-8">

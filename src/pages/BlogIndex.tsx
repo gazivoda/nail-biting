@@ -4,6 +4,7 @@ import { BLOG_INDEX } from '../data/blogIndex';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TAG_PILL } from '../components/blog/tagPill';
 
 // Topics by size, biggest first, with their counts: "Humor (1)" beside
@@ -33,7 +34,8 @@ export function BlogIndex() {
           label sits above it. The h1 and lede are mirrored in server.js. */}
       <main id="main">
       <header className="sg-container pt-28 pb-8 lg:pt-32">
-        <h1 className="sg-h2">Nail biting resources</h1>
+        <PageHero>
+        <h1 className="sg-h1-md">Nail biting <span className="sg-hl">resources</span></h1>
         <p className="sg-lede sg-measure mt-4">
           Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.
         </p>
@@ -43,6 +45,7 @@ export function BlogIndex() {
         <p className="sg-small mt-5">
           New here? Start with <a href={START_HERE.href} className="sg-link">{START_HERE.title}</a>.
         </p>
+        </PageHero>
 
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
           {ALL_TAGS.map(tag => (

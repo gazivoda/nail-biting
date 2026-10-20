@@ -8,7 +8,7 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
   return (
     <nav
       aria-label="Site navigation"
-      className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--sg-rule)] bg-[color:var(--sg-ground)]/90 backdrop-blur-md"
+      className="fixed inset-x-0 top-0 z-50 bg-[color:var(--sg-ground)]/85 backdrop-blur-md"
     >
       {/* First focusable thing on every marketing page: past the nav, to the
           page's <main id="main">. Invisible until focused. */}
@@ -20,11 +20,11 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
       </a>
       <div className="sg-container flex h-16 items-center justify-between gap-4">
         <a href="/" className="flex min-h-11 items-center gap-2.5">
-          <img src="/logo.svg" alt="" className="h-7 w-7 flex-shrink-0" />
+          <img src="/logo.svg" alt="" className="h-8 w-8 flex-shrink-0" />
           {/* Below 360px the name and the trial button do not both fit on one
               line; the mark carries the brand there and the name stays in the
               link for screen readers. */}
-          <span className="sr-only whitespace-nowrap text-lg font-extrabold tracking-tight min-[360px]:not-sr-only">Stop Biting</span>
+          <span className="sr-only whitespace-nowrap font-display text-xl font-extrabold tracking-[-0.03em] min-[360px]:not-sr-only">Stop Biting</span>
         </a>
         <div className="hidden items-center gap-7 md:flex">
           {([['how', 'How to start'], ['science', 'Science'], ['privacy', 'Privacy'], ['pricing', 'Pricing'], ['faq', 'FAQ']] as const).map(([href, label]) => (

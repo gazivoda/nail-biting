@@ -29,7 +29,7 @@ function FeatureList({ features }: { features: string[] }) {
     <ul className="space-y-2.5">
       {features.map(f => (
         <li key={f} className="sg-small flex items-center gap-2.5 text-[color:var(--sg-ink)]">
-          <Check size={17} aria-hidden="true" className="flex-shrink-0 text-[color:var(--sg-green)]" />
+          <Check size={17} aria-hidden="true" className="flex-shrink-0 text-[color:var(--sg-accent)]" />
           {f}
         </li>
       ))}
@@ -59,7 +59,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       {/* Left-aligned on the page's edge like every other section: centred
           and narrower, it read as a template block pasted in. */}
       <div className="max-w-4xl">
-        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</Heading>
+        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or <span className="sg-mark">$29 a year.</span></Heading>
         <p className="sg-lede mt-4 max-w-2xl">
           Three days free first, and no card to start. You pick a plan when the trial ends.
         </p>
@@ -67,8 +67,8 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
 
       <div className="mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
-        <div className="sg-plate relative flex flex-col p-7 shadow-[inset_0_0_0_2px_var(--sg-accent)] sm:p-8">
-          <p className="absolute -top-3.5 left-7 rounded-[0.25rem] bg-[color:var(--sg-accent)] px-2.5 py-1 text-[0.8125rem] font-bold text-white">
+        <div className="sg-plate sg-dark relative flex flex-col !border-transparent !bg-[color:var(--sg-deep)] p-7 sm:p-9">
+          <p className="absolute -top-3.5 left-7 rounded-full bg-[color:var(--sg-signal)] px-3 py-1 text-[0.8125rem] font-bold text-[color:var(--sg-deep)]">
             Best value: save 19%
           </p>
           <p className="sg-h3">Yearly</p>

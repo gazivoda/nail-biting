@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { useTheme } from '../hooks/useTheme';
 
 interface Section {
@@ -33,11 +34,13 @@ export function LegalPage({ title, lastUpdated, sections, standfirst, children }
       <div className="sg-page"><SiteHeader /></div>
 
       <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-20">
-        <h1 className="sg-h2">{title}</h1>
+        <PageHero className="-mx-6 mb-12 sm:mx-0">
+        <h1 className="sg-h1-md">{title}</h1>
         <p className="sg-note mt-3">Last updated: {lastUpdated}</p>
         {standfirst && (
           <p className="article-summary sg-lede mt-5">{standfirst}</p>
         )}
+        </PageHero>
 
         <div className="mt-10 space-y-9">
           {sections.map(({ heading, content }) => (

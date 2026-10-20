@@ -7,6 +7,7 @@ import { ContactForm } from '../components/ContactForm';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { Rings } from '../components/site/Rings';
 import { PromoVideo } from '../components/PromoVideo';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
@@ -181,11 +182,13 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
       <main id="main">
         {/* ── HERO ──────────────────────────────────────────────────────── */}
-        <section aria-label="Hero" className="pt-28 pb-16 lg:pt-36 lg:pb-24">
-          <div className="sg-container grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-6 lg:pt-8">
+        <section aria-label="Hero" className="pt-20 pb-16 lg:pt-24 lg:pb-24">
+          <div className="sg-container">
+          <div className="sg-hero sg-dark bite relative grid items-start gap-12 overflow-hidden p-6 pb-10 sm:p-10 lg:grid-cols-12 lg:gap-10 lg:p-14">
+            <Rings className="-bottom-72 -left-72 h-[44rem] w-[44rem]" />
+            <div className="relative lg:col-span-6 lg:pt-4">
               {authError && (
-                <div role="alert" className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-[color:var(--sg-rule)] bg-white px-4 py-3">
+                <div role="alert" className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-[color:var(--sg-rule)] bg-white/10 px-4 py-3">
                   <p className="sg-small flex-1 text-[color:var(--sg-ink)]">{authErrorMessage(authError)}</p>
                   <a href="/api/auth/google" className="sg-link inline-flex min-h-11 items-center">Try again</a>
                   <button type="button" onClick={onDismissAuthError} className="sg-small inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">
@@ -193,7 +196,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                   </button>
                 </div>
               )}
-              <h1 className="sg-h1">Stop biting your nails.</h1>
+              <h1 className="sg-h1">Stop <span className="sg-hl">biting</span> your nails.</h1>
               <p className="sg-lede sg-measure mt-6">
                 Your webcam watches your hands while you work. The moment a fingertip reaches your lips,
                 an alarm sounds, so you catch the bites you would otherwise never notice.
@@ -214,6 +217,52 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 Detection runs on your device and sends no camera data while it runs. Sign in with Google
                 (it opens in a new tab). Cancel anytime.
               </p>
+            </div>
+
+            {/* The real app, not an illustration: until the visitor asks, the
+                Watch screen (captured with example data, see public/shots);
+                then the real detector runs in its place. The heading and
+                paragraph render on page view: they are the crawler-visible
+                copy mirrored in server.js and must not hide behind the click. */}
+            <div className="relative flex flex-col items-start lg:col-span-6">
+              {demoStarted ? (
+                <div className="w-full">
+                  <Suspense
+                    fallback={
+                      <div className="flex aspect-video w-full items-center justify-center rounded-3xl bg-[color:var(--sg-deep-2)] px-6">
+                        <p role="status" className="flex items-center gap-2 text-center text-[0.9375rem] text-white">
+                          <Loader2 size={15} className="flex-shrink-0 animate-spin" aria-hidden="true" />
+                          {DEMO_LOADING_LABEL}
+                        </p>
+                      </div>
+                    }
+                  >
+                    <HeroDemo autoStart />
+                  </Suspense>
+                </div>
+              ) : (
+                // The click gate. `HeroDemo` is behind `lazy()` and is only
+                // ever referenced above, so a page view fetches no chunk, no
+                // WebAssembly and no MediaPipe model.
+                <figure className="relative w-full">
+                  <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">3 days free, no card</span>
+                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 sm:-right-4">0 bytes of video sent</span>
+                  <img
+                    src="/shots/app-watch-1280.webp"
+                    srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
+                    sizes="(min-width: 1024px) 36rem, 100vw"
+                    width={1280}
+                    height={792}
+                    fetchPriority="high"
+                    decoding="async"
+                    alt="Stop Biting Watch screen with a large streak counter, today's alarms and bites, and detection running."
+                    className="w-full rounded-3xl"
+                  />
+                  <figcaption className="sg-note mt-3">
+                    The Watch screen, shown with example data.
+                  </figcaption>
+                </figure>
+              )}
 
               {/* The demo trigger sits under the main CTA as the second path,
                   not in the right column, where it stacked under the
@@ -223,7 +272,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               <section
                 id="live-demo"
                 aria-labelledby="live-demo-heading"
-                className="mt-10 flex flex-col items-start border-t border-[color:var(--sg-rule)] pt-8"
+                className="mt-8 flex w-full flex-col items-start border-t border-[color:var(--sg-rule)] pt-8"
               >
                 <h2 id="live-demo-heading" className="sg-h3">Try the detector right now</h2>
                 <p className="sg-note mt-2 max-w-md">
@@ -250,51 +299,49 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
             </div>
 
-            {/* The real app, not an illustration: until the visitor asks, the
-                Watch screen (captured with example data, see public/shots);
-                then the real detector runs in its place. The heading and
-                paragraph render on page view: they are the crawler-visible
-                copy mirrored in server.js and must not hide behind the click. */}
-            <div className="flex flex-col items-start lg:col-span-6 lg:sticky lg:top-28">
-              {demoStarted ? (
-                <div className="w-full">
-                  <Suspense
-                    fallback={
-                      <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-[color:var(--sg-ink)] px-6">
-                        <p role="status" className="flex items-center gap-2 text-center text-[0.9375rem] text-white">
-                          <Loader2 size={15} className="flex-shrink-0 animate-spin" aria-hidden="true" />
-                          {DEMO_LOADING_LABEL}
-                        </p>
-                      </div>
-                    }
-                  >
-                    <HeroDemo autoStart />
-                  </Suspense>
+          </div>
+          </div>
+        </section>
+
+        {/* ── TAPE ──────────────────────────────────────────────────────── */}
+        <div aria-hidden="true" className="relative z-10 -my-2 overflow-hidden py-6">
+          <div className="sg-tape">
+            <div className="sg-tape__track">
+              {[0, 1].map(n => (
+                <div key={n} className="sg-tape__item">
+                  {['Notice it', 'Interrupt it', 'Replace it', 'Repeat'].map(w => (
+                    <span key={w} className="inline-flex items-center gap-8">
+                      {w}
+                      <svg width="34" height="34" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="30" fill="currentColor" /><circle cx="48" cy="48" r="16" fill="var(--c-signal)" /><circle cx="54" cy="42" r="5" fill="currentColor" /></svg>
+                    </span>
+                  ))}
                 </div>
-              ) : (
-                // The click gate. `HeroDemo` is behind `lazy()` and is only
-                // ever referenced above, so a page view fetches no chunk, no
-                // WebAssembly and no MediaPipe model.
-                <figure className="w-full">
-                  <img
-                    src="/shots/app-watch-1280.webp"
-                    srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
-                    sizes="(min-width: 1024px) 36rem, 100vw"
-                    width={1280}
-                    height={792}
-                    fetchPriority="high"
-                    decoding="async"
-                    alt="Stop Biting Watch screen after a catch, with a streak counter and a prompt asking what set it off."
-                    className="w-full rounded-lg border border-[color:var(--sg-rule)]"
-                  />
-                  <figcaption className="sg-note mt-2">
-                    The app right after a catch, shown with example data.
-                  </figcaption>
-                </figure>
-              )}
-
+              ))}
             </div>
+          </div>
+        </div>
 
+        {/* ── THE LOOP ──────────────────────────────────────────────────── */}
+        {/* Habit reversal training in three moves, the same three the science
+            section below describes: notice, interrupt, replace. */}
+        <section aria-labelledby="loop-heading" className="py-16 lg:py-24">
+          <div className="sg-container">
+            <h2 id="loop-heading" className="sg-h2 max-w-[18ch]">A habit loop, <span className="sg-mark">broken</span> in three moves</h2>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {[
+                { n: '01', t: 'Notice', d: 'The alarm catches the bite you would never have noticed. Most of them happen on autopilot.', cls: 'bg-lime-300 text-deep', num: 'text-deep/90' },
+                { n: '02', t: 'Interrupt', d: 'It sounds the moment a fingertip reaches your lips, while the habit is still automatic.', cls: 'bg-deep text-white', num: 'text-lime-300' },
+                { n: '03', t: 'Replace', d: 'Press your palms flat or clench a fist. That part is yours, and it is what makes the habit fade.', cls: 'bg-ember text-deep', num: 'text-deep/90' },
+              ].map(({ n, t, d, cls, num }) => (
+                <div key={n} className={`bite flex min-h-[22rem] flex-col justify-between rounded-[2rem] p-7 sm:p-8 [--bite:44px] ${cls}`}>
+                  <span className={`font-display text-[7.5rem] font-extrabold leading-[0.8] tracking-[-0.06em] ${num}`}>{n}</span>
+                  <div>
+                    <h3 className="font-display text-3xl font-extrabold tracking-[-0.03em]">{t}</h3>
+                    <p className="mt-3 text-lg leading-snug opacity-85">{d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -308,13 +355,14 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               of the page. */}
           <div className="sg-container grid items-start gap-10 lg:grid-cols-12">
             <div className="lg:col-span-6 lg:sticky lg:top-28 lg:pt-10">
-              <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in History</h2>
+              <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in <span className="sg-mark">History</span></h2>
               <p className="sg-body sg-measure mt-5">
                 Each alarm and each bite you log lands here with the time. Tag what set it off
                 (stress, boredom, deep focus) and after a week you can see which one is yours.
               </p>
             </div>
-            <figure className="mx-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:col-span-4 lg:col-start-8">
+            <figure className="relative mx-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:col-span-4 lg:col-start-8">
+              <span className="sg-sticker sg-sticker-ember -left-6 top-28 sm:-left-14">Tag what set it off</span>
               <img
                 src="/shots/app-history-390.webp"
                 width={390}
@@ -322,9 +370,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 loading="lazy"
                 decoding="async"
                 alt="The History screen on a phone: each day's alarms and bites with their times, an alarm waiting to be reviewed, and bites tagged with what set them off, such as Deep focus."
-                className="w-full rounded-lg border border-[color:var(--sg-rule)]"
+                className="w-full rounded-[2rem] border border-[color:var(--sg-rule)]"
               />
-              <figcaption className="sg-note mt-2">Shown with example data.</figcaption>
+              <figcaption className="sg-note mt-3">Shown with example data.</figcaption>
             </figure>
           </div>
         </section>
@@ -351,10 +399,11 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         {/* Said, not diagrammed: setting it up is one sentence long, and a
             three-column numbered grid made it look like a SaaS onboarding
             flow. The green "do this" sign appears here once. */}
-        <section id="how" aria-labelledby="how-heading" className="border-y border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-14 lg:py-16">
-          <div className="sg-container grid gap-6 lg:grid-cols-12 lg:items-start lg:gap-10">
+        <section id="how" aria-labelledby="how-heading" className="py-4 lg:py-8">
+          <div className="sg-container">
+          <div className="bite grid gap-6 rounded-[2rem] bg-[color:var(--sg-signal)] p-6 sm:p-10 lg:grid-cols-12 lg:items-start lg:gap-10 lg:rounded-[3rem] lg:p-14">
             <div className="flex items-center gap-4 lg:col-span-4">
-              <span className="sg-sign sg-sign-m"><ArrowRight size={24} aria-hidden="true" /></span>
+              <span className="sg-sign sg-sign-m"><ArrowRight size={26} aria-hidden="true" /></span>
               <h2 id="how-heading" className="sg-h2">How to start</h2>
             </div>
             <div className="lg:col-span-8">
@@ -381,6 +430,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               </ul>
             </div>
           </div>
+          </div>
         </section>
 
         {/* ── SCIENCE ───────────────────────────────────────────────────── */}
@@ -388,7 +438,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
           <div className="sg-container grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <h2 id="science-heading" className="sg-h2 max-w-[18ch]">
-                Why an alarm works when willpower doesn't
+                Why an alarm works when <span className="sg-mark">willpower</span> doesn't
               </h2>
 
               <div className="sg-measure mt-8 space-y-5">
@@ -416,7 +466,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             </div>
 
             <div className="lg:col-span-5">
-              <div className="border-t-2 border-[color:var(--sg-ink)] pt-6 lg:mt-3">
+              <div className="border-t-4 border-[color:var(--sg-deep)] pt-6 lg:mt-3">
                 <p className="sg-body">
                   {/* The figures in ink, the device the privacy plate uses for
                       "0 bytes": the proof was the quietest text on the page. */}
@@ -450,12 +500,13 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         {/* ── PRIVACY ───────────────────────────────────────────────────── */}
         <section id="privacy" aria-labelledby="privacy-heading" className="pb-20 lg:pb-28">
           <div className="sg-container">
-            <div className="overflow-hidden rounded-lg bg-[color:var(--sg-green-tint)] shadow-[inset_0_0_0_2px_var(--sg-green)]">
-              <div className="flex items-start gap-4 bg-[color:var(--sg-green)] p-6 text-white sm:gap-5 sm:p-10">
-                <span className="sg-sign sg-sign-e shadow-[inset_0_0_0_2px_#fff]"><ShieldCheck size={26} aria-hidden="true" /></span>
-                <h2 id="privacy-heading" className="sg-h2">Your camera never leaves your device.</h2>
+            <div className="sg-hero sg-dark bite relative overflow-hidden">
+              <Rings className="-bottom-80 -right-40 h-[42rem] w-[42rem]" />
+              <div className="flex flex-col items-start gap-6 p-6 sm:p-10 lg:p-14">
+                <span className="sg-sign sg-sign-e"><ShieldCheck size={28} aria-hidden="true" /></span>
+                <h2 id="privacy-heading" className="sg-h2 max-w-[20ch]">Your camera never leaves <span className="sg-hl">your device.</span></h2>
               </div>
-              <div className="grid gap-6 p-6 sm:p-10 lg:grid-cols-2 lg:gap-10">
+              <div className="grid gap-6 border-t border-[color:var(--sg-rule)] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:px-14">
                 <p className="sg-body text-[color:var(--sg-ink)]">
                   A camera pointed at you all day is a lot to trust an app with, so detection runs
                   entirely in your browser, on your own computer: <strong className="whitespace-nowrap font-extrabold">0 bytes</strong> of
@@ -496,7 +547,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         </section>
 
         {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
-        <div className="border-t border-[color:var(--sg-rule)] bg-[color:var(--sg-plate)] py-20 lg:py-28">
+        <div className="bg-[color:var(--sg-plate)] py-20 lg:py-28">
           <div className="sg-container">
             <PricingSection />
           </div>
@@ -514,11 +565,11 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 to start, Why this exists and the contact form: in a 4-column
                 slot the heading broke into four lines. */}
             <h2 id="faq-heading" className="sg-h2 max-w-[22ch] lg:col-span-12">Questions people ask about nail biting</h2>
-            <div className="border-t border-[color:var(--sg-rule)] lg:col-span-8 lg:col-start-5">
+            <div className="lg:col-span-8 lg:col-start-5">
               {FAQS.map(({ q, a }, i) => (
                 // The first answer is the definition ("what is Stop Biting"), so it
                 // starts open: a reader and a crawler both meet it without a click.
-                <details key={q} open={i === 0} className="group border-b border-[color:var(--sg-rule)]">
+                <details key={q} open={i === 0} className="group mb-3 rounded-3xl bg-[color:var(--sg-plate)] px-6 open:bg-[color:var(--sg-plate)]">
                   <summary className="flex min-h-11 [text-wrap:balance] cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
                     {q}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
@@ -577,26 +628,29 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         {/* ── FINAL CTA: last, so the page ends on the offer rather than on
             back matter (guides and the contact form used to follow it) ─────────────────────────────────────────────────── */}
         {/* The one full green field on the page: a mandatory sign, blown up. */}
-        <section aria-label="Call to action" className="sg-band bg-[color:var(--sg-accent)] py-20 text-white lg:py-24">
-          <div className="sg-container flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div>
+        <section aria-label="Call to action" className="sg-band pb-10 lg:pb-14">
+          <div className="sg-container">
+          <div className="sg-hero sg-dark bite relative flex flex-col items-start gap-8 overflow-hidden p-8 py-14 sm:p-12 lg:flex-row lg:items-center lg:justify-between lg:p-16">
+            <Rings className="-left-64 -top-64 h-[40rem] w-[40rem]" />
+            <div className="relative">
               {/* Display size, like the hero's h1: the page's one full-bleed field
                   is its closing peak, not one more section heading. */}
-              <h2 className="sg-h1 max-w-[14ch]">Catch your next bite.</h2>
-              <p className="mt-5 max-w-[48ch] text-lg text-white/85">
+              <h2 className="sg-h1 max-w-[12ch]">Catch your next <span className="sg-hl">bite.</span></h2>
+              <p className="mt-5 max-w-[48ch] text-lg text-white/80">
                 Leave it running through your next workday, then open History and see when you bite.
               </p>
             </div>
-            <div className="flex flex-col items-start gap-3">
+            <div className="relative flex flex-col items-start gap-3">
               <TrialButton tone="light" source="landing_final" />
-              <p className="sg-note whitespace-nowrap text-white/90">{OFFER_LINE}</p>
+              <p className="sg-note whitespace-nowrap">{OFFER_LINE}</p>
             </div>
+          </div>
           </div>
         </section>
 
       </main>
 
-      <SiteFooter />
+      <SiteFooter cta={false} />
     </div>
   );
 }

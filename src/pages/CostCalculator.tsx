@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { ShareButton } from '../components/site/ShareButton';
 import { buildShareUrl, cleanNumberParam } from '../utils/shareLink';
@@ -60,17 +61,19 @@ export function CostCalculator() {
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <SiteHeader />
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
+        <PageHero className="mb-12">
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
           <span className="text-[color:var(--sg-ink)]">Nail biting cost calculator</span>
         </nav>
 
-        <h1 className="sg-h1 max-w-[20ch]">What does nail biting cost you each year?</h1>
+        <h1 className="sg-h1-md max-w-[20ch]">What does nail biting <span className="sg-hl">cost</span> you each year?</h1>
         <p className="sg-body sg-measure mt-5">
           Enter what you actually spend on repairing the damage. The result uses only your numbers and
           our published prices, so there is no assumed average in it.
         </p>
+        </PageHero>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-12">
           <form className="grid gap-6 lg:col-span-6" onSubmit={e => e.preventDefault()}>

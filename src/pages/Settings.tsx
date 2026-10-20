@@ -342,7 +342,7 @@ function ReasonsSection() {
         <button
           type="submit"
           disabled={!label.trim()}
-          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-forest-600 hover:bg-forest-500 disabled:opacity-40 disabled:hover:bg-forest-600 text-cream-100 font-semibold rounded-xl px-3 py-2 text-xs transition-colors"
+          className="flex-shrink-0 inline-flex items-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 disabled:opacity-40 disabled:hover:bg-deep text-white dark:text-deep font-semibold rounded-full px-3 py-2 text-xs transition-colors"
         >
           <Plus size={13} />
           Add
@@ -430,7 +430,7 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
             <button
               onClick={onUpgrade}
               type="button"
-              className="inline-flex min-h-11 items-center gap-1.5 bg-forest-600 hover:bg-forest-500 text-cream-100 font-semibold rounded-xl px-4 text-sm transition-colors duration-150"
+              className="inline-flex min-h-11 items-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-semibold rounded-full px-4 text-sm transition-colors duration-150"
             >
               <Zap size={14} aria-hidden="true" />
               Choose a plan

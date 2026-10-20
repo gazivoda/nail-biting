@@ -109,7 +109,7 @@ export function PanicButton() {
       type="button"
       data-tour="panic-button"
       onClick={() => setShowTags(true)}
-      className="w-full select-none rounded-2xl border border-alert-400 bg-alert-100 py-4 text-base font-medium text-alert-600 transition-all duration-150 hover:border-alert-600 hover:bg-alert-100/80 active:scale-95 dark:border-alert-800 dark:bg-alert-900/30 dark:text-alert-400 dark:hover:bg-alert-900/50"
+      className="w-full select-none rounded-full border-2 border-alert-400 bg-alert-100 py-5 font-display text-lg font-bold tracking-[-0.01em] text-alert-600 transition-all duration-150 hover:border-alert-600 hover:bg-alert-100/80 active:scale-95 dark:border-alert-800 dark:bg-alert-900/30 dark:text-alert-400 dark:hover:bg-alert-900/50"
     >
       I just bit my nails
     </button>

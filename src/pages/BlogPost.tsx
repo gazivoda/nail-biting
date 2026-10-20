@@ -8,6 +8,7 @@ import { useTheme } from '../hooks/useTheme';
 import { TAG_PILL } from '../components/blog/tagPill';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { BlogMidCta } from '../components/site/BlogMidCta';
 import { midCtaAfterIndex, midCtaEligible } from '../components/site/midCtaRules';
@@ -114,6 +115,7 @@ export function BlogPost({ slug }: Props) {
       {post && (
         <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
+          <PageHero className="mb-10">
           {/* Breadcrumb nav */}
           <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
             <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
@@ -124,9 +126,9 @@ export function BlogPost({ slug }: Props) {
           </nav>
 
           {/* Article header */}
-          <header className="mb-10">
+          <header>
             <div className="flex flex-wrap items-center gap-3 mb-5">
-              <span className={TAG_PILL}>
+              <span className="sg-chip">
                 {post.tag}
               </span>
               <span className="sg-note flex items-center gap-1">
@@ -146,7 +148,7 @@ export function BlogPost({ slug }: Props) {
               )}
             </div>
 
-            <h1 className="sg-h2 mb-5">
+            <h1 className="sg-h1-md mb-5">
               {post.title}
             </h1>
 
@@ -156,8 +158,8 @@ export function BlogPost({ slug }: Props) {
 
             {/* Author byline — authority signal for AI crawlers */}
             <div className="flex items-center gap-3 border-y border-[color:var(--sg-rule)] py-4">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--sg-accent-tint)]">
-                <span className="text-xs font-bold text-[color:var(--sg-accent)]" aria-hidden="true">IG</span>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
+                <span className="text-xs font-bold text-lime-300" aria-hidden="true">IG</span>
               </div>
               {/* Says what the author is, the same thing the author box at the
                   end says, instead of claiming "science-based content". */}
@@ -172,6 +174,7 @@ export function BlogPost({ slug }: Props) {
               </div>
             </div>
           </header>
+          </PageHero>
 
           {/* Article body */}
           <article className="mt-10">
