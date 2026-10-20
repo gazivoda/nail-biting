@@ -3849,13 +3849,18 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-alcohol.png',
   sections: [
     {
       heading: `Why is alcohol relevant to an automatic habit?`,
       body: `Alcohol's primary relevant effect here is reduced self-monitoring and inhibition — it dampens activity in the prefrontal cortex, the brain region responsible for conscious behavioural control and impulse inhibition, while leaving more automatic, habit-driven behaviours in the basal ganglia relatively less affected. Since nail biting is largely automatic even sober — 92.2% of the nail biters in a survey of 339 medical students described their own behaviour that way — reducing the prefrontal oversight that might otherwise catch or interrupt an episode plausibly increases both the frequency of biting and, specifically, how much of it goes unnoticed in the moment. That last step is an inference: we have not found a study measuring nail biting and alcohol together.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li></ul>`,
+    },
+    {
+      heading: `Is nail biting linked to alcohol use?`,
+      body: `We found no study of nail biting and drinking together. On 20 October 2026 a PubMed search for nail biting and alcohol returned 8 papers, and none tested the pair. The closest is a 2026 analysis of 1,110 community and 690 clinical participants, which found that a grooming dimension (hair pulling, skin picking, and nail biting or picking) had small and inconsistent associations with alcohol and substance use (Snorrason et al., 2026). The mechanism described on this page is reasoning, not a finding about nail biting.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41997371/" target="_blank" rel="noopener noreferrer">Snorrason I, Conway CC, Swisher VS, et al. Higher order dimensions in the DSM/ICD obsessive-compulsive and related disorders. J Affect Disord. 2026;407:121812. doi:10.1016/j.jad.2026.121812</a></li><li>PubMed search "nail biting alcohol", run 20 October 2026: 8 results.</li></ul>`,
     },
     {
       heading: `Social drinking contexts and biting triggers`,
@@ -4725,12 +4730,17 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-08-11',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-birth-control.png',
   sections: [
     {
       heading: `Why is hormonal contraception relevant to nail biting?`,
       body: `Hormonal birth control — pills, patches, rings, hormonal IUDs, implants — works by altering the body's natural hormonal cycle, typically suppressing the normal fluctuation of estrogen and progesterone that occurs across a natural menstrual cycle. Because natural hormonal fluctuation is linked to mood, stress reactivity, and sleep for many people (as discussed for both the menstrual cycle and menopause), it's a reasonable question whether flattening or altering that fluctuation through hormonal contraception could plausibly affect nail biting frequency, even though this specific connection hasn't been directly studied.`,
+    },
+    {
+      heading: `Has anyone studied birth control and nail biting?`,
+      body: `We could not find a study. On 20 October 2026 we searched PubMed for nail biting together with oral contraceptive and got no results, so everything on this page is reasoning from general mood and hormone ideas, not a finding about nail biting. If you notice a change after starting or stopping birth control, talk to your prescriber instead of relying on this page.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "nail biting oral contraceptive", run 20 October 2026: 0 results.</li></ul>`,
     },
     {
       heading: `Different formulations, different plausible effects`,
@@ -4795,12 +4805,17 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 2,
   datePublished: '2026-07-16',
-  dateModified: '2026-07-16',
+  dateModified: '2026-10-20',
   ogImage: '/og/nail-biting-dry-skin-winter.png',
   sections: [
     {
       heading: `Why do many nail biters report worse biting in winter?`,
       body: `A number of nail biters report their habit noticeably worsening during winter months, and there's a plausible, fairly direct physical explanation beyond any seasonal mood changes: cold outdoor air combined with dry indoor heating significantly reduces ambient humidity, which dries out skin and nails more than most other times of year, creating more of the rough edges, hangnails, and cracked cuticles that commonly serve as the specific physical trigger initiating a biting episode.`,
+    },
+    {
+      heading: `Has anyone measured seasonal nail biting?`,
+      body: `No. On 20 October 2026 we searched PubMed for nail biting together with season and winter and found no results. The winter pattern on this page is what nail biters report, plus reasoning about dry skin and cuticles, not a measured finding.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li>PubMed search "nail biting season winter", run 20 October 2026: 0 results.</li></ul>`,
     },
     {
       heading: `How dry air specifically increases the trigger`,
