@@ -78,7 +78,7 @@ function getBitterPolishContent(): PageContent {
           ['Can you use bitter polish and an AI detection app together?', 'Yes — the two approaches aren’t mutually exclusive. Some users run Stop Biting for computer-context biting and keep bitter polish as a backup for other contexts.'],
         ],
       ),
-      verificationSection('Product details on this page were verified against Mavala\'s own product page (mavala.com) on 10 September 2026 — the description quoted in the table is Mavala\'s own wording. The habit reversal figures come from the two peer-reviewed papers linked in full in the evidence comparison above; we re-check competitor details quarterly and date them here so you can see how fresh they are. Formulations and packaging change — confirm on the vendor\'s own site before buying.'),
+      verificationSection('Product details on this page were verified against Mavala\'s own product page (mavala.com) on 10 September 2026 — the description quoted in the table is Mavala\'s own wording. The habit reversal figures come from the two peer-reviewed papers linked in full in the evidence comparison above; we re-check competitor details quarterly and date them here so you can see how fresh they are. Formulations and packaging change — confirm on the vendor\'s own site before buying.', ['https://mavala.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -132,7 +132,7 @@ function getHabitTrackingContent(): PageContent {
           ['Can I use a habit tracker and a detection app together?', 'Yes. Some nail biters run Stop Biting for automatic detection during computer use and keep a habit diary for off-screen episodes.'],
         ],
       ),
-      verificationSection('Streaks details on this page were verified against streaksapp.com on 10 September 2026, and both quotations are Streaks’ own wording. The Habitica quotation comes from Habitica’s App Store listing rather than habitica.com, because habitica.com serves almost no text to anything that doesn’t run JavaScript — we would rather name the source we could actually read than imply a check we couldn’t perform. We re-check these details quarterly and date them here. Features change — confirm on the vendor’s own site before deciding.'),
+      verificationSection('Streaks details on this page were verified against streaksapp.com on 10 September 2026, and both quotations are Streaks’ own wording. The Habitica quotation comes from Habitica’s App Store listing rather than habitica.com, because habitica.com serves almost no text to anything that doesn’t run JavaScript — we would rather name the source we could actually read than imply a check we couldn’t perform. We re-check these details quarterly and date them here. Features change — confirm on the vendor’s own site before deciding.', ['https://streaksapp.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -687,8 +687,16 @@ function getWindowsContent(): PageContent {
  * Keep each note honest about scope: state only the vendors actually checked,
  * and only on a date the check actually ran.
  */
-function verificationSection(body: string): { heading: string; body: string } {
-  return { heading: 'How we verified this page', body };
+function verificationSection(body: string, sources: string[] = []): { heading: string; body: string; html?: string } {
+  // The vendor pages the check was run against, as links, so a reader can open
+  // the same source. The date in `body` is the date of the check; adding a link
+  // does not re-verify anything.
+  const html = sources.length
+    ? `<p><strong>Sources checked:</strong> ${sources
+        .map(u => `<a href="${u}" target="_blank" rel="noopener noreferrer">${u.replace(/^https:\/\//, '')}</a>`)
+        .join(', ')}</p>`
+    : undefined;
+  return html ? { heading: 'How we verified this page', body, html } : { heading: 'How we verified this page', body };
 }
 
 /**
@@ -771,7 +779,7 @@ function getVsHandsOffContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or Hands Off?',
         body: 'Pick Hands Off if you have multiple body-focused repetitive behaviors and live on the desktop — one subscription covering five behaviors is the better fit.\n\nPick Stop Biting if nail biting is your specific problem, you want to run detection in a browser without installing anything, you’d rather pay ~$2.42/month on the annual plan, or you want bite-free streaks, a timestamped incident history and habit-reversal coaching around the detector.\n\nBoth offer a 3-day free trial, so the cheapest way to decide is to try the one that matches your situation.',
       },
-      verificationSection('Every Hands Off detail on this page — platforms, the five behaviours it lists, price, trial length, privacy statements and its statistics tracker — was re-verified against handsoffapp.com on 10 September 2026, and each quotation is Hands Off’s own wording. That check corrected two things in our favour that were not true: Hands Off lists a fifth behaviour, ear picking, that we had omitted, and it ships a statistics tracker that an earlier version of this page treated as something only we offered. We re-verify competitor details quarterly and date them here rather than leaving you to guess how old they are. Prices and features change — confirm on handsoffapp.com before buying.'),
+      verificationSection('Every Hands Off detail on this page — platforms, the five behaviours it lists, price, trial length, privacy statements and its statistics tracker — was re-verified against handsoffapp.com on 10 September 2026, and each quotation is Hands Off’s own wording. That check corrected two things in our favour that were not true: Hands Off lists a fifth behaviour, ear picking, that we had omitted, and it ships a statistics tracker that an earlier version of this page treated as something only we offered. We re-verify competitor details quarterly and date them here rather than leaving you to guess how old they are. Prices and features change — confirm on handsoffapp.com before buying.', ['https://handsoffapp.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -837,7 +845,7 @@ function getVsNailedContent(): PageContent {
           ['Does Nailed have a free trial?', 'No free trial is listed. Its App Store listing showed the app as a free download when we checked, so trying it may cost nothing anyway; Stop Biting’s 3-day trial needs no credit card.'],
         ],
       ),
-      verificationSection('Every Nailed detail on this page was re-verified on 10 September 2026 against nailedapp.io and the Mac App Store listing that site links to as its only download button. Two things changed in Nailed’s favour and are corrected above: its store listing now shows the app as a free download with no in-app purchases, so we no longer present $4.99 as the price you pay, and that listing describes nail-biting tracking, which an earlier version of this page said was absent. Where a vendor’s own two sources disagree — as they do here on price — we show both and name each rather than picking the one that flatters us. Confirm on the App Store page before downloading.'),
+      verificationSection('Every Nailed detail on this page was re-verified on 10 September 2026 against nailedapp.io and the Mac App Store listing that site links to as its only download button. Two things changed in Nailed’s favour and are corrected above: its store listing now shows the app as a free download with no in-app purchases, so we no longer present $4.99 as the price you pay, and that listing describes nail-biting tracking, which an earlier version of this page said was absent. Where a vendor’s own two sources disagree — as they do here on price — we show both and name each rather than picking the one that flatters us. Confirm on the App Store page before downloading.', ['https://nailedapp.io']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -903,7 +911,7 @@ function getVsSmartBehaviorContent(): PageContent {
           ['Which app detects more behaviours?', 'SmartBehavior — its site names onychophagia, dermatillomania (skin picking) and trichotillomania (hair pulling). Stop Biting focuses on nail biting.'],
         ],
       ),
-      verificationSection('Every SmartBehavior detail on this page was re-verified on 10 September 2026 against smart-behavior.com and its App Store listing. That check corrected a claim that had favoured us: we previously said flatly that SmartBehavior has no macOS version and used it as a reason to pick Stop Biting, but its App Store listing states the iPad app runs on Apple Silicon Macs, so Mac users do have a route to it. We also added the $0.99 price its US App Store listing shows, since its own website still publishes none. Storefront prices vary and features change — check your own app store before deciding.'),
+      verificationSection('Every SmartBehavior detail on this page was re-verified on 10 September 2026 against smart-behavior.com and its App Store listing. That check corrected a claim that had favoured us: we previously said flatly that SmartBehavior has no macOS version and used it as a reason to pick Stop Biting, but its App Store listing states the iPad app runs on Apple Silicon Macs, so Mac users do have a route to it. We also added the $0.99 price its US App Store listing shows, since its own website still publishes none. Storefront prices vary and features change — check your own app store before deciding.', ['https://smart-behavior.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -966,7 +974,7 @@ function getAiDetectionAppsContent(): PageContent {
           ['Is there a nail biting detection app for iPhone or Android?', 'SmartBehavior has native iOS and Android apps. Stop Biting runs on a phone as a web app rather than an installed detector.'],
         ],
       ),
-      verificationSection('Every competitor claim in the table above was re-verified on 10 September 2026 against handsoffapp.com, nailedapp.io, smart-behavior.com and the App Store listings those sites link to. Three of the corrections that pass produced went against us, and they are worth naming: Hands Off ships a statistics tracker and lists a fifth behaviour, ear picking, that we had left out; Nailed’s App Store listing now shows the app as a free download and describes nail-biting tracking, both of which this page previously denied it; and SmartBehavior’s iPad app runs on Apple Silicon Macs, which we had presented as a gap. We re-check quarterly rather than writing a comparison once and leaving it to rot, and we date it here so you can judge how current it is. Prices and features change — confirm on the vendor’s own site before buying.'),
+      verificationSection('Every competitor claim in the table above was re-verified on 10 September 2026 against handsoffapp.com, nailedapp.io, smart-behavior.com and the App Store listings those sites link to. Three of the corrections that pass produced went against us, and they are worth naming: Hands Off ships a statistics tracker and lists a fifth behaviour, ear picking, that we had left out; Nailed’s App Store listing now shows the app as a free download and describes nail-biting tracking, both of which this page previously denied it; and SmartBehavior’s iPad app runs on Apple Silicon Macs, which we had presented as a gap. We re-check quarterly rather than writing a comparison once and leaving it to rot, and we date it here so you can judge how current it is. Prices and features change — confirm on the vendor’s own site before buying.', ['https://handsoffapp.com', 'https://nailedapp.io', 'https://smart-behavior.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -1027,7 +1035,7 @@ function getVsNailBiteMenuContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or NailBiteMenu?',
         body: 'Pick NailBiteMenu if you are on a Mac running macOS 15.6 or later, want an app with no account and visible source code, and are comfortable installing a DMG.\n\nPick Stop Biting if you use Windows or an older Mac, want to start in a browser tab, or want history and guides alongside the alarm.\n\nYou could try both on a recent Mac and keep the one that fits how you work.',
       },
-      verificationSection('Every NailBiteMenu detail on this page (what it is, the macOS version, how the alert behaves, its privacy statements, its distribution and its open source statement) was checked against github.com/killian31/NailBiteMenu and killian31.github.io/NailBiteMenu on 13 October 2026, and quoted phrases are theirs. We looked for a price, a licence name and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Details change: confirm on the project’s pages before relying on them.'),
+      verificationSection('Every NailBiteMenu detail on this page (what it is, the macOS version, how the alert behaves, its privacy statements, its distribution and its open source statement) was checked against github.com/killian31/NailBiteMenu and killian31.github.io/NailBiteMenu on 13 October 2026, and quoted phrases are theirs. We looked for a price, a licence name and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Details change: confirm on the project’s pages before relying on them.', ['https://github.com/killian31/NailBiteMenu', 'https://killian31.github.io/NailBiteMenu']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -1087,7 +1095,7 @@ function getVsHabitCamContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or HabitCam?',
         body: 'Pick HabitCam if you are on Windows or Linux, want a one-off purchase, or want to cover hair pulling or skin picking too.\n\nPick Stop Biting if you use a Mac, want nothing to install, or want to start in a browser tab with a habit reversal guide beside it.\n\nBoth have a free trial, so the cheapest way to decide is to try the one that fits your computer.',
       },
-      verificationSection('Every HabitCam detail on this page (what it detects, its platforms, how it processes video, its internet use, its price and its trial) was checked against habitcam.app on 13 October 2026, and quoted phrases are its own. We looked for a Mac download, who makes it and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitcam.app before buying.'),
+      verificationSection('Every HabitCam detail on this page (what it detects, its platforms, how it processes video, its internet use, its price and its trial) was checked against habitcam.app on 13 October 2026, and quoted phrases are its own. We looked for a Mac download, who makes it and an accuracy figure and did not find them, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitcam.app before buying.', ['https://habitcam.app']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -1211,7 +1219,7 @@ function getVsPavlokContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or Pavlok?',
         body: 'Pick Pavlok if you want a wearable that works anywhere, you have several habits to change, and aversive feedback appeals to you.\n\nPick Stop Biting if you bite while you work at a computer, want the alert to come from the app rather than from you, and prefer not to use a shock.\n\nNeither is a medical treatment, and if your biting is severe or distressing, speak to a clinician.',
       },
-      verificationSection('Every Pavlok detail on this page (what it describes itself as, the feedback types, the nail biting use, the app, and the prices) was checked against pavlok.com and pavlok.com/pages/habit-nail-biting on 8 October 2026, and quoted phrases are Pavlok’s own. We looked for automatic nail biting detection, a refund or guarantee, and a Pavlok 3 price, did not find them on those pages, and state none. We did not use claims about studies or success rates found in search results. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on pavlok.com before buying.'),
+      verificationSection('Every Pavlok detail on this page (what it describes itself as, the feedback types, the nail biting use, the app, and the prices) was checked against pavlok.com and pavlok.com/pages/habit-nail-biting on 8 October 2026, and quoted phrases are Pavlok’s own. We looked for automatic nail biting detection, a refund or guarantee, and a Pavlok 3 price, did not find them on those pages, and state none. We did not use claims about studies or success rates found in search results. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on pavlok.com before buying.', ['https://pavlok.com/pages/habit-nail-biting']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -1271,7 +1279,7 @@ function getVsNailKeeperContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or NailKeeper?',
         body: 'Pick NailKeeper if you want a phone app that tracks your nails and your time since quitting, and you bite away from a computer.\n\nPick Stop Biting if you bite while you work and want an alarm at the moment it happens.\n\nIf you want both, nothing stops you using a photo tracker alongside the alarm.',
       },
-      verificationSection('Every NailKeeper detail on this page (what it describes, its platforms, and its prices) was checked against nailkeeper.app and its US App Store listing on 6 October 2026, and quoted phrases are theirs. We looked for any mention of real-time detection, a camera used to detect biting, and a trial length, and did not find them, so we state none and make no claim about what the app lacks. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on nailkeeper.app before buying.'),
+      verificationSection('Every NailKeeper detail on this page (what it describes, its platforms, and its prices) was checked against nailkeeper.app and its US App Store listing on 6 October 2026, and quoted phrases are theirs. We looked for any mention of real-time detection, a camera used to detect biting, and a trial length, and did not find them, so we state none and make no claim about what the app lacks. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on nailkeeper.app before buying.', ['https://nailkeeper.app']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -1333,7 +1341,7 @@ function getVsHabitAwareContent(): PageContent {
         heading: 'Which should you pick: Stop Biting or HabitAware?',
         body: 'Pick HabitAware if you bite away from screens, or if hair pulling or skin picking is part of the picture. A wearable is the right shape for that.\n\nPick Stop Biting if you bite while you work or browse, want to start in minutes without buying hardware, and want the habit-reversal coaching around the alert.\n\nSome people reasonably use a wearable for the day and Stop Biting for the desk; the two do not conflict.',
       },
-      verificationSection('Every HabitAware detail on this page (the behaviors it names, the wrist vibration, the KeenLite Apple Watch app and the 90-day guarantee wording) was checked against habitaware.com on 5 October 2026, and quoted phrases are its own. We looked for a bracelet price, battery life, platform support and subscription cost and did not find them on the pages we fetched, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitaware.com before buying.'),
+      verificationSection('Every HabitAware detail on this page (the behaviors it names, the wrist vibration, the KeenLite Apple Watch app and the 90-day guarantee wording) was checked against habitaware.com on 5 October 2026, and quoted phrases are its own. We looked for a bracelet price, battery life, platform support and subscription cost and did not find them on the pages we fetched, so we state none. We re-verify competitor details quarterly and date them here. Prices and features change: confirm on habitaware.com before buying.', ['https://habitaware.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
