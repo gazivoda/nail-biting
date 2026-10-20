@@ -650,7 +650,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
       </main>
 
-      <SiteFooter />
+      <SiteFooter cta={false} />
     </div>
   );
 }

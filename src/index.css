@@ -619,6 +619,7 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 /* Type. Bricolage Grotesque, heavy and tight, for anything you read from
    across the room; Geist, regular and open, for anything you read up close. */
 .sg-h1   { font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 1.2rem + 5.4vw, 5.75rem); line-height: 0.92; letter-spacing: -0.045em; text-wrap: balance; }
+.sg-h1-md { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.5rem, 1.3rem + 4.2vw, 4.75rem); line-height: 0.95; letter-spacing: -0.045em; text-wrap: balance; }
 .sg-h2   { font-family: var(--font-display); font-weight: 750; font-size: clamp(2.1rem, 1.3rem + 2.8vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; text-wrap: balance; }
 .sg-h3   { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; line-height: 1.2; letter-spacing: -0.02em; text-wrap: balance; }
 .sg-lede { font-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem); line-height: 1.5; color: var(--sg-ink-2); text-wrap: pretty; }

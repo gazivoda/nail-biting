@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { useTheme } from '../hooks/useTheme';
 import { PAGE_MAP } from '../data/comparePages';
@@ -52,6 +53,7 @@ export function ComparePage({ path }: Props) {
 
       <main id="main" className="max-w-2xl mx-auto px-6 pt-28 pb-24">
 
+        <PageHero className="mb-10 -mx-6 sm:-mx-0">
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
@@ -60,10 +62,11 @@ export function ComparePage({ path }: Props) {
           <span className="truncate max-w-[200px] text-[color:var(--sg-ink)]">{content.title.split(':')[0]}</span>
         </nav>
 
-        <header className="mb-10">
+        <header>
           <h1 className="sg-h2">{content.title}</h1>
           <p className="sg-lede mt-4">{content.subtitle}</p>
         </header>
+        </PageHero>
 
         <div className="mb-10 rounded-2xl border border-[color:var(--sg-rule)] bg-white p-6">
           <p className="sg-body text-[color:var(--sg-ink)]">{content.intro}</p>

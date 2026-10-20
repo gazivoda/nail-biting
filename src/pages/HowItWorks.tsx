@@ -3,6 +3,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 
 // /how-it-works, in the homepage's sign system (tokens in `.sg-page`, see
@@ -83,6 +84,7 @@ export function HowItWorks() {
       <SiteHeader />
 
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
+        <PageHero className="mb-14">
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
@@ -90,13 +92,14 @@ export function HowItWorks() {
         </nav>
 
         <header className="max-w-3xl">
-          <h1 className="sg-h2">How AI nail biting detection works</h1>
+          <h1 className="sg-h1-md">How AI nail biting <span className="sg-hl">detection</span> works</h1>
           <p className="sg-lede sg-measure mt-5">
             Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your
             device. The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires about 0.6 seconds
             after it sees your hand approaching your mouth. Setup takes under two minutes.
           </p>
         </header>
+        </PageHero>
 
         {/* A real capture of the app (public/shots), the same one and the same
             alt/caption as the landing page; mirrored in server.js. */}

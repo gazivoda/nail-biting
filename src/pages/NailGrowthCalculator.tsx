@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
+import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { track } from '../utils/track';
 import { FINGERNAIL_MM_PER_MONTH, TOENAIL_MM_PER_MONTH, monthsToGrow, type NailKind } from '../utils/nailGrowth';
@@ -31,17 +32,19 @@ export function NailGrowthCalculator() {
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
       <SiteHeader />
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
+        <PageHero className="mb-12">
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
           <span className="text-[color:var(--sg-ink)]">Nail growth timeline calculator</span>
         </nav>
 
-        <h1 className="sg-h1 max-w-[20ch]">How long will it take to grow your nails back?</h1>
+        <h1 className="sg-h1-md max-w-[20ch]">How long will it take to <span className="sg-hl">grow</span> your nails back?</h1>
         <p className="sg-body sg-measure mt-5">
           Enter how much nail you want to grow. The result divides it by the average growth rate measured
           in one published study, so it is an estimate and not a promise.
         </p>
+        </PageHero>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-12">
           <form className="grid gap-6 lg:col-span-6" onSubmit={e => e.preventDefault()}>

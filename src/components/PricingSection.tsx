@@ -42,7 +42,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       {/* Left-aligned on the page's edge like every other section: centred
           and narrower, it read as a template block pasted in. */}
       <div className="max-w-4xl">
-        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or $29 a year.</Heading>
+        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or <span className="sg-mark">$29 a year.</span></Heading>
         <p className="sg-lede mt-4 max-w-2xl">
           Three days free first, and no card to start. You pick a plan when the trial ends.
         </p>

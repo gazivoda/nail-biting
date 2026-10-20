@@ -99,6 +99,18 @@ What keeps the system from looking like any other wellness template:
 - **Ember** (`--c-ember`, `bg-ember`): a warm coral second accent, only for stickers
   and one block in a set. Never for actions.
 
+## Where it applies
+
+- `PageHero` (`src/components/site/PageHero.tsx`): the deep, bitten, ringed card at the
+  top of every content page (How it works, About, Blog index and posts, Compare and
+  Solutions, both calculators, legal pages). Breadcrumb, h1 and lede go inside; mark one
+  word of the h1 with `sg-hl`.
+- `ClosingCta`: the closing call to action. `SiteFooter` renders it on every marketing
+  page; the homepage passes `cta={false}` because it has its own.
+- `SiteFooter`: a deep rounded-top block with the oversized "Stop biting." wordmark.
+- The paywall and the app share the same pieces: deep hero card, deep recommended plan,
+  lime buttons, pill controls.
+
 ## Do
 
 - Use `.sg-dark` for any deep surface so text, rules and buttons re-point
