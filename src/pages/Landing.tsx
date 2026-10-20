@@ -245,7 +245,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 // WebAssembly and no MediaPipe model.
                 <figure className="relative w-full">
                   <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">3 days free, no card</span>
-                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-sm:hidden sm:-right-4">No camera data is sent while it runs</span>
+                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-w-[10.5rem] text-center leading-tight max-sm:hidden sm:-right-4">No camera data is sent while it runs</span>
                   <img
                     src="/shots/app-watch-1280.webp"
                     srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"

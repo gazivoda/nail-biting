@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/paddle-js';
-import { Check, Shield, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Check, Shield, ArrowLeft, AlertTriangle, ArrowRight } from 'lucide-react';
 import { trialLeft, trialEndedMessage } from '../../utils/trial';
 import { useAppStore } from '../../store/useAppStore';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
@@ -20,6 +20,9 @@ const CHECKOUT_UNAVAILABLE =
   "Checkout couldn't load. If you use an ad blocker, allow paddle.com for this site and reload, or email hello@stopbiting.today.";
 
 export function PaywallPage({ onBack }: Props) {
+  // Hooks first: the 'Payment received' early return below must not skip one.
+  // What the trial actually logged on this device (local history, never a server figure).
+  const loggedAlerts = useAppStore(s => s.incidents.length);
   const { user, refreshProfile, signOut } = useAuth();
   const [activating, setActivating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -130,8 +133,6 @@ export function PaywallPage({ onBack }: Props) {
   const trialLeftText = trialLeft(user?.trial_end_date);
 
   const isTrialExpired = !onBack;
-  // What the trial actually logged on this device (local history, never a server figure).
-  const loggedAlerts = useAppStore(s => s.incidents.length);
 
   return (
     <div className="min-h-dvh bg-cream-100 dark:bg-ink-100 text-stone-800 dark:text-stone-200 flex flex-col">
@@ -213,20 +214,17 @@ export function PaywallPage({ onBack }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
           {/* Yearly first at every width, as on /pricing. */}
           <div className="rounded-2xl p-7 flex flex-col bg-deep text-white relative">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <span className="bg-lime-300 text-deep text-xs font-bold px-3 py-1 rounded-full">
-                Best value: save 19%
-              </span>
-            </div>
+            <p className="absolute -top-3.5 left-7 rounded-full bg-lime-300 px-3 py-1 text-[0.8125rem] font-bold text-deep">
+              Best value: save 19%
+            </p>
             <div className="mb-4">
               <p className="font-display text-lg font-bold text-white">Yearly</p>
-              <p className="text-xs text-white/65">Billed once a year</p>
             </div>
             <div className="mb-1">
               <span className="font-display text-5xl font-extrabold tracking-[-0.04em]">$29.00</span>
               <span className="text-white/65 text-sm"> / year</span>
             </div>
-            <p className="text-lime-300 text-xs mb-4 font-semibold">About $2.42 a month</p>
+            <p className="text-white/65 text-sm mb-4">$2.42/month, billed yearly</p>
             <ul className="space-y-2 mb-6 flex-1">
               {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-white/85">
@@ -238,16 +236,17 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_YEARLY)}
-                className="inline-flex min-h-12 items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-deep font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 bg-lime-300 hover:bg-lime-200 text-deep font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Subscribe yearly
+                <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
               </button>
             )}
           </div>
           {/* Monthly */}
           <div className="border border-stone-200 dark:border-ink-400 rounded-2xl p-7 flex flex-col bg-white dark:bg-ink-50">
             <div className="mb-4">
-              <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Monthly</p>
+              <p className="font-display text-lg font-bold text-stone-900 dark:text-stone-100">Monthly</p>
               <p className="text-xs text-stone-500 dark:text-stone-400">Billed monthly</p>
             </div>
             <div className="mb-4">
@@ -265,9 +264,10 @@ export function PaywallPage({ onBack }: Props) {
               <button
                 disabled={activating || !paddle}
                 onClick={() => openCheckout(PRICE_MONTHLY)}
-                className="inline-flex min-h-11 items-center justify-center gap-2 border-2 border-stone-900 dark:border-stone-200 hover:bg-stone-900 hover:text-white dark:hover:bg-stone-200 dark:hover:text-stone-900 text-stone-900 dark:text-stone-100 font-display font-bold rounded-full px-6 py-3 text-base min-h-12 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group inline-flex min-h-14 w-full items-center justify-center gap-2 border-2 border-stone-900 dark:border-stone-200 hover:bg-stone-900 hover:text-white dark:hover:bg-stone-200 dark:hover:text-stone-900 text-stone-900 dark:text-stone-100 font-display font-bold rounded-full px-6 py-3 text-base transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Subscribe monthly
+                <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
               </button>
             )}
           </div>

@@ -5,7 +5,7 @@ import { TrialButton } from './TrialButton';
 // renders it). The offer must match PricingSection and the homepage.
 const OFFER_LINE = '3 days free, no card, then $2.99/month';
 
-export function ClosingCta() {
+export function ClosingCta({ source = 'page_closing' }: { source?: string } = {}) {
   return (
     <section aria-label="Call to action" className="pb-10 pt-6 lg:pb-14">
       <div className="sg-container">
@@ -18,7 +18,7 @@ export function ClosingCta() {
             </p>
           </div>
           <div className="relative flex flex-col items-start gap-3">
-            <TrialButton tone="light" source="page_closing" />
+            <TrialButton tone="light" source={source} />
             <p className="sg-note whitespace-nowrap">{OFFER_LINE}</p>
           </div>
         </div>

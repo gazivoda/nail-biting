@@ -4,10 +4,10 @@ import { Rings } from './Rings';
 // The site footer for every page in the sign system. Must sit inside a `.sg-page`.
 // Marketing pages also get the closing call to action above it; the homepage
 // renders its own, so it passes cta={false}.
-export function SiteFooter({ cta = true }: { cta?: boolean } = {}) {
+export function SiteFooter({ cta = true, ctaSource }: { cta?: boolean; ctaSource?: string } = {}) {
   return (
     <>
-    {cta && <ClosingCta />}
+    {cta && <ClosingCta source={ctaSource} />}
     <footer className="sg-dark relative overflow-hidden rounded-t-[3rem] bg-[color:var(--sg-deep)] pb-10 pt-14">
       <Rings className="-bottom-80 -left-40 h-[44rem] w-[44rem]" />
       <div className="sg-container relative">

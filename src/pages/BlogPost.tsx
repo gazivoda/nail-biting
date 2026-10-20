@@ -295,7 +295,7 @@ export function BlogPost({ slug }: Props) {
         </main>
       )}
 
-      <div className="sg-page"><SiteFooter /></div>
+      <div className="sg-page"><SiteFooter ctaSource={`blog-${slug}`} /></div>
     </div>
   );
 }
