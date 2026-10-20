@@ -10,7 +10,7 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { BlogMidCta } from '../components/site/BlogMidCta';
-import { midCtaAfterIndex, midCtaEligible } from '../components/site/blogMidCta';
+import { midCtaAfterIndex, midCtaEligible } from '../components/site/midCtaRules';
 import { track } from '../utils/track';
 
 interface Props {

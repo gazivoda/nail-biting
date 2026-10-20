@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { midCtaAfterIndex, midCtaEligible } from './blogMidCta';
+import { midCtaAfterIndex, midCtaEligible } from './midCtaRules';
 
 describe('midCtaEligible', () => {
   it('allows a how-to post with enough sections', () => {
