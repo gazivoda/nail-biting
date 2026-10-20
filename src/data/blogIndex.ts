@@ -1438,4 +1438,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-nail-ridges-grooves",
+    title: "Ridges and Grooves in Bitten Nails: Habit-Tic, Beau's Lines or Something Else?",
+    description: "Ridges and grooves are common in bitten nails, but not every groove comes from biting. What a 53-patient series and reviews say, and when to see a doctor.",
+    tag: "Health",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
