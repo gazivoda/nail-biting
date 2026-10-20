@@ -1510,4 +1510,13 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     datePublished: "2026-10-20",
     dateModified: "2026-10-20",
   },
+  {
+    slug: "nail-biting-short-nails-trimming",
+    title: "Does Keeping Your Nails Short or Filed Stop Nail Biting?",
+    description: "No trial has tested trimming or filing alone for nail biting. What a 2022 review says about nail care, and what trials of wristbands and bitter polish found.",
+    tag: "Treatment",
+    readingMinutes: 5,
+    datePublished: "2026-10-20",
+    dateModified: "2026-10-20",
+  },
 ];
