@@ -189,7 +189,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               {authError && (
                 <div role="alert" className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-[color:var(--sg-rule)] bg-white/10 px-4 py-3">
                   <p className="sg-small flex-1 text-[color:var(--sg-ink)]">{authErrorMessage(authError)}</p>
-                  <a href="/api/auth/google" className="sg-link inline-flex min-h-11 items-center">Try again</a>
+                  <a href="/api/auth/google" rel="nofollow" className="sg-link inline-flex min-h-11 items-center">Try again</a>
                   <button type="button" onClick={onDismissAuthError} className="sg-small inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">
                     Dismiss
                   </button>

@@ -298,7 +298,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "grow-nails-after-nail-biting",
     title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
-    description: "Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails takes several months.",
+    description: "Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out. What to expect, and what no study has measured.",
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
@@ -541,7 +541,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "bfrb-guide",
     title: "Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide",
-    description: "Habit reversal pooled a large effect (d = 0.80) over 18 studies and 575 participants, across six behaviour classes, not nail biting alone. What BFRBs share.",
+    description: "BFRBs are repeated habits such as nail biting, skin picking and hair pulling that damage the body. What they share, and what the evidence says helps.",
     tag: "Clinical",
     readingMinutes: 5,
     datePublished: "2026-07-16",
@@ -1107,8 +1107,8 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-vitamin-deficiency",
-    title: "Is Nail Biting a Sign of Vitamin Deficiency?",
-    description: "No evidence links nail biting to a mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: habit mechanics, not micronutrients.",
+    title: "What Deficiency Causes Nail Biting? What the Evidence Says",
+    description: "No evidence links nail biting to a vitamin or mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: mechanics, not nutrients.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
@@ -1117,11 +1117,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-dermatophagia",
     title: "Dermatophagia: When You Bite the Skin, Not the Nail",
-    description: "Many people who think they bite their nails actually bite the skin around them. Dermatophagia is a distinct behaviour with distinct risks and strategies.",
+    description: "Dermatophagia is biting the skin around the nails and fingers, often mistaken for nail biting. It has its own risks and strategies. What it is and what helps.",
     tag: "Clinical",
     readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-11",
+    dateModified: "2026-10-20",
   },
   {
     slug: "nail-biting-medication",

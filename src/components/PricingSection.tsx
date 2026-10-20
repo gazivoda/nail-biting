@@ -83,7 +83,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
           <a
             href="/api/auth/google"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             onClick={() => track('trial_click', 'pricing_yearly')}
             className="sg-btn group mt-8 w-full"
           >
@@ -110,7 +110,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
           <a
             href="/api/auth/google"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             onClick={() => track('trial_click', 'pricing_monthly')}
             className="sg-btn sg-btn-ink group mt-8 w-full"
           >

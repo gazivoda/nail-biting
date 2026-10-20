@@ -40,7 +40,7 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
     <a
       href="/api/auth/google"
       target="_blank"
-      rel="noopener noreferrer"
+      rel="nofollow noopener noreferrer"
       onClick={() => track('trial_click', source)}
       className={className}
     >

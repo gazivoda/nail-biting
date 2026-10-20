@@ -57,7 +57,7 @@ const SECONDARY_BTN =
 /** The trial link. A new tab on purpose (see 92360d2): the demo tab keeps running. */
 function TrialLink() {
   return (
-    <a href="/api/auth/google" target="_blank" rel="noopener noreferrer" onClick={() => track('trial_click', 'demo_catch')} className={PRIMARY_BTN}>
+    <a href="/api/auth/google" target="_blank" rel="nofollow noopener noreferrer" onClick={() => track('trial_click', 'demo_catch')} className={PRIMARY_BTN}>
       <Zap size={15} aria-hidden="true" />
       Start free trial
     </a>
@@ -314,7 +314,7 @@ export function HeroDemo({ autoStart = false }: Props) {
           <a
             href="/api/auth/google"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             onClick={() => track('trial_click', 'demo_failure')}
             className="sg-link"
           >

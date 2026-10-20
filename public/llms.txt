@@ -26,7 +26,7 @@ Key facts:
 
 ## Key pages
 
-- [Stop Nail Biting with AI](https://stopbiting.today/): Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.
+- [Nail Biting App: Stop Biting with AI](https://stopbiting.today/): Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.
 - [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.
 - [Pricing: $2.99/month or $29/year](https://stopbiting.today/pricing): Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.
 - [Nail Biting Cost Calculator: What It Costs You a Year](https://stopbiting.today/tools/nail-biting-cost-calculator): Free calculator: add up what nail biting costs you each year in manicures and repairs, using your own numbers, and compare it with the $29 yearly plan.
@@ -156,7 +156,7 @@ Key facts:
 - [The Real Health Risks of Nail Biting: What Nail Biting Actually Does to Your Body](https://stopbiting.today/blog/nail-biting-health-risks): Enterobacteriaceae turned up in the saliva of 76% of 25 chronic nail biters against 26.5% of 34 non-biters.
 - [Nail Biting During Sleep: Does It Happen and What Can You Do?](https://stopbiting.today/blog/nail-biting-during-sleep): We could not find a study measuring sleep nail biting: no prevalence figure, no sleep-stage data, no waking comparison.
 - [Nail Biting During Pregnancy: What the Real Risks Are and How to Stop](https://stopbiting.today/blog/nail-biting-pregnancy): Under the nail was the densest bacterial site on the hand in the classic 26-adult survey.
-- [How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect](https://stopbiting.today/blog/grow-nails-after-nail-biting): Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults.
+- [How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect](https://stopbiting.today/blog/grow-nails-after-nail-biting): Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out.
 - [What Lives Under Your Fingernails: The Real Germ Risk of Nail Biting](https://stopbiting.today/blog/nail-biting-bacteria-parasites): Enterobacteriaceae were found in the saliva of 76% of 25 chronic nail biters against 26.5% of 34 non-biters: a difference in detection, not a traced transfer.
 - [Does Nail Biting Weaken Your Immune System?](https://stopbiting.today/blog/nail-biting-immune-system): No solid evidence that nail biting weakens immunity in a generally healthy person.
 - [Nail Biting and Gut Health: What Swallowing Bacteria Does to Your Microbiome](https://stopbiting.today/blog/nail-biting-gut-health): Research linking nail biting to microbiome disruption is limited.
@@ -177,7 +177,7 @@ Key facts:
 - [Nail Biting and Jaw Pain: The TMJ Connection](https://stopbiting.today/blog/nail-biting-jaw-pain-tmj): In 240 adolescents, nail biting was significantly associated with TMD signs and symptoms (p = 0.001).
 - [Hangnails and Nail Biting: The Trigger Loop Nobody Warns You About](https://stopbiting.today/blog/nail-biting-hangnails): Hangnails are both a consequence of nail biting and one of its most reliable triggers.
 - [White Spots on Bitten Nails: What They Are and What They Are Not](https://stopbiting.today/blog/nail-biting-white-spots): White marks are conventionally attributed to matrix trauma, not a calcium or zinc lack.
-- [Is Nail Biting a Sign of Vitamin Deficiency?](https://stopbiting.today/blog/nail-biting-vitamin-deficiency): No evidence links nail biting to a mineral deficiency.
+- [What Deficiency Causes Nail Biting? What the Evidence Says](https://stopbiting.today/blog/nail-biting-vitamin-deficiency): No evidence links nail biting to a vitamin or mineral deficiency.
 - [Does Nail Biting Damage Your Teeth? What Has Actually Been Measured](https://stopbiting.today/blog/nail-biting-teeth-damage): Less is measured than articles claim: one study on root resorption, one disputed on malocclusion, one on jaw signs.
 - [What Happens If You Swallow Your Fingernails?](https://stopbiting.today/blog/swallowing-fingernails): We found no study of what swallowed nail clippings do.
 - [Can You Get Pinworms From Biting Your Nails? What the Studies Show](https://stopbiting.today/blog/pinworm-nail-biting): Studies link nail biting to pinworm in children, but only as an association.
@@ -202,12 +202,12 @@ Key facts:
 - [Nail Biting vs Skin Picking: How These Habits Compare and What Works for Each](https://stopbiting.today/blog/nail-biting-vs-skin-picking): Nail biting and skin picking are both BFRBs with different triggers and treatments.
 - [Nail Biting as Stimming: When the Habit Is Really Sensory Regulation](https://stopbiting.today/blog/nail-biting-stimming): Adults with clinical-level BFRBs (n=26) reported more sensory sensitivity than subclinical and control groups.
 - [Onychophagia: The Medical Term for Nail Biting, Explained](https://stopbiting.today/blog/onychophagia): Onychophagia is the clinical term for chronic nail biting.
-- [Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide](https://stopbiting.today/blog/bfrb-guide): Habit reversal pooled a large effect (d = 0.80) over 18 studies and 575 participants, across six behaviour classes, not nail biting alone.
+- [Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide](https://stopbiting.today/blog/bfrb-guide): BFRBs are repeated habits such as nail biting, skin picking and hair pulling that damage the body.
 - [Nail Biting and Autism: Understanding the Sensory Connection](https://stopbiting.today/blog/nail-biting-autism): Nail biting is more common among autistic people, often serving sensory regulation rather than anxiety.
 - [When to See a Doctor About Nail Biting (And Which Kind)](https://stopbiting.today/blog/when-to-see-a-doctor-for-nail-biting): Most nail biting doesn't need a doctor.
 - [Nail Biting and Panic Disorder: When Biting Clusters Around Panic Attacks](https://stopbiting.today/blog/nail-biting-panic-disorder): For some people with panic disorder, nail biting clusters around panic attacks rather than general anxiety.
 - [Nail Biting and PTSD: Understanding the Hypervigilance Connection](https://stopbiting.today/blog/nail-biting-ptsd): For some people with PTSD, nail biting is tied to hypervigilance and nervous system dysregulation rather than ordinary stress.
-- [Dermatophagia: When You Bite the Skin, Not the Nail](https://stopbiting.today/blog/nail-biting-dermatophagia): Many people who think they bite their nails actually bite the skin around them.
+- [Dermatophagia: When You Bite the Skin, Not the Nail](https://stopbiting.today/blog/nail-biting-dermatophagia): Dermatophagia is biting the skin around the nails and fingers, often mistaken for nail biting.
 - [Is There Medication for Nail Biting? What the Evidence Says](https://stopbiting.today/blog/nail-biting-medication): A 2023 evidence map screened 2,618 psychodermatology studies and found exactly two randomised drug trials for nail biting.
 - [How to Find a Therapist Who Actually Treats Nail Biting](https://stopbiting.today/blog/nail-biting-finding-a-therapist): The common failure is a therapist treating the biting as an anxiety symptom and working only on that.
 - [Nail and Cuticle Picking (Onychotillomania): What It Is and What Helps](https://stopbiting.today/blog/nail-and-cuticle-picking): Nail picking is a body-focused repetitive behavior, like nail biting.

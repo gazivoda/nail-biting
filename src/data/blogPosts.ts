@@ -949,7 +949,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'best-apps-to-stop-nail-biting',
   title: '5 Best Tools to Stop Nail Biting in 2026, Ranked by Evidence',
-  seoTitle: 'Best Tools to Stop Nail Biting (2026), Compared',
+  seoTitle: 'Best Apps to Stop Nail Biting (2026), Compared',
   description: 'Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers. What each does for an automatic habit, and its cost.',
   tag: 'Comparison',
   readingMinutes: 11,
@@ -1550,8 +1550,8 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'grow-nails-after-nail-biting',
   title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
-  seoTitle: 'Grow Nails After Nail Biting: A Timeline',
-  description: 'Fingernails grow at a measured rate, not to a timeline: 3.47mm a month on average in 22 healthy young adults. Why regrowing bitten nails takes several months.',
+  seoTitle: 'Grow Nails Back After Biting: What to Expect',
+  description: 'Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out. What to expect, and what no study has measured.',
   tag: 'Health',
   readingMinutes: 5,
   datePublished: '2026-04-21',
@@ -2827,8 +2827,8 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'bfrb-guide',
   title: `Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide`,
-  seoTitle: 'BFRBs: Body-Focused Repetitive Behaviors Guide',
-  description: 'Habit reversal pooled a large effect (d = 0.80) over 18 studies and 575 participants, across six behaviour classes, not nail biting alone. What BFRBs share.',
+  seoTitle: 'BFRBs: Body-Focused Repetitive Behaviours',
+  description: 'BFRBs are repeated habits such as nail biting, skin picking and hair pulling that damage the body. What they share, and what the evidence says helps.',
   tag: 'Clinical',
   readingMinutes: 5,
   datePublished: '2026-07-16',
@@ -5511,9 +5511,9 @@ BLOG_POSTS.push(
 
   {
     slug: 'nail-biting-vitamin-deficiency',
-    title: 'Is Nail Biting a Sign of Vitamin Deficiency?',
-    seoTitle: 'Nail Biting and Vitamin Deficiency: The Facts',
-    description: 'No evidence links nail biting to a mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: habit mechanics, not micronutrients.',
+    title: 'What Deficiency Causes Nail Biting? What the Evidence Says',
+    seoTitle: 'What Deficiency Causes Nail Biting? Evidence',
+    description: 'No evidence links nail biting to a vitamin or mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: mechanics, not nutrients.',
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
@@ -5553,17 +5553,18 @@ BLOG_POSTS.push(
   {
     slug: 'nail-biting-dermatophagia',
     title: 'Dermatophagia: When You Bite the Skin, Not the Nail',
-    seoTitle: 'Dermatophagia: Biting the Skin Around Nails',
-    description: 'Many people who think they bite their nails actually bite the skin around them. Dermatophagia is a distinct behaviour with distinct risks and strategies.',
+    seoTitle: 'Dermatophagia (Skin Biting): What Helps',
+    description: 'Dermatophagia is biting the skin around the nails and fingers, often mistaken for nail biting. It has its own risks and strategies. What it is and what helps.',
     tag: 'Clinical',
     readingMinutes: 4,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-11',
+    dateModified: '2026-10-20',
     ogImage: '/og/nail-biting-dermatophagia.png',
     sections: [
       {
         heading: 'Is biting the skin around your nails the same as nail biting?',
-        body: `A lot of people describe themselves as nail biters when what they actually do is bite and chew the skin around their nails — the sides of the fingers, the cuticle area, the pads of the fingertips. The nails themselves may be relatively intact.\n\nThis is dermatophagia, and it is worth naming separately. It sits in the same family of body-focused repetitive behaviours as nail biting, skin picking, and hair pulling, and it often coexists with nail biting. But the risk profile and the practical strategies differ enough that treating it as identical leads people to approaches that cannot work.`,
+        body: `Dermatophagia means biting the skin, usually around the nails and on the fingers, rather than the nail itself. A 2022 case report by Cohen uses the term dermatodaxia for humans who bite their skin and lists dermatophagia among the older, less appropriate designations. Biting the skin of the fingers is the same behaviour.\n\nA lot of people describe themselves as nail biters when what they actually do is bite and chew the skin around their nails — the sides of the fingers, the cuticle area, the pads of the fingertips. The nails themselves may be relatively intact.\n\nThis is dermatophagia, and it is worth naming separately. It sits in the same family of body-focused repetitive behaviours as nail biting, skin picking, and hair pulling, and it often coexists with nail biting. But the risk profile and the practical strategies differ enough that treating it as identical leads people to approaches that cannot work.`,
+        html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/35350511/" target="_blank" rel="noopener noreferrer">Cohen PR. Skin Biter: Dermatodaxia Revisited. Cureus. 2022;14(2):e22289. doi:10.7759/cureus.22289</a></li></ul>`,
       },
       {
         heading: 'How to tell which one you are doing',
@@ -6047,7 +6048,7 @@ BLOG_POSTS.push(
   {
     slug: 'nail-biting-finger-tape',
     title: 'Tape, Plasters and Finger Covers for Nail Biting',
-    seoTitle: 'Tape and Plasters to Stop Nail Biting',
+    seoTitle: 'Finger Tape for Nail Biting: How to Use It',
     description: 'Taping target fingers is cheap, discreet, and more sustainable than gloves. Here is how to use it well and what it can and cannot achieve.',
     tag: 'Products',
     readingMinutes: 3,

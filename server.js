@@ -718,6 +718,16 @@ if (!existsSync(distPath)) {
   // changes. Content-Type still comes from the same mime lookup, and the
   // compression filter above still declines /og/ and /fonts/ by path
   // (INCOMPRESSIBLE_PATHS), so neither directory gets a second squeeze.
+  // Data files that sit next to the pages are not pages: keep them out of the
+  // index (robots.txt, llms.txt and sitemap.xml are the only ones that should be
+  // found). /posts already sends its own header.
+  app.use((req, res, next) => {
+    if (/\.(json|txt)$/i.test(req.path) && !['/robots.txt', '/llms.txt', '/llms-full.txt', '/sitemap.xml'].includes(req.path)) {
+      res.setHeader('X-Robots-Tag', 'noindex');
+    }
+    next();
+  });
+
   for (const dir of ['fonts', 'og']) {
     app.use(`/${dir}`, express.static(join(distPath, dir), {
       maxAge: '1y',
@@ -1611,7 +1621,7 @@ if (!existsSync(distPath)) {
     const article = homeArticleHtml();
     const condition = visibleConditionSchema(article);
     let injected = injectMeta(indexHtmlFaqOnly, {
-      title: 'Stop Nail Biting with AI | Stop Biting',
+      title: 'Nail Biting App: Stop Biting with AI | Stop Biting',
       description: homeDescription,
       canonical: 'https://stopbiting.today/',
     });
@@ -1634,7 +1644,7 @@ if (!existsSync(distPath)) {
       '@type': 'WebPage',
       '@id': 'https://stopbiting.today/',
       url: 'https://stopbiting.today/',
-      name: 'Stop Nail Biting with AI | Stop Biting',
+      name: 'Nail Biting App: Stop Biting with AI | Stop Biting',
       description: homeDescription,
       // Reference, not a re-declaration — the WebSite node ships in the shell.
       isPartOf: { '@id': WEBSITE_ID },
@@ -1891,7 +1901,11 @@ if (!existsSync(distPath)) {
   });
 
   // Remaining static assets (icons, WASM, models, etc.)
-  app.use(express.static(distPath));
+  // redirect:false: the 301 middleware above strips the trailing slash from
+  // extensionless paths while express.static adds one for a directory, so
+  // /shots and /video bounced between each other forever. A bare directory now
+  // falls through to the 404 handler instead.
+  app.use(express.static(distPath, { redirect: false }));
 
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
   app.get('/about', (_req, res) => {
