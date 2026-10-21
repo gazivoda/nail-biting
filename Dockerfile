@@ -61,7 +61,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=frontend /app/dist ./dist
 
 # Express server
-COPY server.js email.js ./
+COPY server.js email.js trialFollowup.js ./
 
 # DATA_DIR is where SQLite lives.
 # Mount a Coolify persistent volume at /app/data to survive redeploys.
