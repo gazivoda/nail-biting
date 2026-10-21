@@ -5,7 +5,9 @@ function getResend() {
   if (!resend) resend = new Resend(process.env.RESEND_API_KEY);
   return resend;
 }
-const FROM = 'Stop Biting Nails <onboarding@resend.dev>';
+// onboarding@resend.dev only delivers to the Resend account owner; set EMAIL_FROM
+// to an address on a domain verified in Resend before real users get mail.
+const FROM = process.env.EMAIL_FROM || 'Stop Biting Nails <onboarding@resend.dev>';
 const ADMIN_EMAIL = 'gazivodai61@gmail.com';
 const APP_URL = process.env.APP_URL || 'https://stopbiting.today';
 
@@ -87,6 +89,7 @@ export async function sendFeedbackEmail({ name, email }) {
     from: FROM,
     to: email,
     subject: `How did your Stop Biting trial go, ${firstName}?`,
+    replyTo: ADMIN_EMAIL,
     html: `<!DOCTYPE html>
 <html>
 <head>

@@ -11,7 +11,8 @@ import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomBytes, createHmac } from 'crypto';
-import { sendWelcomeEmail, sendAdminNotification } from './email.js';
+import { sendWelcomeEmail, sendAdminNotification, sendFeedbackEmail } from './email.js';
+import { startTrialFollowupJob } from './trialFollowup.js';
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -2767,5 +2768,8 @@ if (!existsSync(distPath)) {
     res.sendFile(indexPath, HTML_SENDFILE_OPTS);
   });
 }
+
+// Web only: the desktop app's embedded server has its own local DB and must not send mail.
+if (!ELECTRON_PROTOCOL) startTrialFollowupJob(db, sendFeedbackEmail);
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
