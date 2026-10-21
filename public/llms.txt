@@ -27,7 +27,7 @@ Key facts:
 ## Key pages
 
 - [Nail Biting App: Stop Biting with AI](https://stopbiting.today/): Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.
-- [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.
+- [How AI Nail Biting Detection Works](https://stopbiting.today/how-it-works): Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device. No camera data is sent while it runs.
 - [Pricing: $2.99/month or $29/year](https://stopbiting.today/pricing): Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.
 - [Nail Biting Cost Calculator: What It Costs You a Year](https://stopbiting.today/tools/nail-biting-cost-calculator): Free calculator: add up what nail biting costs you each year in manicures and repairs, using your own numbers, and compare it with the $29 yearly plan.
 - [Nail Growth Timeline Calculator: How Long to Regrow Nails](https://stopbiting.today/tools/nail-growth-timeline-calculator): Free calculator: how long to grow nails back, from the average rates in a 22-person study: 3.47 mm a month for fingernails, 1.62 for toenails.
@@ -263,7 +263,7 @@ Key facts:
 ### Parenting
 
 - [Nail Biting in Kids: When It's Normal, When to Step In, and What Actually Helps](https://stopbiting.today/blog/nail-biting-in-children): Clinical reviews estimate up to 45% of children between age 10 and puberty bite their nails.
-- [Nail Biting in Toddlers: What's Normal at Ages 2–4](https://stopbiting.today/blog/nail-biting-toddler): Parents reported nail biting in 23% of 3- to 6-year-olds in a small US interview study: common, not a precise rate.
+- [Nail Biting in Toddlers: What's Normal at Ages 2 to 4](https://stopbiting.today/blog/nail-biting-toddler): Parents reported nail biting in 23% of 3- to 6-year-olds in a small US interview study: common, not a precise rate.
 - [From Thumb Sucking to Nail Biting: How One Habit Becomes the Other](https://stopbiting.today/blog/nail-biting-thumb-sucking): In 1,131 pairs of 12-year-old Japanese twins, finger-sucking and nail biting co-occurred in 17.7% of males and 15.7% of females.
 - [If You Bite Your Nails, Should You Hide It From Your Kids?](https://stopbiting.today/blog/nail-biting-parents-modeling): In 743 schoolchildren, 36.8% of biters had a family member who bit too, but a twin study put 50% of the variance on genes.
 - [Why Punishing a Child for Nail Biting Backfires](https://stopbiting.today/blog/nail-biting-punishing-children): In a randomised experiment, 40 undergraduate biters bit least in conversation and when reprimanded.

@@ -102,7 +102,7 @@ export function ComparePage({ path }: Props) {
             <p className="sg-h3">A webcam alarm for nail biting.</p>
             <p className="sg-small mt-1 max-w-[46ch]">
               Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when your
-              hand moves toward your mouth. The video stays on your computer. 3 days free, no card,
+              hand moves toward your mouth. No camera data is sent while it runs. 3 days free, no card,
               then $2.99 a month or $29 a year. Read{' '}
               <a href="/how-it-works" className="sg-link">how it works</a>.
             </p>

@@ -79,7 +79,8 @@ app.use((req, res, next) => {
   let canonical = path;
   if (path === '/index.html') canonical = '/';
   else if (!/\.[a-z0-9]+$/i.test(path)) {
-    canonical = path.toLowerCase();
+    // Collapse repeated slashes too: '//blog' would otherwise serve a duplicate of /blog.
+    canonical = path.toLowerCase().replace(/\/{2,}/g, '/');
     if (canonical.length > 1) canonical = canonical.replace(/\/+$/, '');
   }
   if (canonical !== path && canonical !== '') return res.redirect(301, canonical + search);
@@ -1275,7 +1276,7 @@ if (!existsSync(distPath)) {
       inLanguage: 'en',
       isAccessibleForFree: true,
       timeRequired: `PT${post.readingMinutes}M`,
-      keywords: post.tag,
+      articleSection: post.tag,
       image: postSchemaImage(post),
       speakable: SCHEMA_SPEAKABLE,
     };
@@ -2216,7 +2217,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/how-it-works',
       url: 'https://stopbiting.today/how-it-works',
       name: 'How AI nail biting detection works',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device. No camera data is sent while it runs.',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: { '@id': ORG_ID },
       speakable: SCHEMA_SPEAKABLE,
@@ -2275,7 +2276,7 @@ if (!existsSync(distPath)) {
     const condition = visibleConditionSchema(article);
     let injected = injectMeta(indexHtml, {
       title: 'How AI Nail Biting Detection Works | Stop Biting',
-      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device, and no camera data is sent anywhere while it runs.',
+      description: 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device. No camera data is sent while it runs.',
       canonical: 'https://stopbiting.today/how-it-works',
     });
     if (condition) injected = injectSchema(injected, condition);

@@ -50,7 +50,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Parenting",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-21",
   },
   {
     slug: "best-nail-biting-remedies",
@@ -122,7 +122,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-07",
-    dateModified: "2026-10-20",
+    dateModified: "2026-10-21",
   },
   {
     slug: "nail-biting-anxiety-treatment",
@@ -131,7 +131,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Psychology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-21",
   },
   {
     slug: "how-long-to-stop-nail-biting",
@@ -212,7 +212,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 11,
     datePublished: "2026-04-19",
-    dateModified: "2026-10-13",
+    dateModified: "2026-10-21",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
@@ -248,7 +248,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 7,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-21",
   },
   {
     slug: "nail-biting-hypnosis",
@@ -302,7 +302,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-21",
   },
   {
     slug: "nail-biting-emotional-regulation",
@@ -504,7 +504,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-toddler",
-    title: "Nail Biting in Toddlers: What's Normal at Ages 2–4",
+    title: "Nail Biting in Toddlers: What's Normal at Ages 2 to 4",
     description: "Parents reported nail biting in 23% of 3- to 6-year-olds in a small US interview study: common, not a precise rate. What is typical at 2 to 4, and what helps.",
     tag: "Parenting",
     readingMinutes: 3,
@@ -1112,7 +1112,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-21",
   },
   {
     slug: "nail-biting-dermatophagia",

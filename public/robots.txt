@@ -20,6 +20,15 @@ User-agent: ClaudeBot
 Allow: /
 Disallow: /api/
 
+# Anthropic's search and user-requested fetchers are separate agents from ClaudeBot.
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /api/
+
 User-agent: PerplexityBot
 Allow: /
 Disallow: /api/
