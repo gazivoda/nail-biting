@@ -39,6 +39,7 @@ export const DEFAULT_REFERRAL_CREDIT_DAYS: number;
 export function referralCreditDays(env?: Record<string, string | undefined>): number;
 export const DEFAULT_GIFT_DAYS: number;
 export function giftDays(env?: Record<string, string | undefined>): number;
+export function describeDays(days: number): string;
 export function giftCodeExpiryDays(env?: Record<string, string | undefined>): number;
 
 export type GrantKind = 'lifetime' | 'gift' | 'referral_credit';

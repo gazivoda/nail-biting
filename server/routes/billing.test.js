@@ -36,7 +36,7 @@ describe('registration', () => {
 
 describe('with every flag off the routes do not exist', () => {
   const dead = [
-    ['GET', '/api/referrals/me'], ['POST', '/api/referrals/attach'],
+    ['GET', '/api/referrals/me'], ['POST', '/api/referrals/attach'], ['GET', '/api/billing/gift-info'],
     ['POST', '/api/billing/gift/redeem'], ['POST', '/api/billing/verify-transaction'], ['GET', '/redeem'],
   ];
   it.each(dead)('%s %s is a 404 whoever asks', async (method, path) => {
@@ -90,6 +90,15 @@ describe('referral routes', () => {
     const h = await harness({ env: { REFERRAL_CREDIT_DAYS: '45' } });
     h.addUser({ id: 'ref' });
     expect((await h.call('/api/referrals/me', { user: 'ref' })).json.credit_days).toBe(45);
+  });
+});
+
+describe('gift info route', () => {
+  it('tells anyone how long a gift lasts, following GIFT_PLAN_DAYS', async () => {
+    const h = await harness();
+    expect((await h.call('/api/billing/gift-info')).json).toEqual({ days: 365 });
+    const h2 = await harness({ env: { GIFT_PLAN_DAYS: '90' } });
+    expect((await h2.call('/api/billing/gift-info')).json).toEqual({ days: 90 });
   });
 });
 

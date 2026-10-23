@@ -153,6 +153,13 @@ export function giftDays(env = processEnv()) {
   return parseWholeNumber(env.GIFT_PLAN_DAYS, DEFAULT_GIFT_DAYS, 1, 3650);
 }
 
+/** A length of time in the words the copy uses: "one year", "3 months", "45 days". */
+export function describeDays(days) {
+  if (days % 365 === 0) { const y = days / 365; return y === 1 ? 'one year' : `${y} years`; }
+  if (days % 30 === 0) { const m = days / 30; return m === 1 ? 'one month' : `${m} months`; }
+  return days === 1 ? 'one day' : `${days} days`;
+}
+
 /** Days a gift code stays redeemable after it is bought. 0 means it never expires (the default). */
 export function giftCodeExpiryDays(env = processEnv()) {
   return parseWholeNumber(env.GIFT_CODE_EXPIRY_DAYS, 0, 0, 3650);

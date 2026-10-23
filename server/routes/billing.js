@@ -6,6 +6,7 @@
 //
 //   GET  /api/referrals/me                 [referrals]   my code, my link, how it is going
 //   POST /api/referrals/attach             [referrals]   {code}  tie a new account to the link that brought it
+//   GET  /api/billing/gift-info            [gift_plan]   {days}  how long one gift lasts (public; the site words its copy from it)
 //   POST /api/billing/gift/redeem          [gift_plan]   {code}  add a gift to my account (once per code)
 //   POST /api/billing/verify-transaction   [lifetime_plan] {transactionId}  grant a lifetime purchase right away
 //   GET  /redeem                           [gift_plan]   the app shell for the redeem page (noindex); 404 while off
@@ -133,6 +134,11 @@ export function registerBilling(ctx, deps = {}) {
   });
 
   // ── Gifts ──────────────────────────────────────────────────────────────────
+  app.get('/api/billing/gift-info', requireFeature('gift_plan'), (_req, res) => {
+    res.set('Cache-Control', 'public, max-age=300');
+    res.json({ days: config.giftDays });
+  });
+
   app.post('/api/billing/gift/redeem', requireFeature('gift_plan'), authMiddleware, redeemLimiter, (req, res) => {
     const code = req.body?.code;
     if (typeof code !== 'string') return res.status(400).json({ error: 'code is required' });

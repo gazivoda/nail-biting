@@ -2,16 +2,10 @@
 // The buyer forwards the link; the code is in the link's fragment (#code=...), which browsers never
 // send to a server, so it does not end up in access logs or a Referer header.
 
+import { describeDays } from '../../shared/plans.js';
 import { formatGiftCode } from './gift.js';
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-/** "one year", "3 months", "45 days". */
-export function describeDays(days) {
-  if (days % 365 === 0) { const y = days / 365; return y === 1 ? 'one year' : `${y} years`; }
-  if (days % 30 === 0) { const m = days / 30; return m === 1 ? 'one month' : `${m} months`; }
-  return days === 1 ? 'one day' : `${days} days`;
-}
 
 export function giftRedeemLink(appUrl, code) {
   return `${appUrl.replace(/\/+$/, '')}/redeem#code=${code}`;

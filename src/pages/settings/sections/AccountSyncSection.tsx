@@ -25,6 +25,10 @@
 // For gating INSIDE the card (one control behind a second flag) use
 // useFeature('...') from '../../../features/useFeature'.
 
+import { ReferralCard } from '../../../components/billing/ReferralCard';
+
 export function AccountSyncSection() {
-  return null;
+  // WS9: the referral card (flag referrals; it draws nothing while the flag is off). WS4: add the sync
+  // controls above it; keep this line.
+  return <ReferralCard />;
 }

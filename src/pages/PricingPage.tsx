@@ -7,6 +7,7 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { Testimonials } from '../components/site/Testimonials';
+import { PlanExtras } from '../components/billing/PlanExtras';
 import { TRIAL_HYPHEN, TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
 // Dedicated /pricing page. The server (server.js) injects the title, meta
@@ -74,6 +75,8 @@ export function PricingPage() {
         </nav>
 
         <PricingSection headingAs="h1" />
+
+        <PlanExtras />{/* WS9: lifetime and gift (flags lifetime_plan, gift_plan); nothing while they are off */}
 
         <div className="mx-auto mt-20 grid max-w-4xl gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Mirrors the "What every plan includes" list in the server-injected prose. */}

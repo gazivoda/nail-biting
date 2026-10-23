@@ -7,6 +7,7 @@ import { PanicButton } from '../components/dashboard/PanicButton';
 import { CoachingDashboardSlot } from '../coaching/CoachingDashboardSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
+import { FreeTierNotice } from '../components/billing/FreeTierNotice';
 
 export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
   const { user, accessStatus } = useAuth();
@@ -48,6 +49,8 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
           )}
         </p>
       )}
+
+      <FreeTierNotice onUpgrade={onUpgrade} />{/* WS9: the free plan's daily allowance (flag free_tier); nothing otherwise */}
 
       {/* Single column on phones/tablets; split 1.35fr / 1fr from md up */}
       <div className="grid gap-5 items-start grid-cols-1 md:grid-cols-[1.35fr_1fr]">

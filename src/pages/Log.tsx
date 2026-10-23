@@ -10,6 +10,7 @@ import { PageTitle } from '../components/ui/PageTitle';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { PRESET_TAGS, URGE_TAG } from '../components/dashboard/triggerTags';
 import { topTrigger, peakHour, hourRange } from '../utils/insights';
+import { useHistoryWindow } from '../billing/useFreeTier';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -193,6 +194,8 @@ function ClearAllButton() {
 
 export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const { incidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
+  // WS9 (flag free_tier): a free account's list shows the last few days. Same array for every other account.
+  const { visible: shown, hidden: hiddenCount } = useHistoryWindow(incidents);
 
   // One tap on the bin used to remove an entry for good, and deleting a bite
   // silently moves the streak. The last deletion can be undone for a few
@@ -216,7 +219,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const grouped: { date: string; items: typeof incidents }[] = [];
   const seen = new Set<string>();
 
-  for (const inc of incidents) {
+  for (const inc of shown) {
     const key = formatDate(inc.timestamp);
     if (!seen.has(key)) {
       seen.add(key);
@@ -279,7 +282,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between gap-3 px-1">
                 <p className="shrink-0 whitespace-nowrap text-sm font-semibold text-stone-700 dark:text-stone-200">
-                  {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
+                  {shown.length} {shown.length !== 1 ? 'entries' : 'entry'}
                 </p>
                 <ClearAllButton />
               </div>
@@ -338,6 +341,12 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   </div>
                 </div>
               ))}
+
+              {hiddenCount > 0 && (
+                <p className="px-1 text-sm text-stone-600 dark:text-stone-300">
+                  {hiddenCount} older {hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan.
+                </p>
+              )}
             </div>
           )}
         </div>
