@@ -15,7 +15,7 @@ Constraints: preserve Google-Extended/training preferences; no invented clinical
 - [x] Product identity — Replace the template README with factual product documentation, source-author attribution and relevant canonical guides/tools.
 - [x] Task 4 — Regenerate blogIndex/sitemap/llms artifacts, run complete unit tests, build:web, seo:check, server syntax and local HTTP/schema/browser checks. Review the whole diff with an independent agent.
 - [x] Task 5 — Save evidence, all-skill coverage, remaining hosting actions, and a 28-day measurement plan in docs/seo/audits/2026-10-23/. Produce a PDF without invented performance/visibility scores.
-- [ ] Task 6 — Commit, confirm remote ancestry, push verified SEO-only changes to main, and check remote/deployment state.
+- [x] Task 6 — Commit, confirm remote ancestry, push verified SEO-only changes to main, and check remote/deployment state.
 
 Review focus: repeat public visits retain route metadata; authenticated HTML is not runtime cached; offline app entry still works; changed facts reach both client JSON and server-rendered HTML; unchanged publication dates and route URLs remain stable.
 
@@ -23,7 +23,7 @@ Review focus: repeat public visits retain route metadata; authenticated HTML is 
 
 Implemented navigation/schema fixes, five article revisions, synchronized metadata, factual README and nine refreshed social preview cards (six were already stale). Unit tests 149/149; production build passes; 219/219 local sitemap pages pass HTTP/canonical/H1/schema/assets checks; seo:check and all 211 OG cards pass. Twelve controlled browser checks pass, with the local-only CSP/HTTP installation fixture documented. Independent source review found no blockers. Ten no-useless-escape errors in untouched article text reproduce on origin/main; changed code and new tests pass targeted ESLint. PDF has five visually verified pages. Release confirmation follows remote verification. Historical GSC baseline: July 18–October 17, 110 clicks / 11,800 impressions / 0.9% CTR / average position 13.8. No current GSC access or measured uplift established.
 
-After integration with ffbf29a: 2,417/2,417 tests across126 files pass (zero skipped); current build passes; fresh219/219 page sweep passes; all213 social cards current; metadata synchronized; independent integration review approved. Trial configuration and new privacy/feature-gate guards retained. Details: docs/seo/audits/2026-10-23/VERIFICATION.md.
+After integration with ffbf29a: 2,417/2,417 tests across 126 files pass (zero skipped); current build passes; fresh 219/219 page sweep passes; all 213 social cards current; metadata synchronized; independent integration review approved. Trial configuration and new privacy/feature-gate guards retained. Pushed a2f94c5 to remote main with a normal fast-forward; git ls-remote confirmed the exact SHA. Automatic deployment was still serving the preceding worker at the first post-push check. Details: docs/seo/audits/2026-10-23/VERIFICATION.md.
 
 Started: 2026-08-11 (via /loop, self-paced). Baseline: GEO-AUDIT-REPORT.md 2026-06-15 = 64/100.
 

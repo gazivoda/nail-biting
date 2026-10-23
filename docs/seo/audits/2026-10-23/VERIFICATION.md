@@ -44,7 +44,7 @@ The emitted worker contains the root-only navigation allowlist. A local-only set
 
 ## Release and limits
 
-The user authorized commit and push. The initial audited implementation was committed as 6a3445e. During final verification, remote main advanced from 0071bb4 to ffbf29a with a separate application release. The updated main is being merged into the isolated SEO worktree; billing trial-copy tokens, photo protections and other released features are preserved. Final integration checks and release confirmation follow below. The original checkout's working files have not been edited by this task.
+The user authorized commit and push. The initial audited implementation was committed as 6a3445e. During final verification, remote main advanced from 0071bb4 to ffbf29a with a separate application release. That release was merged into the isolated SEO worktree; billing trial-copy tokens, photo protections and other released features were preserved. Integration commit a2f94c503b105ee81e3e830a140aa7b803cd9bd7 was pushed to remote main with a normal fast-forward, and git ls-remote confirmed the exact SHA. The original checkout's working files were not edited by this task. The first live-worker check still served the preceding build, so push acceptance is distinguished from automatic deployment completion.
 
 ## Final checks after integrating ffbf29a
 
