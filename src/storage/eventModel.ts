@@ -134,6 +134,20 @@ export function upgradeStateEvents<T extends { incidents?: unknown }>(state: T, 
 
 // ── Canonical <-> persisted ──────────────────────────────────────────────────
 
+/** The trigger an urge-timer entry carries (WS2). It is not a bite and never touches the streak. */
+export const URGE_TAG_ID = 'urge';
+
+/**
+ * An entry the urge timer logged: a manual event whose primary trigger is
+ * `urge`. It records an urge that was felt, not a bite, so `isBite` (the
+ * store), History and Today all leave it out of bite counts and streaks.
+ * Requires `!autoDetected`: an alarm somebody confirms with some other tag
+ * can never be mistaken for one.
+ */
+export function isUrge(inc: Pick<Incident, 'tag' | 'autoDetected'>): boolean {
+  return !inc.autoDetected && inc.tag === URGE_TAG_ID;
+}
+
 /** The synthetic tag an alarm carries until the user says what set it off. */
 const NO_TAG_ALARM = 'auto-detected';
 const NO_TAG_MANUAL = 'unknown';

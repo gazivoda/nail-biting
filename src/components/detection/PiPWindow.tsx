@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useAppStore } from '../../store/useAppStore';
+import { CoachingSeam } from '../../coaching/CoachingSeam';
 
 interface Props {
   pipWindow: Window;
@@ -34,6 +35,8 @@ export function PiPWindow({ pipWindow, status }: Props) {
       {isAlerting && (
         <div className="pointer-events-none absolute inset-0" style={{ border: '3px solid #e5604d' }} />
       )}
+
+      <CoachingSeam surface="pip" />{/* SEAM (WS2): covers the strip while a prompt runs. WS3/WS7a mount beside it. */}
 
       <div className="flex min-w-0 items-center gap-2.5">
         <span

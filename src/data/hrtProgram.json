@@ -1,0 +1,270 @@
+{
+  "status": "NEEDS HUMAN REVIEW",
+  "reviewNote": "All 28 lessons are first drafts written without any clinical input. Before the hrt_coaching flag is switched on in production, a person with the right background should read every lesson, edit or delete anything that overreaches, then set that lesson's reviewed to true and this status to reviewed. Rules the draft follows: plain and practical, no medical claims, no promised outcomes, no statistics, nothing copied from books, apps or sites, and an app is not a clinician.",
+  "title": "The 4-week program",
+  "intro": "One short lesson a day, about three minutes each, with one small thing to try. It follows the idea behind the app: notice the moment, interrupt it, understand what leads into it, and know what to do when it happens anyway.",
+  "pace": "A new lesson opens the day after you finish the last one. Miss a day, or a month, and nothing is lost. The next lesson is simply waiting for you.",
+  "disclaimer": "This is a self-help guide, not a medical treatment and not a replacement for a therapist or doctor. If biting hurts, bleeds, gets infected or is affecting your life, please talk to a professional.",
+  "weeks": [
+    { "week": 1, "title": "Awareness", "theme": "awareness", "summary": "Just notice. Nothing needs fixing yet." },
+    { "week": 2, "title": "Competing response", "theme": "competing response", "summary": "Pick something else for your hands and practise it." },
+    { "week": 3, "title": "Trigger mapping", "theme": "trigger mapping", "summary": "Find out when, where and why it tends to happen." },
+    { "week": 4, "title": "Slips and staying with it", "theme": "relapse handling", "summary": "Plan for the bad day before it arrives." }
+  ],
+  "lessons": [
+    {
+      "day": 1, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "What this program is",
+      "body": [
+        "For the next 28 days you get one short lesson a day. Each one is a few paragraphs and one small thing to try. There is nothing to pass and no score.",
+        "The app's alarm is the first part: it notices the moment so you can notice it too. The lessons are the second part: what to do with that moment.",
+        "Go at your own pace. If you miss a day, the next lesson waits for you."
+      ],
+      "tryToday": "Choose a time of day when you will usually read the lesson, and set a reminder on your phone if that helps."
+    },
+    {
+      "day": 2, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "The moment you notice",
+      "body": [
+        "Often the hand is already moving before you know it. That is what a well-practised habit does.",
+        "This week the only job is to catch the moment, earlier each time if you can. Catching it late still counts.",
+        "Skip the telling off. Noticing is a skill, and a kind tone with yourself keeps you practising it."
+      ],
+      "tryToday": "Each time you notice your hand near your face, with or without the alarm, think 'there it is' and carry on."
+    },
+    {
+      "day": 3, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "Where your hands usually are",
+      "body": [
+        "Your hands have habitual places. Resting by your chin, one on the mouse, one holding the phone, fingers running along the edge of the desk.",
+        "Some of these positions put your fingers close to your face without you deciding anything. You do not need to change them yet. Just get to know them."
+      ],
+      "tryToday": "Set three reminders for today. When each one goes off, look down and see where your hands are and what they are doing."
+    },
+    {
+      "day": 4, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "Using the alarm as a second pair of eyes",
+      "body": [
+        "When the alarm sounds, you do not need to feel bad. It did its job: you now know what your hand was doing.",
+        "Try giving the moment a name in one plain sentence, such as 'my hand was at my mouth while I was reading'. Naming it takes a few seconds and builds the habit of paying attention."
+      ],
+      "tryToday": "The next time the alarm goes, say what just happened, out loud or in your head, in one sentence."
+    },
+    {
+      "day": 5, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "What comes just before",
+      "body": [
+        "You may notice a small something first. A rough edge on a nail, a bit of tension, restlessness, a pause in what you were doing.",
+        "You may or may not have one. If you do, it is useful: it gives you a moment of warning before the hand moves."
+      ],
+      "tryToday": "After you notice a moment today, ask yourself what you felt in the minute before. Fingers, mouth, shoulders, mood. Any answer is fine, including 'nothing'."
+    },
+    {
+      "day": 6, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "Where you are when it happens",
+      "body": [
+        "Situations matter. You might notice it mostly at the screen, or on calls, while reading, waiting, watching something or driving.",
+        "You are not looking for a cause yet. You are collecting the plain facts: where were you, and what were you doing?"
+      ],
+      "tryToday": "Write down three situations from this week when you noticed it. A phrase for each is enough."
+    },
+    {
+      "day": 7, "week": 1, "theme": "awareness", "reviewed": false,
+      "title": "Week 1 look back",
+      "body": [
+        "You have spent a week just noticing. That is real work, even if it did not feel like much.",
+        "Open the History tab and have a look at what the app has recorded. You are not judging the numbers. You are looking for anything that surprises you."
+      ],
+      "tryToday": "Finish this sentence in your own words: 'I notice it most when ...'"
+    },
+    {
+      "day": 8, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "What a competing response is",
+      "body": [
+        "A competing response is a small action you do with your hands instead. It should be something you cannot easily do at the same time as biting, that you can do anywhere, and that nobody else would notice.",
+        "The idea is simple: when you catch the moment, your hands have somewhere else to go."
+      ],
+      "tryToday": "Make your hands into loose fists for ten seconds, then relax them. That is one example. You will pick your own tomorrow."
+    },
+    {
+      "day": 9, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "Choosing yours",
+      "body": [
+        "Good choices are easy, quiet and possible wherever you spend your time. Pressing your palms flat on the desk, clenching your fists, pressing your hands together, holding something in both hands.",
+        "Pick one that suits your day. You can change it later, and you can write your own in Settings, under Alerts."
+      ],
+      "tryToday": "Choose one competing response and say it to yourself in a short phrase, like 'palms flat'."
+    },
+    {
+      "day": 10, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "Practise when it is quiet",
+      "body": [
+        "A response you only try in the heat of the moment is hard to reach for. Rehearsing it when nothing is happening makes it familiar.",
+        "Keep each practice short. Thirty seconds is plenty."
+      ],
+      "tryToday": "Do your competing response three times today for thirty seconds each, at moments when you are not feeling any pull."
+    },
+    {
+      "day": 11, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "Using it when the alarm sounds",
+      "body": [
+        "Now put the two together. The alarm sounds, you notice, your hands go to your competing response and stay there until the timer finishes.",
+        "If you would like a prompt, turn on the countdown in Settings, under Alerts. It appears after the alarm, never instead of it, and you can skip it at any time. Doing it without the app works just as well."
+      ],
+      "tryToday": "Next time the alarm sounds, do your competing response for the full time. If you skip, that is fine. Just notice that you did."
+    },
+    {
+      "day": 12, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "How long to hold it",
+      "body": [
+        "There is no perfect length. A very short response is easy to rush, and a very long one is easy to abandon.",
+        "Choose a length you will really do. The app lets you set anything from 15 to 60 seconds, and you can change it whenever you like."
+      ],
+      "tryToday": "Try a different length from your usual one and see which feels easier to stay with."
+    },
+    {
+      "day": 13, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "When you do not feel like it",
+      "body": [
+        "Some days the response will feel silly, boring or too much effort. That happens, and it does not mean you are doing it wrong.",
+        "On those days, shrink it rather than drop it. Ten seconds counts. So does just placing your hands flat for a moment."
+      ],
+      "tryToday": "Do a deliberately tiny version of your response at least once today, even if the full one feels like too much."
+    },
+    {
+      "day": 14, "week": 2, "theme": "competing response", "reviewed": false,
+      "title": "Week 2 look back",
+      "body": [
+        "You now have a response and some practice with it. Look at how it went.",
+        "Was it easy to remember? Was it easy to do where you actually sit? Is there a version that suits you better?"
+      ],
+      "tryToday": "Change one thing about your competing response, the action or the length, to make it easier to use."
+    },
+    {
+      "day": 15, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "What a trigger is",
+      "body": [
+        "A trigger is anything that tends to come right before. It can be a place, a feeling, a state of your body or something you are doing.",
+        "Knowing yours does not make them go away. It gives you a heads up and a chance to be ready."
+      ],
+      "tryToday": "Of those four kinds (place, feeling, body, activity), which one feels most familiar to you? Jot down one example."
+    },
+    {
+      "day": 16, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "Feelings",
+      "body": [
+        "Boredom, stress, deep focus, frustration, waiting, tiredness. Feelings can be tangled up with the habit, sometimes several at once.",
+        "You do not have to work out the true reason. Pick the one that fits best in the moment. 'Not sure' is a perfectly good answer."
+      ],
+      "tryToday": "When the app asks what set it off, pick an answer instead of closing the question, even if you are only guessing."
+    },
+    {
+      "day": 17, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "Time and place",
+      "body": [
+        "Look for patterns in when it happens. Time of day, day of the week, at work or at home, on your own or around people.",
+        "The History tab starts to show things like your busiest time of day once it has enough entries. Until then, your own notes are just as good."
+      ],
+      "tryToday": "Look at the History tab and write down the times of day that come up most. Ignore anything that does not stand out."
+    },
+    {
+      "day": 18, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "Activities and things nearby",
+      "body": [
+        "Some activities seem to go with it: long reading, a video call, scrolling, thinking hard, watching something. Objects can too, like a pen, a rough nail or a particular chair.",
+        "These are easier to spot than feelings, and easier to change."
+      ],
+      "tryToday": "List two activities and one object that you connect with the habit."
+    },
+    {
+      "day": 19, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "Changing the setup",
+      "body": [
+        "Once you know a few triggers, you can make small changes to your surroundings so they pull less. Keep something to fiddle with within reach. Rest your hands on the desk rather than under your chin. Keep a nail file where you work.",
+        "Small and boring is fine. One change is enough to start."
+      ],
+      "tryToday": "Make one change to your desk, chair or routine that matches a trigger you have found."
+    },
+    {
+      "day": 20, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "An if-then plan",
+      "body": [
+        "A plan in the form 'when this happens, I do that' saves you deciding in the moment. For example: 'When I start a long call, I put my hands flat on the desk.'",
+        "Pick a situation you find hard and give it a one-line plan. Keep it short enough to remember."
+      ],
+      "tryToday": "Write one if-then plan for the situation you find hardest, and put it somewhere you will see it."
+    },
+    {
+      "day": 21, "week": 3, "theme": "trigger mapping", "reviewed": false,
+      "title": "Week 3 look back",
+      "body": [
+        "You now have a rough map. A few places, feelings and activities, and perhaps a plan or two.",
+        "It does not need to be complete. It will keep changing as you notice more."
+      ],
+      "tryToday": "Write your top three triggers in one list, with a short plan beside each."
+    },
+    {
+      "day": 22, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "A slip is information",
+      "body": [
+        "You may well bite again after a good stretch. If so, it does not undo what you have learned.",
+        "Log it in the app and use it as information. What was going on? What came right before? The streak counter restarts, but it is only a number, and your skills stay."
+      ],
+      "tryToday": "If you slip, log it, pick a trigger and move on. If you do not, read this lesson again on a day you need it."
+    },
+    {
+      "day": 23, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "The 'might as well' moment",
+      "body": [
+        "After a slip there can be a thought like 'I have ruined today, so I might as well carry on'. It is an easy trap to fall into.",
+        "The way out is to make the next minute separate from the last one. One slip is one slip."
+      ],
+      "tryToday": "Write one kind sentence to yourself to read after a slip. Use your own words."
+    },
+    {
+      "day": 24, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "Getting back on track in a minute",
+      "body": [
+        "Have a short routine ready for after a slip: log it, do your competing response for a while, take a breath, and go back to what you were doing.",
+        "Practise it once while things are calm. It takes about a minute, and having it ready makes the moment less heavy."
+      ],
+      "tryToday": "Walk through your after-a-slip routine once now, as if it had just happened."
+    },
+    {
+      "day": 25, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "Hard days",
+      "body": [
+        "Stress, travel, poor sleep, deadlines and being ill may all make the habit pull harder. Expect that on those days rather than being surprised by it.",
+        "Lower the goal. On a hard day, 'notice and respond when I can' is a good day's work."
+      ],
+      "tryToday": "Write a two-step plan for hard days. For example: 'Keep the alarm on. Do the tiny version of my response.'"
+    },
+    {
+      "day": 26, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "People who can help",
+      "body": [
+        "Some people like to tell a friend or partner. Others would rather keep it private. Both are fine.",
+        "If you do tell someone, say what kind of help you want. A gentle nudge, a quiet word, or just knowing they know."
+      ],
+      "tryToday": "Decide whether you want to tell anyone. If you do, write the one sentence you would say."
+    },
+    {
+      "day": 27, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "When an app is not enough",
+      "body": [
+        "This app is a self-help tool. It is not a clinician and cannot judge what is right for you.",
+        "If biting causes pain, bleeding or infection, if you feel distressed about it, or if it is getting in the way of daily life, please talk to a doctor or a therapist. Asking for help is a sensible step, and it does not replace anything you have done here."
+      ],
+      "tryToday": "Think about who you would contact if you wanted more support. You do not have to contact them."
+    },
+    {
+      "day": 28, "week": 4, "theme": "relapse handling", "reviewed": false,
+      "title": "Your plan from here",
+      "body": [
+        "The 28 days are over. The app and your plan carry on.",
+        "Pull the pieces together: your competing response and how long you hold it, your top triggers and what you do about each, your plan for slips, your plan for hard days, and who you can ask for support."
+      ],
+      "tryToday": "Write your plan in five short lines, and set yourself a reminder to read it again in a month."
+    }
+  ]
+}

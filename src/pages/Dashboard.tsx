@@ -4,6 +4,7 @@ import { TodayStats } from '../components/dashboard/TodayStats';
 import { SessionGoal } from '../components/dashboard/SessionGoal';
 import { ReplacementPrompt } from '../components/dashboard/ReplacementPrompt';
 import { PanicButton } from '../components/dashboard/PanicButton';
+import { CoachingDashboardSlot } from '../coaching/CoachingDashboardSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
 
@@ -67,6 +68,7 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
           <div className="order-first md:order-none">
             <PanicButton />
           </div>
+          <CoachingDashboardSlot />{/* WS2: urge timer, coaching bridge, program link. Renders nothing while its flags are off. */}
         </div>
       </div>
     </div>

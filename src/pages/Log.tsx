@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore, isBite } from '../store/useAppStore';
+import { isUrge } from '../storage/eventModel';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
 import { Rings } from '../components/site/Rings';
 import { PageTitle } from '../components/ui/PageTitle';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
-import { PRESET_TAGS } from '../components/dashboard/triggerTags';
+import { PRESET_TAGS, URGE_TAG } from '../components/dashboard/triggerTags';
 import { topTrigger, peakHour, hourRange } from '../utils/insights';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
@@ -19,12 +20,16 @@ const BAR_FILL = 'oklch(90% 0.2 124)';
 // Two words, used the same way everywhere:
 // Alarm = auto-detected and not yet reviewed (amber)
 // Bite  = logged by hand OR an alarm confirmed as a bite (red)
+// An urge-timer entry (WS2) is neither: see isBite.
 function isConfirmedBite(inc: Incident) {
-  return !inc.autoDetected || inc.confirmed === true;
+  return isBite(inc);
 }
 
 // Every confirmed-bite tag shares the same styling — preset or custom.
 const BITE_TAG_COLOR = 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800';
+
+// An urge the person rode out (urge timer): calm green, not the alarm red.
+const URGE_TAG_COLOR = 'text-forest-700 dark:text-forest-300 bg-forest-50 dark:bg-forest-800/50 border-forest-300 dark:border-forest-700';
 
 const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
 
@@ -77,7 +82,7 @@ function WeekChart() {
 
   const relevantIncidents = weekChartMetric === 'confirmed'
     ? incidents.filter(isConfirmedBite)
-    : incidents;
+    : incidents.filter(inc => !isUrge(inc)); // "Alarms and bites per day": an urge is neither
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = startOfDay(subDays(new Date(), 6 - i));
@@ -287,10 +292,13 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white divide-y divide-stone-200 dark:border-ink-400 dark:bg-ink-50 dark:divide-ink-400">
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
-                      const tagColor = bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
-                      const tagLabel = bite
-                        ? biteTagLabel(inc, customTags)
-                        : 'Alarm';
+                      const urge = isUrge(inc);
+                      const tagColor = urge ? URGE_TAG_COLOR : bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
+                      const tagLabel = urge
+                        ? (inc.competingResponse?.done ? `${URGE_TAG.label}, timer finished` : URGE_TAG.label)
+                        : bite
+                          ? biteTagLabel(inc, customTags)
+                          : 'Alarm';
                       return (
                         <div
                           key={inc.id}
