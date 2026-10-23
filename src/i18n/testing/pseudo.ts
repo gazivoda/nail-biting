@@ -12,7 +12,8 @@
 // inside the marks: that is for catalogs.test.ts to catch. This catches English that never went through t().
 
 import { beforeEach, afterEach, expect } from 'vitest';
-import { useMemoryStorage, resetStorage } from '../../../test-utils/memoryStorage';
+// (renamed on import: its "use" prefix makes the hooks lint rule think it is a React hook, but it only installs an in-memory storage)
+import { useMemoryStorage as freshMemoryStorage, resetStorage } from '../../../test-utils/memoryStorage';
 import { kv } from '../../storage/kv';
 import { resetFlagsForTests } from '../../features/flags';
 import '../persist';
@@ -23,7 +24,7 @@ import { describeLeaks, findUnmarkedEnglish, mark, type ScanOptions } from './sc
 /** Registers beforeEach/afterEach that put the app in German with marked output, on fresh in-memory storage. */
 export function usePseudoLocale(options: { flags?: string[] } = {}): void {
   beforeEach(() => {
-    useMemoryStorage();
+    freshMemoryStorage();
     setFlags(...(options.flags ?? []));
     resetLocaleForTests();
     installCatalogForTests('de', { reviewed: true, catalog });

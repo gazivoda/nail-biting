@@ -38,7 +38,7 @@ function closure(b, roots, { dynamic = true } = {}) {
   const stack = [...roots];
   while (stack.length) {
     const f = stack.pop();
-    if (seen.has(f) || !b.chunks.has(f)) continue;
+    if (seen.has(f) || !b.chunks.has(f) || /^locale-/.test(f)) continue; // a person who picked a language fetches those; not part of any page's English download
     seen.add(f);
     const c = b.chunks.get(f);
     if (!dynamic) {
