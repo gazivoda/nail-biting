@@ -199,6 +199,335 @@ rule). Restart after each change.
 
 ---
 
+## (c) Environment variables and build arguments
+
+**Where to set them in Coolify.** *Build argument* = baked into the site when it is built (the Dockerfile declares 8 `ARG`s: marked
+**B** below). *Runtime* = read by the running server (**R**). *Both* = needed in both places with the same value. Which build pack
+production uses is not stated anywhere in the repo (see (f)); under the Dockerfile pack the build arguments must be passed as
+build arguments, under Nixpacks an ordinary variable that is available at build time is what the build sees (Coolify's wording for
+that option cannot be checked from here). A line in a `.env` file is **not** enough for anything marked B.
+
+### New since the project started
+
+| Variable | Set as | Default | Required? | Used for |
+|---|---|---|---|---|
+| `FEATURE_FLAGS` | R | empty = all off | no | Comma or space separated flag names. Case-insensitive. Unknown names ignored. No "all". |
+| `TRIAL_DAYS` | **Both** (B and R) | 3 | no | Trial length, whole number 1 to 90 (anything else is ignored and logged). Boot logs a warning if `dist` and the server disagree. |
+| `VITE_PADDLE_PRICE_ID_LIFETIME`, `VITE_PADDLE_PRICE_ID_GIFT` | B | empty | for those plans | The app shows the Lifetime and Gift options only when its id is present in the build. |
+| `PADDLE_PRICE_ID_LIFETIME`, `PADDLE_PRICE_ID_GIFT` | R | empty | for those plans | The webhook recognises these two payments as ours. |
+| `PADDLE_PRICE_ID_MONTHLY`, `PADDLE_PRICE_ID_YEARLY` | R (also read from the `VITE_` spellings if those happen to exist at runtime) | empty | for referral rewards | A payment is rewarded only if its price is positively one of ours. The `VITE_` ones are build arguments and are normally not in the server's environment. |
+| `PADDLE_PRICE_IDS` | R | empty | with a shared Paddle account | Comma separated list of every price id of this app, archived ones included. Read by WS9 code today and by your stashed filter later (see (f)). |
+| `REFERRAL_CREDIT_DAYS` | R | 30 | no | Bonus days for each side. Also fills the sentence on `/features/referral-program`. |
+| `GIFT_PLAN_DAYS` | R | 365 | no | How long one gift lasts. Must match the Paddle gift product. |
+| `GIFT_CODE_EXPIRY_DAYS` | R | never | no | Days after which an unredeemed gift link stops working. |
+| `FREE_TIER_DETECTION_MINUTES`, `FREE_TIER_HISTORY_DAYS` | R | 30 and 7 (placeholders) | no | Free plan limits, only when `free_tier` is on. |
+| `EVENTS_QUOTA_PER_USER` | R | 50000 | no | Most synced entries one account may store. |
+| `APPLE_CLIENT_ID` (the Services ID), `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY` | R | empty | for Apple sign-in | The `.p8` contents may use `\n` or be base64. |
+| `APPLE_DOMAIN_VERIFICATION` | R | empty | once, for Apple | Contents of Apple's domain file, served at `/.well-known/apple-developer-domain-association.txt` while set. Works without any flag. |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | R | empty | for Microsoft sign-in | The secret's value, not its id. |
+| `MICROSOFT_TENANT` | R | `common` | no | `consumers`, `organizations` or one tenant id. |
+
+Optional means optional: with all of the above empty the site behaves as it always did. A sign-in method is offered only when its
+flag is on **and** its keys are set (`GET /auth/providers` is the truth).
+
+### Already existing, listed so nothing is missed
+
+| Variable | Set as | Default | Notes |
+|---|---|---|---|
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `JWT_SECRET` | R | none | Required; the server exits at boot without them. |
+| `APP_URL` | R | `http://localhost:<PORT>` | Must be the public `https://stopbiting.today`; Apple refuses anything else. |
+| `PORT` (3000), `DATA_DIR` (`/app/data` in Docker) | R | | Mount a persistent volume at `DATA_DIR`; `users.db` lives there. |
+| `PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` | R | none | `PADDLE_API_KEY` is also needed for gift buyers' emails and `verify-transaction`. |
+| `VITE_PADDLE_ENV` | **Both** | | `production` picks the live Paddle API; the server reads `VITE_PADDLE_ENV` or `PADDLE_ENV`. |
+| `PADDLE_ENV` | R | | Server-side alternative to `VITE_PADDLE_ENV`. |
+| `VITE_PADDLE_CLIENT_TOKEN`, `VITE_PADDLE_PRICE_ID_MONTHLY`, `VITE_PADDLE_PRICE_ID_YEARLY`, `VITE_FORMSPREE_FORM_ID` | B | | Baked into the bundle. |
+| `RESEND_API_KEY`, `EMAIL_FROM` | R | none; the sender falls back to a Resend sandbox address that only delivers to the Resend account owner | Needed for the emailed link and gift emails; without the key the weekly-email and trial follow-up jobs do not start. |
+| `ALLOWED_ORIGINS` | R | `http://localhost:5173,http://localhost:3000` (plus `APP_URL`) | Optional CORS allow-list for `/api/`. |
+| `ELECTRON_PROTOCOL` | **must be unset** on the web server | | See Read first, item 2. |
+| `SOURCE_COMMIT` or `COMMIT_SHA` | R | `unknown` | Shown by `GET /health`. |
+
+`NODE_ENV` is read in one place (`server/routes/index.js`, as `ctx.config.isProduction`) and no route module uses it, so it changes
+nothing today. Not Coolify variables: `API_BASE_URL` (the packaged desktop app's server, default `https://stopbiting.today`),
+`CHROME_PATH` / `CHROME_NO_SANDBOX` (`npm run og:generate`), the GitHub secrets for desktop signing (`docs/DESKTOP_SIGNING.md`),
+and `VITE_WS7A_PROBE` (a measurement build only; never set it in production).
+
+---
+
+## (d) Everything that needs a human to review or verify
+
+### d1. Legal drafts (`docs/agents/legal/`, every file starts with NEEDS HUMAN REVIEW)
+
+| Draft | Turn on with | Covers | Questions it leaves for you or a lawyer |
+|---|---|---|---|
+| `ws3-privacy.md` | `false_positive_controls` | The six pose numbers kept in the browser, calibration, the "hand" and "not a bite" fields that sync. | Whether to promise the 30-day and 7-day lifetimes. |
+| `ws4-privacy.md`, `ws4-terms.md` | `event_sync`, `data_backup` | What is synced, where it is stored, deletion, portability, "sync is not a backup". | Health-data status of habit logs; consent basis; hosting provider `TODO(owner)`; retention after account deletion; backups; whether to state the 50,000 quota. |
+| `ws5-privacy.md`, `ws5-terms.md` | `weekly_email`, `photo_diary`, `insights` | Weekly email, photo diary, charts and the share picture. | Separate consent record for the email; email provider terms and region; whether "Delete everything" removes photos. |
+| `ws8-privacy.md`, `ws8-terms.md` | `signin_*` | Apple, Microsoft, emailed link; cookies; link records. | Keeping the requester's IP about 24 h; how to refer to Apple's and Microsoft's policies; the "merge accounts on request" sentence promises a process that does not exist in code. |
+| `ws9-terms.md`, `ws9-refund.md` | `lifetime_plan`, `gift_plan`, `referrals`, `free_tier`, `regional_pricing` | Lifetime, gifts, referrals, free plan, local prices, refunds, plus Privacy additions (section 6). | Consumer-law withdrawal rights; what a refunded redeemed gift does; chargebacks; the wording "as long as Stop Biting is offered". |
+| `ws10-privacy.md`, `ws10-terms.md` | `share_links` | Share links. | Health data; consent record; exclude `/share/` from host logs; cleanup schedule. |
+| (none) | `phone_companion` | WS6 wrote no draft. | Confirm the Privacy page's local-storage wording covers `sb:phone:grant` (user id, first name, plan status and dates, grants, free-tier limits; no email, avatar or payment ids). |
+
+### d2. Sentences on the legal pages that become untrue (not edited: rule 8)
+
+Line numbers are as of b6b16f9 and will drift.
+
+| Where | Sentence | Untrue when |
+|---|---|---|
+| `src/pages/PrivacyPage.tsx:12` (and the `/privacy` text in `server.js`) | "your camera feed never leaves your device, and your habit log stays in your own browser" | `event_sync` (and the camera half should use the approved line) |
+| `PrivacyPage.tsx:27` | "These are stored only in your browser (local storage)..." | `event_sync` |
+| `PrivacyPage.tsx:85` | "Your habit data never leaves your browser, so we do not hold a copy of it." | `event_sync`, also share links |
+| `PrivacyPage.tsx:26, 48, 58` (and the OAuth cookie sentence) | account data "provided by Google when you sign in"; "We use Google OAuth 2.0..."; "Google: sign-in (Google OAuth)" | any `signin_*` |
+| `src/pages/TermsPage.tsx:42` | "You must sign in with a Google account to use the Service." | any `signin_*` |
+| `TermsPage.tsx:55` and Privacy | "your camera feed never leaves your device" | The approved line is "No camera data is sent while it runs" (`ws11a-notes.md`) |
+| `TermsPage.tsx:22`, `RefundPage.tsx:17`, the `/refund-policy` summary in `server.js` | "3-day free trial" | `TRIAL_DAYS` is not 3. Suggested wording that never needs editing again: `ws9-terms.md` section 0. |
+| Terms and Refund | nothing about referral credits, gifts, Lifetime, share links, a free plan | `referrals`, `gift_plan`, `lifetime_plan`, `share_links`, `free_tier` |
+| `Refund` section 3 ("Refund Eligibility") | speaks of "subscription" payments only | `lifetime_plan`, `gift_plan` (`ws9-refund.md`, point 1) |
+
+### d3. Copy and content to read
+
+| What | Where | Why |
+|---|---|---|
+| The 28 lessons of the 4-week program | `src/data/hrtProgram.json` | First drafts with no clinical input; `hrt_coaching` must not go on before you read them. |
+| The six feature pages (all new prose) | `src/data/featurePages.ts` | Written from the notes, never read against the running features in one session. Do that once on staging. |
+| The generated answer to "Do I need a Google account to use it?" | rules in `shared/flagCopy.js`; resolved by `server/marketing/copyFlags.js`; WS8's proposed answer is in `ws8-notes.md` | It describes what Google, Apple and Microsoft hand us and varies with which methods are on and configured. Review before any `signin_*` flag. |
+| Competitor facts, with the source URL for each | `src/data/competitorPages.ts` (`needsVerification: true` at two places); tables in `ws11a-notes.md` | Hands Off (`/compare/hands-off`) and HabitAware Keen3 (`/compare/habitaware-keen`). Keen3's $199.00 preorder price also contradicts the live `/compare/stop-biting-vs-habitaware` page, which says HabitAware states no price. |
+| Testimonials | `src/data/testimonials.json` (empty), `src/data/README-testimonials.md` | Only real, consented entries; photos need separate consent. |
+| Email wording | `server/weeklyEmail/template.js`, `server/auth/magicLinkEmail.js`, `server/billing/giftEmail.js` | Read each once; the weekly email says "A log is a way to notice a habit, not a treatment." |
+| `/features/desktop-app` | `getDesktopAppContent()` in `src/data/featurePages.ts` | "It is the same account and the same detection as in the browser" and "the same account, the same plans and the same free trial" are only true after desktop sign-in works. |
+| An older claim on a blog post | `src/data/blogPosts.ts`, `stop-biting-app-review`: "You can disconnect from the internet after the initial load and the app functions identically" | The service worker does not cache the models, so this is not true on a fresh profile. |
+| Translations | not yet | WS12 machine translations need native review before each `locale_*` flag. |
+
+### d4. Decisions that are yours (all configurable, safe defaults)
+
+Trial length (default 3; the plan proposed 7) · free-plan limits (30 min a day, 7 days of History are placeholders) · referral reward
+(30 days each) · gift length (365 days) and gift link expiry (never) · when bonus days start (saved until the account has no other
+access; the alternative would spend a paying referrer's reward on a month already paid) · what a refunded gift does after it was
+redeemed (recipient loses it; `gifts.revokeByTransaction` in `server/billing/gift.js`) · whether "Delete everything" should also delete
+nail photos · whether to run `/compare/hands-off` and `/compare/habitaware-keen` next to the live `vs` pages · whether tray "until
+tomorrow" (08:00, `TOMORROW_RESUME_HOUR` in `src/desktop/trayModel.ts`) and the app's (schedule start, else 06:00) should be the same
+· whether `/share/` goes into host access logs · the sync quota.
+
+### d5. Checks that only a person with the real thing can do (NEEDS HUMAN VERIFICATION)
+
+- Nose landmark indices 1 and 2 on a rendered face mesh (`src/detection/zones.ts`; they are not in any exported MediaPipe set).
+- Left versus right on a real device (`HANDEDNESS_INPUT_IS_MIRRORED`, `src/detection/handedness.ts`), and that `numHands: 2` really
+  returns a second hand.
+- Paddle: one sandbox purchase of each product against `server/billing/paddleData.js` (the test payloads were written from
+  Paddle's documented shapes, not recorded), and `Paddle.PricePreview` for the visitor's location.
+- Apple relay: your sending domain registered with Apple, or mail to "Hide my email" users is dropped.
+- Resend: the sender domain, click and open tracking off, a real inbox receiving the magic link and a one-click unsubscribe.
+- A real phone: install, shortcuts, offline log, status-bar colour.
+- Your own camera with `background_watching`: a real hand while the tab is hidden, the mini window's real size.
+- Desktop: everything in `docs/DESKTOP_SIGNING.md` step 6.
+
+---
+
+## (e) Known gaps and what was NOT verified
+
+### Not built
+
+- **A reminder when the app is closed** during scheduled hours (WS7a). The only browser mechanism, Periodic Background Sync, cannot be
+  done safely or reliably here. Reminders need the app open in a tab or window, or the desktop app running in its tray. The
+  Settings card says so.
+- **Pages for skin picking, nose picking and hair pulling** (WS11b). Those behaviours are not validated.
+- **Custom bite reasons are not synced.** On another device an entry shows as a plain "Bite".
+- **Streak start dates are per device.** Entries converge; a best streak that includes time before a device's own start can differ.
+  The share page's streak is days since the newest synced bite, so it can differ from the app's.
+- **"Delete everything" keeps nail photos**; "Clear all data" and History's clear-all are local only and not sync-aware (the synced
+  copy stays); "Clear all data" does not touch the `sb:*` keys either. The photo diary has no export, by design.
+- No auto-update for the desktop app; no merge tool for accounts; no "delete my account" action (deletion is by email).
+
+### Never exercised for real
+
+| Area | What was not done |
+|---|---|
+| Camera and hands | No real hand or face was seen by any test. All alarms in browser checks were simulated (fake camera or an injected event). Detection rules, chin-rest numbers and learned poses are tuned on drawn scenes. `numHands: 2` and left/right mapping unseen. The photo diary and the calibration were never used with a real hand. |
+| Payments | No Paddle account, not even the sandbox (lifetime, gift, referral, refund, localised prices). |
+| Sign-in and mail | No Apple, Microsoft or Resend call. Apple's cross-site return, Microsoft consent and optional claims, link scanners, deliverability, spam placement, a one-click unsubscribe from a real mail client: all untested. |
+| Browsers | Only headless Chrome (155). Safari, Firefox and Edge were never run: hidden-tab behaviour, Document Picture-in-Picture, Web Share, the Apple return, SameSite cookies, printing the share page. A windowed (non-headless) Chrome, minimised or covered, was not measured. |
+| Phones | No real iPhone or Android: install, Add to Home Screen, shortcuts, icon, status bar colour, the phone view's first-visit tour. |
+| Assistive technology | No real screen reader anywhere; announcements were checked in the page markup only. |
+| Desktop | Unsigned Mac only; Windows never built; the CI workflow never run; tray clicks, launch at login, native notifications, the camera card's Continue and the macOS prompt, a worker under `file://`, detection with the window hidden on a real camera: not seen. |
+| Production | `trust proxy`, any CDN in front, the service worker installing in production, hosting access logs. |
+
+### Defects and warts found in existing code (not fixed here)
+
+- **No `trust proxy`** (`server/auth/session.js:59` says so). Behind Coolify's proxy the global rate limits (`/api/` 100 per 15
+  minutes, `/api/auth/` 10 per minute) may be one bucket for every visitor. Not verified in production. WS8, WS10 and WS11b built around it (their own routes sit outside `/api/` or read the
+  proxy's header); one line, `app.set('trust proxy', 1)`, once you know the proxy chain, would fix it globally.
+- **`email.js` treats a failed Resend send as success** (Resend returns `{ error }` and does not throw). The welcome email, the admin
+  notice and the trial follow-up cannot tell, and `trialFollowup.js` can mark someone mailed when nothing was sent. The magic link,
+  gift and weekly emails check the result.
+- **Service worker install.** WS8 saw the worker fail to install against `server.js` in headless Chrome; WS6 traced that to plain
+  `http://localhost` (the app sends `upgrade-insecure-requests`, so the redirect of `/index.html` is upgraded to https). Production is
+  https, so it is probably fine, but nobody has checked a real install in production.
+- **`GET /auth/providers` answers 404** while no sign-in flag is on, so every marketing page logs one console error (the only failing
+  Lighthouse best-practices audit on WS11b's pages: 96 instead of 100).
+- Out-of-order `subscription.*` webhooks are not guarded; `chargeback_reverse` and partial refunds do not change access.
+- `PaywallPage` shows "N days left in your free trial" to a mid-trial Lifetime buyer (one-line fix: gate `trialLeftText` on
+  `accessStatus === 'trial_active'`).
+- The OS notification still says "Nail biting detected" for any behaviour; the streak and the "was it a bite" card are not per behaviour.
+- Desktop: `cameraErrorCopy.ts` says "from the camera icon in your browser's address bar", wrong inside the app. The installers are 240 MB because `dist/` is the whole site.
+- With `phone_companion` on, the 125 kB `mediapipe` JS chunk is still downloaded on a phone (the model and wasm are not).
+- Phone view, first visit: Lighthouse 75 (LCP 6.0 s) before the flag is cached; returning visits 100.
+- Hidden-tab CPU with `background_watching`: about 12.9 against 2.9 points of one core, 18.2 with the mini window.
+- A returning visitor whose service worker serves the cached shell does not get the copy-flag marker and sees the old sentences until
+  their flag cache refreshes (never wrong in the "on" direction, but can lag). `dateModified` of a page whose copy a rule changed is
+  the flag-off date.
+- Account deletion by hand leaves rows behind: delete the account's rows in `habit_events` and `habit_event_epochs` (WS4),
+  `email_preferences` (WS5), `share_links` (WS10; `removeAllForUser` exists but nothing calls it) and `auth_identities` (WS8).
+- The sign-in follow-up "show which methods are linked to my account" in Settings was not built.
+
+---
+
+## (f) Deploy notes
+
+**Build pack and the Dockerfile.** `COOLIFY_DEPLOY.md:5` says Nixpacks; a `Dockerfile` and a `nixpacks.toml` both exist, and the
+history (commit 57aa6b0, "docker: copy trialFollowup.js into the runtime image", a production crash) suggests production runs the
+Dockerfile. The repo cannot prove it. Under Nixpacks the whole repo is copied and the question below does not arise. Under the
+Dockerfile I checked every import: the runtime image copies `server.js`, `email.js`, `trialFollowup.js`, `server/`, `shared/`, `dist/`
+and `node_modules`; `trialFollowup.js` imports `server/db/migrate.js`; `server/**` reaches outside itself only for `email.js` and
+`shared/**`; every file the server reads at run time is under `dist/`. The build stage copies `src`, `public`, `scripts`, `shared`,
+`index.html`, the tsconfigs and the vite, tailwind and postcss configs, which is all the build reads. **Nothing is missing as of
+b6b16f9.** (The Docker daemon was not running when the orchestrator checked, so the stages were reproduced by hand rather than built.)
+Any future new top-level server file or directory must be added to the Dockerfile or production crashes at boot.
+
+**Migrations are additive.** They run at every boot, each in a transaction, recorded once in `schema_migrations`, and every flag-off
+install runs them too (the tables exist, empty). There is no helper that drops, renames or rewrites, on purpose. The `users` table is
+untouched.
+
+| Id | Table(s) |
+|---|---|
+| `ws4_001_habit_events`, `ws4_002_habit_event_epochs` | `habit_events`, `habit_event_epochs` |
+| `ws5_001_email_preferences` | `email_preferences` |
+| `ws8_001_auth_identities`, `ws8_002_magic_link_tokens`, `ws8_003_auth_oauth_states` | `auth_identities`, `magic_link_tokens`, `auth_oauth_states` |
+| `ws9_001` to `ws9_006` | `paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`, `referral_codes`, `referrals` |
+| `ws10_001_share_links` | `share_links` |
+
+(Plus the older `trial_followup_sent_at` column on `users`, added by `trialFollowup.js` when `RESEND_API_KEY` is set.)
+
+**Changing the trial length.** (1) Set `TRIAL_DAYS` as a build argument **and** as a runtime variable, same value. (2) Locally run
+`TRIAL_DAYS=<n> npm run seo:sync` and commit `public/llms.txt`, `public/sitemap.xml`, `src/data/pageUpdates.json` (the changed pages get a
+`lastmod`, which may be older than today; edit `pageUpdates.json` by hand if you want today's date). `npm run seo:check` says what is
+stale; the Docker build does not run it. (3) Hand-edit **4 sentences that speak of both products** (they are true only while our
+trial equals Hands Off's 3 days): three in `src/data/comparePages.ts` ("each with a 3-day free trial", "with a 3-day free trial.
+Neither records", "Both offer a 3-day free trial") and the Hands Off meta description in `server.js` ("price, privacy, 3-day
+trials"); and **3 legal sentences**: `TermsPage.tsx:22`, `RefundPage.tsx:17` and the `/refund-policy` summary in `server.js`. The list
+is the `shared` and `legal` entries of `ALLOWED` in `scripts/trialLength.test.mjs`. Everything else follows the constant. The server
+warns at boot if `dist` was built with a different value than it runs with.
+
+**Service worker.** `registerType: 'autoUpdate'` with `skipWaiting` and `clientsClaim`: a new deploy takes over on the visitor's
+next navigation; the open page is not reloaded and there is no update prompt. The precache grew from 21 entries (WS11a) to 60 (WS11b's
+count), and each returning browser downloads the new files once in the background. Because a browser that visited before keeps the
+old bundle until the worker updates, the new `/share/` and `/signin` and `/redeem` entries in `navigateFallbackDenylist` only protect
+visitors whose worker has updated. That is the reason for the **`share_links` rule: turn it on a day or two after the deploy that
+ships it, together with `event_sync`.** Per `tasks/todo.md` that code has been on production since PUSH #1. Detection needs a network
+on the very first run of a browser profile (the MediaPipe models are not precached).
+
+**Flags take effect on restart; browsers lag.** `GET /api/features` is `Cache-Control: public, max-age=60` and clients re-ask at most
+every 10 minutes (and on reload), so after any flag change expect up to about 10 minutes before an open tab agrees. The server side
+is exact at once.
+
+**`COOLIFY_DEPLOY.md`.** Delete line 24 (`ELECTRON_PROTOCOL=stopbiting`). I did not edit the file. Your stashed edit adds one
+line to the Notes at the bottom (about `PADDLE_PRICE_IDS`), so deleting line 24 before or after restoring the stash does not conflict.
+`docs/DESKTOP_SIGNING.md` says the same.
+
+**Installers you already handed out.** Before WS7b, the Electron build config had `extraResources: data -> data`. A build made on
+your machine therefore copied the real `data/users.db` into the installer. WS7b removed that entry and checked the new build
+(`app.asar` has no `data/`, no `server.js`, no `node_modules`). I cannot see the old installers. `server.js:720-722` still redirects
+`/downloads/Stop-Biting-1.1.0.dmg` and `Stop-Biting-1.1.0-arm64.dmg` (and the 1.0.0 `Nail-Habit-Tracker` files) to GitHub releases
+`v1.1.0` and `v1.0.0`. **Open those release assets and look for a `data` folder next to the app's resources** (macOS: `Contents/Resources/`).
+If `users.db` is in there, it contains whatever the database held on the machine that built it, and the site's `/downloads/...` links would serve it.
+
+**Your stashed Paddle filter.** `git stash list` in the main checkout shows `2bfc669bb0758757d2021af3984363540ddd7613 On main:
+swarm-paddle-wip-2026-10-23` (it touches `server.js`, +26 lines, and `COOLIFY_DEPLOY.md`, +1 line). After the last push, from
+`/Users/igorgazivoda/nail-habit-app`: `git stash apply 2bfc669bb0758757d2021af3984363540ddd7613` (**apply, not pop**: the stash stack is
+shared with other sessions), build and test, commit, then drop the entry by finding its current `stash@{n}` with `git stash list`.
+A plain patch of the same change is in the orchestrator's scratchpad as `preexisting-wip.patch`; `git apply --check` passed on
+every merge up to WS11b. Then set `PADDLE_PRICE_IDS` to every price id of this app **including the lifetime and gift ids and any
+archived ones**. WS9's hook recognises its own two ids even if you forget, but the server logs a warning and referral rewards need
+every price of yours to be known.
+
+**After deploying.**
+- Restart after every build: the server caches `dist/index.html` and reads `seo-content.json` and `seo-gated.json` at start, and
+  pages that open with a flag are decided at start.
+- `npm run seo:check` and `npm run og:check` should say "in sync" (run in a checkout; do not commit generated files by hand).
+- `npm run seo:indexnow` (run from a checkout, not the container; `--dry-run` first) submits URLs whose `<lastmod>` moved in the
+  checked-in `public/sitemap.xml` to IndexNow. **Pages that are appended to the sitemap at server start (the two competitor pages
+  and the six feature pages, while their flag is on) are not in that file, so they are not submitted;** ask the search engines for them yourself if you want them
+  indexed quickly. The key file `public/21f3175251594edf918c599f5bdee19f.txt` must stay deployed.
+- On the day a gated page goes on, set its `date` in `COMPARE_META` (`server.js`) to that day (it is the Article's `datePublished`).
+- `GET /health` reports the commit; compare it with the one you pushed.
+
+---
+
+## (g) Rollback
+
+**Turn every flag off:** set `FEATURE_FLAGS=` (empty) or delete the variable, restart. Every flagged route answers `404
+{"error":"Not found"}` at once, the feature pages and `/signin`, `/redeem`, `/share/...` give the branded 404, and the app hides the
+features within about 10 minutes of the next visit. To turn one off, remove just its name.
+
+**What stays on regardless of flags** (deliberately):
+- The weekly-email **unsubscribe links** (`/api/email/unsubscribe/...`): a dead link is a compliance problem.
+- **Paid access.** A Lifetime payment is granted whenever its price id is configured, and a refund still revokes it; gift and
+  referral days already granted are honoured. The Paddle webhook hook (`billingWebhook.take`) acts whenever a matching price id is configured.
+- `/.well-known/apple-developer-domain-association.txt` while `APPLE_DOMAIN_VERIFICATION` is set.
+- The Google sign-in hook for accounts made another way (returns nothing when there are none), the empty tables, and the
+  marketing pages' one `GET /auth/providers`.
+- The WS11a site fixes, and the larger service-worker precache.
+- Data a person already made: a "Not a bite" mark stays visible in History, urge entries stay out of the bite count, `competingResponse` on entries.
+
+**Data left behind when a feature goes off**
+
+| Feature | Server | In the browser (`sb:<namespace>:<key>` unless noted) |
+|---|---|---|
+| `detection_behaviors` | | `detection:behaviors` (ignored while off: nail biting only) |
+| `hrt_coaching`, `urge_timer` | | `hrt:settings`, `hrt:last-prompt-at`, `hrt:program`; urge and competing-response data live on the events |
+| `false_positive_controls` | | `falsePositive:settings`, `learned`, `alarm-poses`, `calibration`, `calibration-offered` (Settings > Detection can erase them) |
+| `event_sync` | `habit_events`, `habit_event_epochs` rows stay until deleted | `sync:optin`, `sync:state`, `sync:versions`, `sync:notice`, `sync:device-name` |
+| `insights`, `photo_diary` | | `insights:milestones`, `insights:photo-diary`, `insights:photo-reminder-snooze`; photo bytes in IndexedDB `stop-biting-local-blobs` |
+| `weekly_email` | `email_preferences` rows (opted-in people stop receiving mail when the job stops; unsubscribe still works) | |
+| `phone_companion` | | `phone:grant` (not read while the flag is off or after 14 days; removed by sign-out or a 401) |
+| `background_watching` | | `background:state`, `schedule`, `last-reminded`, `cadence` |
+| `signin_*` | `auth_identities`, `magic_link_tokens`, `auth_oauth_states`; accounts made this way keep working (Google finds them by address) | `auth:providers` |
+| `free_tier`, `lifetime_plan`, `gift_plan`, `referrals` | `paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`, `referral_codes`, `referrals` | `billing:pending-referral`, `pending-gift`, `free-usage` |
+| `share_links` | `share_links` rows stay and work again when the flag returns; revoke in Settings > Sharing first if you do not want that | |
+| everything | | `flags:last-known`, `app:device-id` |
+
+**Undo the history upgrade (v1 to v2).** Normally nothing needs undoing: the v2 record is a superset of the old one, and an older
+bundle reads v2 data fine (it re-labels the payload v1 when it writes; the next load of the new bundle migrates again, harmlessly).
+The one difference: an older bundle counts an urge entry as a bite. If you still want a browser's pre-upgrade data back, there is no
+screen for it. In that browser's developer tools, copy the value of the localStorage key **`stop-biting-state-v1-backup`** over the
+key **`stop-biting-state`** (console: `localStorage.setItem('stop-biting-state', localStorage.getItem('stop-biting-state-v1-backup'))`).
+Know what it does: the backup is the raw payload from before the first upgrade on that browser, written once and never overwritten,
+so everything logged since is lost on that browser; and unless the code running is older than WS0, the next load migrates it to v2
+again. A payload that could not be parsed is kept under `stop-biting-state-corrupt-backup` instead of being overwritten.
+
+**Sync data for one account:** "Delete synced data" in Settings > Data, or `DELETE FROM habit_events WHERE user_id = ?` and
+`DELETE FROM habit_event_epochs WHERE user_id = ?`. **Code rollback:** redeploy the earlier commit; the new tables are simply ignored
+by older code.
+
+---
+
+## Appendix: where the notes and the code disagree
+
+The code was trusted. Items marked *fixed* were corrected in `ARCHITECTURE.md` by this pass.
+
+| Notes say | Code says |
+|---|---|
+| `ws2-notes.md:18` "`urge_timer` does not depend on [`hrt_coaching`] technically" (also `ws6-notes.md`, `ws11b-notes.md`) | `src/features/registry.ts:45` has `urge_timer.dependsOn: ['hrt_coaching']` and `server/features.js` `FLAG_DEPENDS_ON` agrees. Behaviour: only a boot-time warning when `urge_timer` is on and `hrt_coaching` is off. The button is gated by `urge_timer` alone (`src/coaching/CoachingDashboardSlot.tsx:17` and `:21`). |
+| `ws5-notes.md:12` and `:171`: with only `photo_diary` on, the view is called "Photos" | `registry.ts:74` `photo_diary.dependsOn: ['insights']`: works alone, with a boot warning. Likewise `weekly_email` lists `insights` (`registry.ts:79`) although the job needs only `event_sync`. |
+| `ws10-notes.md:12` explains `share_links` has no `dependsOn` | Correct (`registry.ts:145-149`), but a link shows nothing without synced history, so treat `event_sync` as a prerequisite. |
+| `ws8-notes.md:232` "new accounts get their trial length from `TRIAL_MS` in `server/auth/accounts.js` (3 days...)" | `server/auth/accounts.js:17-22` imports and re-exports `TRIAL_MS` from `shared/plans.js`; `TRIAL_DAYS` controls it. `ws9-notes.md` is right. |
+| `ws1-notes.md` "30 committed synthetic fixtures", nail-biting precision 0.33 | WS3 added 5 scenes: `ws1-eval-report.md` now has 35 fixtures and precision 0.35 (0.33 is the original-30 figure). |
+| `ws8-notes.md` finding 5 "the service worker may not install against `server.js`" | `ws6-notes.md` found the cause: plain-http local testing only (see (e)). |
+| `ws4-notes.md` points to `src/pages/Settings.tsx:542` for the "log stays in this browser" sentence | It is at `Settings.tsx:551` and now goes through `copy(...)` (WS11b made it flag-aware). |
+| `.env.example:10` says the desktop app "loads from the embedded Express server" | `electron/main.ts:83-84` uses `API_BASE_URL` or `https://stopbiting.today`; no server ships in the app (`ARCHITECTURE.md` section 10). Not edited here. |
+| `ARCHITECTURE.md` (before this pass) said: no event history stored server-side; all seven Settings sections empty; only Settings reads a flag; precache 21 entries; "WS8 must check" `ELECTRON_PROTOCOL` | *Fixed.* All were stale (WS4; every section has content; Watch tab, History and others read flags; 60 entries; WS8 checked and could not verify production). |
+| `COOLIFY_DEPLOY.md:5` says Nixpacks | A Dockerfile exists and appears to be what production runs; unverifiable from the repo (see (f)). |
+
+---
+
 ## QA results
 
 <!-- WS13-QA-RESULTS: the WS13 agent fills this in -->
