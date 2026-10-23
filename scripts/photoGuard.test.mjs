@@ -275,10 +275,12 @@ describe('the service worker never sees a photo', () => {
   (existsSync(sw) ? it : it.skip)('the built dist/sw.js names no photo store, collection or route', () => {
     const text = read(sw);
     expect(text).not.toMatch(/photo-diary|stop-biting-local-blobs/);
-    // Its precache list holds app files only: no stored image of a person.
+    // Its precache list holds app files only. The diary's own CODE chunks (assets/PhotoDiary-<hash>.js and
+    // friends) are in it on purpose, so the diary works offline; a stored picture of a person never is.
     const entries = [...text.matchAll(/url:\s*"([^"]+)"/g)].map(m => m[1]);
     expect(entries.length).toBeGreaterThan(5);
-    expect(entries.filter(u => /diary|photo-|user-|capture/i.test(u) && !/\/assets\/[A-Za-z]+-[\w-]+\.(js|css)$/.test(u))).toEqual([]);
+    expect(entries.filter(u => /diary|photo|user-|capture/i.test(u) && !/^\/?assets\/[A-Za-z]+-[\w-]+\.(js|css)$/.test(u))).toEqual([]);
+    expect(entries.filter(u => /\.(jpe?g|png|webp|gif|avif|heic|bmp)$/i.test(u) && !/^(icons|og|shots)\//.test(u.replace(/^\//, '')))).toEqual([]);
   });
 });
 
