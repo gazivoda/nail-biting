@@ -5,14 +5,16 @@
 // .env or data/. The user's dates are FIXED (FIXED_NOW) so /api/user/me is comparable across rigs.
 // Set TMPDIR to keep the scratch copies somewhere you can delete.
 import { spawn } from 'node:child_process';
-import { mkdtempSync, mkdirSync, cpSync, symlinkSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, cpSync, symlinkSync, rmSync, existsSync, readdirSync, statSync, utimesSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import Database from 'better-sqlite3';
 import jwt from 'jsonwebtoken';
 
 const SECRET = 'ws13-rig-secret-ws13-rig-secret-0123456789';
-export const FIXED_NOW = Date.UTC(2026, 9, 24, 12, 0, 0);
+// The rig user signed up at FIXED_NOW and has a 3-day trial from then: any fixed moment will do as long as every
+// rig of one comparison uses the same one (override with WS13_NOW=<epoch ms> to keep "days left" stable on a later day).
+export const FIXED_NOW = Number(process.env.WS13_NOW) || Date.UTC(2026, 9, 23, 20, 0, 0);
 
 export async function startRigFrom({ root, port, flags = '', env: extraEnv = {} }) {
   const dir = mkdtempSync(join(tmpdir(), 'ws13-rig-'));
@@ -21,6 +23,13 @@ export async function startRigFrom({ root, port, flags = '', env: extraEnv = {} 
   }
   for (const d of ['server', 'shared']) cpSync(join(root, d), join(dir, d), { recursive: true });
   cpSync(join(root, 'dist'), join(dir, 'dist'), { recursive: true });
+  // express.static answers Last-Modified from the file's mtime, which is the moment of the copy: pin it
+  (function pin(d) {
+    for (const name of readdirSync(d)) {
+      const p = join(d, name);
+      if (statSync(p).isDirectory()) pin(p); else utimesSync(p, FIXED_NOW / 1000, FIXED_NOW / 1000);
+    }
+  })(join(dir, 'dist'));
   symlinkSync(join(root, 'node_modules'), join(dir, 'node_modules'));
   const dataDir = join(dir, 'data');
   mkdirSync(dataDir);
