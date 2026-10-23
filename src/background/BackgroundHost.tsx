@@ -3,12 +3,12 @@
 // fetches the chunk that runs the pause clock, the desktop bridge and the reminders.
 
 import { Suspense, lazy } from 'react';
-import { useFeature } from '../features/useFeature';
+import { useFeatures } from '../features/useFeature';
 
 const BackgroundRunner = lazy(() => import('./BackgroundRunner'));
 
 export function BackgroundHost() {
-  const on = useFeature('background_watching');
+  const on = useFeatures().background_watching;
   if (!on) return null;
   return (
     <Suspense fallback={null}>

@@ -5,7 +5,7 @@
 // did and the stored state is never even read.
 
 import { useMemo, useSyncExternalStore } from 'react';
-import { useFeature } from '../features/useFeature';
+import { useFeatures } from '../features/useFeature';
 import { getWatchStamp, getWatchState, subscribeWatch } from './watchStore';
 import { INITIAL_WATCH_STATE, type WatchState } from './pauseMachine';
 import { watchNote, type WatchNote } from './watchText';
@@ -28,9 +28,13 @@ const offSnapshot = () => INITIAL_WATCH_STATE;
 const offStamp = () => 0;
 
 export function useWatchGate(): WatchGate {
-  const on = useFeature('background_watching');
-  const state = useSyncExternalStore(on ? subscribeWatch : noSubscribe, on ? getWatchState : offSnapshot, offSnapshot);
-  const stamp = useSyncExternalStore(on ? subscribeWatch : noSubscribe, on ? getWatchStamp : offStamp, offStamp);
+  const on = useFeatures().background_watching;
+  // The app is rendered on the client only (createRoot), so the server snapshot is the same as the client one.
+  // That also lets the tests render it with react-dom/server.
+  const read = on ? getWatchState : offSnapshot;
+  const readStamp = on ? getWatchStamp : offStamp;
+  const state = useSyncExternalStore(on ? subscribeWatch : noSubscribe, read, read);
+  const stamp = useSyncExternalStore(on ? subscribeWatch : noSubscribe, readStamp, readStamp);
   return useMemo<WatchGate>(
     () => (on ? { on, state, paused: state.kind === 'paused', silent: state.kind === 'meeting', note: watchNote(state, stamp) } : OFF),
     [on, state, stamp],
