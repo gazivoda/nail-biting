@@ -438,7 +438,7 @@ export function useDetection(
             trackHidden = true;
             hiddenFrom = performance.now();
             hiddenSteps = 0;
-            hiddenSource ??= createHiddenSource({
+            const source = hiddenSource ?? createHiddenSource({
               intervalMs: INFERENCE_INTERVAL_MS,
               tick: hiddenTick,
               ticker: getAppTicker(),
@@ -446,8 +446,9 @@ export function useDetection(
               subscribePip: subscribePipTickWindow,
               onLost: () => { hiddenDriven = false; if (document.hidden) startBgInterval(); },
             });
+            hiddenSource = source;
             hiddenDriven = true;
-            hiddenSource.start();
+            source.start();
             return;
           }
           startBgInterval();
