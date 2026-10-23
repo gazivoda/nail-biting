@@ -3,8 +3,9 @@
 //   useActiveBehaviors()     what the detector should run right now (CameraView)
 //   useBehaviorSettings()    the Settings > Behaviors list
 //
-// Flags are read WITHOUT triggering a fetch (getFlags / subscribeFlags, not
-// useFeature), so the Watch tab makes no new request when every flag is off. A
+// useActiveBehaviors reads flags WITHOUT triggering a fetch (getFlags / subscribeFlags,
+// not useFeature), so the Watch tab makes no new request when every flag is off.
+// (useBehaviorSettings runs inside Settings, where the flags are fetched anyway.) A
 // non-default selection can only exist because the user opened Settings while
 // `detection_behaviors` was on, which fetched the flags and cached them. For
 // those users, and only those, the Watch tab asks for fresh flags (at most every

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Landmark fixture recorder (dev only)</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; max-width: 52rem; margin: 1.5rem auto; padding: 0 1rem; color: #1b1b1b; background: #fbfaf7; }
+    h1 { font-size: 1.3rem; margin: 0 0 .25rem; }
+    fieldset { border: 1px solid #c9c6bd; border-radius: .5rem; margin: 1rem 0; padding: .75rem 1rem; }
+    legend { padding: 0 .4rem; font-weight: 600; }
+    label { display: block; margin: .25rem 0; }
+    input[type=text] { width: 100%; padding: .4rem .5rem; box-sizing: border-box; font: inherit; }
+    button { font: inherit; padding: .5rem 1rem; margin: .25rem .25rem .25rem 0; border: 1px solid #1b1b1b; border-radius: 999px; background: #fff; cursor: pointer; }
+    button:disabled { opacity: .45; cursor: default; }
+    button.primary { background: #1b1b1b; color: #fff; }
+    video { width: 320px; max-width: 100%; border-radius: .5rem; background: #000; transform: scaleX(-1); }
+    #status { font-variant-numeric: tabular-nums; }
+    .privacy { background: #eef4ea; border: 1px solid #b9d0ae; border-radius: .5rem; padding: .6rem .9rem; }
+    code { background: #efede6; padding: 0 .25rem; border-radius: .2rem; }
+  </style>
+</head>
+<body>
+  <h1>Landmark fixture recorder</h1>
+  <p>For the person tuning the detector. Not part of the app: it is served only by the Vite dev server and is never built into the site.</p>
+  <p class="privacy"><strong>What is kept:</strong> numbers only, 21 hand landmarks and the face-mesh landmarks the rules read, five times a second.
+    No video, no pictures, no sound is recorded or sent anywhere. The camera preview stays on this page, and "Save" downloads a JSON file to your computer.
+    A recording is still the shape of your face and hands, so keep it private unless you choose to share it.</p>
+
+  <fieldset>
+    <legend>1. Name it</legend>
+    <label>Id (lower_snake_case, becomes the file name) <input id="id" type="text" placeholder="nose_pick_evening_lamp" /></label>
+    <label>Description <input id="description" type="text" placeholder="What you did, and the light and distance" /></label>
+    <label>Extra tags, comma separated (the recorder adds positive or negative) <input id="tags" type="text" placeholder="nose, evening" /></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Camera</legend>
+    <button id="start" class="primary">Start camera</button> <span id="load"></span><br />
+    <video id="video" playsinline muted></video>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. What are you about to do?</legend>
+    <p>Pick the behaviour(s) an alarm would be correct for. Leave nothing marked and press no events to record a negative (something you do that must NOT alarm).</p>
+    <div id="behaviors"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>4. Record</legend>
+    <button id="record" disabled>Record</button>
+    <button id="event" disabled>Start event (space)</button>
+    <button id="stop" disabled>Stop</button>
+    <button id="save" disabled>Save fixture</button>
+    <p id="status">Not recording.</p>
+    <p>Mark an event from the moment the behaviour starts to the moment it ends, not from when you expect an alarm. Do it several times in one recording, with the hand leaving and coming back.</p>
+  </fieldset>
+
+  <script type="module" src="./record.mjs"></script>
+</body>
+</html>
