@@ -24,6 +24,8 @@ const BlogPost = lazy(() =>
 const ComparePage = lazy(() =>
   import('./pages/ComparePage').then(m => ({ default: m.ComparePage })),
 );
+// The sign-in page (WS8): only visitors who open /signin download it.
+const SignInPage = lazy(() => import('./pages/SignIn').then(m => ({ default: m.SignInPage })));
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
@@ -209,6 +211,15 @@ export default function App() {
   // with the landing page the moment React mounts.
   if (path === '/editorial-policy') {
     return <EditorialPolicyPage />;
+  }
+
+  // Sign in (served by server/routes/authProviders.js only while a sign-in flag is on)
+  if (path === '/signin') {
+    return (
+      <Suspense fallback={null}>
+        <SignInPage />
+      </Suspense>
+    );
   }
 
   // Main app (root and everything else)

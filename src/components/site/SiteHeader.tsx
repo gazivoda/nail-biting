@@ -1,10 +1,13 @@
 import { TrialButton } from './TrialButton';
 import { track } from '../../utils/track';
+import { useSignInHref } from '../../auth/useSignInProviders';
 
 // The site header for every page in the sign system (homepage, /pricing,
 // /how-it-works, /about). Section links are in-page anchors on the homepage
 // and absolute (/#section) everywhere else. Must sit inside a `.sg-page`.
 export function SiteHeader({ onHome = false, current }: { onHome?: boolean; current?: 'blog' }) {
+  // /api/auth/google until the owner turns another sign-in method on (src/auth/providers.ts).
+  const signInHref = useSignInHref();
   return (
     <nav
       aria-label="Site navigation"
@@ -44,7 +47,7 @@ export function SiteHeader({ onHome = false, current }: { onHome?: boolean; curr
             that isn't "Start free trial". The same Google flow signs an
             existing account in. Hidden on phones: the app runs on a computer. */}
         <div className="flex items-center gap-5">
-          <a href="/api/auth/google" rel="nofollow" onClick={() => track('signin_click', 'header')} className="hidden min-h-11 items-center text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)] sm:inline-flex">
+          <a href={signInHref} rel="nofollow" onClick={() => track('signin_click', 'header')} className="hidden min-h-11 items-center text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)] transition-colors hover:text-[color:var(--sg-ink)] sm:inline-flex">
             Sign in
           </a>
           <TrialButton size="sm" source="header" />

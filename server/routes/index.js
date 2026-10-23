@@ -31,14 +31,15 @@ import { createFlags, createRequireFeature } from '../features.js';
 import { runMigrations } from '../db/migrate.js';
 import features from './features.js';
 import example from './_example.js';
+import authProviders from './authProviders.js';
 
 /** Registered in this order. Append your module; do not reorder others. */
 export const ROUTE_MODULES = [
   features,
   example,
+  authProviders, // WS8 sign-in providers (magic link, Apple, Microsoft)
   // WS4  events sync          -> import events from './events.js'
   // WS5  weekly email         -> import insights from './insights.js'
-  // WS8  sign-in providers    -> import signin from './signin.js'
   // WS9  referrals / pricing  -> import billing from './billing.js'
   // WS10 share links          -> import share from './share.js'
 ];

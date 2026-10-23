@@ -14,6 +14,7 @@ import { randomBytes, createHmac } from 'crypto';
 import { sendWelcomeEmail, sendAdminNotification, sendFeedbackEmail } from './email.js';
 import { startTrialFollowupJob } from './trialFollowup.js';
 import { registerRoutes } from './server/routes/index.js';
+import { createGoogleLinker } from './server/auth/googleLink.js';
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -214,6 +215,10 @@ db.exec(`
 // Migration: drop legacy paypal column from existing DBs
 try { db.exec('ALTER TABLE users DROP COLUMN paypal_subscription_id'); } catch { /* already dropped or never existed */ }
 
+// WS8: joins a Google sign-in to an account made with another method (emailed link, Apple,
+// Microsoft). Returns null unless such an account exists, so Google-only behaviour is unchanged.
+const linkGoogleSignIn = createGoogleLinker({ db, getUser });
+
 const stmtGet    = db.prepare('SELECT * FROM users WHERE id = ?');
 const stmtFindByEmail = db.prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
 const stmtUpsert = db.prepare(`
@@ -361,6 +366,7 @@ app.get('/api/auth/callback', async (req, res) => {
 
     // Find or create user
     let user = getUser(googleId);
+    if (!user) user = linkGoogleSignIn(googlePayload);   // WS8: null for everyone who has no other-method account
     const isNewUser = !user;
     if (!user) {
       const trialEnd = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
