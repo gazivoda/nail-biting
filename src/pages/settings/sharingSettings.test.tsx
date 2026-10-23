@@ -165,4 +165,14 @@ describe('the card', () => {
     expect(view({ creating: true })).toContain('Making link…');
     expect(view({ load: 'loading', list: null })).toContain('Loading…');
   });
+  it('gives every label it sets to a role that can carry one (a plain div ignores aria-label)', () => {
+    const html = view({ created: { id: 'n1', token: 't', url: 'https://example.test/share/t', label: '', createdAt: 1, expiresAt: null, lastViewedAt: null, detailed: false }, confirmId: 'l1', list: { links: [link()], max: 5, syncedEntries: 3 } });
+    const labelled = [...html.matchAll(/<(\w+)([^>]*?) aria-label="([^"]*)"([^>]*)>/g)];
+    for (const [, tag, before, , after] of labelled) {
+      const attrs = `${before} ${after}`;
+      const interactive = ['button', 'input', 'select', 'textarea', 'a', 'section', 'svg'].includes(tag);
+      expect(interactive || /role="(group|status|note|region|img)"/.test(attrs)).toBe(true);
+    }
+    expect(html).toMatch(/role="group" aria-label="What this link will show"/);
+  });
 });
