@@ -991,10 +991,17 @@ Each workstream runs in an isolated worktree/branch; the orchestrator merges int
 (push auto-deploys to stopbiting.today). Owner's uncommitted Paddle WIP (server.js, COOLIFY_DEPLOY.md) is stashed during
 merges and restored afterwards; backup patch kept in the session scratchpad.
 
-- [ ] Wave 0: WS0 foundation (schema v2 + migration, flags, storage module, settings slots, server route registry, ARCHITECTURE.md)
-- [ ] Wave 1 (parallel): WS1 detect more behaviors · WS2 HRT coaching · WS8 sign-in options · WS11a marketing fixes
+- [x] Wave 0: WS0 foundation (MERGED cec2120; verified on main: 27 files/260 tests, build:web, node --check, smoke, leak greps) (schema v2 + migration, flags, storage module, settings slots, server route registry, ARCHITECTURE.md)
+- [ ] Wave 1 (RUNNING since 2026-10-23, 4 agents in worktrees): WS1 detect more behaviors · WS2 HRT coaching · WS8 sign-in options · WS11a marketing fixes
 - [ ] Wave 2 (parallel): WS4 sync · WS3 fewer false alarms (needs WS1 harness + WS2 overlay) · WS9 pricing/trial/referrals (after WS11a copy lands) · WS7b desktop wrapper
 - [ ] Wave 3 (parallel): WS5 insights · WS6 phone companion · WS10 share link (all need WS4) · WS7a background watching (after WS3 settles the detection loop)
 - [ ] Wave 4 (sequential): WS11b feature marketing -> WS12 localization
 - [ ] Final: WS13 integration/QA, RELEASE_NOTES.md, seo:sync, full verification, commit, push, verify deploy
 - After EVERY wave merge, on main: npm test, npm run build:web, node --check server.js, grep -l "seedPreviewData\|previewKind" dist/assets/*.js must be empty.
+
+## Orchestrator notes (swarm)
+- Worktrees fork from origin/main, NOT local main: every agent brief starts with `git reset --hard main` + checks for "merge WS0".
+- Owner WIP (Paddle PADDLE_PRICE_IDS filter in server.js, COOLIFY_DEPLOY.md) is in git stash "swarm-paddle-wip-2026-10-23" (sha in session scratchpad stash-sha.txt) + patch backup. Restore AFTER the final push with `git stash apply <sha>` (not pop; shared stash stack).
+- Tracker artifact: https://claude.ai/artifact/KE9X3uW4mXvzVBeLrD6TRQ (credit: queued 0, running .25, built .8, merged .9, verified 1; weights are estimates).
+- WS0 owner TODO: confirm production does not set ELECTRON_PROTOCOL on the web server (COOLIFY_DEPLOY.md says to; would break web OAuth).
+- WS4 must exempt its path from the global express.json 10kb limit; keep `confirmed` wire field (WS3/WS4/WS10).
