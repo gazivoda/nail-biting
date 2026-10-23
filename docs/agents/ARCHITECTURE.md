@@ -596,23 +596,38 @@ config; `start_url` is `/`.
 
 ## 10. Electron wrapper
 
-`electron/main.ts`, `electron/preload.ts`, `src/types/electron.d.ts`; builder config in `package.json` `"build"`
-(appId `today.stopbiting.app`; mac dmg+zip x64/arm64 with hardened runtime and `build/entitlements.mac.plist`; win
-nsis+portable; linux AppImage+deb). Renderer = `npm run build` output (`base './'`, no PWA) loaded with `loadFile`;
-the main process is built by `vite.electron.config.ts` into `dist-electron/` (which also still bundles `server.js`
-although no server is spawned any more, commit 2b633d6).
+`electron/` (`main.ts`, `preload.ts`, `tray.ts`, `prefsFile.ts`, `assets/`), the desktop logic in `src/desktop/`,
+`src/types/electron.d.ts`; builder config in `package.json` `"build"` (appId `today.stopbiting.app`; mac dmg+zip
+**universal** with hardened runtime and `build/entitlements.mac.plist`; win nsis+portable; linux AppImage+deb;
+output in `release/`, ignored by git). Renderer = `npm run build` output (`base './'`, no PWA) loaded with `loadFile`; the
+main process (`main.js`, ES module) and the preload (`preload.cjs`, CommonJS, self-contained) are built by
+`vite.electron.config.ts` and `vite.electron.preload.config.ts` into `dist-electron/` (ignored by git). No server code,
+`data/` or `.env` ships in the app (commit 2b633d6, and WS7b removed the leftovers). `npm run electron:typecheck`
+checks `electron/` (`tsc -b` does not).
 - `API_BASE`: `http://localhost:${PORT||3000}` in dev, `API_BASE_URL || https://stopbiting.today` when packaged. When
   packaged, a `webRequest.onBeforeRequest` hook redirects `file://.../api/...` requests to `API_BASE`.
 - Sign-in: `open-google-auth` IPC fetches `/api/auth/google` and opens Google in the system browser; the callback
   deep-links `stopbiting://auth?token=...` (single-instance lock; `open-url` on mac, `second-instance` on Windows);
   main writes `nh_token` into the renderer's localStorage and fires an `electron-auth` event; `apiFetch` then sends
-  `Authorization: Bearer`.
-- Window hides to the tray on close (tray menu: Show App, Quit). `preload` exposes `window.electronAPI`:
-  `notify`, `onBiteDetected`, `openExternal`, `openGoogleAuth`, `isElectron`. `bite-detected` shows a native
-  notification when the window is not visible.
-- **Not present** (verified by grep): launch at login, tray pause item, auto-updater, `globalShortcut`, CI workflow,
-  signing/notarization config. Existing claims of a signed v1.1.0 live only in a comment in `server.js`.
-- The desktop app is **not marketed** on the site (removed on purpose). WS7b adds features here; no site claims.
+  `Authorization: Bearer`. **This does not complete against the hosted server today** (global `ELECTRON_PROTOCOL`, no
+  sign-in button in the packaged app): see `docs/agents/ws7b-notes.md`, "Known gaps".
+- Window hides to the tray on close; tray menu: Open, status, Start/Stop watching, Pause 15 min / 1 h / until tomorrow
+  or Resume, Launch at login, Quit (menu content is `src/desktop/trayModel.ts`). Detection keeps running with the
+  window hidden (`backgroundThrottling: false`, Chromium switches, a power-save blocker while watching).
+- Preload exposes `window.electronAPI` (`notify`, `onBiteDetected`, `openExternal`, `openGoogleAuth`, `isElectron`;
+  unchanged for callers, arguments now validated in main) and `window.desktop` (`onCommand`, `sendState`, `notify`,
+  `camera.*`; typed by `DesktopAPI` in `src/desktop/ipc.ts`). `src/main.tsx` loads `src/desktop/desktopHost.tsx` by
+  dynamic import only when `window.desktop` exists, so a browser never downloads it (and the service worker does not
+  precache the chunk).
+- Pause and tray commands: the web app receives a cancelable DOM event `stopbiting:desktop-command` and reports pause
+  state with `stopbiting:desktop-state`. The contract, owned by WS7b and consumed by WS7a, is in
+  `docs/agents/ws7b-notes.md`.
+- The macOS camera prompt waits for an in-app explanation: main holds the page's first `getUserMedia` request until the
+  user presses Continue on the card (`DesktopCameraNotice`).
+- **Not present**: auto-updater, `globalShortcut`, a signed build. Signing and the CI workflow
+  (`.github/workflows/desktop.yml`, tag `desktop-v*` or manual) are documented in `docs/DESKTOP_SIGNING.md`. Existing
+  claims of a signed v1.1.0 live only in a comment in `server.js`.
+- The desktop app is **not marketed** on the site (removed on purpose); marketing is WS11b behind `desktop_app`.
 
 ---
 
@@ -651,6 +666,7 @@ although no server is spawned any more, commit 2b633d6).
 | `Dockerfile` | WS0 added `COPY server ./server` | any new top-level server path must be copied |
 | Detection rule: `biteDetector.ts`, zone modules, `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand` |
 | Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
+| Desktop shell: `electron/**`, `src/desktop/**`, `vite.electron*.config.ts`, `build/`, `.github/workflows/desktop.yml` | WS7b | `src/desktop/ipc.ts` is the contract with the Electron side; WS7a consumes `stopbiting:desktop-command` and reports with `stopbiting:desktop-state` (docs/agents/ws7b-notes.md) |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 adds "Not a bite" at the same seam | `handleAlert` is the one-line seam for `{ behavior, hand }` |
 | `Settings.tsx` | frozen; nobody edits it (WS9 may touch `PlanSection` for plans) | `<SettingsSlots />` |
 | `src/pages/settings/sections/*.tsx` | one workstream per file (table in section 7) | |
