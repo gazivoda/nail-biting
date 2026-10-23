@@ -1,9 +1,10 @@
 import { AlertTriangle, Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
+import type { WatchNote } from '../../background/watchText';
 
 /** `problem`: detection is switched on but nothing is watching (the camera
  *  didn't start, or the models didn't load), as a short title. */
-export function CameraToggle({ problem = null }: { problem?: string | null }) {
+export function CameraToggle({ problem = null, note = null }: { problem?: string | null; note?: WatchNote | null }) {
   const cameraProblem = problem !== null;
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
@@ -51,6 +52,9 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
               when nothing is (colour alone can't carry the state). */}
           {cameraProblem ? (
             <AlertTriangle size={16} aria-hidden="true" className="shrink-0 text-amber-400" />
+          ) : note?.kind === 'paused' ? (
+            // WS7a: paused is a still, neutral dot (nothing is being checked), not the live pulse.
+            <span aria-hidden="true" className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-white/50" />
           ) : (
             <div className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-lime-300 opacity-60" />
@@ -59,10 +63,10 @@ export function CameraToggle({ problem = null }: { problem?: string | null }) {
           )}
           <div>
             <p className="font-display text-lg font-bold leading-tight tracking-[-0.02em] text-white">
-              {problem ?? 'Detection active'}
+              {problem ?? note?.title ?? 'Detection active'}
             </p>
             <p className="mt-0.5 text-xs text-white/75">
-              {cameraProblem ? 'See below for how to fix it' : 'Runs on this device'}
+              {cameraProblem ? 'See below for how to fix it' : note ? note.hint : 'Runs on this device'}
             </p>
           </div>
         </div>

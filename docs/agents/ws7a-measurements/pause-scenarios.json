@@ -1,0 +1,63 @@
+{
+ "startedAt": "2026-10-23T19:13:40.314Z",
+ "scenarios": {
+  "uiPauseReloadResume": {
+   "stepsBefore": 20,
+   "cameraBefore": true,
+   "clicked": true,
+   "cameraDuringPause": false,
+   "stepsDuringPause_10s": 0,
+   "panelSaysPaused": true,
+   "stored": "{\"v\":1,\"pausedUntil\":1792783729952,\"meetingUntil\":null}",
+   "trayState": "n/a (browser)",
+   "afterReload": {
+    "stepsIn6s": 0,
+    "camera": false,
+    "panelSaysPaused": true
+   },
+   "resumeClicked": true,
+   "resumedAfterMs": 1512,
+   "cameraAfterResume": true,
+   "storedAfterResume": null
+  },
+  "expiredPauseOnLoad": {
+   "stepsIn5s": 24,
+   "camera": true,
+   "panelSaysPaused": false,
+   "stored": null
+  },
+  "desktopPauseWhileHidden": {
+   "pausedUntilStored": true,
+   "cameraWhilePaused": false,
+   "visibility": "hidden",
+   "resumedLateByMs": 1156,
+   "cameraAfter": true,
+   "stepsIn5sAfterResume": 25
+  },
+  "meetingMode": {
+   "control": {
+    "alarms": 1,
+    "audioContexts": 1,
+    "notifications": 0,
+    "logged": 1
+   },
+   "meetingClicked": true,
+   "panelSaysMeeting": true,
+   "inMeeting": {
+    "alarms": 1,
+    "audioContexts": 0,
+    "notifications": 0,
+    "logged": 1
+   },
+   "endClicked": true,
+   "afterMeeting": {
+    "alarms": 1,
+    "audioContexts": 1,
+    "notifications": 0,
+    "logged": 1
+   }
+  }
+ },
+ "browser": "Chrome/155.0.8059.85",
+ "permission": "granted"
+}

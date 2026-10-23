@@ -89,7 +89,8 @@ export const FEATURES = {
   // ── WS7 background / desktop ───────────────────────────────────────────────
   background_watching: {
     owner: 'WS7a',
-    description: 'Picture-in-Picture watcher, schedules, pause controls, meeting mode.',
+    description: 'Keeps detection at full rate in a hidden tab (mini window / worker tick), pause controls, meeting mode, work-hours reminders.',
+    before: 'Try it in the browsers you support (only Chrome was measured, docs/agents/ws7a-notes.md) and in the desktop app with the tray.',
   },
   desktop_app: {
     owner: 'WS7b',
