@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { ReminderInterval } from '../types';
 import { SUGGESTIONS } from '../components/dashboard/suggestions';
-import { quietNow } from '../background/silent';
+import { isFeatureOn } from '../features/flags';
 
 // A periodic check-in for when detection is off. While the camera is watching,
 // the alarm already does this job, and a second nudge every 15 minutes only
@@ -17,9 +17,7 @@ export function useNotifications(enabled: boolean, intervalMinutes: ReminderInte
 
     const ms = intervalMinutes * 60 * 1000;
     let n = 0;
-    const id = setInterval(() => {
-      if (watchingRef.current) return;
-      if (quietNow()) return; // WS7a: not during a pause or a meeting (false unless background_watching is on)
+    const show = () => {
       const title = 'Hands check';
       const body = `Where are your hands? If they're near your face, try: ${SUGGESTIONS[n++ % SUGGESTIONS.length].toLowerCase()}.`;
       if (window.electronAPI) {
@@ -33,6 +31,16 @@ export function useNotifications(enabled: boolean, intervalMinutes: ReminderInte
           tag: 'nail-reminder',
         });
       }
+    };
+    const id = setInterval(() => {
+      if (watchingRef.current) return;
+      // WS7a: not during a pause or a meeting. The check lives in a lazy chunk (the landing page does not download it);
+      // with the background_watching flag off nothing is imported and the nudge is shown at once, as before.
+      if (isFeatureOn('background_watching')) {
+        void import('../background/silent').then((m) => { if (!m.quietNow()) show(); });
+        return;
+      }
+      show();
     }, ms);
 
     return () => clearInterval(id);

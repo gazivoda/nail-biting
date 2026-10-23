@@ -347,8 +347,12 @@ the real app in headless Chrome by `run-app.mjs`, `run-pause.mjs`, `dom-compare.
 build of main and from this branch with the same user, camera and flags, digits masked: byte-identical (`dom-compare.mjs`; the
 positive control, flag on, differs as it should). The hidden-tab loop with the flag off measures as before (flag-off row of the tables).
 No timer, worker or listener of WS7a is created: `useWatchGate` returns a constant and subscribes to nothing, `BackgroundHost` renders
-null, `silentNow` and `quietNow` read the flag first. The one thing a person could notice is that the `useDetection` chunk the landing
-demo loads grew by about 1.4 KB raw (0.6 KB gzip) and a shared chunk of about 4 KB (1.9 KB gzip) comes with it.
+null, `silentNow` and `quietNow` read the flag first. What a visitor can notice is download size only (`scripts/background-probe/compare-dist.mjs`, build of current main against this branch,
+all chunks): the main bundle `index.js` +0.8 KB raw / +0.3 KB gzip (the lazy host and the flag read); the chunk the landing demo loads
+when someone starts it (`useDetection`) +2.5 KB raw / +1.0 KB gzip, plus a shared 3.1 KB (1.3 KB gzip) `watchStore` chunk; the signed-in
+app's `Dashboard` +6.7 KB (1.6 KB gzip) and `Settings` +5.6 KB (1.5 KB gzip); `BackgroundRunner` 2.9 KB and the worker 0.3 KB, which
+load only with the flag on. Total across all chunks +29.5 KB raw / +10.9 KB gzip; the service worker precache goes from 51 to 60
+entries (+29 KiB). No new dependency.
 
 ## NOT verified here (be honest with yourself before turning the flag on)
 

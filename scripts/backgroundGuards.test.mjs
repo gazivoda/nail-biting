@@ -89,6 +89,17 @@ describe('what the landing-page demo loads with useDetection', () => {
   });
 });
 
+describe('what the main bundle (the landing page) gets', () => {
+  it('App.tsx and useNotifications.ts reach src/background only through the lazy host and a dynamic import', () => {
+    const app = graph('src/App.tsx', true);
+    const fromBg = [...app.files].filter(f => f.startsWith(BG)).map(f => f.slice(BG.length + 1)).sort();
+    // BackgroundHost (a flag read and a lazy import) and the one hook it uses
+    expect(fromBg).toEqual(['BackgroundHost.tsx']);
+    expect(importsOf(read('src/hooks/useNotifications.ts'), true).filter(i => i.includes('background'))).toEqual([]);
+    expect(importsOf(read('src/hooks/useNotifications.ts')).filter(i => i.includes('background'))).toEqual(['../background/silent']);
+  });
+});
+
 describe('src/background moves no data and shows no picture', () => {
   it('has no network call', () => {
     for (const f of bgFiles) {
