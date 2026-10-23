@@ -53,6 +53,30 @@ stays configurable and defaults to the safe value.
   data-driven long-form pages are NOT translated; document that. Locale flags default off.
 - **WS5 charts:** use the existing `recharts` dependency (or plain SVG). No new chart library.
 
+## Waves (the plan's phases, rebalanced to avoid merge conflicts)
+0: WS0 · 1: WS1, WS2, WS8, WS11a · 2: WS4, WS3, WS9, WS7b · 3: WS5, WS6, WS10, WS7a · 4: WS11b then WS12 · 5: WS13.
+You build on whatever earlier waves already merged into `main`; your worktree starts from that.
+
+## Hot zones — who may edit what (WS0 extends this map in ARCHITECTURE.md)
+- Detection logic: `src/hooks/biteDetector.ts`, new zone/rule modules, `scripts/eval-detection/**` → WS1, then WS3.
+- Detection loop, scheduling, Picture-in-Picture: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` → WS7a (wave 3).
+  Before then, WS1/WS2/WS3 may touch these ONLY through a one-line seam each, and must name it in their report.
+- Alarm UI: `AlertOverlay.tsx` → WS2 mounts its coaching overlay at one clear seam; WS3 adds "Not a bite" at the same seam.
+- `server.js` → no new inline code. WS0 adds one `registerRoutes(ctx)` call. WS9 may edit the existing Paddle handlers in place.
+  Everything else is `server/routes/<ws>.js`.
+- Marketing copy (`Landing.tsx`, FAQ data, meta/schema strings, `comparePages.ts`) → WS11a wording (wave 1);
+  WS9 does a mechanical trial-length constant swap only (no sentence rewrites); WS11b and WS12 come last.
+- Settings: only your own section component under the slots WS0 creates.
+- Event schema, storage module, flags registry → WS0's modules; changes need a note in your report.
+- Owner's uncommitted Paddle filter (`PADDLE_PRICE_IDS`, `isOurPaddleData`) is NOT in your base. Patch for reference:
+  `/private/tmp/claude-501/-Users-igorgazivoda-nail-habit-app/21f5a19b-6228-40f9-b8b4-d32a1d4d5d1a/scratchpad/preexisting-wip.patch`.
+  WS9: new price ids (lifetime/gift) will have to be listed in `PADDLE_PRICE_IDS`; keep your webhook changes in
+  small functions so that patch applies cleanly afterwards, and document the env var.
+
+## Tools allowed beyond the repo
+- `npx lighthouse <url> --chrome-flags="--headless=new"` (fetched into the npx cache; does not touch `package.json`) is
+  allowed for WS6, WS11a and WS13. Do not run it against production, only a local `PORT=32NN` server.
+
 ## Hard "do nots" (from the owner's memory and lessons)
 - **Never depict the habit.** No drawing, animation, icon or illustration of a hand at the mouth, a biting figure, a
   "warning" pictogram of nail biting — anywhere: HRT overlay, urge timer, photo-diary framing guide, share cards,
@@ -97,7 +121,7 @@ Run and report the real result of each of these, from your worktree:
 6. Everything flagged, and nothing visible with all flags off (state how you checked).
 
 ## Report format (reply with this, under 450 words)
-- Branch name + last commit sha.
+- Branch name, worktree path, last commit sha.
 - What was built (bullets), files added/changed (grouped), flags added.
 - Test/build/lint results (numbers, not adjectives).
 - Acceptance: verified vs NOT verified, honestly. Things that need a camera, a real provider, or a real Paddle account are NOT verified.

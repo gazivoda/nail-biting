@@ -992,8 +992,9 @@ Each workstream runs in an isolated worktree/branch; the orchestrator merges int
 merges and restored afterwards; backup patch kept in the session scratchpad.
 
 - [ ] Wave 0: WS0 foundation (schema v2 + migration, flags, storage module, settings slots, server route registry, ARCHITECTURE.md)
-- [ ] Wave 1 (parallel): WS1 detect more behaviors · WS2 HRT coaching · WS7a background watching · WS8 sign-in options · WS9 pricing/trial/referrals · WS11a marketing fixes
-- [ ] Wave 2 (parallel): WS4 sync · WS3 fewer false alarms (needs WS1 harness + WS2 overlay) · WS7b desktop wrapper
-- [ ] Wave 3 (parallel, need WS4): WS5 insights · WS6 phone companion · WS10 share link
-- [ ] Wave 4 (sequential): WS11b feature marketing → WS12 localization
+- [ ] Wave 1 (parallel): WS1 detect more behaviors · WS2 HRT coaching · WS8 sign-in options · WS11a marketing fixes
+- [ ] Wave 2 (parallel): WS4 sync · WS3 fewer false alarms (needs WS1 harness + WS2 overlay) · WS9 pricing/trial/referrals (after WS11a copy lands) · WS7b desktop wrapper
+- [ ] Wave 3 (parallel): WS5 insights · WS6 phone companion · WS10 share link (all need WS4) · WS7a background watching (after WS3 settles the detection loop)
+- [ ] Wave 4 (sequential): WS11b feature marketing -> WS12 localization
 - [ ] Final: WS13 integration/QA, RELEASE_NOTES.md, seo:sync, full verification, commit, push, verify deploy
+- After EVERY wave merge, on main: npm test, npm run build:web, node --check server.js, grep -l "seedPreviewData\|previewKind" dist/assets/*.js must be empty.
