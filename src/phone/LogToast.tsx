@@ -8,24 +8,13 @@ import { PRESET_TAGS, type TagOption } from '../components/dashboard/triggerTags
 import { TagMark } from '../components/dashboard/TagMark';
 import type { CustomTag } from '../types';
 import type { LogFlow, LogToast as Toast } from './logFlow';
+import { toastMessage } from './toastText';
 
 const CHIP =
   'inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors duration-150 active:scale-95 motion-reduce:active:scale-100';
 const CHIP_OFF =
   'border-stone-200 bg-stone-100 text-stone-700 hover:bg-stone-200 dark:border-ink-400 dark:bg-ink-fill dark:text-stone-300 dark:hover:bg-ink-400';
 const CHIP_ON = 'border-transparent bg-deep text-white dark:bg-lime-300 dark:text-deep';
-
-function triggerLabel(trigger: string, options: TagOption[]): string {
-  return options.find(o => o.id === trigger)?.label ?? 'Not sure';
-}
-
-export function toastMessage(toast: Toast | null, options: TagOption[]): string {
-  if (!toast) return '';
-  if (toast.kind === 'urge') return 'Urge logged. Your streak is not affected.';
-  return toast.trigger === 'unknown'
-    ? 'Bite logged. Your streak starts again from now.'
-    : `Bite logged: ${triggerLabel(toast.trigger, options)}. Your streak starts again from now.`;
-}
 
 export function LogToast({ toast, flow, customTags }: { toast: Toast | null; flow: LogFlow; customTags: ReadonlyArray<CustomTag> }) {
   const options: TagOption[] = [...PRESET_TAGS, ...customTags];
