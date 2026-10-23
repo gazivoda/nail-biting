@@ -292,6 +292,9 @@ events, tombstones }`; includes the streak anchors so an import restores streaks
 `events.merge(incoming)` (last write wins by `updatedAt`; `deleted: true` events remove; for sync),
 `events.subscribe(fn)`, and `parseWireEvent(x)` (strict validation of anything arriving from outside).
 Everything goes through the store, so streak fields are re-derived and persistence is the usual persist path.
+**Which to call for what:** a live alarm must be logged with `logIncident(tag, true, extras)` (the store action; it
+holds the 30 s per-behavior episode merge, and `extras` carries `behavior` and `hand`). `events.add` does **not** merge
+episodes: use it for manual logs from new surfaces (phone view, urge timer), import and sync, not for detection.
 
 **Settings.** `settings.get()` / `settings.update(patch)` for the core fields the store already owns (sensitivity,
 alert type/sound/volume, reminders, theme, week-chart metric). New settings do not go in the store (do not reshape
