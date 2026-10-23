@@ -156,7 +156,7 @@ window exists). That note is measured, not assumed.
 
 ## Files
 
-Added: `src/background/*` (24 files incl. tests), `scripts/backgroundGuards.test.mjs`, `scripts/background-probe/*` (measurement and
+Added: `src/background/*` (32 files, 11 of them tests), `scripts/backgroundGuards.test.mjs`, `scripts/background-probe/*` (measurement and
 screenshot tooling, not shipped), `docs/agents/ws7a-measurements/*` (results).
 Changed (the seams, named): `src/hooks/useDetection.ts` (imports, the tick-source block, `silent`/`repeat` in `startBiting`, the
 `withProbe(` wrapper around `source` — WS3's `detectHands` line inside it is byte-identical), `src/hooks/usePictureInPicture.ts`

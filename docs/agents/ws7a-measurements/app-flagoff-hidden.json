@@ -3,7 +3,7 @@
  "mode": "hidden",
  "flags": "",
  "browser": "Chrome/155.0.8059.85",
- "startedAt": "2026-10-23T18:03:53.823Z",
+ "startedAt": "2026-10-23T18:27:36.006Z",
  "VIS": 75,
  "HID": 700,
  "BACK": 30,
@@ -13,7 +13,7 @@
    "vis": "hidden",
    "video": {
     "frames": 2397,
-    "t": 119.78
+    "t": 119.81
    },
    "fresh": true
   },
@@ -21,8 +21,8 @@
    "hiddenSec": 61,
    "vis": "hidden",
    "video": {
-    "frames": 3002,
-    "t": 150.05
+    "frames": 3003,
+    "t": 150.09
    },
    "fresh": true
   },
@@ -30,8 +30,8 @@
    "hiddenSec": 91,
    "vis": "hidden",
    "video": {
-    "frames": 3593,
-    "t": 179.58
+    "frames": 3592,
+    "t": 179.54
    },
    "fresh": true
   },
@@ -39,8 +39,8 @@
    "hiddenSec": 121,
    "vis": "hidden",
    "video": {
-    "frames": 4192,
-    "t": 209.56
+    "frames": 4191,
+    "t": 209.51
    },
    "fresh": true
   },
@@ -48,8 +48,8 @@
    "hiddenSec": 151,
    "vis": "hidden",
    "video": {
-    "frames": 4792,
-    "t": 239.56
+    "frames": 4791,
+    "t": 239.51
    },
    "fresh": true
   },
@@ -57,8 +57,8 @@
    "hiddenSec": 181,
    "vis": "hidden",
    "video": {
-    "frames": 5392,
-    "t": 269.56
+    "frames": 5391,
+    "t": 269.51
    },
    "fresh": true
   },
@@ -66,8 +66,8 @@
    "hiddenSec": 211,
    "vis": "hidden",
    "video": {
-    "frames": 5992,
-    "t": 299.56
+    "frames": 5991,
+    "t": 299.52
    },
    "fresh": true
   },
@@ -75,8 +75,8 @@
    "hiddenSec": 241,
    "vis": "hidden",
    "video": {
-    "frames": 6592,
-    "t": 329.56
+    "frames": 6591,
+    "t": 329.51
    },
    "fresh": true
   },
@@ -84,8 +84,8 @@
    "hiddenSec": 271,
    "vis": "hidden",
    "video": {
-    "frames": 7192,
-    "t": 359.56
+    "frames": 7191,
+    "t": 359.5
    },
    "fresh": true
   },
@@ -93,8 +93,8 @@
    "hiddenSec": 301,
    "vis": "hidden",
    "video": {
-    "frames": 7792,
-    "t": 389.56
+    "frames": 7791,
+    "t": 389.51
    },
    "fresh": true
   },
@@ -102,8 +102,8 @@
    "hiddenSec": 331,
    "vis": "hidden",
    "video": {
-    "frames": 8392,
-    "t": 419.56
+    "frames": 8391,
+    "t": 419.5
    },
    "fresh": true
   },
@@ -111,8 +111,8 @@
    "hiddenSec": 361,
    "vis": "hidden",
    "video": {
-    "frames": 8992,
-    "t": 449.57
+    "frames": 8991,
+    "t": 449.5
    },
    "fresh": true
   },
@@ -120,8 +120,8 @@
    "hiddenSec": 391,
    "vis": "hidden",
    "video": {
-    "frames": 9592,
-    "t": 479.56
+    "frames": 9591,
+    "t": 479.5
    },
    "fresh": true
   },
@@ -129,8 +129,8 @@
    "hiddenSec": 421,
    "vis": "hidden",
    "video": {
-    "frames": 10192,
-    "t": 509.56
+    "frames": 10191,
+    "t": 509.5
    },
    "fresh": true
   },
@@ -138,8 +138,8 @@
    "hiddenSec": 451,
    "vis": "hidden",
    "video": {
-    "frames": 10792,
-    "t": 539.56
+    "frames": 10791,
+    "t": 539.51
    },
    "fresh": true
   },
@@ -147,8 +147,8 @@
    "hiddenSec": 481,
    "vis": "hidden",
    "video": {
-    "frames": 11392,
-    "t": 569.56
+    "frames": 11391,
+    "t": 569.5
    },
    "fresh": true
   },
@@ -156,8 +156,8 @@
    "hiddenSec": 511,
    "vis": "hidden",
    "video": {
-    "frames": 11992,
-    "t": 599.56
+    "frames": 11991,
+    "t": 599.5
    },
    "fresh": true
   },
@@ -165,8 +165,8 @@
    "hiddenSec": 541,
    "vis": "hidden",
    "video": {
-    "frames": 12592,
-    "t": 629.56
+    "frames": 12591,
+    "t": 629.51
    },
    "fresh": true
   },
@@ -174,8 +174,8 @@
    "hiddenSec": 571,
    "vis": "hidden",
    "video": {
-    "frames": 13192,
-    "t": 659.56
+    "frames": 13191,
+    "t": 659.5
    },
    "fresh": true
   },
@@ -183,8 +183,8 @@
    "hiddenSec": 601,
    "vis": "hidden",
    "video": {
-    "frames": 13792,
-    "t": 689.56
+    "frames": 13791,
+    "t": 689.52
    },
    "fresh": true
   },
@@ -192,8 +192,8 @@
    "hiddenSec": 631,
    "vis": "hidden",
    "video": {
-    "frames": 14392,
-    "t": 719.56
+    "frames": 14391,
+    "t": 719.5
    },
    "fresh": true
   },
@@ -201,8 +201,8 @@
    "hiddenSec": 661,
    "vis": "hidden",
    "video": {
-    "frames": 14992,
-    "t": 749.56
+    "frames": 14991,
+    "t": 749.5
    },
    "fresh": true
   },
@@ -210,8 +210,8 @@
    "hiddenSec": 691,
    "vis": "hidden",
    "video": {
-    "frames": 15597,
-    "t": 779.8
+    "frames": 15596,
+    "t": 779.74
    },
    "fresh": true
   }
@@ -219,65 +219,65 @@
  "cpu": {
   "visible": {
    "seconds": 65,
-   "browser": 0.9,
+   "browser": 1,
    "renderer": 16.4,
-   "GPU": 7.4,
+   "GPU": 6.8,
    "network.mojom.NetworkService": 0.1,
    "storage.mojom.StorageService": 0,
-   "video_capture.mojom.VideoCaptureService": 0.5
+   "video_capture.mojom.VideoCaptureService": 0.6
   },
   "hiddenFirstMinute": {
-   "seconds": 62.8,
+   "seconds": 62.7,
    "browser": 0.5,
-   "renderer": 4.4,
-   "GPU": 0.9,
+   "renderer": 5.2,
+   "GPU": 1,
    "network.mojom.NetworkService": 0,
    "storage.mojom.StorageService": 0,
-   "video_capture.mojom.VideoCaptureService": 0.5,
+   "video_capture.mojom.VideoCaptureService": 0.6,
    "audio.mojom.AudioService": 0.1
   },
   "hiddenRest": {
    "seconds": 638,
-   "browser": 0.2,
-   "renderer": 2.8,
+   "browser": 0.3,
+   "renderer": 3,
    "GPU": 0.6,
    "network.mojom.NetworkService": 0,
    "storage.mojom.StorageService": 0,
-   "video_capture.mojom.VideoCaptureService": 0.4,
+   "video_capture.mojom.VideoCaptureService": 0.6,
    "audio.mojom.AudioService": 0
   }
  },
  "alarms": [
   {
    "tag": "visible",
-   "latencyMs": 662,
+   "latencyMs": 643,
    "logged": 1,
    "vis": "visible"
   },
   {
    "tag": "hidden+20s",
-   "latencyMs": 1179,
+   "latencyMs": 1165,
    "logged": 1,
    "vis": "hidden"
   },
   {
    "tag": "hidden+650s",
-   "latencyMs": 2978,
+   "latencyMs": 2977,
    "logged": 1,
    "vis": "hidden"
   }
  ],
- "startedDetectionAfterMs": 4030.300000000745,
- "hiddenAtMs": 89349.40000000224,
+ "startedDetectionAfterMs": 4019.800000000745,
+ "hiddenAtMs": 89349.5,
  "visHidden": "hidden",
  "visBack": "visible",
- "endMs": 820675.4000000022,
+ "endMs": 820584.3999999985,
  "table": [
   {
    "window": "-30..0s",
-   "raf": 57.8,
+   "raf": 57.67,
    "iv100": 10,
-   "stepsPerSec": 3.7
+   "stepsPerSec": 3.73
   },
   {
    "window": "0..10s",
@@ -324,13 +324,13 @@
   {
    "window": "600..660s",
    "raf": 0,
-   "iv100": 2.18,
+   "iv100": 2.2,
    "stepsPerSec": 1.02
   },
   {
    "window": "660..701s",
-   "raf": 1.21,
-   "iv100": 6.87,
+   "raf": 1.33,
+   "iv100": 6.89,
    "stepsPerSec": 1.77
   }
  ],

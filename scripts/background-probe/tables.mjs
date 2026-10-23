@@ -44,8 +44,8 @@ const runs = () => RUNS.map((l) => [l, load(`app-${l}.json`)]).filter(([, r]) =>
 function printB() {
   const rs = runs();
   const windows = ['-30..0s', '0..10s', '10..60s', '60..180s', '180..300s', '300..360s', '360..480s', '480..600s', '600..660s'];
-  const cell = (r, w) => r.table.find((t) => t.window === w)?.stepsPerSecond ?? '';
-  console.log('Detection steps per second (the injected-hand windows, 10..60 s and 600..660 s of the "flag on" runs, are lower because the model is not called while a synthetic hand is shown):\n');
+  const cell = (r, w) => r.table.find((t) => t.window === w)?.stepsPerSec ?? '';
+  console.log('Detection steps per second. The "visible" row of the probe-build runs includes a 10 s stretch with an injected hand (the model is not called then), and so do the 10 to 60 s and 600 to 660 s rows of the runs with `INJECT_AT`; the two "before" runs have no injection (visible: 4.7 a second, the rate of the animation-frame loop):\n');
   console.log(md(windows.map((w) => ({ w })), [['hidden time (s)', (x) => x.w === '-30..0s' ? 'visible, before hiding' : x.w.replace('..', ' to ').replace('s', '')], ...rs.map(([l, r]) => [RUN_NAMES[l], (x) => cell(r, x.w)])]));
   console.log('\nAlarm latency in ms, from "a hand is on the mouth" to the alarm starting (synthetic hand through the real loop; probe builds):\n');
   console.log(md(rs.filter(([, r]) => r.alarms?.length), [['run', (x) => RUN_NAMES[x[0]]], ['tab visible', (x) => x[1].alarms.find((a) => a.tag === 'visible')?.latencyMs ?? ''], ['hidden 20 s', (x) => x[1].alarms.find((a) => a.tag === 'hidden+20s')?.latencyMs ?? ''], ['hidden 650 s', (x) => x[1].alarms.find((a) => a.tag === 'hidden+650s')?.latencyMs ?? ''], ['alarm logged each time', (x) => x[1].alarms.every((a) => a.logged === 1) ? 'yes' : 'NO']]));
