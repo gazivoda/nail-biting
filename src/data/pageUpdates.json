@@ -1,19 +1,19 @@
 {
   "/": {
-    "lastmod": "2026-10-21",
-    "fingerprint": "1a7e1599d013638a"
+    "lastmod": "2026-10-23",
+    "fingerprint": "30e4f89aff31ccac"
   },
   "/blog": {
-    "lastmod": "2026-10-21",
+    "lastmod": "2026-10-23",
     "source": "newest article dateModified"
   },
   "/how-it-works": {
-    "lastmod": "2026-10-20",
-    "fingerprint": "b946ec29e6641aad"
+    "lastmod": "2026-10-23",
+    "fingerprint": "fa960d8ae8ba762f"
   },
   "/pricing": {
-    "lastmod": "2026-10-20",
-    "fingerprint": "77d3feb9d4e6b23f"
+    "lastmod": "2026-10-23",
+    "fingerprint": "640a61d7f7c6513e"
   },
   "/tools/nail-biting-cost-calculator": {
     "lastmod": "2026-10-05",
@@ -44,12 +44,12 @@
     "fingerprint": "c7b87ee5561ad34c"
   },
   "/compare/stop-biting-vs-hands-off": {
-    "lastmod": "2026-10-20",
-    "fingerprint": "180b902b7069d783"
+    "lastmod": "2026-10-23",
+    "fingerprint": "ba26e566f681f965"
   },
   "/compare/stop-biting-vs-nailed": {
-    "lastmod": "2026-10-20",
-    "fingerprint": "381af2f0ddd8a0db"
+    "lastmod": "2026-10-23",
+    "fingerprint": "2a267e773d2cea6f"
   },
   "/compare/stop-biting-vs-smartbehavior": {
     "lastmod": "2026-10-20",
@@ -80,8 +80,8 @@
     "fingerprint": "1904bb1fa6a808a8"
   },
   "/solutions/for-desk-workers": {
-    "lastmod": "2026-10-20",
-    "fingerprint": "b1d3d2066b5f851f"
+    "lastmod": "2026-10-23",
+    "fingerprint": "bd993cc142430062"
   },
   "/solutions/for-adhd": {
     "lastmod": "2026-10-20",
@@ -122,5 +122,13 @@
   "/refund-policy": {
     "lastmod": "2026-04-16",
     "fingerprint": "1602bff94053d450"
+  },
+  "/compare/hands-off": {
+    "lastmod": "2026-10-23",
+    "fingerprint": "5818649140c4eed7"
+  },
+  "/compare/habitaware-keen": {
+    "lastmod": "2026-10-23",
+    "fingerprint": "760801a8dca25cfa"
   }
 }
