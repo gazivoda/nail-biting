@@ -10,3 +10,13 @@ import { isSilent } from './pauseMachine';
 export function silentNow(): boolean {
   return isFeatureOn('background_watching') && isSilent(getWatchState());
 }
+
+/**
+ * True while the person has paused or is in a meeting: the periodic "Hands check" nudges (useNotifications.ts) stay
+ * quiet too, because a pause that still buzzes is not a pause. False whenever the flag is off.
+ */
+export function quietNow(): boolean {
+  if (!isFeatureOn('background_watching')) return false;
+  const kind = getWatchState().kind;
+  return kind === 'paused' || kind === 'meeting';
+}
