@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from 'react';
 import {
   getLocale, getLocaleVersion, getPreferredLocale, setLocale, subscribeLocale, type Locale,
-} from './core';
+} from './core.ts';
 
 /** Re-renders the component whenever the language (or the pick) changes. Returns a counter. */
 export function useLocaleVersion(): number {

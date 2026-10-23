@@ -20,7 +20,7 @@
 
 import { BEHAVIORS, type Behavior } from '../storage/eventModel.ts';
 import { RULES, type ZoneRule } from './rules.ts';
-import { t } from '../i18n/scopes/common';
+import { t } from '../i18n/scopes/common.ts';
 
 export type ValidationLevel = 'validated' | 'experimental';
 

@@ -116,6 +116,7 @@ export const COVERS = [
 const FIXTURE = ['Commute', 'Ana', 'ana', 'example', 'com', /^(days?|hours?|left|Less|than|an)$/];
 
 const DAY = 86_400_000;
+const DAYS_LEFT = 3; // days left in the phone-view fixture (scripts/trialLength.test.mjs: no trial-length literal)
 const HOUR = 3_600_000;
 const iso = (ms: number) => new Date(Date.now() + ms).toISOString();
 const person = (over: Record<string, unknown> = {}) => ({
@@ -610,12 +611,12 @@ describe('English (no language picked): the text and markup of today', () => {
 
   it('phone view', () => {
     at3pm();
-    auth.ctx = { user: person({ subscription_status: 'trial', trial_end_date: iso(3 * DAY - HOUR) }), accessStatus: 'trial_active' };
+    auth.ctx = { user: person({ subscription_status: 'trial', trial_end_date: iso(DAYS_LEFT * DAY - HOUR) }), accessStatus: 'trial_active' };
     store.over = { incidents, customTags: custom };
     const html = phoneView({ upgrade: true, navigate: true });
     for (const piece of [
       'Good afternoon, <span class="sg-mark whitespace-nowrap dark:![background:none]">Ana</span>.',
-      'Free trial: 3 days left.',
+      `Free trial: ${DAYS_LEFT} days left.`, // a fixture value, not the trial length
       '>Choose a plan</button>',
       'aria-label="Log"',
       'I bit</button>',

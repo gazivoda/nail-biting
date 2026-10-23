@@ -18,11 +18,11 @@
 // build labels inside the function or component that shows them.
 
 import { createElement, Fragment, useMemo, type ReactNode } from 'react';
-import { intlTag, lookup, transformOutput } from './core';
-import { useLocaleVersion } from './hooks';
-import { formatMessage, formatToParts, parseRich, type Params, type RichNode } from './message';
+import { intlTag, lookup, transformOutput } from './core.ts';
+import { useLocaleVersion } from './hooks.ts';
+import { formatMessage, formatToParts, parseRich, type Params, type RichNode } from './message.ts';
 
-export type { Params } from './message';
+export type { Params } from './message.ts';
 export type RichTags = Readonly<Record<string, (children: ReactNode) => ReactNode>>;
 
 function renderRich(nodes: RichNode[], tags: RichTags): ReactNode[] {
