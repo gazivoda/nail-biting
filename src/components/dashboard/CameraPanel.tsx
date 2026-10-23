@@ -6,8 +6,10 @@ import { useCamera } from '../../hooks/useCamera';
 import { CAMERA_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
 import { useWatchGate } from '../../background/gate';
 import { cameraStreamEnabled } from '../../background/pauseMachine';
+import { useT } from '../../i18n/scopes/watch';
 
 export function CameraPanel() {
+  const t = useT();
   const { cameraEnabled } = useAppStore();
   // WS7a: while watching is paused the camera is let go of (indicator off) where the browser remembers consent.
   // Flag off: the gate is a constant "running" and this is useCamera(cameraEnabled), as before.
@@ -16,8 +18,8 @@ export function CameraPanel() {
   const cameraError = error ? CAMERA_ERROR_MESSAGE[error.kind] : null;
   const [modelFailed, setModelFailed] = useState(false);
   const problem = !cameraEnabled ? null
-    : cameraError ? 'Camera not running'
-    : modelFailed ? 'Detection not running'
+    : cameraError ? t('panel.cameraNotRunning')
+    : modelFailed ? t('panel.detectionNotRunning')
     : null;
 
   return (

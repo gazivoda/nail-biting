@@ -35,6 +35,11 @@ describe('findUnmarkedEnglish', () => {
     expect(findUnmarkedEnglish('<p>Commute</p>', { allow: [/^Comm/] })).toEqual([]);
   });
 
+  it('understands marks nested inside marks (a t() result used as a parameter of another t())', () => {
+    expect(findUnmarkedEnglish(`<p>${mark(`Heute ${mark('Stress')} und mehr`)}</p>`)).toEqual([]);
+    expect(findUnmarkedEnglish(`<p>${mark(`Heute ${mark('Stress')}`)} leftover words</p>`).map(l => l.word)).toEqual(['leftover', 'words']);
+  });
+
   it('describes leaks readably', () => {
     expect(describeLeaks([])).toBe('no unmarked English');
     expect(describeLeaks(findUnmarkedEnglish('<p>Hello there</p>'))).toContain('"Hello"');
