@@ -789,9 +789,14 @@ if (!existsSync(distPath)) {
   // 404 route above express.static below). While the flag is off nothing here is reachable.
   const GATED_FLAG = 'compare_competitors';
   let GATED_CONTENT = {};
+  let GATED_UPDATES = {};   // freshness-ledger rows for the gated paths, kept out of seo-content.json too
   try {
     const gatedPath = join(distPath, 'seo-gated.json');
-    if (existsSync(gatedPath)) GATED_CONTENT = JSON.parse(readFileSync(gatedPath, 'utf-8')).comparePages ?? {};
+    if (existsSync(gatedPath)) {
+      const gated = JSON.parse(readFileSync(gatedPath, 'utf-8'));
+      GATED_CONTENT = gated.comparePages ?? {};
+      GATED_UPDATES = gated.pageUpdates ?? {};
+    }
   } catch (err) {
     console.error('ERROR: dist/seo-gated.json is invalid JSON — gated pages disabled.', err);
   }
@@ -803,7 +808,7 @@ if (!existsSync(distPath)) {
   // pinned to a fingerprint of that page's content and only moves when the
   // content does (see the header comment in scripts/sync-seo.mjs), so it is
   // safe to publish as `dateModified` and as a `Last-Modified` header.
-  const PAGE_UPDATES = SEO_CONTENT.pageUpdates ?? {};
+  const PAGE_UPDATES = { ...(SEO_CONTENT.pageUpdates ?? {}), ...GATED_UPDATES };
   function pageLastmod(path) {
     return PAGE_UPDATES[path]?.lastmod ?? null;
   }

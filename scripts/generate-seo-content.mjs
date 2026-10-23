@@ -141,6 +141,11 @@ try {
   process.exit(1);
 }
 
+// The ledger rows of the flagged pages travel with their copy, not in seo-content.json.
+const isFlaggedPath = path => GATED_COMPARE_PATHS.includes(path);
+const flaggedUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => isFlaggedPath(path)));
+pageUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => !isFlaggedPath(path)));
+
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
 writeFileSync(
   join(DIST, 'seo-content.json'),
@@ -156,7 +161,7 @@ writeFileSync(
 );
 writeFileSync(
   join(DIST, 'seo-gated.json'),
-  JSON.stringify({ generatedAt: new Date().toISOString(), comparePages: flaggedPages }),
+  JSON.stringify({ generatedAt: new Date().toISOString(), comparePages: flaggedPages, pageUpdates: flaggedUpdates }),
 );
 // ─── dist/posts/<slug>.json — one file per article, for the client ──────────
 // BlogPost.tsx used to import src/data/blogPosts.ts, which put every article
