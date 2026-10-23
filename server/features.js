@@ -68,6 +68,7 @@ export const FLAG_DEPENDS_ON = {
   urge_timer: ['hrt_coaching'],
   weekly_email: ['event_sync', 'insights'],
   photo_diary: ['insights'],
+  share_links: ['event_sync'],
 };
 
 /**

@@ -77,7 +77,8 @@ app.use((req, res, next) => {
   const q = req.originalUrl.indexOf('?');
   const path = q === -1 ? req.originalUrl : req.originalUrl.slice(0, q);
   const search = q === -1 ? '' : req.originalUrl.slice(q);
-  if (path.startsWith('/api/') || path.startsWith('/assets/')) return next();
+  // /share/ carries mixed-case bearer tokens (WS10): lower-casing it would break every link.
+  if (path.startsWith('/api/') || path.startsWith('/assets/') || path.startsWith('/share/')) return next();
 
   let canonical = path;
   if (path === '/index.html') canonical = '/';

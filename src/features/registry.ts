@@ -143,6 +143,7 @@ export const FEATURES = {
   share_links: {
     owner: 'WS10',
     description: 'Read-only share link for a therapist or accountability partner.',
+    dependsOn: ['event_sync'], // a link shows the owner's SYNCED history; with sync off it shows "nothing yet"
     before: 'Review the drafted privacy wording (NEEDS HUMAN REVIEW).',
   },
 
