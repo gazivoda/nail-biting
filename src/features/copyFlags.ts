@@ -18,6 +18,7 @@
 //
 // No React and no DOM at import time, so the decision is tested in node.
 
+import { kv } from '../storage/kv';
 import { FLAGS_TTL_MS } from './flags';
 
 /** The flags the server lists in the marker: the ones that change copy on pages that exist today. */
@@ -46,6 +47,20 @@ export function copyFlagIsOn(
   if (!cached || typeof cached.at !== 'number' || now - cached.at >= FLAGS_TTL_MS || now < cached.at) return false;
   const flags = cached.flags;
   return flags !== null && typeof flags === 'object' && (flags as Record<string, unknown>)[name] === true;
+}
+
+export interface CopyFlagInputs {
+  marker: ReadonlySet<string> | null;
+  cached: CachedFlags | null;
+  now: number;
+}
+
+/**
+ * What a page can know about the flags right now: its marker, the app's last answer and the time. Kept out
+ * of the React hooks because it reads the clock and the page, which a component must not do while rendering.
+ */
+export function takeCopyFlagInputs(): CopyFlagInputs {
+  return { marker: readCopyMarker(), cached: kv.get<CachedFlags | null>('flags', 'last-known', null), now: Date.now() };
 }
 
 /** Reads the marker out of the page, if there is a page. */

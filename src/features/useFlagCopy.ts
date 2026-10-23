@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { flagAware } from '../../shared/flagCopy.js';
-import { kv } from '../storage/kv';
 import { useSignInProviders } from '../auth/useSignInProviders';
-import { copyFlagIsOn, readCopyMarker, type CachedFlags } from './copyFlags';
+import { copyFlagIsOn, takeCopyFlagInputs } from './copyFlags';
 
 // Copy that changes with a feature flag (WS11b, shared/flagCopy.js).
 //
@@ -20,25 +19,19 @@ import { copyFlagIsOn, readCopyMarker, type CachedFlags } from './copyFlags';
 
 /** One copy-affecting flag, by the marker or the app's last fresh answer. Never asks the server. */
 export function useCopyFlag(name: string): boolean {
-  return useMemo(() => copyFlagIsOn(name, {
-    marker: readCopyMarker(),
-    cached: kv.get<CachedFlags | null>('flags', 'last-known', null),
-    now: Date.now(),
-  }), [name]);
+  return useMemo(() => copyFlagIsOn(name, takeCopyFlagInputs()), [name]);
 }
 
 /** `isOn` for copy: the flags above, and the sign-in methods the server says are usable. */
 export function useFlagIsOn(): (name: string) => boolean {
   const { providers } = useSignInProviders();
   return useMemo(() => {
-    const marker = readCopyMarker();
-    const cached = kv.get<CachedFlags | null>('flags', 'last-known', null);
-    const now = Date.now();
+    const inputs = takeCopyFlagInputs();
     return (name: string): boolean => {
       if (name === 'signin_magic_link') return providers.magic_link;
       if (name === 'signin_apple') return providers.apple;
       if (name === 'signin_microsoft') return providers.microsoft;
-      return copyFlagIsOn(name, { marker, cached, now });
+      return copyFlagIsOn(name, inputs);
     };
   }, [providers]);
 }
