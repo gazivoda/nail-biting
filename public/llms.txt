@@ -177,7 +177,7 @@ Key facts:
 - [Nail Biting and Jaw Pain: The TMJ Connection](https://stopbiting.today/blog/nail-biting-jaw-pain-tmj): In 240 adolescents, nail biting was significantly associated with TMD signs and symptoms (p = 0.001).
 - [Hangnails and Nail Biting: The Trigger Loop Nobody Warns You About](https://stopbiting.today/blog/nail-biting-hangnails): Hangnails are both a consequence of nail biting and one of its most reliable triggers.
 - [White Spots on Bitten Nails: What They Are and What They Are Not](https://stopbiting.today/blog/nail-biting-white-spots): White marks are conventionally attributed to matrix trauma, not a calcium or zinc lack.
-- [What Deficiency Causes Nail Biting? What the Evidence Says](https://stopbiting.today/blog/nail-biting-vitamin-deficiency): No evidence links nail biting to a vitamin or mineral deficiency.
+- [What Deficiency Causes Nail Biting? What the Evidence Says](https://stopbiting.today/blog/nail-biting-vitamin-deficiency): Can low iron, zinc or magnesium cause nail biting?
 - [Does Nail Biting Damage Your Teeth? What Has Actually Been Measured](https://stopbiting.today/blog/nail-biting-teeth-damage): Less is measured than articles claim: one study on root resorption, one disputed on malocclusion, one on jaw signs.
 - [What Happens If You Swallow Your Fingernails?](https://stopbiting.today/blog/swallowing-fingernails): We found no study of what swallowed nail clippings do.
 - [Can You Get Pinworms From Biting Your Nails? What the Studies Show](https://stopbiting.today/blog/pinworm-nail-biting): Studies link nail biting to pinworm in children, but only as an association.
@@ -231,7 +231,7 @@ Key facts:
 
 ### Comparison
 
-- [5 Best Tools to Stop Nail Biting in 2026, Ranked by Evidence](https://stopbiting.today/blog/best-apps-to-stop-nail-biting): Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers.
+- [Apps and Tools to Stop Nail Biting: What Each Does](https://stopbiting.today/blog/best-apps-to-stop-nail-biting): Compare nail biting apps, bitter polish, wrist sensors and trackers by what they do, where they work and their limits.
 - [Stop Biting vs Mavala Stop: AI Detection vs Bitter Polish (2026)](https://stopbiting.today/blog/stop-biting-vs-mavala-stop): Mavala Stop uses bitter taste to deter nail biting.
 - [Nail Biting vs Pen Chewing: Are They the Same Habit?](https://stopbiting.today/blog/nail-biting-vs-pen-chewing): Pen chewing and nail biting look similar but differ in mechanism and risk.
 - [Nail Biting vs Hair Pulling: How These Two BFRBs Compare](https://stopbiting.today/blog/nail-biting-vs-hair-pulling): Nail biting and hair pulling (trichotillomania) are both BFRBs but differ in visibility, treatment, and evidence base.
@@ -246,7 +246,7 @@ Key facts:
 - [Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained](https://stopbiting.today/blog/webcam-privacy-nail-biting-app): Webcam apps for nail biting raise fair privacy questions.
 - [How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, on your device five times a second.
 - [Wearable Technology for Nail Biting: Smartwatches and Motion Detection](https://stopbiting.today/blog/nail-biting-wearable-technology): Wrist-worn wearables are an emerging way to catch nail biting through motion sensing.
-- [How Accurate Is AI Nail Biting Detection? A Straight Answer](https://stopbiting.today/blog/nail-biting-detection-accuracy): It detects fingertip-to-mouth proximity, not teeth on a nail: five frames a second, three consecutive positives, about 600 milliseconds, before an alert fires.
+- [How Accurate Is AI Nail Biting Detection? A Straight Answer](https://stopbiting.today/blog/nail-biting-detection-accuracy): Stop Biting uses fingertip-to-mouth proximity as a proxy for biting.
 - [Getting Your Camera Setup Right for Nail Biting Detection](https://stopbiting.today/blog/nail-biting-camera-setup): Detection quality depends more on lighting and camera angle than on hardware.
 - [Does Running Nail Biting Detection Slow Down Your Computer?](https://stopbiting.today/blog/nail-biting-app-battery-performance): Inference runs five times a second, not sixty, roughly a twelvefold cut in compute, at about 640 by 480, with no video uploaded.
 

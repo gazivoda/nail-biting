@@ -1,5 +1,28 @@
 # SEO/GEO Optimization Loop — stopbiting.today
 
+## 2026-10-23 — SEO/GEO swarm implementation plan
+
+Goal: improve qualified organic traffic using verified technical and existing-page improvements. Execution is authorized by the user's request to use the swarm, finish, commit and push.
+
+Architecture: preserve the React/Vite site and Express server-rendered content pipeline. Build on origin/main 0071bb4, isolated from the unrelated unfinished billing merge and 55 unpublished local commits. Publish only this work to remote main with a normal fast-forward push if remote main is unchanged.
+
+Constraints: preserve Google-Extended/training preferences; no invented clinical credentials, efficacy, reviews, keyword volumes, traffic lifts, or public outreach. Existing metadata changes from October 21 need measurement before further title changes.
+
+- [x] Audit live pages with technical, content, and GEO/schema specialists; review all SEO/GEO skills and mark inapplicable agency/international operations.
+- [x] Task 1 — Correct service-worker navigation in vite.config.ts, preserving server-rendered metadata for public URLs and avoiding cached authenticated HTML. Add a meaningful regression check and prove red/green. Verify root/offline behavior, API and file exclusions, arbitrary article and comparison routes.
+- [x] Task 2 — Improve five existing blog articles in src/data/blogPosts.ts: remove invented nail recovery schedules; qualify deficiency claims; replace efficacy rankings with feature comparisons and current verified Nailed pricing; simplify the BFRB guide; remove unsupported detector accuracy estimates. Preserve URLs/source provenance; update only modified dates for changed articles.
+- [x] Task 3 — Correct Person sameAs identity in server.js; give article entities distinct IDs from their WebPages and update matching collection links. Validate raw HTML JSON-LD, author identity, IDs and one canonical across route types.
+- [x] Product identity — Replace the template README with factual product documentation, source-author attribution and relevant canonical guides/tools.
+- [x] Task 4 — Regenerate blogIndex/sitemap/llms artifacts, run complete unit tests, build:web, seo:check, server syntax and local HTTP/schema/browser checks. Review the whole diff with an independent agent.
+- [x] Task 5 — Save evidence, all-skill coverage, remaining hosting actions, and a 28-day measurement plan in docs/seo/audits/2026-10-23/. Produce a PDF without invented performance/visibility scores.
+- [ ] Task 6 — Commit, confirm remote ancestry, push verified SEO-only changes to main, and check remote/deployment state.
+
+Review focus: repeat public visits retain route metadata; authenticated HTML is not runtime cached; offline app entry still works; changed facts reach both client JSON and server-rendered HTML; unchanged publication dates and route URLs remain stable.
+
+### Review (2026-10-23)
+
+Implemented navigation/schema fixes, five article revisions, synchronized metadata, factual README and nine refreshed social preview cards (six were already stale). Unit tests 149/149; production build passes; 219/219 local sitemap pages pass HTTP/canonical/H1/schema/assets checks; seo:check and all 211 OG cards pass. Twelve controlled browser checks pass, with the local-only CSP/HTTP installation fixture documented. Independent source review found no blockers. Ten no-useless-escape errors in untouched article text reproduce on origin/main; changed code and new tests pass targeted ESLint. PDF has five visually verified pages. Release confirmation follows remote verification. Historical GSC baseline: July 18–October 17, 110 clicks / 11,800 impressions / 0.9% CTR / average position 13.8. No current GSC access or measured uplift established.
+
 Started: 2026-08-11 (via /loop, self-paced). Baseline: GEO-AUDIT-REPORT.md 2026-06-15 = 64/100.
 
 ## Phase 1: Fresh audits (parallel subagents)

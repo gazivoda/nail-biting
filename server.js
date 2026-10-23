@@ -1069,8 +1069,8 @@ if (!existsSync(distPath)) {
     name: 'Igor Gazivoda',
     url: 'https://stopbiting.today/about',
     jobTitle: 'Founder',
-    // Same GitHub property the Organization schema in index.html links to.
-    sameAs: ['https://github.com/gazivoda/nail-biting'],
+    // This identifies the author, rather than the product's source repository.
+    sameAs: ['https://github.com/gazivoda'],
     knowsAbout: PERSON_KNOWS_ABOUT,
     worksFor: { '@id': ORG_ID },
   };
@@ -1225,11 +1225,8 @@ if (!existsSync(distPath)) {
     return null;
   }
 
-  // FAQPage node for a page whose primary entity is something else (an Article,
-  // or the pricing WebPage). It takes a `#faq` fragment @id rather than the
-  // canonical: the canonical already identifies that other entity, and two
-  // different types under one @id is exactly the entity collision iteration 2
-  // spent its time merging away.
+  // Keep the Q&A node distinct from the canonical WebPage and any #article
+  // entity. Its #faq fragment identifies the answers, not the whole page.
   function faqPageSchema(canonical, name, faqs) {
     return {
       '@context': 'https://schema.org',
@@ -1255,9 +1252,9 @@ if (!existsSync(distPath)) {
       // anonymous, and the stub /blog declares for the same post (see the
       // CollectionPage below) became a second, unlinked half-entity: one node
       // with the body, one with the link. Both now carry this @id and merge
-      // into a single article. It is the page canonical, matching
-      // `url`/`mainEntityOfPage` below.
-      '@id': canonical,
+      // into a single article. The fragment distinguishes that article from
+      // its WebPage; `url`/`mainEntityOfPage` keep the page canonical below.
+      '@id': `${canonical}#article`,
       // The article's OWN title — the string blogArticleHtml() renders as the
       // <h1>. It used to be the SEO meta title (post.seoTitle ?? post.title),
       // which differed from the visible heading on 97 of 152 articles: AI
@@ -1791,7 +1788,7 @@ if (!existsSync(distPath)) {
       // anchor text in the list below and the <h1> on the article itself.
       hasPart: BLOG_RECENT.map(([slug, p]) => ({
         '@type': 'BlogPosting',
-        '@id': `https://stopbiting.today/blog/${slug}`,
+        '@id': `https://stopbiting.today/blog/${slug}#article`,
         headline: p.title,
         description: p.description,
         url: `https://stopbiting.today/blog/${slug}`,
@@ -1928,7 +1925,7 @@ if (!existsSync(distPath)) {
       '@id': PERSON_ID,
       name: 'Igor Gazivoda',
       url: 'https://stopbiting.today/about',
-      sameAs: ['https://github.com/gazivoda/nail-biting'],
+      sameAs: SCHEMA_AUTHOR.sameAs,
       jobTitle: 'Founder',
       worksFor: { '@id': ORG_ID },
       knowsAbout: PERSON_KNOWS_ABOUT,
@@ -2461,8 +2458,8 @@ if (!existsSync(distPath)) {
         '@type': 'Article',
         // Identity, for the same reason every BlogPosting now carries one:
         // these 9 nodes were part of the 152 anonymous content entities. The
-        // page canonical, matching `url`/`mainEntityOfPage` below.
-        '@id': canonical,
+        // fragment separates the article from its canonical WebPage below.
+        '@id': `${canonical}#article`,
         headline: content?.title ?? meta.title,
         description: meta.description,
         url: canonical,

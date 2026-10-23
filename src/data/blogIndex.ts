@@ -207,12 +207,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "best-apps-to-stop-nail-biting",
-    title: "5 Best Tools to Stop Nail Biting in 2026, Ranked by Evidence",
-    description: "Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers. What each does for an automatic habit, and its cost.",
+    title: "Apps and Tools to Stop Nail Biting: What Each Does",
+    description: "Compare nail biting apps, bitter polish, wrist sensors and trackers by what they do, where they work and their limits. Includes our own app, with disclosure.",
     tag: "Comparison",
-    readingMinutes: 11,
+    readingMinutes: 9,
     datePublished: "2026-04-19",
-    dateModified: "2026-10-21",
+    dateModified: "2026-10-23",
   },
   {
     slug: "stop-biting-vs-mavala-stop",
@@ -300,9 +300,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "How to Grow Your Nails After Nail Biting: Timeline, Care Guide, and What to Expect",
     description: "Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out. What to expect, and what no study has measured.",
     tag: "Health",
-    readingMinutes: 5,
+    readingMinutes: 4,
     datePublished: "2026-04-21",
-    dateModified: "2026-10-21",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-emotional-regulation",
@@ -543,9 +543,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Body-Focused Repetitive Behaviors (BFRBs): The Complete Guide",
     description: "BFRBs are repeated habits such as nail biting, skin picking and hair pulling that damage the body. What they share, and what the evidence says helps.",
     tag: "Clinical",
-    readingMinutes: 5,
+    readingMinutes: 4,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-new-years-resolution",
@@ -1108,11 +1108,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-vitamin-deficiency",
     title: "What Deficiency Causes Nail Biting? What the Evidence Says",
-    description: "No evidence links nail biting to a vitamin or mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: mechanics, not nutrients.",
+    description: "Can low iron, zinc or magnesium cause nail biting? What the cited studies do and do not establish, and when to discuss symptoms with a clinician.",
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-10-21",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-dermatophagia",
@@ -1252,11 +1252,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-detection-accuracy",
     title: "How Accurate Is AI Nail Biting Detection? A Straight Answer",
-    description: "It detects fingertip-to-mouth proximity, not teeth on a nail: five frames a second, three consecutive positives, about 600 milliseconds, before an alert fires.",
+    description: "Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and missed episodes occur, and what is unmeasured.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-camera-setup",
