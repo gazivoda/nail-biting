@@ -12,7 +12,7 @@ import Database from 'better-sqlite3';
 import jwt from 'jsonwebtoken';
 
 const SECRET = 'ws13-rig-secret-ws13-rig-secret-0123456789';
-// The rig user signed up at FIXED_NOW and has a 3-day trial from then: any fixed moment will do as long as every
+// The rig user signed up at FIXED_NOW and has a trial that is still running: any fixed moment will do as long as every
 // rig of one comparison uses the same one (override with WS13_NOW=<epoch ms> to keep "days left" stable on a later day).
 export const FIXED_NOW = Number(process.env.WS13_NOW) || Date.UTC(2026, 9, 23, 20, 0, 0);
 
