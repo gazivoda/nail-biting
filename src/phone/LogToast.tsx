@@ -29,7 +29,12 @@ export function LogToast({ toast, flow, customTags }: { toast: Toast | null; flo
             <p className="py-2.5 text-sm font-medium text-forest-700 dark:text-forest-300">{message}</p>
             <button
               type="button"
-              onClick={() => flow.undo()}
+              onClick={e => {
+                // The toast goes away with its Undo button: focus the first button of the Log section instead of the top of the page.
+                const log = e.currentTarget.closest('section');
+                flow.undo();
+                window.setTimeout(() => log?.querySelector('button')?.focus(), 0);
+              }}
               className="-mr-2 inline-flex min-h-11 shrink-0 items-center px-3 text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
             >
               Undo

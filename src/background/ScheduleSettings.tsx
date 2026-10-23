@@ -5,7 +5,7 @@
 // The browser's notification prompt is shown only when the person turns the reminder ON, after the card has said
 // what it is for (reminders.planTurnOn). A refusal is explained, not worked around, and leaves the reminder off.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CalendarClock } from 'lucide-react';
 import { Section, Row, Toggle } from '../pages/settings/ui';
 import {
@@ -13,6 +13,8 @@ import {
 } from './schedule';
 import { loadSchedule, saveSchedule, subscribeSchedule } from './scheduleStore';
 import { askNotificationPermission, notificationPermission, planTurnOn } from './reminders';
+
+const SWITCH_LABEL = 'Remind me to start watching';
 
 type Notice = null | 'explain' | 'denied' | 'unsupported' | 'unanswered';
 
@@ -37,8 +39,15 @@ export function ScheduleSettings() {
   const [schedule, setSchedule] = useState<Schedule>(loadSchedule);
   const [notice, setNotice] = useState<Notice>(null);
   const [asking, setAsking] = useState(false);
+  const allowButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => subscribeSchedule(() => setSchedule(loadSchedule())), []);
+
+  // Turning the switch on only opens the explanation below it; the switch itself stays "off" until the person allows
+  // notifications. So the explanation takes focus (it is the next thing to do, and a screen reader says what it is).
+  useEffect(() => {
+    if (notice === 'explain') allowButton.current?.focus();
+  }, [notice]);
 
   const update = (patch: Partial<Schedule>) => {
     const next = { ...schedule, ...patch };
@@ -50,6 +59,12 @@ export function ScheduleSettings() {
     const plan = planTurnOn(notificationPermission());
     if (plan === 'enable') { setNotice(null); update({ enabled: true }); return; }
     setNotice(plan);
+  };
+
+  // "Not now" removes the buttons: put focus back on the switch that opened them.
+  const notNow = () => {
+    setNotice(null);
+    window.setTimeout(() => document.querySelector<HTMLElement>(`button[role="switch"][aria-label="${SWITCH_LABEL}"]`)?.focus(), 0);
   };
 
   const allow = async () => {
@@ -81,11 +96,11 @@ export function ScheduleSettings() {
   return (
     <Section title="Schedule" icon={CalendarClock} fullWidth>
       <Row
-        label="Remind me to start watching"
+        label={SWITCH_LABEL}
         description="A notification when your watching hours begin, once per day, only if watching is off. It never switches the camera on by itself."
       >
         <Toggle
-          label="Remind me to start watching"
+          label={SWITCH_LABEL}
           value={schedule.enabled}
           onChange={(on) => { if (on) turnOn(); else { setNotice(null); update({ enabled: false }); } }}
         />
@@ -98,8 +113,8 @@ export function ScheduleSettings() {
             &ldquo;Start watching?&rdquo; note when your hours begin. Nothing else, and it never shows one outside your hours.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" disabled={asking} onClick={allow} className={PRIMARY}>Allow notifications</button>
-            <button type="button" onClick={() => setNotice(null)} className={QUIET}>Not now</button>
+            <button ref={allowButton} type="button" disabled={asking} onClick={allow} className={PRIMARY}>Allow notifications</button>
+            <button type="button" onClick={notNow} className={QUIET}>Not now</button>
           </div>
         </div>
       )}

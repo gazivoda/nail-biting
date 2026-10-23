@@ -56,6 +56,12 @@ export function SignInPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const emailRef = useRef<HTMLInputElement>(null);
+  const sentHeading = useRef<HTMLHeadingElement>(null);
+
+  // The form is replaced by "Check your inbox" when the link has been sent: take focus there, not to the top of the page.
+  useEffect(() => {
+    if (sentTo) sentHeading.current?.focus();
+  }, [sentTo]);
 
   useEffect(() => {
     document.title = 'Sign in | Stop Biting';
@@ -170,7 +176,7 @@ export function SignInPage() {
 
               {sentTo ? (
                 <div role="status" aria-live="polite">
-                  <h2 className="sg-h3">Check your inbox</h2>
+                  <h2 ref={sentHeading} tabIndex={-1} className="sg-h3 outline-none">Check your inbox</h2>
                   <p className="sg-small mt-2">
                     A sign-in link is on its way to <strong className="break-all text-[color:var(--sg-ink)]">{sentTo}</strong>. It works
                     once and expires in 15 minutes. If it has not arrived after a couple of minutes, check your spam folder.
