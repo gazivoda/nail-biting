@@ -101,7 +101,7 @@ All writes go through the storage module (`events.add / update / softDelete`, an
   So while the flag is on the app keeps a small copy of the access facts it last saw (`offlineGrant.ts`: user id, first name, trial end, status, plan, end
   date, and WS9's grants and free-tier limits; no email, avatar, payment ids or banked days) and uses it **only** when asking the server failed for any
   reason except a 401 or 403 (no network, a 5xx, a 429, a captive portal). It re-runs WS9's `computeAccessStatus` on those facts at the current time (so a trial
-  that ended while offline is a paywall, i.e. no phone view), never outlives the 14-day session it was copied from, is deleted by sign-out and by a 401/403, and is
+  that ended while offline grants nothing: the person gets the landing page, exactly what an offline start did before WS6; the paywall itself needs the server, so it is not shown offline), never outlives the 14-day session it was copied from, is deleted by sign-out and by a 401/403, and is
   written and used only while `phone_companion` is on. `AuthContext.tsx` has three added lines for it.
 - Verified in real Chrome with a real service worker over https: cold reload offline opens the phone view with the saved first name; one tap logs;
   the tag tap works; Settings opens; the sync note is honest ("You are offline"); back online the offline log reaches the server; with the session removed
@@ -150,13 +150,15 @@ offline as above; installability, manifest, icons (8, all PNG, square, the decla
 - The status bar colour on a real device (the meta tag was verified to change; what the OS paints was not seen).
 - A real camera-less computer (the list was simulated with a script that runs before the page; the real answer of Safari, Firefox and Edge was not checked).
 - The phone-with-sync flow against production data, a second physical device, Paddle (the paywall and free tier were reached with minted sessions and the real access code).
+- The offline path for an account whose trial ended while the phone was offline (unit-tested in `offlineGrant.test.ts`; expired was only exercised online in a browser).
+- The first-visit onboarding tour on the phone view: every browser run pre-set `onboarding_v1_done`. The tour skips a step whose target is not on screen (the camera steps), so it should show the streak and History steps only; nobody watched it.
 - Assistive technology: announcements were checked in the DOM only.
 
 ## Owner TODOs
 
 - Turn the flag on in staging first; open the site on a real phone, sign in, add it to the home screen, log with the airplane mode on, then off.
 - Decide whether `TrialButton`'s phone copy ("The app needs a computer webcam ... Email me the link") should change once the phone view exists: a phone sign-up no longer wastes the trial. That is WS11b's wording; WS6 did not touch it.
-- `docs/agents/legal`: nothing new from WS6. The Privacy page's "stored only in your browser" sentence is WS4's item.
+- **NEEDS HUMAN REVIEW (privacy wording):** while `phone_companion` is on, the browser keeps a small copy of the account's access facts in `sb:phone:grant` (user id, first name, plan status, trial and end dates, WS9's grants and free-tier limits; no email, avatar or payment ids), so the installed app can open offline. Please confirm the Privacy page's local-storage wording covers it. No draft file was written: it is not sent anywhere, and the phone's log entries are ordinary events already covered by WS4's drafts. The Privacy page's "stored only in your browser" sentence is WS4's item.
 - Optional: real app screenshots for the manifest's `screenshots` (Chrome's richer install sheet), once real captures exist.
 
 ## Deviations and lessons
