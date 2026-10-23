@@ -31,6 +31,7 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
 }) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; });
 
@@ -42,6 +43,17 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
       if (e.key === 'Escape') {
         e.stopPropagation();
         onCloseRef.current();
+        return;
+      }
+      // The card says it is modal, so Tab stays on its buttons instead of wandering into the page behind it.
+      if (e.key === 'Tab') {
+        const buttons = [...(dialogRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? [])];
+        if (buttons.length === 0) return;
+        const first = buttons[0];
+        const last = buttons[buttons.length - 1];
+        const active = document.activeElement;
+        if (e.shiftKey && (active === first || !dialogRef.current?.contains(active))) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && (active === last || !dialogRef.current?.contains(active))) { e.preventDefault(); first.focus(); }
       }
     };
     document.addEventListener('keydown', onKey);
@@ -54,6 +66,7 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
   return (
     <div className="fixed inset-0 z-[55] grid place-items-center bg-stone-900/50 p-4 dark:bg-black/60">
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

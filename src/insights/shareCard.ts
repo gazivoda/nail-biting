@@ -173,9 +173,13 @@ export function drawShareCard(ctx: CardContext, m: ShareCardModel): void {
 
 /** Draws the card on an off-screen canvas and returns the PNG. Browser only. */
 export async function renderShareCardPng(m: ShareCardModel): Promise<Blob> {
-  // Wait for the display font if the page has it, so the card does not fall back to a system face.
+  // Wait for the display font if the page has it, so the card does not fall back to a system face. Never for
+  // long: a font that does not load must not leave the person looking at "Making the picture".
   try {
-    await Promise.all([document.fonts.load(`800 60px "Bricolage Grotesque"`), document.fonts.load(`400 30px "Geist"`)]);
+    await Promise.race([
+      Promise.all([document.fonts.load(`800 60px "Bricolage Grotesque"`), document.fonts.load(`400 30px "Geist"`)]),
+      new Promise(resolve => setTimeout(resolve, 1500)),
+    ]);
   } catch { /* draw with whatever is available */ }
   const canvas = document.createElement('canvas');
   canvas.width = m.width;

@@ -36,6 +36,9 @@ server/
   routes/_example.js      worked example of a flagged route module
   routes/billing.js       WS9: lifetime, gifts, referrals, free tier (flagged); hooks for the webhook and /api/user/me
   billing/                WS9: entitlements, gift codes, referrals, purchases, webhook hook (see ws9-notes.md)
+  routes/weeklyEmail.js   WS5: opt-in weekly summary email (weekly_email): preferences, unsubscribe pages
+  weeklyEmail/            WS5: week bounds in a time zone, the summary maths, the unsubscribe token, the template
+  jobs/weeklyEmail.js     WS5: the hourly in-process job (only with weekly_email on and RESEND_API_KEY set)
 shared/                   WS9: plans.js (TRIAL_DAYS and the other plan numbers), access.js (the one access decision);
                           plain JS + .d.ts, imported by src/, server/, scripts/ and vite.config.ts
 email.js                  Resend: welcome, feedback, admin notice, generic sendEmail()
@@ -45,6 +48,8 @@ src/
   main.tsx                React root + service worker registration
   store/useAppStore.ts    THE persisted store (history, streak, settings) + migrations
   storage/                the storage module (section 4): adapter, kv, deviceId, blobs, events facade
+  insights/               WS5: pure aggregation (aggregate.ts), milestones, share card, zone maths; ui/ = the Insights view
+  photos/                 WS5: the local-only nail photo diary (flag photo_diary); never imports sync or network code
   features/               feature flags on the client (section 5)
   hooks/                  useDetection, biteDetector, useCamera, usePictureInPicture, useStreak, ...
   components/detection/   CameraView, DetectionSurface, AlertOverlay, PiPWindow, ...
@@ -532,6 +537,9 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 `email.js`: `sendWelcomeEmail`, `sendFeedbackEmail` (the trial follow-up), `sendAdminNotification`, and the generic
 `sendEmail({ to, subject, html, text, headers })` added by WS0 for route modules. Sender is `EMAIL_FROM`
 (falls back to a Resend sandbox address that only delivers to the account owner). `FROM` is read at import time.
+**The Resend SDK returns `{ data, error }` and does not throw on an API error**, so `await sendEmail(...)` can "succeed"
+with `error` set (the older emails ignore this). WS5's job treats `result.error` (or no `data`) as a failure
+(`isSendSuccess` in `server/jobs/weeklyEmail.js`); do the same in anything new.
 
 ---
 
@@ -696,6 +704,9 @@ checks `electron/` (`tsc -b` does not).
 | `server/routes/<ws>.js` | that workstream | `ROUTE_MODULES` (one import + one entry each) |
 | `server/db/migrate.js` | WS0 | `h.createTable / createIndex / addColumn` |
 | `email.js` | WS0 added `sendEmail`; WS8/WS5 call it, new templates go in their own module | `ctx.sendEmail` |
+| Insights, milestones, share card: `src/insights/**` | WS5 | `src/insights/predicate.ts` is the one place the charts decide what a bite is (it uses WS3's shared predicates); the weekly email keeps a server copy, kept equal by `server/weeklyEmail/parity.test.js` |
+| Photo diary: `src/photos/**` | WS5 | local-only; guarded by `scripts/photoGuard.test.mjs`. Nothing under it may import sync, backup, auth or call the network |
+| History's second view: `Log.tsx` | WS5 added the History / Insights switch (3 small hunks) | `useInsightsAvailability()`, `<HistoryInsightsSwitch />`, `<PhotoReminder />`, lazy `InsightsView` |
 | `Dockerfile` | WS0 added `COPY server ./server`; WS9 `COPY shared ./shared` (both stages) and the `TRIAL_DAYS`, lifetime and gift build args | any new top-level server path must be copied |
 | `shared/plans.js`, `shared/access.js` | WS9 | the trial length, free-tier / referral / gift numbers, and the access decision; edit them, not copies of them |
 | Detection rule: `biteDetector.ts`, `src/detection/**` (zones, rules, registry, engine), `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand`; `getBehaviors` on `createBiteDetector` |
