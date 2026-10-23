@@ -15,8 +15,13 @@ import { sendWelcomeEmail, sendAdminNotification, sendFeedbackEmail } from './em
 import { startTrialFollowupJob } from './trialFollowup.js';
 import { registerRoutes } from './server/routes/index.js';
 import { createGoogleLinker } from './server/auth/googleLink.js';
-import { gatedNavLinks, gatedSitemapEntries, isGateOpen, withGatedSitemapEntries } from './server/marketing/gatedPages.js';
-import { TRIAL_HYPHEN, TRIAL_MS } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
+import {
+  gatedLlmsFullText, gatedLlmsTxtLines, gatedNavLinks, gatedSitemapEntries, isClosedGatedFile, isGateOpen, jsonForScript,
+  openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
+} from './server/marketing/gatedPages.js';
+import { createCopyIsOn } from './server/marketing/copyFlags.js';
+import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
+import { TRIAL_HYPHEN, TRIAL_MS, describeDays, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -761,17 +766,56 @@ if (!existsSync(distPath)) {
     next();
   });
 
-  for (const dir of ['fonts', 'og']) {
+  // ── Pages and copy that follow the feature flags (WS11b) ───────────────────
+  // Flags change only when the server restarts, so everything below is decided once, here.
+  //   copyIsOn   the flag as the WORDS should see it (a sign-in method also needs its keys)
+  //   COPY_ACTIVE  whether any site-wide copy rule (shared/flagCopy.js RULES) says something
+  //              different from the source text. False with every flag off: nothing below
+  //              is registered then and the site is served exactly as the build wrote it.
+  const copyIsOn = createCopyIsOn(flags);
+  const COPY_ACTIVE = anyRuleActive(copyIsOn);
+  const copyHtml = text => flagAware(text, copyIsOn);
+  // dist/seo-gated.json: the copy of the pages that exist only while a flag is on, and the flag
+  // of each. Read by this server and never served (the 404 route further down). Read here, not
+  // where the rest of the gated state is built, because /og and /posts are mounted next.
+  let GATED_FILE = {};
+  try {
+    const gatedPath = join(distPath, 'seo-gated.json');
+    if (existsSync(gatedPath)) GATED_FILE = JSON.parse(readFileSync(gatedPath, 'utf-8'));
+  } catch (err) {
+    console.error('ERROR: dist/seo-gated.json is invalid JSON — gated pages disabled.', err);
+  }
+  const GATED_FLAGS = GATED_FILE.flags ?? {};
+
+  for (const dir of ['fonts']) {
     app.use(`/${dir}`, express.static(join(distPath, dir), {
       maxAge: '1y',
       immutable: true,
     }));
   }
+  // The social cards. The card of a page whose flag is off answers as a file that does not exist
+  // (the page's title is printed on it, and nothing links to it, so it must not be findable).
+  const ogStatic = express.static(join(distPath, 'og'), { maxAge: '1y', immutable: true });
+  app.use('/og', (req, res, next) => (
+    isClosedGatedFile(req.path.slice(1), GATED_FLAGS, flags) ? sendHtml(res, NOT_FOUND_HTML, 404) : ogStatic(req, res, next)
+  ));
 
   // Per-article JSON for BlogPost.tsx (written by scripts/generate-seo-content.mjs).
   // Not a page: it must never be indexed in place of the article it describes,
   // so it carries noindex and a short cache (the files change on every deploy
   // but not between deploys).
+  //
+  // WS11b: while a copy rule is active the same file is served with the rule applied, so the
+  // article a reader sees and the one a crawler gets say the same thing. Not registered otherwise.
+  if (COPY_ACTIVE) {
+    app.get('/posts/:file', (req, res, next) => {
+      if (!/^[a-z0-9-]+\.json$/.test(req.params.file)) return next();
+      const file = join(distPath, 'posts', req.params.file);
+      if (!existsSync(file)) return next();
+      res.set({ 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=300' })
+        .type('json').send(copyHtml(readFileSync(file, 'utf-8')));
+    });
+  }
   app.use('/posts', express.static(join(distPath, 'posts'), {
     maxAge: '5m',
     setHeaders: res => res.setHeader('X-Robots-Tag', 'noindex'),
@@ -795,6 +839,8 @@ if (!existsSync(distPath)) {
   } else {
     console.error('WARNING: dist/seo-content.json missing — run a build (vite build generates it). Crawler article content disabled.');
   }
+  // WS11b: with a copy rule active the crawler copy and every schema derived from it follow the flags.
+  if (COPY_ACTIVE) SEO_CONTENT = flagAwareDeep(SEO_CONTENT, copyIsOn);
   // slug → { title, seoTitle?, description, tag, readingMinutes, datePublished, dateModified, sections }
   const BLOG_POSTS = SEO_CONTENT.posts ?? {};
   // When the content file is absent/corrupt we must not 404 every real post —
@@ -802,26 +848,23 @@ if (!existsSync(distPath)) {
   const SEO_CONTENT_LOADED = Object.keys(BLOG_POSTS).length > 0;
   // path → { title, subtitle, intro, sections, relatedPosts }
   const COMPARE_CONTENT = SEO_CONTENT.comparePages ?? {};
-  // Competitor profile pages behind the `compare_competitors` flag (src/data/competitorPages.ts).
-  // They are deliberately NOT in seo-content.json, which express.static serves to anyone: the
-  // build writes them to dist/seo-gated.json, which this server reads and never serves (see the
-  // 404 route above express.static below). While the flag is off nothing here is reachable.
+  // Pages behind a flag each (WS11b): the two competitor profiles (`compare_competitors`,
+  // src/data/competitorPages.ts) and the feature pages (src/data/featurePages.ts). They are
+  // deliberately NOT in seo-content.json, which express.static serves to anyone: the build writes
+  // them to dist/seo-gated.json, which this server reads (above) and never serves (see the 404 route
+  // below). A page is "open" while ITS flag is on; closed pages are reachable nowhere.
   const GATED_FLAG = 'compare_competitors';
-  let GATED_CONTENT = {};
-  let GATED_UPDATES = {};   // freshness-ledger rows for the gated paths, kept out of seo-content.json too
-  try {
-    const gatedPath = join(distPath, 'seo-gated.json');
-    if (existsSync(gatedPath)) {
-      const gated = JSON.parse(readFileSync(gatedPath, 'utf-8'));
-      GATED_CONTENT = gated.comparePages ?? {};
-      GATED_UPDATES = gated.pageUpdates ?? {};
-    }
-  } catch (err) {
-    console.error('ERROR: dist/seo-gated.json is invalid JSON — gated pages disabled.', err);
-  }
-  // [href, label] pairs the noscript site nav gains while the flag is on. The only place this
-  // site lists comparison pages in its chrome; the React footer never did.
-  const GATED_NAV = flags.isOn(GATED_FLAG) ? gatedNavLinks(GATED_CONTENT) : [];
+  const GATED_UPDATES = GATED_FILE.pageUpdates ?? {};   // freshness-ledger rows for the gated paths, kept out of seo-content.json too
+  // The numbers the environment decides, for the {{PLACEHOLDERS}} in the copy.
+  const COPY_TOKENS = { REFERRAL_CREDIT: describeDays(referralCreditDays()) };
+  // Open pages, with markers and placeholders resolved: the one copy the article, the schema, the
+  // llms files and the JSON the page renders from are all made of.
+  const GATED_CONTENT = Object.fromEntries(Object.entries(
+    openGatedPages(GATED_FILE.comparePages ?? {}, GATED_FLAGS, flags),
+  ).map(([path, page]) => [path, resolveGatedPage(page, { isOn: copyIsOn, tokens: COPY_TOKENS })]));
+  // [href, label] pairs the noscript site nav gains for the open pages. The only place this
+  // site lists them in its chrome; the React footer never did.
+  const GATED_NAV = gatedNavLinks(GATED_CONTENT);
   // path → { lastmod } — the core-page freshness ledger from
   // src/data/pageUpdates.json, the same dates sitemap.xml carries. Each one is
   // pinned to a fingerprint of that page's content and only moves when the
@@ -897,7 +940,7 @@ if (!existsSync(distPath)) {
   function injectSsrArticle(html, articleInnerHtml) {
     return html
       .replace('</head>', `  ${SSR_ARTICLE_HEAD}\n  </head>`)
-      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${articleInnerHtml}</article>`);
+      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${copyHtml(articleInnerHtml)}</article>`);
   }
 
   // Sections come straight from blogPosts.ts via seo-content.json. `body` and
@@ -1308,8 +1351,8 @@ if (!existsSync(distPath)) {
       publisher: { '@id': ORG_ID },
       mainEntity: faqs.map(f => ({
         '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
+        name: copyHtml(f.q),
+        acceptedAnswer: { '@type': 'Answer', text: copyHtml(f.a) },
       })),
     };
   }
@@ -1603,11 +1646,22 @@ if (!existsSync(distPath)) {
   // which Landing.tsx already mirrors (Google requires the visible counterpart)
   // — so the crawler prose, the schema, and the rendered page share one source.
   let HOME_FAQS = [];
+  // The shell the homepage is served from. It is indexHtmlFaqOnly untouched unless a copy rule is
+  // active (WS11b), in which case its FAQPage block says what the visible FAQ says for these flags.
+  let homeShell = indexHtmlFaqOnly;
   if (indexHtmlRaw) {
     const m = indexHtmlRaw.match(/<!-- Structured Data: FAQPage -->\s*<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     if (m) {
       try {
-        HOME_FAQS = JSON.parse(m[1]).mainEntity.map(q => ({ q: q.name, a: q.acceptedAnswer.text }));
+        const faqSchema = JSON.parse(m[1]);
+        HOME_FAQS = faqSchema.mainEntity.map(q => ({ q: q.name, a: q.acceptedAnswer.text }));
+        if (COPY_ACTIVE) {
+          const followed = flagAwareDeep(faqSchema, copyIsOn);
+          HOME_FAQS = followed.mainEntity.map(q => ({ q: q.name, a: q.acceptedAnswer.text }));
+          if (followed !== faqSchema && indexHtmlFaqOnly.includes(m[1])) {
+            homeShell = indexHtmlFaqOnly.replace(m[1], () => `\n${JSON.stringify(followed, null, 2)}\n        `);
+          }
+        }
       } catch (err) {
         console.error('WARNING: could not parse FAQPage schema from index.html', err);
       }
@@ -1690,7 +1744,7 @@ if (!existsSync(distPath)) {
     // is read off the article it actually renders, never assumed.
     const article = homeArticleHtml();
     const condition = visibleConditionSchema(article);
-    let injected = injectMeta(indexHtmlFaqOnly, {
+    let injected = injectMeta(homeShell, {
       title: 'Nail Biting App: Stop Biting with AI | Stop Biting',
       description: homeDescription,
       canonical: 'https://stopbiting.today/',
@@ -1975,17 +2029,60 @@ if (!existsSync(distPath)) {
   // extensionless paths while express.static adds one for a directory, so
   // /shots and /video bounced between each other forever. A bare directory now
   // falls through to the 404 handler instead.
-  // sitemap.xml: the generated file never lists a gated page (scripts/sync-seo.mjs). While the
-  // flag is on they are spliced in here, at start-up (flags only change on a restart); while it is
-  // off this handler is not registered and express.static serves the file exactly as before.
+  // sitemap.xml: the generated file never lists a gated page (scripts/sync-seo.mjs). While a page's
+  // own flag is on it is spliced in here, at start-up (flags only change on a restart); while every
+  // gated flag is off this handler is not registered and express.static serves the file exactly as before.
   const SITEMAP_PATH = join(distPath, 'sitemap.xml');
-  if (flags.isOn(GATED_FLAG) && existsSync(SITEMAP_PATH)) {
+  const GATED_OPEN = Object.keys(GATED_CONTENT).length > 0;
+  if (GATED_OPEN && existsSync(SITEMAP_PATH)) {
     const sitemapWithGated = withGatedSitemapEntries(
       readFileSync(SITEMAP_PATH, 'utf-8'),
       gatedSitemapEntries(GATED_CONTENT, pageLastmod, { warn: console.warn }),
     );
     app.get('/sitemap.xml', (_req, res) => {
       res.set('Cache-Control', 'public, max-age=0').type('application/xml').send(sitemapWithGated);
+    });
+  }
+  // llms.txt and llms-full.txt: the same. The open pages are appended to the generated files, and
+  // while a site-wide copy rule is active the full text follows the flags too. Nothing is
+  // registered with every flag off, so both files are served byte for byte as built.
+  const LLMS_TXT_PATH = join(distPath, 'llms.txt');
+  const LLMS_FULL_PATH = join(distPath, 'llms-full.txt');
+  if (GATED_OPEN && existsSync(LLMS_TXT_PATH)) {
+    let llmsTxt = null;   // built on the first request: COMPARE_META (the descriptions) is declared further down
+    app.get('/llms.txt', (_req, res) => {
+      llmsTxt ??= withGatedLlmsTxt(
+        readFileSync(LLMS_TXT_PATH, 'utf-8'),
+        gatedLlmsTxtLines(GATED_CONTENT, path => COMPARE_META[path]),
+      );
+      res.set('Cache-Control', 'public, max-age=0').type('text/plain; charset=utf-8').send(llmsTxt);
+    });
+  }
+  if ((GATED_OPEN || COPY_ACTIVE) && existsSync(LLMS_FULL_PATH)) {
+    // A section a marker emptied leaves a bare "### " line in the text version; drop it with its blank line.
+    const resolveBlock = text => flagAware(fillCopyTokens(text, COPY_TOKENS), copyIsOn).replace(/^### *\n\n/gm, '');
+    const llmsFullTxt = withGatedLlmsFull(
+      copyHtml(readFileSync(LLMS_FULL_PATH, 'utf-8')),
+      gatedLlmsFullText(GATED_CONTENT, GATED_FILE.llmsFull, resolveBlock),
+    );
+    app.get('/llms-full.txt', (_req, res) => {
+      res.set('Cache-Control', 'public, max-age=0').type('text/plain; charset=utf-8').send(llmsFullTxt);
+    });
+  }
+  if (COPY_ACTIVE && existsSync(seoContentPath)) {
+    app.get('/seo-content.json', (_req, res) => {
+      res.set({ 'X-Robots-Tag': 'noindex', 'Cache-Control': 'public, max-age=0' }).type('json')
+        .send(copyHtml(readFileSync(seoContentPath, 'utf-8')));
+    });
+  }
+  // The JSON a feature page renders from: the same copy as the crawler article above, for pages whose
+  // flag is on. With every gated flag off the route does not exist and the path is any other unknown
+  // address (the branded 404). Not a page: noindex, from the rule for .json files above.
+  if (GATED_OPEN) {
+    app.get('/page-data/{*rest}', (req, res) => {
+      const page = GATED_CONTENT[pathOfPageData(req.path)];
+      if (!page) return sendHtml(res, NOT_FOUND_HTML, 404);
+      res.set('Cache-Control', 'no-cache').json(page);
     });
   }
   // The unpublished copy of the gated pages is for this server only.
@@ -2325,8 +2422,8 @@ if (!existsSync(distPath)) {
       ...(pageLastmod('/how-it-works') ? { dateModified: pageLastmod('/how-it-works') } : {}),
       mainEntity: HOW_IT_WORKS_FAQS.map(f => ({
         '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
+        name: copyHtml(f.q),
+        acceptedAnswer: { '@type': 'Answer', text: copyHtml(f.a) },
       })),
     };
     const breadcrumb = breadcrumbSchema([
@@ -2534,6 +2631,48 @@ if (!existsSync(distPath)) {
       date: '2026-10-23',
       flag: GATED_FLAG,
     },
+    // WS11b: one page per feature, each behind the flag of the feature it describes (the same flag
+    // is written in src/data/featurePagePaths.ts and in dist/seo-gated.json; a page opens only
+    // when both agree). Copy: src/data/featurePages.ts. `date` is the day they were written; set it
+    // to the day the flag goes on (it is the Article's datePublished, and the page is not public until then).
+    '/features/habit-reversal-coaching': {
+      title: 'Habit Reversal-Style Coaching After the Alarm',
+      description: 'An optional prompt for a competing response when the alarm sounds, an urge timer and a four-week program of short lessons. Self-help, not a treatment.',
+      date: '2026-10-23',
+      flag: 'hrt_coaching',
+    },
+    '/features/phone-companion': {
+      title: 'Log Nail Biting From Your Phone in Two Taps',
+      description: 'Open Stop Biting on a phone to log a bite or an urge in two taps, see your streak and add it to your home screen. The alarm still needs a computer webcam.',
+      date: '2026-10-23',
+      flag: 'phone_companion',
+    },
+    '/features/share-with-therapist': {
+      title: 'Share Your Progress With a Therapist or a Friend',
+      description: 'Make a read-only link to a plain summary of your bites, triggers and streak. You pick the expiry, can revoke it, and it shows no photos and no account details.',
+      date: '2026-10-23',
+      flag: 'share_links',
+    },
+    '/features/referral-program': {
+      title: 'Refer a Friend: You Both Get Bonus Access',
+      description: 'Share your personal link. When someone you refer pays for the first time, you both get bonus access. How it works, when the days start and what is checked.',
+      date: '2026-10-23',
+      flag: 'referrals',
+    },
+    // Keep this flag off until desktop sign-in works against the hosted API and the macOS build is signed
+    // (docs/agents/ws11b-notes.md, top of the file).
+    '/features/desktop-app': {
+      title: 'Stop Biting for Mac: A Desktop App That Keeps Watching',
+      description: 'The Stop Biting web app in its own window for Mac, with a menu bar icon, pause controls and optional launch at login. Same detection, same account.',
+      date: '2026-10-23',
+      flag: 'desktop_app',
+    },
+    '/solutions/cuticle-biting': {
+      title: 'Cuticle Biting: Same Mouth Alarm, Logged Under Its Own Name',
+      description: 'Stop Biting uses one mouth alarm for nail biting and cuticle biting, and you choose which name your alerts are logged under. Early, tested on made-up scenes only.',
+      date: '2026-10-23',
+      flag: 'detection_behaviors',
+    },
   };
 
   // The roundup hub also carries ItemList schema (comparison-schema.json) so AI
@@ -2621,6 +2760,12 @@ if (!existsSync(distPath)) {
         (pagePath === '/compare/ai-detection-apps' ? `\n    ${schemaTag(AI_APPS_ITEMLIST)}` : '') +
         (faq ? `\n    ${schemaTag(faqPageSchema(canonical, faq.heading, faq.pairs))}` : '');
       injected = injected.replace('</head>', `    ${schemaTag(article)}\n    ${schemaTag(breadcrumb)}${extraSchemas}\n  </head>`);
+      // A page whose flag is on renders in the browser from this same copy, so the visible page and the
+      // crawler article are one text. (The JSON also answers at /page-data<path>.json for visitors whose
+      // browser holds an older copy of the app shell.)
+      if (GATED_CONTENT[pagePath]) {
+        injected = injected.replace('</head>', () => `    <script type="application/json" id="sb-page-data">${jsonForScript({ path: pagePath, page: content })}</script>\n  </head>`);
+      }
       if (content) injected = injectSsrArticle(injected, compareArticleHtml(content));
       sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod(pagePath));
     });
