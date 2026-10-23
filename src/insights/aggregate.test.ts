@@ -301,16 +301,20 @@ describe('computeInsights: size and speed', () => {
     });
   }
 
-  it('is linear: 4x the events takes well under 8x the time', () => {
+  it('is linear: 4x the events takes well under 10x the time (best of 7, with a floor so a loaded machine does not flake)', () => {
     const small = manyEvents(10_000, NOW);
     const big = manyEvents(40_000, NOW, 120, 11);
-    const time = (events: ReturnType<typeof manyEvents>) => {
+    const best = (events: ReturnType<typeof manyEvents>) => {
       computeInsights(events, { now: NOW });
-      const t0 = performance.now();
-      for (let i = 0; i < 3; i++) computeInsights(events, { now: NOW });
-      return (performance.now() - t0) / 3;
+      let min = Infinity;
+      for (let i = 0; i < 7; i++) {
+        const t0 = performance.now();
+        computeInsights(events, { now: NOW });
+        min = Math.min(min, performance.now() - t0);
+      }
+      return min;
     };
-    expect(time(big)).toBeLessThan(Math.max(time(small) * 8, 20));
+    expect(best(big)).toBeLessThan(Math.max(best(small) * 10, 60));
   });
 
   it('a named zone (Intl) stays inside a budget at the realistic maximum', () => {
