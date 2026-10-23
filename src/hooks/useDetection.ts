@@ -374,14 +374,12 @@ export function useDetection(
         });
 
         // WS7a: while the tab is in the background (flag on), count the checks so the app can say if they were slow.
-        let trackHidden = false;
-        let hiddenFrom = 0;
-        let hiddenSteps = 0;
+        const hiddenStats = { tracking: false, from: 0, steps: 0 };
 
         function runInference() {
           const now = performance.now();
           lastInferenceTs = now;
-          if (trackHidden) hiddenSteps++;
+          if (hiddenStats.tracking) hiddenStats.steps += 1;
           detector.step(now);
         }
 
@@ -435,9 +433,9 @@ export function useDetection(
 
         function startHidden() {
           if (isFeatureOn('background_watching')) {
-            trackHidden = true;
-            hiddenFrom = performance.now();
-            hiddenSteps = 0;
+            hiddenStats.tracking = true;
+            hiddenStats.from = performance.now();
+            hiddenStats.steps = 0;
             const source = hiddenSource ?? createHiddenSource({
               intervalMs: INFERENCE_INTERVAL_MS,
               tick: hiddenTick,
@@ -458,9 +456,9 @@ export function useDetection(
           stopBgInterval();
           hiddenSource?.stop();
           hiddenDriven = false;
-          if (trackHidden) {
-            trackHidden = false;
-            const report = judgeHidden(hiddenSteps, (performance.now() - hiddenFrom) / 1000, Date.now());
+          if (hiddenStats.tracking) {
+            hiddenStats.tracking = false;
+            const report = judgeHidden(hiddenStats.steps, (performance.now() - hiddenStats.from) / 1000, Date.now());
             if (report) saveCadence(report);
           }
         }

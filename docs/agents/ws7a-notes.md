@@ -32,6 +32,15 @@ opening a second tab in the same window (`visibilityState` is `hidden`). Every r
    signed in as a throwaway user, real MediaPipe on the fake camera. Detection steps are counted from outside by hooking WebGL
    `texImage2D` (two video uploads per step); no app code is involved in the counting. CPU is the browser's own process CPU time.
 
+**Which build each number comes from.** The 700 s tables (A and B, and the CPU and idle tables) were produced from the build of commit
+`220e7e7`. Three small edits came after it and do not change the loop's timing: a plain conditional instead of `??=`, the background
+step counters held in an object (the first form made the compiler-based `react-hooks` lint silently skip `useDetection`; the baseline
+lint error in that file is back, so lint is 23/4 as before), and the lazy `useNotifications` import. The final tree was re-checked on
+its own build: a short hidden run with a synthetic hand (flag on: alarm 447 ms at 20 s hidden and 567 ms at 60 s, 5 checks a
+second, `app-final-check-hidden.json`; flag off: 1156 ms and 2808 ms, `app-final-check-flagoff.json`, which also shows that no
+cadence note is written with the flag off), the pause / reload / meeting scenarios (Table D), and the flag-off HTML comparison against a
+build of current main.
+
 To re-run (Chrome at `/Applications/Google Chrome.app`, or set `CHROME_BIN`; ports are yours to choose; results go to
 `docs/agents/ws7a-measurements/` unless `RESULTS_DIR` is set; nothing here touches `.env`, `data/` or your dev ports):
 
@@ -270,7 +279,7 @@ gives one a second). The same worker (one, shared) runs the 1 s clock that ends 
 - **Auto-resume and "cannot get stuck"**: every pause and meeting has an end time. `tick(now)` at or after it returns to running; the
   clock is the worker's 1 s tick, plus a check when the tab becomes visible / focused / online. A stored end time is accepted on load
   only if it is in the future and no more than 27 hours (pause) or 12 hours (meeting) away, so a wrong clock cannot leave watching off.
-  Measured: a 1-minute pause begun with the tab hidden ended **155 ms** after its end time.
+  Measured, three runs: a 1-minute pause begun with the tab hidden ended 0.16 s, 0.21 s and 1.2 s after its end time (the clock ticks once a second; the harness polls once a second).
 - **"Until tomorrow"**: the next local time at the start of the person's scheduled hours (if the schedule is on and has days), else
   **06:00**, and always at least 2 hours away, built from calendar fields so a clock change moves it with the clock. The tray (WS7b)
   sends minutes computed from a fixed **08:00**; so tray and in-app "until tomorrow" can differ by a couple of hours. To align them,
@@ -327,7 +336,7 @@ window exists). That note is measured, not assumed.
 
 ## Files
 
-Added: `src/background/*` (32 files, 11 of them tests), `scripts/backgroundGuards.test.mjs`, `scripts/background-probe/*` (measurement and
+Added: `src/background/*` (32 files, 10 of them tests), `scripts/backgroundGuards.test.mjs`, `scripts/background-probe/*` (measurement and
 screenshot tooling, not shipped), `docs/agents/ws7a-measurements/*` (results).
 Changed (the seams, named): `src/hooks/useDetection.ts` (imports, the tick-source block, `silent`/`repeat` in `startBiting`, the
 `withProbe(` wrapper around `source` — WS3's `detectHands` line inside it is byte-identical), `src/hooks/usePictureInPicture.ts`
@@ -399,6 +408,9 @@ entries (+29 KiB). No new dependency.
 - **A keyed-by-name chunk comparison between two builds lies when two chunks share a name** (`index`, `actions`); compare totals.
 - **React's compiler lint (`react-hooks/purity`) rejects `Date.now()` in render**: keep a timestamp in the store, set when the state
   changes, and derive text from it.
+- **A lint error that disappears can mean the compiler gave up on the function.** `if (flag) steps++` on a captured `let` made the
+  `react-hooks` compiler rules skip all of `useDetection` (lint went 23 to 22 errors, which looked like an improvement). Check by
+  adding a deliberate `Date.now()` in render and seeing whether `react-hooks/purity` fires; keep counters in an object.
 - **The store merges alarms less than 30 s apart into one episode**: a test that fires two alarms in a row sees one logged event.
 - The sandbox refuses long compound shell commands in a worktree and any command whose program is a variable: write scripts with the
   file tools and run them as one plain command.

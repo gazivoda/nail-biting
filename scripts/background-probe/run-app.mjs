@@ -157,6 +157,7 @@ try {
     result.visBack = await page.eval('document.visibilityState');
     await sleep(BACK * 1000);
   }
+  result.cadenceReport = await page.eval(`localStorage.getItem('sb:background:cadence')`); // set by the loop when a 30 s+ stretch in the background ends (flag on only)
   result.endMs = await page.eval('performance.now() - window.__t0');
   const buckets = JSON.parse(await page.eval('JSON.stringify(window.__b)'));
 
