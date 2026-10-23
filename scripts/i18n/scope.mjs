@@ -47,6 +47,7 @@ export const EXCLUDED = [
   { pattern: 'src/detection/__reference__/', reason: 'Verbatim copy of the pre-WS1 detector, used by the equivalence test.' },
   { pattern: 'src/detection/synthetic.ts', reason: 'Synthetic landmark fixtures for tests and the eval harness.' },
   { pattern: 'src/i18n/scopes/', reason: 'The English catalogs: this is where the strings live.' },
+  { pattern: 'src/i18n/testing/', reason: 'Test helpers for the pseudo-locale (they talk about English in their messages).' },
   { pattern: 'src/i18n/locales/', reason: 'The translations: this is where the strings live.' },
   { pattern: 'src/features/registry.ts', reason: 'Owner documentation of each flag (description, what to do before turning it on). Never rendered; nothing reads FEATURES[...] in the UI.' },
   { pattern: 'src/desktop/trayModel.ts', reason: 'Menu of the Electron tray, built in the main process, which has no renderer locale. Follow-up for the desktop app (WS7b owner).' },
