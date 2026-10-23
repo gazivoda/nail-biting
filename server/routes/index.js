@@ -32,15 +32,16 @@ import { runMigrations } from '../db/migrate.js';
 import features from './features.js';
 import example from './_example.js';
 import authProviders from './authProviders.js';
+import billing from './billing.js';
 
 /** Registered in this order. Append your module; do not reorder others. */
 export const ROUTE_MODULES = [
   features,
   example,
   authProviders, // WS8 sign-in providers (magic link, Apple, Microsoft)
+  billing,       // WS9 lifetime, gifts, referrals, free tier; hooks for the Paddle webhook and /api/user/me
   // WS4  events sync          -> import events from './events.js'
   // WS5  weekly email         -> import insights from './insights.js'
-  // WS9  referrals / pricing  -> import billing from './billing.js'
   // WS10 share links          -> import share from './share.js'
 ];
 

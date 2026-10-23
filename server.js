@@ -426,7 +426,8 @@ app.post('/api/auth/signout', (req, res) => {
 app.get('/api/user/me', authMiddleware, (req, res) => {
   const user = getUser(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  res.json(user);
+  // WS9: adds `entitlement` (lifetime / gift / referral credit / free tier) only when the account has one.
+  res.json(app.locals.decorateUser ? app.locals.decorateUser(user) : user);
 });
 
 // H-2: PATCH /api/user/me removed — subscription fields are only written
@@ -478,6 +479,14 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
 
   const eventType = event.event_type;
   const data = event.data;
+  // WS9: a replayed event is acknowledged and ignored; lifetime, gift, referral and refund events are
+  // handled in server/billing (see docs/agents/ws9-notes.md). Everything else falls through to the handlers below.
+  try {
+    if (await app.locals.billingWebhook?.take(event, res)) return res.json({ received: true });
+  } catch (err) {
+    console.error('Paddle webhook billing error:', err.message);
+    return res.status(500).json({ error: 'Webhook processing failed' });
+  }
 
   console.log(`Paddle webhook: ${eventType}`);
 
