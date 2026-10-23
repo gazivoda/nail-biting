@@ -116,7 +116,7 @@ export default defineConfig({
         // the service worker — they have their own loading logic and caching
         // them in the SW cache would break WASM instantiation on some browsers.
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/],
         runtimeCaching: [
           {
             // App shell JS/CSS chunks — cache first, background update

@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { track } from '../../utils/track';
 import { useIsPhone } from '../../hooks/useIsPhone';
 import { canShare, shareToComputer } from '../../utils/phoneLink';
+import { useSignInHref } from '../../auth/useSignInProviders';
 
 // The app needs a computer webcam, and the 3-day clock starts at sign-in, so a
 // phone visitor who signs in here spends the trial before they can use it.
@@ -16,6 +17,7 @@ const PHONE_MAILTO =
 // demo running in it, stays open.
 export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button' }: { tone?: 'solid' | 'light'; size?: 'md' | 'sm'; source?: string }) {
   const phone = useIsPhone();
+  const signInHref = useSignInHref(); // /api/auth/google unless another sign-in method is switched on
   const className = `sg-btn group ${tone === 'light' ? 'sg-btn-light' : ''} ${size === 'sm' ? 'sg-btn-sm' : ''}`;
 
   if (phone && size !== 'sm') {
@@ -38,7 +40,7 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
 
   return (
     <a
-      href="/api/auth/google"
+      href={signInHref}
       target="_blank"
       rel="nofollow noopener noreferrer"
       onClick={() => track('trial_click', source)}
