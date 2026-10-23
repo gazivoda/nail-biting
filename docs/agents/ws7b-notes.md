@@ -25,7 +25,7 @@ workflow and the signing guide. Nothing was added to any marketing page, and not
 How to run it yourself:
 
 ```bash
-npm run electron:dev          # Vite + server + Electron on ports 5173/3000 (dev: the tray works, the login item is disabled)
+npm run electron:dev          # builds main + preload first (dist-electron/ is untracked), then Vite + server + Electron on ports 5173/3000 (the tray works, the login item is disabled)
 npm run electron:typecheck    # tsc -p tsconfig.electron.json (tsc -b does not check electron/)
 npm run electron:pack         # renderer + main + preload, then electron-builder --dir (unpacked, current OS)
 npm run electron:dist:mac     # real installers in release/ (unsigned unless you have signing set up)

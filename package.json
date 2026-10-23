@@ -19,7 +19,7 @@
     "seo:indexnow": "node scripts/indexnow-ping.mjs",
     "preview": "vite preview",
     "electron:build-main": "vite build --config vite.electron.config.ts && vite build --config vite.electron.preload.config.ts",
-    "electron:dev": "concurrently \"vite\" \"node server.js\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:dev": "npm run electron:build-main && concurrently \"vite\" \"node server.js\" \"wait-on http://localhost:5173 && electron .\"",
     "electron:build": "npm run build && npm run electron:build-main",
     "electron:typecheck": "tsc -p tsconfig.electron.json",
     "electron:pack": "npm run electron:build && electron-builder --dir --publish never",

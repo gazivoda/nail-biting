@@ -99,7 +99,12 @@ app.commandLine.appendSwitch('disable-background-timer-throttling');
 app.commandLine.appendSwitch('disable-backgrounding-occluded-windows');
 if (process.platform === 'win32') {
   // Windows marks a fully covered window as occluded and stops painting it.
-  app.commandLine.appendSwitch('disable-features', 'CalculateNativeWinOcclusion');
+  // appendSwitch replaces an earlier value, so keep whatever was already disabled.
+  const alreadyDisabled = app.commandLine.getSwitchValue('disable-features');
+  app.commandLine.appendSwitch(
+    'disable-features',
+    [alreadyDisabled, 'CalculateNativeWinOcclusion'].filter(Boolean).join(','),
+  );
 }
 
 // ─── Globals ─────────────────────────────────────────────────────────────────
