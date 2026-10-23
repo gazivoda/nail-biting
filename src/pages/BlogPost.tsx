@@ -12,6 +12,7 @@ import { PageHero } from '../components/site/PageHero';
 import { BlogMidCta } from '../components/site/BlogMidCta';
 import { midCtaAfterIndex, midCtaEligible } from '../components/site/midCtaRules';
 import { track } from '../utils/track';
+import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
 interface Props {
   slug: string;
@@ -221,7 +222,7 @@ export function BlogPost({ slug }: Props) {
               the footer renders on every marketing page, so this is text only. */}
           <p className="sg-small mt-14 max-w-[62ch]">
             Stop Biting is a webcam alarm that runs in your browser on a laptop or desktop and sounds an
-            alarm when your hand moves toward your mouth. No camera data is sent while it runs. 3 days free,
+            alarm when your hand moves toward your mouth. No camera data is sent while it runs. {TRIAL_DAYS_TEXT} free,
             no card. Read <a href="/how-it-works" className="sg-link">how it works</a>,{' '}
             <a href="/pricing" className="sg-link">see pricing</a> or{' '}
             <a

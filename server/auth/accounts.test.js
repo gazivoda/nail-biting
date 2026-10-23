@@ -157,7 +157,7 @@ describe('the Google hook cannot change anything for Google-only people', () => 
 });
 
 describe('new accounts', () => {
-  it('get a 3 day trial and the verified email', () => {
+  it('get the configured trial and the verified email', () => {
     const t = setup();
     const r = t.accounts.signIn({ provider: 'email', subject: 'new@example.com', assertion: verifiedEmail('new@example.com') });
     expect(r).toMatchObject({ status: 'ok', isNewUser: true, linked: false });

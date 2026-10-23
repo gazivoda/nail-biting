@@ -4,6 +4,7 @@ import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { track } from '../utils/track';
+import { TRIAL_HYPHEN } from '../../shared/plans.js';
 
 // /tools/nail-biting-tracker-printable. The server (server.js) injects the head
 // and the crawler-visible copy; like /pricing, this page does not touch
@@ -64,7 +65,7 @@ export function PrintableTracker() {
               </p>
               <div className="mt-6">
                 <TrialButton source="printable_tracker" />
-                <p className="sg-note mt-3">3-day free trial, no credit card. Then $2.99/month or $29/year.</p>
+                <p className="sg-note mt-3">{TRIAL_HYPHEN} free trial, no credit card. Then $2.99/month or $29/year.</p>
                 <p className="sg-note mt-2">
                   Or <a href="/#live-demo" onClick={() => track('demo_link_click', 'printable_tracker')} className="sg-link">try the 60 second demo</a> first, no account.
                 </p>

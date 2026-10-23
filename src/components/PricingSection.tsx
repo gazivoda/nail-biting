@@ -2,11 +2,12 @@ import { useEffect, useRef } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
 import { track } from '../utils/track';
+import { TRIAL_WORDS_CAP } from '../../shared/plans.js';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
 // figures. Prices here MUST match the Offer schema and SSR prose that
-// server.js injects for /pricing: $2.99/month, $29.00/year, 3-day free trial.
+// server.js injects for /pricing: $2.99/month, $29.00/year, free trial (shared/plans.js).
 //
 // Set in the homepage's sign system (the `.sg-*` block in index.css): two
 // plates side by side, the recommended yearly plan outlined in the blue of the
@@ -61,7 +62,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       <div className="max-w-4xl">
         <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or <span className="sg-mark">$29 a year.</span></Heading>
         <p className="sg-lede mt-4 max-w-2xl">
-          Three days free first, and no card to start. You pick a plan when the trial ends.
+          {TRIAL_WORDS_CAP} free first, and no card to start. You pick a plan when the trial ends.
         </p>
       </div>
 

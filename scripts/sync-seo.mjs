@@ -37,6 +37,12 @@ const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 // a freshness date (the server adds them to sitemap.xml at serve time, only while
 // the flag is on) and their meta is checked against their body like every other page.
 const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
+// Source files spell this site's trial length with ${TRIAL_*} (JS/TS) and {{TRIAL_*}} (index.html)
+// placeholders (shared/plans.js). Every extractor below reads the SOURCE as text, so the placeholders are
+// filled in at the two read points (readWorkTree, readAtCommit) before any extractor runs: what they see is
+// exactly the sentence the page says, which keeps every fingerprint, llms.txt note and mirror check
+// byte-identical to the days when the number was typed into the copy.
+const { fillTrialTokens } = await import('../shared/plans.js');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
@@ -444,7 +450,10 @@ const PAGE_SOURCES = {
 for (const p of Object.keys(PAGE_MAP)) PAGE_SOURCES[p] = [comparePage(p)];
 for (const p of Object.keys(GATED_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(GATED, p)];
 
-const readWorkTree = file => safeRead(join(ROOT, file));
+const readWorkTree = file => {
+  const text = safeRead(join(ROOT, file));
+  return text == null ? text : fillTrialTokens(text);
+};
 function fingerprint(read, path) {
   const parts = [];
   for (const [file, pick] of PAGE_SOURCES[path]) {
@@ -463,7 +472,10 @@ const blobCache = new Map();
 function readAtCommit(sha) {
   return file => {
     const key = `${sha}:${file}`;
-    if (!blobCache.has(key)) blobCache.set(key, git(['show', `${sha}:${file}`]));
+    if (!blobCache.has(key)) {
+      const text = git(['show', `${sha}:${file}`]);
+      blobCache.set(key, text == null ? text : fillTrialTokens(text));
+    }
     return blobCache.get(key);
   };
 }

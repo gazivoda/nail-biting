@@ -7,6 +7,7 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { Testimonials } from '../components/site/Testimonials';
+import { TRIAL_HYPHEN, TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
 // Dedicated /pricing page. The server (server.js) injects the title, meta
 // description, canonical (https://stopbiting.today/pricing), Offer schema and
@@ -20,8 +21,8 @@ import { Testimonials } from '../components/site/Testimonials';
 // Keep these in step with the "Payments and cancellation" prose in server.js.
 const PRICING_FAQS: { q: string; a: ReactNode }[] = [
   {
-    q: 'How does the 3-day free trial work?',
-    a: 'Every account starts with a 3-day free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.',
+    q: `How does the ${TRIAL_HYPHEN} free trial work?`,
+    a: `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.`,
   },
   {
     q: 'What is the difference between Monthly and Yearly?',
@@ -108,7 +109,7 @@ export function PricingPage() {
 
         <div className="mx-auto mt-20 flex max-w-4xl flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="sg-h3">Try it free for 3 days.</p>
+            <p className="sg-h3">Try it free for {TRIAL_DAYS_TEXT}.</p>
             <p className="sg-small mt-1">
               No card to start. Curious first? Read{' '}
               <a href="/how-it-works" className="sg-link">how the detection works</a>, or{' '}
