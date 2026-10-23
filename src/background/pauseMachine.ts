@@ -119,6 +119,20 @@ export function shouldReleaseCamera(permission: string | null | undefined): bool
   return permission === 'granted';
 }
 
+/**
+ * "Detection is running" as the Watch tab and the tray mean it (the store's `detecting`): the switch is on, nothing
+ * has paused it, the camera works, and the detector has started. Paused is never running, even in the one render
+ * where the detector's own status has not caught up yet. WS9's free-tier meter counts seconds only while this is
+ * true, so a paused minute is never charged.
+ */
+export function isDetecting(input: { cameraEnabled: boolean; cameraError: unknown; status: string; watch: WatchState }): boolean {
+  return (
+    inferenceEnabled(input.cameraEnabled, input.watch) &&
+    !input.cameraError &&
+    (input.status === 'watching' || input.status === 'alert')
+  );
+}
+
 /** What an alarm may do right now. Meeting mode is flash only; a pause has no alarms because nothing runs. */
 export function effectiveAlertType(alertType: 'sound' | 'flash' | 'both', s: WatchState): 'sound' | 'flash' | 'both' {
   return s.kind === 'meeting' ? 'flash' : alertType;
