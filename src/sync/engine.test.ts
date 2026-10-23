@@ -151,6 +151,27 @@ describe('what is sent', () => {
   });
 });
 
+describe('an event that is not in this app\'s own shape', () => {
+  // The app always gives a hand-logged event a tag, and `toHabitEvent` turns a missing tag into
+  // triggers ['unknown']. An event from another client (an edited import file, a future phone view)
+  // may carry no triggers at all; this device then holds it normalised, so it is not byte-identical to
+  // the server's copy. The cost must be one extra send, not a loop.
+  it('is sent back at most once, then left alone', async () => {
+    const bare = { id: 'bare', ts: 5, source: 'manual', behavior: 'nail_biting', updatedAt: 5 };
+    const { engine, browser, calls, clock } = setup({ respond: (_r, n) => okBody({ events: n === 1 ? [bare] : [], cursor: n }) });
+    engine.start();
+    await engine.syncNow();
+    expect(browser.snapshot()[0].triggers).toEqual(['unknown']); // normalised on this device
+    expect(engine.getStatus().pending).toBe(1);                  // so it looks "different" from the server's copy
+    await engine.syncNow();
+    expect(calls[1].events.map(e => e.id)).toEqual(['bare']);    // sent back once
+    for (let i = 0; i < 3; i++) await engine.syncNow();
+    await clock.advance(60 * 60_000);
+    expect(calls.slice(2).every(c => c.events.length === 0)).toBe(true); // and never again
+    expect(engine.getStatus().pending).toBe(0);
+  });
+});
+
 describe('privacy: nothing but the whitelisted fields is ever sent', () => {
   it('a field added to a stored event (landmarks, a frame, a photo, a calibration sample) never reaches the request', async () => {
     const { engine, browser, calls } = setup();

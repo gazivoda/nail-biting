@@ -131,7 +131,7 @@ deleted row keeps no content.
 
 ## Verification (what was actually run)
 
-- `npm test`: 63 files / 1011 tests (baseline 52 / 755). `npm run build:web`: 0. `node --check` on `server.js`, the
+- `npm test`: 63 files / 1012 tests (baseline 52 / 755). `npm run build:web`: 0. `node --check` on `server.js`, the
   route module and all four `server/events` files. `npm run lint`: 23 errors / 7 warnings, same as baseline.
   `grep -l "dev-override\|readDevOverrides" dist/assets/*.js` and `grep -l "seedPreviewData\|previewKind"` print nothing.
 - **Real server, real HTTP** (`server.js` on :3204, temp `DATA_DIR`, dummy env, real JWT cookies): auth required,
@@ -142,6 +142,9 @@ deleted row keeps no content.
   `POST /api/events/sync` with no landmark/frame/image words; browser B ends with an export identical field by field to
   A's (12 events plus the deletion record); a reload restarts sync by itself; "Delete synced data" shows the count in
   the page, and B then stops with the notice and sends nothing more; no console errors.
+- The flags-off comparison saw the page's own requests, not the service worker's: the worker's precache list grows from
+  29 to 35 entries (+40 KiB: the lazy sync and data chunks), downloaded in the background like the rest of the
+  precache, once, when the worker updates. That is the only flags-off difference I know of.
 - **Flags off, before and after** (`main`@0ab519b built in a scratch directory vs this branch, both with `FEATURE_FLAGS`
   empty): 12 GET responses (pages and a few API paths) byte-identical (asset hashes normalised), the three events paths 404 in both, the
   signed-in Settings page `innerHTML` and text identical, localStorage keys identical, the set of non-analytics network
@@ -171,6 +174,12 @@ deleted row keeps no content.
   the new Data card to remove both.
 
 ## Known limitations
+
+- **A hand-logged event with no triggers at all** (only an edited import file or another client can produce one; this
+  app always sets a tag) is held on a device as `triggers: ['unknown']` (`toHabitEvent` derives it from the tag
+  `unknown`), so its copy is not byte-identical to the server's. It converges, and the device sends it back once
+  (`src/sync/engine.test.ts`, "is sent back at most once"), but the server may keep either form. Making
+  `triggersFromTag` return nothing for `unknown` would remove it; that changes WS0's export shape, so it was left alone.
 
 - **Custom bite reasons are not synced** (settings, not events). An entry that uses a custom reason arrives on another
   device with the reason's id and shows as a plain "Bite" there until the same reason exists.

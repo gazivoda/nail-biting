@@ -47,6 +47,9 @@ const isTime = (x: unknown): x is number =>
  *
  * The result has the same shape the server returns, which is also what
  * `compareEventVersions` compares, so a pushed event and its echo are equal.
+ * (One exception, by design: an event another client wrote with no triggers at
+ * all is held here as triggers ['unknown'], see `toHabitEvent`; it is sent back
+ * once, never in a loop. Events this app writes are not affected.)
  */
 export function toSyncEvent(e: HabitEventWire): SyncEvent | null {
   if (!isId(e.id) || !isTime(e.ts) || !isTime(e.updatedAt)) return null;
