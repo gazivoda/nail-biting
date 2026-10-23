@@ -109,6 +109,8 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
   const GREEN = 'oklch(58% 0.130 148)';
   // alert-400 OKLCH
   const RED   = 'oklch(62% 0.180 25)';
+  // The 12px label needs 4.5:1: the light red is 3.96:1 on the white card, so on a light page the label uses a darker red.
+  const RED_LABEL_LIGHT = 'oklch(50% 0.180 25)';
 
   const setGradColor = (color: string) => {
     [gradRef.current, grad2Ref.current].forEach(g => {
@@ -125,7 +127,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
 
     if (labelRef.current) {
       labelRef.current.textContent = 'Detected!';
-      labelRef.current.style.color = RED;
+      labelRef.current.style.color = document.documentElement.classList.contains('dark') ? RED : RED_LABEL_LIGHT;
     }
     if (dotRef.current) {
       dotRef.current.style.background = RED;
