@@ -64,6 +64,17 @@ describe('Settings > Schedule', () => {
     expect(html).not.toMatch(/treat|cure|clinical|therapy/i);
   });
 
+  it('says so when the reminder is on but the browser has since blocked notifications', () => {
+    saveSchedule({ ...DEFAULT_SCHEDULE, enabled: true });
+    (globalThis as unknown as { Notification: unknown }).Notification = { permission: 'denied', requestPermission: vi.fn() };
+    const blocked = renderToStaticMarkup(<ScheduleSettings />);
+    (globalThis as unknown as { Notification: unknown }).Notification = { permission: 'granted', requestPermission: vi.fn() };
+    const fine = renderToStaticMarkup(<ScheduleSettings />);
+    delete (globalThis as unknown as { Notification?: unknown }).Notification;
+    expect(blocked).toContain('were blocked for this site');
+    expect(fine).not.toContain('were blocked for this site');
+  });
+
   it('never asks for notification permission just by being shown', () => {
     const request = vi.fn();
     (globalThis as unknown as { Notification: unknown }).Notification = { permission: 'default', requestPermission: request };

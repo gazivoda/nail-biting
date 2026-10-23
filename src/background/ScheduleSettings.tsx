@@ -120,6 +120,13 @@ export function ScheduleSettings() {
         </p>
       )}
 
+      {schedule.enabled && notificationPermission() === 'denied' && (
+        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
+          Notifications were blocked for this site after you turned this on, so no reminder will show. Allow them in the
+          site settings (the icon at the left of the address bar) to get it back.
+        </p>
+      )}
+
       {schedule.enabled && (
         <>
           <div role="group" aria-label="Days" className="flex flex-wrap gap-2">
