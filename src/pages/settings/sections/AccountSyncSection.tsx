@@ -12,12 +12,22 @@
 // Use `fullWidth` unless the card is meant to pair with another half-width one,
 // and follow DESIGN.md: pills, hairlines, no shadows, no illustrations of the habit.
 
-import { SyncSettings } from '../SyncSettings';
+import { Suspense, lazy } from 'react';
+import { useFeatures } from '../../../features/useFeature';
+
+// The sync card pulls in the sync client and the storage facade. It is fetched only
+// while event_sync is on, so with the flag off opening Settings downloads nothing extra.
+const SyncSettings = lazy(() => import('../SyncSettings').then(m => ({ default: m.SyncSettings })));
 
 export function AccountSyncSection() {
+  const flags = useFeatures();
   return (
     <>
-      <SyncSettings />
+      {flags.event_sync && (
+        <Suspense fallback={null}>
+          <SyncSettings />
+        </Suspense>
+      )}
     </>
   );
 }

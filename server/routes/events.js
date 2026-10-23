@@ -33,13 +33,19 @@ import { LIMITS } from '../events/limits.js';
  * @param {{ windowMs?: number, limit?: number }} [options.manageRateLimit]
  */
 export function createEventsModule(options = {}) {
-  const limits = { ...LIMITS, ...options.limits };
+  // Read when the routes are registered (after .env is loaded), not when this file is imported.
+  const limitsNow = () => {
+    const fromEnv = Number(process.env.EVENTS_QUOTA_PER_USER);
+    const quota = Number.isSafeInteger(fromEnv) && fromEnv > 0 ? { quotaPerUser: fromEnv } : {};
+    return { ...LIMITS, ...quota, ...options.limits };
+  };
 
   return {
     name: 'events',
     migrations: EVENTS_MIGRATIONS,
 
     register({ app, db, authMiddleware, requireFeature }) {
+      const limits = limitsNow();
       const store = createEventStore(db);
       const gate = [requireFeature('event_sync'), authMiddleware];
 

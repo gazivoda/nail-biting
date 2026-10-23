@@ -11,12 +11,23 @@
 // Use `fullWidth` unless the card is meant to pair with another half-width one,
 // and follow DESIGN.md: pills, hairlines, no shadows, no illustrations of the habit.
 
-import { DataSettings } from '../DataSettings';
+import { Suspense, lazy } from 'react';
+import { useFeatures } from '../../../features/useFeature';
+
+// The card pulls in the export/import code, the sync client and the storage facade. It is
+// fetched only while data_backup or event_sync is on, so with both off opening Settings
+// downloads nothing extra.
+const DataSettings = lazy(() => import('../DataSettings').then(m => ({ default: m.DataSettings })));
 
 export function DataSection() {
+  const flags = useFeatures();
   return (
     <>
-      <DataSettings />
+      {(flags.data_backup || flags.event_sync) && (
+        <Suspense fallback={null}>
+          <DataSettings />
+        </Suspense>
+      )}
     </>
   );
 }

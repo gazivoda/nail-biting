@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { AccountSyncSection } from './sections/AccountSyncSection';
 import { DataSection } from './sections/DataSection';
-import { SyncCardView, type SyncCardViewProps } from './SyncSettings';
-import { DataCard } from './DataSettings';
+import { SyncCardView, SyncSettings, type SyncCardViewProps } from './SyncSettings';
+import { DataCard, DataSettings } from './DataSettings';
 import { SettingsSlots } from './SettingsSlots';
 import { AuthProvider } from '../../contexts/AuthContext';
 import { OFF_STATUS } from '../../sync/runtime';
@@ -45,6 +45,8 @@ describe('with every flag off nothing appears', () => {
     setFlags('signin_apple', 'weekly_email', 'referrals', 'photo_diary');
     expect(withAuth(<AccountSyncSection />)).toBe('');
     expect(withAuth(<DataSection />)).toBe('');
+    expect(withAuth(<SyncSettings />)).toBe('');
+    expect(withAuth(<DataSettings />)).toBe('');
   });
 });
 
@@ -52,7 +54,7 @@ describe('event_sync only', () => {
   beforeEach(() => setFlags('event_sync'));
 
   it('Account & Sync shows the opt-in with the approved plain-language copy, off by default', () => {
-    const html = withAuth(<AccountSyncSection />);
+    const html = withAuth(<SyncSettings />);
     expect(html).toContain('Account &amp; Sync');
     expect(html).toContain('Your history syncs to your account when this is on. Camera data never leaves your device.');
     expect(html).toContain('Sign in to use sync.'); // no signed-in user in this render
@@ -60,7 +62,7 @@ describe('event_sync only', () => {
   });
 
   it('Data shows the server delete and delete-everything, but no export or import', () => {
-    const html = withAuth(<DataSection />);
+    const html = withAuth(<DataSettings />);
     expect(html).toContain('Delete synced data');
     expect(html).toContain('Delete everything');
     expect(html).not.toContain('Export JSON');
@@ -73,7 +75,7 @@ describe('data_backup only (no account, no sync)', () => {
   beforeEach(() => setFlags('data_backup'));
 
   it('Data shows export and restore, and no sync control', () => {
-    const html = withAuth(<DataSection />);
+    const html = withAuth(<DataSettings />);
     expect(html).toContain('Export JSON');
     expect(html).toContain('Export CSV');
     expect(html).toContain('Choose file');
@@ -83,17 +85,18 @@ describe('data_backup only (no account, no sync)', () => {
 
   it('Account & Sync stays empty', () => {
     expect(withAuth(<AccountSyncSection />)).toBe('');
+    expect(withAuth(<SyncSettings />)).toBe('');
   });
 
   it('says nothing is uploaded when exporting', () => {
-    expect(withAuth(<DataSection />)).toContain('nothing is uploaded');
+    expect(withAuth(<DataSettings />)).toContain('nothing is uploaded');
   });
 });
 
 describe('both flags', () => {
   it('shows every control', () => {
     setFlags('event_sync', 'data_backup');
-    const html = withAuth(<DataSection />);
+    const html = withAuth(<DataSettings />);
     for (const text of ['Export JSON', 'Export CSV', 'Choose file', 'Delete synced data', 'Delete everything']) expect(html).toContain(text);
   });
 

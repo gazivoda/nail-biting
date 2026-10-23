@@ -214,9 +214,10 @@ function ImportDone({ plan, onClose }: { plan: ImportPlan; onClose(): void }) {
 
 type WipeState =
   | { step: 'idle' }
-  | { step: 'asking'; count: number | null }
-  | { step: 'working' }
-  | { step: 'done'; deleted: number }
+  | { step: 'checking' }
+  | { step: 'asking'; count: number }
+  | { step: 'working'; count: number }
+  | { step: 'done'; count: number }
   | { step: 'error'; message: string };
 
 const failure = (status: number) =>
@@ -228,47 +229,54 @@ const failure = (status: number) =>
 function DeleteSyncedRow() {
   const [s, setS] = useState<WipeState>({ step: 'idle' });
 
+  // Look first, so the confirmation can say exactly how much is about to go.
   const ask = async () => {
-    setS({ step: 'asking', count: null });
+    setS({ step: 'checking' });
     const r = await loadRemoteStatus();
-    setS({ step: 'asking', count: r.ok ? r.status.live : null });
+    setS(r.ok ? { step: 'asking', count: r.status.live } : { step: 'error', message: failure(r.status) });
   };
 
   const proceed = async () => {
-    setS({ step: 'working' });
+    if (s.step !== 'asking') return;
+    const count = s.count;
+    setS({ step: 'working', count });
     const r = await deleteSyncedData();
-    setS(r.ok ? { step: 'done', deleted: r.deleted } : { step: 'error', message: failure(r.status) });
+    setS(r.ok ? { step: 'done', count } : { step: 'error', message: failure(r.status) });
   };
 
+  const busy = s.step === 'checking' || s.step === 'working';
   return (
     <>
       <Row
         label="Delete synced data"
         description="Removes the copy of your history held on your account. History on this device stays, and sync is switched off."
       >
-        <button type="button" onClick={() => { void ask(); }} disabled={s.step === 'asking' || s.step === 'working'} className={pill}>
-          Delete synced data
+        <button type="button" onClick={() => { void ask(); }} disabled={busy || s.step === 'asking'} className={pill}>
+          {s.step === 'checking' ? 'Checking…' : 'Delete synced data'}
         </button>
       </Row>
       {(s.step === 'asking' || s.step === 'working') && (
         <div className={panel} role="group" aria-label="Confirm deleting synced data">
           <p className="text-sm text-alert-600 dark:text-alert-400">
-            {s.step === 'asking' && s.count !== null
+            {s.count > 0
               ? `This permanently deletes ${nice(s.count)} synced ${s.count === 1 ? 'event' : 'events'} from your account.`
-              : 'This permanently deletes the history held on your account.'}
+              : 'This permanently clears the history held on your account.'}
             {' '}Other devices will stop syncing. It can’t be undone.
           </p>
           <div className="flex flex-wrap gap-2">
-            <button type="button" onClick={() => { void proceed(); }} disabled={s.step === 'working'} className={danger}>
+            <button type="button" onClick={() => { void proceed(); }} disabled={busy} className={danger}>
               {s.step === 'working' ? 'Deleting…' : 'Yes, delete synced data'}
             </button>
-            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={s.step === 'working'} className={pill}>Cancel</button>
+            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={busy} className={pill}>Cancel</button>
           </div>
         </div>
       )}
       {s.step === 'done' && (
         <p role="status" className="-mt-3 text-sm text-stone-700 dark:text-stone-200">
-          Deleted {nice(s.deleted)} synced {s.deleted === 1 ? 'event' : 'events'} from your account. Sync is off. History on this device is untouched.
+          {s.count > 0
+            ? `Deleted ${nice(s.count)} synced ${s.count === 1 ? 'event' : 'events'} from your account.`
+            : 'Cleared the history held on your account.'}
+          {' '}Sync is off. History on this device is untouched.
         </p>
       )}
       {s.step === 'error' && <p role="alert" className="-mt-3 text-sm text-alert-600 dark:text-alert-400">{s.message}</p>}

@@ -293,6 +293,29 @@ describe('quota', () => {
     expect((await h.sync('u1', body([ev('a'), ev('a', { updatedAt: 1_700_000_000_001 })]))).status).toBe(200);
   });
 
+  it('EVENTS_QUOTA_PER_USER sets the default, read when the routes are registered', async () => {
+    const saved = process.env.EVENTS_QUOTA_PER_USER;
+    process.env.EVENTS_QUOTA_PER_USER = '2';
+    try {
+      const h = await boot();
+      expect((await h.sync('u1', body([ev('a'), ev('b')]))).status).toBe(200);
+      expect((await h.sync('u1', body([ev('c')]))).status).toBe(413);
+      expect((await h.status('u1')).body.quota).toBe(2);
+    } finally {
+      if (saved === undefined) delete process.env.EVENTS_QUOTA_PER_USER;
+      else process.env.EVENTS_QUOTA_PER_USER = saved;
+    }
+    // A nonsense value falls back to the built-in default.
+    process.env.EVENTS_QUOTA_PER_USER = 'lots';
+    try {
+      const h = await boot();
+      expect((await h.status('u1')).body.quota).toBe(LIMITS.quotaPerUser);
+    } finally {
+      if (saved === undefined) delete process.env.EVENTS_QUOTA_PER_USER;
+      else process.env.EVENTS_QUOTA_PER_USER = saved;
+    }
+  });
+
   it('reports usage on the status endpoint', async () => {
     const h = await boot({ module: { limits: { quotaPerUser: 10 } } });
     await h.sync('u1', body([ev('a'), ev('b'), ev('c', { deleted: true })]));
