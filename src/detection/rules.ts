@@ -165,7 +165,8 @@ export function fingertipContact(
   zone: ResolvedZone,
   threshold: number,
 ): boolean {
-  for (const handPoints of hands) {
+  for (let h = 0; h < hands.length; h++) {
+    const handPoints = hands[h];
     for (let k = 0; k < fingerFilter.length; k++) {
       const p = handPoints[fingerFilter[k]];
       if (nearAnchor(p.x, p.y, zone, threshold)) return true;

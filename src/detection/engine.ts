@@ -52,10 +52,19 @@ export interface Engine {
   step(timestampMs: number): void;
 }
 
+/** A zone resolved at most once per frame, however many rules read it. Shared by the rules of one engine. */
+interface ZoneSlot {
+  zone: ResolvedZone;
+  /** The frame number the zone was last resolved for. */
+  frame: number;
+  resolve: (face: readonly Landmark[], out: ResolvedZone) => void;
+}
+
 interface ActiveRule {
   rule: ZoneRule;
   required: number;
   state: RuleState;
+  slot: ZoneSlot;
 }
 
 const NAIL_ONLY: readonly Behavior[] = ['nail_biting'];
@@ -66,12 +75,16 @@ export const REQUIRED_MISSES_TO_CLEAR = 2;
 export function createEngine(options: EngineOptions): Engine {
   const { getVideo, getSensitivity, source, getBehaviors, onBiteStart, onBiteEnd } = options;
 
+  const slots = {} as Record<ZoneId, ZoneSlot>;
+  for (const id of Object.keys(ZONES) as ZoneId[]) slots[id] = { zone: createResolvedZone(), frame: -1, resolve: ZONES[id].resolve };
+  let frameNo = 0;
+
   // One runtime per behaviour, created on first use and kept.
   const runtimes = new Map<Behavior, ActiveRule>();
   const runtimeFor = (b: Behavior): ActiveRule => {
     let r = runtimes.get(b);
     if (!r) {
-      r = { rule: RULES[b], required: framesForDwell(RULES[b].dwellMs), state: createRuleState() };
+      r = { rule: RULES[b], required: framesForDwell(RULES[b].dwellMs), state: createRuleState(), slot: slots[RULES[b].zone] };
       runtimes.set(b, r);
     }
     return r;
@@ -79,10 +92,6 @@ export function createEngine(options: EngineOptions): Engine {
 
   let active: ActiveRule[] = [runtimeFor('nail_biting')];
   let lastWanted: readonly Behavior[] = NAIL_ONLY;
-
-  // Zones are resolved at most once per frame, however many rules use them.
-  const zones = new Map<ZoneId, { zone: ResolvedZone; frame: number }>();
-  let frameNo = 0;
 
   let missedFrames = 0;
   const fired: ActiveRule[] = [];
@@ -104,19 +113,12 @@ export function createEngine(options: EngineOptions): Engine {
   }
 
   function registerMiss() {
-    for (const r of active) resetRuleState(r.state);
+    for (let i = 0; i < active.length; i++) resetRuleState(active[i].state);
     missedFrames++;
     if (missedFrames >= REQUIRED_MISSES_TO_CLEAR) {
       onBiteEnd();
       missedFrames = 0;
     }
-  }
-
-  function zoneFor(id: ZoneId, face: readonly Landmark[]): ResolvedZone {
-    let entry = zones.get(id);
-    if (!entry) { entry = { zone: createResolvedZone(), frame: -1 }; zones.set(id, entry); }
-    if (entry.frame !== frameNo) { ZONES[id].resolve(face, entry.zone); entry.frame = frameNo; }
-    return entry.zone;
   }
 
   return {
@@ -136,15 +138,17 @@ export function createEngine(options: EngineOptions): Engine {
         frameNo++;
 
         let anyContact = false;
-        fired.length = 0;
+        let firedCount = 0;
         if (hands.length > 0 && faces.length > 0) {
           const face = faces[0];
-          for (const r of active) {
-            const contact = evaluateRule(r.rule, hands, zoneFor(r.rule.zone, face), sensitivity, r.state);
-            if (contact) {
+          for (let i = 0; i < active.length; i++) {
+            const r = active[i];
+            const slot = r.slot;
+            if (slot.frame !== frameNo) { slot.resolve(face, slot.zone); slot.frame = frameNo; }
+            if (evaluateRule(r.rule, hands, slot.zone, sensitivity, r.state)) {
               anyContact = true;
               r.state.hits++;
-              if (r.state.hits >= r.required && r.state.gate) fired.push(r);
+              if (r.state.hits >= r.required && r.state.gate) fired[firedCount++] = r;
             } else {
               // Only the dwell restarts. A movement rule keeps the recent contact points it
               // is still collecting (evaluateRule clears them itself when contact is lost).
@@ -155,7 +159,7 @@ export function createEngine(options: EngineOptions): Engine {
 
         if (anyContact) {
           missedFrames = 0;
-          for (const r of fired) onBiteStart(r.rule.behavior);
+          for (let i = 0; i < firedCount; i++) onBiteStart(fired[i].rule.behavior);
         } else {
           registerMiss();
         }

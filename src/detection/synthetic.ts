@@ -312,8 +312,9 @@ export function renderScene(scene: Scene): RenderedFrame[] {
         side: track.side, pin: track.pin, at: [x, y], angleDeg: track.angleDeg,
         size: track.size, ext: track.ext, pinch: pinching,
       });
-      // A hand is only seen once its wrist is inside the frame.
-      if (px[0][1] > IMAGE.height - 10) continue;
+      // A hand is only seen once its palm (the middle knuckle, landmark 9) is inside the frame.
+      const [palmX, palmY] = px[9];
+      if (palmY > IMAGE.height - 20 || palmX < 0 || palmX > IMAGE.width) continue;
       const sigma = track.jitterPx ?? 0.8;
       hands.push(toNormalised(px.map(([hx, hy]) => [hx + gauss(rnd) * sigma, hy + gauss(rnd) * sigma] as [number, number])));
     }

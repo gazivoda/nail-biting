@@ -16,6 +16,7 @@
     "seo:check": "node scripts/sync-seo.mjs --check",
     "og:generate": "node scripts/generate-og-images.mjs",
     "og:check": "node scripts/generate-og-images.mjs --check",
+    "eval:detection": "node scripts/eval-detection/run.mjs",
     "seo:indexnow": "node scripts/indexnow-ping.mjs",
     "preview": "vite preview",
     "electron:build-main": "vite build --config vite.electron.config.ts",
