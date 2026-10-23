@@ -150,6 +150,12 @@ describe.skipIf(!built)('feature pages, every flag off', () => {
     }
   });
 
+  it('adds no marker, and makes no request for flags: the pages are the built pages', async () => {
+    for (const page of ['/', '/about', '/how-it-works', '/pricing', '/compare/ai-detection-apps', '/this-does-not-exist']) {
+      big((await get(srv, page)).text, page).notToContain('sb-copy-flags');
+    }
+  });
+
   it('says what it always said about history, sign-in and phones', async () => {
     const home = (await get(srv, '/')).text;
     big(home).toContain('Your history is stored in this browser, so it doesn');
@@ -393,6 +399,22 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
       } finally { await srv.stop(); }
     }, 60000);
   }
+
+  it('the marker lists the copy flags that are on, in every 200 page and in no error page, and only then', async () => {
+    const both = await startServer('event_sync,phone_companion,hrt_coaching');
+    const one = await startServer('phone_companion');
+    const other = await startServer('hrt_coaching,share_links');
+    try {
+      for (const page of ['/', '/about', '/pricing', '/compare/ai-detection-apps', '/blog/how-to-stop-nail-biting', '/features/habit-reversal-coaching']) {
+        big((await get(both, page)).text, page).toContain('<meta name="sb-copy-flags" content="event_sync phone_companion">');
+        big((await get(one, page)).text, page).toContain('<meta name="sb-copy-flags" content="phone_companion">');
+        big((await get(other, page)).text, page).notToContain('sb-copy-flags');
+      }
+      big((await get(both, '/this-does-not-exist')).text).notToContain('sb-copy-flags');
+      // the marker names no flag but the two that change copy, so it tells a crawler nothing about unreleased features
+      big((await get(both, '/')).text).notToMatch(/sb-copy-flags" content="[^"]*hrt_coaching/);
+    } finally { await both.stop(); await one.stop(); await other.stop(); }
+  }, 30000);
 
   it('the NailBiteMenu comparison follows the sign-in methods, in the page, the article and the FAQPage data', async () => {
     const srv = await startServer('signin_microsoft', { MICROSOFT_CLIENT_ID: 'id', MICROSOFT_CLIENT_SECRET: 'secret' });

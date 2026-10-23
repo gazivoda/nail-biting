@@ -221,7 +221,7 @@ export const RULES = Object.freeze([
     off: 'It is made for a laptop or desktop with a webcam, because the detection needs a camera that can see your hands while you work. On a phone, use the Email me the link button to send yourself the address and open it on your computer.',
     flags: ['phone_companion'],
     on: isOn => (isOn('phone_companion')
-      ? 'The alarm needs a laptop or desktop with a webcam, because the detection needs a camera that can see your hands while you work. On a phone you can sign in and log a bite or an urge in two taps, see your streak, and add the app to your home screen; nothing is detected on the phone. The Email me the link button sends the address to your computer for setup.'
+      ? 'The alarm needs a laptop or desktop with a webcam, because the detection needs a camera that can see your hands while you work. On a phone you can sign in and log a bite or an urge in two taps, see your streak, and add the app to your home screen; nothing is detected on the phone. Once you are signed in, a link on the phone screen sends the address to your computer for setting up the alarm.'
       : null),
   },
 ]);

@@ -1635,7 +1635,13 @@ if (!existsSync(distPath)) {
   // anywhere — no header, no `dateModified`, no `article:modified_time`. It is
   // the same value sitemap.xml and the JSON-LD publish, so the three agree.
   // Omitted deliberately on 404s and on any route with no content date.
+  // WS11b: the copy-affecting flags that are ON, as a marker in every 200 page, so a marketing page can word
+  // its copy without asking for the flags (src/features/copyFlags.ts). Empty, and nothing is added, while
+  // they are all off.
+  const copyMarkerFlags = ['event_sync', 'phone_companion'].filter(name => flags.isOn(name));
+  const copyMarkerTag = copyMarkerFlags.length ? `<meta name="sb-copy-flags" content="${copyMarkerFlags.join(' ')}">` : '';
   function sendHtml(res, html, status = 200, lastModified = null) {
+    if (copyMarkerTag && status === 200) html = html.replace('</head>', () => `${copyMarkerTag}</head>`);
     if (lastModified) {
       const when = new Date(`${lastModified}T00:00:00Z`);
       if (!Number.isNaN(when.valueOf())) res.set('Last-Modified', when.toUTCString());

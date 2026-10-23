@@ -3,7 +3,7 @@ import { track } from '../../utils/track';
 import { useIsPhone } from '../../hooks/useIsPhone';
 import { canShare, shareToComputer } from '../../utils/phoneLink';
 import { useSignInHref } from '../../auth/useSignInProviders';
-import { useLazyFeature } from '../../features/useFlagCopy';
+import { useCopyFlag } from '../../features/useFlagCopy';
 
 // The app needs a computer webcam, and the trial clock starts at sign-in, so a
 // phone visitor who signs in here spends the trial before they can use it.
@@ -43,10 +43,10 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
 // A phone visitor. Until the phone companion (flag phone_companion, WS6) is on, signing up on a phone
 // would spend the trial on a screen that cannot detect anything, so the button sends the link to a
 // computer instead. With the companion on, a phone has a screen of its own (log a bite or an urge in
-// two taps), so the button is the ordinary one. The flag is read here, in a component only a phone
-// renders, so a computer's visit never asks for it.
+// two taps), so the button is the ordinary one. The flag comes from the marker the server wrote into the
+// page (src/features/copyFlags.ts), never from a request.
 function PhoneTrialButton({ className, source, startTrial }: { className: string; source: string; startTrial: React.ReactElement }) {
-  const companion = useLazyFeature('phone_companion');
+  const companion = useCopyFlag('phone_companion');
   if (companion) return startTrial;
 
   // With the share sheet the link goes wherever the visitor picks; the href
