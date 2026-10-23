@@ -5,6 +5,7 @@ import { SessionGoal } from '../components/dashboard/SessionGoal';
 import { ReplacementPrompt } from '../components/dashboard/ReplacementPrompt';
 import { PanicButton } from '../components/dashboard/PanicButton';
 import { CoachingDashboardSlot } from '../coaching/CoachingDashboardSlot';
+import { FalsePositiveSlot } from '../falsePositive/FalsePositiveSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
 
@@ -69,6 +70,7 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
             <PanicButton />
           </div>
           <CoachingDashboardSlot />{/* WS2: urge timer, coaching bridge, program link. Renders nothing while its flags are off. */}
+          <FalsePositiveSlot />{/* WS3: arms the false-alarm controls and the "Not a bite" toast. Renders nothing; does nothing while its flag is off. */}
         </div>
       </div>
     </div>

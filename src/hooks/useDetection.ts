@@ -31,7 +31,8 @@ function assetUrl(relativePath: string): string {
   }
 }
 
-async function getModels() {
+// Exported for the optional calibration (WS3, src/calibration/runner.ts), which reuses the loaded models while detection is paused.
+export async function getModels() {
   if (cachedHand && cachedFace) return { hand: cachedHand, face: cachedFace };
   if (modelInitPromise) return modelInitPromise;
 
