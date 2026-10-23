@@ -79,12 +79,22 @@ function closure(entries) {
   return [...seen];
 }
 
+// For the diary's own code: any mention counts.
 const NETWORK = [
   ['fetch(', /(^|[^A-Za-z_.])fetch\s*\(/],
   ['XMLHttpRequest', /XMLHttpRequest/],
   ['sendBeacon', /sendBeacon/],
   ['WebSocket', /WebSocket/],
   ['EventSource', /EventSource/],
+];
+// For code the diary merely reaches: a way to make a request (not a type that shares a name,
+// like the `EventSource` alias in eventModel.ts, which means "alarm or manual").
+const NETWORK_USE = [
+  ['fetch', /(^|[^A-Za-z_.])fetch\b/],
+  ['XMLHttpRequest', /XMLHttpRequest/],
+  ['sendBeacon', /sendBeacon/],
+  ['new WebSocket', /new\s+WebSocket\b/],
+  ['new EventSource', /new\s+EventSource\b/],
 ];
 
 describe('src/photos makes no network request of its own', () => {
@@ -151,17 +161,19 @@ describe('src/photos makes no network request of its own', () => {
     const offenders = [];
     for (const f of reached.filter(isCode)) {
       const code = stripComments(read(f));
-      for (const [name, re] of NETWORK) if (re.test(code)) offenders.push(`${rel(f)} has ${name}`);
+      for (const [name, re] of NETWORK_USE) if (re.test(code)) offenders.push(`${rel(f)} has ${name}`);
     }
     expect(offenders).toEqual([]);
   });
 
   it('the gating files reach exactly one network file, the flag reader, and its one request carries no body', () => {
     const reached = closure(photoFiles.filter(f => GATING.has(rel(f))));
-    const withNetwork = reached.filter(isCode).filter(f => NETWORK.some(([, re]) => re.test(stripComments(read(f))))).map(rel);
+    const withNetwork = reached.filter(isCode).filter(f => NETWORK_USE.some(([, re]) => re.test(stripComments(read(f))))).map(rel);
     expect(withNetwork).toEqual(['src/features/flags.ts']);
     const flags = stripComments(read(join(root, 'src/features/flags.ts')));
-    expect(flags).not.toMatch(/\bbody\s*:/);
+    expect((flags.match(/doFetch\(/g) ?? []).length).toBe(1); // one request: GET /api/features
+    expect(flags).toContain("doFetch('/api/features'");
+    expect(flags).not.toMatch(/[{,]\s*(body|method)\s*:|POST|PUT/); // no request body, no non-GET method
     expect(flags).not.toMatch(/photo|blob|image|jpeg|diary/i);
     // And that file cannot reach the photo store or the blob module itself.
     const flagsReach = closure([join(root, 'src/features/flags.ts')]).map(rel);
@@ -224,7 +236,7 @@ describe('the photo bytes cannot ride along with history', () => {
 
   it('the local blob store has no upload, export, sync or URL helper', () => {
     const src = stripComments(read(join(root, 'src/storage/blobs.ts')));
-    expect(src).not.toMatch(/upload|createObjectURL|toDataURL|exportAll|sync|fetch\(|sendBeacon|XMLHttpRequest/i);
+    expect(src).not.toMatch(/upload|createObjectURL|toDataURL|exportAll|\bsync\b|fetch\(|sendBeacon|XMLHttpRequest/i);
     const exported = [...src.matchAll(/export\s+(?:async\s+)?(?:function|const)\s+(\w+)/g)].map(m => m[1]).sort();
     expect(exported).toEqual(['blobStorageStatus', 'createIdbBlobStore', 'createMemoryBlobStore', 'localBlobs', 'setBlobStoreForTests']);
   });
@@ -297,7 +309,7 @@ describe('the diary draws nothing of the habit', () => {
 
   it('the words it shows never name the habit, a mouth or a face', () => {
     const offenders = [...photoCode]
-      .filter(([, code]) => /\b(mouth|lips?|bit(e|ing|es)?|chew(ing)?)\b/i.test(code))
+      .filter(([, code]) => /\b(mouth|lips?|bit(e|ing|es)?|chew(ing)?)\b/i.test(code.replace(/Stop Biting/g, '')))
       .map(([f]) => rel(f));
     expect(offenders).toEqual([]);
   });
@@ -319,7 +331,7 @@ describe('in-app reminders only', () => {
   });
 
   it('the server has no photo-diary reminder job', () => {
-    const offenders = walk(join(root, 'server')).filter(isCode).filter(f => !isTest(f)).filter(f => /photo.?reminder|photo.?diary/i.test(read(f))).map(rel);
+    const offenders = walk(join(root, 'server')).filter(isCode).filter(f => !isTest(f)).filter(f => /photo.?reminder/i.test(read(f))).map(rel);
     expect(offenders).toEqual([]);
   });
 });

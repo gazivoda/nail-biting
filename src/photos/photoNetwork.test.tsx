@@ -19,7 +19,7 @@ import { PhotoReminderView } from './PhotoReminder';
 import { PhotoDiarySettingsView } from './PhotoDiarySettingsCard';
 
 const calls: string[] = [];
-const spy = (name: string) => (..._args: unknown[]) => {
+const spy = (name: string) => () => {
   calls.push(name);
   throw new Error(`network API used: ${name}`);
 };
