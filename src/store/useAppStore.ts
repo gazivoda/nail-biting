@@ -1,8 +1,25 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme, StatsMetric, CustomTag } from '../types';
+import { persist, type PersistStorage } from 'zustand/middleware';
+import type { AppState, AppActions, TriggerTag, DetectionSensitivity, AlertType, AlertSound, ReminderInterval, Incident, Theme, StatsMetric, CustomTag, ReplaceEventsInput } from '../types';
+import {
+  DEFAULT_BEHAVIOR,
+  MAX_TOMBSTONES,
+  addTombstone,
+  createStoredEvent,
+  makeTombstone,
+  patchStoredEvent,
+  upgradeIncident,
+  upgradeStateEvents,
+  type EventExtras,
+  type EventPatch,
+  type StoredEvent,
+} from '../storage/eventModel';
+import { getDeviceId } from '../storage/deviceId';
+import { detectLocalStorage } from '../storage/adapter';
+import { createStatePersistStorage } from '../storage/persistStorage';
 
-function isBite(inc: Incident): boolean {
+/** A real bite: logged by hand, or an alarm the user confirmed. Alarms start unconfirmed. */
+export function isBite(inc: Incident): boolean {
   return !inc.autoDetected || inc.confirmed === true;
 }
 
@@ -75,7 +92,7 @@ export function pruneIncidents(state: RetentionState): RetentionState {
 }
 
 /** Streak fields are always derived, never accumulated — see computeBestStreak. */
-function deriveStreakState(state: RetentionState) {
+export function deriveStreakState(state: RetentionState) {
   return {
     lastBiteTime: latestBiteTime(state.incidents),
     bestStreakMs: Math.max(
@@ -88,27 +105,45 @@ function deriveStreakState(state: RetentionState) {
 /** Auto-detections this close to the previous one are the same episode. */
 export const AUTO_EPISODE_MS = 30_000;
 
-export const STATE_VERSION = 1;
+export const STATE_VERSION = 2;
 
-// v0 had no retention fields. Anyone upgrading has a complete, unpruned history,
-// so their anchor is firstOpenTime and there is nothing banked behind it. A floor
-// of 0 keeps bestStreakMs purely derived, which is what lets a wrong value get
-// corrected for users who have deleted an incident. bestStreakMs itself is left
-// alone here; the next history action re-derives it.
+// Persisted-state migrations, run by zustand's persist middleware whenever the
+// stored version differs from STATE_VERSION. Steps chain, so a v0 user goes
+// v0 -> v1 -> v2 in one call. Every step is non-destructive and idempotent: it
+// adds or fills fields and never removes or rewrites existing ones, so running
+// it again on its own output (for instance after a rollback to an older bundle,
+// which rewrites the stored version number) changes nothing.
+//
+//   v0 -> v1  retention fields. v0 had none. Anyone upgrading has a complete,
+//             unpruned history, so their anchor is firstOpenTime and there is
+//             nothing banked behind it. A floor of 0 keeps bestStreakMs purely
+//             derived, which is what lets a wrong value get corrected for users
+//             who have deleted an incident. bestStreakMs itself is left alone
+//             here; the next history action re-derives it.
+//   v1 -> v2  event schema v2: every incident gains ts, source, behavior and
+//             updatedAt (src/storage/eventModel.ts, upgradeIncident). Existing
+//             fields, ids, timestamps and tags are untouched, so streaks and
+//             statistics are identical before and after. Before the first write
+//             of upgraded state, src/storage/persistStorage.ts has already
+//             copied the raw old JSON to 'stop-biting-state-v1-backup'.
 export function migrateState(persisted: unknown, version: number): Partial<AppState> {
-  const state = (persisted ?? {}) as Partial<AppState>;
+  let state = (persisted ?? {}) as Partial<AppState>;
   if (version < 1) {
-    return {
+    state = {
       ...state,
       historyStartTime: state.firstOpenTime ?? Date.now(),
       bestStreakFloorMs: 0,
     };
+  }
+  if (version < 2) {
+    state = upgradeStateEvents(state);
   }
   return state;
 }
 
 const initialState: AppState = {
   incidents: [],
+  tombstones: [],
   firstOpenTime: Date.now(),
   historyStartTime: Date.now(),
   lastBiteTime: null,
@@ -128,32 +163,54 @@ const initialState: AppState = {
   weekChartMetric: 'incidents',
 };
 
-export const useAppStore = create<AppState & AppActions>()(
-  persist(
+type Store = AppState & AppActions;
+/** What reaches disk (and what `migrate` returns): state without the actions. */
+type Persisted = Partial<AppState>;
+
+// The persist middleware is only wired up where there is a real Web Storage to
+// back it (a browser). Where there is none (node tests, storage blocked by
+// policy) the store is memory-only, exactly as before this module existed.
+function defaultStorage(): PersistStorage<Persisted> | undefined {
+  return detectLocalStorage() ? createStatePersistStorage<Persisted>(STATE_VERSION) : undefined;
+}
+
+/**
+ * Builds the app store. `useAppStore` below is the one instance the app uses;
+ * tests build their own with an injected `storage` (see
+ * src/storage/persistence.test.ts) to exercise hydration and migration.
+ * Passing `undefined` yields a memory-only store.
+ */
+export function createAppStore(storage?: PersistStorage<Persisted>) {
+  return create<Store>()(
+  persist<Store, [], [], Persisted>(
     (set, get) => ({
       ...initialState,
 
-      // All three history actions follow the same shape: build the next incident
+      // The history actions all follow the same shape: build the next incident
       // list, then re-derive the streak fields from it. Nothing is accumulated,
       // so the numbers always agree with what the log actually shows.
-      logIncident: (tag: TriggerTag, autoDetected = false) => {
-        const { incidents, historyStartTime, bestStreakFloorMs } = get();
+      logIncident: (tag: TriggerTag, autoDetected = false, extras?: EventExtras) => {
+        const { incidents, historyStartTime, bestStreakFloorMs, tombstones } = get();
+        const behavior = extras?.behavior ?? DEFAULT_BEHAVIOR;
 
         // A hand resting at the chin re-triggers the detector every second or
         // two. The alarm still sounds each time, but it is one episode: a new
         // entry within AUTO_EPISODE_MS of the last auto one would inflate the
         // counts and bring the "try this instead" card back again and again.
+        // Episodes are per behavior, so a nose-pick right after a bite is not
+        // swallowed by the bite's episode (identical for nail biting alone).
         if (autoDetected) {
-          const lastAuto = incidents.find(i => i.autoDetected);
+          const lastAuto = incidents.find(i => i.autoDetected && (i.behavior ?? DEFAULT_BEHAVIOR) === behavior);
           if (lastAuto && Date.now() - lastAuto.timestamp < AUTO_EPISODE_MS) return;
         }
 
-        const incident: Incident = {
-          id: crypto.randomUUID(),
-          timestamp: Date.now(),
+        const incident = createStoredEvent({
           tag,
           autoDetected,
-        };
+          now: Date.now(),
+          deviceId: getDeviceId(),
+          extras,
+        });
 
         // Only the log path can grow the list, so it is the only one that prunes.
         const next = pruneIncidents({
@@ -162,15 +219,17 @@ export const useAppStore = create<AppState & AppActions>()(
           bestStreakFloorMs,
         });
 
-        set({ ...next, ...deriveStreakState(next) });
+        set({ ...next, tombstones, ...deriveStreakState(next) });
       },
 
       confirmIncident: (id: string, tag?: TriggerTag) => {
         const { incidents, historyStartTime, bestStreakFloorMs } = get();
         if (!incidents.some(i => i.id === id)) return;
 
+        const now = Date.now();
         const next = {
-          incidents: incidents.map(i => i.id === id ? { ...i, confirmed: true, ...(tag ? { tag } : {}) } : i),
+          incidents: incidents.map(i =>
+            i.id === id ? patchStoredEvent(i, { confirmed: true, ...(tag ? { tag } : {}) }, now) : i),
           historyStartTime,
           bestStreakFloorMs,
         };
@@ -178,27 +237,78 @@ export const useAppStore = create<AppState & AppActions>()(
       },
 
       deleteIncident: (id: string) => {
-        const { incidents, historyStartTime, bestStreakFloorMs } = get();
+        const { incidents, tombstones, historyStartTime, bestStreakFloorMs } = get();
+        const victim = incidents.find(i => i.id === id);
 
         const next = {
           incidents: incidents.filter(i => i.id !== id),
           historyStartTime,
           bestStreakFloorMs,
         };
-        set({ ...next, ...deriveStreakState(next) });
+        set({
+          ...next,
+          // Sync needs to hear about the delete; no screen ever reads this list.
+          tombstones: victim ? addTombstone(tombstones, makeTombstone(victim, Date.now())) : tombstones,
+          ...deriveStreakState(next),
+        });
       },
 
       restoreIncident: (incident: Incident) => {
-        const { incidents, historyStartTime, bestStreakFloorMs } = get();
+        const { incidents, tombstones, historyStartTime, bestStreakFloorMs } = get();
         if (incidents.some(i => i.id === incident.id)) return;
         // Back into its place in time (newest first), then re-derive the
         // streak so undoing a deleted bite puts the streak back exactly.
+        // updatedAt moves forward so the restore outranks the tombstone in sync.
+        const restored = patchStoredEvent(incident, {}, Date.now());
         const next = {
-          incidents: [...incidents, incident].sort((a, b) => b.timestamp - a.timestamp),
+          incidents: [...incidents, restored].sort((a, b) => b.timestamp - a.timestamp),
+          historyStartTime,
+          bestStreakFloorMs,
+        };
+        set({ ...next, tombstones: tombstones.filter(t => t.id !== incident.id), ...deriveStreakState(next) });
+      },
+
+      insertEvent: (event: StoredEvent) => {
+        const { incidents, tombstones, historyStartTime, bestStreakFloorMs } = get();
+        if (incidents.some(i => i.id === event.id)) return;
+        const next = pruneIncidents({
+          incidents: [...incidents, upgradeIncident(event)].sort((a, b) => b.timestamp - a.timestamp),
+          historyStartTime,
+          bestStreakFloorMs,
+        });
+        set({ ...next, tombstones: tombstones.filter(t => t.id !== event.id), ...deriveStreakState(next) });
+      },
+
+      patchEvent: (id: string, patch: EventPatch) => {
+        const { incidents, historyStartTime, bestStreakFloorMs } = get();
+        if (!incidents.some(i => i.id === id)) return false;
+        const now = Date.now();
+        const next = {
+          incidents: incidents.map(i => (i.id === id ? patchStoredEvent(i, patch, now) : i)),
           historyStartTime,
           bestStreakFloorMs,
         };
         set({ ...next, ...deriveStreakState(next) });
+        return true;
+      },
+
+      replaceEvents: (input: ReplaceEventsInput) => {
+        const state = get();
+        const sorted = input.incidents.map(i => upgradeIncident(i)).sort((a, b) => b.timestamp - a.timestamp);
+        const earliest = sorted.length > 0 ? sorted[sorted.length - 1].timestamp : undefined;
+        const firstOpenTime = input.firstOpenTime
+          ?? (earliest !== undefined ? Math.min(state.firstOpenTime, earliest) : state.firstOpenTime);
+        const next = pruneIncidents({
+          incidents: sorted,
+          historyStartTime: input.historyStartTime ?? firstOpenTime,
+          bestStreakFloorMs: input.bestStreakFloorMs ?? 0,
+        });
+        set({
+          ...next,
+          firstOpenTime,
+          tombstones: (input.tombstones ?? []).slice(0, MAX_TOMBSTONES),
+          ...deriveStreakState(next),
+        });
       },
 
       setCameraEnabled: (enabled) => set({ cameraEnabled: enabled }),
@@ -244,6 +354,7 @@ export const useAppStore = create<AppState & AppActions>()(
         const now = Date.now();
         set({
           incidents: [],
+          tombstones: [],
           lastBiteTime: null,
           bestStreakMs: 0,
           bestStreakFloorMs: 0,
@@ -259,9 +370,10 @@ export const useAppStore = create<AppState & AppActions>()(
       }),
     }),
     {
-      name: 'stop-biting-state',
+      name: 'stop-biting-state', // never change: a new name orphans every user's saved history
       version: STATE_VERSION,
       migrate: migrateState,
+      storage,
       // cameraEnabled + showCameraFeed excluded — always start with detection on, feed hidden
       partialize: (state) => {
         const { cameraEnabled: _a, showCameraFeed: _b, detecting: _c, ...rest } = state as AppState & AppActions;
@@ -269,4 +381,7 @@ export const useAppStore = create<AppState & AppActions>()(
       },
     }
   )
-);
+  );
+}
+
+export const useAppStore = createAppStore(defaultStorage());

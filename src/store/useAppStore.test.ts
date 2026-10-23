@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterAll, vi } from 'vitest';
-import { useAppStore, pruneIncidents, computeBestStreak, migrateState, MAX_INCIDENTS, AUTO_EPISODE_MS } from './useAppStore';
+import { useAppStore, pruneIncidents, computeBestStreak, migrateState, MAX_INCIDENTS, AUTO_EPISODE_MS, STATE_VERSION } from './useAppStore';
 import type { Incident } from '../types';
 
 // The streak maths is all relative to firstOpenTime, so pin the clock and step
@@ -255,8 +255,10 @@ describe('migrateState (v0 -> v1)', () => {
   });
 
   it('is a no-op for state already at the current version', () => {
-    const v1 = { ...v0, historyStartTime: 5, bestStreakFloorMs: 77 };
-    expect(migrateState(v1, 1)).toEqual(v1);
+    // (This asserted version 1 until the event schema moved the current version
+    // to 2; the v1 -> v2 step has its own tests in src/storage/.)
+    const current = { ...v0, historyStartTime: 5, bestStreakFloorMs: 77 };
+    expect(migrateState(current, STATE_VERSION)).toEqual(current);
   });
 });
 
