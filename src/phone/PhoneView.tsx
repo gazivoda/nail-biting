@@ -21,6 +21,7 @@ import { LogToast } from './LogToast';
 import { takeQuickAction } from './quickAction';
 import { RecentList, TodayLine } from './RecentList';
 import { SyncNoteView } from './SyncNoteView';
+import { useThemeColor } from './themeColor';
 import { useLogFlow } from './useLogFlow';
 
 export type PhoneTab = 'log' | 'settings';
@@ -56,6 +57,7 @@ export default function PhoneView({ onUpgrade, onNavigate }: {
   const free = useFreeTier();
   const urgeTimerOn = useFeature('urge_timer');
   const { flow, toast } = useLogFlow();
+  useThemeColor(); // the status bar follows light and dark while this view is up
   const urgeRef = useRef<HTMLDivElement>(null);
 
   const firstName = user?.name?.split(' ')[0] || 'there';
@@ -118,7 +120,7 @@ export default function PhoneView({ onUpgrade, onNavigate }: {
         <button
           type="button"
           onClick={() => flow.tapBite()}
-          className="w-full select-none rounded-full bg-alert-600 min-h-16 py-4 font-display text-xl font-bold tracking-[-0.01em] text-white transition-colors duration-150 hover:bg-alert-800 active:scale-[0.99] motion-reduce:active:scale-100 dark:bg-alert-400 dark:text-alert-900 dark:hover:bg-alert-100"
+          className="w-full select-none rounded-full bg-alert-600 min-h-16 py-4 font-display text-xl font-bold tracking-[-0.01em] text-white transition-colors duration-150 [@media(hover:hover)]:hover:bg-alert-800 active:scale-[0.99] motion-reduce:active:scale-100 dark:bg-alert-400 dark:text-alert-900 dark:[@media(hover:hover)]:hover:bg-alert-100"
         >
           I bit
         </button>
@@ -130,7 +132,7 @@ export default function PhoneView({ onUpgrade, onNavigate }: {
             <button
               type="button"
               onClick={() => flow.tapUrge()}
-              className="w-full select-none rounded-full border-2 border-deep min-h-16 py-3.5 font-display text-xl font-bold tracking-[-0.01em] text-deep transition-colors duration-150 hover:bg-deep hover:text-white active:scale-[0.99] motion-reduce:active:scale-100 dark:border-lime-300 dark:text-lime-300 dark:hover:bg-lime-300 dark:hover:text-deep"
+              className="w-full select-none rounded-full border-2 border-deep min-h-16 py-3.5 font-display text-xl font-bold tracking-[-0.01em] text-deep transition-colors duration-150 [@media(hover:hover)]:hover:bg-deep [@media(hover:hover)]:hover:text-white active:scale-[0.99] motion-reduce:active:scale-100 dark:border-lime-300 dark:text-lime-300 dark:[@media(hover:hover)]:hover:bg-lime-300 dark:[@media(hover:hover)]:hover:text-deep"
             >
               I feel an urge
             </button>

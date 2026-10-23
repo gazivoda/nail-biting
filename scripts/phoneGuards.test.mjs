@@ -97,6 +97,28 @@ describe('every entry point is behind the flag', () => {
   });
 });
 
+describe('PWA metadata', () => {
+  const html = read('index.html');
+  it('the light status-bar colour the phone view restores is the one index.html ships', () => {
+    const light = /LIGHT_THEME_COLOR = '(#[0-9A-Fa-f]{6})'/.exec(read('src/phone/themeColor.ts'))?.[1];
+    expect(light).toBeTruthy();
+    expect(html).toContain(`<meta name="theme-color" content="${light}" />`);
+  });
+  it('index.html has the iOS home-screen tags and full-bleed touch icons in the sizes iPhone and iPad use', () => {
+    for (const tag of ['mobile-web-app-capable', 'apple-mobile-web-app-capable', 'apple-mobile-web-app-title', 'apple-mobile-web-app-status-bar-style']) {
+      expect(html, tag).toContain(`name="${tag}"`);
+    }
+    for (const size of ['152x152', '167x167', '180x180']) {
+      expect(html).toContain(`rel="apple-touch-icon" sizes="${size}" href="/icons/apple-touch-icon-${size}.png"`);
+    }
+  });
+  it('every icon the head and the shortcuts name exists in public/icons', () => {
+    const named = [...html.matchAll(/href="(\/icons\/[^"]+)"/g)].map(m => m[1]);
+    expect(named.length).toBeGreaterThanOrEqual(4);
+    for (const f of named) expect(() => readFileSync(join(root, 'public', f)), f).not.toThrow();
+  });
+});
+
 describe('touch targets', () => {
   const BIG = /\bmin-h-(11|12|14|16)\b/;
   it('every button and link in the phone view has a class giving it at least 44px', () => {
