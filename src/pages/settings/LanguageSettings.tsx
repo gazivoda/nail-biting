@@ -6,7 +6,7 @@
 
 import { Languages } from 'lucide-react';
 import { Section } from './ui';
-import { SegmentedControl } from '../../components/ui/SegmentedControl';
+import { radioGroupKeyDown, radioTabIndex } from '../../components/ui/radioKeys';
 import { useFeatures } from '../../features/useFeature';
 import '../../i18n/persist';
 import { LOCALES, LOCALE_INFO, didLocaleLoadFail, isLocaleReviewed, type Locale } from '../../i18n/core';
@@ -32,12 +32,32 @@ export function LanguageSettings() {
   return (
     <Section title={t('title')} icon={Languages} fullWidth>
       <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">{t('intro')}</p>
-      <SegmentedControl
-        ariaLabel={t('groupLabel')}
-        value={value}
-        onChange={setLocale}
-        options={options.map(l => ({ value: l, label: LOCALE_INFO[l].native }))}
-      />
+      {/* A wrapping row of pills, not the sliding SegmentedControl: four language names do not fit one line at 390 px. */}
+      <div
+        role="radiogroup"
+        aria-label={t('groupLabel')}
+        onKeyDown={e => radioGroupKeyDown(e, options, value, setLocale)}
+        className="flex flex-wrap gap-2"
+      >
+        {options.map(l => (
+          <button
+            key={l}
+            type="button"
+            role="radio"
+            lang={LOCALE_INFO[l].tag}
+            aria-checked={value === l}
+            tabIndex={radioTabIndex(value === l)}
+            onClick={() => setLocale(l)}
+            className={`min-h-11 rounded-full border px-4 py-1 text-sm transition-colors duration-[140ms] ${
+              value === l
+                ? 'border-deep bg-deep font-semibold text-white dark:border-deep-2 dark:bg-deep-2 dark:text-lime-300'
+                : 'border-stone-300 font-medium text-stone-600 hover:bg-stone-100 hover:text-stone-900 dark:border-ink-400 dark:text-stone-300 dark:hover:bg-ink-fill dark:hover:text-stone-100'
+            }`}
+          >
+            {LOCALE_INFO[l].native}
+          </button>
+        ))}
+      </div>
       {waiting && !failed && <p role="status" className="text-sm text-stone-600 dark:text-stone-300">{t('loading')}</p>}
       {failed && <p role="alert" className="text-sm text-alert-600 dark:text-alert-400">{t('loadFailed')}</p>}
       {draft && <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">{t('draftNote')}</p>}

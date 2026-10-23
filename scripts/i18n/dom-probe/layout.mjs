@@ -30,7 +30,7 @@ const FIND = `(() => {
     if (cs.visibility === 'hidden' || cs.display === 'none') continue;
     if (r.right > vw + 1 && cs.position !== 'fixed' && !scrollable(el)) issues.push('past right edge by ' + Math.round(r.right - vw) + 'px: ' + name(el));
     const clips = cs.overflowX === 'hidden' || cs.textOverflow === 'ellipsis';
-    if (clips && el.scrollWidth > el.clientWidth + 1 && (el.textContent || '').trim()) issues.push('clipped text (' + el.scrollWidth + ' > ' + el.clientWidth + '): ' + name(el));
+    if (clips && el.clientWidth > 2 && el.clientHeight > 2 && el.scrollWidth > el.clientWidth + 1 && (el.textContent || '').trim()) issues.push('clipped text (' + el.scrollWidth + ' > ' + el.clientWidth + '): ' + name(el));
     if (el.matches('button,[role=tab],[role=radio]') && el.scrollHeight > el.clientHeight + 2 && cs.overflowY === 'hidden') issues.push('button content taller than the button: ' + name(el));
   }
   return [...new Set(issues)].slice(0, 40);
@@ -78,8 +78,8 @@ try {
     if (await click(page, locale === 'de' ? 'Einblicke' : locale === 'es' ? 'Análisis' : 'Análises')) { await sleep(2000); await report('insights'); }
     await clickNav(page, 2); await report('settings');
     await clickNav(page, 0);
-    // the voluntary upgrade page: the tab bar's upgrade control is the only button outside the three tabs
-    const upgraded = await page.eval(`(() => { const b = [...document.querySelectorAll('nav button')].find((x, i) => i >= 3); if (!b) return false; b.click(); return true; })()`, { userGesture: true });
+    // the voluntary upgrade page: the sidebar pill (desktop) or the "choose a plan" link (phone width)
+    const upgraded = await page.eval(`(() => { const labels = ['Upgrade', 'Mejorar plan', 'Fazer upgrade', 'Choose a plan', 'Tarif wählen', 'Elegir un plan', 'Escolher um plano']; const b = [...document.querySelectorAll('button,a')].find((x) => labels.includes(x.innerText.trim())); if (!b) return false; b.click(); return true; })()`, { userGesture: true });
     if (upgraded) { await sleep(2500); await report('paywall'); }
   }
   // the phone view
