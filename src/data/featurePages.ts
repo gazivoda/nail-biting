@@ -29,7 +29,7 @@
 // Declarations are plain `function getXContent()` and the map is below them: this is
 // the layout scripts/sync-seo.mjs reads to date each page (see comparePages.ts).
 
-import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
+import { TRIAL_HYPHEN } from '../../shared/plans.js';
 import { faqSection, MEDICAL_DISCLAIMER_SECTION, type PageContent } from './comparePages.ts';
 
 // The three lines of privacy truth every page that mentions a camera repeats in the same words.
@@ -51,7 +51,7 @@ function getHabitReversalCoachingContent(): PageContent {
       },
       {
         heading: '{{if urge_timer}}What is the urge timer?{{end}}',
-        body: '{{if urge_timer}}An "I feel an urge" button on the Watch tab starts a guided breathing timer of 60 or 90 seconds, for the moment before anything has happened. Pressing it logs an entry marked as an urge. An urge is not counted as a bite, so it does not reset your streak.\n\nThe timer respects reduced-motion settings: the ring is replaced by the number of seconds left.{{end}}',
+        body: '{{if urge_timer}}An "I feel an urge" button on the Watch tab starts a guided breathing timer of 60 or 90 seconds, for the moment you feel the pull and before you have done anything. Pressing it logs an entry marked as an urge. An urge is not counted as a bite, so it does not reset your streak.\n\nThe timer respects reduced-motion settings: the ring is replaced by the number of seconds left.{{end}}',
       },
       {
         heading: 'What is in the four-week program?',
@@ -101,7 +101,7 @@ function getPhoneCompanionContent(): PageContent {
       },
       {
         heading: 'Which account does it use?',
-        body: `The same one as on your computer. You sign in the usual way, and the ${TRIAL_DAYS_TEXT} free trial, the plans and the free plan, if you have it, apply exactly as they do on a computer. Signing in and paying use the network, as always. An account whose trial has ended sees the paywall instead of the phone screen.`,
+        body: `The same one as on your computer. You sign in the usual way, and the ${TRIAL_HYPHEN} free trial and the plans apply exactly as they do on a computer. Signing in and paying use the network, as always. An account whose trial has ended sees the paywall instead of the phone screen.`,
       },
       faqSection(
         'Short answers about the phone screen.',
@@ -150,7 +150,7 @@ function getShareWithTherapistContent(): PageContent {
           ['Does the other person need an account?', 'No. They open the link in a browser and see the summary.'],
           ['Can I take it back?', 'Yes. Revoking a link ends it at once. Links also expire by themselves unless you chose never.'],
           ['Will they see when I bit?', 'Not by default. The default summary shows counts and groups without dates. Dates and the hours of the day appear only if you switch them on for that link.'],
-          ['Can they see my photos or my camera?', 'No. Photos stay on your device and are never part of a summary, and no camera data is involved.'],
+          ['Can they see my photos or my camera?', 'No. Photos stay on your device and are never part of a summary. A summary is built from your logged entries only, never from the camera.'],
           ['Is this medical advice or a report for a clinician?', 'No. It is a plain summary of your own logs. An app is not a clinician, and what the summary means is for you and the person you share it with to talk about.'],
         ],
       ),

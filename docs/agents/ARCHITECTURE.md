@@ -619,6 +619,26 @@ orchestrator regenerates.
 key-page list. Pages that must stay private use `noindex` and are kept out of the sitemap. A page that exists only
 while a flag is on must 404 on the server while it is off (`flags.isOn`) so it cannot be indexed.
 
+**Pages and copy behind flags (WS11b).** Two mechanisms, both off with every flag off (the served site is byte-identical).
+1. *Pages that exist only while a flag is on.* Copy: `src/data/featurePages.ts` (`FEATURE_PAGE_MAP`); path -> flag:
+   `src/data/featurePagePaths.ts` (`FEATURE_PAGE_FLAGS`, the one place a page's flag is written down); meta: `COMPARE_META` in
+   `server.js` with `gated: true`. `generate-seo-content.mjs` writes copy, `flags` and each page's `llmsFull` block to
+   `dist/seo-gated.json`, which the server reads and never serves. At start-up the server keeps the pages whose OWN flag is on
+   (`openGatedPages`, `server/marketing/gatedPages.js`) and resolves their markers and placeholders once; that one copy is the
+   article, the schema, the llms block and the JSON the browser renders from. Closed page: the branded 404 for the page, for
+   `/page-data<path>.json` and for its `/og` card (the card guard is before the `/og` mount). Open page: also spliced into
+   `sitemap.xml`, `llms.txt`, `llms-full.txt` and the noscript nav at serve time (those handlers are registered only when a page
+   is open). The browser renders a feature page from `<script id="sb-page-data">` in its HTML, else from `/page-data<path>.json`
+   (`ServerComparePage` in `ComparePage.tsx`), so no copy or path rides in the JS bundle. `sync-seo.mjs` dates and checks them
+   like the competitor pages (`FEATURES` in its source list).
+2. *Sentences on existing pages that stop being true with a flag on.* `shared/flagCopy.js` holds `RULES` (the exact source text,
+   the flags, the replacement) and `{{if flag}}..{{else}}..{{end}}` markers for the new pages. The sources keep today's text; the
+   server applies `flagAware` in `injectSsrArticle`, `faqPageSchema`, the homepage FAQPage block, the SEO content loaded at boot and
+   (only while a rule is active) the served `llms-full.txt`, `seo-content.json` and `/posts/*.json`; the browser applies it through
+   `useFlagCopy` (`src/features/useFlagCopy.ts`, which asks for the flags at idle, only when its cached answer is stale).
+   `scripts/flagCopySources.test.mjs` fails when a source sentence is reworded and its rule stops matching. A sign-in method counts
+   as on only when its keys are configured (`server/marketing/copyFlags.js`).
+
 **A page whose address contains a secret** (WS10 `/share/<token>`) must not be the app's HTML shell: that shell loads
 Google Analytics (`index.html`) and the app bundle. `server/share/page.js` renders a self-contained document (inline style
 and one inline script allowed by hash in its own CSP, no third party, no cookie, `no-store`, `noindex`,
@@ -741,6 +761,7 @@ checks `electron/` (`tsc -b` does not).
 | `src/pages/settings/sections/*.tsx` | one workstream per file (table in section 7) | |
 | `src/pages/settings/meta.ts`, `sectionComponents.ts` | WS0; add a section = a line in each | |
 | Marketing copy: `Landing.tsx`, FAQ data, meta/schema strings, `comparePages.ts` | WS11a wording; WS9 mechanical trial-length constant swap; WS11b, WS12 last | |
+| Feature pages, flag-aware copy: `src/data/featurePages.ts`, `featurePagePaths.ts`, `shared/flagCopy.js`, `server/marketing/**`, `src/features/useFlagCopy.ts` | WS11b | add a page = copy + map entry + path/flag + `COMPARE_META` entry (`gated: true`); change a sentence on an existing page = a rule in `RULES` and a line in `scripts/flagCopySources.test.mjs`; never edit the source sentence |
 | `App.tsx` routes | one added line per route | |
 | Phone view: `src/phone/**`, `server/routes/phone.js`, `scripts/generate-phone-icons.py` | WS6 | `Dashboard.tsx` renders `<PhoneView>` when `usePhoneView()` is true (lazy); `App.tsx` passes `onNavigate`; `TabBar` and `PWAGuideModal` read `usePhoneViewActive()`; `AuthContext` calls `resolveFailedSession` / `clearGrant`; `index.html` PWA head tags |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
@@ -789,6 +810,19 @@ checks `electron/` (`tsc -b` does not).
   page would break the "demo never touches the store" guarantee. Use `src/storage/kv` there.
 
 ---
+
+- **(WS11b) A flag-dependent sentence must not enter the freshness basis of a page.** `scripts/sync-seo.mjs` fingerprints a page
+  from every string literal reachable from its handler (`literals`, `refsText`, depth 4). A variant sentence or a flag name added to
+  `homeArticleHtml()` would move `/`'s ledger date, so `sitemap.xml`'s lastmod and `Last-Modified` change with every flag off. Rules
+  live in `shared/flagCopy.js` and are applied by calls with arguments (`copyHtml(...)`), which the extractor treats as transforms.
+  After any copy edit `npm run seo:check` must still say "in sync".
+- **(WS11b) A copy rule's replacement must not contain its own source text**, or applying the rule twice (the server applies it in
+  several places) would stack: `shared/flagCopy.test.js` checks idempotence in every flag state. Rule texts also avoid `& < > " \`,
+  so they are safe in HTML and in JSON.
+- **(WS11b) `String.replace` with a string replacement treats `$&`, `` $` `` and `$'` specially.** Page copy has dollar amounts; use a
+  function replacement when injecting copy (`injectMeta` does; so does the `sb-page-data` block).
+- **(WS11b) The gated state is decided once, at start-up**, because flags change only on a restart: nothing about a gated page is
+  recomputed per request, and the handlers that serve it are registered only when it is open.
 
 ## 15. Background watching and Picture-in-Picture (WS7a to complete)
 
