@@ -36,7 +36,7 @@ const STEPS = [
 
 const SPECS = [
   { label: 'Detection model', value: 'Google MediaPipe Hand Landmarker (21 landmarks)' },
-  { label: 'Processing', value: 'WebAssembly: sandboxed, on-device, no network access' },
+  { label: 'Processing', value: 'WebAssembly: sandboxed, runs on your device' },
   { label: 'Alarm latency', value: 'About 0.6 seconds after your hand starts moving to your mouth' },
   { label: 'Incident logging', value: 'Timestamped log stored locally, never transmitted' },
 ];

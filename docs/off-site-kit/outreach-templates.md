@@ -205,7 +205,7 @@ I'm Igor Gazivoda, a software developer, and I bit my nails for over 20 years. A
 reading the research on Habit Reversal Training, I built the part of it I could never
 do alone: awareness. My app, Stop Biting (https://stopbiting.today), uses on-device
 webcam AI to detect the hand-to-mouth motion and sound an alarm in the moment. All
-processing runs locally — no camera data ever leaves the device — because I don't
+processing runs on-device — no camera data is sent while it runs — because I don't
 think people managing a BFRB should trade privacy for help.
 
 I'm writing to ask, not to pitch:

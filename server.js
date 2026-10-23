@@ -1604,7 +1604,7 @@ if (!existsSync(distPath)) {
       'Behaviors lists BFRB-informed therapists.</p></section>' +
       '<section><h2>Your camera never leaves your device.</h2>' +
       '<p>A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, ' +
-      'on your own computer. No camera data is sent while it runs. Signing in and paying use the network; watching never does.</p></section>' +
+      'on your own computer. No camera data is sent while it runs. Signing in and paying use the network.</p></section>' +
       '<section><h2>Why this exists</h2>' +
       '<p>I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of it lasted, because ' +
       'I never noticed I was doing it until the damage was done. I write software and I had a webcam, so I built the ' +
@@ -2269,7 +2269,7 @@ if (!existsSync(distPath)) {
       `<section><h2>Getting started</h2><ol>${stepsHtml}</ol></section>` +
       '<section><h2>Technical specifications</h2><ul>' +
       '<li>Detection model: Google MediaPipe Hand Landmarker (21 landmarks)</li>' +
-      '<li>Processing: WebAssembly — sandboxed, on-device, no network access</li>' +
+      '<li>Processing: WebAssembly — sandboxed, runs on your device</li>' +
       '<li>Alarm latency: about 0.6 seconds after your hand starts moving to your mouth</li>' +
       '<li>Incident logging: timestamped log stored locally — never transmitted</li>' +
       '</ul></section>' +

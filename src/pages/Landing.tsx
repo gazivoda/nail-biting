@@ -491,7 +491,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 <p className="sg-body text-[color:var(--sg-ink)]">
                   A camera pointed at you all day is a lot to trust an app with, so detection runs
                   entirely in your browser, on your own computer. No camera data is sent while it runs. Signing in and paying
-                  use the network; watching never does.
+                  use the network.
                 </p>
                 {/* "The list stays empty" was not true on a first run: starting
                     detection downloads the models. Say what a visitor will see. */}

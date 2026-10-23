@@ -23,8 +23,8 @@ The user opens the app, enables their webcam, and the AI starts watching. When i
 **Technically:**
 - Google MediaPipe hand (21 keypoints) and face (468 landmarks) models run in WebAssembly at 30+ fps
 - When hand landmarks enter defined proximity of mouth landmarks, detection fires
-- Zero camera data leaves the device — fully verifiable by monitoring network traffic
-- Works completely offline after initial setup
+- Detection runs on the device and no camera data is sent while it runs, which can be checked in a network monitor
+- The AI models download once on first use; sign-in and payments use the network
 
 ---
 
@@ -54,7 +54,7 @@ All paid plans include unlimited AI detection, streak tracking, full incident hi
 ## Key Features
 
 1. **Real-time AI detection** — catches hand-to-mouth movement at the moment it occurs
-2. **100% on-device** — no camera frames transmitted anywhere, works offline
+2. **On-device detection** — no camera data is sent while it runs
 3. **Audible alarm** — fires at the exact detection moment
 4. **Streak tracker** — current streak + all-time best; losing the streak is the motivational hook
 5. **Incident log with tags** — tag each detected bite by trigger (stress, focus, boredom) to surface patterns
@@ -81,6 +81,6 @@ All paid plans include unlimited AI detection, streak tracking, full incident hi
 
 ## Brand Pillars
 
-1. **Privacy** — on-device, zero bytes sent, independently verifiable
+1. **Privacy** — on-device detection, no camera data sent while it runs, independently verifiable
 2. **Science** — grounded in HRT clinical literature and DSM-5 BFRB classification
 3. **Simplicity** — detection starts in under 10 seconds, nothing extraneous in the UI
