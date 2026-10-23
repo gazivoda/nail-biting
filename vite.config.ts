@@ -35,6 +35,28 @@ function fillTrialCopy(): Plugin {
   }
 }
 
+// WS6: the web manifest is answered by server/routes/phone.js while phone_companion is on (it adds
+// the home-screen shortcuts), so it must not be served from the service worker's precache: a
+// precached copy would go to every returning visitor and the flag-aware answer would never reach
+// them. vite-plugin-pwa adds the manifest to the precache list itself (workbox's manifestTransforms
+// never sees that entry), so it is taken out through the plugin's own API, after it was added.
+// The browser then fetches the manifest from the network (and its HTTP cache) like any other file.
+function manifestOutOfPrecache(): Plugin {
+  type Entry = string | { url: string }
+  type PwaApi = { extendManifestEntries(fn: (entries: Entry[]) => Entry[] | void): void }
+  let api: PwaApi | undefined
+  return {
+    name: 'manifest-out-of-precache',
+    apply: 'build',
+    configResolved(config) {
+      api = (config.plugins.find((p) => p.name === 'vite-plugin-pwa') as { api?: PwaApi } | undefined)?.api
+    },
+    buildStart() {
+      api?.extendManifestEntries((entries) => entries.filter((e) => (typeof e === 'string' ? e : e.url) !== 'manifest.webmanifest'))
+    },
+  }
+}
+
 const isWeb = process.env.VITE_BUILD_TARGET === 'web'
 
 export default defineConfig({
@@ -184,14 +206,6 @@ export default defineConfig({
           // the service worker. They are served directly and rely on the
           // browser's HTTP cache (Cache-Control headers from Express).
         ],
-        // WS6: the manifest is answered by server/routes/phone.js while phone_companion is on
-        // (it adds the home-screen shortcuts). A precached copy would be served to every
-        // returning visitor, so the flag-aware answer would never reach them. The browser
-        // fetches it from the network (and its HTTP cache) like any other file; installing needs
-        // a connection anyway.
-        manifestTransforms: [
-          async (entries) => ({ manifest: entries.filter((e) => e.url !== 'manifest.webmanifest'), warnings: [] }),
-        ],
         // Exclude WASM, MediaPipe models, and API routes from precaching
         globIgnores: [
           '**/mediapipe-wasm/**',
@@ -205,5 +219,6 @@ export default defineConfig({
         ],
       },
     })] : []),
+    ...(isWeb ? [manifestOutOfPrecache()] : []),
   ],
 })

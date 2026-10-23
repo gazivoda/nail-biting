@@ -157,7 +157,8 @@ describe('the build leaves the manifest out of the service worker precache', () 
   let config;
   beforeAll(() => { config = readFileSync(join(root, 'vite.config.ts'), 'utf8'); });
   it('vite.config.ts filters manifest.webmanifest out of the precache list', () => {
-    expect(config).toMatch(/manifestTransforms/);
-    expect(config).toMatch(/e\.url !== 'manifest\.webmanifest'/);
+    expect(config).toMatch(/extendManifestEntries/);
+    expect(config).toMatch(/!== 'manifest\.webmanifest'/);
+    expect(config).toMatch(/manifestOutOfPrecache\(\)/);
   });
 });
