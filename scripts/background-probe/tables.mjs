@@ -57,6 +57,12 @@ function printCPU() {
   console.log(md(rs, [['run', (x) => RUN_NAMES[x[0]]], ['visible: renderer', (x) => x[1].cpu.visible?.renderer ?? ''], ['visible: GPU', (x) => x[1].cpu.visible?.GPU ?? ''], ['hidden: renderer', (x) => x[1].cpu.hiddenRest?.renderer ?? ''], ['hidden: GPU', (x) => x[1].cpu.hiddenRest?.GPU ?? ''], ['hidden: browser', (x) => x[1].cpu.hiddenRest?.browser ?? '']]));
 }
 
+function printIdle() {
+  const r = load('idle-cpu.json');
+  if (!r) return;
+  console.log(md(Object.entries(r.runs), [['detection switched off, tab visible, 90 s', (x) => x[0] === 'flag-off' ? 'flag off' : 'flag on'], ['renderer', (x) => x[1].renderer], ['GPU', (x) => x[1].GPU], ['browser', (x) => x[1].browser], ['workers running', (x) => x[1].workers]]));
+}
+
 function printPause() {
   const p = load('pause-scenarios.json');
   if (p) console.log('```json\n' + JSON.stringify(p.scenarios, null, 1) + '\n```');
@@ -67,5 +73,6 @@ if (mode === 'a-short') printA(true);
 else if (mode === 'a') printA(false);
 else if (mode === 'b') printB();
 else if (mode === 'cpu') printCPU();
+else if (mode === 'idle') printIdle();
 else if (mode === 'pause') printPause();
-else { console.log('### A\n'); printA(false); console.log('### B\n'); printB(); console.log('\n### CPU\n'); printCPU(); console.log('\n### Pause scenarios\n'); printPause(); }
+else { console.log('### A\n'); printA(false); console.log('### B\n'); printB(); console.log('\n### CPU\n'); printCPU(); console.log('\n### Idle CPU\n'); printIdle(); console.log('\n### Pause scenarios\n'); printPause(); }

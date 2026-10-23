@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-10-23T18:20:20.446Z",
+ "startedAt": "2026-10-23T18:48:14.936Z",
  "scenarios": {
   "uiPauseReloadResume": {
    "stepsBefore": 19,
@@ -8,7 +8,7 @@
    "cameraDuringPause": false,
    "stepsDuringPause_10s": 0,
    "panelSaysPaused": true,
-   "stored": "{\"v\":1,\"pausedUntil\":1792780529912,\"meetingUntil\":null}",
+   "stored": "{\"v\":1,\"pausedUntil\":1792782204403,\"meetingUntil\":null}",
    "trayState": "n/a (browser)",
    "afterReload": {
     "stepsIn6s": 0,
@@ -16,7 +16,7 @@
     "panelSaysPaused": true
    },
    "resumeClicked": true,
-   "resumedAfterMs": 1502,
+   "resumedAfterMs": 1508,
    "cameraAfterResume": true,
    "storedAfterResume": null
   },
@@ -30,7 +30,7 @@
    "pausedUntilStored": true,
    "cameraWhilePaused": false,
    "visibility": "hidden",
-   "resumedLateByMs": 155,
+   "resumedLateByMs": 213,
    "cameraAfter": true,
    "stepsIn5sAfterResume": 25
   },

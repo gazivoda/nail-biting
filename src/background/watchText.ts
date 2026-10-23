@@ -9,8 +9,10 @@ export interface WatchNote {
   title: string;
   /** One sentence under it. */
   detail: string;
-  /** What fits the 240 px mini window. */
+  /** What fits the 240 px mini window on one line. */
   short: string;
+  /** The mini window's two-line form: a status word and, under it, when it ends ("until 3:45 PM"). */
+  strip: { status: string; detail: string };
   /** The line under the headline in the camera card's top band (it must not repeat the headline). */
   hint: string;
 }
@@ -26,6 +28,7 @@ export function watchNote(state: WatchState, now: number, clock?: ClockFormatter
         ? 'The camera is off and nothing is being checked. Watching starts again by itself.'
         : 'Nothing is being checked. Watching starts again by itself. The camera stays on in this browser so it can.',
       short: `Paused until ${end}`,
+      strip: { status: 'Paused', detail: `until ${end}` },
       hint: state.releaseCamera ? 'Camera off. Starts again by itself' : 'Nothing is checked. Starts again by itself',
     };
   }
@@ -36,6 +39,7 @@ export function watchNote(state: WatchState, now: number, clock?: ClockFormatter
       title: `Meeting mode until ${end}`,
       detail: 'Still watching, silently: the screen flashes, there is no sound or notification, and alarms are still logged.',
       short: 'Watching, silent',
+      strip: { status: 'Watching', detail: `silent until ${end}` },
       hint: 'Watching, silent',
     };
   }

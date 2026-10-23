@@ -46,7 +46,174 @@ node scripts/background-probe/shots.mjs 3251 dist /tmp/shots             # scree
 node scripts/background-probe/tables.mjs                                 # the tables below, from the result files
 ```
 
-<<TABLES>>
+### Table A. The probe page: ticks per second, by hidden time
+
+**no camera**
+
+| window (s since hidden) | page `setInterval` 100 ms (10/s) | page `setTimeout` chain 200 ms (5/s) | animation frames | worker timer 100 ms (10/s) | worker chain 200 ms (5/s) |
+|---|---|---|---|---|---|
+| -29..0s | 9.92 | 4.92 | 59.36 | 9.95 | 4.85 |
+| 0..10s | 1 | 1 | 0 | 4.3 | 3.8 |
+| 10..60s | 1 | 1 | 0 | 4 | 3.68 |
+| 60..180s | 1 | 1 | 0 | 5.1 | 3.68 |
+| 180..300s | 1 | 1 | 0 | 7.63 | 3.86 |
+| 300..360s | 0.02 | 0.02 | 0 | 7.37 | 3.83 |
+| 360..480s | 0.02 | 0.02 | 0 | 7.32 | 3.79 |
+| 480..600s | 0.02 | 0.02 | 0 | 6.35 | 3.43 |
+| 600..660s | 0.02 | 0.02 | 0 | 7.55 | 3.85 |
+| 660..701s | 0.32 | 0.17 | 1.75 | 7.03 | 3.92 |
+
+**camera on**
+
+| window (s since hidden) | page `setInterval` 100 ms (10/s) | page `setTimeout` chain 200 ms (5/s) | animation frames | worker timer 100 ms (10/s) | worker chain 200 ms (5/s) |
+|---|---|---|---|---|---|
+| -29..0s | 9.92 | 4.92 | 59.33 | 10.06 | 4.89 |
+| 0..10s | 1 | 1 | 0 | 10 | 4.8 |
+| 10..60s | 1 | 1 | 0 | 10 | 4.86 |
+| 60..180s | 1 | 1 | 0 | 10 | 4.88 |
+| 180..300s | 1 | 1 | 0 | 10 | 4.92 |
+| 300..360s | 1 | 1 | 0 | 10 | 4.92 |
+| 360..480s | 1 | 1 | 0 | 10 | 4.92 |
+| 480..600s | 1 | 1 | 0 | 10 | 4.92 |
+| 600..660s | 1 | 1 | 0 | 10 | 4.92 |
+| 660..701s | 1.28 | 1.14 | 1.73 | 10.12 | 4.99 |
+
+**camera on + mini window open**
+
+| window (s since hidden) | page `setInterval` 100 ms (10/s) | page `setTimeout` chain 200 ms (5/s) | animation frames | worker timer 100 ms (10/s) | worker chain 200 ms (5/s) |
+|---|---|---|---|---|---|
+| -29..0s | 10.04 | 4.99 | 60.23 | 10.04 | 4.85 |
+| 0..10s | 10 | 4.9 | 60 | 10 | 4.9 |
+| 10..60s | 10 | 4.96 | 60 | 10 | 4.86 |
+| 60..180s | 10 | 4.96 | 60.01 | 10 | 4.88 |
+| 180..300s | 10 | 4.97 | 59.99 | 10 | 4.92 |
+| 300..360s | 10 | 4.97 | 59.88 | 10 | 4.92 |
+| 360..480s | 10 | 4.97 | 56.62 | 10 | 4.91 |
+| 480..600s | 10 | 4.96 | 60 | 10 | 4.92 |
+| 600..660s | 10 | 4.97 | 60 | 10 | 4.92 |
+| 660..701s | 10.12 | 5.04 | 60.75 | 10.12 | 4.99 |
+
+**camera on + audio worklet**
+
+| window (s since hidden) | page `setInterval` 100 ms (10/s) | page `setTimeout` chain 200 ms (5/s) | animation frames | worker timer 100 ms (10/s) | worker chain 200 ms (5/s) | audio worklet (5/s) |
+|---|---|---|---|---|---|---|
+| -29..0s | 9.92 | 4.93 | 59.36 | 10.06 | 4.89 | 5.03 |
+| 0..10s | 1 | 1 | 0 | 10 | 4.9 | 5 |
+| 10..60s | 1 | 1 | 0 | 10 | 4.86 | 5 |
+| 60..180s | 1 | 1 | 0 | 10 | 4.88 | 5 |
+| 180..300s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| 300..360s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| 360..480s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| 480..600s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| 600..660s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| 660..701s | 1.28 | 1.14 | 1.75 | 10.12 | 4.99 | 5.06 |
+
+### Table B. The real app, before and after
+
+Detection steps per second. The "visible" row of the probe-build runs includes a 10 s stretch with an injected hand (the model is not called then), and so do the 10 to 60 s and 600 to 660 s rows of the runs with `INJECT_AT`; the two "before" runs have no injection (visible: 4.7 a second, the rate of the animation-frame loop):
+
+| hidden time (s) | before, hidden | before, hidden + mini window | flag off, hidden (probe build) | flag on, hidden | flag on, hidden + mini window |
+|---|---|---|---|---|---|
+| visible, before hiding | 4.67 | 4.73 | 3.73 | 3.83 | 3.85 |
+| 0 to 10 | 1 | 2 | 2 | 5 | 5 |
+| 10 to 60 | 1.02 | 2.02 | 1.7 | 4.42 | 4.42 |
+| 60 to 180 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 180 to 300 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 300 to 360 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 360 to 480 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 480 to 600 | 1.02 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 600 to 660 | 1.03 | 2.03 | 1.02 | 4.53 | 4.53 |
+
+Alarm latency in ms, from "a hand is on the mouth" to the alarm starting (synthetic hand through the real loop; probe builds):
+
+| run | tab visible | hidden 20 s | hidden 650 s | alarm logged each time |
+|---|---|---|---|---|
+| flag off, hidden (probe build) | 643 | 1165 | 2977 | yes |
+| flag on, hidden | 600 | 480 | 439 | yes |
+| flag on, hidden + mini window | 542 | 457 | 415 | yes |
+
+Video frames in the hidden tab were new (not a repeat of one picture) at every checkpoint: before, hidden: yes; before, hidden + mini window: yes; flag off, hidden (probe build): yes; flag on, hidden: yes; flag on, hidden + mini window: yes.
+
+### Table C. CPU, percent of one core
+
+| run | visible: renderer | visible: GPU | hidden: renderer | hidden: GPU | hidden: browser |
+|---|---|---|---|---|---|
+| before, hidden | 17.1 | 7.6 | 2.9 | 0.7 | 0.2 |
+| before, hidden + mini window | 17.3 | 7.7 | 12.9 | 8.8 | 0.3 |
+| flag off, hidden (probe build) | 16.4 | 6.8 | 3 | 0.6 | 0.3 |
+| flag on, hidden | 16.7 | 6.5 | 12.9 | 1.6 | 0.2 |
+| flag on, hidden + mini window | 16.5 | 6.8 | 18.2 | 7.9 | 0.3 |
+
+### Table D. Pause, reload, meeting mode in the real app (`run-pause.mjs`, raw)
+
+```json
+{
+ "uiPauseReloadResume": {
+  "stepsBefore": 19,
+  "cameraBefore": true,
+  "clicked": true,
+  "cameraDuringPause": false,
+  "stepsDuringPause_10s": 0,
+  "panelSaysPaused": true,
+  "stored": "{\"v\":1,\"pausedUntil\":1792782204403,\"meetingUntil\":null}",
+  "trayState": "n/a (browser)",
+  "afterReload": {
+   "stepsIn6s": 0,
+   "camera": false,
+   "panelSaysPaused": true
+  },
+  "resumeClicked": true,
+  "resumedAfterMs": 1508,
+  "cameraAfterResume": true,
+  "storedAfterResume": null
+ },
+ "expiredPauseOnLoad": {
+  "stepsIn5s": 24,
+  "camera": true,
+  "panelSaysPaused": false,
+  "stored": null
+ },
+ "desktopPauseWhileHidden": {
+  "pausedUntilStored": true,
+  "cameraWhilePaused": false,
+  "visibility": "hidden",
+  "resumedLateByMs": 213,
+  "cameraAfter": true,
+  "stepsIn5sAfterResume": 25
+ },
+ "meetingMode": {
+  "control": {
+   "alarms": 1,
+   "audioContexts": 1,
+   "notifications": 0,
+   "logged": 1
+  },
+  "meetingClicked": true,
+  "panelSaysMeeting": true,
+  "inMeeting": {
+   "alarms": 1,
+   "audioContexts": 0,
+   "notifications": 0,
+   "logged": 1
+  },
+  "endClicked": true,
+  "afterMeeting": {
+   "alarms": 1,
+   "audioContexts": 1,
+   "notifications": 0,
+   "logged": 1
+  }
+ }
+}
+```
+
+### Table E. Idle CPU (detection switched off, tab visible; `run-idle.mjs`)
+
+| detection switched off, tab visible, 90 s | renderer | GPU | browser | workers running |
+|---|---|---|---|---|
+| flag off | 1.79 | 7.37 | 1.14 | [] |
+| flag on | 1.44 | 6.22 | 1.11 | [] |
+
 
 ### What the numbers say
 
@@ -62,7 +229,11 @@ node scripts/background-probe/tables.mjs                                 # the t
 - An AudioWorklet delivered 5 ticks a second but left the main-thread timers throttled, and needs an audio context running (it needs
   user activation on a real browser). Not used: the worker does the job with no side effects.
 - Dwell is counted in frames (three hits in a row), so the alarm latency is three step intervals: 0.6 s at 5 checks a second, about
-  3 s at one a second. The "before" alarm latency in the tables is exactly that.
+  3 s at one a second. The "before" alarm latency in the tables is exactly that (1.2 s in the first minute hidden, 3.0 s after ten
+  minutes; 0.6 s visible). After: 0.4 to 0.5 s at 20 s and at 650 s hidden, with or without the mini window (Table B).
+- **CPU**: visible, no change (renderer 16.7 flag on / 16.4 flag off / 17.1 before). Hidden, keeping 5 checks a second costs about
+  10 points of one core more than 1 a second (12.9 vs 2.9; with the mini window the page also keeps drawing: GPU 7.9). Detection
+  switched off: no measurable cost, no worker (Table E). That is the price of the feature and is why it is behind a flag.
 
 ### What ships (the mechanism)
 

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { RefObject } from 'react';
 import { setPipTickWindow } from '../background/tickHost';
+import { isFeatureOn } from '../features/flags';
 
 declare global {
   interface Window {
@@ -58,7 +59,8 @@ export function usePictureInPicture(videoRef: RefObject<HTMLVideoElement | null>
     if (hasDocPiP && window.documentPictureInPicture) {
       try {
         const win = await window.documentPictureInPicture.requestWindow({
-          width: 240,
+          // WS7a: with the flag on the strip also carries Pause / Resume and "until 3:45 PM", so it is a little wider.
+          width: isFeatureOn('background_watching') ? 300 : 240,
           height: 64,
         });
         copyStylesToWindow(win);

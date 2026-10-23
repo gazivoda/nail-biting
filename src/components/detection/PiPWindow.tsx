@@ -30,7 +30,9 @@ export function PiPWindow({ pipWindow, status }: Props) {
   const gate = useWatchGate();
   const note = gate.note;
   const paused = gate.on && gate.paused;
-  const label = !cameraEnabled ? 'Stopped' : paused && note ? note.short : note?.kind === 'meeting' && status === 'watching' ? note.short : LABEL[status];
+  const label = !cameraEnabled ? 'Stopped' : paused && note ? note.strip.status : note?.kind === 'meeting' && status === 'watching' ? note.strip.status : LABEL[status];
+  // Two lines (a status word, and under it until when) only while paused or silent: the strip is 64 px high.
+  const detail = cameraEnabled && note && (paused || (note.kind === 'meeting' && status === 'watching')) ? note.strip.detail : null;
 
   const body = pipWindow.document.body;
   if (!body) return null;
@@ -53,12 +55,19 @@ export function PiPWindow({ pipWindow, status }: Props) {
           className="h-2 w-2 shrink-0 rounded-full"
           style={{ background: isAlerting ? '#e5604d' : paused ? '#8a948f' : '#6f8f7d', opacity: isAlerting ? 1 : paused ? 0.55 : 0.7 }}
         />
-        <span
-          className="truncate text-xs"
-          style={{ color: isAlerting ? '#ffd9d3' : '#7f9488', fontWeight: isAlerting ? 600 : 500 }}
-        >
-          {label}
-        </span>
+        {detail ? (
+          <span className="flex min-w-0 flex-col">
+            <span className="truncate text-xs" style={{ color: '#7f9488', fontWeight: 500 }}>{label}</span>
+            <span className="truncate text-[10px]" style={{ color: '#667c71' }}>{detail}</span>
+          </span>
+        ) : (
+          <span
+            className="truncate text-xs"
+            style={{ color: isAlerting ? '#ffd9d3' : '#7f9488', fontWeight: isAlerting ? 600 : 500 }}
+          >
+            {label}
+          </span>
+        )}
       </div>
 
       <NotABiteSeam surface="pip" />{/* SEAM (WS3): "Not a bite" after an alarm. Renders nothing unless the false-alarm controls are on. */}

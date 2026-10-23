@@ -76,8 +76,8 @@ try {
     const dims = await pip.eval('JSON.stringify([innerWidth, innerHeight])');
     console.log('mini window size', dims);
     await pip.send('Page.enable');
-    // headless opens a bigger window than the 240x64 that was asked for; show the strip at its real size
-    await pip.send('Emulation.setDeviceMetricsOverride', { width: 240, height: 64, deviceScaleFactor: 2, mobile: false });
+    // headless opens a bigger window than the 240x64 that was asked for; show the strip at the size the app asks for (300x64 with the flag on)
+    await pip.send('Emulation.setDeviceMetricsOverride', { width: 300, height: 64, deviceScaleFactor: 2, mobile: false });
     await sleep(500);
     await shot(pip, 'pip-running');
     await pip.eval(`[...document.querySelectorAll('button')].find((b) => b.innerText.trim() === 'Pause')?.click()`, { userGesture: true });
@@ -86,6 +86,8 @@ try {
     await pip.eval(`[...document.querySelectorAll('button')].find((b) => b.innerText.trim() === 'Resume')?.click()`, { userGesture: true });
     await sleep(2500);
     await shot(pip, 'pip-resumed');
+    await click(page, '30 minutes'); await sleep(1500);
+    await shot(pip, 'pip-meeting');
   } else {
     console.log('no mini window target found');
   }

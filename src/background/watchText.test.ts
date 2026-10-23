@@ -26,6 +26,13 @@ describe('the words for a pause or a meeting', () => {
     expect(n.hint).not.toContain('Camera off');
   });
 
+  it('has a two-line form for the 64 px mini window', () => {
+    const p = watchNote({ kind: 'paused', until: now + 15 * 60_000, releaseCamera: true }, now, clock)!;
+    expect(p.strip).toEqual({ status: 'Paused', detail: 'until 14:15' });
+    const m = watchNote({ kind: 'meeting', until: now + 3_600_000 }, now, clock)!;
+    expect(m.strip).toEqual({ status: 'Watching', detail: 'silent until 15:00' });
+  });
+
   it('"until tomorrow" says tomorrow', () => {
     const n = watchNote({ kind: 'paused', until: new Date(2026, 9, 24, 6, 0).getTime(), releaseCamera: true }, now, clock)!;
     expect(n.title).toBe('Paused until tomorrow 6:00');

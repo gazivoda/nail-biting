@@ -7,7 +7,7 @@ purpose; they rot. If something here is wrong, fix it in your PR and say so in y
 Contents: 1 Stack and file map · 2 Detection · 3 History, streak, event schema v2 · 4 Storage module ·
 5 Feature flags · 6 Server: routes, auth, Paddle, database · 7 Settings shell · 8 Marketing pages, meta, schema ·
 9 PWA · 10 Electron · 11 Tests and tooling · 12 File ownership map · 13 Rules for later agents ·
-14 Gotchas · 15 Background watching and Picture-in-Picture (reserved for WS7a)
+14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a)
 
 ---
 
@@ -133,6 +133,12 @@ Changing sensitivity or alert settings does not restart the loop: they are read 
   face widths) and **silence** (`requestSilence()` stops the alarm that is sounding and keeps it quiet until the hand has gone).
   Controls can only remove or delay an alarm. The one line in `useDetection.ts` is the hand source
   (`detectHandsWithSides`); `getModels` is exported for the calibration. Details: `docs/agents/ws3-notes.md`.
+
+- **WS7a update (background watching, flag `background_watching`).** With the flag on, while the tab is hidden the loop is ticked by
+  a source the browser does not slow down (the mini window's timers, else a dedicated worker) at the visible rate instead of the 500 ms
+  `setInterval`, which stays as the fallback; `processFrame` parks itself while a hidden source drives the loop. The loop can be paused
+  (inference off, camera released) and the alarm can be silenced (meeting mode). With the flag off every path above is exactly what it
+  was. Measurements, mechanism, pause semantics: section 15 and `docs/agents/ws7a-notes.md`.
 
 **Alarm.** `useDetection.startBiting`: starts the sound (`startAlarm(sound, volume)`, Web Audio, profiles
 `alarm | chime | buzz | chirp | whistle`), sets status `alert`, calls `onAlert()` once, flashes the tab title, and
@@ -724,7 +730,7 @@ checks `electron/` (`tsc -b` does not).
 | `Dockerfile` | WS0 added `COPY server ./server`; WS9 `COPY shared ./shared` (both stages) and the `TRIAL_DAYS`, lifetime and gift build args | any new top-level server path must be copied |
 | `shared/plans.js`, `shared/access.js` | WS9 | the trial length, free-tier / referral / gift numbers, and the access decision; edit them, not copies of them |
 | Detection rule: `biteDetector.ts`, `src/detection/**` (zones, rules, registry, engine), `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand`; `getBehaviors` on `createBiteDetector` |
-| Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
+| Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx`; `src/background/**` | WS7a | the WS1/WS2/WS3 seams in those files are kept byte for byte (guard: `scripts/backgroundGuards.test.mjs`); later work adds through `src/background/` |
 | Desktop shell: `electron/**`, `src/desktop/**`, `vite.electron*.config.ts`, `build/`, `.github/workflows/desktop.yml` | WS7b | `src/desktop/ipc.ts` is the contract with the Electron side; WS7a consumes `stopbiting:desktop-command` and reports with `stopbiting:desktop-state` (docs/agents/ws7b-notes.md) |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 mounted `<NotABiteSeam />` beside it (and in `PiPWindow.tsx`) | `handleAlert` is the one-line seam for `{ behavior, hand }` (`alarmHandExtras()`) |
 | Share links: `server/routes/share.js`, `server/share/**`, `src/share/**`, `SharingSettings.tsx` | WS10 | `buildShareView` in `server/share/summary.js` is the ONLY thing a link reveals; add a field there and in its exact-key-set tests, never anywhere else |
@@ -780,13 +786,170 @@ checks `electron/` (`tsc -b` does not).
 
 ---
 
-## 15. Background watching and Picture-in-Picture (WS7a to complete)
+## 15. Background watching and Picture-in-Picture (WS7a, flag `background_watching`)
 
-_Reserved for WS7a. Document here, with measurements: what the browser does to the detection loop when the tab is
-hidden (rAF paused, timer throttling, the 500 ms `setInterval` fallback in `useDetection`), what Document
-Picture-in-Picture changes, what happens on browsers without it, notification and schedule behaviour, and how pause /
-meeting mode interact with `logIncident` (the alarm must still be loggable). Starting points that exist today:
-`usePictureInPicture.ts` (opens a Document PiP window of 240x64 with copied styles, falls back to PiP of the raw video
-element), `PiPWindow.tsx` (a status strip with Start/Stop, rendered from `CameraView`), `useNotifications.ts`
-(periodic "hands check" reminders, skipped while detection runs), and `useDetection.startBiting` (app badge and
-`Notification` when `document.hidden`)._
+Details, every table and the "not verified" list: `docs/agents/ws7a-notes.md`. Raw results and the measuring scripts:
+`docs/agents/ws7a-measurements/`, `scripts/background-probe/` (`node scripts/background-probe/tables.mjs` prints the tables below
+from the result files).
+
+### 15.1 What the browser does to a hidden tab (measured)
+
+Chrome 155, headless (`--headless=new`), macOS, fake camera; the tab is made hidden by opening a second tab; **700 s hidden** (so past
+Chrome's 5-minute intensive timer throttling). Ticks per second by condition, with a nominal 10 a second for the 100 ms timers and 5
+for the 200 ms chains (`run-probe.mjs`; the full per-window tables are in the notes):
+
+| hidden, condition | page `setInterval` 100 ms (10/s) | page `setTimeout` chain 200 ms (5/s) | animation frames | worker timer 100 ms (10/s) | worker chain 200 ms (5/s) | audio worklet (5/s) |
+|---|---|---|---|---|---|---|
+| no camera, 10-60 s | 1 | 1 | 0 | 4 | 3.68 | - |
+| no camera, 300-360 s | 0.02 | 0.02 | 0 | 7.37 | 3.83 | - |
+| no camera, 600-660 s | 0.02 | 0.02 | 0 | 7.55 | 3.85 | - |
+| camera on, 10-60 s | 1 | 1 | 0 | 10 | 4.86 | - |
+| camera on, 300-360 s | 1 | 1 | 0 | 10 | 4.92 | - |
+| camera on, 600-660 s | 1 | 1 | 0 | 10 | 4.92 | - |
+| camera on + mini window open, 10-60 s | 10 | 4.96 | 60 | 10 | 4.86 | - |
+| camera on + mini window open, 300-360 s | 10 | 4.97 | 59.88 | 10 | 4.92 | - |
+| camera on + mini window open, 600-660 s | 10 | 4.97 | 60 | 10 | 4.92 | - |
+| camera on + audio worklet, 10-60 s | 1 | 1 | 0 | 10 | 4.86 | 5 |
+| camera on + audio worklet, 300-360 s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+| camera on + audio worklet, 600-660 s | 1 | 1 | 0 | 10 | 4.92 | 5 |
+
+Read it as: the page's own timers are clamped to 1 a second as soon as the tab is hidden and `requestAnimationFrame` stops; **with the
+camera capturing they stay at 1 a second** (the no-camera case shows the cut to 1 a minute after 5 minutes that capture avoids);
+**a dedicated worker's timers keep their full rate**; **with the Document PiP window open the page is not throttled at all**; an audio
+worklet ticks but leaves the page's timers throttled. Camera frames keep arriving in the hidden tab and are new (checked at every
+checkpoint of every run).
+
+The real app, detection steps per second by hidden time (counted from outside by hooking WebGL `texImage2D`: two uploads per step),
+before and after, and the alarm latency measured through the real loop with a synthetic hand (`run-app.mjs`, a `VITE_WS7A_PROBE`
+build; `flagoff-hidden` is the same build with the flag off, i.e. today's behaviour):
+
+Detection steps per second. The "visible" row of the probe-build runs includes a 10 s stretch with an injected hand (the model is not called then), and so do the 10 to 60 s and 600 to 660 s rows of the runs with `INJECT_AT`; the two "before" runs have no injection (visible: 4.7 a second, the rate of the animation-frame loop):
+
+| hidden time (s) | before, hidden | before, hidden + mini window | flag off, hidden (probe build) | flag on, hidden | flag on, hidden + mini window |
+|---|---|---|---|---|---|
+| visible, before hiding | 4.67 | 4.73 | 3.73 | 3.83 | 3.85 |
+| 0 to 10 | 1 | 2 | 2 | 5 | 5 |
+| 10 to 60 | 1.02 | 2.02 | 1.7 | 4.42 | 4.42 |
+| 60 to 180 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 180 to 300 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 300 to 360 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 360 to 480 | 1.03 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 480 to 600 | 1.02 | 2.03 | 1.03 | 5.03 | 5.03 |
+| 600 to 660 | 1.03 | 2.03 | 1.02 | 4.53 | 4.53 |
+
+Alarm latency in ms, from "a hand is on the mouth" to the alarm starting (synthetic hand through the real loop; probe builds):
+
+| run | tab visible | hidden 20 s | hidden 650 s | alarm logged each time |
+|---|---|---|---|---|
+| flag off, hidden (probe build) | 643 | 1165 | 2977 | yes |
+| flag on, hidden | 600 | 480 | 439 | yes |
+| flag on, hidden + mini window | 542 | 457 | 415 | yes |
+
+Video frames in the hidden tab were new (not a repeat of one picture) at every checkpoint: before, hidden: yes; before, hidden + mini window: yes; flag off, hidden (probe build): yes; flag on, hidden: yes; flag on, hidden + mini window: yes.
+
+Before WS7a: **1 check a second** while hidden (2 with the mini window open: `processFrame` returned early on `document.hidden`, so
+only the 500 ms interval ran, while 60 animation frames a second woke the page for nothing). Dwell is counted in frames (three in a
+row), so the alarm took three step intervals: **1.2 s in the first minute hidden and 3.0 s after ten minutes** (the browser slows
+the tab after 10 s), against 0.6 s visible. After: **5 a second, hidden or not, with or without the mini window, for the whole
+700 s**, and the alarm in **0.4 to 0.5 s** at 20 s and at 650 s hidden.
+
+CPU, percent of one core (sum over the browser's processes of a type; same machine, same fake camera; "visible" is the 65 s before
+hiding, "hidden" the last 638 s):
+
+| run | visible: renderer | visible: GPU | hidden: renderer | hidden: GPU | hidden: browser |
+|---|---|---|---|---|---|
+| before, hidden | 17.1 | 7.6 | 2.9 | 0.7 | 0.2 |
+| before, hidden + mini window | 17.3 | 7.7 | 12.9 | 8.8 | 0.3 |
+| flag off, hidden (probe build) | 16.4 | 6.8 | 3 | 0.6 | 0.3 |
+| flag on, hidden | 16.7 | 6.5 | 12.9 | 1.6 | 0.2 |
+| flag on, hidden + mini window | 16.5 | 6.8 | 18.2 | 7.9 | 0.3 |
+
+Reading it: **visible, nothing changed** (renderer 16.7 with the flag on, 16.4 off, 17.1 before: noise). **Hidden, the price of keeping
+the rate**: the renderer works about five times as often, 12.9 against 2.9 points of one core; with the mini window the page also keeps
+drawing (GPU 7.9). With the detection switched off the feature costs nothing measurable (renderer 1.4 flag on, 1.8 flag off, no worker
+running). Idle:
+
+| detection switched off, tab visible, 90 s | renderer | GPU | browser | workers running |
+|---|---|---|---|---|
+| flag off | 1.79 | 7.37 | 1.14 | [] |
+| flag on | 1.44 | 6.22 | 1.11 | [] |
+
+### 15.2 The mechanism
+
+`useDetection.ts`, in the effect that runs the loop:
+- visible: unchanged, the `requestAnimationFrame` loop at 5 checks a second;
+- hidden, flag off: unchanged, the 500 ms `setInterval` (`startBgInterval`);
+- hidden, flag on (`isFeatureOn('background_watching')`, read when the tab becomes hidden): `createHiddenSource`
+  (`src/background/hiddenSource.ts`) ticks `runInference` every 200 ms from, in order, **the Document PiP window's timers**
+  (`pipWindow.setInterval`; `usePictureInPicture` registers the window in `src/background/tickHost.ts` and forgets it on `pagehide`),
+  then **a dedicated worker** (`src/background/tickWorker.ts` through `ticker.ts` / `appTicker.ts`), and if neither is available
+  `onLost` re-enables the 500 ms interval. Never two sources at once. The animation-frame callback parks itself while a hidden source
+  drives the loop and re-arms on show. A tick less than 150 ms after the last check is dropped (`HIDDEN_MIN_GAP_MS`).
+- **The worker is a same-origin file** (`new Worker(new URL('./tickWorker.ts', import.meta.url), { type: 'module' })`, 286 bytes,
+  `/assets/tickWorker-*.js`), because the page's CSP is `worker-src 'self'` (`server.js`, untouched): a blob worker works under Vite's dev
+  server and is refused in production (a guard test pins both). It is precached like any chunk. It is created only when something needs a
+  tick (a hidden tab, a running pause clock, an alarm repeating while hidden) and ended when nothing does.
+- The alarm sound repeats from the same worker while the tab is hidden (flag on); otherwise from `setInterval`, as before.
+- While the tab is hidden the checks are counted (`src/background/cadence.ts`). A stretch of 30 s or more under 3 checks a second is
+  remembered (kv `background:cadence`) and the Watch tab says so in words: how a browser that slows hidden tabs and offers nothing better
+  is reported honestly.
+- Rejected, with numbers: an audio keep-alive (5 ticks a second, but the page's timers stay throttled, and it needs an audio context
+  running); doing the inference inside the worker (MediaPipe reads the page's `<video>`; only the clock needed to move).
+
+### 15.3 Pause and meeting mode
+
+`src/background/pauseMachine.ts` is a pure reducer: `stopped | running | paused(until) | meeting(until)`, events `start`, `stop`, `pause`,
+`pauseUntil`, `resume`, `meeting`, `tick(now)`. `watchStore.ts` holds the one live copy and saves `{pausedUntil, meetingUntil}` in
+`kv('background', 'state')`; `restoreWatch` drops anything expired, unreadable, in the past, or more than 27 h (pause) / 12 h (meeting)
+away, so a pause cannot get stuck. **The camera switch (`cameraEnabled`) is not touched**: pause is a gate over it (`inferenceEnabled`,
+`cameraStreamEnabled`, read by `CameraView` and `CameraPanel`), because that field resets to on at every load and a pause that flipped
+it would end on refresh.
+- **Paused**: no inference; `detecting` is false (`isDetecting`), so the tray reads `watching:false, paused:true` and **WS9's free-tier
+  meter, which counts a second only while `detecting` is true, never counts paused time**; the camera is released where the browser
+  remembers consent (`shouldReleaseCamera`: permission `granted`), otherwise kept open so the automatic resume cannot stall on a
+  prompt. Resume restarts the camera.
+- **Meeting**: inference and camera stay on; `startBiting` plays no sound and raises no notification, badge or native alert
+  (`silentNow()`); the screen flash stays; the alarm is logged as always. The periodic "Hands check" nudges are skipped during either.
+- **The mini window** (`PiPWindow.tsx`, the WS2 and WS3 seams untouched) shows "Paused / until 3:45 PM" or "Watching / silent until 4:30 PM" on two lines and a Pause (15 minutes) / Resume button; with the flag on the window is requested 300 px wide instead of 240 so that fits.
+- Both end by themselves (`runExpiryClock`: a 1 s worker tick, plus a check when the tab becomes visible, focused or online). A pause
+  survives a reload; Stop clears it. "Until tomorrow" = the start of the person's scheduled hours, else 06:00, at least 2 h away (the
+  tray's fixed 08:00 is WS7b's, so the two can differ).
+
+### 15.4 Desktop bridge (the WS7b contract)
+
+`src/background/wiring.ts` `connectDesktop`, run by `BackgroundRunner` (only with the flag on): `stopbiting:desktop-command` `pause` /
+`resume` -> the machine and `preventDefault()`; `start` while paused -> resume (`preventDefault()`), otherwise the machine starts and the
+bridge's default switches the camera on; `stop` -> the machine stops and the bridge switches the camera off. The state goes out as
+`stopbiting:desktop-state {paused, pausedUntil}` on every change and once at start (repeated at 0.5, 2 and 5 s, because the bridge is
+loaded by a dynamic import that may finish later). Flag off: no report, so the tray keeps its pause items disabled, as the contract says.
+Tested against the real `createDesktopBridge` in `src/background/wiring.test.ts`.
+
+### 15.5 Schedule and reminders
+
+`schedule.ts` (pure, clock injected): weekdays and one daily window; an overnight window belongs to the day it starts on; window id =
+date + start time (no UTC offset, so the repeated hour of a fall-back day is one window). `decideReminder`: schedule on, inside a window,
+none shown for it, not watching, not paused, app not in front, permission granted. Settings > Schedule (`ScheduleSettings.tsx`) asks
+for notification permission only when the switch is turned on, after saying why (`planTurnOn`; a guard test fails if anything else calls
+`requestPermission`). Checked every 30 s while the app is open (`checkReminder`). Click: `window.focus()` in a browser, a native
+notification in the desktop app. **Not built: a reminder with the app closed** (Periodic Background Sync in an installed PWA: it needs
+custom code in the generated service worker, the worker cannot read `localStorage`, Chrome decides when it fires, it is Chromium-desktop
+installed-PWA only; details in `ws7a-notes.md`). Reminders need the app open in a tab or window, or the desktop app running in its tray.
+
+### 15.6 Browsers
+
+| | Hidden-tab rate | Mini window | Verified |
+|---|---|---|---|
+| Chrome 155 desktop (headless) | full, 5 a second, with or without the mini window | Document PiP | yes |
+| Edge and other Chromium desktop | expected full | yes | no |
+| Firefox, Safari | worker if the browser runs it at full rate, else the old once a second (alarm in about 3 s); the Watch tab says so after a slow stretch | none: no Document PiP (the Minimize button shows only where a PiP API exists) | no |
+| Electron | the window is never throttled (WS7b); same pause clock and tray bridge | n/a | partly |
+
+What the person sees where nothing better exists: the Watch tab's pause card says that some browsers slow background tabs, and after
+a measured slow stretch adds one sentence with the rate that was actually reached.
+
+### 15.7 Not verified (the owner should look)
+
+A real hand on a real camera while hidden; a windowed Chrome (minimised, covered); Edge, Firefox, Safari; a real Document PiP window's
+size and always-on-top behaviour (headless opens a larger one); the tray clicks; a worker under `file://` in the packaged app (it falls
+back to timers); the OS notification itself; screen readers. Flag-off sameness was checked on the HTML of Watch, History and Settings
+against a build of main: byte-identical.
