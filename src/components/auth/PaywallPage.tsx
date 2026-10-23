@@ -3,6 +3,7 @@ import { initializePaddle, type Paddle, type CheckoutEventsData } from '@paddle/
 import { Check, Shield, ArrowLeft, AlertTriangle, ArrowRight } from 'lucide-react';
 import { trialLeft, trialEndedMessage } from '../../utils/trial';
 import { useAppStore } from '../../store/useAppStore';
+import { isAlarmOrBite } from '../../storage/eventModel';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 import { Rings } from '../site/Rings';
@@ -22,7 +23,7 @@ const CHECKOUT_UNAVAILABLE =
 export function PaywallPage({ onBack }: Props) {
   // Hooks first: the 'Payment received' early return below must not skip one.
   // What the trial actually logged on this device (local history, never a server figure).
-  const loggedAlerts = useAppStore(s => s.incidents.length);
+  const loggedAlerts = useAppStore(s => s.incidents.filter(isAlarmOrBite).length); // not an urge, not a "Not a bite"
   const { user, refreshProfile, signOut } = useAuth();
   const [activating, setActivating] = useState(false);
   const [error, setError] = useState<string | null>(null);

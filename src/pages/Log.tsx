@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore, isBite } from '../store/useAppStore';
-import { isUrge } from '../storage/eventModel';
+import { isAlarmOrBite, isPendingAlarm, isUrge } from '../storage/eventModel';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
@@ -87,7 +87,7 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
 
   const relevantIncidents = weekChartMetric === 'confirmed'
     ? incidents.filter(isConfirmedBite)
-    : incidents.filter(inc => !isUrge(inc)); // "Alarms and bites per day": an urge is neither
+    : incidents.filter(isAlarmOrBite); // "Alarms and bites per day": an urge and a "Not a bite" alarm are neither
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = startOfDay(subDays(new Date(), 6 - i));
@@ -341,7 +341,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                             {tagLabel}
                           </span>
                           <div className="ml-auto flex items-center gap-1">
-                            {inc.autoDetected && !inc.confirmed && (
+                            {isPendingAlarm(inc) && (
                               <button
                                 onClick={() => confirmIncident(inc.id)}
                                 aria-label={`Confirm alarm at ${formatTime(inc.timestamp)} as a bite`}
@@ -387,7 +387,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                 </div>
                 <div>
                   <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
-                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
+                    {incidents.filter(isPendingAlarm).length}
                   </p>
                   <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">Alarms to review</p>
                 </div>

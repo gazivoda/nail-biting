@@ -6,6 +6,7 @@ import {
   MAX_TOMBSTONES,
   addTombstone,
   createStoredEvent,
+  isFalsePositive,
   isUrge,
   makeTombstone,
   patchStoredEvent,
@@ -22,10 +23,13 @@ import { createStatePersistStorage } from '../storage/persistStorage';
 /**
  * A real bite: logged by hand, or an alarm the user confirmed. Alarms start
  * unconfirmed. An urge-timer entry (WS2) is logged by hand too, but it is an
- * urge that was felt, not a bite, so it never breaks a streak.
+ * urge that was felt, not a bite, so it never breaks a streak. An alarm marked
+ * "Not a bite" (WS3) is never a bite, even if it was confirmed before; see the
+ * state table in src/storage/eventModel.ts. This is the ONE definition: the
+ * streak, Today, History and the insights all go through it.
  */
 export function isBite(inc: Incident): boolean {
-  return (!inc.autoDetected || inc.confirmed === true) && !isUrge(inc);
+  return (!inc.autoDetected || inc.confirmed === true) && !isUrge(inc) && !isFalsePositive(inc);
 }
 
 function latestBiteTime(incidents: Incident[]): number | null {
@@ -234,7 +238,8 @@ export function createAppStore(storage?: PersistStorage<Persisted>) {
         const now = Date.now();
         const next = {
           incidents: incidents.map(i =>
-            i.id === id ? patchStoredEvent(i, { confirmed: true, ...(tag ? { tag } : {}) }, now) : i),
+            // Saying "this was a bite" about an alarm that was marked "Not a bite" takes the mark off.
+            i.id === id ? patchStoredEvent(i, { confirmed: true, ...(i.falsePositive ? { falsePositive: false } : {}), ...(tag ? { tag } : {}) }, now) : i),
           historyStartTime,
           bestStreakFloorMs,
         };

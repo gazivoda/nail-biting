@@ -5,6 +5,7 @@ import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
 import { SUGGESTIONS } from './suggestions';
 import type { TriggerTag } from '../../types';
+import { isPendingAlarm } from '../../storage/eventModel';
 
 
 const RECENT_MS = 10 * 60 * 1000;
@@ -25,7 +26,7 @@ export function ReplacementPrompt() {
   const lastAuto = incidents.find(i => i.autoDetected);
 
   const shouldShow =
-    lastAuto && !lastAuto.confirmed && lastAuto.timestamp > askAfter && dismissed < lastAuto.timestamp;
+    lastAuto && isPendingAlarm(lastAuto) && lastAuto.timestamp > askAfter && dismissed < lastAuto.timestamp;
 
   if (!shouldShow) return null;
 

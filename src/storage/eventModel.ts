@@ -148,6 +148,38 @@ export function isUrge(inc: Pick<Incident, 'tag' | 'autoDetected'>): boolean {
   return !inc.autoDetected && inc.tag === URGE_TAG_ID;
 }
 
+// ── What an entry is: the review states (WS3). ONE set of predicates, used by every counter ─────────────
+//
+//   state                autoDetected  confirmed  falsePositive   isBite  pending  alarmOrBite
+//   unreviewed alarm     true          no         no              no      YES      yes
+//   confirmed bite       true          yes        no              YES     no       yes
+//   false positive       true          (any)      yes             no      no       no
+//   manual log ("I bit") false         n/a        no              YES     no       yes
+//   urge (urge timer)    false, tag    n/a        no              no      no       no
+//
+// "False positive" is the person saying "Not a bite" about an alarm. It outranks `confirmed`, which is
+// left as it was so that undoing the false positive puts the entry back exactly where it was. A false
+// positive is never a bite, never "an alarm to review", and not part of any count, chart, insight or
+// streak. `isBite` lives in the store file (it needs the streak maths) and applies the same rule.
+
+/** The person said "Not a bite" about this alarm. Outranks `confirmed`. */
+export function isFalsePositive(inc: Pick<Incident, 'falsePositive'>): boolean {
+  return inc.falsePositive === true;
+}
+
+/** An alarm nobody has reviewed yet: the amber "Alarm" in History and "alarms to review" on Today. */
+export function isPendingAlarm(inc: Pick<Incident, 'autoDetected' | 'confirmed' | 'falsePositive'>): boolean {
+  return inc.autoDetected && !inc.confirmed && inc.falsePositive !== true;
+}
+
+/**
+ * "Alarms and bites": the History chart's All view and the Paywall's "alerts logged". An urge is neither
+ * and a false positive is not an alarm anyone should count.
+ */
+export function isAlarmOrBite(inc: Pick<Incident, 'tag' | 'autoDetected' | 'falsePositive'>): boolean {
+  return !isUrge(inc) && !isFalsePositive(inc);
+}
+
 /** The synthetic tag an alarm carries until the user says what set it off. */
 const NO_TAG_ALARM = 'auto-detected';
 const NO_TAG_MANUAL = 'unknown';
