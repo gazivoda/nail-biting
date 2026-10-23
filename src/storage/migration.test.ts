@@ -38,6 +38,8 @@ function deepFreeze<T>(x: T): T {
   return x;
 }
 
+const withoutIncidents = (s: State) => Object.fromEntries(Object.entries(s).filter(([k]) => k !== 'incidents'));
+
 const LEGACY_FIELDS = ['id', 'timestamp', 'tag', 'autoDetected', 'confirmed'] as const;
 const legacyView = (i: Incident) => Object.fromEntries(LEGACY_FIELDS.filter(k => k in i).map(k => [k, (i as unknown as Record<string, unknown>)[k]]));
 
@@ -81,9 +83,7 @@ describe('v1 -> v2: nothing is lost or changed', () => {
       });
 
       it('preserves every other persisted field (streak inputs and settings)', () => {
-        const { incidents: _a, ...restBefore } = v1;
-        const { incidents: _b, ...restAfter } = v2;
-        expect(restAfter).toEqual(restBefore);
+        expect(withoutIncidents(v2)).toEqual(withoutIncidents(v1));
       });
     });
   }
