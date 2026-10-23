@@ -134,6 +134,15 @@ Also for the owner: **the live `/compare/stop-biting-vs-habitaware` page (checke
 state a bracelet price".** HabitAware now lists Keen3 at $199.00 as a preorder (the product page is dated 9 October). That page
 was not touched; refresh it, or it contradicts the new one once both are live.
 
+## For WS9 (trial-length constant swap)
+
+WS11a did not touch any "3-day" sentence, but it added or moved some. After merging, re-run the swap over: `src/data/competitorPages.ts`
+(our own "3-day free trial", 6 places; **leave "3 days free" in the Hands Off quotations and sentences alone, that is Hands
+Off's trial, not ours**), `server.js` `PRICING_FAQS` (now the same four answers as `PricingPage.tsx`, so two copies to keep in
+step). The static `og:description` in `index.html` no longer mentions the trial. After the swap run `npm run seo:sync`
+again: the freshness ledger fingerprints these pages.
+`scripts/marketingSite.test.mjs` asserts the FAQ text is identical on both sides, so a swap that misses one copy fails there.
+
 ## Owner TODO
 
 - [ ] Verify the tables above, then set `needsVerification: false` in `src/data/competitorPages.ts` and decide the overlap question.
