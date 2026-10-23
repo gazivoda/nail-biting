@@ -15,6 +15,7 @@ import { beforeEach, afterEach, expect } from 'vitest';
 import { useMemoryStorage, resetStorage } from '../../../test-utils/memoryStorage';
 import { kv } from '../../storage/kv';
 import { resetFlagsForTests } from '../../features/flags';
+import '../persist';
 import { installCatalogForTests, resetLocaleForTests, setAllowedLocales, setLocale, setOutputTransformForTests } from '../core';
 import { catalog } from '../locales/de';
 import { describeLeaks, findUnmarkedEnglish, mark, type ScanOptions } from './scan';

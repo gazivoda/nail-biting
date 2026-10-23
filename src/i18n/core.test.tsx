@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useMemoryStorage, resetStorage } from '../../test-utils/memoryStorage';
 import { kv } from '../storage/kv';
+import './persist';
 import {
   getLocale, getPreferredLocale, setLocale, setAllowedLocales, getAllowedLocales, installCatalogForTests, resetLocaleForTests,
   ensureLocaleLoaded, isLocaleReviewed, lookup, intlLocaleArg, intlTag, subscribeLocale, getLocaleVersion, setOutputTransformForTests,

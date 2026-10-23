@@ -12,6 +12,7 @@
 
 import { useEffect } from 'react';
 import { useFeatures } from '../features/useFeature';
+import './persist';
 import { LOCALES, LOCALE_INFO, setAllowedLocales, type Locale } from './core';
 import { useLocale } from './hooks';
 

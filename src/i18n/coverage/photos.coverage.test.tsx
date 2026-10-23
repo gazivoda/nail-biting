@@ -14,6 +14,7 @@ import type { ReactElement } from 'react';
 import { usePseudoLocale, expectAllTranslated, expectNoMissingParams, setFlags } from '../testing/pseudo';
 import { formatToParts } from '../message';
 import { messages, t } from '../scopes/photos';
+import { t as tc } from '../scopes/common';
 import { messages as de } from '../locales/de/photos';
 import { messages as es } from '../locales/es/photos';
 import { messages as ptBR } from '../locales/pt-BR/photos';
@@ -64,8 +65,11 @@ const asPanelState = (s: unknown) => s as CapturePanelViewProps['state'];
 /** Every HTML string rendered in this file, for the "each message is shown somewhere" check at the end. */
 const rendered: string[] = [];
 
-/** File sizes are written with the units KB and MB in every language; they are not words to translate. */
-const UNITS = ['KB', 'MB'];
+/**
+ * File sizes are written with the units KB and MB in every language, and Intl spells September "Sept." in a full date
+ * (src/i18n/testing/scan.ts only knows the stand-alone month names): neither is a word to translate.
+ */
+const UNITS = ['KB', 'MB', 'Sept'];
 
 /** Renders, records, and asserts that all words came out of t(). */
 function check(node: ReactElement, allow: Array<string | RegExp> = []): string {
@@ -129,10 +133,12 @@ describe('photo diary screen, pseudo-locale', () => {
       <TwoStepDelete label={t('diary.deleteAll')} question={t('diary.deleteAll.question', { count: 3 })}
         confirmLabel={t('diary.deleteAll.confirm')} keepLabel={t('diary.deleteAll.keep')} onConfirm={noop} initiallyOpen />,
     );
-    check(
-      <TwoStepDelete compact label={t('diary.deleteAll')} ariaLabel={t('diary.deleteOne.aria', { date: '23. Okt. 2026' })}
-        question={t('diary.deleteOne.question')} confirmLabel={t('diary.deleteAll.confirm')} keepLabel={t('diary.keep')} onConfirm={noop} />,
-    );
+    for (const initiallyOpen of [false, true]) {
+      check(
+        <TwoStepDelete compact label={tc('delete')} ariaLabel={t('diary.deleteOne.aria', { date: '23. Okt. 2026' })}
+          question={t('diary.deleteOne.question')} confirmLabel={tc('delete')} keepLabel={t('diary.keep')} onConfirm={noop} initiallyOpen={initiallyOpen} />,
+      );
+    }
     // plural forms of the "delete all" question: one photo and many
     for (const count of [1, 2, 104]) expect(t('diary.deleteAll.question', { count })).toContain('⟦');
   });
@@ -292,9 +298,8 @@ describe('capture text made by the state machine and the store, pseudo-locale', 
   it('ages and sizes are said in the language', () => {
     const ages = [0, 1, 2, 9, 40].map(d => describeAge(NOW - d * DAY, NOW));
     check(<ul>{ages.map(a => <li key={a}>{a}</li>)}</ul>);
-    const sizes = [0, 1, 180 * 1024, 1024 * 1024 - 1, 2.4 * 1024 * 1024].map(formatBytes);
-    check(<ul>{sizes.map(s => <li key={s}>{s}</li>)}</ul>);
-    expect(sizes[4]).toContain('2,4'); // a decimal comma in German
+    // sizes keep their unit, and the decimal mark follows the language (a comma in German)
+    expect([0, 1, 180 * 1024, 2.4 * 1024 * 1024].map(formatBytes)).toEqual(['0 KB', '1 KB', '180 KB', '2,4 MB']);
   });
 
   it('the fixed paragraphs of copy.ts are the English of the scope, and the guide sentence matches', () => {

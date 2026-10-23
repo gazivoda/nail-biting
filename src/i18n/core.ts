@@ -2,7 +2,7 @@
 // (an event handler, a notification, a pure helper). The React side is hooks.ts.
 //
 // What decides the language the person sees:
-//   1. what they picked (kv 'i18n' / 'locale'), never the browser's language: there is no detection;
+//   1. what they picked (kept through ./persist.ts in kv 'i18n' / 'locale'), never the browser's language: there is no detection;
 //   2. whether that locale is allowed, which means its feature flag is on. The core does not read
 //      flags (that would pull the network client into every page that formats a string):
 //      <LocaleHost /> tells it with setAllowedLocales();
@@ -13,8 +13,11 @@
 // With nothing picked, or a locale whose flag is off, getLocale() is 'en' and nothing below
 // changes anything on the page.
 
-import { kv } from '../storage/kv';
-import type { FeatureName } from '../features/registry';
+// This file imports nothing from the app (no storage, no flags, no store): the alarm overlay and the
+// detection hook, which the marketing home page's demo also loads, reach it, and the guard tests
+// (scripts/coachingGuards, falsePositiveGuards, backgroundGuards) keep storage and the flag client out of
+// that part of the bundle. Where the pick is stored is plugged in by ./persist.ts, which only the signed-in
+// app imports; with nothing plugged in the language is English.
 
 export const LOCALES = ['en', 'es', 'de', 'pt-BR'] as const;
 export type Locale = (typeof LOCALES)[number];
@@ -27,7 +30,7 @@ export interface LocaleInfo {
   /** BCP 47 tag for Intl and for <html lang>. */
   tag: string;
   /** The flag that lets people pick it (the owner turns it on after a native review). */
-  flag: FeatureName | null;
+  flag: 'locale_es' | 'locale_de' | 'locale_pt_br' | null;
 }
 
 export const LOCALE_INFO: Record<Locale, LocaleInfo> = {
@@ -54,10 +57,14 @@ const LOADERS: Record<ForeignLocale, () => Promise<LocaleModule>> = {
   'pt-BR': () => import('./locale-pt-BR'),
 };
 
-const KV_NS = 'i18n';
-const KV_KEY = 'locale';
+/** Where the pick lives. ./persist.ts plugs in the storage module; nothing is plugged in on the marketing pages. */
+export interface LocalePersistence {
+  read(): unknown;
+  write(locale: Locale): void;
+}
+let persistence: LocalePersistence | null = null;
 
-let preferred: Locale | null = null; // read from kv on first use
+let preferred: Locale | null = null; // read through `persistence` on first use
 let allowed: ReadonlySet<Locale> = new Set<Locale>(['en']);
 let effective: Locale = 'en';
 let version = 0;
@@ -118,7 +125,7 @@ export function getLocale(): Locale {
 /** What the person picked, whether or not it is currently allowed. 'en' when nothing was picked. */
 export function getPreferredLocale(): Locale {
   if (preferred === null) {
-    const stored = kv.get<unknown>(KV_NS, KV_KEY, 'en');
+    const stored = persistence ? persistence.read() : 'en';
     preferred = isLocale(stored) ? stored : 'en';
   }
   return preferred;
@@ -167,11 +174,19 @@ export function didLocaleLoadFail(locale: Locale): boolean {
 
 // ── Writing ──────────────────────────────────────────────────────────────────
 
+/** Plugs in the storage of the pick (./persist.ts). Re-reads the pick, so it may be called after first use. */
+export function configurePersistence(p: LocalePersistence | null): void {
+  persistence = p;
+  preferred = null;
+  recompute();
+  notify();
+}
+
 /** The person picks a language. Stored, and applied as soon as its flag is on and its catalog is here. */
 export function setLocale(locale: Locale): void {
   if (!isLocale(locale)) return;
   preferred = locale;
-  kv.set(KV_NS, KV_KEY, locale);
+  persistence?.write(locale);
   failed.delete(locale);
   recompute();
   notify(); // the pick itself changed (the language card shows it)

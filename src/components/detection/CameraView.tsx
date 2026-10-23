@@ -12,6 +12,7 @@ import { alarmHandExtras } from '../../detection/controlsRegistry';
 import { useWatchGate } from '../../background/gate';
 import { PausedOverlay } from '../../background/PausedOverlay';
 import { effectiveAlertType, inferenceEnabled, isDetecting } from '../../background/pauseMachine';
+import { useT } from '../../i18n/scopes/watch';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -34,6 +35,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
     setDetecting,
   } = useAppStore();
 
+  const t = useT();
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { pipActive, pipWindow, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
@@ -96,7 +98,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
         {cameraEnabled && pipSupported && !cameraError && !modelFailed && (
           <button
             onClick={togglePiP}
-            title={pipActive ? 'Exit Picture-in-Picture' : 'Float to a mini window. Detection keeps running when you switch apps'}
+            title={pipActive ? t('view.pip.exitTitle') : t('view.pip.floatTitle')}
             className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-150 ${
               pipActive
                 ? 'bg-forest-600 text-cream-100 ring-1 ring-forest-400/40'
@@ -104,7 +106,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
             }`}
           >
             <PictureInPicture2 size={13} />
-            {pipActive ? 'Exit PiP' : 'Minimize'}
+            {pipActive ? t('view.pip.exit') : t('view.pip.minimize')}
           </button>
         )}
       </DetectionSurface>

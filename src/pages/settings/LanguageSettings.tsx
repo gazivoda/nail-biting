@@ -8,6 +8,7 @@ import { Languages } from 'lucide-react';
 import { Section } from './ui';
 import { SegmentedControl } from '../../components/ui/SegmentedControl';
 import { useFeatures } from '../../features/useFeature';
+import '../../i18n/persist';
 import { LOCALES, LOCALE_INFO, didLocaleLoadFail, isLocaleReviewed, type Locale } from '../../i18n/core';
 import { useLocale } from '../../i18n/hooks';
 import { useT } from '../../i18n/scopes/language';
