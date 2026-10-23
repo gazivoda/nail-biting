@@ -74,10 +74,11 @@ function SharingCard() {
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [copied, setCopied] = useState<'idle' | 'copied' | 'manual'>('idle');
-  const linkInput = useRef<HTMLInputElement>(null);
+  const [now, setNow] = useState(() => Date.now());
 
   const refresh = useCallback(async () => {
     const r = await listLinks(apiFetchRequest);
+    setNow(Date.now());
     if (r.ok) {
       setList(r.value);
       setLoad('ready');
@@ -90,14 +91,9 @@ function SharingCard() {
 
   useEffect(() => {
     if (!signedIn) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- loading the list when the card opens
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- loads the list when the card opens; the state is set after the request answers
     void refresh();
   }, [signedIn, refresh]);
-
-  // The panel with the new link takes focus with the link selected, ready to copy.
-  useEffect(() => {
-    if (created) linkInput.current?.select();
-  }, [created]);
 
   const onCreate = async () => {
     setCreating(true);
@@ -116,11 +112,11 @@ function SharingCard() {
     void refresh();
   };
 
-  const onCopy = async () => {
+  const onCopy = async (input: HTMLInputElement | null) => {
     if (!created) return;
-    const ok = await copyText(created.url, browserClipboard(linkInput.current));
+    const ok = await copyText(created.url, browserClipboard(input));
     setCopied(ok ? 'copied' : 'manual');
-    if (!ok) linkInput.current?.select();
+    if (!ok) input?.select();
   };
 
   const onRevoke = async () => {
@@ -154,13 +150,12 @@ function SharingCard() {
       error={error}
       status={status}
       copied={copied}
-      now={Date.now()}
-      linkInputRef={linkInput}
+      now={now}
       onLabel={setLabel}
       onExpiry={setExpiresInDays}
       onDetailed={setDetailed}
       onCreate={() => { void onCreate(); }}
-      onCopy={() => { void onCopy(); }}
+      onCopy={input => { void onCopy(input); }}
       onDismissCreated={() => { setCreated(null); setCopied('idle'); }}
       onAskRevoke={id => { setConfirmId(id); setStatus(null); }}
       onCancelRevoke={() => setConfirmId(null)}
@@ -187,12 +182,12 @@ export interface SharingCardViewProps {
   status: string | null;
   copied: 'idle' | 'copied' | 'manual';
   now: number;
-  linkInputRef?: React.Ref<HTMLInputElement>;
   onLabel(v: string): void;
   onExpiry(v: ExpiryChoice): void;
   onDetailed(v: boolean): void;
   onCreate(): void;
-  onCopy(): void;
+  /** `input` is the field that shows the link, for the select-and-copy fallback. */
+  onCopy(input: HTMLInputElement | null): void;
   onDismissCreated(): void;
   onAskRevoke(id: string): void;
   onCancelRevoke(): void;
@@ -204,6 +199,12 @@ export interface SharingCardViewProps {
 export function SharingCardView(p: SharingCardViewProps) {
   const labelId = useId();
   const expiryId = useId();
+  const linkInput = useRef<HTMLInputElement>(null);
+  const hasCreated = p.created !== null;
+  // The panel with the new link appears with the link selected, ready to copy.
+  useEffect(() => {
+    if (hasCreated) linkInput.current?.select();
+  }, [hasCreated]);
   const preview = previewFor(p.form.detailed);
   const links = p.list?.links ?? [];
   const atLimit = p.list !== null && links.length >= p.list.max;
@@ -304,14 +305,14 @@ export function SharingCardView(p: SharingCardViewProps) {
                 <label htmlFor={`${labelId}-url`} className="sr-only">Your share link</label>
                 <input
                   id={`${labelId}-url`}
-                  ref={p.linkInputRef}
+                  ref={linkInput}
                   type="text"
                   readOnly
                   value={p.created.url}
                   onFocus={e => e.currentTarget.select()}
                   className={`${field} min-w-0 flex-1 basis-64 font-mono text-xs`}
                 />
-                <button type="button" onClick={p.onCopy} className={primary}>
+                <button type="button" onClick={() => p.onCopy(linkInput.current)} className={primary}>
                   {p.copied === 'copied' ? 'Copied' : 'Copy link'}
                 </button>
                 <button type="button" onClick={p.onDismissCreated} className={pill}>Done</button>

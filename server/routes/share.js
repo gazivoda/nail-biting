@@ -59,7 +59,6 @@ export function parseCreateRequest(body) {
   let label = '';
   if (body.label !== undefined) {
     if (typeof body.label !== 'string') return { ok: false, field: 'label', why: 'must be a string' };
-    // eslint-disable-next-line no-control-regex
     label = body.label.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
     if (label.length > MAX_LABEL_LENGTH) return { ok: false, field: 'label', why: `at most ${MAX_LABEL_LENGTH} characters` };
   }
