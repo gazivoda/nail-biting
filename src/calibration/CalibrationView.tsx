@@ -19,7 +19,7 @@ import { useAppStore } from '../store/useAppStore';
 import { writeCalibration } from '../falsePositive/poseStore';
 import { CALIBRATION } from '../detection/calibration';
 import { openCamera, startFrames } from './runner';
-import { addFrame, begin, failureMessage, framesSoFar, profileToSave, secondsLeft, START, tick, type CalibrationState } from './steps';
+import { addFrame, begin, failureMessage, framesSoFar, profileToSave, secondsLeft, START, stepAnnouncement, tick, type CalibrationState } from './steps';
 import { closeCalibration } from './state';
 
 type Link = 'starting' | 'ready' | 'error';
@@ -116,6 +116,10 @@ function Overlay() {
   const left = secondsLeft(state, now);
   const profile = profileToSave(state);
   const stepTitle = state.phase === 'rest' ? 'Step 1 of 2' : state.phase === 'real' ? 'Step 2 of 2' : state.phase === 'between' ? 'Step 2 of 2 next' : 'Calibrate';
+  // One short line per step, read out once when the step starts. It lives in a region that is always in the page, and the
+  // ticking "seconds left" and frame count are NOT inside any live region: they used to be, and a screen reader read out
+  // a new number every second for the whole step.
+  const announcement = stepAnnouncement(state);
 
   return (
     <div
@@ -155,6 +159,7 @@ function Overlay() {
         </div>
 
         <div className="space-y-5">
+          <p role="status" aria-live="polite" className="sr-only">{announcement}</p>
           {state.phase === 'intro' && (
             <>
               <p className="text-base leading-relaxed">
@@ -184,7 +189,7 @@ function Overlay() {
           )}
 
           {state.phase === 'rest' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">Rest your chin on your hand as you normally would.</p>
               <p className="mt-3 text-base">Hold it there. {left} seconds left.</p>
               <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{framesSoFar(state)} of {CALIBRATION.minFrames} needed.</p>
@@ -192,14 +197,14 @@ function Overlay() {
           )}
 
           {state.phase === 'between' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">Take your hand away.</p>
               <p className="mt-3 text-base">Step 2 starts in {left} seconds: you will bring a fingertip near your lips.</p>
             </div>
           )}
 
           {state.phase === 'real' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">Bring a fingertip near your lips.</p>
               <p className="mt-3 text-base">Hold it there. {left} seconds left.</p>
               <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{framesSoFar(state)} of {CALIBRATION.minFrames} needed.</p>
@@ -207,7 +212,7 @@ function Overlay() {
           )}
 
           {state.phase === 'result' && (
-            <div aria-live="polite" className="space-y-4">
+            <div className="space-y-4">
               {profile ? (
                 <>
                   <p className="text-xl font-semibold">Done.</p>

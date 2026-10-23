@@ -95,6 +95,21 @@ export function profileToSave(state: CalibrationState): CalibrationProfile | nul
   return state.phase === 'result' && state.outcome.ok ? state.outcome.profile : null;
 }
 
+/**
+ * What a screen reader says when a step starts (the calibration view keeps it in one live region).
+ * It has no clock and no frame count in it, so it is the same text for the whole step and is read out once per step,
+ * not once per second. The ticking numbers stay on screen, outside any live region.
+ */
+export function stepAnnouncement(state: CalibrationState): string {
+  switch (state.phase) {
+    case 'rest': return 'Step 1 of 2. Rest your chin on your hand as you normally would. Hold it there.';
+    case 'between': return 'Take your hand away. Step 2 starts in a few seconds.';
+    case 'real': return 'Step 2 of 2. Bring a fingertip near your lips. Hold it there.';
+    case 'result': return profileToSave(state) ? 'Done. You can save the result or try again.' : 'That did not work. You can try again.';
+    default: return '';
+  }
+}
+
 /** A step that is enough on its own would be a half calibration; say in words why a result failed. */
 export function failureMessage(reason: 'no-rest' | 'no-real' | 'no-either'): string {
   switch (reason) {
