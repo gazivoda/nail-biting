@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { StreakHero } from '../components/dashboard/StreakHero';
 import { CameraPanel } from '../components/dashboard/CameraPanel';
 import { TodayStats } from '../components/dashboard/TodayStats';
@@ -10,15 +11,30 @@ import { BackgroundSlot } from '../background/BackgroundSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
 import { FreeTierNotice } from '../components/billing/FreeTierNotice';
+import { usePhoneView } from '../phone/usePhoneView';
+import type { PhoneTab } from '../phone/PhoneView';
 
-export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
+// WS6 (flag phone_companion): a lazy chunk, so a visitor who never sees the phone view never downloads it.
+const PhoneView = lazy(() => import('../phone/PhoneView'));
+
+export function Dashboard({ onUpgrade, onNavigate }: { onUpgrade?: () => void; onNavigate?: (tab: PhoneTab) => void }) {
   const { user, accessStatus } = useAuth();
+  const phoneView = usePhoneView(); // WS6: true only with the flag on, on a phone or a computer with no webcam
   const trialLeftText = accessStatus === 'trial_active' ? trialLeft(user?.trial_end_date) : null;
   const firstName = user?.name?.split(' ')[0] ?? 'there';
 
   const hour = new Date().getHours();
   const greeting =
     hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+
+  // WS6: the phone view replaces the camera dashboard (no camera panel, so no detection starts).
+  if (phoneView) {
+    return (
+      <Suspense fallback={<div aria-busy="true" className="min-h-[60vh]" />}>
+        <PhoneView onUpgrade={onUpgrade} onNavigate={onNavigate} />
+      </Suspense>
+    );
+  }
 
   return (
     <div className="p-5 sm:p-8 pb-10">

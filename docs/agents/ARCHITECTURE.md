@@ -619,7 +619,7 @@ mirrored facts. `scripts/generate-og-images.mjs` renders the 1200x630 cards (nee
 `scripts/indexnow-ping.mjs` is manual. **Do not run seo:sync or og:generate in a workstream** (SWARM_RULES); the
 orchestrator regenerates.
 
-**Adding a marketing page** (WS6 phone view, WS10 share page, WS11): client branch in `src/App.tsx`; a server handler
+**Adding a marketing page** (WS10 share page, WS11; the WS6 phone view is not a page, see section 9): client branch in `src/App.tsx`; a server handler
 (or at least a `KNOWN_ROUTES` entry, otherwise a direct hit 404s); for indexable pages `CORE_PAGES` and
 `PAGE_SOURCES` in `sync-seo.mjs` (the file contains binary bytes: use `grep -a` and edit in bytes) and the llms.txt
 key-page list. Pages that must stay private use `noindex` and are kept out of the sitemap. A page that exists only
@@ -650,8 +650,17 @@ needs a network on the very first run of a profile. `/api/*` is never cached by 
 Install UI: `usePWAInstall` (captures `beforeinstallprompt`, key `pwa_install_dismissed`), `PWAInstallPrompt`
 (banner), `usePWAGuide` + `PWAGuideModal` (iOS/Chromium instructions, key `pwa_guide_snoozed_until`).
 **A browser that has visited keeps the old bundle until the worker updates** (lessons.md): unregister the worker or use
-a fresh headless Chrome profile before judging a UI change. WS6: the manifest has no `shortcuts` or phone-specific
-config; `start_url` is `/`.
+a fresh headless Chrome profile before judging a UI change.
+**WS6 (flag `phone_companion`).** The phone view is not a URL: it is `/` on a phone (or a computer that lists no
+camera), chosen by `src/phone/phoneDecision.ts`, so `start_url` stays `/` and no server page has to 404 while the flag is
+off. The manifest on disk is unchanged; while the flag is on `server/routes/phone.js` answers `GET /manifest.webmanifest`
+with the same file plus two home-screen `shortcuts` (`/?action=bite`, `/?action=urge`; iOS ignores shortcuts), and with
+the flag off it calls `next()` so `express.static` serves the file byte for byte. For that to work the worker must not
+precache the manifest: `manifestOutOfPrecache()` in `vite.config.ts` removes the entry through vite-plugin-pwa's
+`api.extendManifestEntries` (workbox's `manifestTransforms` never sees that entry; verified). Also added: a CacheFirst
+`brand-static` runtime cache for `/fonts/*.woff2` and `/logo*.svg` (offline type), iOS head tags and 152/167 touch icons
+in `index.html`, and `src/phone/offlineGrant.ts` (the installed app opens offline from the access facts last saved
+online; see `docs/agents/ws6-notes.md`).
 
 ---
 
@@ -739,6 +748,7 @@ checks `electron/` (`tsc -b` does not).
 | `src/pages/settings/meta.ts`, `sectionComponents.ts` | WS0; add a section = a line in each | |
 | Marketing copy: `Landing.tsx`, FAQ data, meta/schema strings, `comparePages.ts` | WS11a wording; WS9 mechanical trial-length constant swap; WS11b, WS12 last | |
 | `App.tsx` routes | one added line per route | |
+| Phone view: `src/phone/**`, `server/routes/phone.js`, `scripts/generate-phone-icons.py` | WS6 | `Dashboard.tsx` renders `<PhoneView>` when `usePhoneView()` is true (lazy); `App.tsx` passes `onNavigate`; `TabBar` and `PWAGuideModal` read `usePhoneViewActive()`; `AuthContext` calls `resolveFailedSession` / `clearGrant`; `index.html` PWA head tags |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
 | `src/index.css`, `tailwind.config.js` | do not change tokens (a change reaches every surface; see lessons) | |
 | `PrivacyPage`, `TermsPage`, `LegalPage`, `RefundPage` | nobody; drafts go to `docs/agents/legal/` | |

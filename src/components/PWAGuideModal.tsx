@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Download, X, Share, Plus, Check, Activity, Zap, Wifi } from 'lucide-react';
 import { usePWAGuide } from '../hooks/usePWAGuide';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { usePhoneViewActive } from '../phone/activeStore';
 
 const BENEFITS = [
   {
@@ -18,6 +19,26 @@ const BENEFITS = [
     icon: <Wifi size={15} />,
     title: 'Runs on your device',
     desc: 'No camera data is sent while detection runs',
+  },
+];
+
+// WS6: on the phone view there is no detection to keep running, so the first benefit
+// and the last one are about what the phone view actually does.
+const PHONE_BENEFITS = [
+  {
+    icon: <Zap size={15} />,
+    title: 'Instant launch',
+    desc: 'One tap from your home screen, no browser',
+  },
+  {
+    icon: <Activity size={15} />,
+    title: 'Log in a tap or two',
+    desc: 'Record a bite or an urge as it happens',
+  },
+  {
+    icon: <Wifi size={15} />,
+    title: 'Works with no signal',
+    desc: 'Entries are saved on this phone and sync later if you turned sync on',
   },
 ];
 
@@ -42,6 +63,7 @@ const IOS_STEPS = [
 export function PWAGuideModal() {
   const { visible, platform, snooze, dismiss } = usePWAGuide();
   const { canInstall, triggerInstall } = usePWAInstall();
+  const phoneView = usePhoneViewActive();
   const [mounted, setMounted] = useState(false);
 
   // Trigger enter animation on next frame after mount
@@ -113,7 +135,7 @@ export function PWAGuideModal() {
 
           {/* Benefits */}
           <div className="space-y-2.5 mb-6">
-            {BENEFITS.map(({ icon, title, desc }) => (
+            {(phoneView ? PHONE_BENEFITS : BENEFITS).map(({ icon, title, desc }) => (
               <div key={title} className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-deep dark:bg-lime-300 flex items-center justify-center text-lime-300 dark:text-deep flex-shrink-0 mt-0.5">
                   {icon}
