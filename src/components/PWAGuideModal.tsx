@@ -16,8 +16,8 @@ const BENEFITS = [
   },
   {
     icon: <Wifi size={15} />,
-    title: 'Works offline',
-    desc: 'Detection runs fully on-device, no internet needed',
+    title: 'Runs on your device',
+    desc: 'No camera data is sent while detection runs',
   },
 ];
 

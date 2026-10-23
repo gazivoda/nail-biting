@@ -6,6 +6,7 @@ import { PLAN_FEATURES } from '../components/site/plans';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
+import { Testimonials } from '../components/site/Testimonials';
 
 // Dedicated /pricing page. The server (server.js) injects the title, meta
 // description, canonical (https://stopbiting.today/pricing), Offer schema and
@@ -102,6 +103,8 @@ export function PricingPage() {
             </div>
           </section>
         </div>
+
+        <Testimonials className="mx-auto mt-20 max-w-4xl" container={false} />
 
         <div className="mx-auto mt-20 flex max-w-4xl flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <div>

@@ -79,8 +79,7 @@ listing uses several of these already, which groups you into the same browse pag
 - habits / habit-tracking
 - webcam-monitoring
 - ai-powered
-- privacy-focused / no-tracking
-- works-offline
+- privacy-focused
 
 ## 3. Alternative relationships to register
 

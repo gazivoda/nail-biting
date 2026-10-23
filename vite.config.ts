@@ -158,6 +158,9 @@ export default defineConfig({
         globIgnores: [
           '**/mediapipe-wasm/**',
           '**/mediapipe-models/**',
+          // The copy of the pages behind the compare_competitors flag: fetched only
+          // once that flag is on, so it must not ride into every visitor's precache.
+          '**/assets/competitorPages-*.js',
         ],
       },
     })] : []),

@@ -13,6 +13,11 @@ export interface PageContent {
   // comparison tables) — same convention as blog post sections in blogPosts.ts.
   sections: { heading: string; body: string; html?: string }[];
   relatedPosts: { href: string; label: string }[];
+  // Set on pages whose competitor facts have not been checked by a human yet
+  // (the flagged pages in competitorPages.ts). Never rendered; read by tests and
+  // by docs/agents/ws11a-notes.md. Flip it to false only after someone has
+  // opened every source URL in the page's facts and confirmed the wording.
+  needsVerification?: boolean;
 }
 
 /**
@@ -159,7 +164,7 @@ function getDeskWorkersContent(): PageContent {
       },
       {
         heading: 'How does a webcam app stop nail biting at your desk?',
-        body: 'It supplies the awareness self-monitoring couldn\'t: the app watches your existing webcam locally and fires an audible alarm the moment it detects your hand approaching your mouth.\n\nIf you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab using your existing webcam.\n\nThe app processes your webcam feed locally — nothing is transmitted — and fires an audible alarm when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting covers the hours where a large share of the habit lives — the time spent in front of a computer.',
+        body: 'It supplies the awareness self-monitoring couldn\'t: the app watches your existing webcam locally and fires an audible alarm the moment it detects your hand approaching your mouth.\n\nIf you work at a computer, you already have everything you need for AI-assisted habit detection. Stop Biting runs in a browser tab using your existing webcam.\n\nDetection runs on your device, no camera data is sent while it runs, and an audible alarm fires when it detects your hand approaching your mouth. The alarm interrupts the automatic habit chain at the exact moment of occurrence, creating the awareness window that self-monitoring couldn\'t provide.\n\nFor desk workers, Stop Biting covers the hours where a large share of the habit lives — the time spent in front of a computer.',
       },
       {
         heading: 'What should you do when the alarm fires at your desk?',
@@ -175,7 +180,7 @@ function getDeskWorkersContent(): PageContent {
         [
           ['Where does most desk-worker nail biting happen?', 'During deep focus — debugging code, writing a difficult email, analyzing data — when the prefrontal cortex is fully occupied by the task and self-monitoring is offline.'],
           ['Does Stop Biting work on a work laptop?', 'It runs in a browser tab, with no install, using the webcam already on the machine.'],
-          ['Is my webcam footage sent anywhere?', 'No. The app processes your webcam feed locally — nothing is transmitted.'],
+          ['Is my webcam footage sent anywhere?', 'No. Detection runs on your device, and no camera data is sent while it runs.'],
           ['How do I stop biting during video calls?', 'Interlace your fingers and press them together under the desk: the same physical incompatibility as the palm press, and invisible on camera. Hold it while the urge passes, typically 20–60 seconds.'],
         ],
       ),
@@ -741,7 +746,7 @@ function getVsHandsOffContent(): PageContent {
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>€2.99/month (monthly plan only listed)</td></tr>' +
           '<tr><td>Free trial</td><td>3 days, no credit card</td><td>3 days</td></tr>' +
           '<tr><td>Progress tracking</td><td>Bite-free streaks and a timestamped incident history</td><td>Yes — its site says it “includes a statistics tracker to show your progress over time”</td></tr>' +
-          '<tr><td>Privacy</td><td>No camera data leaves the device, and nothing is sent while detection runs</td><td>States no video is recorded, GDPR compliant, no personal data collected</td></tr>' +
+          '<tr><td>Privacy</td><td>Detection runs on your device; no camera data is sent while it runs</td><td>States no video is recorded, GDPR compliant, no personal data collected</td></tr>' +
           '</tbody></table>',
       },
       {
@@ -762,7 +767,7 @@ function getVsHandsOffContent(): PageContent {
       },
       {
         heading: 'How does each app handle your camera data?',
-        body: 'Neither sends it anywhere — both process the webcam feed entirely on your device. This is a tie, and that’s good news. Hands Off states that all processing happens locally, no video gets recorded, and no personal data is collected — it is explicitly GDPR compliant. Stop Biting runs MediaPipe models compiled to WebAssembly directly on your device: the camera feed never leaves your machine, and no camera data is sent during detection, which you can verify yourself with your browser’s network monitor.\n\nWhichever app you choose here, you are not trading privacy for the feature.',
+        body: 'Neither sends it anywhere — both process the webcam feed entirely on your device. This is a tie, and that’s good news. Hands Off states that all processing happens locally, no video gets recorded, and no personal data is collected — it is explicitly GDPR compliant. Stop Biting runs MediaPipe models compiled to WebAssembly directly on your device: detection runs on your device and no camera data is sent while it runs, which you can verify yourself with your browser’s network monitor.\n\nWhichever app you choose here, you are not trading privacy for the feature.',
       },
       faqSection(
         'Every answer below uses the same 10 September 2026 verification against handsoffapp.com as the rest of this page.',
@@ -818,7 +823,7 @@ function getVsNailedContent(): PageContent {
       },
       {
         heading: 'Do Stop Biting and Nailed use the same detection technology?',
-        body: 'Yes — both run MediaPipe’s hand and face models, compiled to WebAssembly, locally on your own machine.\n\nUnder the hood, the two apps make the same technical bet: MediaPipe’s hand and face models, compiled to WebAssembly, running locally. Nailed’s site describes it plainly — machine learning detects when your hand approaches your mouth, everything runs on your Mac, the camera feed is processed in memory and immediately discarded, no servers, no analytics.\n\nStop Biting’s detection works the same way, and we publish the same commitment: no camera data ever leaves your device, and nothing is sent while detection runs.\n\nSo the honest framing isn’t "which detector is real" — both are. It’s "how much system do you want around the detector."',
+        body: 'Yes — both run MediaPipe’s hand and face models, compiled to WebAssembly, locally on your own machine.\n\nUnder the hood, the two apps make the same technical bet: MediaPipe’s hand and face models, compiled to WebAssembly, running locally. Nailed’s site describes it plainly — machine learning detects when your hand approaches your mouth, everything runs on your Mac, the camera feed is processed in memory and immediately discarded, no servers, no analytics.\n\nStop Biting’s detection works the same way, and we publish the same commitment: detection runs on your device and no camera data is sent while it runs.\n\nSo the honest framing isn’t "which detector is real" — both are. It’s "how much system do you want around the detector."',
       },
       {
         heading: 'Why choose Nailed over Stop Biting?',
@@ -1378,3 +1383,10 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-mac': getMacContent,
   '/solutions/for-windows': getWindowsContent,
 };
+
+// The page-building helpers, for src/data/competitorPages.ts. A trailing export
+// list rather than `export` on each declaration: scripts/sync-seo.mjs follows a
+// page's copy to `const NAME =` / `function NAME(` at the start of a line, and an
+// `export` prefix would make it stop seeing the shared sections, which would
+// move the freshness date of every page that uses them.
+export { faqSection, verificationSection, MEDICAL_DISCLAIMER_SECTION };

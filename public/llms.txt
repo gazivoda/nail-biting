@@ -13,8 +13,8 @@ Pricing:
 
 Key facts:
 
-- Stop Biting runs MediaPipe models in WebAssembly on your own device — the camera feed never leaves it, and once the detection models have downloaded nothing carrying camera data is sent while it watches, which anyone can verify in a browser network monitor
-- Detection works fully offline after the initial load; no camera data is transmitted or stored
+- Stop Biting runs MediaPipe models in WebAssembly on your own device — once the detection models have downloaded nothing carrying camera data is sent while it watches, which anyone can verify in a browser network monitor
+- Detection runs on your device. No camera data is sent while it runs
 - It detects nail biting using two MediaPipe models: a hand landmark model tracking 21 keypoints, and a face mesh tracking 468 facial landmarks
 - Supported platforms: any modern browser with a webcam, as a no-install PWA, on Mac or Windows
 - It detects nail biting only. Competing apps cover more behaviours, run on phones, or cost less, and the comparison pages below say where each of them beats us

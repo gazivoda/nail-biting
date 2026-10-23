@@ -8,7 +8,7 @@ import { TrialButton } from '../components/site/TrialButton';
 
 // /how-it-works, in the homepage's sign system (tokens in `.sg-page`, see
 // DESIGN.md). The h1, the standfirst, "Why awareness is the bottleneck", the
-// steps and the first three questions are mirrored as crawler prose and
+// steps and the five questions are mirrored as crawler prose and
 // HowTo/FAQPage schema in server.js (HOW_IT_WORKS_FAQS): edit both together.
 
 const STEPS = [
@@ -36,16 +36,16 @@ const STEPS = [
 
 const SPECS = [
   { label: 'Detection model', value: 'Google MediaPipe Hand Landmarker (21 landmarks)' },
-  { label: 'Processing', value: 'WebAssembly: sandboxed, on-device, no network access' },
+  { label: 'Processing', value: 'WebAssembly: sandboxed, runs on your device' },
   { label: 'Alarm latency', value: 'About 0.6 seconds after your hand starts moving to your mouth' },
   { label: 'Incident logging', value: 'Timestamped log stored locally, never transmitted' },
 ];
 
-// The first three match HOW_IT_WORKS_FAQS in server.js (FAQPage schema).
+// All five match HOW_IT_WORKS_FAQS in server.js (FAQPage schema), word for word.
 const FAQS = [
   {
     q: 'What happens to my camera data?',
-    a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
+    a: 'It is processed frame by frame on your device by the MediaPipe WASM binary running locally. No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
   },
   {
     q: 'Does it work on Mac, Windows, and Linux?',

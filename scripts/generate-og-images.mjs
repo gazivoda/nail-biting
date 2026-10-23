@@ -594,6 +594,10 @@ function shrink(png) {
 async function collectTargets() {
   const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
   const { PAGE_MAP } = await import('../src/data/comparePages.ts');
+  // Cards for the pages behind the compare_competitors flag. A card is a static file
+  // under /og/ that nothing links to, so having one for an unpublished page leaks nothing
+  // and spares a regeneration step on the day the flag is turned on.
+  const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
 
   const targets = BLOG_POSTS.map((post) => ({
     file: `${post.slug}.png`,
@@ -604,7 +608,7 @@ async function collectTargets() {
     meta: `${post.readingMinutes} min read`,
   }));
 
-  for (const [path, load] of Object.entries(PAGE_MAP)) {
+  for (const [path, load] of Object.entries({ ...PAGE_MAP, ...GATED_PAGE_MAP })) {
     const content = load();
     targets.push({
       // /compare/foo -> compare-foo.png, /solutions/bar -> solutions-bar.png
