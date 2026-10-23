@@ -1,0 +1,338 @@
+{
+ "label": "flagoff-hidden",
+ "mode": "hidden",
+ "flags": "",
+ "browser": "Chrome/155.0.8059.85",
+ "startedAt": "2026-10-23T18:03:53.823Z",
+ "VIS": 75,
+ "HID": 700,
+ "BACK": 30,
+ "checkpoints": [
+  {
+   "hiddenSec": 31,
+   "vis": "hidden",
+   "video": {
+    "frames": 2397,
+    "t": 119.78
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 61,
+   "vis": "hidden",
+   "video": {
+    "frames": 3002,
+    "t": 150.05
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 91,
+   "vis": "hidden",
+   "video": {
+    "frames": 3593,
+    "t": 179.58
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 121,
+   "vis": "hidden",
+   "video": {
+    "frames": 4192,
+    "t": 209.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 151,
+   "vis": "hidden",
+   "video": {
+    "frames": 4792,
+    "t": 239.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 181,
+   "vis": "hidden",
+   "video": {
+    "frames": 5392,
+    "t": 269.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 211,
+   "vis": "hidden",
+   "video": {
+    "frames": 5992,
+    "t": 299.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 241,
+   "vis": "hidden",
+   "video": {
+    "frames": 6592,
+    "t": 329.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 271,
+   "vis": "hidden",
+   "video": {
+    "frames": 7192,
+    "t": 359.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 301,
+   "vis": "hidden",
+   "video": {
+    "frames": 7792,
+    "t": 389.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 331,
+   "vis": "hidden",
+   "video": {
+    "frames": 8392,
+    "t": 419.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 361,
+   "vis": "hidden",
+   "video": {
+    "frames": 8992,
+    "t": 449.57
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 391,
+   "vis": "hidden",
+   "video": {
+    "frames": 9592,
+    "t": 479.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 421,
+   "vis": "hidden",
+   "video": {
+    "frames": 10192,
+    "t": 509.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 451,
+   "vis": "hidden",
+   "video": {
+    "frames": 10792,
+    "t": 539.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 481,
+   "vis": "hidden",
+   "video": {
+    "frames": 11392,
+    "t": 569.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 511,
+   "vis": "hidden",
+   "video": {
+    "frames": 11992,
+    "t": 599.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 541,
+   "vis": "hidden",
+   "video": {
+    "frames": 12592,
+    "t": 629.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 571,
+   "vis": "hidden",
+   "video": {
+    "frames": 13192,
+    "t": 659.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 601,
+   "vis": "hidden",
+   "video": {
+    "frames": 13792,
+    "t": 689.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 631,
+   "vis": "hidden",
+   "video": {
+    "frames": 14392,
+    "t": 719.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 661,
+   "vis": "hidden",
+   "video": {
+    "frames": 14992,
+    "t": 749.56
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 691,
+   "vis": "hidden",
+   "video": {
+    "frames": 15597,
+    "t": 779.8
+   },
+   "fresh": true
+  }
+ ],
+ "cpu": {
+  "visible": {
+   "seconds": 65,
+   "browser": 0.9,
+   "renderer": 16.4,
+   "GPU": 7.4,
+   "network.mojom.NetworkService": 0.1,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.5
+  },
+  "hiddenFirstMinute": {
+   "seconds": 62.8,
+   "browser": 0.5,
+   "renderer": 4.4,
+   "GPU": 0.9,
+   "network.mojom.NetworkService": 0,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.5,
+   "audio.mojom.AudioService": 0.1
+  },
+  "hiddenRest": {
+   "seconds": 638,
+   "browser": 0.2,
+   "renderer": 2.8,
+   "GPU": 0.6,
+   "network.mojom.NetworkService": 0,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.4,
+   "audio.mojom.AudioService": 0
+  }
+ },
+ "alarms": [
+  {
+   "tag": "visible",
+   "latencyMs": 662,
+   "logged": 1,
+   "vis": "visible"
+  },
+  {
+   "tag": "hidden+20s",
+   "latencyMs": 1179,
+   "logged": 1,
+   "vis": "hidden"
+  },
+  {
+   "tag": "hidden+650s",
+   "latencyMs": 2978,
+   "logged": 1,
+   "vis": "hidden"
+  }
+ ],
+ "startedDetectionAfterMs": 4030.300000000745,
+ "hiddenAtMs": 89349.40000000224,
+ "visHidden": "hidden",
+ "visBack": "visible",
+ "endMs": 820675.4000000022,
+ "table": [
+  {
+   "window": "-30..0s",
+   "raf": 57.8,
+   "iv100": 10,
+   "stepsPerSec": 3.7
+  },
+  {
+   "window": "0..10s",
+   "raf": 0,
+   "iv100": 10,
+   "stepsPerSec": 2
+  },
+  {
+   "window": "10..60s",
+   "raf": 0,
+   "iv100": 9.3,
+   "stepsPerSec": 1.7
+  },
+  {
+   "window": "60..180s",
+   "raf": 0,
+   "iv100": 1,
+   "stepsPerSec": 1.03
+  },
+  {
+   "window": "180..300s",
+   "raf": 0,
+   "iv100": 1,
+   "stepsPerSec": 1.03
+  },
+  {
+   "window": "300..360s",
+   "raf": 0,
+   "iv100": 1,
+   "stepsPerSec": 1.03
+  },
+  {
+   "window": "360..480s",
+   "raf": 0,
+   "iv100": 1,
+   "stepsPerSec": 1.03
+  },
+  {
+   "window": "480..600s",
+   "raf": 0,
+   "iv100": 1,
+   "stepsPerSec": 1.03
+  },
+  {
+   "window": "600..660s",
+   "raf": 0,
+   "iv100": 2.18,
+   "stepsPerSec": 1.02
+  },
+  {
+   "window": "660..701s",
+   "raf": 1.21,
+   "iv100": 6.87,
+   "stepsPerSec": 1.77
+  }
+ ],
+ "longestSecondsWithoutAStepWhileHidden": 6
+}

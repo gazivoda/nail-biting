@@ -123,13 +123,14 @@ try {
 
   // 4. meeting mode: logged, silent; then sounds again
   const s4 = {};
+  // The store merges alarms less than 30 s apart into one episode (ARCHITECTURE section 2), so each alarm waits 31 s.
   s4.control = await injectAlarm(page); // running: sounds
   s4.meetingClicked = await clickText(page, '30 minutes');
-  await sleep(1000);
+  await sleep(31000);
   s4.panelSaysMeeting = /Meeting mode until/.test(await body(page));
   s4.inMeeting = await injectAlarm(page); // silent: logged, no AudioContext
   s4.endClicked = await clickText(page, 'End meeting mode');
-  await sleep(1000);
+  await sleep(31000);
   s4.afterMeeting = await injectAlarm(page);
   results.scenarios.meetingMode = s4;
   console.log('4', JSON.stringify(s4));
