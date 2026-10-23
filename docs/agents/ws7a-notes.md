@@ -356,8 +356,9 @@ demo loads grew by about 1.4 KB raw (0.6 KB gzip) and a shared chunk of about 4 
   loop, engine and alarm (`probeHook.ts`, a build-time define, absent from production bundles: `grep __sbProbe dist/assets/*.js` prints
   nothing). MediaPipe's own speed on a real face is unchanged (WS1 measured it).
 - **A windowed (non-headless) Chrome**, minimised or covered by other windows; **Edge, Firefox, Safari**; a **real Document
-  Picture-in-Picture window** on a desktop (headless opens one, but its size and always-on-top behaviour are not the real thing: the strip
-  is 240x64 there only on paper; the headless window is larger).
+  Picture-in-Picture window** on a desktop. Headless opens one (it is a real second window and it unthrottles the page, as measured), but
+  larger than the 300x64 the app asks for (240x64 with the flag off), so the strip's layout was checked by emulating that size
+  (`shots.mjs`), not in a window of that size.
 - **The tray** (clicks) and **the desktop app end to end**: the bridge round trip is tested with the real bridge and fakes, not
   through Electron. A worker loaded from `file://` in the packaged app is untested; if it is refused the ticker falls back to timers
   (and the packaged window is not throttled anyway).
