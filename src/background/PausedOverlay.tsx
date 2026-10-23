@@ -17,7 +17,11 @@ export function PausedOverlay() {
       <p className="max-w-xs text-sm text-stone-600 dark:text-stone-300">{note.detail}</p>
       <button
         type="button"
-        onClick={resumeWatching}
+        onClick={() => {
+          resumeWatching();
+          // This panel goes away with its button: focus the camera card's own Stop button, not the top of the page.
+          window.setTimeout(() => document.querySelector<HTMLElement>('[data-tour="camera-toggle"] button')?.focus(), 0);
+        }}
         className="inline-flex min-h-11 items-center rounded-full bg-deep px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
       >
         Resume now
