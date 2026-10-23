@@ -36,6 +36,8 @@ server/
   routes/_example.js      worked example of a flagged route module
   routes/billing.js       WS9: lifetime, gifts, referrals, free tier (flagged); hooks for the webhook and /api/user/me
   billing/                WS9: entitlements, gift codes, referrals, purchases, webhook hook (see ws9-notes.md)
+  routes/share.js         WS10: read-only share links (flag share_links): owner API + public page and JSON
+  share/                  WS10: links.js (table + store), tokens.js, summary.js (THE whitelist), page.js (self-contained HTML)
 shared/                   WS9: plans.js (TRIAL_DAYS and the other plan numbers), access.js (the one access decision);
                           plain JS + .d.ts, imported by src/, server/, scripts/ and vite.config.ts
 email.js                  Resend: welcome, feedback, admin notice, generic sendEmail()
@@ -410,7 +412,7 @@ file is empty; that check is the feature's, not the flag's.
 ### Request pipeline in `server.js` (in order)
 
 1. `http -> https` 301 (from `X-Forwarded-Proto`), then a canonicalising 301 for page URLs (lower-case, collapse `//`,
-   strip trailing slash, `/index.html` -> `/`; never `/api` or `/assets`).
+   strip trailing slash, `/index.html` -> `/`; never `/api`, `/assets` or `/share/` (WS10: share tokens are mixed case)).
 2. `compression`, `Permissions-Policy`, `helmet` (CSP lists Paddle, GA, Formspree), CORS for `/api/` only
    (`ALLOWED_ORIGINS` + `APP_URL`), `cookieParser`.
 3. `express.json({ limit: '10kb' })` for everything except `/api/paddle/webhook` (which needs the raw body).
@@ -473,6 +475,10 @@ production crashes at boot (commit 57aa6b0 was exactly this). A test checks the 
 `ALTER TABLE users DROP COLUMN paypal_subscription_id` in a try/catch, and `trialFollowup.js` adds
 `trial_followup_sent_at` (only when `RESEND_API_KEY` is set). `getUser` lazily flips an expired trial to `expired`.
 Prepared statements: `stmtGet`, `stmtFindByEmail`, `stmtUpsert`.
+
+`share_links` (WS10, additive migration `ws10_001_share_links`): `id`, `user_id`, `token_hash` (SHA-256 of the token, unique),
+`scope` JSON `{"detailed":bool}`, `label`, `created_at`, `expires_at`, `revoked_at`, `last_viewed_at`, `timezone`. The token is
+never stored. Details, endpoints and the privacy tests: `docs/agents/ws10-notes.md`.
 
 **New tables and columns** go through `server/db/migrate.js`, additive only: `createTable` (must be
 `CREATE TABLE IF NOT EXISTS`), `createIndex` (`CREATE [UNIQUE] INDEX IF NOT EXISTS`), `addColumn(table, column,
@@ -605,6 +611,14 @@ orchestrator regenerates.
 key-page list. Pages that must stay private use `noindex` and are kept out of the sitemap. A page that exists only
 while a flag is on must 404 on the server while it is off (`flags.isOn`) so it cannot be indexed.
 
+**A page whose address contains a secret** (WS10 `/share/<token>`) must not be the app's HTML shell: that shell loads
+Google Analytics (`index.html`) and the app bundle. `server/share/page.js` renders a self-contained document (inline style
+and one inline script allowed by hash in its own CSP, no third party, no cookie, `no-store`, `noindex`,
+`Referrer-Policy: no-referrer`). Keep any new secret-bearing page the same way, add its prefix to the canonicalising
+redirect's exemptions in `server.js` if the secret is mixed case, and to the service worker denylist (a worker that answers
+it from the cached shell loads Google Analytics with the secret in the address; WS10 reproduced exactly that with the
+denylist entry removed).
+
 ---
 
 ## 9. PWA
@@ -615,7 +629,7 @@ swallowed. The generated worker has `skipWaiting` + `clientsClaim`, so a new dep
 (the open page is not reloaded; there is no update prompt). Manifest (generated, `dist/manifest.webmanifest`): name
 "Stop Biting: AI Nail Habit Tracker", `display: standalone`, `orientation: portrait-primary`, theme/background
 `#F7F7F1`, icons 192, 512 and a maskable 512 in `public/icons/`, `screenshots: []`. Workbox: precache of the app shell
-(21 entries), `navigateFallback: '/index.html'` with a denylist for `/api/`, `/downloads/`, `/posts/`; runtime caches:
+(21 entries), `navigateFallback: '/index.html'` with a denylist for `/api/`, `/downloads/`, `/posts/`, `/signin` (WS8), `/redeem` (WS9) and `/share/` (WS10); runtime caches:
 `/assets/*.js|css` StaleWhileRevalidate, `/posts/<slug>.json` NetworkFirst (3 s), `/icons/*.png` CacheFirst.
 MediaPipe wasm and models are excluded from precache and not runtime-cached (browser HTTP cache only), so detection
 needs a network on the very first run of a profile. `/api/*` is never cached by the worker.
@@ -702,6 +716,7 @@ checks `electron/` (`tsc -b` does not).
 | Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
 | Desktop shell: `electron/**`, `src/desktop/**`, `vite.electron*.config.ts`, `build/`, `.github/workflows/desktop.yml` | WS7b | `src/desktop/ipc.ts` is the contract with the Electron side; WS7a consumes `stopbiting:desktop-command` and reports with `stopbiting:desktop-state` (docs/agents/ws7b-notes.md) |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 mounted `<NotABiteSeam />` beside it (and in `PiPWindow.tsx`) | `handleAlert` is the one-line seam for `{ behavior, hand }` (`alarmHandExtras()`) |
+| Share links: `server/routes/share.js`, `server/share/**`, `src/share/**`, `SharingSettings.tsx` | WS10 | `buildShareView` in `server/share/summary.js` is the ONLY thing a link reveals; add a field there and in its exact-key-set tests, never anywhere else |
 | `Settings.tsx` | frozen; nobody edits it (WS9 may touch `PlanSection` for plans) | `<SettingsSlots />` |
 | `src/pages/settings/sections/*.tsx` | one workstream per file (table in section 7) | |
 | `src/pages/settings/meta.ts`, `sectionComponents.ts` | WS0; add a section = a line in each | |
