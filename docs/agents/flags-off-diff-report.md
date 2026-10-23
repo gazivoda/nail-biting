@@ -152,7 +152,21 @@ total raw 1526846 -> 1585418 (+58572), gzip 462139 -> 482811 (+20672)
 * In S to M the same table has the same rows and deltas (total +58,572 raw; gzip +20,620 because the SEO session changed
   `index.js#2` by -23 B raw).
 
-PENDING-WEIGHT
+What a visitor downloads (`weight.mjs`: the JS and CSS the browser actually requested in the real-Chrome captures,
+gzipped), A to B, every flag off:
+
+| Page load | A | B | Delta |
+|---|---|---|---|
+| landing page and every marketing page (3 files: entry, vendor, CSS) | 182,572 B gz | 186,512 B gz | **+3,940 B, no new request** (entry +3,528, CSS +289, vendor +123) |
+| a blog post (+ `BlogPost` chunk) | 185,988 | 189,934 | +3,946 |
+| a compare or solutions page (+ `ComparePage`) | 218,259 | 222,591 | +4,332 |
+| signed in, Watch tab (13 files, 18 files) | 252,760 | 263,877 | **+11,117 B and 5 more requests**: `appTicker`, `silent`, `watchStore`, `scheduleStore`, a third `actions` chunk (3.8 kB gz); the rest is the entry, `Dashboard` (+2,263), `useDetection` (+1,072) |
+| signed in, History | 83,639 | 83,645 | +6 |
+| signed in, Settings (adds `reminders` and the schedule section) | 10,898 | 12,903 | **+2,005 B and 1 more request** |
+
+The landing demo (`HeroDemo`) and the calibration screen import the same three chunks (`appTicker`, `silent`,
+`watchStore`, 2.2 kB gz); that is from the import graph (the demo needs a click, it was not started in the captures).
+For a visitor whose service worker installs, the precache grows from 49 to 60 entries, +58.3 KiB raw (section 3.3).
 
 ## 5. HTTP: 91 requests against the real server, flags off
 
@@ -237,16 +251,43 @@ PENDING-DOM
 |---|---|---|---|---|
 | E1 | WS6 | `index.html` head: 3 touch icons with sizes and 4 mobile web app meta tags, on all 19 shell pages | yes, matches `ws6-notes.md` (1) | no. Visible only when a page is added to a home screen: on iOS the label becomes "Stop Biting" instead of the page title, iPads get their own icon sizes, and iOS before 16.4 opens it standalone. The manifest already says `display: standalone` |
 | E2 | WS6 | `manifest.webmanifest` out of the service worker precache; `brand-static` cache for fonts and logos; 4 new icon files served | yes | no. The served manifest is still the built file, byte for byte |
-| E3 | WS6 | `PhoneView` chunk (13.6 kB) | yes: never requested in any signed-in or signed-out capture | **partly**: it is in the service worker's precache (A to B list above), so a visitor whose worker installs does download it (4.9 kB gz) although the page never renders it. The notes say a flag-off visitor "never downloads" it |
+| E3 | WS6 | `PhoneView` chunk (13.6 kB) | yes: never requested in any signed-in or signed-out capture | no, but see F3: it is in the service worker's precache, so a visitor whose worker installs does download it (4.9 kB gz); the notes record the precache growth and also say a flag-off visitor "never downloads" it |
 | E4 | WS7a | 12 new chunks; `tickWorker`, `BackgroundRunner` unused | yes: only requested with the flag on | no for `BackgroundRunner`/`tickWorker`. Both are precached (2.9 kB + 0.3 kB) |
-| E5 | WS7a | extra chunks fetched with the flag off | partly | **yes**. `ws7a-notes.md` names `watchStore` (1.3 kB gz) for the landing demo. In fact `useDetection`, `HeroDemo` and `CalibrationView` import `appTicker`, `silent` and `watchStore`, and Dashboard's load adds `scheduleStore` too: **4 extra requests (appTicker, silent, watchStore, scheduleStore) on the signed-in Watch tab (+7.2 kB gz with Dashboard and useDetection growth), 1 (reminders) on Settings (+2.0 kB gz)**. Body HTML and pixels are identical; `modulepreload` links for them appear in the head |
+| E5 | WS7a | extra chunks fetched with the flag off | partly | **yes**. `ws7a-notes.md` names `watchStore` (1.3 kB gz) for the landing demo and says a visitor "can notice download size only". In fact `useDetection`, `HeroDemo` and `CalibrationView` import `appTicker`, `silent` and `watchStore`, and the Watch tab also loads `scheduleStore` and a third `actions` chunk: **5 extra requests and +11.1 kB gz on the signed-in Watch tab** (3.8 kB gz of it new chunks), **1 extra request (`reminders`) and +2.0 kB gz on Settings**. Body HTML, title, console errors and pixels are identical; `<link rel="modulepreload">` lines for them appear in the head |
 | E6 | WS7a | the detection loop, alarm, notifications | yes | no. Read in the diff: every new branch is guarded by `isFeatureOn('background_watching')`, `silentNow()` (false when off), `hiddenDriven` (false) or `useWatchGate` (constant). `startHidden()` with the flag off is `startBgInterval()` |
 | E7 | WS11b | entry bundle +~8 kB raw / 2.2 kB gz of copy rules and hook; `ComparePage` +1 kB; `seo-gated.json` +68 kB; 6 OG cards in `dist` | yes | no. `ws11b-notes.md` says the rule sentences "are in the JavaScript and in the service worker's precache of every visitor with every flag off". The six pages' copy is not in the app |
 | E8 | WS11b | marketing pages learn the flags from `<meta name="sb-copy-flags">` | yes: absent with every flag off (no page body differs from A beyond E1), present with `event_sync phone_companion` on (5.5) | no |
 | E9 | WS11b | six pages, their data, OG cards, sitemap and llms entries | yes: all absent or 404 (5.1) | the 404 for the two cards has a different `Vary` (F3) |
 | E10 | WS12a | does not exist in this tree | n/a | n/a |
 
-PENDING-FINDINGS
+## 8. Findings
+
+**Verdict: with every flag off, tree B (and the merge M) serves what production serves, apart from the differences in
+sections 3 to 7. No difference is unexplained. Nothing is gated wrongly: every page, API route, social card and data file of
+a flagged feature is a 404 (or the built file, byte for byte) and the sitemap, llms files, CSP and caching of every
+published page are unchanged.** The positive control (5.5) shows the checks can see a flag.
+
+| # | Kind | Finding |
+|---|---|---|
+| F1 | **UNEXPLAINED** | none |
+| F2 | Documentation says less than the build does (WS7a) | With every flag off the signed-in Watch tab loads **5 more JS files** (`appTicker`, `silent`, `watchStore`, `scheduleStore`, a third `actions` chunk) and Settings **1 more** (`reminders`), **+11.1 kB and +2.0 kB gzip** in total. `useDetection`, `HeroDemo`, `CalibrationView` and the settings chunks import the new shared chunks statically (Rollup's chunk graph), so the code is fetched although nothing in it runs. No visible effect (body HTML, pixels, console errors identical in 25 captures). The `ws7a-notes.md` sentence "what a visitor can notice is download size only" is true; the list that follows it (`watchStore` only) is incomplete. Fix if it matters: make the flag-off path not import them (dynamic import behind `isFeatureOn`), the same trick WS7a used for `BackgroundRunner` |
+| F3 | Documented, but the notes contradict each other (WS6, WS7a) | `PhoneView` (13.6 kB, 4.9 kB gz), `BackgroundRunner`, `tickWorker` and 8 other new chunks are in the **service worker precache** (49 to 60 entries, +58.3 KiB raw; the 11 new names are 28.5 kB raw / 11.9 kB gz). A visitor whose worker installs downloads them although no flag is on; the page load itself never requests them. `ws6-notes.md` records "49 precache entries become 51, with the PhoneView chunk" and, a line later, that a flag-off visitor "never downloads" it; `ws7a-notes.md` records 51 to 60. Both are true: never on a page load, always for the precache |
+| F4 | Undocumented, harmless (WS11b) | A closed gated card (`/og/features-*.png`, `/og/solutions-cuticle-biting.png`) still answers the same 404 page, but now with `Vary: Accept-Encoding` and **gzip-compressed**. Mechanism: the new `app.use('/og', ...)` wrapper calls `sendHtml` while `req.path` is mount-relative (`/features-phone-companion.png`), so the compression filter's `INCOMPRESSIBLE_PATHS = /^\/(?:og\|fonts)\//` no longer matches. `/og/nope.png` (falls through to the catch-all, full path) is unchanged. Verified with `Accept-Encoding: gzip` against A and B. Real cards (PNG, declined by content type) are unaffected |
+| F5 | Behaviour you may not expect (WS6) | The head tags are in the shell, so they are on every page including the legal pages, with the flag off: on iOS, "Add to Home Screen" now says "Stop Biting" (it used the page title), iPads get their own icon sizes and iOS before 16.4 opens it full screen. The two shortcut icons are served (200) but referenced by nothing while `phone_companion` is off. Both documented in `ws6-notes.md` as "only read when someone adds the app to a home screen" |
+| F6 | Process | The shared worktree's `dist/` was regenerated by another agent during this check (`seo-content.json` 00:48:30) and its `sw.js` names a different `workbox-*.js` than any clean build of the same commit. Verify releases from a clean checkout, as done here. `workbox-*.js` names are not reproducible between checkouts, so compare `sw.js` after normalising them (`lib.mjs`) |
+| F7 | Integration | M (B merged with `origin/main`) builds, and the two sessions' changes are exactly additive in `dist/` and in 11 of 13 shared pages (5.4). Both edit `sw.js` (SEO: navigation `allowlist`; WS6: `brand-static`, manifest out of the precache); both are present in M. `/?action=bite` still matches the SEO allowlist |
+| F8 | Same in every build, not a regression | `/signin`, `/redeem`, `/share/<id>` are the branded 404 with every flag off (documented), and `GET /api/phone/*` does not exist (WS6 has only the manifest route) |
+
+### Not verified, and why
+
+* The service worker was not installed in the browser: over plain `http://localhost` Chrome upgrades the shell's redirect to
+  https and workbox's precache fails (`ws6-notes.md`, "Local testing pitfall"). Its behaviour is read from the generated
+  `sw.js`, not observed.
+* One signed-in user (trial running). The expired-trial paywall, subscribed and free-tier states were not captured.
+* Detection ran on Chrome's fake camera only: the loop starts, the status text says "Detection active" and nothing differs from A;
+  no hand was injected, so the alarm path with the flag off was read in the source diff, not run (WS7a's own flag-off alarm
+  timing, `app-final-check-flagoff.json`, covers that).
+* No real phone, no Electron build (`npm run build` was not run), no flag-on behaviour beyond the positive control.
 
 ## 9. Reproduce
 

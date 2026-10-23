@@ -48,9 +48,11 @@ try {
     if (!row.head) {
       row.headDiff = lineDiff(file(la, name, 'head').replace(/></g, '>\n<'), file(lb, name, 'head').replace(/></g, '>\n<'), 40);
       // WS6 added these tags to index.html with every flag off (docs/agents/ws6-notes.md, "Flags off, before and after" (1))
-      const known = /apple-touch-icon|mobile-web-app|Added to a home screen|is read too since|Full-bleed icons|style \(dark text/;
+      // and Vite writes a <link rel="modulepreload"> into the head for each lazy chunk the page loads: the new shared
+      // chunks (appTicker, silent, watchStore, scheduleStore, reminders, ...) show up there, and their requests show up below
+      const known = /apple-touch-icon|mobile-web-app|Added to a home screen|is read too since|Full-bleed icons|style \(dark text|rel="modulepreload"[^>]*href="\/assets\/[A-Za-z]+\.js"/;
       row.headOnlyWs6Tags = [...row.headDiff.removedSample, ...row.headDiff.addedSample].every((l) => known.test(l));
-      if (row.headOnlyWs6Tags) row.head = true;   // counted as the same: the only difference is the documented one
+      if (row.headOnlyWs6Tags) row.head = true;   // counted as the same: the only differences are the documented ones
     }
     // The landing page's screenshot carousel fetches its next image on a timer: the same build asks for
     // /shots/app-history-390.webp in some runs and not in others (A twice, B once, in three repeats). Not compared.
@@ -69,10 +71,13 @@ try {
 
 const clean = (r) => r.body && r.head && r.title && !r.requestsRemoved?.length && !r.requestsAdded?.length && r.pixels?.diffPixels === 0 && r.localStorageKeys
   && !r.errorsOnlyInA?.length && !r.errorsOnlyInB?.length;
-console.log(`${la} vs ${lb}: ${rows.filter(clean).length} of ${rows.length} captures identical in body, head, requests and pixels`);
+const visible = (r) => r.body && r.title && r.pixels?.diffPixels === 0 && !r.errorsOnlyInA?.length && !r.errorsOnlyInB?.length;
+console.log(`${la} vs ${lb}: ${rows.filter(visible).length} of ${rows.length} captures identical to the eye (body HTML, title, every pixel, console errors)`);
+console.log(`${' '.repeat(la.length + 4)}${rows.filter(clean).length} of ${rows.length} identical in everything, i.e. also head and network requests`);
+console.log(`${' '.repeat(la.length + 4)}sideways scroll in ${rows.filter((r) => !r.noSideScroll?.every(Boolean)).length} captures`);
 for (const r of rows) {
   if (r.missing) { console.log(`MISSING in ${r.missing}: ${r.name}`); continue; }
-  console.log(`${clean(r) ? 'SAME     ' : 'DIFFERENT'}${r.headOnlyWs6Tags ? ' (head: only the WS6 home-screen tags)' : ''} ${r.name}${r.noSideScroll.every(Boolean) ? '' : '  SIDEWAYS SCROLL ' + JSON.stringify(r.noSideScroll)}`);
+  console.log(`${clean(r) ? 'SAME     ' : 'DIFFERENT'}${r.headOnlyWs6Tags ? ' (head: only the WS6 home-screen tags and modulepreload links of lazy chunks)' : ''} ${r.name}${r.noSideScroll.every(Boolean) ? '' : '  SIDEWAYS SCROLL ' + JSON.stringify(r.noSideScroll)}`);
   if (clean(r)) continue;
   if (!r.body) { console.log(`   body: -${r.bodyDiff.removed} +${r.bodyDiff.added} lines`); r.bodyDiff.removedSample.forEach((l) => console.log('     - ' + l.slice(0, 200))); r.bodyDiff.addedSample.forEach((l) => console.log('     + ' + l.slice(0, 200))); }
   if (!r.head) { console.log(`   head: -${r.headDiff.removed} +${r.headDiff.added} lines`); r.headDiff.removedSample.forEach((l) => console.log('     - ' + l.slice(0, 200))); r.headDiff.addedSample.forEach((l) => console.log('     + ' + l.slice(0, 200))); }
