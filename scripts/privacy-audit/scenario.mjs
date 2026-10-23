@@ -238,6 +238,14 @@ export async function runScenario({ page, rec, mode, seconds, flags, log, shotDi
   // ── back to Watch: more bites after the opt-in ──
   await step('Watch tab', () => nav('Watch'));
   await step('log two more bites', async () => { await logBite('Not sure'); await logBite('Stress'); return `${out.bitesLogged} logged in all`; });
+  await step('log a bite and undo it (the deletion is a record that syncs)', async () => {
+    await page.click({ text: 'I just bit my nails' });
+    await sleep(400);
+    await page.click({ text: 'Boredom', exact: true });
+    if (!(await page.waitText('Logged:', 4000))) throw new Error('no "Logged:" confirmation');
+    await page.click({ text: 'Undo', exact: true });
+    await sleep(1200);
+  });
   if (mode === 'on') {
     await step('Sync now', async () => {
       await nav('Settings');

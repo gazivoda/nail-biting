@@ -1,0 +1,1969 @@
+{
+  "mode": "on",
+  "flags": "event_sync,data_backup,insights,photo_diary,urge_timer,hrt_coaching,false_positive_controls",
+  "seconds": 300,
+  "startedAt": "2026-10-23T23:30:31.416Z",
+  "origin": "http://localhost:3213",
+  "signedIn": true,
+  "chrome": "Chrome/155.0.8059.85",
+  "scenario": {
+    "steps": [
+      {
+        "name": "detection starts with the fake camera",
+        "ok": true,
+        "ms": 2016,
+        "detail": "12 frames after 2s"
+      },
+      {
+        "name": "log three bites with trigger tags",
+        "ok": true,
+        "ms": 12529,
+        "detail": "3 logged"
+      },
+      {
+        "name": "urge: open, start the breathing timer, stop it",
+        "ok": true,
+        "ms": 7000
+      },
+      {
+        "name": "Settings tab opens",
+        "ok": true,
+        "ms": 932
+      },
+      {
+        "name": "switch sync on (the opt-in)",
+        "ok": true,
+        "ms": 816,
+        "detail": "was false"
+      },
+      {
+        "name": "first sync request is made",
+        "ok": true,
+        "ms": 0,
+        "detail": "after 0s"
+      },
+      {
+        "name": "scroll through Settings",
+        "ok": true,
+        "ms": 721
+      },
+      {
+        "name": "Watch tab",
+        "ok": true,
+        "ms": 913
+      },
+      {
+        "name": "log two more bites",
+        "ok": true,
+        "ms": 6965,
+        "detail": "5 logged in all"
+      },
+      {
+        "name": "Sync now",
+        "ok": true,
+        "ms": 4351
+      },
+      {
+        "name": "History tab",
+        "ok": true,
+        "ms": 933
+      },
+      {
+        "name": "photo diary: open the view, take a photo with the fake camera, save it",
+        "ok": true,
+        "ms": 10565,
+        "detail": [
+          {
+            "key": "photo-diary/12a77c0c-a9ff-4040-b61f-01e025d98548",
+            "size": 9107,
+            "type": "image/jpeg",
+            "sha256": "9017bcea685c6ba441e0c14ab73ecabc5e5a76cd30f46b2d7ed9f46ef51a00d4",
+            "windows": [
+              {
+                "at": 1821,
+                "b64": "ky1JmIiI7Xp4/B6C6lufw3jLGdxedVubNVc1Vd8xTVM+JqqjUa3P5ZnxqUOu8fTg",
+                "distinct": 43
+              },
+              {
+                "at": 3642,
+                "b64": "8umr88anu8x6elyn3n0lwuruo7vP38eIxbWHiYtHZj49vUxRGo351H2jxqIiIjx6",
+                "distinct": 40
+              },
+              {
+                "at": 5464,
+                "b64": "upXe1LV42nl3Ry+7OsTGZmOaSfCz+rxeoOFt+MjNwp+XVV+SNRVT5n19blPtPpKD",
+                "distinct": 45
+              },
+              {
+                "at": 7285,
+                "b64": "mXKaMHLqjurrrmItVxE6q+2p8RP7TvUIaIdfRrr6c6duUsbVi0Yl9LiBfDDq67ye",
+                "distinct": 42
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "mid-session activity 1",
+        "ok": true,
+        "ms": 8153
+      },
+      {
+        "name": "mid-session activity 2",
+        "ok": true,
+        "ms": 8109
+      },
+      {
+        "name": "final Sync now",
+        "ok": true,
+        "ms": 4849
+      }
+    ],
+    "bitesLogged": 7,
+    "urgeLogged": 1,
+    "syncSwitchedOn": true,
+    "photo": [
+      {
+        "key": "photo-diary/12a77c0c-a9ff-4040-b61f-01e025d98548",
+        "size": 9107,
+        "type": "image/jpeg",
+        "sha256": "9017bcea685c6ba441e0c14ab73ecabc5e5a76cd30f46b2d7ed9f46ef51a00d4",
+        "windows": [
+          {
+            "at": 1821,
+            "b64": "ky1JmIiI7Xp4/B6C6lufw3jLGdxedVubNVc1Vd8xTVM+JqqjUa3P5ZnxqUOu8fTg",
+            "distinct": 43
+          },
+          {
+            "at": 3642,
+            "b64": "8umr88anu8x6elyn3n0lwuruo7vP38eIxbWHiYtHZj49vUxRGo351H2jxqIiIjx6",
+            "distinct": 40
+          },
+          {
+            "at": 5464,
+            "b64": "upXe1LV42nl3Ry+7OsTGZmOaSfCz+rxeoOFt+MjNwp+XVV+SNRVT5n19blPtPpKD",
+            "distinct": 45
+          },
+          {
+            "at": 7285,
+            "b64": "mXKaMHLqjurrrmItVxE6q+2p8RP7TvUIaIdfRrr6c6duUsbVi0Yl9LiBfDDq67ye",
+            "distinct": 42
+          }
+        ]
+      }
+    ],
+    "frameSamples": [
+      {
+        "t": 0,
+        "frames": 12
+      },
+      {
+        "t": 21.6,
+        "frames": 220
+      },
+      {
+        "t": 36.2,
+        "frames": 356
+      },
+      {
+        "t": 52.6,
+        "frames": 512
+      },
+      {
+        "t": 62.6,
+        "frames": 608
+      },
+      {
+        "t": 77.6,
+        "frames": 752
+      },
+      {
+        "t": 92.6,
+        "frames": 896
+      },
+      {
+        "t": 107.6,
+        "frames": 1042
+      },
+      {
+        "t": 122.6,
+        "frames": 1188
+      },
+      {
+        "t": 137.6,
+        "frames": 1334
+      },
+      {
+        "t": 165.7,
+        "frames": 1602
+      },
+      {
+        "t": 180.8,
+        "frames": 1748
+      },
+      {
+        "t": 195.8,
+        "frames": 1892
+      },
+      {
+        "t": 210.8,
+        "frames": 2036
+      },
+      {
+        "t": 228.9,
+        "frames": 2208
+      },
+      {
+        "t": 243.9,
+        "frames": 2352
+      },
+      {
+        "t": 258.9,
+        "frames": 2496
+      },
+      {
+        "t": 273.9,
+        "frames": 2640
+      },
+      {
+        "t": 288.9,
+        "frames": 2786
+      },
+      {
+        "t": 300,
+        "frames": 2892
+      },
+      {
+        "t": 300,
+        "frames": 2892
+      }
+    ],
+    "notes": [
+      "frames before/after the diary: 466 -> 504"
+    ],
+    "durationSec": 305.4,
+    "finalFrames": 2946,
+    "serviceWorker": {
+      "registrations": [
+        {
+          "scope": "http://localhost:3213/",
+          "active": "activated",
+          "script": "http://localhost:3213/sw.js",
+          "waiting": false,
+          "installing": false
+        }
+      ],
+      "caches": [
+        "workbox-precache-v2-http://localhost:3213/",
+        "brand-static"
+      ]
+    }
+  },
+  "csp": {
+    "connectSrc": [
+      "'self'",
+      "https://*.paddle.com",
+      "https://checkout.paddle.com",
+      "https://checkout-service.paddle.com",
+      "https://public.profitwell.com",
+      "https://www.google.com",
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://analytics.google.com",
+      "https://region1.google-analytics.com",
+      "https://formspree.io"
+    ],
+    "imgSrc": [
+      "'self'",
+      "data:",
+      "https://lh3.googleusercontent.com",
+      "https://*.paddle.com"
+    ],
+    "scriptSrc": [
+      "'self'",
+      "'wasm-unsafe-eval'",
+      "'unsafe-inline'",
+      "https://*.paddle.com",
+      "https://cdn.paddle.com",
+      "https://public.profitwell.com",
+      "https://www.googletagmanager.com"
+    ],
+    "frameSrc": [
+      "'self'",
+      "https://*.paddle.com"
+    ],
+    "workerSrc": [
+      "'self'"
+    ]
+  },
+  "detectionFramesPerSecond": 9.61,
+  "distinctEventIdsSynced": 8,
+  "serviceWorkerStatic": {
+    "files": [
+      "sw.js",
+      "workbox-74048807.js"
+    ],
+    "uploadCapableCode": []
+  },
+  "serviceWorkerActive": true,
+  "findings": [],
+  "allowlist": [
+    {
+      "host": "www.googletagmanager.com",
+      "why": "Google Tag Manager loader (index.html)"
+    },
+    {
+      "host": "www.google-analytics.com",
+      "why": "Google Analytics"
+    },
+    {
+      "host": "*.google-analytics.com",
+      "why": "Google Analytics (regional collectors)"
+    },
+    {
+      "host": "analytics.google.com",
+      "why": "Google Analytics"
+    },
+    {
+      "host": "www.google.com",
+      "why": "Google Analytics (ads/audience pings, connect-src)"
+    },
+    {
+      "host": "*.paddle.com",
+      "why": "Paddle checkout and billing"
+    },
+    {
+      "host": "public.profitwell.com",
+      "why": "Paddle (ProfitWell) retention script, CSP script-src"
+    },
+    {
+      "host": "lh3.googleusercontent.com",
+      "why": "Google account avatar (image GET only)"
+    }
+  ],
+  "allowlistNotInCsp": [],
+  "whitelist": {
+    "top": [
+      "since",
+      "events",
+      "deviceId",
+      "epoch"
+    ],
+    "event": [
+      "id",
+      "ts",
+      "source",
+      "behavior",
+      "hand",
+      "triggers",
+      "falsePositive",
+      "competingResponse",
+      "confirmed",
+      "deviceId",
+      "updatedAt",
+      "deleted"
+    ],
+    "response": [
+      "done",
+      "durationSec"
+    ],
+    "clientMatchesServer": true
+  },
+  "stats": {
+    "records": 150,
+    "requests": 140,
+    "webSocketFrames": 0,
+    "webSocketsOpened": 0,
+    "hookCalls": 10,
+    "localSchemeRequests": 0,
+    "bodiesChecked": 8,
+    "bytesChecked": 2620,
+    "bodiesUnreadable": 0,
+    "eventsRequests": 8,
+    "syncPosts": 8,
+    "syncEvents": 8,
+    "hosts": {
+      "localhost:3213": 137,
+      "www.google-analytics.com": 2,
+      "www.googletagmanager.com": 1
+    },
+    "byTarget": {
+      "page": 85,
+      "service_worker": 65
+    },
+    "byResourceType": {
+      "Document": 1,
+      "Font": 3,
+      "Script": 42,
+      "Stylesheet": 1,
+      "Image": 7,
+      "Manifest": 1,
+      "Other": 4,
+      "Fetch": 81
+    },
+    "eventKeysSeen": [
+      "behavior",
+      "competingResponse",
+      "deviceId",
+      "id",
+      "source",
+      "triggers",
+      "ts",
+      "updatedAt"
+    ],
+    "topKeysSeen": [
+      "deviceId",
+      "epoch",
+      "events",
+      "since"
+    ],
+    "responseKeysSeen": [
+      "done",
+      "durationSec"
+    ],
+    "needlesSearched": 4
+  },
+  "targets": {
+    "page": 2,
+    "service_worker": 1
+  },
+  "requests": [
+    {
+      "t": 57,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/",
+      "type": "Document",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 73,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/fonts/bricolage-latin.woff2",
+      "type": "Font",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 74,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/fonts/geist-latin.woff2",
+      "type": "Font",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 75,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-CcN38E7P.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 75,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/vendor-YUv05mAp.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 75,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-8FAzMBKE.css",
+      "type": "Stylesheet",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 76,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/shots/app-watch-1280@1x.webp",
+      "type": "Image",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 79,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/manifest.webmanifest",
+      "type": "Manifest",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 103,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "https://www.googletagmanager.com/gtag/js?id=G-WXS5XX6ZV0",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 110,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo.svg",
+      "type": "Image",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 111,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo-dark.svg",
+      "type": "Image",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 126,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/shots/app-history-390.webp",
+      "type": "Image",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 126,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/workbox-74048807.js",
+      "type": "Other",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 127,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/api/features",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 127,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/api/user/me",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 127,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/icon-192x192.png",
+      "type": "Other",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 127,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/icon-192x192.png",
+      "type": "Other",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 128,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/auth/providers",
+      "type": "Fetch",
+      "status": 404,
+      "bodyBytes": 0
+    },
+    {
+      "t": 138,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Dashboard-DPqzuusp.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 138,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-D2Oh680v.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 138,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-CW0EEmQw.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 139,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/controlsRegistry-BV_XmzhL.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 139,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/controls-UF2lVlFY.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 139,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SegmentedControl-BDl_4RY1.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 140,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/useDetection-KbsSRiMK.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 140,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/mediapipe-db9maXuS.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 141,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/appTicker-BhzYlBvT.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 141,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/silent-DJJiYS4k.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 142,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/watchStore-iq-v-Tmk.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 142,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-DKEjFLH9.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 142,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/scheduleStore-vPH2UsOu.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 144,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/state-DvlgzCG0.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 144,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/programProgress-BkCkFPrj.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 146,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/favicon.svg",
+      "type": "Other",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 147,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/icon-192x192.png",
+      "type": "Image",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 152,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/index.html",
+      "type": "Fetch",
+      "bodyBytes": 0
+    },
+    {
+      "t": 154,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 154,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/MilestoneRunner-CNJz7RF0.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 154,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/milestones-FXeishnv.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 154,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/watchStore-iq-v-Tmk.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 156,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/vendor-YUv05mAp.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 165,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/usePhotoRecords-B_XGU95s.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 168,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/useDetection-KbsSRiMK.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 170,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/tickWorker-CuRtLgjx.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 173,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/statusText-DVgDIGXr.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 176,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/state-DvlgzCG0.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 178,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/silent-DJJiYS4k.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 180,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/scheduleStore-vPH2UsOu.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 181,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/runtime-DhiqLupW.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 184,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/reminders-CIZ0l7Hj.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 186,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/programProgress-BkCkFPrj.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 188,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/photoStore-Cq-fxde9.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 193,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/paddle-CQAbpomY.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 200,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/milestones-FXeishnv.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 202,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/mediapipe-db9maXuS.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 206,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-CcN38E7P.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 208,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-CW0EEmQw.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 210,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/index-8FAzMBKE.css",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 212,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/events-X5BjuHvz.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 215,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/controlsRegistry-BV_XmzhL.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 216,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/controls-UF2lVlFY.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 218,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/coachingStats-Cr8g4nYM.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 221,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/charts-BTahuwGA.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 228,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/appTicker-BhzYlBvT.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 230,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/apiFetchRequest-Co0bMSQo.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 233,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/api-B2mbaUU0.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 236,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-DKEjFLH9.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 238,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-D2Oh680v.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 241,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-BIZ-7czA.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 243,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/WeeklyEmailCard-p_JP1Trn.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 247,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SyncSettings-Bip7mZ9I.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 250,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SyncRunner-DguBThvO.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 253,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SignIn-nY1yvFXf.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 256,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SharingSettings-DHcCgo5o.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 259,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Settings-MxW8e8kW.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 262,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SegmentedControl-BDl_4RY1.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 264,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/RedeemPage-DBYddMvv.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 266,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/ProgramView-C25-0Hes.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 269,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Program-T_TWim0Y.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 272,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PhotoDiarySettingsCard-D2uf2Tqp.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 274,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PhotoDiary-C23GVFke.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 277,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PhoneView-CyE9cQkC.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 280,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PaywallPage-DAvE4in6.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 283,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PageTitle-DSwah0Hg.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 285,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/MilestoneRunner-CNJz7RF0.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 287,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Log-tSXEqdCj.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 290,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/InsightsView-C5OaSCcw.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 292,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/HeroDemo-DqpNklQv.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 295,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/DataSettings-BLOnusvf.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 299,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Dashboard-DPqzuusp.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 300,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/ComparePage-Bycnu6Bz.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 305,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/CoachingStatsLine-D2ajKAUK.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 308,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/CalibrationView-CGv1W8R-.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 311,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/BlogPost-BmGFOMBu.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 314,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/BackgroundRunner-PBwNOsgK.js",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 316,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/icon-192x192.png",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 319,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/icon-512x512.png",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 322,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/icons/maskable-512x512.png",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 437,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo.svg",
+      "type": "Image",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 437,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo-dark.svg",
+      "type": "Image",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 437,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo.svg",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 438,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/logo-dark.svg",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 440,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-wasm/vision_wasm_internal.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 480,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-WXS5XX6ZV0&gtm=45je6al1v9248691581za208zd9248691581xf1&_p=1792798232042&gcd=13l3l3l3l1l1&npa=0&dma=0&cid=1929153180.1792798232&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=800x600&uaa=arm&uab=64&uafvl=Google%2520Chrome%3B155.0.8059.85%7CChromium%3B155.0.8059....",
+      "type": "Fetch",
+      "status": 204,
+      "failed": "net::ERR_ABORTED",
+      "bodyBytes": 0
+    },
+    {
+      "t": 485,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-wasm/vision_wasm_internal.wasm",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 638,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-models/hand_landmarker.task",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 740,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-wasm/vision_wasm_internal.js",
+      "type": "Script",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 746,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-wasm/vision_wasm_internal.wasm",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 784,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/mediapipe-models/face_landmarker.task",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 5493,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-WXS5XX6ZV0&gtm=45je6al1v9248691581za200zd9248691581xf1&_p=1792798232042&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&cid=1929153180.1792798232&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=800x600&uaa=arm&uab=64&uafvl=Google%2520Chrome%3B155.0.8059.85%7CChrom...",
+      "type": "Fetch",
+      "status": 204,
+      "failed": "net::ERR_ABORTED",
+      "bodyBytes": 0
+    },
+    {
+      "t": 23644,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Settings-MxW8e8kW.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23644,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PageTitle-DSwah0Hg.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23644,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/CoachingStatsLine-D2ajKAUK.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23644,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/coachingStats-Cr8g4nYM.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23644,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/reminders-CIZ0l7Hj.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SyncSettings-Bip7mZ9I.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/statusText-DVgDIGXr.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/runtime-DhiqLupW.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/actions-BIZ-7czA.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/apiFetchRequest-Co0bMSQo.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/api-B2mbaUU0.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/DataSettings-BLOnusvf.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23663,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PhotoDiarySettingsCard-D2uf2Tqp.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23664,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/photoStore-Cq-fxde9.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23664,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/usePhotoRecords-B_XGU95s.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23947,
+      "target": "service_worker",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/fonts/geist-mono-latin.woff2",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 0
+    },
+    {
+      "t": 23954,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/fonts/geist-mono-latin.woff2",
+      "type": "Font",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 24559,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/SyncRunner-DguBThvO.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 24869,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 958,
+      "bodySha": "9f67ecda679dcb85"
+    },
+    {
+      "t": 34892,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 532,
+      "bodySha": "e8a037200743391a"
+    },
+    {
+      "t": 38343,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/Log-tSXEqdCj.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 38343,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/charts-BTahuwGA.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 39260,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/InsightsView-C5OaSCcw.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 39279,
+      "target": "page",
+      "kind": "http",
+      "method": "GET",
+      "url": "http://localhost:3213/assets/PhotoDiary-C23GVFke.js",
+      "type": "Script",
+      "status": 200,
+      "fromServiceWorker": true,
+      "bodyBytes": 0
+    },
+    {
+      "t": 84871,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 120,
+      "bodySha": "bb6874283f8fb8b0"
+    },
+    {
+      "t": 146981,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 325,
+      "bodySha": "14dcd9a9afc6d003"
+    },
+    {
+      "t": 175124,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 120,
+      "bodySha": "e92440a1b659fa4b"
+    },
+    {
+      "t": 220103,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 325,
+      "bodySha": "c8a75ad2e5b89b22"
+    },
+    {
+      "t": 248272,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 120,
+      "bodySha": "22535e56755b9054"
+    },
+    {
+      "t": 303515,
+      "target": "page",
+      "kind": "http",
+      "method": "POST",
+      "url": "http://localhost:3213/api/events/sync",
+      "type": "Fetch",
+      "status": 200,
+      "bodyBytes": 120,
+      "bodySha": "22535e56755b9054"
+    }
+  ],
+  "hookCalls": [
+    {
+      "t": 479,
+      "api": "fetch",
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-WXS5XX6ZV0&gtm=45je6al1v9248691581za208zd9248691581xf1&_p=1792798232042&gcd=13l3l3l3l1l1&npa=0&dma=0&cid=1929153180.1792798232&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=800x600&uaa=arm&uab=64&uafvl=Google%2520Chrome%3B155.0.8059.85%7CChromium%3B155.0.8059.85%7CNot(A%253ABrand%3B24.0.0.0&uam=&uamb=0&uap=macOS&uapv=27.0.1&uaw=0&ul=en-us&_s=1&tag_exp=115938465~115938469~118897920~118897930~119793973~120213116~120385422~120469145~120469153~121246026~121246034&sid=1792798232&sct=1&seg=0&dl=http%3A%2F%2Flocalhost%2F&dt=Nail%20Biting%20App%3A%20Stop%20Biting%20with%20AI%20%7C%20Stop%20Biting&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=421",
+      "bodyType": "none",
+      "keepalive": true,
+      "where": "page"
+    },
+    {
+      "t": 5493,
+      "api": "fetch",
+      "method": "POST",
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-WXS5XX6ZV0&gtm=45je6al1v9248691581za200zd9248691581xf1&_p=1792798232042&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&cid=1929153180.1792798232&frm=0&ngs=1&pscdl=noapi&rcb=7&sr=800x600&uaa=arm&uab=64&uafvl=Google%2520Chrome%3B155.0.8059.85%7CChromium%3B155.0.8059.85%7CNot(A%253ABrand%3B24.0.0.0&uam=&uamb=0&uap=macOS&uapv=27.0.1&uaw=0&ul=en-us&_s=2&tag_exp=115938465~115938469~118897920~118897930~119793973~120213116~120385422~120469145~120469153~121246026~121246034&sid=1792798232&sct=1&seg=0&dl=http%3A%2F%2Flocalhost%2F&dt=Nail%20Biting%20App%3A%20Stop%20Biting%20with%20AI%20%7C%20Stop%20Biting&en=scroll&epn.percent_scrolled=90&_et=9&tfd=5435",
+      "bodyType": "none",
+      "keepalive": true,
+      "where": "page"
+    },
+    {
+      "t": 24868,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 958,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 34891,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 532,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 84870,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 120,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 146980,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 325,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 175124,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 120,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 220101,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 325,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 248272,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 120,
+      "keepalive": false,
+      "where": "page"
+    },
+    {
+      "t": 303514,
+      "api": "fetch",
+      "method": "POST",
+      "url": "/api/events/sync",
+      "bodyType": "string",
+      "size": 120,
+      "keepalive": false,
+      "where": "page"
+    }
+  ],
+  "verdict": "PASS",
+  "exitCode": 0,
+  "finishedAt": "2026-10-23T23:35:40.445Z",
+  "violations": 0,
+  "serverLogTail": "[routes] applied migrations: ws8_001_auth_identities, ws8_002_magic_link_tokens, ws8_003_auth_oauth_states, ws4_001_habit_events, ws4_002_habit_event_epochs, ws9_001_paddle_events, ws9_002_billing_transactions, ws9_003_entitlements, ws9_004_gift_codes, ws9_005_referral_codes, ws9_006_referrals, ws10_001_share_links, ws5_001_email_preferences\n[routes] features, example, authProviders, events, billing, share, weeklyEmail, phone registered; flags on: hrt_coaching, urge_timer, false_positive_controls, event_sync, data_backup, insights, photo_diary\n[marketing] pages open (flag on): /features/habit-reversal-coaching\n[trial-followup] RESEND_API_KEY not set — job disabled\nServer running on http://localhost:50785\n"
+}

@@ -1,0 +1,56 @@
+{
+  "commit": "e6eed4c",
+  "finishedAt": "2026-10-23T23:35:40.504Z",
+  "seconds": 300,
+  "results": [
+    {
+      "mode": "canary",
+      "verdict": "CAUGHT",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 119,
+      "hosts": {
+        "localhost:3213": 116,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1,
+        "telemetry.canary.invalid": 0
+      }
+    },
+    {
+      "mode": "flagsoff",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 120,
+      "hosts": {
+        "localhost:3213": 117,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    },
+    {
+      "mode": "off",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 131,
+      "hosts": {
+        "localhost:3213": 128,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    },
+    {
+      "mode": "on",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 140,
+      "hosts": {
+        "localhost:3213": 137,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    }
+  ]
+}
