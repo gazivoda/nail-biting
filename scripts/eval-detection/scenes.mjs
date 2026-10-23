@@ -14,6 +14,7 @@
 // talking with the hands, brushing hair back, holding a pen with a pinch.
 
 import { facePoint } from '../../src/detection/synthetic.ts';
+import { WS3_SCENES } from './scenes-ws3.mjs';
 
 const P = (name, dx = 0, dy = 0) => { const [x, y] = facePoint(name); return [x + dx, y + dy]; };
 const LAP = x => [x, 640];              // far below the frame: the hand is not in view
@@ -47,7 +48,7 @@ function reach({ from, via, target, arrive, leave, end }) {
 const positive = (...more) => ['positive', ...more];
 const negative = (...more) => ['negative', ...more];
 
-export const SCENES = [
+const WS1_SCENES = [
   // ── hand at the mouth: nail biting and cuticle/skin biting (the same rule) ──────────────
   {
     id: 'mouth_bite_steady',
@@ -340,3 +341,6 @@ export const SCENES = [
     labels: [],
   },
 ];
+
+// WS1's scenes first (their fixtures must not change), then WS3's (scenes-ws3.mjs).
+export const SCENES = [...WS1_SCENES, ...WS3_SCENES];

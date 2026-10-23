@@ -1,6 +1,8 @@
 import type { DetectionSensitivity } from '../types';
 import type { Behavior } from '../storage/eventModel';
 import { createEngine } from '../detection/engine.ts';
+import type { DetectionControls } from '../detection/controls.ts';
+import { getDetectionControls } from '../detection/controlsRegistry.ts';
 import {
   FINGERTIP_INDICES as RULE_FINGERTIP_INDICES,
   NAIL_BITING_RULE,
@@ -57,6 +59,12 @@ export interface BiteDetectorOptions {
    * which is the whole of what this detector did before behaviours existed.
    */
   getBehaviors?: () => readonly Behavior[];
+  /**
+   * The false-alarm controls (WS3). Leave it out and the detector reads the app's registered
+   * controls (src/detection/controlsRegistry), which are empty unless the `false_positive_controls`
+   * flag is on: so by default this is exactly the detector that has always shipped.
+   */
+  getControls?: () => DetectionControls | null;
   /** Called on every frame once the dwell threshold is met — dedupe upstream. */
   onBiteStart: (behavior: Behavior) => void;
   /** Called once the episode has cleared. */
@@ -69,5 +77,5 @@ export interface BiteDetector {
 }
 
 export function createBiteDetector(options: BiteDetectorOptions): BiteDetector {
-  return createEngine(options);
+  return createEngine({ ...options, getControls: options.getControls ?? getDetectionControls });
 }

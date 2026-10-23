@@ -3,6 +3,7 @@
 
 import { Suspense, lazy, useMemo, useState } from 'react';
 import { useFeatures } from '../../features/useFeature';
+import { useHistoryWindow } from '../../billing/useFreeTier';
 import { useAppStore } from '../../store/useAppStore';
 import { computeInsightsMemo } from '../aggregate';
 import { evaluateMilestones, type MilestoneStatus } from '../milestones';
@@ -26,7 +27,10 @@ export function InsightsView({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const [viewing, setViewing] = useState<MilestoneStatus | null>(null);
   const card = useShareCard();
 
-  const insights = useMemo(() => computeInsightsMemo(incidents, { now, rangeDays }), [incidents, now, rangeDays]);
+  // WS9 (free_tier): a free account sees the last few days of history, so its charts cover the same days.
+  // The same array comes back for everyone else. Milestones use the whole history, like the streak does.
+  const { visible, hidden } = useHistoryWindow(incidents);
+  const insights = useMemo(() => computeInsightsMemo(visible, { now, rangeDays }), [visible, now, rangeDays]);
   const milestones = useMemo(
     () => evaluateMilestones({ events: incidents, startedAt: historyStartTime, now }),
     [incidents, historyStartTime, now],
@@ -47,6 +51,7 @@ export function InsightsView({ onGoToWatch }: { onGoToWatch?: () => void }) {
         charts={flags.insights}
         coachingOn={flags.hrt_coaching}
         falseAlarmsOn={flags.false_positive_controls}
+        hiddenCount={hidden}
         onGoToWatch={onGoToWatch}
         onOpenMilestone={setViewing}
         photoDiary={flags.photo_diary ? <Suspense fallback={null}><PhotoDiary /></Suspense> : null}

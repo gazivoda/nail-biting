@@ -37,6 +37,8 @@ export interface InsightsBodyProps {
   falseAlarmsOn: boolean;
   /** The photo diary, already gated and lazy. */
   photoDiary?: ReactNode;
+  /** Older entries a free account does not see (WS9). 0 for everyone else. */
+  hiddenCount?: number;
   onGoToWatch?: () => void;
   onOpenMilestone: (s: MilestoneStatus) => void;
 }
@@ -84,6 +86,11 @@ export function InsightsBody(p: InsightsBodyProps) {
             {sparse && (
               <p role="note" className="rounded-2xl border border-stone-200 bg-white px-5 py-3 text-sm text-stone-700 dark:border-ink-400 dark:bg-ink-50 dark:text-stone-200">
                 Only {r.totals.entries} {plural(r.totals.entries, 'entry', 'entries')} so far. The charts say more after a week or two of use.
+              </p>
+            )}
+            {!!p.hiddenCount && (
+              <p role="note" className="text-sm text-stone-600 dark:text-stone-300">
+                {p.hiddenCount} older {p.hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan, so these charts cover the days you can see.
               </p>
             )}
             <div className="flex flex-wrap items-center gap-3">

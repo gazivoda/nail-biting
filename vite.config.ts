@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { execFileSync } from 'child_process'
 import { VitePWA } from 'vite-plugin-pwa'
+import { fillTrialTokens } from './shared/plans.js'
 
 // Regenerates dist/seo-content.json + dist/llms-full.txt from
 // src/data/blogPosts.ts and src/data/comparePages.ts after every build.
@@ -24,12 +25,28 @@ function generateSeoContent(): Plugin {
   }
 }
 
+// index.html is static text, so it cannot import the trial length. It spells it as
+// {{TRIAL_HYPHEN}}-style placeholders (see shared/plans.js) and this fills them in
+// for dist/index.html, which server.js then reads. Nothing else in the file changes.
+function fillTrialCopy(): Plugin {
+  return {
+    name: 'fill-trial-copy',
+    transformIndexHtml: { order: 'pre', handler: (html: string) => fillTrialTokens(html) },
+  }
+}
+
 const isWeb = process.env.VITE_BUILD_TARGET === 'web'
 
 export default defineConfig({
   // Electron (file://) needs relative base './'; web server needs absolute '/'.
   // Set VITE_BUILD_TARGET=web when building for Docker/Coolify.
   base: isWeb ? '/' : './',
+
+  // The trial length the client copy says, from the build's environment (TRIAL_DAYS, default
+  // 3). shared/plans.js reads exactly this expression; with nothing set it stays the default.
+  define: {
+    'process.env.TRIAL_DAYS': JSON.stringify(process.env.TRIAL_DAYS ?? ''),
+  },
 
   server: {
     proxy: {
@@ -67,6 +84,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    fillTrialCopy(),
     generateSeoContent(),
     // PWA only for web builds — Electron handles its own install/update flow.
     ...(isWeb ? [VitePWA({
@@ -116,7 +134,7 @@ export default defineConfig({
         // the service worker — they have their own loading logic and caching
         // them in the SW cache would break WASM instantiation on some browsers.
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/],
+        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/, /^\/redeem/],
         runtimeCaching: [
           {
             // App shell JS/CSS chunks — cache first, background update

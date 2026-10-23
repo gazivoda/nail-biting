@@ -20,6 +20,8 @@ import { WeeklyEmailSettings } from '../WeeklyEmailSettings';
 // while event_sync is on, so with the flag off opening Settings downloads nothing extra.
 const SyncSettings = lazy(() => import('../SyncSettings').then(m => ({ default: m.SyncSettings })));
 
+import { ReferralCard } from '../../../components/billing/ReferralCard';
+
 export function AccountSyncSection() {
   const flags = useFeatures();
   return (
@@ -30,6 +32,8 @@ export function AccountSyncSection() {
         </Suspense>
       )}
       <WeeklyEmailSettings />{/* WS5: the weekly summary email opt-in (flag weekly_email); renders nothing while it is off */}
+      {/* WS9: the referral card (flag referrals; it draws nothing while the flag is off). Keep this line. */}
+      <ReferralCard />
     </>
   );
 }

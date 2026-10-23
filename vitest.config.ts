@@ -10,6 +10,7 @@ export default defineConfig({
       'src/**/*.test.{ts,tsx}',
       'server/**/*.test.{js,ts}',
       'scripts/**/*.test.{js,mjs,ts}',
+      'shared/**/*.test.{js,ts}',
     ],
     // These tests cover store logic, not persistence. With no DOM there is no
     // localStorage, so the storage module falls back to an in-memory adapter.

@@ -78,6 +78,7 @@ export function parseFixture(raw, where = 'fixture') {
     description: raw.description ?? '',
     source: raw.source,
     tags: raw.tags,
+    image: { width: raw.image.width, height: raw.image.height },
     knownIssue: raw.knownIssue ?? null,
     labels: raw.labels,
     frames,

@@ -10,6 +10,7 @@ import { GATED_COMPARE_FLAG, isGatedComparePath } from '../data/gatedComparePath
 import { refreshFlags } from '../features/flags';
 import { useFeature } from '../features/useFeature';
 import { AuthorBox } from './EditorialPolicyPage';
+import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
 interface Props {
   path: string;
@@ -138,7 +139,7 @@ function ComparePageView({ path, content }: Props & { content: PageContent | und
             <p className="sg-h3">A webcam alarm for nail biting.</p>
             <p className="sg-small mt-1 max-w-[46ch]">
               Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when your
-              hand moves toward your mouth. No camera data is sent while it runs. 3 days free, no card,
+              hand moves toward your mouth. No camera data is sent while it runs. {TRIAL_DAYS_TEXT} free, no card,
               then $2.99 a month or $29 a year. Read{' '}
               <a href="/how-it-works" className="sg-link">how it works</a>.
             </p>

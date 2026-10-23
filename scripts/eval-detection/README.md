@@ -7,6 +7,7 @@ types; Node 22.18 or newer, the repo uses 24), so it tests the rules that ship, 
 ```
 npm run eval:detection                                   # table; exit 1 if a validated rule is below its bar
 npm run eval:detection -- --report docs/agents/ws1-eval-report.md
+npm run eval:detection -- --controls-report docs/agents/ws3-eval-report.md   # the false-alarm controls, before and after
 npm run eval:detection -- --sensitivity high             # gate on another sensitivity
 npm run eval:detection -- --json
 node scripts/eval-detection/generate-fixtures.mjs        # rewrite the synthetic fixtures from scenes.mjs
@@ -89,6 +90,32 @@ rules are reported against their bar and never fail the command. The two validat
 the unchanged nail-biting rule scores on the committed fixtures (they include scenes drawn to fool it). Raise
 `minPrecision` when a change really improves it (WS3 should).
 
+## The false-alarm controls (WS3): three ways to play the same fixtures
+
+Everything above is the shipped detector (the `false_positive_controls` flag OFF). `npm run eval:detection` also plays
+the fixtures with the controls on, and prints and gates both:
+
+| variant | what it is | fixtures | bar in `thresholds.json` |
+|---|---|---|---|
+| `shipped` | the flag off: the detector that has always shipped | every fixture except `sequence` | `rules.<behavior>` |
+| `controls` | the flag on, a person who has not yet tapped "Not a bite": the chin-rest rule, both hands | the same | `withControls.<behavior>` |
+| `learning` | as `controls`, and a simulated person who taps "Not a bite" after every false alarm (judged by the fixture's own labels), so the pose is remembered | only the `sequence` fixtures (one pose five times, then a real bite) | `withLearning.<behavior>` |
+
+Plus the plan's acceptance line, checked in the same command: fewer false alarms on the `chin-rest-rule` fixtures, and
+recall no more than `controlsMaxRecallDrop` (5 points) below the shipped detector's.
+
+- The `withControls` / `withLearning` precision bars are a ratchet set just under what was measured when WS3 landed.
+  Raise them when the controls improve. Never lower one to make a change pass.
+- Fixtures tagged `ws3` are WS3's (`scenes-ws3.mjs`). `chin-rest-rule` marks the scenes drawn to match the rule (the
+  back of the hand or the knuckles on the chin, no fingertip near the lips); `hand-near-chin` marks real bites with the
+  palm close to the chin and a fingertip at the lips, which the rule must leave alone. The older `neg_chin_rest` and
+  `neg_cheek_rest_thinking` are drawn with the fingers along the jaw and the palm far from the chin, so the rule rightly
+  does not touch them; they are what the learning is for.
+- A `real` recording of a chin rest goes in `fixtures/real/` with the tags `negative`, `mouth`, `chin-rest-rule`, and
+  counts in both variants like any other.
+- `bench.mjs` has `controls` and `controls+40` variants: the rules' cost per frame with the flag on, and with 40
+  remembered poses to compare against.
+
 ## Adding a real recording, and promoting a rule (owner)
 
 1. Record with the dev recorder (below) or write the JSON yourself. Aim for a handful of each, per behaviour: the thing
@@ -118,15 +145,17 @@ negative.
 
 ```
 run.mjs                  the command (table, exit code, --report)
-bench.mjs                CPU cost of rule evaluation per frame, before vs after WS1
+bench.mjs                CPU cost of rule evaluation per frame, before vs after WS1 and with the WS3 controls on
 generate-fixtures.mjs    scenes.mjs -> fixtures/*.json (deterministic)
 scenes.mjs               the synthetic scenes (positives and hard negatives) as data
+scenes-ws3.mjs           WS3's scenes: chin rests, bites near the chin, and repeated-pose sequences
 thresholds.json          your bars
 lib/fixtures.mjs         read, check and write fixtures
-lib/replay.mjs           play one through src/detection/engine.ts
+lib/replay.mjs           play one through src/detection/engine.ts (shipped, controls, or controls + simulated taps)
 lib/score.mjs            precision and recall
 lib/evaluate.mjs         every rule x every fixture x every sensitivity, and the gate
 lib/report.mjs           the table and the markdown report
+lib/controlsReport.mjs   the WS3 comparison (console and docs/agents/ws3-eval-report.md)
 recorder/                the dev-only recorder
 fixtures/                synthetic fixtures (committed); fixtures/real/ for yours (git-ignored)
 ```

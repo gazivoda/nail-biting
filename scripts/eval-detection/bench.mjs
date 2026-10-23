@@ -9,6 +9,8 @@
 //   nail+hook     the new engine, nail biting only, getBehaviors returning one shared array (what the app runs
 //                 with every flag off: useDetection always passes it)
 //   all-six       the new engine with all six behaviours on (the experimental flag, everything selected)
+//   controls      WS3: the new engine, nail biting, with the false_positive_controls flag on (chin-rest rule, both hands)
+//   controls+40   the same with 40 learned poses to compare every contact frame against (the most it ever holds)
 //
 // Each variant runs in a fresh process so one cannot warm the JIT for another. Frames come from a fixed pool of
 // 2,000 synthetic landmark frames (some with no hand, most with a hand away from the face, some at the mouth, nose,
@@ -23,6 +25,7 @@ import { fileURLToPath } from 'node:url';
 import { createBiteDetector as createLegacy } from '../../src/detection/__reference__/legacyBiteDetector.ts';
 import { createBiteDetector as createNew } from '../../src/hooks/biteDetector.ts';
 import { buildHand, mulberry32, neutralFace, facePoint } from '../../src/detection/synthetic.ts';
+import { defaultControls } from '../../src/detection/controls.ts';
 
 const ROUNDS = 7;
 const FRAMES_PER_ROUND = 1_000_000;
@@ -59,6 +62,14 @@ function makeDetector(variant, source) {
     case 'nail': return createNew(base);
     case 'nail+hook': { const only = ['nail_biting']; return createNew({ ...base, getBehaviors: () => only }); }
     case 'all-six': { const all = ['nail_biting', 'cuticle_skin_biting', 'nose_picking', 'eye_area_pulling', 'face_skin_picking', 'hair_pulling']; return createNew({ ...base, getBehaviors: () => all }); }
+    case 'controls': { const only = ['nail_biting']; const c = defaultControls(); return createNew({ ...base, getBehaviors: () => only, getControls: () => c }); }
+    case 'controls+40': {
+      const only = ['nail_biting'];
+      const rnd = mulberry32(5);
+      const learned = Array.from({ length: 40 }, () => ({ at: Date.now(), v: [Math.floor(rnd() * 4), rnd() * 0.5, rnd() * 0.5, Math.floor(rnd() * 8), rnd(), rnd() - 0.5] }));
+      const c = defaultControls({ learned });
+      return createNew({ ...base, getBehaviors: () => only, getControls: () => c });
+    }
     default: throw new Error(`unknown variant ${variant}`);
   }
 }
@@ -94,7 +105,7 @@ if (arg !== -1) {
 } else {
   const script = fileURLToPath(import.meta.url);
   const results = [];
-  for (const variant of ['legacy', 'nail', 'nail+hook', 'all-six', 'legacy', 'nail+hook']) {
+  for (const variant of ['legacy', 'nail', 'nail+hook', 'all-six', 'controls', 'controls+40', 'legacy', 'nail+hook']) {
     const out = spawnSync(process.execPath, [script, '--variant', variant], { encoding: 'utf8' });
     if (out.status !== 0) { console.error(out.stderr); process.exit(1); }
     results.push(JSON.parse(out.stdout));
