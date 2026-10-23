@@ -35,6 +35,7 @@ import authProviders from './authProviders.js';
 import events from './events.js';
 import billing from './billing.js';
 import share from './share.js';
+import weeklyEmail from './weeklyEmail.js';
 
 /** Registered in this order. Append your module; do not reorder others. */
 export const ROUTE_MODULES = [
@@ -44,7 +45,7 @@ export const ROUTE_MODULES = [
   events, // WS4 optional sync of history (event_sync)
   billing, // WS9 lifetime, gifts, referrals, free tier; hooks for the Paddle webhook and /api/user/me
   share, // WS10 read-only share links (share_links)
-  // WS5  weekly email         -> import insights from './insights.js'
+  weeklyEmail, // WS5 opt-in weekly summary email (weekly_email); unsubscribe links are never flag-gated
 ];
 
 /** Completes the context server.js passes in. Exported for tests. */
