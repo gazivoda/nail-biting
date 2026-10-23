@@ -70,9 +70,9 @@ export const messages: Record<keyof typeof en, string> = {
   'label.noReason': 'Sin motivo elegido',
   'label.otherReason': 'Otro motivo',
 
-  'rate.coachingTitle': 'Respuesta competidora',
-  'rate.coachingEmpty': 'Aún no hay respuestas competidoras terminadas que contar. Activa el aviso en Ajustes, Alertas, y aquí verás con qué frecuencia la terminas después de una alarma.',
-  'coaching.sentence': '{completed} de {alarms, plural, one {{alarms} alarma seguida} other {{alarms} alarmas seguidas}} de una respuesta competidora terminada.',
+  'rate.coachingTitle': 'Respuesta alternativa',
+  'rate.coachingEmpty': 'Aún no hay respuestas alternativas terminadas que contar. Activa el aviso en Ajustes, Alertas, y aquí verás con qué frecuencia la terminas después de una alarma.',
+  'coaching.sentence': '{completed} de {alarms, plural, one {{alarms} alarma seguida} other {{alarms} alarmas seguidas}} de una respuesta alternativa completada.',
   'rate.falseTitle': 'Falsas alarmas',
   'rate.falseEmpty': 'Aún no hay alarmas. Aquí se cuentan las alarmas que marcas como «No fue un mordisco».',
   'falseAlarms.none': 'Aún no hay alarmas.',

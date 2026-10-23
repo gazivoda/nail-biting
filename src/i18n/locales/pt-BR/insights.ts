@@ -70,9 +70,9 @@ export const messages: Record<keyof typeof en, string> = {
   'label.noReason': 'Nenhum motivo escolhido',
   'label.otherReason': 'Outro motivo',
 
-  'rate.coachingTitle': 'Resposta competitiva',
-  'rate.coachingEmpty': 'Ainda não há respostas competitivas concluídas para contar. Ative o lembrete em Configurações, Alertas, e aqui você verá com que frequência a conclui depois de um alarme.',
-  'coaching.sentence': '{completed} de {alarms, plural, one {{alarms} alarme seguido} other {{alarms} alarmes seguidos}} de uma resposta competitiva concluída.',
+  'rate.coachingTitle': 'Resposta alternativa',
+  'rate.coachingEmpty': 'Ainda não há respostas alternativas concluídas para contar. Ative o aviso em Configurações, Alarmes, e aqui você verá com que frequência a conclui depois de um alarme.',
+  'coaching.sentence': '{completed} de {alarms, plural, one {{alarms} alarme seguido} other {{alarms} alarmes seguidos}} de uma resposta alternativa concluída.',
   'rate.falseTitle': 'Alarmes falsos',
   'rate.falseEmpty': 'Ainda não há alarmes. Os alarmes que você marca como “Não foi uma mordida” são contados aqui.',
   'falseAlarms.none': 'Ainda não há alarmes.',

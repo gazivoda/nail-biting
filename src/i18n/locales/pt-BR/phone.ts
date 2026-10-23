@@ -3,7 +3,7 @@ import type { messages as en } from '../../scopes/phone';
 
 export const messages: Record<keyof typeof en, string> = {
   'home.greeting.named': '{part, select, morning {Bom dia} afternoon {Boa tarde} other {Boa noite}}, <name>{name}</name>.',
-  'home.greeting.anon': '{part, select, morning {Bom dia, <name>você</name>.} afternoon {Boa tarde, <name>você</name>.} other {Boa noite, <name>você</name>.}}',
+  'home.greeting.anon': '{part, select, morning {Bom <name>dia</name>.} afternoon {Boa <name>tarde</name>.} other {Boa <name>noite</name>.}}',
   'home.freePlan': 'Plano gratuito.',
   'home.freePlanHistory': 'Plano gratuito: o Histórico mostra {days, plural, one {seu último dia} other {seus últimos {days} dias}}.',
   'home.trial': 'Teste grátis: {left}.',

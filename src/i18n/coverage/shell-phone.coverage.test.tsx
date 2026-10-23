@@ -386,12 +386,12 @@ const at3pm = () => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(T
 describe('phone view, pseudo-locale', () => {
   usePseudoLocale({ flags: [] });
 
-  it('empty, signed in without a name, in the morning: the greeting marks the fallback word', () => {
+  it('empty, signed in without a name, in the morning: the greeting marks the time-of-day word', () => {
     vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(at(9));
     auth.ctx = { user: person({ name: '' }), accessStatus: 'subscribed' };
     const html = phoneView();
     check(html);
-    expect(html).toContain('⟦Guten Morgen, ⟧<span class="sg-mark whitespace-nowrap dark:![background:none]">⟦du⟧</span>⟦.⟧');
+    expect(html).toContain('⟦Guten ⟧<span class="sg-mark whitespace-nowrap dark:![background:none]">⟦Morgen⟧</span>⟦.⟧');
     for (const piece of ['Ich habe gebissen', 'Ich spüre einen Drang', 'Heute nichts erfasst', 'Zuletzt', 'Noch nichts erfasst', 'Nur auf diesem Handy gespeichert.', 'Die vollständige App auf diesem Gerät öffnen', 'Link für meinen Computer per E-Mail senden']) {
       expect(html, piece).toContain(piece);
     }
@@ -650,6 +650,9 @@ describe('English (no language picked): the text and markup of today', () => {
     at3pm();
     auth.ctx = { user: person({ entitlement: { free_tier: { detection_minutes_per_day: 30, history_days: 7 } } }), accessStatus: 'free_tier' };
     expect(phoneView({ upgrade: true })).toContain('Free plan: History shows your last 7 days.');
+    // the screen has always said "N days", also for 1 (the window is never that short)
+    auth.ctx = { user: person({ entitlement: { free_tier: { detection_minutes_per_day: 30, history_days: 1 } } }), accessStatus: 'free_tier' };
+    expect(phoneView({ upgrade: true })).toContain('Free plan: History shows your last 1 days.');
     auth.ctx = { user: person({ name: '', entitlement: { free_tier: { detection_minutes_per_day: 30, history_days: null } } }), accessStatus: 'free_tier' };
     const html = phoneView();
     expect(html).toContain('Free plan.');

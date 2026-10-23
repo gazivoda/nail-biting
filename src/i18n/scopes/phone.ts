@@ -8,7 +8,9 @@ export const messages = {
   'home.greeting.named': '{part, select, morning {Good morning} afternoon {Good afternoon} other {Good evening}}, <name>{name}</name>.',
   'home.greeting.anon': '{part, select, morning {Good morning, <name>there</name>.} afternoon {Good afternoon, <name>there</name>.} other {Good evening, <name>there</name>.}}',
   'home.freePlan': 'Free plan.',
-  'home.freePlanHistory': 'Free plan: History shows your last {days, plural, one {day} other {{days} days}}.',
+  // Both forms read "N days" in English because that is what the screen has always said (the window is 7 or more days).
+  // The other languages have a real singular.
+  'home.freePlanHistory': 'Free plan: History shows your last {days, plural, one {{days} days} other {{days} days}}.',
   'home.trial': 'Free trial: {left}.',
   'home.choosePlan': 'Choose a plan',
   'home.logAria': 'Log',

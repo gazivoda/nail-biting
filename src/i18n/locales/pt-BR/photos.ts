@@ -59,7 +59,7 @@ export const messages: Record<keyof typeof en, string> = {
   'capture.saved': 'Salva no seu diário.',
   'capture.stopWatching': 'Parar o monitoramento e tentar de novo',
   'capture.previewLabel': 'Prévia ao vivo da câmera',
-  'capture.guide': 'Coloque as mãos abertas e planas dentro da moldura, com as unhas voltadas para a câmera',
+  'capture.guide': 'Coloque as mãos planas dentro da moldura, com as unhas voltadas para a câmera',
   'capture.mirrorNote': 'Mantenha seu rosto fora da imagem. A prévia é um espelho, e a foto é salva do jeito que você a vê.',
   'capture.countdown': 'Tirando a foto em {n}',
   'capture.waiting': 'Aguardando a imagem da câmera',

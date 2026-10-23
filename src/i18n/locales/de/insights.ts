@@ -70,9 +70,9 @@ export const messages: Record<keyof typeof en, string> = {
   'label.noReason': 'Kein Grund gewählt',
   'label.otherReason': 'Ein anderer Grund',
 
-  'rate.coachingTitle': 'Gegenreaktion',
-  'rate.coachingEmpty': 'Noch keine abgeschlossenen Gegenreaktionen zum Zählen. Aktiviere die Abfrage unter Einstellungen, Alarm, und hier siehst du, wie oft du sie nach einem Alarm abschließt.',
-  'coaching.sentence': '{completed} von {alarms, plural, one {{alarms} Alarm} other {{alarms} Alarmen}}, auf die eine abgeschlossene Gegenreaktion folgte.',
+  'rate.coachingTitle': 'Ersatzhandlung',
+  'rate.coachingEmpty': 'Noch keine abgeschlossenen Ersatzhandlungen zum Zählen. Aktiviere den Hinweis unter Einstellungen, Alarme, und hier siehst du, wie oft du sie nach einem Alarm abschließt.',
+  'coaching.sentence': '{completed} von {alarms, plural, one {{alarms} Alarm} other {{alarms} Alarmen}}, auf die eine abgeschlossene Ersatzhandlung folgte.',
   'rate.falseTitle': 'Fehlalarme',
   'rate.falseEmpty': 'Noch keine Alarme. Alarme, die du als „Kein Biss“ markierst, werden hier gezählt.',
   'falseAlarms.none': 'Noch keine Alarme.',

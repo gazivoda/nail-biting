@@ -10,7 +10,7 @@ export const messages: Record<keyof typeof en, string> = {
   'switch.photos': 'Fotos',
 
   'empty.title': 'Aún no hay historial',
-  'empty.body': 'Las alarmas de la pestaña Vigilar y los mordiscos que registras con «Me acabo de morder las uñas» aparecen aquí, día a día. Añade un motivo a cada uno y esta página te muestra qué te desencadena.',
+  'empty.body': 'Las alarmas de la pestaña Vigilar y los mordiscos que registras con «Acabo de morderme las uñas» aparecen aquí, día a día. Añade un motivo a cada uno y esta página te muestra qué te desencadena.',
   'empty.goToWatch': 'Ir a Vigilar',
 
   'undo.deleted': 'Registro de las {time} eliminado.',
