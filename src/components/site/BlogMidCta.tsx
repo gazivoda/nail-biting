@@ -1,5 +1,6 @@
 import { TrialButton } from './TrialButton';
 import { track } from '../../utils/track';
+import { TRIAL_DAYS_TEXT } from '../../../shared/plans.js';
 
 // Mid-article block, in the Signal language: a deep card with one lime button.
 // Same offer and privacy wording as the footer call to action; its own source
@@ -14,7 +15,7 @@ export function BlogMidCta({ slug }: { slug: string }) {
           <p className="sg-h3 text-white">Biting without <span className="sg-hl">noticing?</span></p>
           <p className="sg-small mt-2 max-w-[46ch]">
             Stop Biting is a webcam alarm that runs in your browser on a laptop or desktop. No camera
-            data is sent while it runs. 3 days free, no card. Or{' '}
+            data is sent while it runs. {TRIAL_DAYS_TEXT} free, no card. Or{' '}
             <a href="/#live-demo" onClick={() => track('demo_link_click', source)} className="sg-link">
               try the 60 second demo
             </a>{' '}

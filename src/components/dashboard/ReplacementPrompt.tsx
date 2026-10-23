@@ -5,6 +5,9 @@ import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
 import { SUGGESTIONS } from './suggestions';
 import type { TriggerTag } from '../../types';
+import { isPendingAlarm } from '../../storage/eventModel';
+import { useFalsePositiveEnabled } from '../../falsePositive/useEnabled';
+import { markNotABite } from '../../falsePositive/actions';
 
 
 const RECENT_MS = 10 * 60 * 1000;
@@ -15,6 +18,7 @@ const RECENT_MS = 10 * 60 * 1000;
 // only later, from a hover button in History, which is where it never happened.
 export function ReplacementPrompt() {
   const { incidents, customTags, confirmIncident, deleteIncident } = useAppStore();
+  const falsePositiveControls = useFalsePositiveEnabled();
   const [dismissed, setDismissed] = useState<number>(0);
   // Only ask about detections from this sitting: after a reload, a catch from
   // yesterday is not "the moment" any more. Anchored at mount so render stays pure.
@@ -25,7 +29,7 @@ export function ReplacementPrompt() {
   const lastAuto = incidents.find(i => i.autoDetected);
 
   const shouldShow =
-    lastAuto && !lastAuto.confirmed && lastAuto.timestamp > askAfter && dismissed < lastAuto.timestamp;
+    lastAuto && isPendingAlarm(lastAuto) && lastAuto.timestamp > askAfter && dismissed < lastAuto.timestamp;
 
   if (!shouldShow) return null;
 
@@ -42,9 +46,12 @@ export function ReplacementPrompt() {
   };
 
   // A false alarm the person has just ruled out. Leaving it in place kept it
-  // counted as "to review" on Today and in History forever.
+  // counted as "to review" on Today and in History forever. With the false-alarm
+  // controls on (WS3) it is marked "Not a bite" instead of deleted: it stays in
+  // History (and can be taken back), is not counted, and the app learns from it.
   const notABite = () => {
-    deleteIncident(lastAuto.id);
+    if (falsePositiveControls) markNotABite(lastAuto.id);
+    else deleteIncident(lastAuto.id);
     setDismissed(lastAuto.timestamp);
   };
 

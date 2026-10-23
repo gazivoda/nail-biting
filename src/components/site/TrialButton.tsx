@@ -4,7 +4,7 @@ import { useIsPhone } from '../../hooks/useIsPhone';
 import { canShare, shareToComputer } from '../../utils/phoneLink';
 import { useSignInHref } from '../../auth/useSignInProviders';
 
-// The app needs a computer webcam, and the 3-day clock starts at sign-in, so a
+// The app needs a computer webcam, and the trial clock starts at sign-in, so a
 // phone visitor who signs in here spends the trial before they can use it.
 // They get a way to send themselves the link instead. A mailto needs no
 // backend and stores nothing. The small header button keeps its label: it is

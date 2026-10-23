@@ -8,6 +8,7 @@ import { ShareButton } from '../components/site/ShareButton';
 import { buildShareUrl, cleanChoiceParam, cleanNumberParam } from '../utils/shareLink';
 import { track } from '../utils/track';
 import { FINGERNAIL_MM_PER_MONTH, TOENAIL_MM_PER_MONTH, monthsToGrow, type NailKind } from '../utils/nailGrowth';
+import { TRIAL_HYPHEN } from '../../shared/plans.js';
 
 // /tools/nail-growth-timeline-calculator. The server (server.js) injects the head
 // and the crawler-visible copy; like /pricing, this page does not touch
@@ -101,7 +102,7 @@ export function NailGrowthCalculator() {
             </div>
             <div className="mt-6">
               <TrialButton source="nail_growth_calculator" />
-              <p className="sg-note mt-3">3-day free trial, no credit card. Then $2.99/month or $29/year.</p>
+              <p className="sg-note mt-3">{TRIAL_HYPHEN} free trial, no credit card. Then $2.99/month or $29/year.</p>
               <p className="sg-note mt-2">
                 Or <a href="/#live-demo" onClick={() => track('demo_link_click', 'nail_growth_calculator')} className="sg-link">try the 60 second demo</a> first, no account.
               </p>

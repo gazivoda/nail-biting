@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore, isBite } from '../store/useAppStore';
-import { isUrge } from '../storage/eventModel';
+import { isAlarmOrBite, isFalsePositive, isPendingAlarm, isUrge } from '../storage/eventModel';
+import { useFalsePositiveEnabled } from '../falsePositive/useEnabled';
+import { markNotABite, undoNotABite } from '../falsePositive/actions';
+import { FalsePositiveRate } from '../falsePositive/FalsePositiveRate';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { subDays, startOfDay, format } from 'date-fns';
@@ -13,6 +16,7 @@ import { topTrigger, peakHour, hourRange, behaviorsIn, filterByBehavior } from '
 import { BEHAVIOR_REGISTRY } from '../detection/registry';
 import { useBehaviorFilterEnabled } from '../detection/useBehaviors';
 import type { Behavior } from '../storage/eventModel';
+import { useHistoryWindow } from '../billing/useFreeTier';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -33,6 +37,9 @@ const BITE_TAG_COLOR = 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-
 
 // An urge the person rode out (urge timer): calm green, not the alarm red.
 const URGE_TAG_COLOR = 'text-forest-700 dark:text-forest-300 bg-forest-50 dark:bg-forest-800/50 border-forest-300 dark:border-forest-700';
+
+// An alarm the person marked "Not a bite" (WS3): reviewed, not counted. Quiet, neither the alarm amber nor the bite red.
+const FALSE_TAG_COLOR = 'text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-ink-fill border-stone-300 dark:border-ink-400';
 
 const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700';
 
@@ -87,7 +94,7 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
 
   const relevantIncidents = weekChartMetric === 'confirmed'
     ? incidents.filter(isConfirmedBite)
-    : incidents.filter(inc => !isUrge(inc)); // "Alarms and bites per day": an urge is neither
+    : incidents.filter(isAlarmOrBite); // "Alarms and bites per day": an urge and a "Not a bite" alarm are neither
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = startOfDay(subDays(new Date(), 6 - i));
@@ -198,6 +205,9 @@ function ClearAllButton() {
 
 export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const { incidents: allIncidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
+  // The "Not a bite" button on each alarm is the `false_positive_controls` feature. An entry already marked keeps its label
+  // and its Undo whatever the flag says (the mark is data), so turning the flag off never strands one.
+  const falsePositiveControls = useFalsePositiveEnabled();
 
   // Behaviour filter (WS1): only offered with the `detection_behaviors` flag on AND more than one
   // behaviour in the history. Otherwise `incidents` is the store's own array and nothing differs.
@@ -207,6 +217,8 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const [pickedBehavior, setPickedBehavior] = useState<Behavior | 'all'>('all');
   const behaviorFilter = showBehaviorFilter && pickedBehavior !== 'all' && behaviorsPresent.includes(pickedBehavior) ? pickedBehavior : 'all';
   const incidents = filterByBehavior(allIncidents, behaviorFilter);
+  // WS9 (flag free_tier): a free account's list shows the last few days. Same array for every other account.
+  const { visible: shown, hidden: hiddenCount } = useHistoryWindow(incidents);
 
   // One tap on the bin used to remove an entry for good, and deleting a bite
   // silently moves the streak. The last deletion can be undone for a few
@@ -226,11 +238,15 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
     setLastDeleted(null);
   };
 
+  // "Not a bite" entries stay in the list (so they can be taken back) but are not entries that count.
+  const markedCount = shown.filter(isFalsePositive).length;
+  const countedEntries = shown.length - markedCount;
+
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
   const seen = new Set<string>();
 
-  for (const inc of incidents) {
+  for (const inc of shown) {
     const key = formatDate(inc.timestamp);
     if (!seen.has(key)) {
       seen.add(key);
@@ -307,7 +323,9 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between gap-3 px-1">
                 <p className="shrink-0 whitespace-nowrap text-sm font-semibold text-stone-700 dark:text-stone-200">
-                  {incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}
+                  {markedCount === 0
+                    ? <>{shown.length} {shown.length !== 1 ? 'entries' : 'entry'}</>
+                    : <>{countedEntries} {countedEntries !== 1 ? 'entries' : 'entry'}, {markedCount} marked not a bite</>}
                 </p>
                 <ClearAllButton />
               </div>
@@ -321,12 +339,15 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                     {items.map(inc => {
                       const bite = isConfirmedBite(inc);
                       const urge = isUrge(inc);
-                      const tagColor = urge ? URGE_TAG_COLOR : bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
-                      const tagLabel = urge
-                        ? (inc.competingResponse?.done ? `${URGE_TAG.label}, timer finished` : URGE_TAG.label)
-                        : bite
-                          ? biteTagLabel(inc, customTags)
-                          : 'Alarm';
+                      const notABite = isFalsePositive(inc);
+                      const tagColor = notABite ? FALSE_TAG_COLOR : urge ? URGE_TAG_COLOR : bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
+                      const tagLabel = notABite
+                        ? 'Not a bite'
+                        : urge
+                          ? (inc.competingResponse?.done ? `${URGE_TAG.label}, timer finished` : URGE_TAG.label)
+                          : bite
+                            ? biteTagLabel(inc, customTags)
+                            : 'Alarm';
                       return (
                         <div
                           key={inc.id}
@@ -341,7 +362,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                             {tagLabel}
                           </span>
                           <div className="ml-auto flex items-center gap-1">
-                            {inc.autoDetected && !inc.confirmed && (
+                            {isPendingAlarm(inc) && (
                               <button
                                 onClick={() => confirmIncident(inc.id)}
                                 aria-label={`Confirm alarm at ${formatTime(inc.timestamp)} as a bite`}
@@ -350,6 +371,26 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                               >
                                 <CheckCircle size={13} />
                                 <span>Bite</span>
+                              </button>
+                            )}
+                            {notABite && (
+                              <button
+                                onClick={() => undoNotABite(inc.id)}
+                                aria-label={`Undo: count the alarm at ${formatTime(inc.timestamp)} again`}
+                                title="Count this alarm again"
+                                className="flex min-h-11 items-center gap-1 px-2 text-xs font-medium text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
+                              >
+                                Undo
+                              </button>
+                            )}
+                            {falsePositiveControls && inc.autoDetected && !notABite && (
+                              <button
+                                onClick={() => markNotABite(inc.id)}
+                                aria-label={`Mark the alarm at ${formatTime(inc.timestamp)} as not a bite`}
+                                title="My hand was only resting there"
+                                className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 items-center gap-1 px-2 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-all duration-150"
+                              >
+                                Not a bite
                               </button>
                             )}
                             <button
@@ -366,6 +407,12 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   </div>
                 </div>
               ))}
+
+              {hiddenCount > 0 && (
+                <p className="px-1 text-sm text-stone-600 dark:text-stone-300">
+                  {hiddenCount} older {hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan.
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -387,12 +434,13 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                 </div>
                 <div>
                   <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
-                    {incidents.filter(i => i.autoDetected && !i.confirmed).length}
+                    {incidents.filter(isPendingAlarm).length}
                   </p>
                   <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">Alarms to review</p>
                 </div>
               </div>
               <BiteInsights incidents={incidents} />
+              <FalsePositiveRate incidents={incidents} />
             </div>
           )}
         </div>

@@ -33,6 +33,7 @@ import features from './features.js';
 import example from './_example.js';
 import authProviders from './authProviders.js';
 import events from './events.js';
+import billing from './billing.js';
 import phone from './phone.js';
 
 /** Registered in this order. Append your module; do not reorder others. */
@@ -41,9 +42,9 @@ export const ROUTE_MODULES = [
   example,
   authProviders, // WS8 sign-in providers (magic link, Apple, Microsoft)
   events, // WS4 optional sync of history (event_sync)
+  billing, // WS9 lifetime, gifts, referrals, free tier; hooks for the Paddle webhook and /api/user/me
   phone, // WS6 phone companion: the manifest with home-screen shortcuts (phone_companion)
   // WS5  weekly email         -> import insights from './insights.js'
-  // WS9  referrals / pricing  -> import billing from './billing.js'
   // WS10 share links          -> import share from './share.js'
 ];
 

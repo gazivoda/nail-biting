@@ -4,6 +4,7 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
+import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
 export function About() {
   useTheme('light');
@@ -142,7 +143,7 @@ export function About() {
 
         <div className="mt-16 flex flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="sg-h3">Try it free for 3 days.</p>
+            <p className="sg-h3">Try it free for {TRIAL_DAYS_TEXT}.</p>
             <p className="sg-small mt-1">No card to start. Then $2.99 a month or $29 a year, cancel anytime.</p>
           </div>
           <TrialButton source="about" />

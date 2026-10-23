@@ -2,11 +2,14 @@ import { useEffect, useRef } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
 import { track } from '../utils/track';
+import { PRICE_IDS } from '../billing/env';
+import { hasAll, useLocalizedPrices } from '../billing/prices';
+import { TRIAL_WORDS_CAP } from '../../shared/plans.js';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
 // figures. Prices here MUST match the Offer schema and SSR prose that
-// server.js injects for /pricing: $2.99/month, $29.00/year, 3-day free trial.
+// server.js injects for /pricing: $2.99/month, $29.00/year, free trial (shared/plans.js).
 //
 // Set in the homepage's sign system (the `.sg-*` block in index.css): two
 // plates side by side, the recommended yearly plan outlined in the blue of the
@@ -54,6 +57,11 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
     return () => io.disconnect();
   }, []);
 
+  // WS9 (flag regional_pricing): what Paddle will charge this visitor. Empty, and so the fixed prices
+  // below, while the flag is off, when Paddle is not set up, and whenever anything goes wrong.
+  const regional = useLocalizedPrices([PRICE_IDS.monthly, PRICE_IDS.yearly].filter(Boolean));
+  const localized = hasAll(regional, [PRICE_IDS.monthly, PRICE_IDS.yearly]);
+
   return (
     <section ref={ref} id="pricing" aria-labelledby="pricing-heading" className="sg-page">
       {/* Left-aligned on the page's edge like every other section: centred
@@ -61,7 +69,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       <div className="max-w-4xl">
         <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or <span className="sg-mark">$29 a year.</span></Heading>
         <p className="sg-lede mt-4 max-w-2xl">
-          Three days free first, and no card to start. You pick a plan when the trial ends.
+          {TRIAL_WORDS_CAP} free first, and no card to start. You pick a plan when the trial ends.
         </p>
       </div>
 
@@ -69,14 +77,14 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
         <div className="sg-plate sg-dark relative flex flex-col !border-transparent !bg-[color:var(--sg-deep)] p-7 sm:p-9">
           <p className="absolute -top-3.5 left-7 rounded-full bg-[color:var(--sg-signal)] px-3 py-1 text-[0.8125rem] font-bold text-[color:var(--sg-deep)]">
-            Best value: save 19%
+            {localized ? 'Best value' : 'Best value: save 19%'}
           </p>
           <p className="sg-h3">Yearly</p>
           <p className="mt-5 flex items-baseline gap-1.5">
-            <span className="sg-figure">$29.00</span>
+            <span className="sg-figure">{localized ? regional[PRICE_IDS.yearly].total : '$29.00'}</span>
             <span className="sg-small">/ year</span>
           </p>
-          <p className="sg-small mt-2">$2.42/month, billed yearly</p>
+          <p className="sg-small mt-2">{localized ? 'Billed yearly' : '$2.42/month, billed yearly'}</p>
           <div className="mt-7 flex-1">
             <FeatureList features={[...FEATURES, YEARLY_EXTRA]} />
           </div>
@@ -96,7 +104,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         <div className="sg-plate flex flex-col p-7 sm:p-8">
           <p className="sg-h3">Monthly</p>
           <p className="mt-5 flex items-baseline gap-1.5">
-            <span className="sg-figure">$2.99</span>
+            <span className="sg-figure">{localized ? regional[PRICE_IDS.monthly].total : '$2.99'}</span>
             <span className="sg-small">/ month</span>
           </p>
           <p className="sg-small mt-2">Billed monthly</p>
@@ -119,6 +127,12 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
           </a>
         </div>
       </div>
+
+      {localized && (
+        <p className="sg-small mt-6 max-w-4xl">
+          These prices are shown in your local currency. The list prices are $2.99 a month and $29 a year.
+        </p>
+      )}
 
       <p className="sg-small mt-8 max-w-4xl">
         Payments go through Paddle. Cancel anytime in Settings. You can ask for a full refund within 14 days of
