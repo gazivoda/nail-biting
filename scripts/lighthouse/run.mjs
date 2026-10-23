@@ -6,7 +6,7 @@
 //
 // Writes <out>/lighthouse.json (every run) and prints a table of the median per page and form factor.
 // Numbers from a laptop that is also doing other work are noisy: read the scores as ranges, not as a benchmark.
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,11 +27,20 @@ const PAGES = [
 const only = typeof args.only === 'string' ? args.only.split(',') : null;
 const median = (xs) => { const s = xs.filter(x => x !== null && x !== undefined).sort((a, b) => a - b); return s.length ? s[Math.floor(s.length / 2)] : null; };
 
-function lighthouse(url, formFactor, file) {
-  const a = ['--yes', 'lighthouse', url, '--only-categories=performance,seo,best-practices,accessibility', '--output=json', `--output-path=${file}`,
-    '--chrome-flags=--headless=new --no-first-run', '--quiet', ...(formFactor === 'desktop' ? ['--preset=desktop'] : [])];
-  const r = spawnSync('npx', a, { env: { ...process.env, CHROME_PATH: CHROME }, encoding: 'utf8', timeout: 180000 });
-  if (r.status !== 0) return { error: (r.stderr || r.stdout || 'lighthouse failed').slice(-400) };
+// Lighthouse is pointed at a Chrome this script started (--port), as WS13's accessibility pass did: letting Lighthouse
+// launch Chrome itself hung on macOS here.
+// Asynchronous on purpose: the proxy in front of the server lives in THIS process, and a blocking spawnSync would freeze it.
+async function lighthouse(url, formFactor, file, chromePort) {
+  const a = ['--yes', 'lighthouse', url, `--port=${chromePort}`, '--only-categories=performance,seo,best-practices,accessibility', '--output=json', `--output-path=${file}`,
+    '--quiet', ...(formFactor === 'desktop' ? ['--preset=desktop'] : [])];
+  const child = spawn('npx', a, { env: { ...process.env }, stdio: ['ignore', 'pipe', 'pipe'] });
+  let text = '';
+  child.stdout.on('data', d => { text += d; });
+  child.stderr.on('data', d => { text += d; });
+  const timer = setTimeout(() => child.kill('SIGKILL'), 240000);
+  const status = await new Promise(resolve => child.on('exit', resolve));
+  clearTimeout(timer);
+  if (status !== 0) return { error: `exit ${status}: ${text.split('\n').filter(l => !l.startsWith('npm warn')).join(' | ').slice(-600)}` };
   const j = JSON.parse(readFileSync(file, 'utf8'));
   const c = j.categories;
   const au = j.audits;
@@ -67,6 +76,7 @@ mkdirSync(OUT, { recursive: true });
 const tmp = join(OUT, '.raw');
 mkdirSync(tmp, { recursive: true });
 const server = await startServer({ root: REPO, port: PORT, flags: FLAGS });
+const lhChrome = await launchChrome({ port: PORT + 2000 });
 const results = [];
 try {
   for (const [path, label] of PAGES) {
@@ -74,7 +84,7 @@ try {
     for (const ff of ['mobile', 'desktop']) {
       const runs = [];
       for (let i = 0; i < RUNS; i++) {
-        const r = lighthouse(`${server.origin}${path}`, ff, join(tmp, `${label.replace(/\W+/g, '_')}-${ff}-${i}.json`));
+        const r = await lighthouse(`${server.origin}${path}`, ff, join(tmp, `${label.replace(/\W+/g, '_')}-${ff}-${i}.json`), PORT + 2000);
         runs.push(r);
         console.log(`${path} ${ff} #${i + 1}: ${r.error ? `ERROR ${r.error}` : `perf ${r.performance} seo ${r.seo} bp ${r.bestPractices} a11y ${r.accessibility} LCP ${r.lcpMs}ms CLS ${r.cls} TBT ${r.tbtMs}ms`}`);
       }
@@ -82,7 +92,7 @@ try {
       results.push({ path, label, formFactor: ff, runs, median: ok.length ? Object.fromEntries(['performance', 'seo', 'bestPractices', 'accessibility', 'lcpMs', 'cls', 'tbtMs', 'fcpMs'].map(k => [k, median(ok.map(r => r[k]))])) : null, failedAudits: [...new Set(ok.flatMap(r => r.failed))] });
     }
   }
-} finally { await server.stop(); }
+} finally { lhChrome.close(); await server.stop(); }
 const install = [];
 for (const flags of ['', 'phone_companion']) { try { install.push(await installability(flags)); } catch (e) { install.push({ flags, error: String(e.message ?? e) }); } }
 writeFileSync(join(OUT, 'lighthouse.json'), JSON.stringify({ at: new Date().toISOString(), runs: RUNS, flags: FLAGS, lighthouse: results.find(r => r.runs[0]?.version)?.runs[0].version, results, installability: install }, null, 2));

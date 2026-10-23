@@ -335,3 +335,22 @@ node scripts/flags-off-diff/dom-all.mjs 3214 4214 <out2> A=<A> S=<S> B=<B> M=<M>
 node scripts/flags-off-diff/dom-diff.mjs <out2> A B 4214
 node scripts/flags-off-diff/weight.mjs <out2> A=<A>/dist B=<B>/dist
 ```
+
+## 10. Changes made after this comparison (WS13 accessibility fixes, `b6b16f9..HEAD`)
+
+The comparison above was run on `b6b16f9`. The accessibility pass (`docs/agents/accessibility-report.md`) then made small fixes
+in 21 files under `src/`. Almost all of them are in code that only runs with a flag on (calibration, urge timer, insights
+charts, sharing card, photo diary, schedule and pause controls, phone view, sign-in page). **Four changes are visible with
+every flag off**, all contrast or reflow fixes to screens that already existed. None was in the DOM comparison, so they are
+the known, deliberate differences from production in addition to sections 3 to 7:
+
+| File | Change with all flags off | Why | How to take it out |
+|---|---|---|---|
+| `src/pages/Settings.tsx` | two class names on the "Bite reasons" emoji and label fields: `dark:placeholder:text-stone-600` becomes `dark:placeholder:text-stone-400` | the dark placeholder measured 2.33:1 (WCAG AA wants 4.5:1) | revert commit `2d5491c` |
+| `src/components/DetectionWave.tsx` | in light mode the 12 px "Detected!" label is a darker red (`oklch(50% .18 25)` instead of `62%`) | 3.96:1 on the white card, needs 4.5:1 | same commit `2d5491c` |
+| `src/pages/Log.tsx` | the History count line may wrap and shrink only when some alarms are marked "Not a bite" (needs `false_positive_controls`); with nothing marked the class string is unchanged | at 320 px "Clear all" was pushed off the screen | commit `f32b80c` |
+| `src/phone/RecentList.tsx` | phone view only (`phone_companion`): rows wrap | scrolled the page sideways at 320 px | commit `0a5c2dc` |
+
+No behaviour, request, route, persisted value or copy changed. If "nothing visible with flags off" must hold literally,
+revert `2d5491c` (the first two rows); everything else is flag-gated. The DOM comparison in section 6 was not re-run after
+these commits; the privacy audit's `flagsoff` mode and the full test suite were (`docs/agents/privacy-audit-report.md`).
