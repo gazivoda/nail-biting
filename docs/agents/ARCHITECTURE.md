@@ -7,7 +7,7 @@ purpose; they rot. If something here is wrong, fix it in your PR and say so in y
 Contents: 1 Stack and file map · 2 Detection · 3 History, streak, event schema v2 · 4 Storage module ·
 5 Feature flags · 6 Server: routes, auth, Paddle, database · 7 Settings shell · 8 Marketing pages, meta, schema ·
 9 PWA · 10 Electron · 11 Tests and tooling · 12 File ownership map · 13 Rules for later agents ·
-14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a)
+14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a) · 16 Localization (WS12a)
 
 ---
 
@@ -53,6 +53,7 @@ src/
   insights/               WS5: pure aggregation (aggregate.ts), milestones, share card, zone maths; ui/ = the Insights view
   photos/                 WS5: the local-only nail photo diary (flag photo_diary); never imports sync or network code
   features/               feature flags on the client (section 5)
+  i18n/                   WS12a: messages, locale state, scopes (English), locales/ (es, de, pt-BR), format helpers (section 16)
   hooks/                  useDetection, biteDetector, useCamera, usePictureInPicture, useStreak, ...
   components/detection/   CameraView, DetectionSurface, AlertOverlay, PiPWindow, ...
   components/dashboard/   StreakHero, TodayStats, ReplacementPrompt, PanicButton, CameraPanel, ...
@@ -571,7 +572,7 @@ them without importing the page.
 | `alerts` | Alerts | WS2 | `hrt_coaching` | `sections/AlertsSection.tsx` |
 | `behaviors` | Behaviors | WS1 | `detection_behaviors` | `sections/BehaviorsSection.tsx` |
 | `schedule` | Schedule | WS7a | `background_watching` | `sections/ScheduleSection.tsx` |
-| `account-sync` | Account & Sync | WS4 (+WS8, WS5, WS9) | `event_sync`, `signin_*`, `weekly_email`, `referrals` | `sections/AccountSyncSection.tsx` |
+| `account-sync` | Account & Sync | WS4 (+WS8, WS5, WS9, WS12a) | `event_sync`, `signin_*`, `weekly_email`, `referrals`, `locale_*` (the Language card) | `sections/AccountSyncSection.tsx` |
 | `data` | Data | WS4 (+WS5) | `data_backup`, `event_sync`, `photo_diary` | `sections/DataSection.tsx` |
 | `sharing` | Sharing | WS10 | `share_links` | `sections/SharingSection.tsx` |
 
@@ -751,6 +752,7 @@ checks `electron/` (`tsc -b` does not).
 | Phone view: `src/phone/**`, `server/routes/phone.js`, `scripts/generate-phone-icons.py` | WS6 | `Dashboard.tsx` renders `<PhoneView>` when `usePhoneView()` is true (lazy); `App.tsx` passes `onNavigate`; `TabBar` and `PWAGuideModal` read `usePhoneViewActive()`; `AuthContext` calls `resolveFailedSession` / `clearGrant`; `index.html` PWA head tags |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
 | `src/index.css`, `tailwind.config.js` | do not change tokens (a change reaches every surface; see lessons) | |
+| `src/i18n/**`, `scripts/i18n/**` | WS12a (WS12b adds marketing scopes and routes on top) | `createScope`, `t`/`useT`, `format.ts`; `scope.mjs` is the one list of what is exempt from the no-English rule |
 | `PrivacyPage`, `TermsPage`, `LegalPage`, `RefundPage` | nobody; drafts go to `docs/agents/legal/` | |
 
 ---
@@ -963,3 +965,32 @@ A real hand on a real camera while hidden; a windowed Chrome (minimised, covered
 size and always-on-top behaviour (headless opens a larger one); the tray clicks; a worker under `file://` in the packaged app (it falls
 back to timers); the OS notification itself; screen readers. Flag-off sameness was checked on the HTML of Watch, History and Settings
 against a build of main: byte-identical.
+
+---
+
+## 16. Localization of the signed-in app (WS12a, flags `locale_es`, `locale_de`, `locale_pt_br`)
+
+Full notes: `docs/agents/ws12a-notes.md`. The short version:
+
+- **Where the text lives.** `src/i18n/scopes/<area>.ts` holds the English messages of one area and exports its `t` / `useT`; the translations are
+  `src/i18n/locales/{es,de,pt-BR}/<area>.ts`, typed `Record<keyof English, string>`. English is the source of truth. A scope is imported by the
+  code of its area, so the English text stays in that area's lazy chunk; keep the scopes imported by the main bundle (`common`, `shell`, `alarm`,
+  `trial`, `plans`, the i18n core) small. The `labels` scope (tag and behavior names) is read through getters in `triggerTags.ts` / `detection/registry.ts`.
+- **Messages.** ICU-like subset in `message.ts`: `{name}`, `{n, number}`, `{n, plural, =0 {..} one {# ..} other {# ..}}`, `{x, select, ..}`, rich `<tag>..</tag>`
+  through `t.rich`. Stored ids (tags, behaviors, settings values) are never translated; only what is displayed, through a lookup.
+- **Which language.** Only what the person picked (Settings > Account & Sync > Language, kept in `kv('i18n', 'locale')` via `src/i18n/persist.ts`) and only
+  when that locale's flag is on: `<LocaleHost />` (mounted by `App.tsx`, `SignIn.tsx`, `RedeemPage.tsx`) is the only link between the language and the
+  flags. The browser language is never read. The catalog of the language is fetched by dynamic import (`assets/locale-*.js`, kept out of the service
+  worker precache); until it arrives, and for any missing key, English shows. `<html lang>` follows (written only after a language was applied).
+- **`src/i18n/core.ts` imports no storage, flags or store.** The alarm overlay, `useDetection` and the not-a-bite seam are also loaded by the marketing demo,
+  and `scripts/coachingGuards`, `falsePositiveGuards`, `backgroundGuards` keep storage and the flag client out of that part of the bundle. `format.ts` imports
+  date-fns, so those modules must not import it (`backgroundGuards` pins `useDetection`'s packages).
+- **Formatting.** `src/i18n/format.ts`: numbers, money, dates, times, relative time, lists. While English shows they behave exactly like the code they replaced
+  (browser formats, date-fns patterns), so English output is unchanged.
+- **Enforcement.** Two ESLint rules (`local-i18n/no-hardcoded-text`, `local-i18n/no-english-literals`; `scripts/i18n/`) fail on English in any file under `src/`
+  that `scripts/i18n/scope.mjs` does not exempt (each exemption has a reason). `scripts/i18n/guard.test.mjs` runs them inside `npm test`. Every area has a
+  pseudo-locale coverage test (`src/i18n/coverage/*.coverage.test.tsx`: German catalog, every `t()` result wrapped in `⟦ ⟧`, fail on any word outside the marks);
+  `scripts/i18n/inventory.test.mjs` requires every file that uses `t()` to be rendered by one or carry a `NOT-RENDERED` reason; `src/i18n/catalogs.test.ts`
+  checks keys, placeholders, plural forms and the `NEEDS NATIVE REVIEW` header of every locale.
+- **Not translated:** marketing pages, blog, compare pages, calculators, legal text, the 28 coaching lessons, every server-rendered page and email, the Electron tray menu.
+

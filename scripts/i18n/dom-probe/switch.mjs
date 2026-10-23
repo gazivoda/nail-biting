@@ -20,8 +20,8 @@ const cdp = new CDP(chrome.wsUrl);
 await cdp.ready;
 
 const lines = (page) => page.eval(`(() => { const out = []; const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); for (let n = w.nextNode(); n; n = w.nextNode()) { const t = n.textContent.trim(); if (!t) continue; const el = n.parentElement; if (el && ['SCRIPT','STYLE','NOSCRIPT'].includes(el.tagName)) continue; out.push(t); } for (const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt]')) for (const a of ['aria-label','title','placeholder','alt']) { const v = el.getAttribute(a); if (v && v.trim()) out.push('@' + a + ': ' + v.trim()); } return out; })()`);
-const html = (page) => page.eval('document.body.innerHTML.replace(/\\\\d+/g, "0").replace(/ref=[A-Z0-9]+/g, "ref=X")');
-const nav = (page, i) => page.eval(`(() => { const b = [...document.querySelectorAll('nav button')][${i}]; if (b) b.click(); })()`, { userGesture: true }).then(() => sleep(1500));
+const html = (page) => page.eval('document.body.innerHTML.replace(/\\d+/g, "0").replace(/ref=[A-Z0-9]+/g, "ref=X").replace(/ style=""/g, "").replace(/_r_[a-z0-9]+_/g, "_r_")');
+const nav = (page, i) => page.eval(`(() => { const b = [...document.querySelectorAll('nav button')][${i}]; if (b) b.click(); })()`, { userGesture: true }).then(() => sleep(2500));
 const clickText = (page, text) => page.eval(`(() => { const b = [...document.querySelectorAll('button,[role=radio],a')].find((x) => x.innerText.trim() === ${JSON.stringify(text)}); if (!b) return false; b.click(); return true; })()`, { userGesture: true });
 const insightsLabel = { en: 'Insights', es: 'Análisis', de: 'Einblicke', 'pt-BR': 'Análises' };
 
@@ -30,7 +30,7 @@ const BRAND = new Set(['Stop', 'Biting', 'Google', 'Apple', 'Microsoft', 'Paddle
 
 async function snapshot(page) {
   const out = {};
-  await nav(page, 0); out.watch = { lines: await lines(page), html: await html(page) };
+  await nav(page, 0); console.log('   [active tab button]', await page.eval(`[...document.querySelectorAll('nav button[aria-current]')].map((b) => b.innerText.trim()).join('|')`), '| nav buttons:', await page.eval(`document.querySelectorAll('nav button').length`)); out.watch = { lines: await lines(page), html: await html(page) };
   await nav(page, 1); out.history = { lines: await lines(page), html: await html(page) };
   if (await clickText(page, insightsLabel[await page.eval('window.__lang = document.documentElement.lang')] ?? 'Insights')) { await sleep(2000); out.insights = { lines: await lines(page), html: await html(page) }; await nav(page, 1); }
   await nav(page, 2); out.settings = { lines: await lines(page), html: await html(page) };
