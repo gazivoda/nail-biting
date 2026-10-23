@@ -8,7 +8,7 @@
 // imagery anywhere in this feature (PRODUCT/DESIGN: never depict the habit).
 
 import { kv } from '../storage/kv';
-import { SUGGESTIONS } from '../components/dashboard/suggestions';
+import { t } from '../i18n/scopes/coaching';
 import { clampDuration, DEFAULT_DURATION_SEC } from './session';
 import { isPromptMode, type PromptMode } from './promptPolicy';
 
@@ -17,13 +17,17 @@ export interface ResponseOption {
   text: string;
 }
 
-/** Neutral instructions, as text. The first two are the plan's examples; the third is the existing suggestion the post-alarm card already uses. */
+/**
+ * Neutral instructions, as text. The first two are the plan's examples; the third is the existing suggestion the post-alarm card already uses.
+ * `text` is read when it is shown, in the language showing then (src/i18n); the ids are what gets stored and never change.
+ * What a person typed themselves is shown as typed (see `custom`).
+ */
 export const PRESET_RESPONSES: readonly ResponseOption[] = [
-  { id: 'fists', text: 'Clench your fists' },
-  { id: 'palms', text: 'Palms flat on the desk' },
-  { id: 'thumbs', text: SUGGESTIONS[0] },
-  { id: 'press', text: 'Press your hands together' },
-  { id: 'hold', text: 'Hold something in both hands' },
+  { id: 'fists', get text() { return t('preset.fists'); } },
+  { id: 'palms', get text() { return t('preset.palms'); } },
+  { id: 'thumbs', get text() { return t('preset.thumbs'); } },
+  { id: 'press', get text() { return t('preset.press'); } },
+  { id: 'hold', get text() { return t('preset.hold'); } },
 ];
 
 export const MAX_CUSTOM_RESPONSES = 8;

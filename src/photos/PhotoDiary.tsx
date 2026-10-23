@@ -9,6 +9,7 @@ import { PhotoDiaryView, TAKE_BUTTON_ID } from './PhotoDiaryView';
 import { canDecodePhotos } from './drawBlob';
 import { photoStore } from './photoStore';
 import { usePhotos } from './usePhotos';
+import { useT } from '../i18n/scopes/photos';
 
 const loadBlob = (id: string) => photoStore.getBlob(id);
 
@@ -17,6 +18,7 @@ function focusTakeButton() {
 }
 
 export function PhotoDiary() {
+  const t = useT();
   const { photos, persistent, now } = usePhotos();
   const [captureOpen, setCaptureOpen] = useState(false);
   const [status, setStatus] = useState('');
@@ -28,7 +30,7 @@ export function PhotoDiary() {
 
   const saved = ({ persisted }: SavedPhoto) => {
     setCaptureOpen(false);
-    setStatus(persisted ? 'Photo saved on this device.' : 'Photo kept for this tab only. This browser is not saving it to disk.');
+    setStatus(persisted ? t('status.saved') : t('status.savedTabOnly'));
     focusTakeButton();
   };
 
@@ -42,8 +44,8 @@ export function PhotoDiary() {
       loadBlob={loadBlob}
       capture={captureOpen ? <CapturePanel onClose={closeCapture} onSaved={saved} /> : null}
       onStartCapture={() => { setStatus(''); setCaptureOpen(true); }}
-      onDeleteOne={id => { void photoStore.remove(id).then(ok => setStatus(ok ? 'Photo deleted.' : '')); }}
-      onDeleteAll={() => { void photoStore.removeAll().then(n => setStatus(n === 1 ? 'Photo deleted.' : `All ${n} photos deleted.`)); }}
+      onDeleteOne={id => { void photoStore.remove(id).then(ok => setStatus(ok ? t('status.deleted') : '')); }}
+      onDeleteAll={() => { void photoStore.removeAll().then(n => setStatus(n === 1 ? t('status.deleted') : t('status.deletedAll', { count: n }))); }}
     />
   );
 }

@@ -9,7 +9,8 @@ import { Camera, Check, RotateCcw, X } from 'lucide-react';
 import type { CaptureState } from './captureController';
 import { COUNTDOWN_SECONDS } from './captureController';
 import { PhotoCanvas } from './PhotoCanvas';
-import { GUIDE_TEXT } from './copy';
+import { useT } from '../i18n/scopes/photos';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 export interface CapturePanelViewProps {
   state: CaptureState<MediaStream>;
@@ -28,6 +29,8 @@ const primary = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-
 const pill = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill';
 
 export function CapturePanelView(p: CapturePanelViewProps) {
+  const t = useT();
+  const tc = useCommonT();
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => { headingRef.current?.focus(); }, []);
   const { state } = p;
@@ -43,18 +46,18 @@ export function CapturePanelView(p: CapturePanelViewProps) {
         tabIndex={-1}
         className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 outline-none dark:text-stone-100"
       >
-        Take a photo of your hands
+        {t('capture.title')}
       </h3>
 
       <div className="mt-4 space-y-4">
         {state.phase === 'idle' && (
           <>
             <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-              {state.notice ?? 'The camera opens only while this screen is open, and turns off as soon as the photo is taken.'}
+              {state.notice ?? t('capture.idle')}
             </p>
             <div className="flex flex-wrap gap-2">
-              <button type="button" onClick={p.onStart} className={primary}><Camera size={16} aria-hidden="true" />Start the camera</button>
-              <button type="button" onClick={p.onClose} className={pill}>Close</button>
+              <button type="button" onClick={p.onStart} className={primary}><Camera size={16} aria-hidden="true" />{t('capture.start')}</button>
+              <button type="button" onClick={p.onClose} className={pill}>{tc('close')}</button>
             </div>
           </>
         )}
@@ -62,9 +65,9 @@ export function CapturePanelView(p: CapturePanelViewProps) {
         {state.phase === 'starting' && (
           <>
             <p role="status" className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-              Opening the camera. Your browser may ask you to allow it.
+              {t('capture.opening')}
             </p>
-            <button type="button" onClick={p.onClose} className={pill}>Cancel</button>
+            <button type="button" onClick={p.onClose} className={pill}>{tc('cancel')}</button>
           </>
         )}
 
@@ -90,32 +93,32 @@ export function CapturePanelView(p: CapturePanelViewProps) {
                 sourceKey={`review-${state.frame.takenAt}`}
                 load={() => Promise.resolve(state.frame.blob)}
                 maxWidth={960}
-                label="The photo you just took"
+                label={t('capture.photoLabel')}
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
             <p className="text-sm text-stone-600 dark:text-stone-300">
-              The camera is off. Save this photo to your diary on this device, or take it again.
+              {t('capture.reviewNote')}
             </p>
             {state.phase === 'review' && state.saveError && (
               <p role="alert" className="text-sm font-semibold text-alert-600 dark:text-alert-400">{state.saveError}</p>
             )}
             <div className="flex flex-wrap gap-2">
               <button type="button" onClick={p.onSave} disabled={state.phase === 'saving'} className={primary}>
-                <Check size={16} aria-hidden="true" />{state.phase === 'saving' ? 'Saving' : 'Save photo'}
+                <Check size={16} aria-hidden="true" />{state.phase === 'saving' ? t('capture.saving') : t('capture.save')}
               </button>
               <button type="button" onClick={p.onRetake} disabled={state.phase === 'saving'} className={pill}>
-                <RotateCcw size={14} aria-hidden="true" />Retake
+                <RotateCcw size={14} aria-hidden="true" />{t('capture.retake')}
               </button>
               <button type="button" onClick={p.onClose} disabled={state.phase === 'saving'} className={pill}>
-                <X size={14} aria-hidden="true" />Discard
+                <X size={14} aria-hidden="true" />{t('capture.discard')}
               </button>
             </div>
           </>
         )}
 
         {state.phase === 'saved' && (
-          <p role="status" className="text-sm font-semibold text-stone-800 dark:text-stone-100">Saved to your diary.</p>
+          <p role="status" className="text-sm font-semibold text-stone-800 dark:text-stone-100">{t('capture.saved')}</p>
         )}
 
         {state.phase === 'error' && (
@@ -124,10 +127,10 @@ export function CapturePanelView(p: CapturePanelViewProps) {
             <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">{state.problem.detail}</p>
             <div className="flex flex-wrap gap-2">
               {state.problem.watchingIsUsingIt && (
-                <button type="button" onClick={p.onStopWatchingAndRetry} className={primary}>Stop watching and try again</button>
+                <button type="button" onClick={p.onStopWatchingAndRetry} className={primary}>{t('capture.stopWatching')}</button>
               )}
-              <button type="button" onClick={p.onRetake} className={state.problem.watchingIsUsingIt ? pill : primary}>Try again</button>
-              <button type="button" onClick={p.onClose} className={pill}>Close</button>
+              <button type="button" onClick={p.onRetake} className={state.problem.watchingIsUsingIt ? pill : primary}>{tc('tryAgain')}</button>
+              <button type="button" onClick={p.onClose} className={pill}>{tc('close')}</button>
             </div>
           </div>
         )}
@@ -147,6 +150,8 @@ interface LiveStageProps {
 }
 
 function LiveStage({ stream, secondsLeft, hint, onTakeNow, onTakeInSeconds, onCancelCountdown, onClose }: LiveStageProps) {
+  const t = useT();
+  const tc = useCommonT();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ratio, setRatio] = useState(4 / 3);
   const [ready, setReady] = useState(false);
@@ -177,7 +182,7 @@ function LiveStage({ stream, secondsLeft, hint, onTakeNow, onTakeInSeconds, onCa
           muted
           playsInline
           autoPlay
-          aria-label="Live camera preview"
+          aria-label={t('capture.previewLabel')}
           onLoadedMetadata={e => {
             const v = e.currentTarget;
             if (v.videoWidth > 0 && v.videoHeight > 0) setRatio(v.videoWidth / v.videoHeight);
@@ -201,23 +206,23 @@ function LiveStage({ stream, secondsLeft, hint, onTakeNow, onTakeInSeconds, onCa
         )}
       </div>
 
-      <p id="photo-guide-text" className="text-center text-sm font-medium text-stone-800 dark:text-stone-100">{GUIDE_TEXT}</p>
-      <p className="-mt-2 text-center text-xs text-stone-600 dark:text-stone-300">Keep your face out of the picture. The preview is a mirror, and the photo is saved the way you see it.</p>
+      <p id="photo-guide-text" className="text-center text-sm font-medium text-stone-800 dark:text-stone-100">{t('capture.guide')}</p>
+      <p className="-mt-2 text-center text-xs text-stone-600 dark:text-stone-300">{t('capture.mirrorNote')}</p>
 
       <div role="status" aria-live="polite" className="min-h-5 text-center text-sm text-stone-700 dark:text-stone-200">
-        {counting ? `Taking the photo in ${secondsLeft}` : hint ?? (ready ? '' : 'Waiting for the camera picture')}
+        {counting ? t('capture.countdown', { n: secondsLeft }) : hint ?? (ready ? '' : t('capture.waiting'))}
       </div>
 
       <div className="flex flex-wrap justify-center gap-2" aria-describedby="photo-guide-text">
         {counting ? (
-          <button type="button" onClick={onCancelCountdown} className={pill}>Cancel the timer</button>
+          <button type="button" onClick={onCancelCountdown} className={pill}>{t('capture.cancelTimer')}</button>
         ) : (
           <>
             <button type="button" disabled={!ready} onClick={withVideo(onTakeInSeconds)} className={primary}>
-              <Camera size={16} aria-hidden="true" />Take photo in {COUNTDOWN_SECONDS} seconds
+              <Camera size={16} aria-hidden="true" />{t('capture.takeIn', { seconds: COUNTDOWN_SECONDS })}
             </button>
-            <button type="button" disabled={!ready} onClick={withVideo(onTakeNow)} className={pill}>Take it now</button>
-            <button type="button" onClick={onClose} className={pill}>Cancel</button>
+            <button type="button" disabled={!ready} onClick={withVideo(onTakeNow)} className={pill}>{t('capture.takeNow')}</button>
+            <button type="button" onClick={onClose} className={pill}>{tc('cancel')}</button>
           </>
         )}
       </div>

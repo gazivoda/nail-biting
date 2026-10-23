@@ -3,8 +3,10 @@
 
 import { useWatchGate } from './gate';
 import { resumeWatching } from './actions';
+import { useT } from '../i18n/scopes/background';
 
 export function PausedOverlay() {
+  const t = useT();
   const gate = useWatchGate();
   const note = gate.paused ? gate.note : null;
   if (!note) return null;
@@ -20,7 +22,7 @@ export function PausedOverlay() {
         onClick={resumeWatching}
         className="inline-flex min-h-11 items-center rounded-full bg-deep px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
       >
-        Resume now
+        {t('slot.resume')}
       </button>
     </div>
   );

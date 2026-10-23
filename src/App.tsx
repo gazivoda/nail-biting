@@ -51,6 +51,7 @@ import { BackgroundHost } from './background/BackgroundHost';
 import { MilestoneHost } from './insights/ui/MilestoneHost';
 import { LocaleHost } from './i18n/LocaleHost';
 import { useLocaleVersion } from './i18n/hooks';
+import { useT as useCommonT } from './i18n/scopes/common';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -69,6 +70,7 @@ type Tab = 'dashboard' | 'log' | 'settings';
 // Same markup for both so a signed-in user sees one continuous state rather than
 // a spinner, a flash, and then another spinner.
 function AppLoading() {
+  const tc = useCommonT();
   return (
     <div
       role="status"
@@ -78,7 +80,7 @@ function AppLoading() {
       <img src="/logo.svg" alt="" className="h-16 w-16 motion-safe:animate-pulse dark:hidden" />
       <img src="/logo-dark.svg" alt="" className="hidden h-16 w-16 motion-safe:animate-pulse dark:block" />
       <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Stop Biting</span>
-      <span className="sr-only">Loading…</span>
+      <span className="sr-only">{tc('loading')}</span>
     </div>
   );
 }

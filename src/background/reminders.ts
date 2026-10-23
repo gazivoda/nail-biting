@@ -5,9 +5,15 @@
 //      starts the camera by itself.
 
 import type { NotificationPermissionState } from './schedule';
+import { messages, t } from '../i18n/scopes/background';
 
-export const REMINDER_TITLE = 'Start watching?';
-export const REMINDER_BODY = 'Your watching hours have started. Open Stop Biting to switch the alarm on.';
+// The English wording, from the catalog's source of truth. What is actually shown is built when the notification is
+// shown (reminderTitle / reminderBody), in the language of the app at that moment.
+export const REMINDER_TITLE = messages['reminder.title'];
+export const REMINDER_BODY = messages['reminder.body'];
+
+const reminderTitle = () => t('reminder.title');
+const reminderBody = () => t('reminder.body');
 
 /** The state of notification permission right now, without asking for anything. */
 export function notificationPermission(): NotificationPermissionState {
@@ -51,13 +57,13 @@ export async function askNotificationPermission(): Promise<NotificationPermissio
 export function showStartWatchingReminder(): boolean {
   if (typeof window === 'undefined') return false;
   if (window.desktop) {
-    window.desktop.notify({ title: REMINDER_TITLE, body: REMINDER_BODY, clickAction: 'open' });
+    window.desktop.notify({ title: reminderTitle(), body: reminderBody(), clickAction: 'open' });
     return true;
   }
   if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return false;
   try {
-    const n = new Notification(REMINDER_TITLE, {
-      body: REMINDER_BODY,
+    const n = new Notification(reminderTitle(), {
+      body: reminderBody(),
       icon: '/icons/icon-192x192.png',
       tag: 'stopbiting-schedule', // a second one replaces the first instead of stacking
     });

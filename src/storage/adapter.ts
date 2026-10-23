@@ -91,7 +91,7 @@ function resolve(): StorageAdapter {
   } else {
     current = createMemoryAdapter();
     persistent = false;
-    fallbackReason = 'Web Storage is unavailable; using in-memory storage for this page load.';
+    fallbackReason = 'Web Storage is unavailable; using in-memory storage for this page load.'; // i18n-ignore: diagnostic only (storageStatus().reason is read by tests, never rendered)
   }
   return current;
 }

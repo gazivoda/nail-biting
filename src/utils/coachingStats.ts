@@ -16,6 +16,7 @@
 //    and `completedOfPrompted` are there for anyone who wants the other reading.
 
 import type { HabitEvent } from '../storage/eventModel';
+import { formatPercent } from '../i18n/format';
 
 type CoachingEvent = Pick<HabitEvent, 'ts' | 'source' | 'competingResponse'> & { deleted?: boolean; falsePositive?: boolean };
 
@@ -61,7 +62,7 @@ export function coachingStats(events: readonly CoachingEvent[], opts: { since?: 
   };
 }
 
-/** "62%", or null when there is nothing to report. */
+/** "62%" ("62 %" in German), or null when there is nothing to report. Whole percent, rounded as before. */
 export function formatRate(rate: number | null): string | null {
-  return rate === null ? null : `${Math.round(rate * 100)}%`;
+  return rate === null ? null : formatPercent(Math.round(rate * 100) / 100);
 }

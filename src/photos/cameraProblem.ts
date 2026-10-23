@@ -1,6 +1,10 @@
 // Why the diary's camera did not open, in words a person can act on. The diary
 // opens its OWN camera stream (it never shares or touches the one detection uses),
-// so it needs its own small mapping from the browser's error names. Pure.
+// so it needs its own small mapping from the browser's error names. The words come
+// from the `photos` i18n scope when the message is made, so they are in the language
+// showing at that moment.
+
+import { t } from '../i18n/scopes/photos';
 
 export type CameraProblemKind = 'permission-denied' | 'no-camera' | 'busy' | 'insecure-context' | 'unknown';
 
@@ -46,43 +50,43 @@ export function describeCameraProblem(kind: CameraProblemKind, detectionRunning:
     case 'permission-denied':
       return {
         kind,
-        title: 'The camera is blocked',
-        detail: 'Your browser did not allow camera access. Allow it for this site in the address bar or in your browser settings, then try again.',
+        title: t('problem.blocked.title'),
+        detail: t('problem.blocked.detail'),
         watchingIsUsingIt: false,
       };
     case 'no-camera':
       return {
         kind,
-        title: 'No camera found',
-        detail: 'Connect a webcam, or check that it is switched on and not blocked by a privacy switch, then try again.',
+        title: t('problem.noCamera.title'),
+        detail: t('problem.noCamera.detail'),
         watchingIsUsingIt: false,
       };
     case 'busy':
       return detectionRunning
         ? {
             kind,
-            title: 'Watching is using the camera',
-            detail: 'Your camera would not open a second time while watching is on. Stop watching, take the photo, then start watching again from the Watch tab.',
+            title: t('problem.watching.title'),
+            detail: t('problem.watching.detail'),
             watchingIsUsingIt: true,
           }
         : {
             kind,
-            title: 'The camera is busy',
-            detail: 'Another app or browser tab is using the camera. Close it, then try again.',
+            title: t('problem.busy.title'),
+            detail: t('problem.busy.detail'),
             watchingIsUsingIt: false,
           };
     case 'insecure-context':
       return {
         kind,
-        title: 'The camera needs a secure page',
-        detail: 'Cameras only work on https pages (or localhost). Open Stop Biting at its https address and try again.',
+        title: t('problem.insecure.title'),
+        detail: t('problem.insecure.detail'),
         watchingIsUsingIt: false,
       };
     default:
       return {
         kind: 'unknown',
-        title: 'The camera did not start',
-        detail: 'Something went wrong while opening the camera. Try again, or reload the page.',
+        title: t('problem.unknown.title'),
+        detail: t('problem.unknown.detail'),
         watchingIsUsingIt: false,
       };
   }

@@ -17,6 +17,7 @@
 
 import { CALIBRATION, deriveProfile, type CalibrationProfile } from '../detection/calibration';
 import type { PoseFeatures } from '../detection/pose';
+import { t } from '../i18n/scopes/calibration';
 
 /** A frame only counts toward "resting on the chin" if the hand is at least this close to the lower face. */
 export const REST_MAX_CHIN_FW = 0.6;
@@ -98,8 +99,8 @@ export function profileToSave(state: CalibrationState): CalibrationProfile | nul
 /** A step that is enough on its own would be a half calibration; say in words why a result failed. */
 export function failureMessage(reason: 'no-rest' | 'no-real' | 'no-either'): string {
   switch (reason) {
-    case 'no-rest': return 'The camera did not see your hand resting on your chin for long enough. Try again with your hand in view.';
-    case 'no-real': return 'The camera did not see a fingertip near your lips for long enough. Try again with your hand in view.';
-    case 'no-either': return 'The camera did not see your hand. Check that your face and hand are in the picture and try again.';
+    case 'no-rest': return t('failure.noRest');
+    case 'no-real': return t('failure.noReal');
+    case 'no-either': return t('failure.noEither');
   }
 }

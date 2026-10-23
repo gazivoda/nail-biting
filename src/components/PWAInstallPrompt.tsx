@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
 import { usePWAInstall } from '../hooks/usePWAInstall';
+import { useT } from '../i18n/scopes/shell';
 
 export function PWAInstallPrompt() {
   const { canInstall, bannerDismissed, triggerInstall, dismissBanner } = usePWAInstall();
+  const t = useT();
   const [show, setShow] = useState(false);
 
   // Slide in after a short delay once the prompt is available
@@ -39,22 +41,22 @@ export function PWAInstallPrompt() {
           className="w-11 h-11 rounded-xl flex-shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <p className="font-display text-base font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Install Stop Biting</p>
+          <p className="font-display text-base font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">{t('prompt.title')}</p>
           <p className="text-sm text-stone-600 dark:text-stone-400 mt-0.5">
-            Add to home screen for quick access, no app store needed.
+            {t('prompt.body')}
           </p>
           <button
             onClick={handleInstall}
             className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full bg-deep px-5 font-display text-sm font-bold text-white transition-colors hover:bg-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
           >
             <Download className="w-3.5 h-3.5" />
-            Install app
+            {t('install.app')}
           </button>
         </div>
         <button
           onClick={handleDismiss}
           className="-mr-2 -mt-2 flex h-11 w-11 flex-shrink-0 items-center justify-center text-stone-500 transition-colors hover:text-stone-600 dark:text-stone-400 dark:hover:text-stone-300"
-          aria-label="Dismiss"
+          aria-label={t('pwa.dismiss')}
         >
           <X className="w-4 h-4" />
         </button>

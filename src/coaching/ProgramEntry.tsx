@@ -6,16 +6,18 @@ import { useSyncExternalStore } from 'react';
 import { BookOpen } from 'lucide-react';
 import { openProgram } from './programViewState';
 import { PROGRAM_LESSON_COUNT, completedCount, getProgress, subscribeProgress } from './programProgress';
+import { useT } from '../i18n/scopes/coaching';
 
 export function ProgramEntry() {
+  const t = useT();
   const progress = useSyncExternalStore(subscribeProgress, getProgress, getProgress);
   const started = progress.startedOn !== null;
   const done = completedCount(progress);
   const label = !started
-    ? '4-week program'
+    ? t('program.entry')
     : done >= PROGRAM_LESSON_COUNT
-      ? '4-week program, finished'
-      : `4-week program, ${done} of ${PROGRAM_LESSON_COUNT} lessons done`;
+      ? t('program.entryFinished')
+      : t('program.entryProgress', { done, total: PROGRAM_LESSON_COUNT });
   return (
     <button
       type="button"

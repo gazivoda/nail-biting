@@ -14,6 +14,7 @@
 import type { AddResult } from './photoStore';
 import type { PhotoMeta } from './diaryMeta';
 import { problemFromError, describeCameraProblem, type CameraProblem } from './cameraProblem';
+import { messages, t } from '../i18n/scopes/photos';
 
 export interface CaptureTrackLike {
   stop(): void;
@@ -55,14 +56,16 @@ export type CaptureState<S extends CaptureStreamLike> =
 
 export const COUNTDOWN_SECONDS = 3;
 
-export const NOT_READY_HINT = 'The camera has not shown a picture yet. Wait for the preview to appear, then try again.';
+/** The English wording of the "no picture yet" hint (what the tests compare with); the controller says it with t() when it happens. */
+export const NOT_READY_HINT = messages['capture.notReady'];
 
-const FRAME_PROBLEM: CameraProblem = {
+/** Made when it is needed, so the words are in the language showing then. */
+const frameProblem = (): CameraProblem => ({
   kind: 'unknown',
-  title: 'The photo could not be taken',
-  detail: NOT_READY_HINT,
+  title: t('problem.frame.title'),
+  detail: t('capture.notReady'),
   watchingIsUsingIt: false,
-};
+});
 
 export function createCaptureController<S extends CaptureStreamLike, V>(ports: CapturePorts<S, V>) {
   let state: CaptureState<S> = { phase: 'idle' };
@@ -114,7 +117,7 @@ export function createCaptureController<S extends CaptureStreamLike, V>(ports: C
       const opened = await ports.openCamera();
       if (mine !== generation) {
         // The person left while the browser was still asking: do not leave the camera on.
-        for (const t of opened.getTracks()) { try { t.stop(); } catch { /* ignore */ } }
+        for (const track of opened.getTracks()) { try { track.stop(); } catch { /* ignore */ } }
         return;
       }
       stream = opened;
@@ -140,8 +143,8 @@ export function createCaptureController<S extends CaptureStreamLike, V>(ports: C
       if (mine !== generation) return;
       encoding = false;
       // Keep the preview: the person can press the button again once the picture is there.
-      if (stream) set({ phase: 'live', stream, hint: NOT_READY_HINT });
-      else set({ phase: 'error', problem: FRAME_PROBLEM });
+      if (stream) set({ phase: 'live', stream, hint: t('capture.notReady') });
+      else set({ phase: 'error', problem: frameProblem() });
     }
   }
 
@@ -198,7 +201,7 @@ export function createCaptureController<S extends CaptureStreamLike, V>(ports: C
     try {
       result = await ports.save(frame);
     } catch {
-      result = { ok: false, reason: 'write-failed', message: 'The photo could not be saved. Try again.' };
+      result = { ok: false, reason: 'write-failed', message: t('capture.saveFailed') };
     }
     if (mine !== generation) return;
     if (result.ok) set({ phase: 'saved', photo: result.photo, persisted: result.persisted });

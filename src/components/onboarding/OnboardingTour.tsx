@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowRight } from 'lucide-react';
+import { useT, type messages } from '../../i18n/scopes/shell';
+import { useT as useCommonT } from '../../i18n/scopes/common';
 
 interface Step {
   target: string;
-  title: string;
-  body: string;
+  title: keyof typeof messages;
+  body: keyof typeof messages;
   side: 'top' | 'bottom' | 'left' | 'right';
 }
 
@@ -15,32 +17,32 @@ const STEPS: Step[] = [
     // The tour opens 1.8s after the dashboard, often while the browser's
     // camera prompt is still up or after it was refused, so it cannot promise
     // that detection is running. The card it points at says whether it is.
-    title: 'This is the detector',
-    body: 'Once your browser lets it use the camera, it watches for your hands and sounds the alarm when one reaches your mouth. No camera data is sent while it runs.',
+    title: 'tour.detector.title',
+    body: 'tour.detector.body',
     side: 'bottom',
   },
   {
     target: 'hide-feed',
-    title: 'Camera feed stays hidden',
-    body: "Your video stays hidden so you can focus on work. Detection runs either way. Turn the feed on only if you want to see yourself.",
+    title: 'tour.feed.title',
+    body: 'tour.feed.body',
     side: 'bottom',
   },
   {
     target: 'streak-card',
-    title: 'Your streak',
-    body: "How long you've gone without a bite. An alarm doesn't reset it; a bite you confirm or log does.",
+    title: 'tour.streak.title',
+    body: 'tour.streak.body',
     side: 'bottom',
   },
   {
     target: 'panic-button',
-    title: 'Bit and the alarm missed it?',
-    body: "Log it here and tag what set it off: stress, deep focus, boredom.",
+    title: 'tour.log.title',
+    body: 'tour.log.body',
     side: 'top',
   },
   {
     target: 'history-tab',
-    title: 'History',
-    body: 'Every alarm and bite by day, with a 7-day chart.',
+    title: 'tour.history.title',
+    body: 'tour.history.body',
     side: 'right',
   },
 ];
@@ -65,6 +67,65 @@ function Arrow({ side }: { side: Step['side'] }) {
   if (side === 'top')    return <div className={`${base} -bottom-1.5 left-1/2 -translate-x-1/2`} />;
   if (side === 'right')  return <div className={`${base} top-1/2 -translate-y-1/2 -left-1.5`} />;
   return                        <div className={`${base} top-1/2 -translate-y-1/2 -right-1.5`} />;
+}
+
+/** The text and buttons inside the tooltip: its own component so the words can be rendered without the portal. */
+export function TourCardContent({ step, nextRef, skipRef, onSkip, onNext }: {
+  step: number;
+  nextRef?: React.Ref<HTMLButtonElement>;
+  skipRef?: React.Ref<HTMLButtonElement>;
+  onSkip: () => void;
+  onNext: () => void;
+}) {
+  const t = useT();
+  const tc = useCommonT();
+  const { title, body } = STEPS[step];
+  return (
+    <div className="p-5">
+      {/* Dots + skip */}
+      <div className="flex items-center justify-between mb-3">
+        <span className="sr-only">{t('tour.stepOf', { step: step + 1, total: STEPS.length })}</span>
+        <div className="flex items-center gap-1" aria-hidden="true">
+          {STEPS.map((_, i) => (
+            <span
+              key={i}
+              className={`block rounded-full transition-all duration-300 ${
+                i === step
+                  ? 'w-5 h-2 bg-deep dark:bg-lime-300'
+                  : i < step
+                  ? 'w-2 h-2 bg-forest-500 dark:bg-forest-400'
+                  : 'w-2 h-2 bg-stone-300 dark:bg-ink-400'
+              }`}
+            />
+          ))}
+        </div>
+        <button
+          ref={skipRef}
+          type="button"
+          onClick={onSkip}
+          className="-mr-3 -my-2 min-h-11 px-3 text-xs text-stone-600 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+        >
+          {t('tour.skip')}
+        </button>
+      </div>
+
+      <h2 id="tour-title" className="font-display text-xl font-extrabold leading-[1.05] text-stone-900 dark:text-stone-100 tracking-[-0.035em] mb-2">
+        {t(title)}
+      </h2>
+      <p id="tour-body" className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+        {t(body)}
+      </p>
+
+      <button
+        ref={nextRef}
+        type="button"
+        onClick={onNext}
+        className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-display text-sm font-bold rounded-full transition-colors duration-150"
+      >
+        {step >= STEPS.length - 1 ? tc('done') : <>{t('tour.next')} <ArrowRight size={14} aria-hidden="true" /></>}
+      </button>
+    </div>
+  );
 }
 
 export function OnboardingTour() {
@@ -153,7 +214,6 @@ export function OnboardingTour() {
   const rect = target?.step === step ? target.rect : null;
   if (!rect) return null;
 
-  const { title, body } = STEPS[step];
   // A 272px tooltip beside its target does not fit on a phone: below 640px a
   // left/right step goes above or below, whichever has more room.
   const side: Step['side'] =
@@ -235,50 +295,7 @@ export function OnboardingTour() {
             />
           </div>
 
-          <div className="p-5">
-            {/* Dots + skip */}
-            <div className="flex items-center justify-between mb-3">
-              <span className="sr-only">Step {step + 1} of {STEPS.length}</span>
-              <div className="flex items-center gap-1" aria-hidden="true">
-                {STEPS.map((_, i) => (
-                  <span
-                    key={i}
-                    className={`block rounded-full transition-all duration-300 ${
-                      i === step
-                        ? 'w-5 h-2 bg-deep dark:bg-lime-300'
-                        : i < step
-                        ? 'w-2 h-2 bg-forest-500 dark:bg-forest-400'
-                        : 'w-2 h-2 bg-stone-300 dark:bg-ink-400'
-                    }`}
-                  />
-                ))}
-              </div>
-              <button
-                ref={skipRef}
-                type="button"
-                onClick={finish}
-                className="-mr-3 -my-2 min-h-11 px-3 text-xs text-stone-600 dark:text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
-              >
-                Skip tour
-              </button>
-            </div>
-
-            <h2 id="tour-title" className="font-display text-xl font-extrabold leading-[1.05] text-stone-900 dark:text-stone-100 tracking-[-0.035em] mb-2">
-              {title}
-            </h2>
-            <p id="tour-body" className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
-              {body}
-            </p>
-
-            <button
-              ref={nextRef}
-              type="button"
-              onClick={next}
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-1.5 bg-deep hover:bg-forest-500 dark:bg-lime-300 dark:hover:bg-lime-200 text-white dark:text-deep font-display text-sm font-bold rounded-full transition-colors duration-150"
-            >
-              {step >= STEPS.length - 1 ? 'Done' : <>Next <ArrowRight size={14} aria-hidden="true" /></>}
-            </button>
-          </div>
+          <TourCardContent step={step} nextRef={nextRef} skipRef={skipRef} onSkip={finish} onNext={next} />
         </div>
       </div>
     </div>,

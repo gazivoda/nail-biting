@@ -31,6 +31,7 @@ import { createPortal } from 'react-dom';
 import { alarmCoaching, type ControllerState } from './controller';
 import { progress as sessionProgress, remainingSec, type CoachingSession } from './session';
 import { CoachingCard } from './CoachingCard';
+import { cardAnnouncement } from './cardText';
 
 export type CoachingSurface = 'main' | 'pip';
 
@@ -40,14 +41,6 @@ export function CoachingSeam({ surface }: { surface: CoachingSurface }) {
   const state = useSyncExternalStore(alarmCoaching.subscribe, alarmCoaching.getState, () => SERVER_STATE);
   if (!state.armed) return null;
   return <Armed surface={surface} session={state.session} />;
-}
-
-function announcement(s: CoachingSession): string {
-  if (s.phase === 'running') {
-    return `${s.text}. ${s.durationSec} seconds. Press Done when you have finished, or Skip, or Escape, to dismiss.`;
-  }
-  if (s.phase === 'finished') return 'Done. Saved with this alarm.';
-  return '';
 }
 
 function Armed({ surface, session }: { surface: CoachingSurface; session: CoachingSession }) {
@@ -106,7 +99,7 @@ function Armed({ surface, session }: { surface: CoachingSurface; session: Coachi
     return (
       <div ref={ref} style={{ display: active ? 'block' : 'none' }}>
         {card}
-        <span className="sr-only" role="status" aria-live="polite">{announcement(session)}</span>
+        <span className="sr-only" role="status" aria-live="polite">{cardAnnouncement(session)}</span>
       </div>
     );
   }
@@ -115,7 +108,7 @@ function Armed({ surface, session }: { surface: CoachingSurface; session: Coachi
   return createPortal(
     <>
       {/* Always in the page once armed, so the change of text is announced. */}
-      <p role="status" aria-live="polite" className="sr-only">{announcement(session)}</p>
+      <p role="status" aria-live="polite" className="sr-only">{cardAnnouncement(session)}</p>
       {active && (
         <div
           ref={ref}

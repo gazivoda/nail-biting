@@ -6,19 +6,22 @@ import { useMemo } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { toHabitEvent } from '../storage/eventModel';
 import { coachingStats, formatRate } from '../utils/coachingStats';
+import { useT } from '../i18n/scopes/coaching';
 
 export function CoachingStatsLine({ className = '' }: { className?: string }) {
+  const t = useT();
   const incidents = useAppStore(s => s.incidents);
   const stats = useMemo(() => coachingStats(incidents.map(toHabitEvent)), [incidents]);
   const rate = formatRate(stats.rate);
   if (rate === null) return null;
   return (
     <p className={className}>
-      <span className="font-semibold tabular-nums">{stats.completed} of {stats.alarms}</span>{' '}
-      {stats.alarms === 1 ? 'alarm was' : 'alarms were'} followed by a finished competing response ({rate}).{' '}
-      <span className="text-stone-500 dark:text-stone-400">
-        Counted from your first prompt. Alarms that did not get a prompt count as not followed.
-      </span>
+      {t.rich(
+        'stats.line',
+        { completed: stats.completed, alarms: stats.alarms, rate },
+        { b: chunks => <span className="font-semibold tabular-nums">{chunks}</span> },
+      )}{' '}
+      <span className="text-stone-500 dark:text-stone-400">{t('stats.note')}</span>
     </p>
   );
 }

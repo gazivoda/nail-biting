@@ -15,6 +15,7 @@ import { getPipTickWindow, subscribePipTickWindow } from '../background/tickHost
 import { silentNow } from '../background/silent';
 import { withProbe } from '../background/probeHook';
 import { judgeHidden, saveCadence } from '../background/cadence';
+import { t } from '../i18n/scopes/alarm';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -302,7 +303,7 @@ export function useDetection(
 
     // Tab title flash
     if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
-    document.title = '⚠️ Stop biting! – Stop Biting';
+    document.title = t('alert.tabTitle');
     titleTimerRef.current = setTimeout(() => {
       document.title = originalTitleRef.current;
     }, 3000);
@@ -315,8 +316,8 @@ export function useDetection(
 
       // OS notification (uses existing permission from reminders toggle)
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-        new Notification('Stop biting!', {
-          body: 'Nail biting detected — take your hands away.',
+        new Notification(t('alert.notification.title'), {
+          body: t('alert.notification.body'),
           icon: '/icons/icon-192x192.png',
           tag: 'bite-alert', // deduplicates — only one notification at a time
           requireInteraction: false,

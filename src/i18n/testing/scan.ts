@@ -62,7 +62,13 @@ export interface ScanOptions {
 
 function leaksIn(raw: string, where: Leak['where'], allowed: (w: string) => boolean): Leak[] {
   const text = decode(raw);
-  const unmarked = text.replace(new RegExp(`${OPEN}[^${CLOSE}]*${CLOSE}`, 'g'), ' ');
+  // Marks nest when a t() result is passed into another message as a parameter ("{age}"): take the innermost out first.
+  const innermost = new RegExp(`${OPEN}[^${OPEN}${CLOSE}]*${CLOSE}`, 'g');
+  let unmarked = text;
+  for (let before = ''; before !== unmarked;) {
+    before = unmarked;
+    unmarked = unmarked.replace(innermost, ' ');
+  }
   const leaks: Leak[] = [];
   for (const m of unmarked.matchAll(/[\p{L}][\p{L}'’-]*/gu)) {
     const word = m[0].replace(/^[-'’]+|[-'’]+$/g, '');

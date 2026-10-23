@@ -13,6 +13,7 @@ import { Suspense, lazy, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useFeature } from '../features/useFeature';
 import { closeProgram, installProgramPopstate } from './programViewState';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 const Program = lazy(() => import('../pages/Program').then(m => ({ default: m.Program })));
 
@@ -26,7 +27,8 @@ export function ProgramView() {
   return createPortal(<Overlay />, document.body);
 }
 
-function Overlay() {
+export function Overlay() {
+  const tc = useCommonT();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +57,7 @@ function Overlay() {
       tabIndex={-1}
       className="app-type outline-none fixed inset-0 z-[55] overflow-y-auto bg-cream-200 text-stone-800 dark:bg-ink-100 dark:text-stone-200"
     >
-      <Suspense fallback={<p role="status" className="p-8 text-sm text-stone-600 dark:text-stone-300">Loading…</p>}>
+      <Suspense fallback={<p role="status" className="p-8 text-sm text-stone-600 dark:text-stone-300">{tc('loading')}</p>}>
         <Program onClose={closeProgram} />
       </Suspense>
     </div>

@@ -3,6 +3,7 @@
 // network or storage.
 
 import { MAX_IMPORT_BYTES } from './importPlan';
+import { t } from '../i18n/scopes/data';
 
 /** `stop-biting-history-2026-10-23.json` */
 export function exportFileName(kind: 'json' | 'csv', now: Date = new Date()): string {
@@ -32,11 +33,11 @@ export type ReadResult =
 /** Reads a chosen file as text, refusing anything over the size limit BEFORE reading it. */
 export async function readChosenFile(file: File): Promise<ReadResult> {
   if (file.size > MAX_IMPORT_BYTES) {
-    return { ok: false, message: `That file is larger than ${Math.round(MAX_IMPORT_BYTES / 1024 / 1024)} MB. A history export is far smaller, so this is probably not one.` };
+    return { ok: false, message: t('import.tooBig', { mb: Math.round(MAX_IMPORT_BYTES / 1024 / 1024) }) };
   }
   try {
     return { ok: true, text: await file.text() };
   } catch {
-    return { ok: false, message: 'That file could not be read.' };
+    return { ok: false, message: t('import.unreadable') };
   }
 }

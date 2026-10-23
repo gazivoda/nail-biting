@@ -9,6 +9,7 @@ import { getOptedInUserId, subscribeSyncOptIn } from '../sync/optIn';
 import { useSyncStatus } from '../sync/useSyncStatus';
 import { describeStatus } from '../sync/statusText';
 import { syncNoteFor } from './syncNote';
+import { useT } from '../i18n/scopes/phone';
 
 function useNow(everyMs: number): number {
   const [now, setNow] = useState(() => Date.now());
@@ -20,6 +21,7 @@ function useNow(everyMs: number): number {
 }
 
 export function SyncNoteView({ onOpenSettings }: { onOpenSettings: () => void }) {
+  const t = useT();
   const { user } = useAuth();
   const syncAvailable = useFeature('event_sync');
   const optedInFor = useSyncExternalStore(subscribeSyncOptIn, getOptedInUserId, () => null);
@@ -43,7 +45,7 @@ export function SyncNoteView({ onOpenSettings }: { onOpenSettings: () => void })
           onClick={onOpenSettings}
           className="mt-2 inline-flex min-h-11 items-center rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-800 transition-colors hover:border-stone-500 dark:border-ink-400 dark:text-stone-100 dark:hover:border-stone-400"
         >
-          Open Settings
+          {t('sync.openSettings')}
         </button>
       )}
     </div>
