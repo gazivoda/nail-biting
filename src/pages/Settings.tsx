@@ -12,6 +12,8 @@ import { planOverride } from '../billing/planLabel';
 import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
 import { Section, Row, Toggle } from './settings/ui';
 import { SettingsSlots } from './settings/SettingsSlots';
+import { flagAware } from '../../shared/flagCopy.js';
+import { useFeature } from '../features/useFeature';
 
 // --------------------------------------------------------------------------
 // Web Audio preview — fires a one-shot preview of a sound
@@ -408,6 +410,10 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 }
 
 export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
+  // WS11b, the one edit to this page: the Privacy card's log sentence is not true once sync is on.
+  // This page already asks for the flags (SettingsSlots), so reading one here costs no request.
+  const syncOn = useFeature('event_sync');
+  const copy = (text: string) => flagAware(text, flag => flag === 'event_sync' && syncOn);
   const {
     detectionSensitivity, setSensitivity,
     theme, setTheme,
@@ -542,7 +548,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           <div>
             <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">Detection runs on your computer</p>
             <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
-              Your camera is processed in this browser. No camera data is sent while it runs; your alarm and bite log stays in this browser too.
+              {copy('Your camera is processed in this browser. No camera data is sent while it runs; your alarm and bite log stays in this browser too.')}
             </p>
           </div>
         </div>

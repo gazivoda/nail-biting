@@ -238,10 +238,11 @@ describe.skipIf(!built)('marketing site, compare_competitors on', () => {
     }
   });
 
-  it('llms.txt and llms-full.txt still do not list them (they are generated from published pages only)', async () => {
+  it('llms.txt and llms-full.txt list them while the flag is on (WS11b adds them at serve time; the built files never do)', async () => {
     for (const file of ['/llms.txt', '/llms-full.txt']) {
       const { text } = await get(srv, file);
-      for (const path of GATED) big(text).notToContain(path);
+      for (const path of GATED) big(text, file).toContain(`https://stopbiting.today${path}`);
+      expect(text.length, file).toBeGreaterThan(readFileSync(join(ROOT, `dist${file}`), 'utf8').length);
     }
   });
 

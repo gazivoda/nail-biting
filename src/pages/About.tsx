@@ -5,9 +5,11 @@ import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
+import { useFlagCopy } from '../features/useFlagCopy';
 
 export function About() {
   useTheme('light');
+  const copy = useFlagCopy();   // the log sentence changes when sync is on; unchanged otherwise
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -99,7 +101,8 @@ export function About() {
               the app runs.
             </p>
             <p>
-              Your alarm and bite log is stored in your browser. The site counts page visits with Google
+              {copy('Your alarm and bite log is stored in your browser.')}{' '}
+              The site counts page visits with Google
               Analytics; that never includes anything from your camera.
             </p>
           </div>
