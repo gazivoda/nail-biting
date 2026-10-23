@@ -13,10 +13,6 @@ export const messages: Record<keyof typeof en, string> = {
   'plan.free': 'Grátis',
   'plan.free.detail': '{minutes, plural, one {{minutes} minuto} other {{minutes} minutos}} de detecção por dia e {days, plural, one {{days} dia} other {{days} dias}} de histórico.',
 
-  'length.years': '{count, plural, one {um ano} other {{count} anos}}',
-  'length.months': '{count, plural, one {um mês} other {{count} meses}}',
-  'length.days': '{count, plural, one {um dia} other {{count} dias}}',
-
   'feature.detection': 'Detecção enquanto você a mantiver ativa',
   'feature.streak': 'Sequência atual e melhor sequência',
   'feature.history': 'Histórico completo com tags de gatilhos',
@@ -54,19 +50,11 @@ export const messages: Record<keyof typeof en, string> = {
   'paywall.cancel': 'Cancele quando quiser em Configurações',
   'paywall.noCamera': 'Nenhum dado da câmera é enviado enquanto a detecção está em execução',
 
-  'extras.label': 'Outras formas de comprar',
   'lifetime.once': 'uma única vez',
   'lifetime.priceAtCheckout': 'O preço é exibido no pagamento',
   'lifetime.plate.body': 'Pagamento único, sem renovações, enquanto o Stop Biting estiver disponível. Veja a <link>política de reembolso</link>.',
   'lifetime.buy': 'Comprar vitalício',
-  'lifetime.band.body': 'Pague uma única vez em vez de todo mês ou todo ano. Inclui tudo do plano mensal, sem renovações, enquanto o Stop Biting estiver disponível. Comece o teste grátis e depois escolha Vitalício no app.',
-  'lifetime.band.cta': 'Começar o teste grátis',
-  'gift.title': 'Dê de presente',
-  'gift.body.length': 'Compre {length} de Stop Biting para outra pessoa. Enviamos um link por e-mail para você repassar. A pessoa entra, abre o link e o resgata uma única vez. O presente começa quando nenhum teste ou assinatura estiver cobrindo a pessoa.',
-  'gift.body.plain': 'Compre acesso ao Stop Biting para outra pessoa. Enviamos um link por e-mail para você repassar. A pessoa entra, abre o link e o resgata uma única vez. O presente começa quando nenhum teste ou assinatura estiver cobrindo a pessoa.',
   'gift.thanks': 'Obrigado. O link do presente está sendo enviado para o e-mail com o qual você pagou. Pode levar alguns minutos.',
-  'gift.failed': 'Não foi possível carregar o pagamento. Se você usa um bloqueador de anúncios, permita paddle.com neste site e recarregue a página, ou escreva para hello@stopbiting.today.',
-  'gift.buy': 'Comprar um presente',
 
   'freeTier.reached': 'Você usou {minutes, plural, one {o minuto grátis} other {os {minutes} minutos grátis}} de detecção de hoje. Ela recomeça amanhã.',
   'freeTier.used': 'Plano grátis: {used} de {limit, plural, one {{limit} minuto} other {{limit} minutos}} de detecção usados hoje.',

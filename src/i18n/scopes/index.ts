@@ -19,8 +19,10 @@ import * as phone from './phone';
 import * as language from './language';
 import * as trial from './trial';
 import * as labels from './labels';
+import * as plans from './plans';
 
 export const SCOPES = {
+  plans,
   labels,
   trial,
   common,

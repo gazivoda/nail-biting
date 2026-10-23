@@ -13,10 +13,6 @@ export const messages: Record<keyof typeof en, string> = {
   'plan.free': 'Kostenlos',
   'plan.free.detail': '{minutes, plural, one {{minutes} Minute} other {{minutes} Minuten}} Erkennung pro Tag und {days, plural, one {{days} Tag} other {{days} Tage}} Verlauf.',
 
-  'length.years': '{count, plural, one {ein Jahr} other {{count} Jahre}}',
-  'length.months': '{count, plural, one {ein Monat} other {{count} Monate}}',
-  'length.days': '{count, plural, one {ein Tag} other {{count} Tage}}',
-
   'feature.detection': 'Erkennung, solange du sie laufen lässt',
   'feature.streak': 'Aktuelle und beste Serie',
   'feature.history': 'Vollständiger Verlauf mit Auslöser-Tags',
@@ -54,19 +50,11 @@ export const messages: Record<keyof typeof en, string> = {
   'paywall.cancel': 'Jederzeit in den Einstellungen kündbar',
   'paywall.noCamera': 'Während die Erkennung läuft, werden keine Kameradaten gesendet',
 
-  'extras.label': 'Weitere Möglichkeiten zum Kaufen',
   'lifetime.once': 'einmalig',
   'lifetime.priceAtCheckout': 'Der Preis wird im Checkout angezeigt',
   'lifetime.plate.body': 'Einmal zahlen, keine Verlängerungen, solange Stop Biting angeboten wird. Siehe die <link>Rückerstattungsrichtlinie</link>.',
   'lifetime.buy': 'Lebenslang kaufen',
-  'lifetime.band.body': 'Einmal zahlen statt jeden Monat oder jedes Jahr. Enthalten ist alles aus dem Monatstarif, ohne Verlängerungen, solange Stop Biting angeboten wird. Starte die kostenlose Testphase und wähle dann in der App Lebenslang.',
-  'lifetime.band.cta': 'Kostenlose Testphase starten',
-  'gift.title': 'Als Geschenk verschenken',
-  'gift.body.length': 'Kaufe {length} Stop Biting für jemand anderen. Wir senden dir per E-Mail einen Link zum Weitergeben. Die Person meldet sich an, öffnet ihn und löst ihn einmal ein. Das Geschenk beginnt, wenn keine Testphase und kein Abo sie abdeckt.',
-  'gift.body.plain': 'Kaufe Zugang zu Stop Biting für jemand anderen. Wir senden dir per E-Mail einen Link zum Weitergeben. Die Person meldet sich an, öffnet ihn und löst ihn einmal ein. Das Geschenk beginnt, wenn keine Testphase und kein Abo sie abdeckt.',
   'gift.thanks': 'Danke! Der Geschenk-Link wird an die E-Mail-Adresse gesendet, mit der du bezahlt hast. Das kann ein paar Minuten dauern.',
-  'gift.failed': 'Der Checkout konnte nicht geladen werden. Wenn du einen Werbeblocker nutzt, erlaube paddle.com für diese Seite und lade sie neu, oder schreib an hello@stopbiting.today.',
-  'gift.buy': 'Geschenk kaufen',
 
   'freeTier.reached': '{minutes, plural, one {Du hast die heutige kostenlose Minute Erkennung aufgebraucht.} other {Du hast die heutigen {minutes} kostenlosen Minuten Erkennung aufgebraucht.}} Morgen geht es wieder los.',
   'freeTier.used': 'Kostenloser Tarif: {used} von {limit, plural, one {{limit} Minute} other {{limit} Minuten}} Erkennung heute genutzt.',

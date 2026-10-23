@@ -23,10 +23,12 @@ import { messages as phone } from './phone';
 import { messages as language } from './language';
 import { messages as trial } from './trial';
 import { messages as labels } from './labels';
+import { messages as plans } from './plans';
 
 export const reviewed = false;
 
 export const catalog = {
+  plans,
   labels,
   trial,
   common,

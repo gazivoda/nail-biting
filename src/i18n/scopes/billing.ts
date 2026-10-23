@@ -21,9 +21,6 @@ export const messages = {
   'plan.free.detail': '{minutes, plural, one {{minutes} minute} other {{minutes} minutes}} of detection a day and the last {days, plural, one {{days} day} other {{days} days}} of history.',
 
   // A length of time, in the words shared/plans.js describeDays() uses ("one year", "3 months", "45 days").
-  'length.years': '{count, plural, one {one year} other {{count} years}}',
-  'length.months': '{count, plural, one {one month} other {{count} months}}',
-  'length.days': '{count, plural, one {one day} other {{count} days}}',
 
   // What every plan includes: the same five lines as src/components/site/plans.ts (a test checks they match).
   'feature.detection': 'Detection for as long as you run it',
@@ -65,19 +62,11 @@ export const messages = {
   'paywall.noCamera': 'No camera data is sent while it runs',
 
   // ── Lifetime and gift (LifetimePlate on the paywall, PlanExtras on /pricing) ──
-  'extras.label': 'Other ways to buy',
   'lifetime.once': 'once',
   'lifetime.priceAtCheckout': 'Price shown at checkout',
   'lifetime.plate.body': 'One payment, no renewals, for as long as Stop Biting is offered. See the <link>refund policy</link>.',
   'lifetime.buy': 'Buy lifetime',
-  'lifetime.band.body': 'Pay once instead of every month or year. It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered. Start the free trial, then choose Lifetime in the app.',
-  'lifetime.band.cta': 'Start free trial',
-  'gift.title': 'Give it as a gift',
-  'gift.body.length': 'Buy {length} of Stop Biting for someone else. We email you a link to pass on. They sign in, open it and redeem it once. The gift starts when no trial or subscription is covering them.',
-  'gift.body.plain': 'Buy access of Stop Biting for someone else. We email you a link to pass on. They sign in, open it and redeem it once. The gift starts when no trial or subscription is covering them.',
   'gift.thanks': 'Thank you. The gift link is being emailed to the address you paid with. It can take a few minutes.',
-  'gift.failed': 'Checkout could not load. If you use an ad blocker, allow paddle.com for this site and reload, or email hello@stopbiting.today.',
-  'gift.buy': 'Buy a gift',
 
   // ── Free plan line on the Dashboard (src/components/billing/FreeTierNotice.tsx) ──
   'freeTier.reached': "You have used today's {minutes, plural, one {{minutes} free minute} other {{minutes} free minutes}} of detection. It starts again tomorrow.",

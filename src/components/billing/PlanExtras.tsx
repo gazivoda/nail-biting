@@ -7,8 +7,8 @@
 
 import { useState } from 'react';
 import { ArrowRight, Gift } from 'lucide-react';
-import { describeLength } from '../../billing/planLabel';
-import { useT } from '../../i18n/scopes/billing';
+import { describeLength } from '../../billing/planLength';
+import { useT } from '../../i18n/scopes/plans';
 import { useSignInHref } from '../../auth/useSignInProviders';
 import { PRICE_IDS } from '../../billing/env';
 import { completedTransactionId, onPaddleEvent, openGiftCheckout, paddleAvailable } from '../../billing/paddleClient';

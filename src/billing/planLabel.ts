@@ -39,12 +39,7 @@ export function planOverride(user: UserProfile, now: number = Date.now()): PlanO
   }
 }
 
-/** shared/plans.js describeDays() in the active language: "one year", "3 months", "45 days". */
-export function describeLength(days: number): string {
-  if (days % 365 === 0) return t('length.years', { count: days / 365 });
-  if (days % 30 === 0) return t('length.months', { count: days / 30 });
-  return t('length.days', { count: days });
-}
+export { describeLength } from './planLength';
 
 // The lines of what a plan includes. The list itself lives in src/components/site/plans.ts (the marketing
 // pricing cards read it too); the line at a given position is shown through the catalog, and a line this

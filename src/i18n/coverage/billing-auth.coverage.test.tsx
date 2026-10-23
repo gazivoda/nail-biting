@@ -82,6 +82,7 @@ export const COVERS = [
   'src/components/billing/PlanExtras.tsx',
   'src/components/billing/ReferralCard.tsx',
   'src/billing/planLabel.ts',
+  'src/billing/planLength.ts', // describeLength, called through planLabel's re-export below
   'src/utils/trial.ts',
   'src/pages/RedeemPage.tsx',
   'src/pages/SignIn.tsx',
