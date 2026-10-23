@@ -180,8 +180,16 @@ Fork B's notes, condensed. Code is in `src/photos/`; behaviour and the guard tes
   detection; Safari and Firefox; a real screen reader (labels checked in the markup only).
 - Real email delivery through Resend, a real mail client's one-click POST and its rendering (simulated with `fetch`/curl), the
   sender domain, spam placement. The Resend result shape was read from SDK 6.12, not observed live.
-- The Web Share sheet (headless Chrome has none: the download path was exercised).
+- The Web Share sheet: headless Chrome says it can share files but has no sheet, so the download path was exercised for real and
+  the share path with a stub (a PNG file named for the milestone is handed over).
 - The weekly-email Settings card in a browser (rendered in node; it needs a signed-in session against a server with the flag on).
+- The photo diary offline with the real service worker: fork B's offline run used a harness page with no worker, and the
+  integration run in the real Insights view stayed online (it watched requests and saw none, and the diary uses no network
+  API at all, but "reload the app while offline and open the diary from the precache" was not tried). The diary's code chunks are
+  in `dist/sw.js`'s precache (checked).
+- The production server's HTML: the flags-off comparison above used Vite dev servers (main and this branch, second capture after
+  the lazy modules had warmed), not `server.js` serving `dist/` as WS4's comparison did. A different method, not a known gap; the
+  server-side difference was checked separately (404s with the flags off, no job).
 - Daylight-saving behaviour beyond Node's own time-zone data.
 
 ## Owner TODOs
