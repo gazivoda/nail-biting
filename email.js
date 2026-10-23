@@ -17,6 +17,17 @@ function formatDate(isoString) {
   return isNaN(d) ? 'soon' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+// Generic transactional send for route modules (magic-link sign-in, weekly
+// summaries): same Resend client and sender as the emails below. Each caller
+// builds its own subject and body. Returns Resend's response; throws on failure.
+export async function sendEmail({ to, subject, html, text, headers }) {
+  const message = { from: FROM, to, subject };
+  if (html !== undefined) message.html = html;
+  if (text !== undefined) message.text = text;
+  if (headers !== undefined) message.headers = headers;
+  return getResend().emails.send(message);
+}
+
 export async function sendWelcomeEmail({ name, email, trial_end_date }) {
   const firstName = name ? name.split(' ')[0] : 'there';
   const trialEnd = formatDate(trial_end_date);

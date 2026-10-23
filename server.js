@@ -13,6 +13,7 @@ import { dirname, join } from 'path';
 import { randomBytes, createHmac } from 'crypto';
 import { sendWelcomeEmail, sendAdminNotification, sendFeedbackEmail } from './email.js';
 import { startTrialFollowupJob } from './trialFollowup.js';
+import { registerRoutes } from './server/routes/index.js';
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -673,6 +674,15 @@ app.get('/api/paddle/portal-session', authMiddleware, async (req, res) => {
     console.error('Portal session error:', err.message);
     res.status(502).json({ error: 'Failed to create portal session' });
   }
+});
+
+// ─── Route modules (server/routes/*) ─────────────────────────────────────────
+// New server features live there, not here. Must stay above the static/SSR block
+// below so API routes win over the page catch-all.
+registerRoutes({
+  app, db, authMiddleware, getUser, saveUser, signToken,
+  findUserByEmail: email => stmtFindByEmail.get(email) ?? null,
+  config: { APP_URL, ELECTRON_PROTOCOL },
 });
 
 // ─── Downloads ───────────────────────────────────────────────────────────────
