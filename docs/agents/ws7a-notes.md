@@ -32,6 +32,20 @@ opening a second tab in the same window (`visibilityState` is `hidden`). Every r
    signed in as a throwaway user, real MediaPipe on the fake camera. Detection steps are counted from outside by hooking WebGL
    `texImage2D` (two video uploads per step); no app code is involved in the counting. CPU is the browser's own process CPU time.
 
+To re-run (Chrome at `/Applications/Google Chrome.app`, or set `CHROME_BIN`; ports are yours to choose; results go to
+`docs/agents/ws7a-measurements/` unless `RESULTS_DIR` is set; nothing here touches `.env`, `data/` or your dev ports):
+
+```bash
+npm run build:web                                   # the build to measure (VITE_WS7A_PROBE=1 npm run build:web for a probe build)
+node scripts/background-probe/run-probe.mjs camera 3311 30 700 30        # plain | camera | camerapip | audio
+node scripts/background-probe/run-app.mjs after-hidden 3241 hidden 75 700 30 dist background_watching   # label port hidden|pip visible hidden back dist [flags]
+INJECT_VISIBLE=1 INJECT_AT=20,650 node scripts/background-probe/run-app.mjs ...   # with a probe build: time the alarm
+node scripts/background-probe/run-pause.mjs 3261 dist                    # pause, reload, resume, meeting mode (probe build)
+node scripts/background-probe/dom-compare.mjs 3271 distA distB [flags]   # flag-off sameness of two builds
+node scripts/background-probe/shots.mjs 3251 dist /tmp/shots             # screenshots of the new screens
+node scripts/background-probe/tables.mjs                                 # the tables below, from the result files
+```
+
 <<TABLES>>
 
 ### What the numbers say
