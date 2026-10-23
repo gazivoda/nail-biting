@@ -14,6 +14,7 @@
 
 import { Suspense, lazy } from 'react';
 import { useFeatures } from '../../../features/useFeature';
+import { WeeklyEmailSettings } from '../WeeklyEmailSettings';
 
 // The sync card pulls in the sync client and the storage facade. It is fetched only
 // while event_sync is on, so with the flag off opening Settings downloads nothing extra.
@@ -30,6 +31,7 @@ export function AccountSyncSection() {
           <SyncSettings />
         </Suspense>
       )}
+      <WeeklyEmailSettings />{/* WS5: the weekly summary email opt-in (flag weekly_email); renders nothing while it is off */}
       {/* WS9: the referral card (flag referrals; it draws nothing while the flag is off). Keep this line. */}
       <ReferralCard />
     </>
