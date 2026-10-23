@@ -9,7 +9,10 @@ import { Rings } from '../components/site/Rings';
 import { PageTitle } from '../components/ui/PageTitle';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { PRESET_TAGS, URGE_TAG } from '../components/dashboard/triggerTags';
-import { topTrigger, peakHour, hourRange } from '../utils/insights';
+import { topTrigger, peakHour, hourRange, behaviorsIn, filterByBehavior } from '../utils/insights';
+import { BEHAVIOR_REGISTRY } from '../detection/registry';
+import { useBehaviorFilterEnabled } from '../detection/useBehaviors';
+import type { Behavior } from '../storage/eventModel';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -48,8 +51,9 @@ function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
 // What the empty state promises ("this page shows what sets you off"), from
 // confirmed and logged bites only. Each row appears once there is enough data
 // to mean something (see utils/insights).
-function BiteInsights() {
-  const { incidents, customTags } = useAppStore();
+function BiteInsights({ incidents: shown }: { incidents?: Incident[] }) {
+  const { incidents: all, customTags } = useAppStore();
+  const incidents = shown ?? all;
   const bites = incidents.filter(isConfirmedBite);
   const trigger = topTrigger(bites);
   const peak = peakHour(bites);
@@ -77,8 +81,9 @@ function BiteInsights() {
   );
 }
 
-function WeekChart() {
-  const { incidents, weekChartMetric, setWeekChartMetric } = useAppStore();
+function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
+  const { incidents: all, weekChartMetric, setWeekChartMetric } = useAppStore();
+  const incidents = shown ?? all;
 
   const relevantIncidents = weekChartMetric === 'confirmed'
     ? incidents.filter(isConfirmedBite)
@@ -192,7 +197,16 @@ function ClearAllButton() {
 }
 
 export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
-  const { incidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
+  const { incidents: allIncidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
+
+  // Behaviour filter (WS1): only offered with the `detection_behaviors` flag on AND more than one
+  // behaviour in the history. Otherwise `incidents` is the store's own array and nothing differs.
+  const behaviorFilterOn = useBehaviorFilterEnabled();
+  const behaviorsPresent = behaviorsIn(allIncidents);
+  const showBehaviorFilter = behaviorFilterOn && behaviorsPresent.length > 1;
+  const [pickedBehavior, setPickedBehavior] = useState<Behavior | 'all'>('all');
+  const behaviorFilter = showBehaviorFilter && pickedBehavior !== 'all' && behaviorsPresent.includes(pickedBehavior) ? pickedBehavior : 'all';
+  const incidents = filterByBehavior(allIncidents, behaviorFilter);
 
   // One tap on the bin used to remove an entry for good, and deleting a bite
   // silently moves the streak. The last deletion can be undone for a few
@@ -243,6 +257,20 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
           </div>
         )}
       </div>
+
+      {showBehaviorFilter && (
+        <div className="-mt-2 mb-6 max-w-full overflow-x-auto">
+          <SegmentedControl<Behavior | 'all'>
+            ariaLabel="Show behavior"
+            value={behaviorFilter}
+            onChange={setPickedBehavior}
+            options={[
+              { label: 'All', value: 'all' },
+              ...behaviorsPresent.map(b => ({ label: BEHAVIOR_REGISTRY[b].shortLabel, value: b as Behavior | 'all' })),
+            ]}
+          />
+        </div>
+      )}
 
       {/* First visit: say what will fill this page and hand over the one
           action that fills it, under the title rather than in an empty
@@ -345,7 +373,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
             (and for keyboard and screen-reader order) the entries come first;
             from xl the grid puts this column on the left. */}
         <div className="xl:order-first xl:sticky xl:top-8 flex flex-col gap-4">
-          {incidents.length > 0 && <WeekChart />}
+          {incidents.length > 0 && <WeekChart incidents={incidents} />}
 
           {incidents.length > 0 && (
             <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6">
@@ -364,7 +392,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">Alarms to review</p>
                 </div>
               </div>
-              <BiteInsights />
+              <BiteInsights incidents={incidents} />
             </div>
           )}
         </div>

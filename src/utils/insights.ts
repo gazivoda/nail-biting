@@ -1,4 +1,17 @@
 import type { Incident } from '../types';
+import { BEHAVIORS, DEFAULT_BEHAVIOR, type Behavior } from '../storage/eventModel';
+
+/** The behaviours that appear in a history, in the schema's order. Entries from before WS1 count as nail biting. */
+export function behaviorsIn(incidents: readonly Incident[]): Behavior[] {
+  const seen = new Set<Behavior>(incidents.map(i => i.behavior ?? DEFAULT_BEHAVIOR));
+  return BEHAVIORS.filter(b => seen.has(b));
+}
+
+/** The entries of one behaviour, or all of them. The same array comes back for 'all', so nothing re-renders for nothing. */
+export function filterByBehavior<T extends Pick<Incident, 'behavior'>>(items: T[], behavior: Behavior | 'all'): T[] {
+  if (behavior === 'all') return items;
+  return items.filter(i => (i.behavior ?? DEFAULT_BEHAVIOR) === behavior);
+}
 
 // What History can honestly say from the bites a person has confirmed or
 // logged. Each insight needs a minimum sample, so two bites never become "your

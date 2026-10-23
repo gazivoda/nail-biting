@@ -101,6 +101,15 @@ Changing sensitivity or alert settings does not restart the loop: they are read 
   A missing or not-ready video (`readyState < 2`), or an inference exception, counts as a miss, so a firing alarm
   can always stop.
 - The detector is pure (the landmark source is injected) and is tested in `biteDetector.test.ts`.
+- **WS1 update.** The counting above now lives in `src/detection/` (`zones.ts` face zones, `rules.ts` one `ZoneRule`
+  per behaviour, `engine.ts` the frame loop, `registry.ts` labels and the `validated | experimental` level).
+  `biteDetector.ts` keeps every export and delegates to the engine; with the default selection (nail biting alone) it
+  makes the same decision on every frame as the old code (`src/detection/equivalence.test.ts`). `createBiteDetector`
+  takes an optional `getBehaviors()`, and `onBiteStart` now receives the behaviour. Which behaviours run comes from
+  `kv('detection', 'behaviors')` through `effectiveBehaviors()`, which is always just nail biting while the
+  `detection_behaviors` flag is off. `useDetection` takes an optional trailing `behaviors` list and calls
+  `onAlert(behavior)`; `CameraView.handleAlert` passes it to `logIncident(..., { behavior })`. Details and the
+  evaluation harness: `docs/agents/ws1-notes.md`, `scripts/eval-detection/README.md`.
 
 **Alarm.** `useDetection.startBiting`: starts the sound (`startAlarm(sound, volume)`, Web Audio, profiles
 `alarm | chime | buzz | chirp | whistle`), sets status `alert`, calls `onAlert()` once, flashes the tab title, and
@@ -649,7 +658,7 @@ although no server is spawned any more, commit 2b633d6).
 | `server/db/migrate.js` | WS0 | `h.createTable / createIndex / addColumn` |
 | `email.js` | WS0 added `sendEmail`; WS8/WS5 call it, new templates go in their own module | `ctx.sendEmail` |
 | `Dockerfile` | WS0 added `COPY server ./server` | any new top-level server path must be copied |
-| Detection rule: `biteDetector.ts`, zone modules, `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand` |
+| Detection rule: `biteDetector.ts`, `src/detection/**` (zones, rules, registry, engine), `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand`; `getBehaviors` on `createBiteDetector` |
 | Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 adds "Not a bite" at the same seam | `handleAlert` is the one-line seam for `{ behavior, hand }` |
 | `Settings.tsx` | frozen; nobody edits it (WS9 may touch `PlanSection` for plans) | `<SettingsSlots />` |

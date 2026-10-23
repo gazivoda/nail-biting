@@ -67,7 +67,9 @@ describe('<SettingsSlots />', () => {
   });
 
   it('renders nothing even with the flags on while the section files are empty', () => {
-    setFlags('detection_behaviors', 'event_sync', 'share_links', 'false_positive_controls', 'background_watching'); // hrt_coaching is left out: WS2's Alerts card has content now (see coachingSettings.test.tsx)
+    // Left out because their cards have content now: hrt_coaching (WS2, see coachingSettings.test.tsx)
+    // and detection_behaviors (WS1, see src/detection/useBehaviors.test.tsx).
+    setFlags('event_sync', 'share_links', 'false_positive_controls', 'background_watching');
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 
