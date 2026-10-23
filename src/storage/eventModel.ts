@@ -327,6 +327,59 @@ export function queryEvents(events: HabitEventWire[], q: EventQuery = {}): Habit
   return q.limit !== undefined ? out.slice(0, Math.max(0, q.limit)) : out;
 }
 
+// ── Which version wins (last write wins, deterministic ties) ────────────────
+
+const LIVE_ORDER = [
+  'id', 'ts', 'source', 'behavior', 'hand', 'triggers', 'falsePositive',
+  'competingResponse', 'confirmed', 'deviceId', 'updatedAt',
+] as const;
+const DELETED_ORDER = ['id', 'ts', 'source', 'behavior', 'deviceId', 'updatedAt'] as const;
+
+/** A fixed-key-order JSON text of an event. A deleted record keeps only what a tombstone keeps. */
+export function canonicalEvent(e: HabitEventWire): string {
+  const rec = e as unknown as Record<string, unknown>;
+  const deleted = e.deleted === true;
+  const out: Record<string, unknown> = {};
+  for (const key of deleted ? DELETED_ORDER : LIVE_ORDER) {
+    const v = rec[key];
+    if (v === undefined) continue;
+    if (key === 'competingResponse') {
+      const cr = v as NonNullable<HabitEvent['competingResponse']>;
+      out[key] = cr.durationSec === undefined ? { done: cr.done } : { done: cr.done, durationSec: cr.durationSec };
+    } else {
+      out[key] = v;
+    }
+  }
+  if (deleted) out.deleted = true;
+  return JSON.stringify(out);
+}
+
+/**
+ * Which of two versions of the SAME event wins: > 0 when `a` should replace
+ * `b`, < 0 when `b` stays, 0 when they are the same version. The first
+ * difference decides: higher `updatedAt`; then a deletion beats a live record;
+ * then the higher `deviceId`; then the higher canonical text. It is a total
+ * order on content, so every replica that sees the same set of versions ends
+ * on the same one, whatever order they arrive in.
+ *
+ * The server uses the same rule (server/events/compare.js, kept identical by
+ * server/events/compare.test.js). It has to: two devices that disagreed about a
+ * tie would never converge.
+ */
+export function compareEventVersions(a: HabitEventWire, b: HabitEventWire): number {
+  if (a.updatedAt !== b.updatedAt) return a.updatedAt > b.updatedAt ? 1 : -1;
+  const da = a.deleted === true;
+  const db = b.deleted === true;
+  if (da !== db) return da ? 1 : -1;
+  const deva = a.deviceId ?? '';
+  const devb = b.deviceId ?? '';
+  if (deva !== devb) return deva > devb ? 1 : -1;
+  const ca = canonicalEvent(a);
+  const cb = canonicalEvent(b);
+  if (ca === cb) return 0;
+  return ca > cb ? 1 : -1;
+}
+
 // ── Merging (last write wins), for import and sync ──────────────────────────
 
 export interface MergeResult {
@@ -337,10 +390,13 @@ export interface MergeResult {
 }
 
 /**
- * Folds incoming events into local state, last-write-wins by `updatedAt`
- * (ties keep the local copy). A deleted incoming event removes the live record
- * and leaves a tombstone; a newer live event beats an older tombstone.
- * Output is newest-first, like the store keeps it.
+ * Folds incoming events into local state, last-write-wins by `updatedAt`.
+ * A tie on `updatedAt` is settled by `compareEventVersions`, the same rule the
+ * server uses, so devices that exchange the same versions converge (before WS4
+ * a tie kept the local copy, which can leave two devices with different copies
+ * for ever; identical versions are still a no-op). A deleted incoming event
+ * removes the live record and leaves a tombstone; a newer live event beats an
+ * older tombstone. Output is newest-first, like the store keeps it.
  */
 export function mergeEvents(
   local: { incidents: Incident[]; tombstones: Tombstone[] },
@@ -359,8 +415,8 @@ export function mergeEvents(
   for (const e of incoming) {
     const mine = live.get(e.id);
     const theirTomb = dead.get(e.id);
-    const localStamp = mine ? mine.updatedAt : theirTomb ? theirTomb.updatedAt : -Infinity;
-    if (e.updatedAt <= localStamp) continue; // local is as new or newer
+    const localVersion: HabitEventWire | undefined = mine ? toHabitEvent(mine) : theirTomb;
+    if (localVersion && compareEventVersions(e, localVersion) <= 0) continue; // local wins or is identical
     applied++;
     if (e.deleted) {
       live.delete(e.id);

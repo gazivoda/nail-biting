@@ -167,8 +167,10 @@ app.use('/api/', corsMiddleware);  // only API routes need CORS, not static asse
 
 app.use(cookieParser());
 // Skip JSON body parsing for the Paddle webhook route (needs raw body for signature verification)
+// and for the event sync route (a batch is bigger than 10kb; server/routes/events.js parses it itself,
+// after the flag and sign-in checks, with its own limit).
 app.use((req, res, next) => {
-  if (req.path === '/api/paddle/webhook') return next();
+  if (req.path === '/api/paddle/webhook' || req.path === '/api/events/sync') return next();
   express.json({ limit: '10kb' })(req, res, next);
 });
 
