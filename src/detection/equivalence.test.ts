@@ -196,14 +196,21 @@ describe('refactored detector vs the verbatim pre-WS1 reference', () => {
     for (const seed of SEEDS) {
       const frames = generateFrames(seed, FRAMES_PER_SEED);
       const before = run(createLegacyDetector, frames);
-      const after = run(createBiteDetector, frames);
 
-      // Frame by frame, so a failure names the first frame that differs.
-      const firstDiff = before.calls.findIndex((c, i) => c !== after.calls[i]);
-      expect(firstDiff, `seed ${seed}: first differing frame`).toBe(-1);
-      expect(after.alarmStarts, `seed ${seed}: alarm starts`).toEqual(before.alarmStarts);
-      expect(after.alarmStops, `seed ${seed}: alarm stops`).toEqual(before.alarmStops);
-      expect(after.asked, `seed ${seed}: timestamps handed to the source`).toEqual(before.asked);
+      // Two ways of building the new detector: as the landing demo does (no behaviours named) and as the
+      // app does with every flag off (useDetection always passes getBehaviors; here a FRESH array each frame,
+      // the worst case for the engine's "has the selection changed" check).
+      const plain = run(createBiteDetector, frames);
+      const asTheAppRunsIt = run(options => createBiteDetector({ ...options, getBehaviors: () => ['nail_biting'] }), frames);
+
+      for (const [label, after] of [['no getBehaviors', plain], ['getBehaviors, fresh array each frame', asTheAppRunsIt]] as const) {
+        // Frame by frame, so a failure names the first frame that differs.
+        const firstDiff = before.calls.findIndex((c, i) => c !== after.calls[i]);
+        expect(firstDiff, `seed ${seed} (${label}): first differing frame`).toBe(-1);
+        expect(after.alarmStarts, `seed ${seed} (${label}): alarm starts`).toEqual(before.alarmStarts);
+        expect(after.alarmStops, `seed ${seed} (${label}): alarm stops`).toEqual(before.alarmStops);
+        expect(after.asked, `seed ${seed} (${label}): timestamps handed to the source`).toEqual(before.asked);
+      }
 
       totalFrames += frames.length;
       for (const c of before.calls) { starts += (c.match(/S/g) ?? []).length; ends += (c.match(/E/g) ?? []).length; }

@@ -22,7 +22,9 @@ has a WS1 update) and `scripts/eval-detection/README.md`.
   (landmarks only), a deterministic generator, precision and recall per rule at three sensitivities, and
   `docs/agents/ws1-eval-report.md` (generated, labelled SYNTHETIC). A dev-only recorder for the owner's real fixtures.
 - **Tests**: 61 golden tests that pin the old nail-biting behaviour, a 120,000-frame frame-by-frame equivalence test
-  against a verbatim copy of the old detector (`src/detection/__reference__/legacyBiteDetector.ts`), rule, zone,
+  against a verbatim copy of the old detector (`src/detection/__reference__/legacyBiteDetector.ts`; run both without
+  `getBehaviors`, as the landing demo builds it, and with a fresh `['nail_biting']` array each frame, as the app builds
+  it), rule, zone,
   registry, engine, selection and Settings/History render tests, and 32 harness tests.
 
 ## Nothing changes for anyone until you turn it on
