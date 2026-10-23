@@ -2,8 +2,9 @@
 
 WS13 item 2. Question: with every feature flag off, does the tree at `main` (b6b16f9) behave like what is live?
 Answer, with the evidence below: **yes, apart from a list of differences that each trace to a documented workstream
-change (WS6, WS7a, WS11b). Nothing unexplained was found.** Two of those differences are larger or more visible than the
-workstream notes say, and one is an undocumented (harmless) header quirk. They are under "Findings".
+change (WS6, WS7a, WS11b). Nothing unexplained was found.** Two of those differences are larger than the workstream
+notes say (extra JS fetched with every flag off, F2, and the precache, F3) and one is an undocumented, harmless header
+quirk (F4). They are under "Findings" (section 8).
 
 ## 1. Baselines and method
 
@@ -21,8 +22,8 @@ A to S must be the same set of changes, which is the proof that the two sessions
 
 Each tree was checked out into its own scratch git worktree, `node_modules` symlinked, and built with `npm run build:web`
 (exit 0 in all four; precache 49 / 49 / 60 / 60 entries). **B was rebuilt from a clean checkout of b6b16f9, not taken from
-the shared worktree's `dist/`**: another agent regenerated `dist/seo-content.json` in that worktree at 00:48:30 while this
-work ran. The shared `dist/` differs from the clean build of the same commit in one thing only: the `workbox-*.js` file name
+the shared worktree's `dist/`**: `dist/seo-content.json` and a few other generated files in that worktree were rewritten at
+00:48:30 (a content script, not a build) while this work ran. The shared `dist/` differs from the clean build of the same commit in one thing only: the `workbox-*.js` file name
 that `sw.js` points at (`workbox-74048807.js`; all four clean checkouts give `workbox-3266fc27.js`; the file contents are equal).
 All scratch worktrees were removed afterwards.
 
@@ -41,7 +42,7 @@ Tools (all in `scripts/flags-off-diff/`, Node ESM, no dependencies; commands at 
 Normalisation (the lesson about hashes): `name-<8 chars>.<ext>` asset references and `workbox-<hash>.js` are rewritten
 to their un-hashed form in names and in every file's content; `"generatedAt"` build timestamps are blanked; static-file
 mtimes are pinned in the rig (so `Last-Modified` is comparable); the rig user's dates are fixed. A second fetch of every
-non-API URL gave the same bytes (0 unstable of 91). Ports 3214 and 3215 only, Chrome 4214.
+non-API URL gave the same bytes (0 unstable of 91). Ports 3214 and 3215 only, Chrome 4214 and 4215.
 
 ## 2. Summary
 
@@ -52,7 +53,8 @@ non-API URL gave the same bytes (0 unstable of 91). Ports 3214 and 3215 only, Ch
 | `dist/` files, A to S (the SEO session alone) | 509 | 492 | 0 | **17** | 0 |
 | HTTP, 91 requests, four-way attribution | 91 | **61** | **12** swarm only | **5** SEO only | **0** |
 | HTTP, requests touched by both sessions | 13 | | all 13: swarm half = head tags / SW / entry bundle | all 13: SEO half = JSON-LD ids etc. | **0** (11 text pages commute exactly; `sw.js` and `index.js` checked structurally) |
-| DOM, signed in and out (see section 6) | see section 6 | | | | |
+| DOM captures per build (section 6): A to B, 25 captures | 25 identical in body, title, console errors and every pixel; 16 also identical in head and requests | 9 differ only in extra chunk requests (E5) and 25 in head tags (E1) | 0 | **0** |
+| DOM, S to M (the deploy) | 25 identical to the eye; 16 in everything | the same 9 | already live | **0** |
 
 Of the 91 HTTP requests, 25 differ between A and B (19 HTML pages, `/sw.js`, the entry bundle, 2 closed OG cards,
 2 new icon files) and 66 are identical in status, every header and the body.
@@ -68,7 +70,7 @@ Added (22):
 | `assets/PhoneView.js` (13.6 kB), `icons/apple-touch-icon-152x152.png`, `-167x167.png`, `shortcut-bite-96x96.png`, `shortcut-urge-96x96.png` | WS6 phone companion (lazy chunk and icons). `ws6-notes.md` file table |
 | `assets/BackgroundRunner.js`, `appTicker.js`, `silent.js`, `watchStore.js`, `scheduleStore.js`, `reminders.js`, `tickWorker.js` | WS7a background watching (`ws7a-notes.md`, "What exists"). `tickWorker.js` is the 286-byte worker; nothing imports it, only `new Worker(new URL(...))` with the flag on |
 | `assets/statusText.js`, `api.js`, `events.js`, `actions.js#3` | chunk graph reshuffle: code that used to sit in `runtime.js`, `SyncSettings.js`, `desktopHost.js` and an `actions` chunk is now shared (strings checked: `/api/events/sync`, `stopbiting:desktop-command`, etc. moved, none lost) |
-| `og/features-habit-reversal.png`, `features-phone-companion.png`, `features-share-with-therapist.png`, `features-referral-program.png`, `features-desktop-app.png`, `solutions-cuticle-biting.png` | WS11b social cards of the six gated pages. The server answers 404 for them with the flag off (checked, section 4) |
+| `og/features-habit-reversal.png`, `features-phone-companion.png`, `features-share-with-therapist.png`, `features-referral-program.png`, `features-desktop-app.png`, `solutions-cuticle-biting.png` | WS11b social cards of the six gated pages. The server answers 404 for them with the flag off (checked, section 5) |
 
 Changed (40, of which 19 are the same code):
 
@@ -178,13 +180,13 @@ or hashed files (sitemap, llms, robots, manifest, `sw.js`, `seo-content.json`, `
 fonts, `.well-known/apple-developer-domain-association.txt`, the IndexNow key, the workbox file and the entry bundle under
 their hashed names), 20 API and `/health` calls signed out and 10 signed in (a minted `nh_session` for the rig user).
 
-### 5.1 Identical in A, S, B and M (61)
+### 5.1 What did not change (61 requests identical in all four builds; 66 identical between A and B)
 
-All the gated URLs answer the same branded 404 in every build: `/compare/hands-off`, `/compare/habitaware-keen`,
-`/solutions/cuticle-biting`, the five `/features/*`, `/features`, `/page-data/*`, `/og/solutions-...` aside (5.2), `/seo-gated.json`
-(plain 404). Also identical: `/api/features` (all 27 flags false), `/health`, `/manifest.webmanifest`
-(`public, max-age=0`, no shortcuts, `phone.js` did not engage), `/robots.txt`, `/privacy` aside from the head tags,
-every `/api/...` call in the list (signed out and signed in):
+The gated pages answer the same branded 404 (status, headers and body) in every build: `/compare/hands-off`,
+`/compare/habitaware-keen`, `/solutions/cuticle-biting`, the five `/features/*`, `/features`, the two `/page-data/*` URLs, and
+`/seo-gated.json` (a plain-text 404). Also identical: `/api/features` (all 27 flags false), `/health`, `/manifest.webmanifest`
+(`public, max-age=0`, no shortcuts: `phone.js` did not engage), `/robots.txt`, `/sitemap.xml` and the two llms files in A, B (they differ in S
+and M only by the SEO session), every `/api/...` call in the list, signed out and signed in:
 
 | Request | Status in A, B, S, M |
 |---|---|
@@ -212,7 +214,7 @@ existing date). The no-script site navigation is unchanged (`GATED_NAV` is empty
 | `GET /sw.js` | body | 3.3 |
 | `GET /assets/index.js` (entry) | body | 3.1 |
 | `GET /icons/apple-touch-icon-152x152.png`, `/icons/shortcut-bite-96x96.png` | 404 to 200 | WS6 icons. Served with the flag off. The two shortcut icons are referenced by nothing while `phone_companion` is off (only the flag-on manifest names them); the two touch icons are referenced by the new head tags |
-| `GET /og/features-phone-companion.png`, `/og/solutions-cuticle-biting.png` | **status 404 and body identical; one header differs: `Vary: Accept-Encoding` present, and the 404 page is now gzip-compressed** | WS11b, see Finding F3 |
+| `GET /og/features-phone-companion.png`, `/og/solutions-cuticle-biting.png` | **status 404 and body identical; one header differs: `Vary: Accept-Encoding` present, and the 404 page is now gzip-compressed** | WS11b, see Finding F4 |
 
 ### 5.3 SEO session, A to S (18 requests)
 
@@ -243,7 +245,37 @@ the shortcuts "I bit" and "I feel an urge" and `Cache-Control: no-cache`; every 
 `<meta name="sb-copy-flags" content="event_sync phone_companion">`; the closed OG cards turn into PNGs. So each of the
 flag-off facts above is a real switch.
 
-PENDING-DOM
+## 6. DOM in a real browser, signed out and signed in, at 1280 and 390 px
+
+Headless Chrome (macOS, `--headless=new`, fake camera and auto-granted permission, service worker bypassed, clean profile
+per build, reduced motion), against the real `server.js` of each tree with `FEATURE_FLAGS` empty, the rig user signed in
+with a minted `nh_session`. 25 captures per build, each with its body HTML (digits masked, clock-dependent), head, title,
+network requests, console errors and a PNG screenshot:
+
+* signed out, 1280 px light: `/`, `/how-it-works`, `/pricing`, `/about`, `/blog`, a blog post, a compare page, a solutions
+  page, `/privacy`, a calculator; `/` at 390 px (11 captures);
+* signed in: Watch, History and Settings at 1280 light, 1280 dark, 390 light, 390 dark (12 captures; 390 px is
+  `Emulation.setDeviceMetricsOverride` with touch emulation, and `scrollWidth <= innerWidth` is asserted);
+* Watch with detection actually running on the fake camera (real MediaPipe models, 15 s), then stopped (2 captures). The
+  video and canvas are hidden for that screenshot; the DOM is not.
+
+| Compared | Identical to the eye (body, title, every pixel, console errors) | Identical in everything (also head and requests) | What differs |
+|---|---|---|---|
+| **A to B** (the swarm) | **25 of 25** | 16 of 25 | head: WS6 tags in all 25, plus `modulepreload` links of lazy chunks in 14 signed-in captures; **requests: 9 captures load extra chunks** (E5): Watch (4 captures, plus the detecting one) +`appTicker`, `silent`, `watchStore`, `scheduleStore` (and a third `actions`, which the name normalisation hides), Settings (4) +`reminders`; History and every signed-out page: none |
+| **S to M** (what a deploy changes) | **25 of 25** | 16 of 25 | exactly the same 9 captures with exactly the same requests |
+| **A to S** (the SEO session) | 24 of 25 | 3 of 25 | `/blog` (three article titles and summaries in the list); the JSON-LD in the head in 22 captures (the signed-in app is served from `/`, so it carries the home page's schema) |
+| **B to M** | 24 of 25 | 3 of 25 | the same SEO changes: `/blog` and the head JSON-LD |
+
+* **Pixels: 25 of 25 screenshots are byte-identical between A and B**, including the 12 signed-in shots at 1280 and 390 px,
+  light and dark, the three tabs. (`dom-diff.mjs` would have reported the differing pixel count and its bounding box.)
+* **No sideways scroll anywhere**: 25 of 25 captures per build have `scrollWidth <= innerWidth` at both widths.
+* **Detection running** (flag off): "Detection active" in both, the same body HTML, the same single console message in both
+  (MediaPipe's `INFO: Created TensorFlow Lite XNNPACK delegate for CPU.`), stopped state identical.
+* localStorage keys are equal in every capture; no console error or page exception differs.
+* Noise that was filtered, and why: the page's Google Tag Manager image beacon is blocked by the site's own `img-src` and
+  logged as an error in some captures of any build (runs of the 11 signed-out captures: A 0 and 1 captures, M 4, 0 and 2, B 0, 0 and 0, S 0 and 0).
+  The landing page's screenshot carousel asks for `/shots/app-history-390.webp` on a timer, in some runs and not others (A in 3 of 3
+  runs, B in 1 of 3). Neither is compared. Both are third-party or timing effects, not build differences.
 
 ## 7. Expected differences: the ledger
 
@@ -257,7 +289,7 @@ PENDING-DOM
 | E6 | WS7a | the detection loop, alarm, notifications | yes | no. Read in the diff: every new branch is guarded by `isFeatureOn('background_watching')`, `silentNow()` (false when off), `hiddenDriven` (false) or `useWatchGate` (constant). `startHidden()` with the flag off is `startBgInterval()` |
 | E7 | WS11b | entry bundle +~8 kB raw / 2.2 kB gz of copy rules and hook; `ComparePage` +1 kB; `seo-gated.json` +68 kB; 6 OG cards in `dist` | yes | no. `ws11b-notes.md` says the rule sentences "are in the JavaScript and in the service worker's precache of every visitor with every flag off". The six pages' copy is not in the app |
 | E8 | WS11b | marketing pages learn the flags from `<meta name="sb-copy-flags">` | yes: absent with every flag off (no page body differs from A beyond E1), present with `event_sync phone_companion` on (5.5) | no |
-| E9 | WS11b | six pages, their data, OG cards, sitemap and llms entries | yes: all absent or 404 (5.1) | the 404 for the two cards has a different `Vary` (F3) |
+| E9 | WS11b | six pages, their data, OG cards, sitemap and llms entries | yes: all absent or 404 (5.1) | the 404 for the closed cards has a different `Vary` and is compressed (F4) |
 | E10 | WS12a | does not exist in this tree | n/a | n/a |
 
 ## 8. Findings
@@ -274,7 +306,7 @@ published page are unchanged.** The positive control (5.5) shows the checks can 
 | F3 | Documented, but the notes contradict each other (WS6, WS7a) | `PhoneView` (13.6 kB, 4.9 kB gz), `BackgroundRunner`, `tickWorker` and 8 other new chunks are in the **service worker precache** (49 to 60 entries, +58.3 KiB raw; the 11 new names are 28.5 kB raw / 11.9 kB gz). A visitor whose worker installs downloads them although no flag is on; the page load itself never requests them. `ws6-notes.md` records "49 precache entries become 51, with the PhoneView chunk" and, a line later, that a flag-off visitor "never downloads" it; `ws7a-notes.md` records 51 to 60. Both are true: never on a page load, always for the precache |
 | F4 | Undocumented, harmless (WS11b) | A closed gated card (`/og/features-*.png`, `/og/solutions-cuticle-biting.png`) still answers the same 404 page, but now with `Vary: Accept-Encoding` and **gzip-compressed**. Mechanism: the new `app.use('/og', ...)` wrapper calls `sendHtml` while `req.path` is mount-relative (`/features-phone-companion.png`), so the compression filter's `INCOMPRESSIBLE_PATHS = /^\/(?:og\|fonts)\//` no longer matches. `/og/nope.png` (falls through to the catch-all, full path) is unchanged. Verified with `Accept-Encoding: gzip` against A and B. Real cards (PNG, declined by content type) are unaffected |
 | F5 | Behaviour you may not expect (WS6) | The head tags are in the shell, so they are on every page including the legal pages, with the flag off: on iOS, "Add to Home Screen" now says "Stop Biting" (it used the page title), iPads get their own icon sizes and iOS before 16.4 opens it full screen. The two shortcut icons are served (200) but referenced by nothing while `phone_companion` is off. Both documented in `ws6-notes.md` as "only read when someone adds the app to a home screen" |
-| F6 | Process | The shared worktree's `dist/` was regenerated by another agent during this check (`seo-content.json` 00:48:30) and its `sw.js` names a different `workbox-*.js` than any clean build of the same commit. Verify releases from a clean checkout, as done here. `workbox-*.js` names are not reproducible between checkouts, so compare `sw.js` after normalising them (`lib.mjs`) |
+| F6 | Process | The shared worktree's `dist/` was partly regenerated by something other than a build during this check (`seo-content.json`, `seo-gated.json`, `llms-full.txt` and `posts/*.json` have a later mtime than `index.html`: a content script, not `vite build`), and its `sw.js` names a different `workbox-*.js` than any clean build of the same commit. Verify releases from a clean checkout, as done here. `workbox-*.js` names are not reproducible between checkouts, so compare `sw.js` after normalising them (`lib.mjs`) |
 | F7 | Integration | M (B merged with `origin/main`) builds, and the two sessions' changes are exactly additive in `dist/` and in 11 of 13 shared pages (5.4). Both edit `sw.js` (SEO: navigation `allowlist`; WS6: `brand-static`, manifest out of the precache); both are present in M. `/?action=bite` still matches the SEO allowlist |
 | F8 | Same in every build, not a regression | `/signin`, `/redeem`, `/share/<id>` are the branded 404 with every flag off (documented), and `GET /api/phone/*` does not exist (WS6 has only the manifest route) |
 

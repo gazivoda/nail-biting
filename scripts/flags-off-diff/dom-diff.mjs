@@ -60,8 +60,12 @@ try {
     const ra = new Set(a.requests), rb = new Set(b.requests);
     row.requestsRemoved = a.requests.filter((r) => !rb.has(r) && !timing(r));
     row.requestsAdded = b.requests.filter((r) => !ra.has(r) && !timing(r));
-    row.errorsOnlyInA = (a.errors ?? []).filter((e) => !(b.errors ?? []).includes(e));
-    row.errorsOnlyInB = (b.errors ?? []).filter((e) => !(a.errors ?? []).includes(e));
+    // Google Tag Manager's image beacon is blocked by the page's own img-src policy, in whichever builds the tag script
+    // answered in time: 0 to 4 of the 11 signed-out captures in ANY build, and in repeats of the same build (the
+    // baseline A showed it once in six repeats, M 0, 2 and 4 times). Third-party timing, not compared.
+    const noise = (e) => /Loading the image 'https:\/\/www\.googletagmanager\.com\//.test(e);
+    row.errorsOnlyInA = (a.errors ?? []).filter((e) => !(b.errors ?? []).includes(e) && !noise(e));
+    row.errorsOnlyInB = (b.errors ?? []).filter((e) => !(a.errors ?? []).includes(e) && !noise(e));
     row.errorCount = [(a.errors ?? []).length, (b.errors ?? []).length];
     row.detecting = [a.detectingText, b.detectingText];
     row.pixels = a.shotHash === b.shotHash ? { diffPixels: 0 } : await pixelDiff(join(dir, la, a.shot), join(dir, lb, b.shot));
