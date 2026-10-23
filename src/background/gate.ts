@@ -6,8 +6,9 @@
 
 import { useMemo, useSyncExternalStore } from 'react';
 import { useFeature } from '../features/useFeature';
-import { getWatchState, subscribeWatch } from './watchStore';
+import { getWatchStamp, getWatchState, subscribeWatch } from './watchStore';
 import { INITIAL_WATCH_STATE, type WatchState } from './pauseMachine';
+import { watchNote, type WatchNote } from './watchText';
 
 export interface WatchGate {
   /** The flag is on. */
@@ -16,18 +17,22 @@ export interface WatchGate {
   paused: boolean;
   /** Meeting mode: alarms are silent. */
   silent: boolean;
+  /** The words for a pause or meeting (headline, sentence, short form), or null. */
+  note: WatchNote | null;
 }
 
-const OFF: WatchGate = { on: false, state: INITIAL_WATCH_STATE, paused: false, silent: false };
+const OFF: WatchGate = { on: false, state: INITIAL_WATCH_STATE, paused: false, silent: false, note: null };
 
 const noSubscribe = () => () => {};
 const offSnapshot = () => INITIAL_WATCH_STATE;
+const offStamp = () => 0;
 
 export function useWatchGate(): WatchGate {
   const on = useFeature('background_watching');
   const state = useSyncExternalStore(on ? subscribeWatch : noSubscribe, on ? getWatchState : offSnapshot, offSnapshot);
+  const stamp = useSyncExternalStore(on ? subscribeWatch : noSubscribe, on ? getWatchStamp : offStamp, offStamp);
   return useMemo<WatchGate>(
-    () => (on ? { on, state, paused: state.kind === 'paused', silent: state.kind === 'meeting' } : OFF),
-    [on, state],
+    () => (on ? { on, state, paused: state.kind === 'paused', silent: state.kind === 'meeting', note: watchNote(state, stamp) } : OFF),
+    [on, state, stamp],
   );
 }

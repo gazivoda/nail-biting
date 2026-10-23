@@ -8,6 +8,11 @@ import type { DetectionSensitivity, AlertSound } from '../types';
 import type { Behavior } from '../storage/eventModel';
 import { createBiteDetector } from './biteDetector';
 import { detectHandsWithSides } from '../detection/handedness';
+import { isFeatureOn } from '../features/flags';
+import { getAppTicker } from '../background/appTicker';
+import { createHiddenSource, type HiddenSource } from '../background/hiddenSource';
+import { getPipTickWindow, subscribePipTickWindow } from '../background/tickHost';
+import { silentNow } from '../background/silent';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -83,6 +88,11 @@ export async function getModels() {
 // 5fps — plenty for nail-biting detection, ~12x less CPU than 60fps
 const INFERENCE_INTERVAL_MS = 200;
 
+// WS7a (flag background_watching): a tick from the hidden-tab source that arrives sooner than this after the last
+// inference is dropped. The source ticks every INFERENCE_INTERVAL_MS, so a normal tick is never this early; a burst of
+// ticks queued behind a busy main thread is.
+const HIDDEN_MIN_GAP_MS = 150;
+
 // What is watched when the caller names no behaviours: nail biting alone, as before WS1.
 // One shared array, so the engine can tell "unchanged" by identity.
 const DEFAULT_BEHAVIOR_LIST: readonly Behavior[] = ['nail_biting'];
@@ -90,11 +100,18 @@ const DEFAULT_BEHAVIOR_LIST: readonly Behavior[] = ['nail_biting'];
 // The per-frame detection logic lives in ./biteDetector so it can be tested
 // without a camera or MediaPipe.
 
+// How the alarm sound repeats. A plain setInterval, which a hidden tab slows to once a second.
+type Repeat = (fn: () => void, ms: number) => () => void;
+const repeatOnPage: Repeat = (fn, ms) => {
+  const id = setInterval(fn, ms);
+  return () => clearInterval(id);
+};
+
 // Starts a repeating alert sound based on the selected AlertSound profile.
 // Returns a stop function.
-function startAlarm(sound: AlertSound, volume: number): (() => void) {
+function startAlarm(sound: AlertSound, volume: number, repeat: Repeat = repeatOnPage): (() => void) {
   let ctx: AudioContext;
-  let intervalId: ReturnType<typeof setInterval>;
+  let stopRepeat: () => void;
   let stopFn: (() => void) | null = null;
 
   try {
@@ -204,13 +221,13 @@ function startAlarm(sound: AlertSound, volume: number): (() => void) {
     }[sound];
 
     playFn(); // fire immediately
-    intervalId = setInterval(playFn, intervalMs);
+    stopRepeat = repeat(playFn, intervalMs);
   } catch {
     return () => {};
   }
 
   stopFn = () => {
-    clearInterval(intervalId);
+    stopRepeat();
     try { ctx.close(); } catch { /* ignore */ }
   };
 
@@ -267,9 +284,16 @@ export function useDetection(
   const startBiting = useCallback((behavior: Behavior = 'nail_biting') => {
     if (isBitingRef.current) return; // already alarming
     isBitingRef.current = true;
-    const type = alertTypeRef.current;
+    // WS7a: meeting mode is silent. No sound, no notification, no native alert: the flash and the log remain.
+    // silentNow() is false whenever the background_watching flag is off, so nothing changes without it.
+    const silent = silentNow();
+    const type = silent ? 'flash' : alertTypeRef.current;
     if (type === 'sound' || type === 'both') {
-      stopAlarmRef.current = startAlarm(alertSoundRef.current, alertVolumeRef.current);
+      // WS7a: with the flag on, a hidden tab repeats the alarm from the worker's timer (4 beeps a second, not 1).
+      const repeat: Repeat | undefined = document.hidden && isFeatureOn('background_watching')
+        ? (fn, ms) => getAppTicker().every(ms, fn)
+        : undefined;
+      stopAlarmRef.current = startAlarm(alertSoundRef.current, alertVolumeRef.current, repeat);
     }
     setStatus('alert');
     onAlertRef.current(behavior); // log the incident once when biting starts
@@ -283,7 +307,7 @@ export function useDetection(
 
     // Background notifications: when the tab is hidden (PiP detection),
     // notify via app badge + OS notification so the user knows.
-    if (document.hidden) {
+    if (document.hidden && !silent) {
       // App icon badge (PWA Badging API — no permission required)
       navigator.setAppBadge?.().catch(() => {});
 
@@ -300,7 +324,7 @@ export function useDetection(
 
     // Electron: notify the main process so it can show a system notification
     // when the app window is minimised to tray
-    window.electronAPI?.onBiteDetected?.();
+    if (!silent) window.electronAPI?.onBiteDetected?.();
   }, []);
 
   const stopBiting = useCallback(() => {
@@ -324,6 +348,7 @@ export function useDetection(
     let rafId = 0;
     let bgIntervalId: ReturnType<typeof setInterval> | null = null;
     let visibilityHandler: (() => void) | null = null;
+    let hiddenSource: HiddenSource | null = null; // WS7a, only ever made with the background_watching flag on
 
     getModels()
       .then(({ hand, face }) => {
@@ -352,8 +377,14 @@ export function useDetection(
           detector.step(now);
         }
 
+        // WS7a: true while a hidden-tab source (the mini window's timers, or a worker) is driving the loop.
+        let hiddenDriven = false;
+
         function processFrame() {
           if (cancelled) return;
+          // WS7a: while a hidden-tab source drives the loop, do not keep waking 60 times a second for nothing
+          // (a hidden tab with the mini window open still gets every frame). visibilityHandler re-arms it.
+          if (hiddenDriven && document.hidden) { rafId = 0; return; }
           rafId = requestAnimationFrame(processFrame);
 
           // When tab is hidden, rAF is throttled/paused. The background
@@ -384,19 +415,53 @@ export function useDetection(
           }
         }
 
+        // WS7a. With the background_watching flag on, a hidden tab is kept at the visible rate (5 checks a second)
+        // by a source the browser does not slow down; see src/background/hiddenSource.ts and ARCHITECTURE section 15.
+        // The 500 ms interval above stays as the fallback (flag off, no worker, a worker that died): the two never
+        // run together, so there is still exactly one inference per tick.
+        function hiddenTick() {
+          if (cancelled || !document.hidden) return;
+          if (performance.now() - lastInferenceTs < HIDDEN_MIN_GAP_MS) return;
+          runInference();
+        }
+
+        function startHidden() {
+          if (isFeatureOn('background_watching')) {
+            hiddenSource ??= createHiddenSource({
+              intervalMs: INFERENCE_INTERVAL_MS,
+              tick: hiddenTick,
+              ticker: getAppTicker(),
+              getPip: getPipTickWindow,
+              subscribePip: subscribePipTickWindow,
+              onLost: () => { hiddenDriven = false; if (document.hidden) startBgInterval(); },
+            });
+            hiddenDriven = true;
+            hiddenSource.start();
+            return;
+          }
+          startBgInterval();
+        }
+
+        function stopHidden() {
+          stopBgInterval();
+          hiddenSource?.stop();
+          hiddenDriven = false;
+        }
+
         visibilityHandler = () => {
           if (document.hidden) {
-            startBgInterval();
+            startHidden();
           } else {
-            stopBgInterval();
+            stopHidden();
             // Clear app badge when user returns to the tab
             navigator.clearAppBadge?.().catch(() => {});
+            if (!rafId) rafId = requestAnimationFrame(processFrame); // parked while a hidden source drove the loop
           }
         };
 
         document.addEventListener('visibilitychange', visibilityHandler);
-        // If tab is already hidden when detection starts, start the interval
-        if (document.hidden) startBgInterval();
+        // If tab is already hidden when detection starts, start the hidden-tab source (or the interval)
+        if (document.hidden) startHidden();
 
         rafId = requestAnimationFrame(processFrame);
       })
@@ -410,6 +475,7 @@ export function useDetection(
       cancelAnimationFrame(rafId);
       if (visibilityHandler) document.removeEventListener('visibilitychange', visibilityHandler);
       if (bgIntervalId) clearInterval(bgIntervalId);
+      hiddenSource?.stop();
       if (alertTimeoutRef.current) clearTimeout(alertTimeoutRef.current);
       if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
       stopAlarmRef.current?.();

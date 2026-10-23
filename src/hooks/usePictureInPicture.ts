@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { RefObject } from 'react';
+import { setPipTickWindow } from '../background/tickHost';
 
 declare global {
   interface Window {
@@ -62,10 +63,13 @@ export function usePictureInPicture(videoRef: RefObject<HTMLVideoElement | null>
         });
         copyStylesToWindow(win);
         win.addEventListener('pagehide', () => {
+          setPipTickWindow(null);
           setPipActive(false);
           setPipWindow(null);
         });
         setPipWindow(win);
+        // WS7a: the detection loop borrows this window's timers while the main tab is hidden (flag background_watching).
+        setPipTickWindow(win);
         setPipActive(true);
         return;
       } catch {
@@ -102,6 +106,7 @@ export function usePictureInPicture(videoRef: RefObject<HTMLVideoElement | null>
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (pipWindow) setPipTickWindow(null); // this run's window is going away (or was replaced)
       if (pipWindow && !pipWindow.closed) pipWindow.close();
       if (document.pictureInPictureElement) {
         document.exitPictureInPicture().catch(() => {});

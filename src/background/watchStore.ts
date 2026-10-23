@@ -15,12 +15,16 @@ const NS = 'background' as const;
 const KEY = 'state';
 
 let current: WatchState | null = null;
+// When the state last changed (or was loaded). The words for a pause ("tomorrow 6:00 AM") are relative to this, so a
+// component never has to read the clock while it renders.
+let changedAt = 0;
 const listeners = new Set<() => void>();
 
 /** The state. The first call loads it from storage: an expired pause or meeting is gone by then. */
 export function getWatchState(now: number = Date.now()): WatchState {
   if (current === null) {
     current = restoreWatch(kv.get<unknown>(NS, KEY, null), now);
+    changedAt = now;
     // A value that expired (or was garbage) is cleaned up now, not left to be re-read next time.
     if (kv.get<unknown>(NS, KEY, null) !== null && current.kind === 'running') kv.remove(NS, KEY);
   }
@@ -33,6 +37,7 @@ export function dispatchWatch(event: WatchEvent): WatchState {
   const after = reduceWatch(before, event);
   if (after === before) return before;
   current = after;
+  changedAt = Date.now();
   const wasSaved = JSON.stringify(serializeWatch(before));
   const nowSaved = JSON.stringify(serializeWatch(after));
   if (wasSaved !== nowSaved) {
@@ -45,6 +50,12 @@ export function dispatchWatch(event: WatchEvent): WatchState {
   return after;
 }
 
+/** The time (epoch ms) the state last changed or was loaded. */
+export function getWatchStamp(): number {
+  getWatchState();
+  return changedAt;
+}
+
 export function subscribeWatch(fn: () => void): () => void {
   listeners.add(fn);
   return () => { listeners.delete(fn); };
@@ -53,5 +64,6 @@ export function subscribeWatch(fn: () => void): () => void {
 /** Tests only: forget the loaded state so the next read loads from storage again (a "reload"). */
 export function resetWatchForTests(): void {
   current = null;
+  changedAt = 0;
   listeners.clear();
 }

@@ -69,8 +69,9 @@ describe('<SettingsSlots />', () => {
   it('renders nothing even with the flags on while the section files are empty', () => {
     // Left out because their cards have content now: hrt_coaching (WS2, see coachingSettings.test.tsx),
     // detection_behaviors (WS1, see src/detection/useBehaviors.test.tsx), event_sync and data_backup
-    // (WS4, see syncData.test.tsx) and false_positive_controls (WS3, see src/falsePositive/settings.test.tsx).
-    setFlags('share_links', 'background_watching');
+    // (WS4, see syncData.test.tsx), false_positive_controls (WS3, see src/falsePositive/settings.test.tsx) and
+    // background_watching (WS7a, see src/background/scheduleSettings.test.tsx).
+    setFlags('share_links');
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 
