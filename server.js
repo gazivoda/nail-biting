@@ -2631,33 +2631,35 @@ if (!existsSync(distPath)) {
       date: '2026-10-23',
       flag: GATED_FLAG,
     },
-    // WS11b: one page per feature, each behind the flag of the feature it describes (the same flag
-    // is written in src/data/featurePagePaths.ts and in dist/seo-gated.json; a page opens only
-    // when both agree). Copy: src/data/featurePages.ts. `date` is the day they were written; set it
-    // to the day the flag goes on (it is the Article's datePublished, and the page is not public until then).
+    // WS11b: one page per feature, each behind the flag of the feature it describes. `gated: true`
+    // means "closed unless dist/seo-gated.json names a flag for this path and that flag is on": the
+    // flag is written once, in src/data/featurePagePaths.ts, and reaches here through that file, so
+    // it cannot disagree with the sitemap, the llms files or the navigation. Copy:
+    // src/data/featurePages.ts. `date` is the day they were written; set it to the day the flag
+    // goes on (it is the Article's datePublished, and the page is not public until then).
     '/features/habit-reversal-coaching': {
       title: 'Habit Reversal-Style Coaching After the Alarm',
-      description: 'An optional prompt for a competing response when the alarm sounds, an urge timer and a four-week program of short lessons. Self-help, not a treatment.',
+      description: 'An optional prompt for a competing response when the alarm sounds, and a four-week program of short lessons. Self-help, not a treatment.',
       date: '2026-10-23',
-      flag: 'hrt_coaching',
+      gated: true,
     },
     '/features/phone-companion': {
       title: 'Log Nail Biting From Your Phone in Two Taps',
       description: 'Open Stop Biting on a phone to log a bite or an urge in two taps, see your streak and add it to your home screen. The alarm still needs a computer webcam.',
       date: '2026-10-23',
-      flag: 'phone_companion',
+      gated: true,
     },
     '/features/share-with-therapist': {
       title: 'Share Your Progress With a Therapist or a Friend',
       description: 'Make a read-only link to a plain summary of your bites, triggers and streak. You pick the expiry, can revoke it, and it shows no photos and no account details.',
       date: '2026-10-23',
-      flag: 'share_links',
+      gated: true,
     },
     '/features/referral-program': {
       title: 'Refer a Friend: You Both Get Bonus Access',
       description: 'Share your personal link. When someone you refer pays for the first time, you both get bonus access. How it works, when the days start and what is checked.',
       date: '2026-10-23',
-      flag: 'referrals',
+      gated: true,
     },
     // Keep this flag off until desktop sign-in works against the hosted API and the macOS build is signed
     // (docs/agents/ws11b-notes.md, top of the file).
@@ -2665,13 +2667,13 @@ if (!existsSync(distPath)) {
       title: 'Stop Biting for Mac: A Desktop App That Keeps Watching',
       description: 'The Stop Biting web app in its own window for Mac, with a menu bar icon, pause controls and optional launch at login. Same detection, same account.',
       date: '2026-10-23',
-      flag: 'desktop_app',
+      gated: true,
     },
     '/solutions/cuticle-biting': {
       title: 'Cuticle Biting: Same Mouth Alarm, Logged Under Its Own Name',
-      description: 'Stop Biting uses one mouth alarm for nail biting and cuticle biting, and you choose which name your alerts are logged under. Early, tested on made-up scenes only.',
+      description: 'Stop Biting uses one mouth alarm for nail biting and cuticle biting; you choose which name alerts are logged under. Early, tested on made-up scenes only.',
       date: '2026-10-23',
-      flag: 'detection_behaviors',
+      gated: true,
     },
   };
 
@@ -2703,7 +2705,7 @@ if (!existsSync(distPath)) {
       if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
       // A flagged page does not exist until its flag is on (and its copy was built): the same
       // branded, noindex 404 as any unknown URL, never the SPA shell.
-      if (!isGateOpen(flags, meta) || (meta.flag && !GATED_CONTENT[pagePath])) {
+      if (!isGateOpen(flags, meta) || ((meta.flag || meta.gated) && !GATED_CONTENT[pagePath])) {
         return sendHtml(res, NOT_FOUND_HTML, 404);
       }
       const canonical = `https://stopbiting.today${pagePath}`;

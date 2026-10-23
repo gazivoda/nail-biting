@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
@@ -9,6 +9,8 @@ import { PAGE_MAP, type PageContent } from '../data/comparePages';
 import { GATED_COMPARE_FLAG, isGatedComparePath } from '../data/gatedComparePaths';
 import { refreshFlags } from '../features/flags';
 import { useFeature } from '../features/useFeature';
+import { useFlagIsOn } from '../features/useFlagCopy';
+import { flagAwareDeep, mentionsFlagCopy } from '../../shared/flagCopy.js';
 import { AuthorBox } from './EditorialPolicyPage';
 import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 
@@ -21,7 +23,55 @@ interface Props {
 // branch, so only they ever read the flag or load their (unverified) copy.
 export function ComparePage({ path }: Props) {
   if (isGatedComparePath(path)) return <FlaggedComparePage path={path} />;
-  return <ComparePageView path={path} content={PAGE_MAP[path]?.()} />;
+  const getContent = PAGE_MAP[path];
+  // Not one of the pages in this bundle: a feature page (WS11b), which exists only while its feature's
+  // flag is on and is rendered from JSON the server resolves. Anything else the server says is not there.
+  if (!getContent) return <ServerComparePage path={path} />;
+  return <LocalComparePage path={path} content={getContent()} />;
+}
+
+// A page in this bundle renders as it always did, unless one of its sentences is one that changes with a
+// feature flag (the NailBiteMenu comparison says what sign-in Stop Biting needs). Only such a page reads
+// the flags, so every other page makes no request for them.
+function LocalComparePage({ path, content }: Props & { content: PageContent }) {
+  const follows = useMemo(() => mentionsFlagCopy(JSON.stringify(content)), [content]);
+  return follows ? <FlagAwareComparePage path={path} content={content} /> : <ComparePageView path={path} content={content} />;
+}
+
+function FlagAwareComparePage({ path, content }: Props & { content: PageContent }) {
+  const isOn = useFlagIsOn();
+  const followed = useMemo(() => flagAwareDeep(content, isOn), [content, isOn]);
+  return <ComparePageView path={path} content={followed} />;
+}
+
+// The copy of a feature page, already resolved for this server's flags and numbers. Read from the page's
+// own HTML when the server put it there (no request, no flash), else asked for. Anything but a 200 is a 404.
+function embeddedPage(path: string): PageContent | undefined {
+  try {
+    const text = document.getElementById('sb-page-data')?.textContent;
+    if (!text) return undefined;
+    const data = JSON.parse(text) as { path?: string; page?: PageContent };
+    return data.path === path && data.page?.title ? data.page : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function ServerComparePage({ path }: Props) {
+  const [content, setContent] = useState<PageContent | 'missing' | undefined>(() => embeddedPage(path));
+
+  useEffect(() => {
+    if (content) return;
+    let live = true;
+    fetch(`/page-data${path}.json`, { credentials: 'omit', headers: { Accept: 'application/json' } })
+      .then(res => (res.ok ? (res.json() as Promise<PageContent>) : Promise.reject(new Error(String(res.status)))))
+      .then(page => { if (live) setContent(page?.title ? page : 'missing'); })
+      .catch(() => { if (live) setContent('missing'); });
+    return () => { live = false; };
+  }, [path, content]);
+
+  if (!content) return null;
+  return <ComparePageView path={path} content={content === 'missing' ? undefined : content} />;
 }
 
 // A flagged page does not exist until its flag is on: the 404 below until then.
@@ -53,7 +103,7 @@ function FlaggedComparePage({ path }: Props) {
   return null;
 }
 
-function ComparePageView({ path, content }: Props & { content: PageContent | undefined }) {
+export function ComparePageView({ path, content }: Props & { content: PageContent | undefined }) {
   useTheme('light');
 
   useEffect(() => {
@@ -83,6 +133,8 @@ function ComparePageView({ path, content }: Props & { content: PageContent | und
 
   const breadcrumbLabel = path.startsWith('/compare/') ? 'Compare' : 'Solutions';
   const breadcrumbHref = path.startsWith('/compare/') ? '/compare/ai-detection-apps' : '/solutions/for-desk-workers';
+  // Feature pages have no hub page to point at: Home / <the page>, as in their BreadcrumbList.
+  const hasHub = !path.startsWith('/features/');
 
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
@@ -94,8 +146,12 @@ function ComparePageView({ path, content }: Props & { content: PageContent | und
         <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
           <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
           <span aria-hidden="true">/</span>
-          <a href={breadcrumbHref} className="hover:text-[color:var(--sg-ink)]">{breadcrumbLabel}</a>
-          <span aria-hidden="true">/</span>
+          {hasHub && (
+            <>
+              <a href={breadcrumbHref} className="hover:text-[color:var(--sg-ink)]">{breadcrumbLabel}</a>
+              <span aria-hidden="true">/</span>
+            </>
+          )}
           <span className="truncate max-w-[200px] text-[color:var(--sg-ink)]">{content.title.split(':')[0]}</span>
         </nav>
 

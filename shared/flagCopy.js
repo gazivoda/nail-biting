@@ -118,7 +118,7 @@ export const RULES = Object.freeze([
     off: 'Signing in and paying use the network',
     flags: ['event_sync'],
     on: isOn => (isOn('event_sync')
-      ? 'Signing in and paying use the network, and so does syncing if you turn it on'
+      ? 'Signing in, paying and, if you turn it on, syncing use the network'
       : null),
   },
   {
@@ -155,6 +155,25 @@ export const RULES = Object.freeze([
     flags: ['event_sync'],
     on: isOn => (isOn('event_sync')
       ? 'timestamped log stored locally; sent to your account only if you turn on sync'
+      : null),
+  },
+
+  {
+    id: 'blog-log-not-synced',
+    where: 'Blog post: webcam privacy',
+    off: 'Your incident log and streaks are stored in your browser rather than synced to a server, and clearing the site\'s data removes them.',
+    flags: ['event_sync'],
+    on: isOn => (isOn('event_sync')
+      ? 'Your incident log and streaks are stored in your browser unless you turn on sync, which copies the log to your account; with sync off, clearing the site\'s data removes them.'
+      : null),
+  },
+  {
+    id: 'blog-log-no-cloud',
+    where: 'Blog post: mediapipe detection explained or the app review',
+    off: 'The alarm and bite log is stored in your browser, with no cloud sync.',
+    flags: ['event_sync'],
+    on: isOn => (isOn('event_sync')
+      ? 'The alarm and bite log is stored in your browser, and is copied to your account only if you turn on sync.'
       : null),
   },
 

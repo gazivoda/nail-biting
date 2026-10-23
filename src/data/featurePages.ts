@@ -38,7 +38,7 @@ const PRIVACY_LINE = 'Detection runs on your device. No camera data is sent whil
 function getHabitReversalCoachingContent(): PageContent {
   return {
     title: 'Habit reversal-style coaching after the alarm',
-    subtitle: 'An optional prompt for something else to do with your hands, an urge timer and a four-week program of short lessons',
+    subtitle: 'An optional prompt for something else to do with your hands, {{if urge_timer}}an urge timer, {{end}}and a four-week program of short lessons',
     intro: 'When the alarm sounds, Stop Biting can offer a competing response: a short, simple action you chose in advance, such as pressing your palms flat on the desk, held for 15 to 60 seconds. It is optional, it never delays or silences the alarm, and you can dismiss it at any moment. Habit reversal training pairs noticing the habit with doing something incompatible with it. The alarm is the noticing; this puts the second half in the app. It is a self-help tool. It is not a treatment, and an app is not a clinician.',
     sections: [
       {

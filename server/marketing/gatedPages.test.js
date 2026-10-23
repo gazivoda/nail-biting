@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { createFlags } from '../features.js';
-import { gatedNavLinks, gatedSitemapEntries, isGateOpen, withGatedSitemapEntries } from './gatedPages.js';
+import {
+  gatedFlagOf, gatedLlmsFullText, gatedLlmsTxtLines, gatedNavLinks, gatedOgFile, gatedSitemapEntries, isClosedGatedFile, isGateOpen,
+  jsonForScript, openGatedPages, pageDataPath, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
+} from './gatedPages.js';
 
 const quiet = () => {};
 const SITEMAP = [
@@ -80,5 +83,103 @@ describe('gatedSitemapEntries and withGatedSitemapEntries', () => {
 
   it('returns the sitemap unchanged when there is nothing to add', () => {
     expect(withGatedSitemapEntries(SITEMAP, [])).toBe(SITEMAP);
+  });
+});
+
+describe('per-page flags (WS11b)', () => {
+  const pages = {
+    '/compare/hands-off': { title: 'Hands Off' },
+    '/features/phone-companion': { title: 'Phone' },
+    '/features/share-with-therapist': { title: 'Share' },
+  };
+  const flagsOf = {
+    '/compare/hands-off': 'compare_competitors',
+    '/features/phone-companion': 'phone_companion',
+    '/features/share-with-therapist': 'share_links',
+  };
+  const flagSet = names => createFlags({ FEATURE_FLAGS: names }, { warn: quiet });
+
+  it('opens a page only with its own flag: another page\'s flag opens nothing', () => {
+    expect(Object.keys(openGatedPages(pages, flagsOf, flagSet('')))).toEqual([]);
+    expect(Object.keys(openGatedPages(pages, flagsOf, flagSet('phone_companion')))).toEqual(['/features/phone-companion']);
+    expect(Object.keys(openGatedPages(pages, flagsOf, flagSet('compare_competitors')))).toEqual(['/compare/hands-off']);
+    expect(Object.keys(openGatedPages(pages, flagsOf, flagSet('hrt_coaching,referrals')))).toEqual([]);
+    expect(Object.keys(openGatedPages(pages, flagsOf, flagSet('share_links,phone_companion')))).toEqual(
+      ['/features/phone-companion', '/features/share-with-therapist'],
+    );
+  });
+
+  it('a page the build did not give a flag falls back to the competitor flag it always had', () => {
+    expect(gatedFlagOf({}, '/compare/hands-off')).toBe('compare_competitors');
+    expect(gatedFlagOf(undefined, '/compare/hands-off')).toBe('compare_competitors');
+    expect(Object.keys(openGatedPages({ '/compare/hands-off': {} }, {}, flagSet('compare_competitors')))).toEqual(['/compare/hands-off']);
+    expect(Object.keys(openGatedPages({ '/compare/hands-off': {} }, {}, flagSet('phone_companion')))).toEqual([]);
+  });
+
+  it('resolves markers, copy rules and placeholders, and drops a section a marker emptied', () => {
+    const page = {
+      title: 'T',
+      intro: 'You both get {{REFERRAL_CREDIT}}.',
+      sections: [
+        { heading: 'Always', body: '{{if event_sync}}Synced.{{else}}Local.{{end}}' },
+        { heading: '{{if urge_timer}}Timer{{end}}', body: '{{if urge_timer}}About it.{{end}}' },
+      ],
+    };
+    const off = resolveGatedPage(page, { isOn: () => false, tokens: { REFERRAL_CREDIT: 'one month' } });
+    expect(off).toEqual({ title: 'T', intro: 'You both get one month.', sections: [{ heading: 'Always', body: 'Local.' }] });
+    const on = resolveGatedPage(page, { isOn: name => name === 'event_sync' || name === 'urge_timer', tokens: { REFERRAL_CREDIT: '30 days' } });
+    expect(on.sections).toEqual([{ heading: 'Always', body: 'Synced.' }, { heading: 'Timer', body: 'About it.' }]);
+    expect(JSON.stringify(on)).not.toMatch(/\{\{/);
+  });
+});
+
+describe('llms files and cards for open pages', () => {
+  const open = { '/features/phone-companion': { title: 'Phone companion' } };
+  const llmsFull = { '/features/phone-companion': '## Phone companion\nURL: https://stopbiting.today/features/phone-companion\n' };
+
+  it('adds the open pages\' blocks to llms-full.txt and nothing when none is open', () => {
+    const addition = gatedLlmsFullText(open, llmsFull);
+    expect(addition).toContain('URL: https://stopbiting.today/features/phone-companion');
+    expect(withGatedLlmsFull('# base\n', addition)).toBe(`# base\n\n${addition}`);
+    expect(gatedLlmsFullText({}, llmsFull)).toBe('');
+    expect(withGatedLlmsFull('# base\n', '')).toBe('# base\n');
+    expect(gatedLlmsFullText(open, llmsFull, t => t.toUpperCase())).toContain('PHONE COMPANION');
+  });
+
+  it('adds one line per open page to llms.txt, with the description, and nothing when none is open', () => {
+    const lines = gatedLlmsTxtLines(open, path => ({ description: `About ${path}` }));
+    expect(lines).toEqual(['- [Phone companion](https://stopbiting.today/features/phone-companion): About /features/phone-companion']);
+    expect(withGatedLlmsTxt('# Stop Biting\n', lines)).toBe(`# Stop Biting\n\n## Features and newer pages\n\n${lines[0]}\n`);
+    expect(withGatedLlmsTxt('# Stop Biting\n', [])).toBe('# Stop Biting\n');
+    expect(gatedLlmsTxtLines(open, () => undefined)).toEqual([]);
+  });
+
+  it('knows which /og card belongs to a closed page', () => {
+    const flagsOf = { '/features/desktop-app': 'desktop_app', '/solutions/cuticle-biting': 'detection_behaviors' };
+    expect(gatedOgFile('/features/desktop-app')).toBe('features-desktop-app.png');
+    const off = createFlags({}, { warn: quiet });
+    const on = createFlags({ FEATURE_FLAGS: 'desktop_app' }, { warn: quiet });
+    expect(isClosedGatedFile('features-desktop-app.png', flagsOf, off)).toBe(true);
+    expect(isClosedGatedFile('features-desktop-app.png', flagsOf, on)).toBe(false);
+    expect(isClosedGatedFile('solutions-cuticle-biting.png', flagsOf, on)).toBe(true);
+    expect(isClosedGatedFile('site.png', flagsOf, off)).toBe(false);
+    expect(isClosedGatedFile('compare-stop-biting-vs-hands-off.png', flagsOf, off)).toBe(false);
+  });
+
+  it('maps a page to its data file and back, and refuses anything else', () => {
+    expect(pageDataPath('/features/phone-companion')).toBe('/page-data/features/phone-companion.json');
+    expect(pathOfPageData('/page-data/features/phone-companion.json')).toBe('/features/phone-companion');
+    expect(pathOfPageData('/page-data/solutions/cuticle-biting.json')).toBe('/solutions/cuticle-biting');
+    expect(pathOfPageData('/page-data/../server.js')).toBeNull();
+    expect(pathOfPageData('/page-data/features/x.txt')).toBeNull();
+    expect(pathOfPageData('/features/x.json')).toBeNull();
+  });
+
+  it('writes JSON that cannot end a script block early', () => {
+    const text = jsonForScript({ a: '</script><!--', b: String.fromCharCode(0x2028) });
+    expect(text).not.toContain('</script>');
+    expect(text).not.toContain('<!--');
+    expect(text).not.toContain(String.fromCharCode(0x2028));
+    expect(JSON.parse(text)).toEqual({ a: '</script><!--', b: String.fromCharCode(0x2028) });
   });
 });
