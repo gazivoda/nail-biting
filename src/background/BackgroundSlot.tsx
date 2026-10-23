@@ -4,10 +4,15 @@
 //
 // Text and plain pills only. No picture of the habit, no icon that stands for it.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { useWatchGate } from './gate';
 import { pauseForMinutes, pauseUntilTomorrow, resumeWatching, startMeeting } from './actions';
+import { cadenceNote, loadCadence, subscribeCadence } from './cadence';
+
+// Whether this browser can float the small status window (Document Picture-in-Picture, Chromium).
+const canFloatWindow = () => typeof window !== 'undefined' && 'documentPictureInPicture' in window;
+const currentNote = () => cadenceNote(loadCadence(), Date.now(), canFloatWindow());
 
 const PILL =
   'inline-flex min-h-11 items-center rounded-full border border-stone-300 px-4 text-sm font-semibold text-stone-800 transition-colors hover:border-stone-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500 dark:border-ink-400 dark:text-stone-100 dark:hover:border-stone-300';
@@ -24,6 +29,9 @@ export function BackgroundSlot() {
   const gate = useWatchGate();
   const cameraEnabled = useAppStore((s) => s.cameraEnabled);
   const [busy, setBusy] = useState(false);
+  // What the last stretch in the background really ran at, if it was slow (src/background/cadence.ts).
+  const [slowNote, setSlowNote] = useState<string | null>(currentNote);
+  useEffect(() => subscribeCadence(() => setSlowNote(currentNote())), []);
   if (!gate.on || !cameraEnabled) return null;
 
   const note = gate.note;
@@ -79,6 +87,9 @@ export function BackgroundSlot() {
         While you work in other tabs, detection keeps running. Some browsers slow background tabs down, so checks can be
         less frequent there.
       </p>
+      {slowNote && (
+        <p role="status" className="mt-2 text-xs leading-relaxed text-stone-700 dark:text-stone-200">{slowNote}</p>
+      )}
     </section>
   );
 }

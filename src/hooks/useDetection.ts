@@ -14,6 +14,7 @@ import { createHiddenSource, type HiddenSource } from '../background/hiddenSourc
 import { getPipTickWindow, subscribePipTickWindow } from '../background/tickHost';
 import { silentNow } from '../background/silent';
 import { withProbe } from '../background/probeHook';
+import { judgeHidden, saveCadence } from '../background/cadence';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -372,9 +373,15 @@ export function useDetection(
           onBiteEnd: stopBiting,
         });
 
+        // WS7a: while the tab is in the background (flag on), count the checks so the app can say if they were slow.
+        let trackHidden = false;
+        let hiddenFrom = 0;
+        let hiddenSteps = 0;
+
         function runInference() {
           const now = performance.now();
           lastInferenceTs = now;
+          if (trackHidden) hiddenSteps++;
           detector.step(now);
         }
 
@@ -428,6 +435,9 @@ export function useDetection(
 
         function startHidden() {
           if (isFeatureOn('background_watching')) {
+            trackHidden = true;
+            hiddenFrom = performance.now();
+            hiddenSteps = 0;
             hiddenSource ??= createHiddenSource({
               intervalMs: INFERENCE_INTERVAL_MS,
               tick: hiddenTick,
@@ -447,6 +457,11 @@ export function useDetection(
           stopBgInterval();
           hiddenSource?.stop();
           hiddenDriven = false;
+          if (trackHidden) {
+            trackHidden = false;
+            const report = judgeHidden(hiddenSteps, (performance.now() - hiddenFrom) / 1000, Date.now());
+            if (report) saveCadence(report);
+          }
         }
 
         visibilityHandler = () => {

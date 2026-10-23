@@ -80,7 +80,7 @@ describe('what the landing-page demo loads with useDetection', () => {
   it('brings in only these files from src/background', () => {
     const fromBg = local.filter(f => f.startsWith(BG)).map(f => f.slice(BG.length + 1)).sort();
     expect(fromBg).toEqual([
-      'appTicker.ts', 'hiddenSource.ts', 'pauseMachine.ts', 'probeHook.ts', 'silent.ts', 'tickHost.ts', 'ticker.ts', 'watchStore.ts',
+      'appTicker.ts', 'cadence.ts', 'hiddenSource.ts', 'pauseMachine.ts', 'probeHook.ts', 'silent.ts', 'tickHost.ts', 'ticker.ts', 'watchStore.ts',
     ]);
   });
 

@@ -17,9 +17,15 @@ function fakeNotification(permission: 'default' | 'granted' | 'denied', answer: 
   class FakeNotification {
     static permission = permission;
     static requestPermission = requestPermission;
+    title: string;
+    options: Record<string, unknown>;
     onclick: (() => void) | null = null;
     close = vi.fn();
-    constructor(public title: string, public options: Record<string, unknown>) { created.push(this); }
+    constructor(title: string, options: Record<string, unknown>) {
+      this.title = title;
+      this.options = options;
+      created.push(this);
+    }
   }
   g.Notification = FakeNotification;
   return { created, requestPermission };
