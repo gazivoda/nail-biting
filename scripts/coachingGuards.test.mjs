@@ -23,12 +23,16 @@ const read = rel => readFileSync(join(root, rel), 'utf8');
 // Line comments first (one of them contains "/*" in a path), then block comments. Good enough for a guard.
 const strip = src => src.replace(/^\s*\/\/.*$/gm, '').replace(/\s\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
 
-const importsOf = src => {
+// `onlyStatic`: skip import('...') (lazy chunks), to ask what a file drags into ITS OWN chunk.
+const importsOf = (src, onlyStatic = false) => {
   const out = [];
   const re = /(?:import|export)\s+(?:type\s+)?(?:[\w*{}\s,]+?\s+from\s+)?['"]([^'"]+)['"]|import\(\s*['"]([^'"]+)['"]\s*\)/g;
   let m;
   const code = strip(src);
-  while ((m = re.exec(code))) out.push(m[1] ?? m[2]);
+  while ((m = re.exec(code))) {
+    if (m[2] !== undefined && onlyStatic) continue;
+    out.push(m[1] ?? m[2]);
+  }
   return out;
 };
 
@@ -45,7 +49,7 @@ function resolveImport(fromFile, spec) {
 }
 
 /** Every local file reachable from `entry`, plus every bare package it imports. */
-function graph(entry) {
+function graph(entry, onlyStatic = false) {
   const files = new Set();
   const packages = new Set();
   const stack = [entry];
@@ -54,7 +58,7 @@ function graph(entry) {
     if (files.has(f)) continue;
     files.add(f);
     if (!/\.(ts|tsx)$/.test(f)) continue;
-    for (const spec of importsOf(read(f))) {
+    for (const spec of importsOf(read(f), onlyStatic)) {
       const local = resolveImport(f, spec);
       if (local) stack.push(local);
       else if (!spec.startsWith('.')) packages.add(spec);
@@ -163,6 +167,15 @@ describe('4. never depicts the habit', () => {
   });
 });
 
+describe('6. file names (case-insensitive filesystems, tasks/lessons.md)', () => {
+  it.each(['src/coaching', 'src/pages', 'src/pages/settings', 'src/components/detection'])('no two files in %s differ only by case', dir => {
+    const names = readdirSync(join(root, dir), { withFileTypes: true })
+      .filter(e => e.isFile())
+      .map(e => e.name.replace(/\.(tsx?|json)$/, '').toLowerCase());
+    expect(names.filter((n, i) => names.indexOf(n) !== i)).toEqual([]);
+  });
+});
+
 describe('5. everything is behind its flag', () => {
   it('the Dashboard slot gates the bridge, the timer and the program link', () => {
     const slot = strip(read('src/coaching/CoachingDashboardSlot.tsx'));
@@ -173,11 +186,16 @@ describe('5. everything is behind its flag', () => {
     expect(slot).toMatch(/\{hrt && <ProgramEntry \/>\}/);
   });
 
-  it('the program view is only mounted when hrt_coaching is on, and loads lazily', () => {
-    const host = strip(read('src/coaching/ProgramHost.tsx'));
-    expect(host).toMatch(/useFeature\('hrt_coaching'\)/);
-    expect(host).toMatch(/if \(!enabled \|\| !open/);
-    expect(host).toMatch(/lazy\(\(\) => import\('\.\.\/pages\/Program'\)/);
+  it('the program view shows only with hrt_coaching on, and nothing of it is in the main bundle', () => {
+    const view = strip(read('src/coaching/ProgramView.tsx'));
+    expect(view).toMatch(/useFeature\('hrt_coaching'\)/);
+    expect(view).toMatch(/if \(!enabled/);
+    expect(view).toMatch(/lazy\(\(\) => import\('\.\.\/pages\/Program'\)/);
+    // App.tsx imports ProgramHost statically, and the landing page downloads App.tsx's chunk.
+    const host = graph('src/coaching/ProgramHost.tsx', true);
+    expect([...host.files].sort()).toEqual(['src/coaching/ProgramHost.tsx', 'src/coaching/programViewState.ts']);
+    expect([...host.packages]).toEqual(['react']);
+    expect(strip(read('src/coaching/ProgramHost.tsx'))).toMatch(/lazy\(\(\) => import\('\.\/ProgramView'\)/);
   });
 
   it('the shared files carry exactly the expected one-line seams', () => {

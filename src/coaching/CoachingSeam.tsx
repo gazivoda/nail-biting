@@ -55,6 +55,11 @@ function Armed({ surface, session }: { surface: CoachingSurface; session: Coachi
   const ref = useRef<HTMLDivElement>(null);
   const [now, setNow] = useState(() => Date.now());
 
+  // While this surface is mounted a prompt can be seen. If the last surface goes
+  // away mid-session (the camera was stopped) the controller drops the session
+  // without saving a result.
+  useEffect(() => alarmCoaching.attach(), []);
+
   // Redraw four times a second while a session is showing, and nudge the
   // controller so it advances even if its own timer was throttled.
   useEffect(() => {

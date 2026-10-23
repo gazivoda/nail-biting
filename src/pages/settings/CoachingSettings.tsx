@@ -20,7 +20,7 @@ import {
 } from '../../coaching/settings';
 import { MAX_DURATION_SEC, MIN_DURATION_SEC } from '../../coaching/session';
 import { CoachingStatsLine } from '../../coaching/CoachingStatsLine';
-import { openProgram } from '../../coaching/programView';
+import { openProgram } from '../../coaching/programViewState';
 
 const MODE_LABEL: Record<PromptMode, string> = {
   off: 'Off',

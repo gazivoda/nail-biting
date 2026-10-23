@@ -46,6 +46,7 @@ beforeEach(() => {
   lastPrompt = null;
   saved = [];
   controller = createCoachingController();
+  controller.attach(); // the overlay is mounted
 });
 afterEach(() => vi.useRealTimers());
 

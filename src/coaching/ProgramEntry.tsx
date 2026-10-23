@@ -4,7 +4,7 @@
 
 import { useSyncExternalStore } from 'react';
 import { BookOpen } from 'lucide-react';
-import { openProgram } from './programView';
+import { openProgram } from './programViewState';
 import { PROGRAM_LESSON_COUNT, completedCount, getProgress, subscribeProgress } from './programProgress';
 
 export function ProgramEntry() {

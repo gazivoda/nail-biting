@@ -35,12 +35,21 @@ export interface CoachingController {
   arm(): void;
   /** Disarms and drops any session without producing a result. */
   disarm(): void;
+  /**
+   * A surface (the overlay, the minimized strip) calls this while it is mounted
+   * and calls the returned function when it goes away. With no surface mounted
+   * nobody can see a prompt, so none is started; and if the last surface goes
+   * away mid-session (the camera was stopped) the session is dropped with NO
+   * result: a countdown nobody saw must not be counted as done.
+   */
+  attach(): () => void;
 }
 
 export function createCoachingController(now: () => number = Date.now): CoachingController {
   let state: ControllerState = { armed: false, session: IDLE };
   let handler: ((r: CoachingResult) => void) | null = null;
   let timer: ReturnType<typeof setTimeout> | null = null;
+  let surfaces = 0;
   const listeners = new Set<() => void>();
 
   const emit = () => listeners.forEach(fn => { try { fn(); } catch { /* a listener must not break the others */ } });
@@ -68,7 +77,7 @@ export function createCoachingController(now: () => number = Date.now): Coaching
     getState: () => state,
     subscribe(fn) { listeners.add(fn); return () => { listeners.delete(fn); }; },
     offer(o) {
-      if (!state.armed || state.session.phase === 'running') return false;
+      if (!state.armed || surfaces === 0 || state.session.phase === 'running') return false;
       apply({ session: sOffer(state.session, o, now()) });
       return true;
     },
@@ -86,6 +95,20 @@ export function createCoachingController(now: () => number = Date.now): Coaching
       if (!state.armed && state.session === IDLE) return;
       state = { armed: false, session: IDLE };
       emit();
+    },
+    attach() {
+      surfaces++;
+      let attached = true;
+      return () => {
+        if (!attached) return;
+        attached = false;
+        surfaces--;
+        if (surfaces === 0 && state.session !== IDLE) {
+          if (timer !== null) { clearTimeout(timer); timer = null; }
+          state = { ...state, session: IDLE }; // dropped: no result, nothing saved
+          emit();
+        }
+      };
     },
   };
 }

@@ -6,6 +6,7 @@ const offerA = { eventId: 'a', text: 'Clench your fists', durationSec: 30 };
 
 let ctl: ReturnType<typeof createCoachingController>;
 let results: CoachingResult[];
+let detach: () => void;
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -14,6 +15,7 @@ beforeEach(() => {
   results = [];
   ctl.setResultHandler(r => results.push(r));
   ctl.arm();
+  detach = ctl.attach(); // a surface (the overlay) is mounted
 });
 afterEach(() => vi.useRealTimers());
 
@@ -93,6 +95,34 @@ describe('the shared controller', () => {
     vi.advanceTimersByTime(120_000);
     expect(results).toEqual([]);
     expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it('with no surface mounted nobody could see a prompt, so none starts', () => {
+    detach();
+    expect(ctl.offer(offerA)).toBe(false);
+    expect(ctl.getState().session.phase).toBe('idle');
+  });
+
+  it('if the last surface goes away mid-session (camera stopped) the session is dropped and NOT counted as done', () => {
+    ctl.offer(offerA);
+    vi.advanceTimersByTime(5_000);
+    detach();
+    expect(ctl.getState().session.phase).toBe('idle');
+    vi.advanceTimersByTime(120_000);
+    expect(results).toEqual([]);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it('with two surfaces (overlay and minimized strip) one going away does not end the session', () => {
+    const detachPip = ctl.attach();
+    ctl.offer(offerA);
+    detachPip();
+    expect(ctl.getState().session.phase).toBe('running');
+    detach();
+    expect(ctl.getState().session.phase).toBe('idle');
+    detach(); // detaching twice is harmless
+    detachPip();
+    expect(results).toEqual([]);
   });
 
   it('unsubscribe stops notifications', () => {
