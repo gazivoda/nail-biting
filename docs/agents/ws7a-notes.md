@@ -340,7 +340,7 @@ ARCHITECTURE.md (sections 2, 12, 15).
 
 ## Verified, and how
 
-See the run log in the final report; per area: pure logic by vitest (`src/background/*.test.*`, `scripts/backgroundGuards.test.mjs`);
+Per area: pure logic by vitest (`src/background/*.test.*`, `scripts/backgroundGuards.test.mjs`);
 the real app in headless Chrome by `run-app.mjs`, `run-pause.mjs`, `dom-compare.mjs`, `shots.mjs`.
 
 **Flag off, nothing changes**: the signed-in app's HTML (Watch, History, Settings; 1280 px light and dark, 390 px) captured from a
