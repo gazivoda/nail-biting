@@ -1,9 +1,12 @@
 /**
- * Vite config for building the Electron main process, preload script, and
- * the Express backend server — all compiled into dist-electron/.
+ * Vite config for building the Electron main process into dist-electron/main.js.
  *
- * This is separate from the renderer build (vite.config.ts). It outputs
- * ESM Node.js code that Electron and Node load directly.
+ * This is separate from the renderer build (vite.config.ts). It outputs ESM
+ * Node.js code that Electron loads directly. The preload script is built by
+ * vite.electron.preload.config.ts (it has to be CommonJS and self-contained).
+ *
+ * The Express server is not built here any more: the packaged app talks to the
+ * hosted API (commit 2b633d6) and ships no server code or secrets.
  */
 
 import { defineConfig } from 'vite';
@@ -36,12 +39,10 @@ export default defineConfig({
     outDir: 'dist-electron',
     emptyOutDir: true,
 
-    // Three entry points: main process, preload, and the Express server
+    // One entry point: the main process
     lib: {
       entry: {
         main: path.resolve(__dirname, 'electron/main.ts'),
-        preload: path.resolve(__dirname, 'electron/preload.ts'),
-        server: path.resolve(__dirname, 'server.js'),
       },
       // ESM — Electron 28+ and modern Node both support it natively
       formats: ['es'],
@@ -49,8 +50,6 @@ export default defineConfig({
 
     rollupOptions: {
       // Electron and Node.js built-ins must NOT be bundled.
-      // All third-party deps (express, google-auth-library, etc.) ARE bundled
-      // into server.js so the packaged app doesn't need node_modules on disk.
       external: NODE_BUILTINS,
       output: {
         // Preserve entry file names
