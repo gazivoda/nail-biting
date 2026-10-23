@@ -38,15 +38,14 @@
 
     <!-- Primary SEO -->
     <title>Nail Biting App: Stop Biting with AI | Stop Biting</title>
-    <meta name="description" content="Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial." />
-    <meta name="keywords" content="stop nail biting, nail biting remedies, onychophagia, habit reversal techniques, products to stop nail biting, compulsive habits, nail biting treatment, nail care, how to stop biting nails" />
+    <meta name="description" content="Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. {{TRIAL_HYPHEN}} free trial." />
     <link rel="canonical" href="https://stopbiting.today/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://stopbiting.today/" />
     <meta property="og:title" content="Nail Biting App: Stop Biting with AI | Stop Biting" />
-    <meta property="og:description" content="On-device AI detects nail biting in real-time using your webcam. No camera data is sent while it runs. Science-backed habit reversal techniques to stop onychophagia for good." />
+    <meta property="og:description" content="Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs." />
     <meta property="og:image" content="https://stopbiting.today/og/site.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -58,7 +57,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Nail Biting App: Stop Biting with AI | Stop Biting" />
-    <meta name="twitter:description" content="On-device AI detects nail biting in real-time. No camera data is sent while it runs. Science-backed habit reversal techniques." />
+    <meta name="twitter:description" content="Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs." />
     <meta name="twitter:image" content="https://stopbiting.today/og/site.png" />
     <meta name="twitter:image:alt" content="Stop Biting: a webcam and on-device AI that catch nail biting the moment it starts" />
 
@@ -171,7 +170,7 @@
 
          The $0 Offer is bounded. It previously carried no duration at all, so
          the markup advertised a permanently free tier while the visible
-         /pricing copy says "Start with a 3-day free trial — no credit card
+         /pricing copy says "Start with a {{TRIAL_HYPHEN}} free trial — no credit card
          required". `eligibleDuration` is the property that fixes it —
          https://schema.org/eligibleDuration declares domain Demand | Offer and
          range QuantitativeValue, so it belongs directly on the Offer and must
@@ -207,10 +206,10 @@
           "price": "0",
           "priceCurrency": "USD",
           "name": "Free trial",
-          "description": "Full detection and tracking features during a 3-day free trial. No credit card required.",
+          "description": "Full detection and tracking features during a {{TRIAL_HYPHEN}} free trial. No credit card required.",
           "eligibleDuration": {
             "@type": "QuantitativeValue",
-            "value": 3,
+            "value": {{TRIAL_DAYS}},
             "unitCode": "DAY"
           }
         },
@@ -269,7 +268,7 @@
           "name": "What is Stop Biting and how does it work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device. No camera data is sent while it runs. It costs $2.99 a month or $29 a year after a 3-day free trial with no card. It is not a medical treatment or a replacement for a therapist."
+            "text": "Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device. No camera data is sent while it runs. It costs $2.99 a month or $29 a year after a {{TRIAL_HYPHEN}} free trial with no card. It is not a medical treatment or a replacement for a therapist."
           }
         },
         {
@@ -325,7 +324,7 @@
           "name": "Do I need a credit card, and can I cancel anytime?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No card is needed for the 3-day free trial. After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period. Payments are handled by Paddle, so Stop Biting never sees your card details."
+            "text": "No card is needed for the {{TRIAL_HYPHEN}} free trial. After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period. Payments are handled by Paddle, so Stop Biting never sees your card details."
           }
         },
         {

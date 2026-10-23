@@ -2,10 +2,10 @@
 
 Date: 23 October 2026. Base: origin/main 0071bb4. Tests use the isolated SEO worktree and a temporary local database, not the original checkout's unfinished billing merge.
 
-## Source and artifacts
+## Initial source and artifact checks (before the concurrent release)
 
 - Baseline: `npm test` passed 119 tests across 18 files before implementation.
-- Final integrated `npm test`: **149/149 tests across 20 files pass**. The 24 navigation cases observe the real VitePWA options and use Workbox's real matcher. Six schema cases start the real Express server and check HTTP responses.
+- Initial SEO implementation `npm test`: **149/149 tests across 20 files pass**. The 24 navigation cases observe the real VitePWA options and use Workbox's real matcher. Six schema cases start the real Express server and check HTTP responses.
 - Red/green observed: 16 public navigation cases failed before the allowlist fix; all 24 pass after. All six schema identity checks failed before their corresponding fix and pass after.
 - `npm run build:web`: **pass**, including TypeScript project build, 188 per-article JSON files, shared server content, full LLM text and production service worker.
 - `npm run seo:check`: **pass**, 188 articles synchronized; sitemap has 219 URLs. Modification dates changed only for the five edited articles and their blog index.
@@ -44,6 +44,19 @@ The emitted worker contains the root-only navigation allowlist. A local-only set
 
 ## Release and limits
 
-The user authorized commit and push. Release commands will use a normal fast-forward push from the origin/main-based worktree to remote main, excluding the original checkout's 55 unpublished commits and unfinished merge. Release confirmation will be recorded after remote verification.
+The user authorized commit and push. The initial audited implementation was committed as 6a3445e. During final verification, remote main advanced from 0071bb4 to ffbf29a with a separate application release. The updated main is being merged into the isolated SEO worktree; billing trial-copy tokens, photo protections and other released features are preserved. Final integration checks and release confirmation follow below. The original checkout's working files have not been edited by this task.
+
+## Final checks after integrating ffbf29a
+
+- All source and generated-image merge conflicts resolved; the original checkout was not edited. The diff against updated main contains the SEO changes, not a rollback of its application release.
+- `npm run build:web`: **pass**, generating 188 articles, 19 public comparison/solution pages and the updated production worker. Incoming feature gates remain unchanged.
+- `npm test`: **2,417/2,417 tests across 126 files pass, zero skipped**. This includes 29 real-build marketing HTTP tests, 27 Workbox navigation cases, six real-server schema cases, trial configuration, photo privacy, storage/sync and server suites.
+- The first post-merge test run used the old pre-merge dist and failed one sync-chunk guard (2,387 passed, 29 skipped); rebuilding current source resolved it without changing the guard or application logic. The final run above covers the actual updated build.
+- A fresh isolated server sweep repeated all **219/219 sitemap URL checks**, including status, canonical, heading, noindex, JSON-LD article identities and referenced script/style assets. local-sweep.json contains this final run.
+- Search artifacts remain synchronized for 188 posts. The updated release contains **213 social cards**; all are current. Three cards differ from updated main because their reading times changed in this pass; the six older stale cards had already been refreshed by the concurrent release.
+- Trial-copy conflict resolution retains shared TRIAL_* tokens. An explicit seven-day configuration probe updates our own trial mentions while the competitor's separately verified three-day trial remains unchanged. Default trial remains three days.
+- The root-only fallback retains incoming /signin, /redeem and /share exclusions plus photo-related safeguards. Focused navigation/photo checks pass 70/70. The initial 12 browser checks remain evidence for the unchanged navigation policy; the final build is additionally covered by the 27 matcher and 29 marketing tests.
+- Schema fixtures now load the incoming modular server/shared files and resolve trial tokens before HTTP assertions; all six pass. Targeted ESLint for the build configuration and new tests passes, as do server syntax and `git diff --check origin/main`.
+- The independent reviewer approved the integration delta against ffbf29a with no blocking findings.
 
 Remaining hosting work: www TLS/router repair and proxy HTTP302→permanent redirect. Current GSC outcomes, field CWV and measured AI citations/traffic uplift are unavailable. The report contains a 28-day comparison plan rather than invented results.

@@ -1,9 +1,10 @@
 import { Rings } from './Rings';
 import { TrialButton } from './TrialButton';
+import { TRIAL_DAYS_TEXT } from '../../../shared/plans.js';
 
 // The closing call to action, shared by every marketing page (SiteFooter
 // renders it). The offer must match PricingSection and the homepage.
-const OFFER_LINE = '3 days free, no card, then $2.99/month';
+const OFFER_LINE = `${TRIAL_DAYS_TEXT} free, no card, then $2.99/month`;
 
 export function ClosingCta({ source = 'page_closing' }: { source?: string } = {}) {
   return (

@@ -1,4 +1,5 @@
-import { useAppStore } from '../../store/useAppStore';
+import { useAppStore, isBite } from '../../store/useAppStore';
+import { isPendingAlarm } from '../../storage/eventModel';
 
 export function TodayStats() {
   const { incidents } = useAppStore();
@@ -6,8 +7,8 @@ export function TodayStats() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const todayIncidents = incidents.filter(i => i.timestamp >= today.getTime());
-  const incidentCount = todayIncidents.filter(i => i.autoDetected && !i.confirmed).length;
-  const biteCount = todayIncidents.filter(i => !i.autoDetected || i.confirmed).length;
+  const incidentCount = todayIncidents.filter(isPendingAlarm).length; // a "Not a bite" alarm is reviewed, not pending
+  const biteCount = todayIncidents.filter(isBite).length; // an urge-timer entry is not a bite
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 sm:p-7">

@@ -1,0 +1,5 @@
+# Real recordings are landmark numbers only (no video, no images) but they are still the shape of a real
+# person's face and hands. They stay out of git unless someone adds one on purpose with the person's agreement:
+#   git add -f scripts/eval-detection/fixtures/real/<id>.json
+*.json
+!.gitignore

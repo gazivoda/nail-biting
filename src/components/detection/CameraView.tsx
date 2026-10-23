@@ -6,6 +6,9 @@ import { DetectionSurface } from './DetectionSurface';
 import { PiPWindow } from './PiPWindow';
 import { useAppStore } from '../../store/useAppStore';
 import type { DetectionSensitivity } from '../../types';
+import type { Behavior } from '../../storage/eventModel';
+import { useActiveBehaviors } from '../../detection/useBehaviors';
+import { alarmHandExtras } from '../../detection/controlsRegistry';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -31,7 +34,9 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { pipActive, pipWindow, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
-  const handleAlert = () => logIncident('auto-detected', true);
+  const behaviors = useActiveBehaviors();
+  // SEAM (WS3): alarmHandExtras() is {} unless the false-alarm controls are on, then { hand } (left or right as the person sees it).
+  const handleAlert = (behavior: Behavior) => logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });
 
   const handleRetry = useCallback(() => {
     if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
@@ -47,6 +52,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
     alertSound,
     alertVolume,
     handleAlert,
+    behaviors,
   );
 
   const modelFailed = status === 'error';

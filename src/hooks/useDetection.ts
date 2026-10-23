@@ -5,7 +5,9 @@ import {
   FilesetResolver,
 } from '@mediapipe/tasks-vision';
 import type { DetectionSensitivity, AlertSound } from '../types';
+import type { Behavior } from '../storage/eventModel';
 import { createBiteDetector } from './biteDetector';
+import { detectHandsWithSides } from '../detection/handedness';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -29,7 +31,8 @@ function assetUrl(relativePath: string): string {
   }
 }
 
-async function getModels() {
+// Exported for the optional calibration (WS3, src/calibration/runner.ts), which reuses the loaded models while detection is paused.
+export async function getModels() {
   if (cachedHand && cachedFace) return { hand: cachedHand, face: cachedFace };
   if (modelInitPromise) return modelInitPromise;
 
@@ -79,6 +82,10 @@ async function getModels() {
 
 // 5fps — plenty for nail-biting detection, ~12x less CPU than 60fps
 const INFERENCE_INTERVAL_MS = 200;
+
+// What is watched when the caller names no behaviours: nail biting alone, as before WS1.
+// One shared array, so the engine can tell "unchanged" by identity.
+const DEFAULT_BEHAVIOR_LIST: readonly Behavior[] = ['nail_biting'];
 
 // The per-frame detection logic lives in ./biteDetector so it can be tested
 // without a camera or MediaPipe.
@@ -223,7 +230,10 @@ export function useDetection(
   alertType: 'sound' | 'flash' | 'both',
   alertSound: AlertSound,
   alertVolume: number,
-  onAlert: () => void,
+  // Told which behaviour set the alarm off (WS1). Existing callers that ignore it still type-check.
+  onAlert: (behavior: Behavior) => void,
+  // The behaviours to watch for (WS1). Leave out for nail biting alone, exactly as before.
+  behaviors?: readonly Behavior[],
 ) {
   const [status, setStatus] = useState<DetectionStatus>('idle');
 
@@ -233,6 +243,7 @@ export function useDetection(
   const alertSoundRef = useRef(alertSound);
   const alertVolumeRef = useRef(alertVolume);
   const onAlertRef = useRef(onAlert);
+  const behaviorsRef = useRef(behaviors);
 
   // Writing to a ref during render is not allowed. No dep array, so this runs
   // after every render — same cadence as the old inline assignments. These
@@ -244,6 +255,7 @@ export function useDetection(
     alertSoundRef.current = alertSound;
     alertVolumeRef.current = alertVolume;
     onAlertRef.current = onAlert;
+    behaviorsRef.current = behaviors;
   });
 
   const stopAlarmRef = useRef<(() => void) | null>(null);
@@ -252,7 +264,7 @@ export function useDetection(
   const titleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const originalTitleRef = useRef(document.title);
 
-  const startBiting = useCallback(() => {
+  const startBiting = useCallback((behavior: Behavior = 'nail_biting') => {
     if (isBitingRef.current) return; // already alarming
     isBitingRef.current = true;
     const type = alertTypeRef.current;
@@ -260,7 +272,7 @@ export function useDetection(
       stopAlarmRef.current = startAlarm(alertSoundRef.current, alertVolumeRef.current);
     }
     setStatus('alert');
-    onAlertRef.current(); // log the incident once when biting starts
+    onAlertRef.current(behavior); // log the incident once when biting starts
 
     // Tab title flash
     if (titleTimerRef.current) clearTimeout(titleTimerRef.current);
@@ -323,9 +335,10 @@ export function useDetection(
         const detector = createBiteDetector({
           getVideo: () => videoRef.current,
           getSensitivity: () => sensitivityRef.current,
+          getBehaviors: () => behaviorsRef.current ?? DEFAULT_BEHAVIOR_LIST,
           source: {
-            detectHands: (video, ts) =>
-              hand.detectForVideo(video as HTMLVideoElement, ts).landmarks ?? [],
+            // SEAM (WS3): with the false-alarm controls off this is exactly `.landmarks ?? []`; see src/detection/handedness.ts.
+            detectHands: (video, ts) => detectHandsWithSides(hand, video as HTMLVideoElement, ts),
             detectFace: (video, ts) =>
               face.detectForVideo(video as HTMLVideoElement, ts).faceLandmarks ?? [],
           },

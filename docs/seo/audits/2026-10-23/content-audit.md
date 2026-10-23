@@ -92,4 +92,3 @@ Authority work belongs with the owner: publish a factual device/context demo and
 ## Measurement plan
 
 Export GSC query/page data for 28 days before and 28 days after deployment, with prior-period comparison and annotations for the 21 October changes. Track clicks, impressions, CTR and average position separately for the two historically exposed pages and the app roundup. Review queries by intent before interpreting a change. Track blog-to-comparison visits and organic trial starts using existing analytics only after confirming the available events; do not imply conversion data exists from this audit. Record AI-source citations only where they can be directly observed, keeping crawler access distinct from actual citations.
-

@@ -19,4 +19,10 @@ interface ElectronAPI {
 
 interface Window {
   electronAPI?: ElectronAPI;
+  /**
+   * The desktop shell's API (tray commands and state, native notifications,
+   * camera access). Defined in src/desktop/ipc.ts; exposed by electron/preload.ts.
+   * Undefined in the browser / PWA context.
+   */
+  desktop?: import('../desktop/ipc').DesktopAPI;
 }

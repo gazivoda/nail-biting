@@ -15,6 +15,8 @@ COPY src ./src
 COPY public ./public
 # generate-seo-content.mjs runs at vite closeBundle — build fails without it
 COPY scripts ./scripts
+# shared/plans.js: the trial length and plan numbers, imported by src/, scripts/ and the server
+COPY shared ./shared
 COPY index.html tsconfig.json tsconfig.app.json tsconfig.node.json ./
 COPY vite.config.ts tailwind.config.js postcss.config.js ./
 
@@ -34,6 +36,18 @@ ENV VITE_PADDLE_PRICE_ID_YEARLY=$VITE_PADDLE_PRICE_ID_YEARLY
 
 ARG VITE_PADDLE_ENV
 ENV VITE_PADDLE_ENV=$VITE_PADDLE_ENV
+
+# Lifetime and gift prices (WS9). Leave empty until the Paddle products exist.
+ARG VITE_PADDLE_PRICE_ID_LIFETIME
+ENV VITE_PADDLE_PRICE_ID_LIFETIME=$VITE_PADDLE_PRICE_ID_LIFETIME
+
+ARG VITE_PADDLE_PRICE_ID_GIFT
+ENV VITE_PADDLE_PRICE_ID_GIFT=$VITE_PADDLE_PRICE_ID_GIFT
+
+# Trial length the site copy and generated pages say (WS9). Empty means the default
+# (3 days). Set the SAME value as the runtime variable TRIAL_DAYS: see docs/agents/ws9-notes.md.
+ARG TRIAL_DAYS
+ENV TRIAL_DAYS=$TRIAL_DAYS
 
 # Build with web base path (/ not ./ which is for Electron file://)
 # Call vite directly — skip tsc which fails on Electron-specific types in CI
@@ -60,8 +74,11 @@ COPY --from=deps /app/node_modules ./node_modules
 # Built React frontend
 COPY --from=frontend /app/dist ./dist
 
-# Express server
+# Express server (server/ holds the route modules and the feature flags)
 COPY server.js email.js trialFollowup.js ./
+COPY server ./server
+# shared/plans.js (trial length, plan numbers) is imported by server.js and server/**
+COPY shared ./shared
 
 # DATA_DIR is where SQLite lives.
 # Mount a Coolify persistent volume at /app/data to survive redeploys.

@@ -80,4 +80,3 @@ Applied `seo`, `seo-audit`, `seo-technical`, `seo-page`, `seo-images`, `seo-site
 Requests respected public robots rules, used at most five parallel fetches with approximately one-second delay between batches, and inspected fewer than 50 distinct site URLs. No public URLs were submitted to search engines and no account/deployment changes were made.
 
 Machine-readable sampled page evidence: `/tmp/stopbiting-technical-page-evidence.json`. Curl bodies/headers: `/tmp/stopbiting-technical-*`. Mobile screenshots: `/tmp/stopbiting-technical-home-mobile.png`, `/tmp/stopbiting-technical-blog-mobile.png`. PageSpeed failure body: `/tmp/stopbiting-technical-psi.json`.
-

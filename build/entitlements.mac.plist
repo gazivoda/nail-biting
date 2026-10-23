@@ -2,20 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <!-- Allow the app to access the camera -->
+    <!-- Camera: the detector reads the webcam. Without this key, hardened-runtime
+         builds are refused camera access (no prompt, no device). The matching
+         usage text (NSCameraUsageDescription) is set in package.json: build.mac.extendInfo. -->
     <key>com.apple.security.device.camera</key>
     <true/>
-    <!-- Allow the app to send user notifications -->
+    <!-- Outbound connections only (hosted API, sign-in, checkout). The app opens no
+         listening socket since the local server was removed, so
+         com.apple.security.network.server is intentionally not requested. These two
+         keys only take effect inside the App Sandbox; the hardened runtime itself
+         does not restrict networking. -->
     <key>com.apple.security.network.client</key>
     <true/>
-    <!-- Allow outbound network connections (for Google OAuth and PayPal) -->
-    <key>com.apple.security.network.server</key>
-    <true/>
-    <!-- Required for hardened runtime + notarisation -->
+    <!-- Hardened runtime exceptions. Chromium's V8 compiles JavaScript and WebAssembly
+         (the MediaPipe hand and face models run as WASM) to executable memory, which
+         the hardened runtime forbids unless these are granted. Required for
+         notarisation to produce an app that starts. -->
     <key>com.apple.security.cs.allow-jit</key>
     <true/>
     <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
     <true/>
+    <!-- Lets the app load Electron's helper frameworks if their signing identity ever
+         differs from the main binary. Kept from the original file. Candidate to remove
+         once a signed, notarised build has been run on a clean Mac (see docs/DESKTOP_SIGNING.md). -->
     <key>com.apple.security.cs.disable-library-validation</key>
     <true/>
   </dict>

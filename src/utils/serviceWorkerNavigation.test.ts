@@ -58,6 +58,7 @@ describe('web service-worker app shell navigation', () => {
     '/api/auth/google', '/api/auth/callback?code=example', '/api',
     '/downloads/app.dmg', '/downloads', '/posts/article.json', '/posts',
     '/files/nail-biting-30-day-tracker.pdf',
+    '/signin?next=%2F', '/redeem?code=example', '/share/example-token',
   ])('leaves %s to its route-specific network response', path => {
     expect(matches(path)).toBe(false);
   });

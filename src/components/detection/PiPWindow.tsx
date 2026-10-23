@@ -1,5 +1,7 @@
 import { createPortal } from 'react-dom';
 import { useAppStore } from '../../store/useAppStore';
+import { CoachingSeam } from '../../coaching/CoachingSeam';
+import { NotABiteSeam } from '../../falsePositive/NotABiteSeam';
 
 interface Props {
   pipWindow: Window;
@@ -35,6 +37,8 @@ export function PiPWindow({ pipWindow, status }: Props) {
         <div className="pointer-events-none absolute inset-0" style={{ border: '3px solid #e5604d' }} />
       )}
 
+      <CoachingSeam surface="pip" />{/* SEAM (WS2): covers the strip while a prompt runs. WS7a mounts beside it. */}
+
       <div className="flex min-w-0 items-center gap-2.5">
         <span
           aria-hidden="true"
@@ -48,6 +52,8 @@ export function PiPWindow({ pipWindow, status }: Props) {
           {cameraEnabled ? LABEL[status] : 'Stopped'}
         </span>
       </div>
+
+      <NotABiteSeam surface="pip" />{/* SEAM (WS3): "Not a bite" after an alarm. Renders nothing unless the false-alarm controls are on. */}
 
       <button
         type="button"

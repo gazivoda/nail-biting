@@ -99,4 +99,3 @@ Applied: geo (discovery and evidence-first scope); geo-audit (delegated audit co
 Reviewed and passed deliverable requirements to root: geo-report and geo-report-pdf. Root should generate one consolidated Markdown report and PDF with this evidence, unknowns and realistic actions, without fabricated traffic/revenue forecasts. Correct PDF crawler labels to Anthropic/Claude rather than the skill template's incorrect Codex label. The generator script actually exists at /Users/igorgazivoda/.agents/skills/geo/scripts/generate_pdf_report.py.
 
 Reviewed but N/A: geo-proposal (no agency engagement, approved scope/fees or revenue baseline; do not invent a paid proposal), geo-prospect (owner's product optimization, no CRM enrollment requested; do not write ~/.geo-prospects). No messages were sent externally and no account resources were modified.
-

@@ -6,6 +6,7 @@ import { CAMERA_ERROR_MESSAGE, MODEL_ERROR_MESSAGE } from '../detection/cameraEr
 import { useDetection } from '../../hooks/useDetection';
 import { initialSession, remainingMs, sessionReducer } from './demoSession';
 import { track } from '../../utils/track';
+import { TRIAL_DAYS_TEXT } from '../../../shared/plans.js';
 
 // --------------------------------------------------------------------------
 // Copy
@@ -29,7 +30,7 @@ const LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
 const HINT_LABEL = 'Bring a fingertip to your lips to hear the alarm';
 
 /** The offer, next to every trial link this component renders. */
-const OFFER_LABEL = '3 days free, no card';
+const OFFER_LABEL = `${TRIAL_DAYS_TEXT} free, no card`;
 
 
 

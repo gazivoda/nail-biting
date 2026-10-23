@@ -86,7 +86,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-during-focus-and-work",
@@ -154,11 +154,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "webcam-privacy-nail-biting-app",
     title: "Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained",
-    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data leaves your device.",
+    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-09-10",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-during-sleep",
@@ -194,7 +194,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-laptop-working-from-home",
@@ -203,7 +203,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Humor",
     readingMinutes: 6,
     datePublished: "2026-04-17",
-    dateModified: "2026-04-17",
+    dateModified: "2026-10-23",
   },
   {
     slug: "best-apps-to-stop-nail-biting",
@@ -221,7 +221,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Comparison",
     readingMinutes: 4,
     datePublished: "2026-04-19",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-adhd",
@@ -329,7 +329,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 5,
     datePublished: "2026-04-23",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-bacteria-parasites",
@@ -401,7 +401,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 4,
     datePublished: "2026-05-12",
-    dateModified: "2026-09-16",
+    dateModified: "2026-10-23",
   },
   {
     slug: "nail-biting-personality",

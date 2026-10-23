@@ -1,10 +1,11 @@
 import { spawn, type ChildProcess } from 'node:child_process';
 import { once } from 'node:events';
-import { copyFileSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { DEFAULT_TRIAL_DAYS, fillTrialTokens, trialCopy } from '../../shared/plans.js';
 
 type Schema = Record<string, unknown>;
 
@@ -21,7 +22,12 @@ describe('server-rendered schema identities', () => {
     for (const file of ['server.js', 'email.js', 'trialFollowup.js']) {
       copyFileSync(file, join(fixture, file));
     }
-    copyFileSync('index.html', join(fixture, 'dist/index.html'));
+    // Mirror Vite's shell transform without running a full build.
+    writeFileSync(join(fixture, 'dist/index.html'),
+      fillTrialTokens(readFileSync('index.html', 'utf8'), trialCopy(DEFAULT_TRIAL_DAYS)));
+    for (const directory of ['server', 'shared']) {
+      symlinkSync(resolve(directory), join(fixture, directory), 'dir');
+    }
     symlinkSync(resolve('node_modules'), join(fixture, 'node_modules'), 'dir');
     writeFileSync(join(fixture, 'package.json'), '{"type":"module"}');
     writeFileSync(join(fixture, 'dist/seo-content.json'), JSON.stringify({

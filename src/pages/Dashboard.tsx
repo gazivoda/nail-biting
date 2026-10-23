@@ -4,8 +4,11 @@ import { TodayStats } from '../components/dashboard/TodayStats';
 import { SessionGoal } from '../components/dashboard/SessionGoal';
 import { ReplacementPrompt } from '../components/dashboard/ReplacementPrompt';
 import { PanicButton } from '../components/dashboard/PanicButton';
+import { CoachingDashboardSlot } from '../coaching/CoachingDashboardSlot';
+import { FalsePositiveSlot } from '../falsePositive/FalsePositiveSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
+import { FreeTierNotice } from '../components/billing/FreeTierNotice';
 
 export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
   const { user, accessStatus } = useAuth();
@@ -48,6 +51,8 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
         </p>
       )}
 
+      <FreeTierNotice onUpgrade={onUpgrade} />{/* WS9: the free plan's daily allowance (flag free_tier); nothing otherwise */}
+
       {/* Single column on phones/tablets; split 1.35fr / 1fr from md up */}
       <div className="grid gap-5 items-start grid-cols-1 md:grid-cols-[1.35fr_1fr]">
         {/* Left column */}
@@ -67,6 +72,8 @@ export function Dashboard({ onUpgrade }: { onUpgrade?: () => void }) {
           <div className="order-first md:order-none">
             <PanicButton />
           </div>
+          <CoachingDashboardSlot />{/* WS2: urge timer, coaching bridge, program link. Renders nothing while its flags are off. */}
+          <FalsePositiveSlot />{/* WS3: arms the false-alarm controls and the "Not a bite" toast. Renders nothing; does nothing while its flag is off. */}
         </div>
       </div>
     </div>

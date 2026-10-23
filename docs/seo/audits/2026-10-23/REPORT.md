@@ -6,7 +6,7 @@
 
 Improve the pages that already receive search exposure, preserve accurate page metadata on repeat visits, and make the product's claims easier to verify. The site already has 188 articles, topic hubs, source citations, an author page, crawlable content, comparison pages, a sitemap, robots rules and generated LLM indexes. Adding another large content batch would repeat work without evidence that volume is the constraint.
 
-The audit used three independent specialists: technical SEO and browser delivery; content and search intent; and AI discovery and structured data. The implementation started from deployed branch origin/main at 0071bb4 in an isolated worktree. The original checkout's unfinished billing merge and unpublished application changes were preserved.
+The audit used three independent specialists: technical SEO and browser delivery; content and search intent; and AI discovery and structured data. The implementation started from deployed branch origin/main at 0071bb4 in an isolated worktree. The original checkout's unfinished billing merge and unpublished application changes were preserved. Remote main advanced to ffbf29a during verification; the final SEO release integrates that application release and retains its trial-copy configuration and privacy protections. The verification record distinguishes initial audit evidence from checks after integration.
 
 ## Traffic baseline and interpretation
 
@@ -35,6 +35,8 @@ This is a demonstrated delivery and metadata consistency fix. It is not proof th
 Only changed articles receive October 23 modification dates. Original publication dates, slugs and SEO titles remain stable. The generated article index, sitemap and LLM descriptions must be synchronized with the final text.
 
 Nine social preview cards were regenerated to match their current title and reading time. Three needed updates because of this content pass; six were already stale from prior changes. The remaining 202 cards are byte-identical. All 211 generated cards pass the repository's freshness check.
+
+After integration with the concurrent release, the final build contains 213 current social cards. Only the three reading-time cards differ from updated main, which had independently refreshed the other six. The final integrated suite passes 2,417 tests across 126 files, and a fresh isolated-server sweep passes all 219 sitemap URLs. Dynamic trial configuration, closed feature gates and incoming photo protections remain intact.
 
 ### Clearer author and article identities
 

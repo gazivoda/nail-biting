@@ -13,6 +13,10 @@ import { dirname, join } from 'path';
 import { randomBytes, createHmac } from 'crypto';
 import { sendWelcomeEmail, sendAdminNotification, sendFeedbackEmail } from './email.js';
 import { startTrialFollowupJob } from './trialFollowup.js';
+import { registerRoutes } from './server/routes/index.js';
+import { createGoogleLinker } from './server/auth/googleLink.js';
+import { gatedNavLinks, gatedSitemapEntries, isGateOpen, withGatedSitemapEntries } from './server/marketing/gatedPages.js';
+import { TRIAL_HYPHEN, TRIAL_MS } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -74,7 +78,8 @@ app.use((req, res, next) => {
   const q = req.originalUrl.indexOf('?');
   const path = q === -1 ? req.originalUrl : req.originalUrl.slice(0, q);
   const search = q === -1 ? '' : req.originalUrl.slice(q);
-  if (path.startsWith('/api/') || path.startsWith('/assets/')) return next();
+  // /share/ carries mixed-case bearer tokens (WS10): lower-casing it would break every link.
+  if (path.startsWith('/api/') || path.startsWith('/assets/') || path.startsWith('/share/')) return next();
 
   let canonical = path;
   if (path === '/index.html') canonical = '/';
@@ -164,8 +169,10 @@ app.use('/api/', corsMiddleware);  // only API routes need CORS, not static asse
 
 app.use(cookieParser());
 // Skip JSON body parsing for the Paddle webhook route (needs raw body for signature verification)
+// and for the event sync route (a batch is bigger than 10kb; server/routes/events.js parses it itself,
+// after the flag and sign-in checks, with its own limit).
 app.use((req, res, next) => {
-  if (req.path === '/api/paddle/webhook') return next();
+  if (req.path === '/api/paddle/webhook' || req.path === '/api/events/sync') return next();
   express.json({ limit: '10kb' })(req, res, next);
 });
 
@@ -212,6 +219,10 @@ db.exec(`
 
 // Migration: drop legacy paypal column from existing DBs
 try { db.exec('ALTER TABLE users DROP COLUMN paypal_subscription_id'); } catch { /* already dropped or never existed */ }
+
+// WS8: joins a Google sign-in to an account made with another method (emailed link, Apple,
+// Microsoft). Returns null unless such an account exists, so Google-only behaviour is unchanged.
+const linkGoogleSignIn = createGoogleLinker({ db, getUser });
 
 const stmtGet    = db.prepare('SELECT * FROM users WHERE id = ?');
 const stmtFindByEmail = db.prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
@@ -360,9 +371,10 @@ app.get('/api/auth/callback', async (req, res) => {
 
     // Find or create user
     let user = getUser(googleId);
+    if (!user) user = linkGoogleSignIn(googlePayload);   // WS8: null for everyone who has no other-method account
     const isNewUser = !user;
     if (!user) {
-      const trialEnd = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+      const trialEnd = new Date(Date.now() + TRIAL_MS).toISOString();
       user = {
         id: googleId,
         email: googlePayload.email,
@@ -417,7 +429,8 @@ app.post('/api/auth/signout', (req, res) => {
 app.get('/api/user/me', authMiddleware, (req, res) => {
   const user = getUser(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  res.json(user);
+  // WS9: adds `entitlement` (lifetime / gift / referral credit / free tier) only when the account has one.
+  res.json(app.locals.decorateUser ? app.locals.decorateUser(user) : user);
 });
 
 // H-2: PATCH /api/user/me removed — subscription fields are only written
@@ -469,6 +482,14 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
 
   const eventType = event.event_type;
   const data = event.data;
+  // WS9: a replayed event is acknowledged and ignored; lifetime, gift, referral and refund events are
+  // handled in server/billing (see docs/agents/ws9-notes.md). Everything else falls through to the handlers below.
+  try {
+    if (await app.locals.billingWebhook?.take(event, res)) return res.json({ received: true });
+  } catch (err) {
+    console.error('Paddle webhook billing error:', err.message);
+    return res.status(500).json({ error: 'Webhook processing failed' });
+  }
 
   console.log(`Paddle webhook: ${eventType}`);
 
@@ -675,6 +696,16 @@ app.get('/api/paddle/portal-session', authMiddleware, async (req, res) => {
   }
 });
 
+// ─── Route modules (server/routes/*) ─────────────────────────────────────────
+// New server features live there, not here. Must stay above the static/SSR block
+// below so API routes win over the page catch-all.
+// `flags` is the same set the route modules got; the page handlers below read it too.
+const { flags } = registerRoutes({
+  app, db, authMiddleware, getUser, saveUser, signToken,
+  findUserByEmail: email => stmtFindByEmail.get(email) ?? null,
+  config: { APP_URL, ELECTRON_PROTOCOL },
+});
+
 // ─── Downloads ───────────────────────────────────────────────────────────────
 const GITHUB_RELEASES_BASE = 'https://github.com/gazivoda/nail-biting/releases/download';
 const DOWNLOAD_MAP = {
@@ -771,12 +802,32 @@ if (!existsSync(distPath)) {
   const SEO_CONTENT_LOADED = Object.keys(BLOG_POSTS).length > 0;
   // path → { title, subtitle, intro, sections, relatedPosts }
   const COMPARE_CONTENT = SEO_CONTENT.comparePages ?? {};
+  // Competitor profile pages behind the `compare_competitors` flag (src/data/competitorPages.ts).
+  // They are deliberately NOT in seo-content.json, which express.static serves to anyone: the
+  // build writes them to dist/seo-gated.json, which this server reads and never serves (see the
+  // 404 route above express.static below). While the flag is off nothing here is reachable.
+  const GATED_FLAG = 'compare_competitors';
+  let GATED_CONTENT = {};
+  let GATED_UPDATES = {};   // freshness-ledger rows for the gated paths, kept out of seo-content.json too
+  try {
+    const gatedPath = join(distPath, 'seo-gated.json');
+    if (existsSync(gatedPath)) {
+      const gated = JSON.parse(readFileSync(gatedPath, 'utf-8'));
+      GATED_CONTENT = gated.comparePages ?? {};
+      GATED_UPDATES = gated.pageUpdates ?? {};
+    }
+  } catch (err) {
+    console.error('ERROR: dist/seo-gated.json is invalid JSON — gated pages disabled.', err);
+  }
+  // [href, label] pairs the noscript site nav gains while the flag is on. The only place this
+  // site lists comparison pages in its chrome; the React footer never did.
+  const GATED_NAV = flags.isOn(GATED_FLAG) ? gatedNavLinks(GATED_CONTENT) : [];
   // path → { lastmod } — the core-page freshness ledger from
   // src/data/pageUpdates.json, the same dates sitemap.xml carries. Each one is
   // pinned to a fingerprint of that page's content and only moves when the
   // content does (see the header comment in scripts/sync-seo.mjs), so it is
   // safe to publish as `dateModified` and as a `Last-Modified` header.
-  const PAGE_UPDATES = SEO_CONTENT.pageUpdates ?? {};
+  const PAGE_UPDATES = { ...(SEO_CONTENT.pageUpdates ?? {}), ...GATED_UPDATES };
   function pageLastmod(path) {
     return PAGE_UPDATES[path]?.lastmod ?? null;
   }
@@ -798,6 +849,22 @@ if (!existsSync(distPath)) {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  // Crawler copy of the testimonial section (src/components/site/Testimonials.tsx), built from
+  // seo-content.json, which scripts/generate-seo-content.mjs fills through the same validator the
+  // component uses. Empty string unless the `social_proof` flag is on AND there is at least one
+  // consented entry, which is exactly when the component renders: a no-JS reader sees the same
+  // page, and an empty data file leaves no trace in the HTML.
+  const TESTIMONIALS = SEO_CONTENT.testimonials ?? { heading: '', entries: [] };
+  function testimonialsArticleHtml() {
+    if (!flags.isOn('social_proof') || !TESTIMONIALS.entries?.length) return '';
+    const figures = TESTIMONIALS.entries.map(t =>
+      '<figure>' +
+      (t.photo ? `<img src="${escapeHtml(t.photo.src)}" alt="${escapeHtml(t.photo.alt)}" loading="lazy">` : '') +
+      `<blockquote><p>${escapeHtml(t.quote)}</p></blockquote>` +
+      `<figcaption>${escapeHtml(t.firstName)}. ${escapeHtml(t.detail)}</figcaption></figure>`).join('');
+    return `<section><h2>${escapeHtml(TESTIMONIALS.heading)}</h2>${figures}</section>`;
   }
 
   // ── In-flow server-rendered articles ────────────────────────────────────────
@@ -978,7 +1045,7 @@ if (!existsSync(distPath)) {
       : '';
     const nav =
       `<noscript><nav aria-label="Site"><h2>Stop Biting</h2><ul>` +
-      `${SITE_NAV.map(link).join('')}</ul>${extra}</nav></noscript>`;
+      `${[...SITE_NAV, ...GATED_NAV].map(link).join('')}</ul>${extra}</nav></noscript>`;
     return html.replace('</body>', `    ${nav}\n  </body>`);
   }
 
@@ -1558,7 +1625,7 @@ if (!existsSync(distPath)) {
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
       'it checks 21 hand landmarks and your face mesh five times a second, and the moment your hand moves toward your mouth an ' +
       'audible alarm fires within a second, catching the automatic episodes you never notice. All detection runs ' +
-      'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
+      `locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The ${TRIAL_HYPHEN} free trial needs no ` +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<p>Your webcam watches your hands while you work. The moment a fingertip reaches your lips, an alarm sounds, ' +
       'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam. ' +
@@ -1591,13 +1658,14 @@ if (!existsSync(distPath)) {
       'Behaviors lists BFRB-informed therapists.</p></section>' +
       '<section><h2>Your camera never leaves your device.</h2>' +
       '<p>A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, ' +
-      'on your own computer. No camera data is sent while it runs. Signing in and paying use the network; watching never does.</p></section>' +
+      'on your own computer. No camera data is sent while it runs. Signing in and paying use the network.</p></section>' +
       '<section><h2>Why this exists</h2>' +
       '<p>I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of it lasted, because ' +
       'I never noticed I was doing it until the damage was done. I write software and I had a webcam, so I built the ' +
       'thing that notices for me. Igor Gazivoda. <a href="/about">The longer story</a>.</p></section>' +
+      testimonialsArticleHtml() +
       '<section><h2>$2.99 a month, or $29 a year.</h2>' +
-      '<p>Start with a 3-day free trial, no credit card required. ' +
+      `<p>Start with a ${TRIAL_HYPHEN} free trial, no credit card required. ` +
       'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +
       'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. ' +
       'Secure payment via Paddle, cancel anytime. You can ask for a full refund within 14 days of your first payment (<a href="/refund-policy">refund policy</a>). See <a href="/pricing">pricing details</a>.</p></section>' +
@@ -1613,7 +1681,7 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const homeDescription = 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.';
+    const homeDescription = `Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. ${TRIAL_HYPHEN} free trial.`;
     // The homepage FAQ names onychophagia and habit reversal training in flow,
     // so it earns the MedicalCondition entity — but which therapies it may list
     // is read off the article it actually renders, never assumed.
@@ -1904,6 +1972,22 @@ if (!existsSync(distPath)) {
   // extensionless paths while express.static adds one for a directory, so
   // /shots and /video bounced between each other forever. A bare directory now
   // falls through to the 404 handler instead.
+  // sitemap.xml: the generated file never lists a gated page (scripts/sync-seo.mjs). While the
+  // flag is on they are spliced in here, at start-up (flags only change on a restart); while it is
+  // off this handler is not registered and express.static serves the file exactly as before.
+  const SITEMAP_PATH = join(distPath, 'sitemap.xml');
+  if (flags.isOn(GATED_FLAG) && existsSync(SITEMAP_PATH)) {
+    const sitemapWithGated = withGatedSitemapEntries(
+      readFileSync(SITEMAP_PATH, 'utf-8'),
+      gatedSitemapEntries(GATED_CONTENT, pageLastmod, { warn: console.warn }),
+    );
+    app.get('/sitemap.xml', (_req, res) => {
+      res.set('Cache-Control', 'public, max-age=0').type('application/xml').send(sitemapWithGated);
+    });
+  }
+  // The unpublished copy of the gated pages is for this server only.
+  app.get('/seo-gated.json', (_req, res) => res.status(404).type('text/plain').send('Not found'));
+
   app.use(express.static(distPath, { redirect: false }));
 
   // Core app pages — each needs its own canonical and meta so they can be indexed separately
@@ -2057,29 +2141,38 @@ if (!existsSync(distPath)) {
   // reuses the same PricingSection component as the landing page, so crawler
   // view and user view carry the same figures. Prices in the prose and the
   // Offer schema below MUST match PricingSection.tsx exactly:
-  // $2.99/month, $29.00/year, 3-day free trial.
+  // $2.99/month, $29.00/year, free trial (${TRIAL_HYPHEN}).
   // The two questions an AI engine actually resolves against a pricing page,
   // answered directly and in the page's own first section. Every figure here is
   // already on the page and in PricingSection.tsx — $2.99/month, $29.00/year,
-  // $2.42/month equivalent, 19% saving, 3-day trial, no credit card. Nothing is
+  // $2.42/month equivalent, 19% saving, ${TRIAL_HYPHEN} trial, no credit card. Nothing is
   // introduced; the page simply never stated it in the shape of an answer, so
   // "how much does Stop Biting cost" had no extractable passage to lift.
   //
   // One source for the visible <h2>/<p> pairs AND for the FAQPage below, the
   // same contract HOME_FAQS and HOW_IT_WORKS_FAQS enforce: the answer a machine
   // reads is by construction the answer a reader sees.
+  // These ARE the four questions PricingPage.tsx renders, word for word: the FAQPage schema
+  // below must describe what a visitor sees, and a JS-rendering crawler sees the React page.
+  // The previous two questions here appeared nowhere on that page. `html` is the same answer
+  // with its link, for the crawler copy; the schema carries the plain `a`.
   const PRICING_FAQS = [
     {
-      q: 'How much does Stop Biting cost?',
-      a: 'Stop Biting costs $2.99 per month, or $29.00 per year — about $2.42 a month, 19% less than paying monthly. '
-        + 'Both plans include unlimited AI detection, streak tracking and full incident history. Every account starts '
-        + 'with a 3-day free trial that needs no credit card, and you can cancel at any time.',
+      q: `How does the ${TRIAL_HYPHEN} free trial work?`,
+      a: `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.`,
     },
     {
-      q: 'Is there a free version of Stop Biting?',
-      a: 'There is no permanently free plan. Every new account gets a 3-day free trial with the full detector, streak '
-        + 'tracking and incident history, and it does not ask for a credit card. After the trial you keep using the app '
-        + 'by choosing the $2.99 monthly or the $29.00 yearly plan.',
+      q: 'What is the difference between Monthly and Yearly?',
+      a: 'Both plans include the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support.',
+    },
+    {
+      q: 'How do payments work?',
+      a: 'Payments are handled by Paddle, a secure merchant of record. Stop Biting never sees or stores your card details.',
+    },
+    {
+      q: 'Can I cancel anytime?',
+      a: 'Yes. Cancel anytime from the app settings and you keep access until the end of the paid period. See the refund policy for details.',
+      html: 'Yes. Cancel anytime from the app settings and you keep access until the end of the paid period. See the <a href="/refund-policy">refund policy</a> for details.',
     },
   ];
 
@@ -2087,7 +2180,7 @@ if (!existsSync(distPath)) {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
       title: 'Pricing: $2.99/month or $29/year | Stop Biting',
-      description: 'Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.',
+      description: `Stop Biting pricing: ${TRIAL_HYPHEN} free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.`,
       canonical: 'https://stopbiting.today/pricing',
     });
     // This page used to declare its own SoftwareApplication with its own copy of
@@ -2105,7 +2198,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/pricing',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
-      description: 'Pricing for Stop Biting: 3-day free trial, then $2.99/month or $29/year.',
+      description: `Pricing for Stop Biting: ${TRIAL_HYPHEN} free trial, then $2.99/month or $29/year.`,
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
       // Selectors resolve against the SSR <h1> and the `article-summary`
@@ -2138,12 +2231,12 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(pricingFaq)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
       '<h1>$2.99 a month, or $29 a year.</h1>' +
-      '<p class="article-summary">Simple, honest pricing: start with a 3-day free trial — no credit card required — ' +
+      `<p class="article-summary">Simple, honest pricing: start with a ${TRIAL_HYPHEN} free trial — no credit card required — ` +
       'then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing.</p>' +
       // Answer target first: the question verbatim as a heading, then the
       // answer in one self-contained paragraph, before any plan detail.
       PRICING_FAQS.map(f =>
-        `<section><h2>${escapeHtml(f.q)}</h2><p>${escapeHtml(f.a)}</p></section>`).join('') +
+        `<section><h2>${escapeHtml(f.q)}</h2><p>${f.html ?? escapeHtml(f.a)}</p></section>`).join('') +
       '<section><h2>Monthly — $2.99/month</h2>' +
       '<p>Billed monthly. Includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types.</p></section>' +
       '<section><h2>Yearly — $29.00/year</h2>' +
@@ -2157,32 +2250,40 @@ if (!existsSync(distPath)) {
       '</ul></section>' +
       '<section><h2>Payments and cancellation</h2>' +
       '<p>Secure payment via Paddle. Cancel anytime, and you can ask for a full refund within 14 days of your first payment: see the <a href="/refund-policy">refund policy</a>. ' +
-      'The 3-day free trial includes full detection and tracking features with no credit card required.</p></section>' +
+      `The ${TRIAL_HYPHEN} free trial includes full detection and tracking features with no credit card required.</p></section>` +
+      testimonialsArticleHtml() +
       '<section><h2>Start free</h2>' +
       '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>. ' +
       'To see what biting costs you first, use the <a href="/tools/nail-biting-cost-calculator">nail biting cost calculator</a>.</p></section>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/pricing'));
   });
 
-  // The three questions this page answers under "Common questions". One source
-  // for the visible <h3>/<p> pairs AND for the FAQPage schema below, so an
-  // answer a machine reads is by construction the answer a reader sees — the
-  // same contract HOME_FAQS enforces on the homepage. The page already shipped
-  // these three Q&As as correctly-structured headings with no schema over them;
-  // this only adds the markup, it does not add or reword a single answer.
+  // The five questions this page answers under "Common questions", word for word as
+  // HowItWorks.tsx renders them (a test compares the two). One source for the crawler
+  // <h3>/<p> pairs AND for the FAQPage schema below, so an answer a machine reads is by
+  // construction the answer a reader sees. It listed three of the five, and its second answer
+  // used a dash where the page has a colon, so the schema did not match the page.
   const HOW_IT_WORKS_FAQS = [
     {
       q: 'What happens to my camera data?',
-      a: 'Nothing. The video feed is processed frame-by-frame by the MediaPipe WASM binary running locally. '
+      a: 'It is processed frame by frame on your device by the MediaPipe WASM binary running locally. '
         + 'No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
     },
     {
       q: 'Does it work on Mac, Windows, and Linux?',
-      a: 'The web app works on any device with a modern browser and webcam — Mac, Windows, Linux, and Chromebook.',
+      a: 'The web app works on any device with a modern browser and webcam: Mac, Windows, Linux, and Chromebook.',
     },
     {
       q: 'Will it false-alarm when I\'m eating or touching my face?',
       a: 'The detection model distinguishes sustained hand-to-mouth proximity from brief touches, and sensitivity can be adjusted in settings.',
+    },
+    {
+      q: 'Does it work if I\'m not at the camera?',
+      a: 'Detection needs your face and hands in frame. At a desk you are usually in frame anyway.',
+    },
+    {
+      q: 'Does it work in the dark?',
+      a: 'Detection accuracy drops in poor lighting. A desk lamp or ordinary room light is enough; you don\'t need anything special.',
     },
   ];
 
@@ -2256,7 +2357,7 @@ if (!existsSync(distPath)) {
       `<section><h2>Getting started</h2><ol>${stepsHtml}</ol></section>` +
       '<section><h2>Technical specifications</h2><ul>' +
       '<li>Detection model: Google MediaPipe Hand Landmarker (21 landmarks)</li>' +
-      '<li>Processing: WebAssembly — sandboxed, on-device, no network access</li>' +
+      '<li>Processing: WebAssembly — sandboxed, runs on your device</li>' +
       '<li>Alarm latency: about 0.6 seconds after your hand starts moving to your mouth</li>' +
       '<li>Incident logging: timestamped log stored locally — never transmitted</li>' +
       '</ul></section>' +
@@ -2265,7 +2366,7 @@ if (!existsSync(distPath)) {
       '<li><a href="/blog/habit-reversal-training-guide">Habit Reversal Training: the clinical method behind the app</a></li>' +
       '<li><a href="/blog/webcam-privacy-nail-biting-app">How we verified on-device processing</a></li>' +
       '<li><a href="/compare/bitter-polish-alternative">Stop Biting vs bitter nail polish</a></li>' +
-      '<li><a href="/pricing">Pricing — $2.99/month or $29/year, 3-day free trial</a></li>' +
+      `<li><a href="/pricing">Pricing — $2.99/month or $29/year, ${TRIAL_HYPHEN} free trial</a></li>` +
       '</ul></section>';
     // This page describes the clinical mechanism but its prose never names
     // onychophagia as the MedicalCondition block defines it, so it does not
@@ -2342,11 +2443,11 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-mac': {
       title: 'Stop Nail Biting on a Mac | Stop Biting',
-      description: 'Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
+      description: `Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. ${TRIAL_HYPHEN} free trial.`,
     },
     '/solutions/for-windows': {
       title: 'Stop Nail Biting on Windows | Stop Biting',
-      description: 'Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
+      description: `Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. ${TRIAL_HYPHEN} free trial.`,
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own
@@ -2415,6 +2516,21 @@ if (!existsSync(distPath)) {
       description: 'Every AI webcam app that detects nail biting in 2026 (Stop Biting, Hands Off, Nailed and SmartBehavior) compared on platforms, price and privacy.',
       date: '2026-08-11',
     },
+    // The two entries below carry `flag`: the handler below answers 404 (the branded, noindex
+    // page) until that flag is on, and sitemap.xml / the noscript nav list them only then. Their
+    // copy is src/data/competitorPages.ts, facts marked NEEDS HUMAN VERIFICATION.
+    '/compare/hands-off': {
+      title: 'Hands Off Nail Biting App: Features, Price, Who It Suits',
+      description: 'Hands Off is a Mac and Windows webcam app covering five behaviours, listed at €2.99 a month after 3 days free. What it does, who it suits, and where we differ.',
+      date: '2026-10-23',
+      flag: GATED_FLAG,
+    },
+    '/compare/habitaware-keen': {
+      title: 'HabitAware Keen3 Bracelet: Price, How It Works, Who It Suits',
+      description: 'Keen3 is HabitAware’s vibrating wrist bracelet: $199.00 with a year of Pro, shipping January 2027 per its site. Who it suits and where a webcam app fits.',
+      date: '2026-10-23',
+      flag: GATED_FLAG,
+    },
   };
 
   // The roundup hub also carries ItemList schema (comparison-schema.json) so AI
@@ -2443,6 +2559,11 @@ if (!existsSync(distPath)) {
   for (const [pagePath, meta] of Object.entries(COMPARE_META)) {
     app.get(pagePath, (_req, res) => {
       if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
+      // A flagged page does not exist until its flag is on (and its copy was built): the same
+      // branded, noindex 404 as any unknown URL, never the SPA shell.
+      if (!isGateOpen(flags, meta) || (meta.flag && !GATED_CONTENT[pagePath])) {
+        return sendHtml(res, NOT_FOUND_HTML, 404);
+      }
       const canonical = `https://stopbiting.today${pagePath}`;
       const ogImage = routeImageUrl(pagePath);
       let injected = injectMeta(indexHtml, {
@@ -2452,7 +2573,7 @@ if (!existsSync(distPath)) {
         ogType: 'article',
         ogImage,
       });
-      const content = COMPARE_CONTENT[pagePath];
+      const content = COMPARE_CONTENT[pagePath] ?? GATED_CONTENT[pagePath];
       const article = {
         '@context': 'https://schema.org',
         '@type': 'Article',

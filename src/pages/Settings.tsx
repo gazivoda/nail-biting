@@ -8,71 +8,10 @@ import { PageTitle } from '../components/ui/PageTitle';
 import { Rings } from '../components/site/Rings';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { trialLeft } from '../utils/trial';
+import { planOverride } from '../billing/planLabel';
 import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
-
-function Section({ title, icon: Icon, children, fullWidth, danger }: {
-  title: string;
-  icon: typeof Bell;
-  children: React.ReactNode;
-  fullWidth?: boolean;
-  danger?: boolean;
-}) {
-  return (
-    <section
-      className={`rounded-2xl border bg-white p-5 sm:p-6 dark:bg-ink-50 ${
-        danger ? 'border-alert-400 dark:border-alert-800' : 'border-stone-200 dark:border-ink-400'
-      } ${fullWidth ? 'md:col-span-2' : ''}`}
-    >
-      <div className="mb-5 flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className={`inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full ${
-            danger ? 'bg-alert-100 text-alert-600 dark:bg-alert-900/30 dark:text-alert-400' : 'bg-stone-100 text-stone-700 dark:bg-ink-fill dark:text-stone-200'
-          }`}
-        >
-          <Icon size={16} />
-        </span>
-        <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{title}</h2>
-      </div>
-      <div className="space-y-5">{children}</div>
-    </section>
-  );
-}
-
-function Row({ label, description, children }: {
-  label: string;
-  description?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-      <div className="min-w-0">
-        <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{label}</p>
-        {description && <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">{description}</p>}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function Toggle({ value, onChange, label }: { value: boolean; onChange: (v: boolean) => void; label: string }) {
-  // The button is the 44px target; the pill inside is the visible track.
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      role="switch"
-      aria-checked={value}
-      onClick={() => onChange(!value)}
-      className="group flex h-11 w-16 flex-shrink-0 items-center justify-center rounded-full"
-    >
-      <span className={`relative h-8 w-14 rounded-full transition-colors duration-200 ${value ? 'bg-deep dark:bg-lime-300' : 'bg-stone-300 dark:bg-ink-400'}`}>
-        <span className={`absolute left-1 top-1 h-6 w-6 rounded-full transition-transform duration-200 ${value ? 'translate-x-6 bg-lime-300 dark:bg-deep' : 'translate-x-0 bg-white dark:bg-stone-300'}`} />
-      </span>
-    </button>
-  );
-}
-
+import { Section, Row, Toggle } from './settings/ui';
+import { SettingsSlots } from './settings/SettingsSlots';
 
 // --------------------------------------------------------------------------
 // Web Audio preview — fires a one-shot preview of a sound
@@ -389,7 +328,9 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
   if (!user) return null;
 
   const { subscription_status, subscription_plan, subscription_end_date, trial_end_date } = user;
-  const badge = STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired;
+  // WS9: lifetime, gift, referral credit and the free plan have their own wording. null for everyone else.
+  const override = planOverride(user);
+  const badge = override ? { label: override.badge } : (STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired);
 
   const trialLeftText = trialLeft(trial_end_date);
 
@@ -407,12 +348,12 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 
   const canManage = subscription_status === 'active' || subscription_status === 'paused' || subscription_status === 'cancelled';
 
-  const headline = subscription_status === 'trial'
+  const headline = override ? override.headline : subscription_status === 'trial'
     ? (trialLeftText ?? 'Trial ended')
     : subscription_status === 'active' || subscription_status === 'paused'
       ? (subscription_plan === 'yearly' ? 'Yearly' : subscription_plan === 'monthly' ? 'Monthly' : badge.label)
       : badge.label;
-  const detail = subscription_status === 'trial' && trial_end_date
+  const detail = override ? override.detail : subscription_status === 'trial' && trial_end_date
     ? (trialLeftText ? `In your free trial, ends ${fmt(trial_end_date)}` : 'Your free trial has ended')
     : subscription_status === 'active' && subscription_end_date
       ? `Renews ${fmt(subscription_end_date)}`
@@ -436,9 +377,9 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
         <p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-0.045em] sm:text-6xl">{headline}</p>
         {detail && <p className="mt-3 text-base text-white/80">{detail}</p>}
 
-        {(accessStatus === 'trial_active' && onUpgrade) || canManage ? (
+        {((accessStatus === 'trial_active' || override?.upgrade) && onUpgrade) || canManage ? (
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            {accessStatus === 'trial_active' && onUpgrade && (
+            {(accessStatus === 'trial_active' || override?.upgrade) && onUpgrade && (
               <button
                 onClick={onUpgrade}
                 type="button"
@@ -573,6 +514,10 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
 
       {/* Bite reasons — full width */}
       <ReasonsSection />
+
+      {/* Sections added by later workstreams (src/pages/settings). Each renders
+          nothing until its feature flag is on, so this adds no card by default. */}
+      <SettingsSlots />
 
       {/* Appearance: the one place to set the theme, on every screen size. */}
       <Section title="Appearance" icon={Sun}>

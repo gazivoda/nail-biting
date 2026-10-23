@@ -1,3 +1,5 @@
+import { TRIAL_HYPHEN, TRIAL_WORDS, TRIAL_WORDS_CAP, TRIAL_WORD_HYPHEN } from '../../shared/plans.js';
+
 export interface BlogSection {
   heading: string;
   body: string; // plain paragraphs separated by \n\n
@@ -373,7 +375,7 @@ export const BLOG_POSTS: BlogPost[] = [
     tag: 'Technology',
     readingMinutes: 4,
     datePublished: '2026-04-03',
-    dateModified: '2026-09-16',
+    dateModified: '2026-10-23',
     ogImage: '/og/how-ai-can-help-stop-nail-biting.png',
     sections: [
       {
@@ -382,7 +384,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: 'How does webcam-based nail biting detection actually work?',
-        body: `Modern real-time nail biting detection uses a combination of hand landmark detection and face landmark detection to identify when fingers are near the mouth. The hand model tracks 21 key points on the hand with sub-centimetre precision; the face model tracks 468 facial landmarks including the precise location of the lips and mouth opening. When hand landmarks and mouth landmarks are simultaneously within a defined geometric proximity, the detection fires.\n\nThe underlying AI framework — MediaPipe, developed by Google — runs entirely in WebAssembly, a portable binary instruction format that executes at near-native speed inside browsers and desktop applications. This means detection can run entirely on the user's local CPU or GPU, with no network connection to any server required. Stop Biting deliberately runs it five times a second rather than on every frame — enough to catch a hand on its way to the mouth, at a fraction of the CPU cost. The camera feed never leaves the device — a non-trivial privacy consideration for a tool that operates continuously during work hours.`,
+        body: `Modern real-time nail biting detection uses a combination of hand landmark detection and face landmark detection to identify when fingers are near the mouth. The hand model tracks 21 key points on the hand with sub-centimetre precision; the face model tracks 468 facial landmarks including the precise location of the lips and mouth opening. When hand landmarks and mouth landmarks are simultaneously within a defined geometric proximity, the detection fires.\n\nThe underlying AI framework — MediaPipe, developed by Google — runs entirely in WebAssembly, a portable binary instruction format that executes at near-native speed inside browsers and desktop applications. This means detection can run entirely on the user's local CPU or GPU, so the video never has to be sent to a server to be analysed. Stop Biting deliberately runs it five times a second rather than on every frame — enough to catch a hand on its way to the mouth, at a fraction of the CPU cost. Detection runs on the device and no camera data is sent while it runs — a non-trivial privacy consideration for a tool that operates continuously during work hours.`,
       },
       {
         heading: 'Is AI detection as effective as human awareness training?',
@@ -390,7 +392,7 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         heading: 'What are the privacy implications of a webcam monitoring app?',
-        body: `Privacy is the central concern for any application that operates a webcam continuously during work hours. Stop Biting addresses this through architecture rather than policy: because MediaPipe runs entirely in WebAssembly on the user's device, no camera data — not a single frame — is transmitted over the network. This can be independently verified by monitoring network traffic while the app runs; no camera-related packets will be observed.\n\nThe SQLite database storing incident logs and streaks is also local. Uninstalling the app removes all data. There is no cloud sync, no user analytics, no behavioural data collected. For anyone considering the trade-off of continuous camera monitoring against the therapeutic benefit, the data architecture makes the privacy case straightforwardly: the camera feed is processed and discarded locally, frame by frame, with no persistence and no network transmission.`,
+        body: `Privacy is the central concern for any application that operates a webcam continuously during work hours. Stop Biting addresses this through architecture rather than policy: because MediaPipe runs entirely in WebAssembly on the user's device, no camera data — not a single frame — is sent while it runs. This can be independently verified by monitoring network traffic while detection runs; no camera data will be observed.\n\nYour incident log and streaks are stored in your browser rather than synced to a server, and clearing the site's data removes them. Signing in and paying use the network, and the site counts page visits with Google Analytics, but none of that includes camera data. For anyone considering the trade-off of continuous camera monitoring against the therapeutic benefit, the data architecture makes the privacy case straightforwardly: the camera feed is processed and discarded on the device, frame by frame, and no camera data is sent while it runs.`,
       },
       {
         heading: 'What should I expect in the first month of using AI detection for nail biting?',
@@ -706,11 +708,11 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     slug: 'webcam-privacy-nail-biting-app',
     title: 'Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained',
     seoTitle: 'Webcam Nail Biting App Privacy: Is It Safe?',
-    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data leaves your device.",
+    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-09-10',
+    dateModified: '2026-10-23',
     ogImage: '/og/webcam-privacy-nail-biting-app.png',
     sections: [
       {
@@ -719,7 +721,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       },
       {
         heading: 'How on-device AI processing works',
-        body: `Stop Biting uses MediaPipe, Google's open-source machine learning framework, compiled to WebAssembly — a portable binary format that runs at near-native speed inside browsers and desktop applications. The hand and face landmark detection models run entirely on the user's local CPU or GPU. No video frames, no landmark coordinates, and no detection events are transmitted to any server.\n\nThis can be independently verified by anyone using network monitoring tools (Charles Proxy, Wireshark, or the browser's built-in Network tab in Developer Tools). Running Stop Biting while monitoring network traffic will show zero camera-related network requests. The absence of data transmission is architectural — there is no server endpoint to send data to, because all processing is local.`,
+        body: `Stop Biting uses MediaPipe, Google's open-source machine learning framework, compiled to WebAssembly — a portable binary format that runs at near-native speed inside browsers and desktop applications. The hand and face landmark detection models run entirely on the user's local CPU or GPU. No video frames, no landmark coordinates, and no detection events are transmitted to any server.\n\nThis can be independently verified by anyone using network monitoring tools (Charles Proxy, Wireshark, or the browser's built-in Network tab in Developer Tools). Running Stop Biting while monitoring network traffic will show no camera data being sent. Detection runs in your browser, so there is no step at which video has to be uploaded. Signing in and paying do use the network.`,
       },
       {
         heading: 'What data is and is not stored',
@@ -860,12 +862,12 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-04-07',
-    dateModified: '2026-09-15',
+    dateModified: '2026-10-23',
     ogImage: '/og/mediapipe-ai-detection-explained.png',
     sections: [
       {
         heading: 'What is MediaPipe and why does it matter?',
-        body: `MediaPipe is an open-source machine learning framework developed by Google Research, designed for real-time perception tasks — detecting, tracking, and understanding objects in camera streams. Originally developed for Google's own products (Pixel's portrait mode, Google Meet's background blur), it was open-sourced in 2019 and has become the dominant framework for on-device computer vision in web and mobile applications.\n\nThe key property that makes MediaPipe relevant for a nail biting detection app is its speed and its architecture: all models run locally on the user's device with no cloud dependency, and the framework is built to sustain video frame rates on standard consumer hardware. That headroom is what lets Stop Biting sample five times a second and still leave the machine free for whatever you are actually doing.`,
+        body: `MediaPipe is an open-source machine learning framework developed by Google Research, designed for real-time perception tasks — detecting, tracking, and understanding objects in camera streams. Originally developed for Google's own products (Pixel's portrait mode, Google Meet's background blur), it was open-sourced in 2019 and has become the dominant framework for on-device computer vision in web and mobile applications.\n\nThe key property that makes MediaPipe relevant for a nail biting detection app is its speed and its architecture: all models run on the user's device, so analysing video does not need a cloud service, and the framework is built to sustain video frame rates on standard consumer hardware. That headroom is what lets Stop Biting sample five times a second and still leave the machine free for whatever you are actually doing.`,
       },
       {
         heading: 'The two models used for detection',
@@ -898,7 +900,7 @@ BLOG_POSTS.push({
   tag: 'Humor',
   readingMinutes: 6,
   datePublished: '2026-04-17',
-  dateModified: '2026-04-17',
+  dateModified: '2026-10-23',
   ogImage: '/og/nail-biting-laptop-working-from-home.png',
   sections: [
     {
@@ -927,7 +929,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'What actually works (and why it sounds almost too simple)',
-      body: `The most effective treatment for nail biting is called Habit Reversal Training, and its core insight is this: you cannot stop a habit you are not aware of. The reason the habit persists is not that you lack motivation — you clearly want to stop — it is that the habit is invisible to you while it is happening.\n\nThe intervention that consistently works is external awareness: something that tells you, at the exact moment the behaviour occurs, that it is occurring. Traditionally this required a therapist, a patient spouse, or a very observant colleague. None of these are particularly convenient for a solo Zoom call at 9am.\n\nThis is where Stop Biting comes in. It uses your laptop's webcam and on-device AI to watch for the specific gesture of hand-to-mouth contact and fire an alert the moment it detects it. Not five minutes later when you notice your hand is sore. Not the next morning when you look at your nails. Right now, as it happens — which is the only moment when awareness is therapeutically useful.\n\nThe camera never leaves the app. Nothing is recorded or sent anywhere. It is just a silent observer that, unlike your prefrontal cortex, does not take a break when the build fails.`,
+      body: `The most effective treatment for nail biting is called Habit Reversal Training, and its core insight is this: you cannot stop a habit you are not aware of. The reason the habit persists is not that you lack motivation — you clearly want to stop — it is that the habit is invisible to you while it is happening.\n\nThe intervention that consistently works is external awareness: something that tells you, at the exact moment the behaviour occurs, that it is occurring. Traditionally this required a therapist, a patient spouse, or a very observant colleague. None of these are particularly convenient for a solo Zoom call at 9am.\n\nThis is where Stop Biting comes in. It uses your laptop's webcam and on-device AI to watch for the specific gesture of hand-to-mouth contact and fire an alert the moment it detects it. Not five minutes later when you notice your hand is sore. Not the next morning when you look at your nails. Right now, as it happens — which is the only moment when awareness is therapeutically useful.\n\nDetection runs on your device. No camera data is sent while it runs, and no video is recorded. It is just a silent observer that, unlike your prefrontal cortex, does not take a break when the build fails.`,
     },
     {
       heading: 'What using it actually looks like',
@@ -935,7 +937,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The part where we get slightly serious for one paragraph',
-      body: `Nail biting at a laptop is funny to describe and genuinely frustrating to live with. If you have tried to stop — through bitter polish, through gloves, through sheer willpower — and found that nothing holds, you are not failing. You are running the wrong intervention on the right problem.\n\nThe right intervention works with the architecture of your habit rather than against it. Stop Biting is free to try for three days, requires no installation, and runs entirely on your device. If you're going to be in front of your laptop anyway, you might as well let it do something useful.`,
+      body: `Nail biting at a laptop is funny to describe and genuinely frustrating to live with. If you have tried to stop — through bitter polish, through gloves, through sheer willpower — and found that nothing holds, you are not failing. You are running the wrong intervention on the right problem.\n\nThe right intervention works with the architecture of your habit rather than against it. Stop Biting is free to try for ${TRIAL_WORDS}, requires no installation, and runs detection on your device. If you're going to be in front of your laptop anyway, you might as well let it do something useful.`,
           html: `<p>The full desk-based version of this, including what to do in meetings, is in our <a href="/solutions/for-desk-workers">guide for desk workers</a>.</p>`,
     },
     {
@@ -963,7 +965,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Camera apps: alerts while your hand is near your mouth',
-      body: `Stop Biting uses a computer webcam and on-device hand and face tracking to alert when a fingertip stays close to the mouth. Camera frames are processed locally. Proximity is a proxy for biting: false alarms and missed episodes are possible, and it cannot monitor you away from the camera.\n\nIts alert is intended as an awareness aid. Habit Reversal Training (HRT) combines awareness training with other components, including competing responses and social support. Evidence for that treatment package is not evidence that a particular app produces the same results.\n\nStop Biting costs $2.99/month or $29/year after a free 3-day trial, with no credit card required to start.\n\nThere are other camera apps. Our 10 September 2026 vendor check recorded Hands Off for Mac and Windows and SmartBehavior with iOS and Android apps. Both describe support for behaviours beyond nail biting. Hands Off's homepage, rechecked on 23 October, still advertises €2.99/month after a 3-day trial. SmartBehavior's September store price was $0.99; confirm its current listing before buying.\n\nNailed is a macOS menu bar app. On 23 October 2026, both its official site and its linked US Mac App Store listing showed it as free. The listing requires macOS 12 or later and a Mac with an Apple M1 chip or later.`,
+      body: `Stop Biting uses a computer webcam and on-device hand and face tracking to alert when a fingertip stays close to the mouth. Camera frames are processed locally. Proximity is a proxy for biting: false alarms and missed episodes are possible, and it cannot monitor you away from the camera.\n\nIts alert is intended as an awareness aid. Habit Reversal Training (HRT) combines awareness training with other components, including competing responses and social support. Evidence for that treatment package is not evidence that a particular app produces the same results.\n\nStop Biting costs $2.99/month or $29/year after a free ${TRIAL_HYPHEN} trial, with no credit card required to start.\n\nThere are other camera apps. Our 10 September 2026 vendor check recorded Hands Off for Mac and Windows and SmartBehavior with iOS and Android apps. Both describe support for behaviours beyond nail biting. Hands Off's homepage, rechecked on 23 October, says it costs €2.99/month with a 3-day trial. SmartBehavior's September store price was $0.99; confirm its current listing before buying.\n\nNailed is a macOS menu bar app. On 23 October 2026, both its official site and its linked US Mac App Store listing showed it as free. The listing requires macOS 12 or later and a Mac with an Apple M1 chip or later.`,
       list: [
         `For a browser-based alert at your desk: compare Stop Biting's setup and limits with the installed camera apps.`,
         `For several BFRBs: check which specific behaviours Hands Off and SmartBehavior say they cover.`,
@@ -999,7 +1001,7 @@ BLOG_POSTS.push({
     <tr><th>Tool / Category</th><th>How it prompts or records</th><th>Where it works</th><th>Price and check date</th></tr>
   </thead>
   <tbody>
-    <tr><td><strong>Stop Biting</strong> (camera app)</td><td>Alerts for sustained fingertip-to-mouth proximity; can false-alarm or miss an episode</td><td>Computer with webcam, while you are in view</td><td>3-day trial, then $2.99/mo or $29/yr (our product)</td></tr>
+    <tr><td><strong>Stop Biting</strong> (camera app)</td><td>Alerts for sustained fingertip-to-mouth proximity; can false-alarm or miss an episode</td><td>Computer with webcam, while you are in view</td><td>${TRIAL_HYPHEN} trial, then $2.99/mo or $29/yr (our product)</td></tr>
     <tr><td><strong>Nailed</strong> (Mac camera app)</td><td>Camera-based hand-to-mouth alert, per its site</td><td>A supported Apple Silicon Mac with camera</td><td>Free (official site and US Mac App Store, 23 Oct 2026)</td></tr>
     <tr><td><strong>Mavala Stop</strong> (bitter polish)</td><td>Bitter taste when a treated nail reaches the mouth</td><td>Away from a screen; follow product instructions</td><td>Check current product listing</td></tr>
     <tr><td><strong>Orly No Bite</strong> (bitter polish)</td><td>Bitter taste when a treated nail reaches the mouth</td><td>Away from a screen; follow product instructions</td><td>Check current product listing</td></tr>
@@ -1024,7 +1026,7 @@ BLOG_POSTS.push({
     {
       heading: 'Frequently asked questions',
       body: `Answers to the questions people ask most about these tools.`,
-      html: `<h3>Are there any free apps to stop nail biting?</h3><p>Nailed's official site and linked US Mac App Store listing both showed it as free on 23 October 2026, for supported Apple Silicon Macs. NailKeeper's earlier listing showed a free download with in-app purchases. Stop Biting offers a free 3-day trial, then costs $2.99/month or $29/year; the trial is not a permanent free plan.</p><h3>Do nail biting apps actually work?</h3><p>An app's features do not establish its clinical effectiveness. A camera alert can prompt awareness, and a tracker can record what you enter, but the HRT trial cited here tested a treatment package rather than these apps. We have not run a trial of Stop Biting or established that it outperforms the alternatives.</p><h3>What is the fastest combination to reduce biting?</h3><p>We do not have comparative evidence identifying a fastest combination. Start with where biting happens and what support you need. If biting causes injury or significant distress, ask a clinician about an appropriate treatment plan.</p><p><strong>HRT evidence:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a> Thirty adults were randomized to HRT or a conversation placebo; this was not a trial of any app named here.</p>`,
+      html: `<h3>Are there any free apps to stop nail biting?</h3><p>Nailed's official site and linked US Mac App Store listing both showed it as free on 23 October 2026, for supported Apple Silicon Macs. NailKeeper's earlier listing showed a free download with in-app purchases. Stop Biting offers a free ${TRIAL_HYPHEN} trial, then costs $2.99/month or $29/year; the trial is not a permanent free plan.</p><h3>Do nail biting apps actually work?</h3><p>An app's features do not establish its clinical effectiveness. A camera alert can prompt awareness, and a tracker can record what you enter, but the HRT trial cited here tested a treatment package rather than these apps. We have not run a trial of Stop Biting or established that it outperforms the alternatives.</p><h3>What is the fastest combination to reduce biting?</h3><p>We do not have comparative evidence identifying a fastest combination. Start with where biting happens and what support you need. If biting causes injury or significant distress, ask a clinician about an appropriate treatment plan.</p><p><strong>HRT evidence:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a> Thirty adults were randomized to HRT or a conversation placebo; this was not a trial of any app named here.</p>`,
     },
     {
       heading: `Where to go next`,
@@ -1043,7 +1045,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 4,
   datePublished: '2026-04-19',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-23',
   ogImage: '/og/stop-biting-vs-mavala-stop.png',
   sections: [
     {
@@ -1057,8 +1059,8 @@ BLOG_POSTS.push({
         'Mechanism — Stop Biting: AI webcam detection fires an alert before the bite. Mavala Stop: bitter taste deters on contact.',
         'Works away from screen — Stop Biting: No (screen-time only). Mavala Stop: Yes (works 24/7).',
         'Effective for established habits — Stop Biting: Strong (awareness mechanism directly addresses automaticity). Mavala Stop: Variable (habituation risk within 2–3 weeks).',
-        'Price — Stop Biting: $2.99/month or $29/year with 3-day free trial. Mavala Stop: ~$10–$12 one-time purchase.',
-        'Privacy — Stop Biting: 100% on-device, no data transmitted. Mavala Stop: physical product, no data.',
+        `Price — Stop Biting: $2.99/month or $29/year with ${TRIAL_HYPHEN} free trial. Mavala Stop: ~$10–$12 one-time purchase.`,
+        'Privacy — Stop Biting: detection runs on your device and no camera data is sent while it runs. Mavala Stop: physical product, no data.',
         'Addresses root trigger — Stop Biting: Yes (builds awareness). Mavala Stop: No (deterrent only).',
       ],
     },
@@ -1072,7 +1074,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Which should you use?',
-      body: `Choose Mavala Stop if you bite across all contexts (not mainly at a screen), have a mild or early-stage habit, want the simplest possible solution, or want monitoring that works 24/7 including during sleep.\n\nChoose Stop Biting if most of your biting happens at the computer, you have an established habit where awareness interruption is needed, or privacy matters — 100% on-device with nothing transmitted.\n\nUse both if you bite in multiple contexts. Stop Biting handles screen time; Mavala handles everything else. The combination costs under $15/month (Mavala is a one-off purchase) and provides the closest thing to full-day monitoring available without a dedicated wearable.\n\nDisclosure: Stop Biting is our product. We've tried to present both tools honestly — the evidence for Mavala Stop's mechanism is real and it works for many people, particularly casual biters and those with early-stage habits.`,
+      body: `Choose Mavala Stop if you bite across all contexts (not mainly at a screen), have a mild or early-stage habit, want the simplest possible solution, or want monitoring that works 24/7 including during sleep.\n\nChoose Stop Biting if most of your biting happens at the computer, you have an established habit where awareness interruption is needed, or privacy matters: detection runs on your device and no camera data is sent while it runs.\n\nUse both if you bite in multiple contexts. Stop Biting handles screen time; Mavala handles everything else. The combination costs under $15/month (Mavala is a one-off purchase) and provides the closest thing to full-day monitoring available without a dedicated wearable.\n\nDisclosure: Stop Biting is our product. We've tried to present both tools honestly — the evidence for Mavala Stop's mechanism is real and it works for many people, particularly casual biters and those with early-stage habits.`,
     },
     {
       heading: 'Frequently asked questions',
@@ -1591,7 +1593,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The bottom line on acrylics for nail biting',
-      body: `Acrylic and gel nails are a legitimate nail biting intervention with a real mechanism — not a placebo or a gimmick. They work best for people with sensory-triggered habits, sufficient motivation to maintain extensions, and the willingness to combine them with behavioral habit work during the extension period. For people with deeply automatic habits driven by stress or concentration states, acrylics alone are unlikely to produce lasting change without simultaneous awareness training.\n\nIf you're considering acrylics as a starting strategy, use the time under extensions actively: track your urges, identify your triggers, and build a competing response. The extensions give you a window. Whether that window produces lasting change depends on what you do with the automatic habits that don't respond to a physical barrier.\n\nStop Biting provides the awareness layer that acrylics can't. It catches the moments when the habit fires below conscious attention during screen time — the sessions where acrylics don't help because you're not even noticing you're trying to bite. Start with a free 3-day trial to see how often those moments actually occur.`,
+      body: `Acrylic and gel nails are a legitimate nail biting intervention with a real mechanism — not a placebo or a gimmick. They work best for people with sensory-triggered habits, sufficient motivation to maintain extensions, and the willingness to combine them with behavioral habit work during the extension period. For people with deeply automatic habits driven by stress or concentration states, acrylics alone are unlikely to produce lasting change without simultaneous awareness training.\n\nIf you're considering acrylics as a starting strategy, use the time under extensions actively: track your urges, identify your triggers, and build a competing response. The extensions give you a window. Whether that window produces lasting change depends on what you do with the automatic habits that don't respond to a physical barrier.\n\nStop Biting provides the awareness layer that acrylics can't. It catches the moments when the habit fires below conscious attention during screen time — the sessions where acrylics don't help because you're not even noticing you're trying to bite. Start with a free ${TRIAL_HYPHEN} trial to see how often those moments actually occur.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/1540108/" target="_blank" rel="noopener noreferrer">Silber KP, Haynes CE. Treating nailbiting: a comparative analysis of mild aversion and competing response therapies. Behav Res Ther. 1992;30(1):15–22.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/21873368/" target="_blank" rel="noopener noreferrer">Koritzky G, Yechiam E. On the value of nonremovable reminders for behavior modification: an application to nail-biting (onychophagia). Behav Modif. 2011;35(6):511–530.</a></li></ul>`,
     },
     {
@@ -1611,7 +1613,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 5,
   datePublished: '2026-04-23',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-23',
   ogImage: '/og/nail-biting-cure.png',
   sections: [
     {
@@ -1639,7 +1641,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The fastest path to permanent remission',
-      body: `The shortest documented path to lasting remission combines real-time awareness detection with a prepared competing response, sustained for 8–12 weeks. The real-time detection provides immediate awareness for screen-time biting — the most common context — while the competing response is practiced consistently every time an episode is detected.\n\nStop Biting uses your webcam to detect the exact moment your hand approaches your mouth and fires an alert — giving you the awareness window that the competing response requires. All processing happens on your device; no camera data is ever transmitted. The three-day free trial gives you accurate data on how often the habit actually fires during screen time — which is almost always more than people expect. That gap between expected and actual frequency is itself the first and most important data point on the path to stopping for good.`,
+      body: `The shortest documented path to lasting remission combines real-time awareness detection with a prepared competing response, sustained for 8–12 weeks. The real-time detection provides immediate awareness for screen-time biting — the most common context — while the competing response is practiced consistently every time an episode is detected.\n\nStop Biting uses your webcam to detect the exact moment your hand approaches your mouth and fires an alert — giving you the awareness window that the competing response requires. Detection runs on your device, and no camera data is sent while it runs. The ${TRIAL_WORD_HYPHEN} free trial gives you accurate data on how often the habit actually fires during screen time — which is almost always more than people expect. That gap between expected and actual frequency is itself the first and most important data point on the path to stopping for good.`,
     },
     {
       heading: `Related reading`,
@@ -1738,7 +1740,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Starting is simpler than the social burden makes it seem',
-      body: `The social shame associated with nail biting can paradoxically make starting treatment harder. Shame tends to narrow attention and reduce perceived self-efficacy — "I've had this for 20 years, it's just who I am." The clinical literature on BFRB treatment consistently finds that reducing shame (treating the habit as a neurological pattern, not a character flaw) is a prerequisite for effective engagement with treatment.\n\nThe practical starting point is awareness — catching the habit at the moment it occurs, rather than noticing it after the fact. Most of it runs outside awareness: 92.2% of the biters in the 339-student survey described their own behaviour as automatic. Closing this awareness gap is the first step and the most therapeutically active component of the process. Stop Biting provides this automatically during screen time: using your webcam to detect hand-to-mouth behavior and alert you in real time. Three days free, no setup, no credit card required. The awareness data alone — seeing exactly how often and in what contexts the habit fires — changes the relationship with it.`,
+      body: `The social shame associated with nail biting can paradoxically make starting treatment harder. Shame tends to narrow attention and reduce perceived self-efficacy — "I've had this for 20 years, it's just who I am." The clinical literature on BFRB treatment consistently finds that reducing shame (treating the habit as a neurological pattern, not a character flaw) is a prerequisite for effective engagement with treatment.\n\nThe practical starting point is awareness — catching the habit at the moment it occurs, rather than noticing it after the fact. Most of it runs outside awareness: 92.2% of the biters in the 339-student survey described their own behaviour as automatic. Closing this awareness gap is the first step and the most therapeutically active component of the process. Stop Biting provides this automatically during screen time: using your webcam to detect hand-to-mouth behavior and alert you in real time. ${TRIAL_WORDS_CAP} free, no setup, no credit card required. The awareness data alone — seeing exactly how often and in what contexts the habit fires — changes the relationship with it.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://medicaljournalssweden.se/actadv/article/view/6260" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://acta-apa.mf.uni-lj.si/journals/acta-dermatovenerol-apa/papers/10.15570/actaapa.2021.4/actaapa.2021.4.pdf" target="_blank" rel="noopener noreferrer">Erdogan HK, Arslantas D, Atay E, Eyuboglu D, Unsal A, Dagtekin G, Kilinc A. Prevalence of onychophagia and its relation to stress and quality of life. Acta Dermatovenerol Alp Pannonica Adriat. 2021;30(1):15–19.</a></li><li><a href="https://doi.org/10.1016/j.comppsych.2018.06.014" target="_blank" rel="noopener noreferrer">Solley K, Turner C. Prevalence and correlates of clinically significant body-focused repetitive behaviors in a non-clinical sample. Compr Psychiatry. 2018;86:9–18.</a></li><li><a href="https://doi.org/10.1016/j.psychres.2018.10.002" target="_blank" rel="noopener noreferrer">Houghton DC, Alexander JR, Bauer CC, Woods DW. Body-focused repetitive behaviors: More prevalent than once thought? Psychiatry Research. 2018;270:389–393.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2435519/" target="_blank" rel="noopener noreferrer">Ghanizadeh A. Association of nail biting and psychiatric disorders in children and their parents in a psychiatrically referred sample of children. Child Adolesc Psychiatry Ment Health. 2008;2(1):13.</a></li></ul>`,
     },
     {
@@ -1784,7 +1786,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'A practical starting point for teens and their parents',
-      body: `For teenagers who want to stop and have parental support, the most effective starting combination is: a structured awareness practice (keeping a simple log of when and where biting occurs for one week) plus a single pre-chosen competing response practiced consistently. The log reveals the contexts — most teenagers are surprised by how specifically their biting clusters around particular situations — and the competing response is trained for exactly those contexts.\n\nFor teenagers who bite primarily during screen time (increasingly the majority, given screen-based studying), real-time detection during computer use provides the external awareness that neither self-monitoring nor parental signals can reliably deliver. Stop Biting's three-day free trial works on any webcam-equipped device, requires no download, and gives immediate data on when the habit fires during study sessions. That data — seeing exactly how many times the hand moves to the mouth during a two-hour study block — is often the most eye-opening and motivating starting point available.`,
+      body: `For teenagers who want to stop and have parental support, the most effective starting combination is: a structured awareness practice (keeping a simple log of when and where biting occurs for one week) plus a single pre-chosen competing response practiced consistently. The log reveals the contexts — most teenagers are surprised by how specifically their biting clusters around particular situations — and the competing response is trained for exactly those contexts.\n\nFor teenagers who bite primarily during screen time (increasingly the majority, given screen-based studying), real-time detection during computer use provides the external awareness that neither self-monitoring nor parental signals can reliably deliver. Stop Biting's ${TRIAL_WORD_HYPHEN} free trial works on any webcam-equipped device, requires no download, and gives immediate data on when the habit fires during study sessions. That data — seeing exactly how many times the hand moves to the mouth during a two-hour study block — is often the most eye-opening and motivating starting point available.`,
     },
     {
       heading: `Related reading`,
@@ -1828,7 +1830,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The one week plan to reduce biting at work',
-      body: `Day 1–2: keep a simple habit log — note time and context for every episode. No competing response yet; just data collection. Most professionals are surprised by the specificity of the pattern this reveals.\n\nDay 3: choose one competing response matched to your highest-risk context. Practice it deliberately 5–10 times in a calm moment — before the habit fires, not after. Muscle memory for the competing response needs to exist before the stressful moment.\n\nDay 4–7: implement the competing response every time the habit fires in the high-risk context. Aim for consistency, not perfection. Even 60% application in week one produces measurable frequency reduction.\n\nFor screen-time work specifically: run Stop Biting's three-day free trial during your highest-concentration work periods. The awareness data from even one day of continuous monitoring is typically more informative than a week of self-reporting — catching the automatic episodes that self-monitoring consistently misses.`,
+      body: `Day 1–2: keep a simple habit log — note time and context for every episode. No competing response yet; just data collection. Most professionals are surprised by the specificity of the pattern this reveals.\n\nDay 3: choose one competing response matched to your highest-risk context. Practice it deliberately 5–10 times in a calm moment — before the habit fires, not after. Muscle memory for the competing response needs to exist before the stressful moment.\n\nDay 4–7: implement the competing response every time the habit fires in the high-risk context. Aim for consistency, not perfection. Even 60% application in week one produces measurable frequency reduction.\n\nFor screen-time work specifically: run Stop Biting's ${TRIAL_WORD_HYPHEN} free trial during your highest-concentration work periods. The awareness data from even one day of continuous monitoring is typically more informative than a week of self-reporting — catching the automatic episodes that self-monitoring consistently misses.`,
     },
     {
       heading: `Related reading`,
@@ -1872,7 +1874,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'The practical connection to nail biting treatment',
-      body: `Understanding the perfectionism-nail biting connection changes the treatment emphasis. Rather than focusing only on catching and interrupting individual biting episodes, treatment also needs to address the internal tension state that the habit is serving.\n\nFor the frustration-driven pattern: the competing response must be practiced specifically during the frustration state, not just during calm moments. Practice pressing palms flat when a project is stuck, when a problem isn't resolving, when you're waiting on someone who's late. Train the competing response to fire during the actual trigger state, not just in neutral conditions.\n\nFor the sensory-perfectionism pattern: proactive nail care is the most effective prevention. Filing nails smooth daily removes the sensory triggers before they initiate an episode. Carrying a fine-grit nail file and addressing uneven edges immediately — rather than biting them — redirects the perfectionist impulse to fix the imperfection through a non-damaging channel.\n\nStop Biting catches the episodes that fire during focused, frustrated work — the moments when perfectionists are most productive and most vulnerable. Three days free, no credit card. The frequency data alone often surprises people who thought their habit was well-managed.`,
+      body: `Understanding the perfectionism-nail biting connection changes the treatment emphasis. Rather than focusing only on catching and interrupting individual biting episodes, treatment also needs to address the internal tension state that the habit is serving.\n\nFor the frustration-driven pattern: the competing response must be practiced specifically during the frustration state, not just during calm moments. Practice pressing palms flat when a project is stuck, when a problem isn't resolving, when you're waiting on someone who's late. Train the competing response to fire during the actual trigger state, not just in neutral conditions.\n\nFor the sensory-perfectionism pattern: proactive nail care is the most effective prevention. Filing nails smooth daily removes the sensory triggers before they initiate an episode. Carrying a fine-grit nail file and addressing uneven edges immediately — rather than biting them — redirects the perfectionist impulse to fix the imperfection through a non-damaging channel.\n\nStop Biting catches the episodes that fire during focused, frustrated work — the moments when perfectionists are most productive and most vulnerable. ${TRIAL_WORDS_CAP} free, no credit card. The frequency data alone often surprises people who thought their habit was well-managed.`,
     },
     {
       heading: `Where to go next`,
@@ -2004,16 +2006,16 @@ BLOG_POSTS.push({
   tag: 'Products',
   readingMinutes: 4,
   datePublished: '2026-05-12',
-  dateModified: '2026-09-16',
+  dateModified: '2026-10-23',
   ogImage: '/og/stop-biting-app-review.png',
   sections: [
     {
       heading: 'What Stop Biting does',
-      body: `Full disclosure before anything else: Stop Biting is my own app, made and sold by Igor Gazivoda, who writes this site, so this is not an independent review. What follows is an honest walkthrough of what the app does, where it helps, and where it doesn't, so you can judge whether it fits your habit pattern before starting the free trial.\n\nStop Biting is a web application that uses your computer's webcam and on-device AI to detect nail biting in real time. When the model detects your hand near your mouth, it sounds an alarm. No data is sent anywhere — the detection runs entirely on your device using Google's MediaPipe framework compiled to WebAssembly.\n\nThe core use case is the awareness component of Habit Reversal Training (HRT) — the best-evidenced behavioural treatment for nail biting. Much of the habit runs below conscious awareness, and self-monitoring misses many episodes. Stop Biting provides the external awareness signal that HRT identifies as the key ingredient.`,
+      body: `Full disclosure before anything else: Stop Biting is my own app, made and sold by Igor Gazivoda, who writes this site, so this is not an independent review. What follows is an honest walkthrough of what the app does, where it helps, and where it doesn't, so you can judge whether it fits your habit pattern before starting the free trial.\n\nStop Biting is a web application that uses your computer's webcam and on-device AI to detect nail biting in real time. When the model detects your hand near your mouth, it sounds an alarm. No camera data is sent while it runs: detection runs on your device using Google's MediaPipe framework compiled to WebAssembly.\n\nThe core use case is the awareness component of Habit Reversal Training (HRT) — the best-evidenced behavioural treatment for nail biting. Much of the habit runs below conscious awareness, and self-monitoring misses many episodes. Stop Biting provides the external awareness signal that HRT identifies as the key ingredient.`,
     },
     {
       heading: 'Getting started: what the first 10 minutes look like',
-      body: `The app runs in a browser (Chrome, Edge, Firefox) without installation — or as a downloadable app for macOS and Windows. A 3-day free trial starts immediately; no credit card required. Setup takes under two minutes: grant camera permission, position your webcam so your face and hands are visible, and the detection is live.\n\nThe first thing the tool tends to surface is biting you did not know about. That is not a malfunction, it is the entire purpose: the episodes worth catching are by definition the ones you were never going to notice yourself. This is not a bug — it's exactly what the tool is for. Nail biting is automatic. The alarm makes it visible.`,
+      body: `The app runs in a browser (Chrome, Edge, Firefox) without installation — or as a downloadable app for macOS and Windows. A ${TRIAL_HYPHEN} free trial starts immediately; no credit card required. Setup takes under two minutes: grant camera permission, position your webcam so your face and hands are visible, and the detection is live.\n\nThe first thing the tool tends to surface is biting you did not know about. That is not a malfunction, it is the entire purpose: the episodes worth catching are by definition the ones you were never going to notice yourself. This is not a bug — it's exactly what the tool is for. Nail biting is automatic. The alarm makes it visible.`,
     },
     {
       heading: 'The first week: what your data shows',
@@ -2021,7 +2023,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Privacy: the question everyone asks first',
-      body: `The app uses your webcam, which creates an understandable privacy concern. The answer is simple: your camera video is never transmitted. The video feed is processed locally by MediaPipe, a framework that runs in WebAssembly — a sandboxed execution environment in your browser. The AI model is downloaded once and runs offline thereafter.\n\nThe alarm and bite log is stored in your browser, with no cloud sync. You sign in with Google so your trial and subscription work, and the site counts page visits with Google Analytics; neither ever sees your camera. You can disconnect from the internet after the initial load and the app functions identically. This isn't a privacy policy claim that requires trust — it's verifiable by monitoring your network traffic while the app runs.`,
+      body: `The app uses your webcam, which creates an understandable privacy concern. The answer is simple: no camera data is sent while detection runs. The video feed is processed locally by MediaPipe, a framework that runs in WebAssembly — a sandboxed execution environment in your browser. The AI models are downloaded once, when you first start detection.\n\nThe alarm and bite log is stored in your browser, with no cloud sync. You sign in with Google so your trial and subscription work, and the site counts page visits with Google Analytics; neither ever sees your camera. You can disconnect from the internet after the initial load and the app functions identically. This isn't a privacy policy claim that requires trust — it's verifiable by monitoring your network traffic while the app runs.`,
     },
     {
       heading: 'Where Stop Biting fits in the treatment stack',
@@ -6198,7 +6200,7 @@ BLOG_POSTS.push(
     sections: [
       {
         heading: 'How accurate is AI nail biting detection?',
-        body: `Stop Biting detects fingertip-to-mouth proximity as a proxy for biting. It does not observe teeth contacting a nail. We have not published a validated accuracy benchmark, so we cannot give a measured percentage of biting episodes caught or alerts that are correct.\n\nOn each sampled frame, hand and face models estimate landmark positions. The detector compares each fingertip with the midpoint of the inner lips. A fingertip inside the chosen distance threshold counts as a positive frame, whether or not biting is actually happening.`,
+        body: `Stop Biting detects fingertip-to-mouth proximity as a proxy for biting. It does not observe teeth contacting a nail. We have not published a validated real-world accuracy benchmark, so we cannot give a measured percentage of biting episodes caught or alerts that are correct.\n\nThis describes default nail-biting detection. Optional detection settings can change which movements trigger alerts. On each sampled frame, hand and face models estimate landmark positions. The detector compares each fingertip with the midpoint of the inner lips. A fingertip inside the chosen distance threshold counts as a positive frame, whether or not biting is actually happening.`,
       },
       {
         heading: 'Why the alert waits for consecutive frames',
@@ -6216,7 +6218,7 @@ BLOG_POSTS.push(
           'Missed episodes: a brief movement may end before three positive frames are recorded.',
           'Framing and obstruction: a hand outside the image, an object covering the mouth or a changed head angle can prevent usable landmark positions.',
           'Lighting: test in the conditions where you will use the app, including backlighting or a dim room; a successful test in one setup does not establish performance in another.',
-          'Coverage: the current model configuration tracks one hand and one face. It cannot monitor you away from the camera.',
+          'Coverage: the camera needs usable views of your face and hands. It cannot monitor you away from its view.',
         ],
         html: `<p>For practical checks, see <a href="/blog/nail-biting-camera-setup">setting up your camera</a>. The technical description here was checked against the current detector implementation on 23 October 2026; it is not a clinical validation study.</p>`,
       },

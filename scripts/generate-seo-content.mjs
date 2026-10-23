@@ -22,6 +22,14 @@ import { fileURLToPath } from 'node:url';
 // Node >= 22.18 strips TypeScript types on import, so the .ts files load directly.
 const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
 const { PAGE_MAP } = await import('../src/data/comparePages.ts');
+// Pages behind the compare_competitors flag. Kept OUT of seo-content.json and
+// llms-full.txt, both of which are served to anyone: they go to dist/seo-gated.json,
+// which server.js reads and never serves.
+const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
+const { GATED_COMPARE_PATHS } = await import('../src/data/gatedComparePaths.ts');
+// Same validator the Testimonials component renders through, so the crawler copy
+// and the page cannot disagree about which entries are publishable.
+const { parseTestimonials, testimonialDetail, TESTIMONIALS_HEADING } = await import('../src/components/site/testimonialsModel.ts');
 // Same function BlogPost.tsx renders from, so the crawler's "Related reading"
 // links are exactly the ones a visitor sees.
 const { getRelated, PRODUCT_LINKS } = await import('../src/data/related.ts');
@@ -91,6 +99,36 @@ if (problems.length) {
   process.exit(1);
 }
 
+const flaggedPages = {};
+for (const [path, get] of Object.entries(GATED_PAGE_MAP)) {
+  const page = get();
+  if (!page?.title) problems.push(`flagged page missing title: ${path}`);
+  if (!page?.sections?.length) problems.push(`flagged page has no sections: ${path}`);
+  if (PAGE_MAP[path]) problems.push(`flagged page is also in PAGE_MAP (it would be published): ${path}`);
+  flaggedPages[path] = page;
+}
+if (Object.keys(flaggedPages).sort().join(',') !== [...GATED_COMPARE_PATHS].sort().join(',')) {
+  problems.push('GATED_PAGE_MAP (competitorPages.ts) and GATED_COMPARE_PATHS (gatedComparePaths.ts) list different paths');
+}
+if (problems.length) {
+  console.error('generate-seo-content: structural problems in the flagged competitor pages:');
+  for (const p of problems) console.error(`  ! ${p}`);
+  process.exit(1);
+}
+
+// The testimonial section's crawler copy (server.js testimonialsArticleHtml). Empty
+// while src/data/testimonials.json is empty; the server renders nothing then.
+const testimonials = {
+  heading: TESTIMONIALS_HEADING,
+  entries: parseTestimonials(JSON.parse(readFileSync(join(ROOT, 'src/data/testimonials.json'), 'utf8')))
+    .map(t => ({
+      quote: t.quote,
+      firstName: t.firstName,
+      detail: testimonialDetail(t),
+      ...(t.beforeAfterPhoto ? { photo: t.beforeAfterPhoto } : {}),
+    })),
+};
+
 // Core-page freshness ledger, maintained by scripts/sync-seo.mjs. It rides in
 // seo-content.json because that is the one generated file the runtime image
 // carries (src/ is not copied into it), and because the sitemap, the JSON-LD
@@ -103,6 +141,11 @@ try {
   process.exit(1);
 }
 
+// The ledger rows of the flagged pages travel with their copy, not in seo-content.json.
+const isFlaggedPath = path => GATED_COMPARE_PATHS.includes(path);
+const flaggedUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => isFlaggedPath(path)));
+pageUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => !isFlaggedPath(path)));
+
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
 writeFileSync(
   join(DIST, 'seo-content.json'),
@@ -113,7 +156,12 @@ writeFileSync(
     pageUpdates,
     authorBio: AUTHOR_BIO,
     editorialPolicy: EDITORIAL_POLICY,
+    testimonials,
   }),
+);
+writeFileSync(
+  join(DIST, 'seo-gated.json'),
+  JSON.stringify({ generatedAt: new Date().toISOString(), comparePages: flaggedPages, pageUpdates: flaggedUpdates }),
 );
 // ─── dist/posts/<slug>.json — one file per article, for the client ──────────
 // BlogPost.tsx used to import src/data/blogPosts.ts, which put every article

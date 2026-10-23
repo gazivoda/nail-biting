@@ -8,1533 +8,1533 @@
       "issues": [],
       "status": 200,
       "schema_count": 7,
-      "bytes": 37737
+      "bytes": 37488
     },
     {
       "path": "/blog",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 79563
+      "bytes": 79338
     },
     {
       "path": "/how-it-works",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 24943
+      "bytes": 25418
     },
     {
       "path": "/pricing",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 23228
+      "bytes": 23649
     },
     {
       "path": "/tools/nail-biting-cost-calculator",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 20602
+      "bytes": 20374
     },
     {
       "path": "/tools/nail-growth-timeline-calculator",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 21064
+      "bytes": 20836
     },
     {
       "path": "/tools/nail-biting-tracker-printable",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 21423
+      "bytes": 21195
     },
     {
       "path": "/about",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 22962
+      "bytes": 22734
     },
     {
       "path": "/compare/bitter-polish-alternative",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 35610
+      "bytes": 35382
     },
     {
       "path": "/compare/habit-tracking-apps",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31560
+      "bytes": 31332
     },
     {
       "path": "/compare/ai-detection-apps",
       "issues": [],
       "status": 200,
       "schema_count": 7,
-      "bytes": 34719
+      "bytes": 34491
     },
     {
       "path": "/compare/stop-biting-vs-hands-off",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 34787
+      "bytes": 34536
     },
     {
       "path": "/compare/stop-biting-vs-nailed",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 33891
+      "bytes": 33653
     },
     {
       "path": "/compare/stop-biting-vs-smartbehavior",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 32561
+      "bytes": 32333
     },
     {
       "path": "/compare/stop-biting-vs-habitaware",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31278
+      "bytes": 31050
     },
     {
       "path": "/compare/stop-biting-vs-nailkeeper",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30548
+      "bytes": 30320
     },
     {
       "path": "/compare/stop-biting-vs-pavlok",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31135
+      "bytes": 30907
     },
     {
       "path": "/compare/stop-biting-vs-biteless",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30501
+      "bytes": 30273
     },
     {
       "path": "/compare/stop-biting-vs-habitcam",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30452
+      "bytes": 30224
     },
     {
       "path": "/compare/stop-biting-vs-nailbitemenu",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30525
+      "bytes": 30297
     },
     {
       "path": "/solutions/for-desk-workers",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29024
+      "bytes": 28795
     },
     {
       "path": "/solutions/for-adhd",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30758
+      "bytes": 30530
     },
     {
       "path": "/solutions/for-gamers",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 28491
+      "bytes": 28263
     },
     {
       "path": "/solutions/for-students",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 27758
+      "bytes": 27530
     },
     {
       "path": "/solutions/for-remote-workers",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 28043
+      "bytes": 27815
     },
     {
       "path": "/solutions/for-mac",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 27066
+      "bytes": 26838
     },
     {
       "path": "/solutions/for-windows",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 26949
+      "bytes": 26721
     },
     {
       "path": "/editorial-policy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 24519
+      "bytes": 24291
     },
     {
       "path": "/privacy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 19842
+      "bytes": 19614
     },
     {
       "path": "/terms-and-conditions",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 19906
+      "bytes": 19678
     },
     {
       "path": "/refund-policy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 19741
+      "bytes": 19513
     },
     {
       "path": "/blog/why-do-people-bite-their-nails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28516
+      "bytes": 28288
     },
     {
       "path": "/blog/habit-reversal-training-guide",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 34734
+      "bytes": 34506
     },
     {
       "path": "/blog/nail-biting-health-risks",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 34974
+      "bytes": 34746
     },
     {
       "path": "/blog/nail-biting-in-children",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30086
+      "bytes": 29858
     },
     {
       "path": "/blog/best-nail-biting-remedies",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 32090
+      "bytes": 31862
     },
     {
       "path": "/blog/stress-and-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30482
+      "bytes": 30254
     },
     {
       "path": "/blog/nail-biting-ocd-connection",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29433
+      "bytes": 29205
     },
     {
       "path": "/blog/how-ai-can-help-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27816
+      "bytes": 27692
     },
     {
       "path": "/blog/nail-biting-during-focus-and-work",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28027
+      "bytes": 27799
     },
     {
       "path": "/blog/breaking-any-habit-science",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29058
+      "bytes": 28830
     },
     {
       "path": "/blog/nail-biting-vs-skin-picking",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31061
+      "bytes": 30833
     },
     {
       "path": "/blog/stopping-nail-biting-for-good",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29128
+      "bytes": 28900
     },
     {
       "path": "/blog/nail-biting-anxiety-treatment",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30077
+      "bytes": 29849
     },
     {
       "path": "/blog/how-long-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29444
+      "bytes": 29216
     },
     {
       "path": "/blog/nail-biting-adults-why-persists",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28644
+      "bytes": 28416
     },
     {
       "path": "/blog/webcam-privacy-nail-biting-app",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26821
+      "bytes": 26594
     },
     {
       "path": "/blog/nail-biting-during-sleep",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27226
+      "bytes": 26998
     },
     {
       "path": "/blog/bitter-nail-polish-review",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29497
+      "bytes": 29269
     },
     {
       "path": "/blog/nail-biting-genetics",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30319
+      "bytes": 30091
     },
     {
       "path": "/blog/mediapipe-ai-detection-explained",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27129
+      "bytes": 26918
     },
     {
       "path": "/blog/nail-biting-laptop-working-from-home",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30587
+      "bytes": 30406
     },
     {
       "path": "/blog/best-apps-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 39463
+      "bytes": 39231
     },
     {
       "path": "/blog/stop-biting-vs-mavala-stop",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29794
+      "bytes": 29629
     },
     {
       "path": "/blog/nail-biting-adhd",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31099
+      "bytes": 30871
     },
     {
       "path": "/blog/nail-biting-stimming",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31467
+      "bytes": 31239
     },
     {
       "path": "/blog/stop-nail-biting-fast",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 34438
+      "bytes": 34210
     },
     {
       "path": "/blog/nail-biting-hypnosis",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29360
+      "bytes": 29132
     },
     {
       "path": "/blog/nac-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30937
+      "bytes": 30709
     },
     {
       "path": "/blog/nail-biting-alternatives",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30817
+      "bytes": 30589
     },
     {
       "path": "/blog/nail-biting-pregnancy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31075
+      "bytes": 30847
     },
     {
       "path": "/blog/nail-biting-statistics",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 36835
+      "bytes": 36607
     },
     {
       "path": "/blog/grow-nails-after-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30108
+      "bytes": 29880
     },
     {
       "path": "/blog/nail-biting-emotional-regulation",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 32508
+      "bytes": 32280
     },
     {
       "path": "/blog/acrylics-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 33117
+      "bytes": 32889
     },
     {
       "path": "/blog/nail-biting-cure",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 33043
+      "bytes": 32813
     },
     {
       "path": "/blog/nail-biting-bacteria-parasites",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 36330
+      "bytes": 36102
     },
     {
       "path": "/blog/nail-biting-social-confidence",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 32911
+      "bytes": 32683
     },
     {
       "path": "/blog/nail-biting-teenagers",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 32543
+      "bytes": 32315
     },
     {
       "path": "/blog/nail-biting-at-work-meetings",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29432
+      "bytes": 29204
     },
     {
       "path": "/blog/nail-biting-and-perfectionism",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31650
+      "bytes": 31422
     },
     {
       "path": "/blog/nail-biting-gaming",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29344
+      "bytes": 29116
     },
     {
       "path": "/blog/nail-biting-30-day-plan",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31147
+      "bytes": 30919
     },
     {
       "path": "/blog/stop-biting-app-review",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27356
+      "bytes": 27135
     },
     {
       "path": "/blog/nail-biting-personality",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28466
+      "bytes": 28238
     },
     {
       "path": "/blog/nail-biting-evening",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27214
+      "bytes": 26986
     },
     {
       "path": "/blog/nail-biting-fidget-toys",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29456
+      "bytes": 29228
     },
     {
       "path": "/blog/nail-biting-interview-anxiety",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29419
+      "bytes": 29191
     },
     {
       "path": "/blog/nail-biting-habit-tracking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29590
+      "bytes": 29362
     },
     {
       "path": "/blog/nail-biting-men",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30479
+      "bytes": 30251
     },
     {
       "path": "/blog/nail-biting-screen-time",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29286
+      "bytes": 29058
     },
     {
       "path": "/blog/how-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 7,
-      "bytes": 39338
+      "bytes": 39110
     },
     {
       "path": "/blog/onychophagia",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29727
+      "bytes": 29499
     },
     {
       "path": "/blog/nail-biting-and-depression",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28871
+      "bytes": 28643
     },
     {
       "path": "/blog/nail-biting-quiz",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28780
+      "bytes": 28552
     },
     {
       "path": "/blog/nail-biting-toddler",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29094
+      "bytes": 28866
     },
     {
       "path": "/blog/nail-biting-during-exams",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28496
+      "bytes": 28268
     },
     {
       "path": "/blog/nail-biting-night-guard",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26769
+      "bytes": 26541
     },
     {
       "path": "/blog/nail-biting-cognitive-behavioral-therapy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29248
+      "bytes": 29020
     },
     {
       "path": "/blog/bfrb-guide",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30944
+      "bytes": 30716
     },
     {
       "path": "/blog/nail-biting-new-years-resolution",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27363
+      "bytes": 27135
     },
     {
       "path": "/blog/nail-biting-immune-system",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28219
+      "bytes": 27991
     },
     {
       "path": "/blog/nail-biting-vs-pen-chewing",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27061
+      "bytes": 26833
     },
     {
       "path": "/blog/nail-biting-autism",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27673
+      "bytes": 27445
     },
     {
       "path": "/blog/nail-biting-college-students",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29681
+      "bytes": 29453
     },
     {
       "path": "/blog/nail-biting-after-quitting-smoking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28059
+      "bytes": 27831
     },
     {
       "path": "/blog/nail-biting-reddit",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30052
+      "bytes": 29824
     },
     {
       "path": "/blog/nail-biting-gut-health",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30112
+      "bytes": 29884
     },
     {
       "path": "/blog/products-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28131
+      "bytes": 27903
     },
     {
       "path": "/blog/nail-biting-thumb-sucking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28894
+      "bytes": 28666
     },
     {
       "path": "/blog/nail-biting-braces",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28701
+      "bytes": 28473
     },
     {
       "path": "/blog/stop-nail-biting-challenge",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28666
+      "bytes": 28438
     },
     {
       "path": "/blog/nail-biting-vs-hair-pulling",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 27905
+      "bytes": 27677
     },
     {
       "path": "/blog/nail-biting-cortisol",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28147
+      "bytes": 27919
     },
     {
       "path": "/blog/nail-biting-gel-manicure",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29784
+      "bytes": 29556
     },
     {
       "path": "/blog/nail-biting-cuticle-damage",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29691
+      "bytes": 29463
     },
     {
       "path": "/blog/nail-biting-cost",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26055
+      "bytes": 25827
     },
     {
       "path": "/blog/when-to-see-a-doctor-for-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28981
+      "bytes": 28753
     },
     {
       "path": "/blog/nail-biting-app-vs-therapy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28664
+      "bytes": 28436
     },
     {
       "path": "/blog/nail-biting-public-speaking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27544
+      "bytes": 27316
     },
     {
       "path": "/blog/nail-biting-fingerprints",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26801
+      "bytes": 26573
     },
     {
       "path": "/blog/nail-biting-nail-technicians",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27098
+      "bytes": 26870
     },
     {
       "path": "/blog/nail-biting-eczema",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26530
+      "bytes": 26302
     },
     {
       "path": "/blog/nail-biting-caffeine",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26688
+      "bytes": 26460
     },
     {
       "path": "/blog/nail-biting-alcohol",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27771
+      "bytes": 27543
     },
     {
       "path": "/blog/nail-biting-parents-modeling",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27718
+      "bytes": 27490
     },
     {
       "path": "/blog/nail-biting-menopause",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26645
+      "bytes": 26417
     },
     {
       "path": "/blog/press-on-nails-to-stop-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27776
+      "bytes": 27548
     },
     {
       "path": "/blog/how-to-help-someone-who-bites-their-nails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27268
+      "bytes": 27040
     },
     {
       "path": "/blog/nail-biting-healthcare-workers",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28730
+      "bytes": 28502
     },
     {
       "path": "/blog/does-nail-biting-cause-permanent-damage",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28935
+      "bytes": 28707
     },
     {
       "path": "/blog/nail-biting-women",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27361
+      "bytes": 27133
     },
     {
       "path": "/blog/nail-biting-toenails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26856
+      "bytes": 26628
     },
     {
       "path": "/blog/nail-biting-musicians",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 25901
+      "bytes": 25673
     },
     {
       "path": "/blog/nail-biting-flights-travel",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27307
+      "bytes": 27079
     },
     {
       "path": "/blog/nail-biting-contagious",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27024
+      "bytes": 26796
     },
     {
       "path": "/blog/nail-biting-fsa-hsa",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27546
+      "bytes": 27318
     },
     {
       "path": "/blog/nail-biting-essential-oils",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29468
+      "bytes": 29240
     },
     {
       "path": "/blog/nail-biting-magnesium",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29140
+      "bytes": 28912
     },
     {
       "path": "/blog/nail-biting-panic-disorder",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26541
+      "bytes": 26313
     },
     {
       "path": "/blog/nail-biting-ptsd",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27065
+      "bytes": 26837
     },
     {
       "path": "/blog/nail-biting-chefs-food-service",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28399
+      "bytes": 28171
     },
     {
       "path": "/blog/nail-biting-teachers",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 25813
+      "bytes": 25585
     },
     {
       "path": "/blog/nail-biting-wearable-technology",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27648
+      "bytes": 27420
     },
     {
       "path": "/blog/nail-biting-evolutionary-psychology",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26727
+      "bytes": 26499
     },
     {
       "path": "/blog/nail-biting-knuckle-cracking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26834
+      "bytes": 26606
     },
     {
       "path": "/blog/nail-biting-seniors-elderly",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27694
+      "bytes": 27466
     },
     {
       "path": "/blog/nail-biting-birth-control",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27265
+      "bytes": 27037
     },
     {
       "path": "/blog/nail-biting-major-life-changes",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27821
+      "bytes": 27593
     },
     {
       "path": "/blog/nail-biting-dry-skin-winter",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26895
+      "bytes": 26667
     },
     {
       "path": "/blog/nail-biting-fungal-infection",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27815
+      "bytes": 27587
     },
     {
       "path": "/blog/nail-biting-boredom",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29375
+      "bytes": 29147
     },
     {
       "path": "/blog/nail-biting-dopamine",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27264
+      "bytes": 27036
     },
     {
       "path": "/blog/nail-biting-oral-fixation",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29556
+      "bytes": 29328
     },
     {
       "path": "/blog/nail-biting-myths",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31540
+      "bytes": 31312
     },
     {
       "path": "/blog/nail-biting-which-fingers",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27044
+      "bytes": 26816
     },
     {
       "path": "/blog/nail-biting-famous-people",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29139
+      "bytes": 28911
     },
     {
       "path": "/blog/nail-biting-paronychia",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 32020
+      "bytes": 31792
     },
     {
       "path": "/blog/nail-biting-warts",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28479
+      "bytes": 28251
     },
     {
       "path": "/blog/nail-biting-jaw-pain-tmj",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29812
+      "bytes": 29584
     },
     {
       "path": "/blog/nail-biting-hangnails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28844
+      "bytes": 28616
     },
     {
       "path": "/blog/nail-biting-white-spots",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29261
+      "bytes": 29033
     },
     {
       "path": "/blog/nail-biting-vitamin-deficiency",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 28639
+      "bytes": 28411
     },
     {
       "path": "/blog/nail-biting-dermatophagia",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29496
+      "bytes": 29268
     },
     {
       "path": "/blog/nail-biting-medication",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 33084
+      "bytes": 32856
     },
     {
       "path": "/blog/nail-biting-finding-a-therapist",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28867
+      "bytes": 28639
     },
     {
       "path": "/blog/nail-biting-support-groups",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28880
+      "bytes": 28652
     },
     {
       "path": "/blog/nail-biting-mindfulness",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29262
+      "bytes": 29034
     },
     {
       "path": "/blog/nail-biting-trigger-mapping",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30797
+      "bytes": 30569
     },
     {
       "path": "/blog/nail-biting-habit-stacking",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26547
+      "bytes": 26319
     },
     {
       "path": "/blog/nail-biting-accountability-partner",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28062
+      "bytes": 27834
     },
     {
       "path": "/blog/nail-care-routine-for-nail-biters",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28924
+      "bytes": 28696
     },
     {
       "path": "/blog/nail-biting-gloves",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26118
+      "bytes": 25890
     },
     {
       "path": "/blog/nail-biting-finger-tape",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 25997
+      "bytes": 25769
     },
     {
       "path": "/blog/nail-biting-regular-nail-polish",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26335
+      "bytes": 26107
     },
     {
       "path": "/blog/nail-biting-punishing-children",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30530
+      "bytes": 30302
     },
     {
       "path": "/blog/nail-biting-vs-cheek-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27268
+      "bytes": 27040
     },
     {
       "path": "/blog/nail-biting-vs-teeth-grinding",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27162
+      "bytes": 26934
     },
     {
       "path": "/blog/nail-biting-detection-accuracy",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26801
+      "bytes": 26691
     },
     {
       "path": "/blog/nail-biting-camera-setup",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26355
+      "bytes": 26127
     },
     {
       "path": "/blog/nail-biting-app-battery-performance",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26457
+      "bytes": 26229
     },
     {
       "path": "/blog/how-to-choose-nail-biting-treatment",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 33475
+      "bytes": 33247
     },
     {
       "path": "/blog/nail-biting-mistakes",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31196
+      "bytes": 30968
     },
     {
       "path": "/blog/nail-biting-gym-sports",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31228
+      "bytes": 31000
     },
     {
       "path": "/blog/nail-biting-by-situation",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29243
+      "bytes": 29015
     },
     {
       "path": "/blog/nail-biting-subconscious-habit",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26389
+      "bytes": 26161
     },
     {
       "path": "/blog/nail-biting-teeth-damage",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27964
+      "bytes": 27736
     },
     {
       "path": "/blog/swallowing-fingernails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 26975
+      "bytes": 26747
     },
     {
       "path": "/blog/is-nail-biting-self-harm",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29328
+      "bytes": 29100
     },
     {
       "path": "/blog/nail-and-cuticle-picking",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30452
+      "bytes": 30224
     },
     {
       "path": "/blog/rubber-band-snap-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 27318
+      "bytes": 27090
     },
     {
       "path": "/blog/acceptance-commitment-therapy-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 28717
+      "bytes": 28489
     },
     {
       "path": "/blog/nail-biting-vs-tics-tourette",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 28117
+      "bytes": 27889
     },
     {
       "path": "/blog/inositol-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 27888
+      "bytes": 27660
     },
     {
       "path": "/blog/pinworm-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29590
+      "bytes": 29362
     },
     {
       "path": "/blog/staph-mrsa-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29232
+      "bytes": 29004
     },
     {
       "path": "/blog/nail-biting-mental-disorder",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 30323
+      "bytes": 30095
     },
     {
       "path": "/blog/nail-biting-cancer",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27984
+      "bytes": 27756
     },
     {
       "path": "/blog/nail-biting-dark-line-on-nail",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30524
+      "bytes": 30296
     },
     {
       "path": "/blog/nail-biting-nail-ridges-grooves",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29139
+      "bytes": 28911
     },
     {
       "path": "/blog/nail-biting-premonitory-urge",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28189
+      "bytes": 27961
     },
     {
       "path": "/blog/nail-biting-urge-surfing",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28887
+      "bytes": 28659
     },
     {
       "path": "/blog/online-therapy-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27886
+      "bytes": 27658
     },
     {
       "path": "/blog/nail-biting-reward-chart-children",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28229
+      "bytes": 28001
     },
     {
       "path": "/blog/nail-biting-shame-self-compassion",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30361
+      "bytes": 30133
     },
     {
       "path": "/blog/nail-biting-stimulus-control",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 29585
+      "bytes": 29357
     },
     {
       "path": "/blog/nail-biting-chewing-gum",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28132
+      "bytes": 27904
     },
     {
       "path": "/blog/nail-biting-short-nails-trimming",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28131
+      "bytes": 27903
     },
     {
       "path": "/blog/nail-biting-colds-flu-norovirus",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27751
+      "bytes": 27523
     },
     {
       "path": "/blog/nail-biting-home-remedies",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31518
+      "bytes": 31290
     },
     {
       "path": "/blog/nail-biting-cold-turkey-or-gradual",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 27960
+      "bytes": 27732
     },
     {
       "path": "/blog/nail-biting-onycholysis",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 32185
+      "bytes": 31957
     },
     {
       "path": "/blog/nail-biting-herpetic-whitlow",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31643
+      "bytes": 31415
     },
     {
       "path": "/blog/cbd-cannabis-nail-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28650
+      "bytes": 28422
     },
     {
       "path": "/blog/uv-nail-lamps-safety",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 32843
+      "bytes": 32615
     },
     {
       "path": "/blog/nail-biting-substitute-habits",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30205
+      "bytes": 29977
     },
     {
       "path": "/blog/biotin-bitten-nails",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31408
+      "bytes": 31180
     },
     {
       "path": "/blog/swallowing-nail-polish-biting",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31641
+      "bytes": 31413
     },
     {
       "path": "/blog/nail-biting-before-period",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 28692
+      "bytes": 28464
     },
     {
       "path": "/blog/nail-biting-relapse",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30035
+      "bytes": 29807
     },
     {
       "path": "/blog/nail-biting-vaping-nicotine",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29566
+      "bytes": 29338
     },
     {
       "path": "/blog/nail-biting-lack-of-sleep",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30408
+      "bytes": 30180
     },
     {
       "path": "/blog/nail-biting-hand-cream-moisturiser",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30976
+      "bytes": 30748
     },
     {
       "path": "/blog/nail-biting-nail-hardeners",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31169
+      "bytes": 30941
     },
     {
       "path": "/blog/nail-biting-exercise",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 30928
+      "bytes": 30700
     },
     {
       "path": "/blog/nail-biting-dating-relationships",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 29077
+      "bytes": 28849
     },
     {
       "path": "/blog/nail-biting-gum-disease",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31592
+      "bytes": 31364
     },
     {
       "path": "/blog/nail-biting-hand-sanitizer",
       "issues": [],
       "status": 200,
       "schema_count": 5,
-      "bytes": 31175
+      "bytes": 30947
     },
     {
       "path": "/blog/nail-biting-self-esteem",
       "issues": [],
       "status": 200,
       "schema_count": 6,
-      "bytes": 31914
+      "bytes": 31686
     }
   ]
 }
