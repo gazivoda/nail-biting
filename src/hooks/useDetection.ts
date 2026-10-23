@@ -7,6 +7,7 @@ import {
 import type { DetectionSensitivity, AlertSound } from '../types';
 import type { Behavior } from '../storage/eventModel';
 import { createBiteDetector } from './biteDetector';
+import { detectHandsWithSides } from '../detection/handedness';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -335,8 +336,8 @@ export function useDetection(
           getSensitivity: () => sensitivityRef.current,
           getBehaviors: () => behaviorsRef.current ?? DEFAULT_BEHAVIOR_LIST,
           source: {
-            detectHands: (video, ts) =>
-              hand.detectForVideo(video as HTMLVideoElement, ts).landmarks ?? [],
+            // SEAM (WS3): with the false-alarm controls off this is exactly `.landmarks ?? []`; see src/detection/handedness.ts.
+            detectHands: (video, ts) => detectHandsWithSides(hand, video as HTMLVideoElement, ts),
             detectFace: (video, ts) =>
               face.detectForVideo(video as HTMLVideoElement, ts).faceLandmarks ?? [],
           },
