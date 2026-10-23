@@ -13,8 +13,9 @@ import { BEHAVIOR_REGISTRY } from '../../src/detection/registry.ts';
 import { FACE_LANDMARKS_USED } from '../../src/detection/zones.ts';
 import { loadFixtures, parseFixture } from './lib/fixtures.mjs';
 import { scoreRule } from './lib/score.mjs';
-import { evaluateAll, gate, loadThresholds } from './lib/evaluate.mjs';
+import { evaluateAll, gate, loadThresholds, headlineFixtures, sequenceFixtures } from './lib/evaluate.mjs';
 import { renderReport } from './lib/report.mjs';
+import { renderControlsReport } from './lib/controlsReport.mjs';
 import { generateAll, FIXTURE_DIR } from './generate-fixtures.mjs';
 import { runEvaluation } from './run.mjs';
 
@@ -224,5 +225,89 @@ describe('the evaluation and its gate', () => {
   it('the report says, up front, that it is synthetic', () => {
     const report = renderReport(runEvaluation());
     expect(report.split('\n').slice(0, 6).join('\n')).toMatch(/SYNTHETIC. This is not real-world accuracy/);
+  });
+});
+
+// ── WS3: the false-alarm controls, played over the same fixtures ──────────────────────────────
+
+describe('the false-alarm controls in the evaluation (WS3)', () => {
+  const NAIL = rows => rows.find(r => r.behavior === 'nail_biting');
+
+  it('the sequence fixtures are kept out of the shipped and controls headline numbers', () => {
+    const result = runEvaluation();
+    expect(result.fixtures.some(f => f.tags.includes('sequence'))).toBe(false);
+    expect(result.sequences.length).toBeGreaterThanOrEqual(2);
+    expect(headlineFixtures(result.allFixtures).length + sequenceFixtures(result.allFixtures).length).toBe(result.allFixtures.length);
+  });
+
+  it('every WS3 fixture is synthetic and tagged ws3', () => {
+    const ws3 = loadFixtures(FIXTURE_DIR).filter(f => f.tags.includes('ws3'));
+    expect(ws3.length).toBeGreaterThanOrEqual(7);
+    for (const f of ws3) expect(f.source, f.id).toBe('synthetic');
+  });
+
+  it('the acceptance line: fewer false alarms on the chin-rest-rule scenes, recall no more than 5 points lower', () => {
+    const { acceptance, bySensitivity, controls, thresholds } = runEvaluation();
+    const g = thresholds.gateSensitivity;
+    expect(acceptance.failures).toEqual([]);
+    expect(acceptance.chinRest.after).toBeLessThan(acceptance.chinRest.before);
+    expect(NAIL(controls[g]).recall).toBeGreaterThanOrEqual(NAIL(bySensitivity[g]).recall - 0.05);
+    expect(NAIL(controls[g]).falseAlarms).toBeLessThan(NAIL(bySensitivity[g]).falseAlarms);
+  });
+
+  it('the controls lose no bite on any fixture at any sensitivity (the chin-rest rule must not kill a real one)', () => {
+    const { bySensitivity, controls } = runEvaluation();
+    for (const s of ['low', 'medium', 'high']) {
+      for (const sr of NAIL(bySensitivity[s]).perFixture) {
+        const cr = NAIL(controls[s]).perFixture.find(p => p.id === sr.id);
+        expect(cr.detected, `${sr.id} at ${s}`).toBeGreaterThanOrEqual(sr.detected);
+      }
+    }
+  });
+
+  it('the bite scenes that have the palm near the chin and a fingertip at the lips are still found', () => {
+    const { controls, thresholds } = runEvaluation();
+    const rows = NAIL(controls[thresholds.gateSensitivity]).perFixture;
+    for (const id of ['mouth_bite_thumb_palm_low', 'mouth_bite_fist_fingertip_at_lips', 'cuticle_thumb_to_mouth']) {
+      expect(rows.find(p => p.id === id).detected, id).toBe(1);
+    }
+  });
+
+  it('learning: a pose rejected five times stops sounding, and the real bite after it still does', () => {
+    const { learning, sequenceShipped, thresholds } = runEvaluation();
+    const g = thresholds.gateSensitivity;
+    const l = NAIL(learning[g]);
+    expect(l.recall).toBe(1);
+    const shippedFalse = sequenceShipped[g].reduce((n, r) => n + r.alarms.length, 0) - l.events;
+    expect(l.falseAlarms).toBeLessThan(shippedFalse);
+    expect(l.falseAlarms).toBeLessThanOrEqual(l.taps); // it only ever sounded on poses it was then told about
+  });
+
+  it('the controls bar is a real ratchet: above the shipped bar, and met', () => {
+    const t = loadThresholds(THRESHOLDS);
+    const { controls, thresholds } = runEvaluation();
+    expect(t.withControls.nail_biting.minPrecision).toBeGreaterThan(t.rules.nail_biting.minPrecision);
+    expect(NAIL(controls[thresholds.gateSensitivity]).precision).toBeGreaterThanOrEqual(t.withControls.nail_biting.minPrecision);
+    // "just under": within 0.05 of what was measured, so it cannot drift away from the truth
+    expect(NAIL(controls[thresholds.gateSensitivity]).precision - t.withControls.nail_biting.minPrecision).toBeLessThan(0.05);
+  });
+
+  it('the gate fails when the controls fall below their own bar, and says so', () => {
+    const t = JSON.parse(readFileSync(THRESHOLDS, 'utf8'));
+    t.withControls.nail_biting = { minPrecision: 0.99, minRecall: 1 };
+    const dir = mkdtempSync(join(tmpdir(), 'eval-thresholds-'));
+    const path = join(dir, 'thresholds.json');
+    writeFileSync(path, JSON.stringify(t));
+    const { verdict } = runEvaluation({ thresholdsPath: path });
+    expect(verdict.ok).toBe(false);
+    expect(verdict.failures.join(' ')).toMatch(/nail_biting \(controls\): precision/);
+  });
+
+  it('the committed WS3 report is what the evaluation writes now (regenerate with: npm run eval:detection -- --controls-report docs/agents/ws3-eval-report.md)', () => {
+    expect(readFileSync(join(REPO, 'docs', 'agents', 'ws3-eval-report.md'), 'utf8')).toBe(renderControlsReport(runEvaluation()));
+  });
+
+  it('the WS3 report says, up front, that it is synthetic', () => {
+    expect(renderControlsReport(runEvaluation()).split('\n').slice(0, 6).join('\n')).toMatch(/SYNTHETIC. This is not real-world accuracy/);
   });
 });

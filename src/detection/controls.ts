@@ -35,6 +35,11 @@ export const CONTROLS_CONFIG = {
     chinRegionFw: 0.25,
     /** A fingertip this close to the middle of the lips means real contact: the chin-rest rule never applies. */
     tipGuardFw: 0.15,
+    /**
+     * Once a hand has been judged a chin rest, the chin region is this much wider for the next frame,
+     * so a hand resting right at the edge of the region does not flicker in and out of it.
+     */
+    hysteresis: 1.25,
     /** Calibration may move the two values above, but only within these limits. */
     chinRegionRange: [0.15, 0.4],
     tipGuardRange: [0.08, 0.25],
@@ -87,6 +92,8 @@ export interface DetectionControls {
   learned: readonly LearnedSample[];
   /** Poses the person recorded as "a fingertip near my lips": never suppressed. */
   safe: readonly PoseVector[];
+  /** Poses the person recorded as "how I rest my chin": treated as if they had said "Not a bite" about them twice. They do not expire. */
+  rest?: readonly PoseVector[];
   /** Milliseconds, for the learned samples' expiry. Default Date.now. The harness passes the fixture clock. */
   now?: () => number;
   /** Called on the frame an alarm starts, wrapped in try/catch by the engine. */
@@ -131,14 +138,15 @@ export function liveSamples(samples: readonly LearnedSample[], now: number): Lea
  * only for frames where the base rule already has contact (so it can only ever remove or delay an
  * alarm, never add one).
  */
-export function judgeContact(pose: PoseFeatures, controls: DetectionControls, now: number): ContactVerdict {
+export function judgeContact(pose: PoseFeatures, controls: DetectionControls, now: number, wasChinRest = false): ContactVerdict {
   const vector = poseToVector(pose);
 
   // A pose the person said is a real fingertip-near-lips pose wins over everything below.
   for (const safe of controls.safe) if (posesMatch(vector, safe)) return ALLOW;
 
   const chin = controls.chinRest;
-  if (chin.enabled && pose.chinDist <= chin.chinRegionFw && pose.tipDist > chin.tipGuardFw) {
+  const region = chin.chinRegionFw * (wasChinRest ? CONTROLS_CONFIG.chinRest.hysteresis : 1);
+  if (chin.enabled && pose.chinDist <= region && pose.tipDist > chin.tipGuardFw) {
     return { ok: false, extraFrames: 0, reason: 'chin-rest', matches: 0 };
   }
 
@@ -146,6 +154,7 @@ export function judgeContact(pose: PoseFeatures, controls: DetectionControls, no
   let matches = 0;
   const cutoff = now - cfg.ttlDays * DAY_MS;
   for (const s of controls.learned) if (s.at >= cutoff && posesMatch(vector, s.v)) matches++;
+  if (controls.rest) for (const r of controls.rest) if (posesMatch(vector, r)) { matches += cfg.strongAt; break; }
   if (matches === 0) return ALLOW;
 
   if (matches >= cfg.strongAt) {

@@ -79,6 +79,8 @@ interface ActiveRule {
   required: number;
   state: RuleState;
   slot: ZoneSlot;
+  /** Controls only: the last frame's contact was entirely judged a chin rest (see judgeContact's hysteresis). */
+  chinRest: boolean;
 }
 
 const NAIL_ONLY: readonly Behavior[] = ['nail_biting'];
@@ -112,7 +114,7 @@ function aspectOf(video: VideoLike): number {
  * the filter. Only called with at least one hand.
  */
 function evaluateControlled(
-  rule: ZoneRule,
+  active: ActiveRule,
   hands: readonly Landmark[][],
   sides: readonly (Hand | undefined)[],
   face: readonly Landmark[],
@@ -123,6 +125,7 @@ function evaluateControlled(
   aspect: number,
   nowMs: number,
 ): ControlledResult {
+  const rule = active.rule;
   if (rule.zone !== 'mouth' || rule.gesture) {
     const hit = evaluateRule(rule, hands, zone, sensitivity, state);
     return { hit, extra: 0, hand: hit && hands.length === 1 ? (sides[0] ?? 'unknown') : 'unknown', pose: null };
@@ -130,18 +133,20 @@ function evaluateControlled(
 
   const threshold = rule.distanceThreshold[sensitivity] * zone.unit;
   let best: ControlledResult | null = null;
+  let sawChinRest = false;
   for (let h = 0; h < hands.length; h++) {
     oneHand[0] = hands[h] as Landmark[];
     if (!fingertipContact(rule.fingerFilter, oneHand, zone, threshold)) continue;
     const pose = extractPose(hands[h], face, aspect);
     const side = sides[h] ?? 'unknown';
     // A pose that cannot be worked out is not a reason to stay quiet: the shipped rule decides.
-    const verdict = pose === null ? null : judgeContact(pose, controls, nowMs);
-    if (verdict !== null && !verdict.ok) continue;
+    const verdict = pose === null ? null : judgeContact(pose, controls, nowMs, active.chinRest);
+    if (verdict !== null && !verdict.ok) { if (verdict.reason === 'chin-rest') sawChinRest = true; continue; }
     const extra = verdict === null ? 0 : verdict.extraFrames;
     if (best === null || extra < best.extra) best = { hit: true, extra, hand: side, pose };
   }
   oneHand[0] = [];
+  active.chinRest = best === null && sawChinRest;
   return best ?? NO_POSE;
 }
 
@@ -157,7 +162,7 @@ export function createEngine(options: EngineOptions): Engine {
   const runtimeFor = (b: Behavior): ActiveRule => {
     let r = runtimes.get(b);
     if (!r) {
-      r = { rule: RULES[b], required: framesForDwell(RULES[b].dwellMs), state: createRuleState(), slot: slots[RULES[b].zone] };
+      r = { rule: RULES[b], required: framesForDwell(RULES[b].dwellMs), state: createRuleState(), slot: slots[RULES[b].zone], chinRest: false };
       runtimes.set(b, r);
     }
     return r;
@@ -258,7 +263,7 @@ export function createEngine(options: EngineOptions): Engine {
             if (controls === null) {
               hit = evaluateRule(r.rule, usable, slot.zone, sensitivity, r.state);
             } else {
-              controlled = evaluateControlled(r.rule, usable, usableSides, face, slot.zone, sensitivity, r.state, controls, aspect, nowMs);
+              controlled = evaluateControlled(r, usable, usableSides, face, slot.zone, sensitivity, r.state, controls, aspect, nowMs);
               hit = controlled.hit;
               extra = controlled.extra;
             }
