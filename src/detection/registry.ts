@@ -27,6 +27,8 @@ export interface BehaviorInfo {
   id: Behavior;
   /** Plain words for the settings list. */
   label: string;
+  /** One word for tight spaces (the History filter). */
+  shortLabel: string;
   /** One neutral sentence. It describes what is watched, never what the habit looks like. */
   description: string;
   validation: ValidationLevel;
@@ -39,6 +41,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   nail_biting: {
     id: 'nail_biting',
     label: 'Nail biting',
+    shortLabel: 'Nails',
     description: 'A fingertip held near your mouth for about 0.6 seconds. This is the check the app has always used.',
     validation: 'validated',
     group: 'mouth',
@@ -47,6 +50,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   cuticle_skin_biting: {
     id: 'cuticle_skin_biting',
     label: 'Cuticle and skin biting',
+    shortLabel: 'Cuticles',
     description: 'The same mouth check as nail biting, recorded under this name. Choose the one that fits you; they share one check, so only one can be on.',
     validation: 'validated',
     group: 'mouth',
@@ -55,6 +59,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   nose_picking: {
     id: 'nose_picking',
     label: 'Nose picking',
+    shortLabel: 'Nose',
     description: 'An index or little fingertip at your nose for about 1.6 seconds.',
     validation: 'experimental',
     rule: RULES.nose_picking,
@@ -62,6 +67,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   eye_area_pulling: {
     id: 'eye_area_pulling',
     label: 'Eyelash and eyebrow pulling',
+    shortLabel: 'Eyes',
     description: 'A thumb and finger pinched together at your eye or brow for about 1.4 seconds.',
     validation: 'experimental',
     rule: RULES.eye_area_pulling,
@@ -69,6 +75,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   face_skin_picking: {
     id: 'face_skin_picking',
     label: 'Face skin picking',
+    shortLabel: 'Face skin',
     description: 'A fingertip moving in small repeated movements on your cheek, chin or forehead for about 3 seconds.',
     validation: 'experimental',
     rule: RULES.face_skin_picking,
@@ -76,6 +83,7 @@ export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   hair_pulling: {
     id: 'hair_pulling',
     label: 'Hair pulling',
+    shortLabel: 'Hair',
     description: 'A pinch above your forehead for about 2 seconds. Needs your camera framed high enough to see the top of your head.',
     validation: 'experimental',
     rule: RULES.hair_pulling,

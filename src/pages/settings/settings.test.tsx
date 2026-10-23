@@ -67,7 +67,8 @@ describe('<SettingsSlots />', () => {
   });
 
   it('renders nothing even with the flags on while the section files are empty', () => {
-    setFlags('detection_behaviors', 'event_sync', 'share_links', 'hrt_coaching', 'false_positive_controls', 'background_watching');
+    // (not detection_behaviors: WS1's Behaviors card now has content; see src/detection/useBehaviors.test.tsx)
+    setFlags('event_sync', 'share_links', 'hrt_coaching', 'false_positive_controls', 'background_watching');
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 
