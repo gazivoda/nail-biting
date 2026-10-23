@@ -3,20 +3,20 @@
 // object out, so it is tested without a database.
 //
 // What counts as a bite here is the same rule the app uses (`isBite` in
-// src/store/useAppStore.ts and `countsAsBite` in src/insights/predicates.ts), written
-// for the wire shape of an event:
+// src/store/useAppStore.ts, which since WS3 also leaves out falsePositive, and the
+// WS5 client predicate in src/insights/predicate.ts), written for the wire shape of an event:
 //
 //   a bite    = a manual log, or an alarm the person confirmed;
 //   NOT a bite: an urge-timer entry, an event marked "Not a bite" (falsePositive),
 //               a deleted event (tombstone), an alarm nobody confirmed.
 //
 // Two small functions are the places to touch if that definition ever changes
-// (WS3 replaces the false-positive test with its own predicate):
-//   isFalsePositiveEvent   <- the swap point for WS3
+// (WS3's client predicate isFalsePositive is `falsePositive === true`, the same test):
+//   isFalsePositiveEvent   <- the swap point
 //   isCountedBiteEvent
 //
-// A parity test (server/weeklyEmail/parity.test.js) runs one fixture through this
-// file and through the client's aggregation and requires the same answers.
+// Meant to be checked against the client's aggregation by one shared fixture (a parity
+// test, written by the WS5 lead): same bites, same top trigger, same quiet days.
 
 import { WEEKDAY_NAMES, dayBoundaries, validTimeZone } from './week.js';
 
