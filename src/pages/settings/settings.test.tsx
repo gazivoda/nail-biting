@@ -84,7 +84,7 @@ describe('<SettingsSlots />', () => {
     setFlags('detection_behaviors');
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('<p>behaviors card</p>');
 
-    setFlags('background_watching'); // a different flag: behaviors stays hidden
+    setFlags('phone_companion'); // a different flag, with no section of its own: behaviors stays hidden
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('');
   });
 });
