@@ -10,10 +10,12 @@ export const ALARM_QUIET_MS = 60_000;
 export interface CelebrationDecision {
   /** Show this one now, or null. */
   show: MilestoneStatus | null;
-  /** Record these as seen without a screen (a longer streak milestone is being celebrated instead). */
+  /** Record these as seen without a screen (a longer streak milestone is being celebrated instead, or this is the first run). */
   silent: MilestoneId[];
   /** Something is waiting but an alarm was too recent; ask again later. */
   deferred: boolean;
+  /** This was the first run on this device: `silent` is everything already reached, and the baseline is now taken. */
+  baseline: boolean;
 }
 
 export function decideCelebration(input: {
@@ -22,15 +24,20 @@ export function decideCelebration(input: {
   startedAt: number;
   now: number;
   seen: SeenMilestones;
+  /** Has the first-run baseline been taken on this device? */
+  baselined: boolean;
 }): CelebrationDecision {
-  const plan = planCelebrations(
-    evaluateMilestones({ events: input.events, startedAt: input.startedAt, now: input.now }),
-    input.seen,
-  );
-  if (plan.celebrate.length === 0) return { show: null, silent: plan.silent, deferred: false };
+  const statuses = evaluateMilestones({ events: input.events, startedAt: input.startedAt, now: input.now });
+  if (!input.baselined) {
+    // First run here: whatever is already reached is history, not news.
+    const already = statuses.filter(s => s.reachedAt !== null && input.seen[s.def.id] === undefined).map(s => s.def.id);
+    return { show: null, silent: already, deferred: false, baseline: true };
+  }
+  const plan = planCelebrations(statuses, input.seen);
+  if (plan.celebrate.length === 0) return { show: null, silent: plan.silent, deferred: false, baseline: false };
 
   const cutoff = input.now - ALARM_QUIET_MS;
   const alarmJustRaised = input.events.some(e => e.autoDetected === true && e.timestamp >= cutoff && e.timestamp <= input.now + ALARM_QUIET_MS);
-  if (alarmJustRaised) return { show: null, silent: plan.silent, deferred: true };
-  return { show: plan.celebrate[0], silent: plan.silent, deferred: false };
+  if (alarmJustRaised) return { show: null, silent: plan.silent, deferred: true, baseline: false };
+  return { show: plan.celebrate[0], silent: plan.silent, deferred: false, baseline: false };
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { evaluateMilestones, planCelebrations, MILESTONES, type MilestoneId, type MilestoneStatus } from './milestones';
-import { markMilestonesSeen, readSeenMilestones } from './milestoneSeen';
+import { markMilestonesSeen, readMilestoneRecord, readSeenMilestones } from './milestoneSeen';
 import { alarm, bite, urge } from './testEvents';
 import { kv } from '../storage/kv';
 import { setStorageAdapter } from '../storage/adapter';
@@ -231,8 +231,17 @@ describe('remembering what was seen (kv)', () => {
 
   it('starts empty and remembers a milestone with the time it was recorded', () => {
     expect(readSeenMilestones()).toEqual({});
+    expect(readMilestoneRecord().baselined).toBe(false);
     markMilestonesSeen(['day'], 123);
     expect(readSeenMilestones()).toEqual({ day: 123 });
+    expect(readMilestoneRecord().baselined).toBe(false);
+  });
+
+  it('remembers that the first-run baseline was taken, even with nothing reached, and keeps it', () => {
+    markMilestonesSeen([], 1, { baseline: true });
+    expect(readMilestoneRecord()).toEqual({ seen: {}, baselined: true });
+    markMilestonesSeen(['hour'], 2);
+    expect(readMilestoneRecord()).toEqual({ seen: { hour: 2 }, baselined: true });
   });
 
   it('keeps the first time and adds new ones', () => {

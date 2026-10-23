@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { decideCelebration } from './celebrate';
-import { markMilestonesSeen, readSeenMilestones } from './milestoneSeen';
+import { markMilestonesSeen, readMilestoneRecord } from './milestoneSeen';
 import type { MilestoneStatus } from './milestones';
 
 const CHECK_EVERY_MS = 60_000;
@@ -22,7 +22,12 @@ export function useMilestoneCelebration(): { current: MilestoneStatus | null; di
     try {
       const { incidents, historyStartTime } = useAppStore.getState();
       const now = Date.now();
-      const decision = decideCelebration({ events: incidents, startedAt: historyStartTime, now, seen: readSeenMilestones() });
+      const record = readMilestoneRecord();
+      const decision = decideCelebration({ events: incidents, startedAt: historyStartTime, now, seen: record.seen, baselined: record.baselined });
+      if (decision.baseline) {
+        markMilestonesSeen(decision.silent, now, { baseline: true });
+        return;
+      }
       if (!decision.show) return;
       markMilestonesSeen([decision.show.def.id, ...decision.silent], now);
       showing.current = true;

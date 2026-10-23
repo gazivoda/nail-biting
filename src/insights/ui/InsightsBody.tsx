@@ -57,7 +57,8 @@ export function InsightsBody(p: InsightsBodyProps) {
     return {
       key: d.start,
       value: pick(d),
-      label: fromEnd % 5 === 0 ? String(date.getDate()) : '',
+      // Every fifth day is labelled; the month is added to the first label and wherever the month turns over.
+      label: fromEnd % 5 === 0 ? (i === 0 || date.getDate() <= 5 ? `${date.getDate()} ${date.toLocaleDateString([], { month: 'short' })}` : String(date.getDate())) : '',
       title: `${dayLabel(d.start)}: ${pick(d)} ${plural(pick(d), noun, nounPlural)}`,
     };
   });
