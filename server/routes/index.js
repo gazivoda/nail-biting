@@ -34,6 +34,8 @@ import example from './_example.js';
 import authProviders from './authProviders.js';
 import events from './events.js';
 import billing from './billing.js';
+import share from './share.js';
+import weeklyEmail from './weeklyEmail.js';
 import phone from './phone.js';
 
 /** Registered in this order. Append your module; do not reorder others. */
@@ -43,9 +45,9 @@ export const ROUTE_MODULES = [
   authProviders, // WS8 sign-in providers (magic link, Apple, Microsoft)
   events, // WS4 optional sync of history (event_sync)
   billing, // WS9 lifetime, gifts, referrals, free tier; hooks for the Paddle webhook and /api/user/me
+  share, // WS10 read-only share links (share_links)
+  weeklyEmail, // WS5 opt-in weekly summary email (weekly_email); unsubscribe links are never flag-gated
   phone, // WS6 phone companion: the manifest with home-screen shortcuts (phone_companion)
-  // WS5  weekly email         -> import insights from './insights.js'
-  // WS10 share links          -> import share from './share.js'
 ];
 
 /** Completes the context server.js passes in. Exported for tests. */

@@ -13,6 +13,7 @@
 
 import { Suspense, lazy } from 'react';
 import { useFeatures } from '../../../features/useFeature';
+import { PhotoDiarySettings } from '../../../photos/PhotoDiarySettings';
 
 // The card pulls in the export/import code, the sync client and the storage facade. It is
 // fetched only while data_backup or event_sync is on, so with both off opening Settings
@@ -28,6 +29,7 @@ export function DataSection() {
           <DataSettings />
         </Suspense>
       )}
+      <PhotoDiarySettings />{/* WS5: gates itself on photo_diary and lazy-loads its card. */}
     </>
   );
 }
