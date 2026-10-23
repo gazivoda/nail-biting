@@ -96,7 +96,7 @@ All writes go through the storage module (`events.add / update / softDelete`, an
 
 - The service worker is WS0's, with two additions: a CacheFirst `brand-static` cache for `/fonts/*.woff2` and `/logo*.svg` (before this the fonts
   relied on the HTTP cache alone, so offline type fell back to system fonts), and the manifest is no longer precached (below). The new
-  `PhoneView` chunk is precached (38 precache entries become 40: three added, the manifest removed; +20 KiB; the three are the chunk and the two sync pieces it splits out).
+  `PhoneView` chunk is precached (49 precache entries become 51: three added, the manifest removed; +20 KiB; the three are the chunk and the two sync pieces it splits out).
 - **The big finding:** offline, a signed-in person got the landing page, because `AuthContext` treats "could not reach the server" as "signed out".
   So while the flag is on the app keeps a small copy of the access facts it last saw (`offlineGrant.ts`: user id, first name, trial end, status, plan, end
   date, and WS9's grants and free-tier limits; no email, avatar, payment ids or banked days) and uses it **only** when asking the server failed for any
@@ -126,14 +126,14 @@ All writes go through the storage module (`events.add / update / softDelete`, an
 
 ## Verified, and how
 
-Run from this worktree on the final build (`npm run build:web`): `npm test` 106 files / 1856 tests (main was 95 / 1739); lint 23 errors / 4 warnings
+Run from this worktree on the final build (`npm run build:web`): `npm test` 135 files / 2501 tests (main@ffbf29a, with WS3, WS5, WS9 and WS10 merged, is 124 / 2384; WS6 adds 11 files / 117 tests); lint 23 errors / 4 warnings
 (`eslint src server scripts electron shared`), compared to main **by file and rule: no new problem**; `node --check server.js`, `server/routes/phone.js`, `server/routes/index.js`;
 `npm run seo:check` in sync; the two dev-leak greps print nothing; `Dockerfile` needs no change (no new top-level server path).
 
-**Flags off, before and after** (main@014a549 built in a scratch directory vs this branch, same server settings, real headless Chrome, signed-in app at 390 px with touch and at 1280 px):
-the app's DOM, the screenshot, the set of non-analytics network requests (26) and the localStorage keys are **identical**, and so is the landing page except for its head. The differences with every flag off,
+**Flags off, before and after** (main@ffbf29a built in a scratch directory vs this branch, same server settings, real headless Chrome, signed-in app at 390 px with touch and at 1280 px):
+the app's DOM, the set of non-analytics network requests (26) and the localStorage keys are **identical**, and so is the screenshot (pixel for pixel on the desktop; on the phone only the 24 x 24 px pulsing dot of the streak card differs, an animation phase), and so is the landing page except for its head. The differences with every flag off,
 all of them: (1) `index.html` gained the four iOS/Android meta tags and two more touch-icon links (only read when someone adds the app to a home screen); (2) the manifest is no longer in the service worker's
-precache (the browser fetches it from the network instead: 38 precache entries become 40, with the PhoneView chunk and two sync pieces added); (3) a new `brand-static` runtime cache for fonts and the logo; (4) the main bundle grew by about 2.5 kB raw
+precache (the browser fetches it from the network instead: 49 precache entries become 51, with the PhoneView chunk and two sync pieces added); (3) a new `brand-static` runtime cache for fonts and the logo; (4) the main bundle grew by about 2.5 kB raw
 and `Dashboard` by about 1.6 kB (the phone view itself is a separate chunk that a flag-off visitor never downloads); (5) one more line in the server's boot log.
 
 **Real Chrome, real server, scripts kept in the session scratchpad** (about 100 checks): the two buttons, 64 px; tap counts above; sync end to end between two browser profiles; every text piece meets WCAG AA at 360, 390 and 430 px in light and dark (lowest 4.64);
