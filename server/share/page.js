@@ -92,7 +92,7 @@ function streakSection(streak) {
   const caption = firstEntry
     ? 'No bite has been logged yet, so this counts from the first entry in the synced history.'
     : 'Counted from the most recent bite the person logged. Under 24 hours shows as 0.';
-  return `<section class="card streak" aria-labelledby="h-streak">
+  return `<section class="card streak sec-streak" aria-labelledby="h-streak">
   <h2 id="h-streak">${heading}</h2>
   <p class="big"><span class="num">${streak.days}</span> <span class="unit">${unit}</span></p>
   <p class="cap">${caption}</p>
@@ -109,7 +109,7 @@ function countsSection(view) {
   const weeklyStart = detail ? longDate(shiftDate(detail.today, -(view.window.weeklyWeeks * 7 - 1))) : '12 weeks ago';
   const weeklyEnd = detail ? longDate(detail.today) : 'This week';
   const busiestDay = Math.max(0, ...daily);
-  return `<section class="card" aria-labelledby="h-counts">
+  return `<section class="card sec-counts" aria-labelledby="h-counts">
   <h2 id="h-counts">Logged bites</h2>
   <dl class="stats">
     <div><dt>Last 7 days</dt><dd>${totals.last7Days}</dd></div>
@@ -134,7 +134,7 @@ function countsSection(view) {
 function triggersSection(view) {
   const total = view.triggers.reduce((s, t) => s + t.count, 0);
   const rows = view.triggers.filter(t => t.count > 0).map(t => hbar(TRIGGER_LABELS[t.key] ?? 'Other reasons', t.count, total)).join('');
-  return `<section class="card" aria-labelledby="h-triggers">
+  return `<section class="card sec-triggers" aria-labelledby="h-triggers">
   <h2 id="h-triggers">What set it off</h2>
   <p class="cap">The reason the person picked when they logged a bite, over the last 12 weeks. They choose it themselves, so it is their view, not a measurement.</p>
   ${total > 0 ? `<ul class="hbars">${rows}</ul>` : '<p>No bites were logged in the last 12 weeks.</p>'}
@@ -145,8 +145,8 @@ function competingSection(cr) {
   const body = cr.ratePercent === null
     ? '<p>No alarms with a competing-response prompt in the last 12 weeks.</p>'
     : `<p class="big small"><span class="num">${cr.ratePercent}%</span></p>
-  <p>${plural(cr.completed, 'alarm')} of ${plural(cr.alarms, 'alarm')} in the last 12 weeks ${cr.completed === 1 ? 'was' : 'were'} followed by a finished competing response.</p>`;
-  return `<section class="card" aria-labelledby="h-cr">
+  <p>${cr.completed} of ${plural(cr.alarms, 'alarm')} in the last 12 weeks ${cr.completed === 1 ? 'was' : 'were'} followed by a finished competing response.</p>`;
+  return `<section class="card sec-cr" aria-labelledby="h-cr">
   <h2 id="h-cr">After an alarm</h2>
   <p class="cap">A competing response is a short alternative action the person picks in the app to do when an alarm sounds.</p>
   ${body}
@@ -157,7 +157,7 @@ function hoursSection(detail) {
   const values = detail.byHour;
   const total = values.reduce((s, n) => s + n, 0);
   const label = `Bar chart, bites by hour of the day from midnight, over the last 12 weeks: ${values.join(', ')}.`;
-  return `<section class="card" aria-labelledby="h-hours">
+  return `<section class="card sec-hours" aria-labelledby="h-hours">
   <h2 id="h-hours">Time of day</h2>
   <p class="cap">Bites by the hour of the day they were logged, over the last 12 weeks.</p>
   ${total > 0
@@ -169,7 +169,7 @@ function hoursSection(detail) {
 }
 
 function aboutSection(view) {
-  return `<section class="card about" aria-labelledby="h-about">
+  return `<section class="card about sec-about" aria-labelledby="h-about">
   <h2 id="h-about">How to read this page</h2>
   <ul>
     <li>It is made from the history the person chose to sync from the Stop Biting app. Entries that have not synced yet are not included, so it can be a little behind.</li>
@@ -255,6 +255,7 @@ figcaption .muted { font-weight: 400; }
 .chart .bar.zero { fill: var(--bar-zero); }
 .chart .axis { stroke: var(--line); stroke-width: 1; }
 .chart .val { font: 600 12px var(--sans); fill: var(--ink-2); }
+.axis-labels.four { display: grid; grid-template-columns: repeat(4, 1fr); }
 .axis-labels { display: flex; justify-content: space-between; max-width: 440px; font-size: 0.8125rem; color: var(--ink-2); margin-top: 4px; }
 .hbars { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
 .hbar { display: grid; grid-template-columns: 7.5rem 1fr auto; align-items: center; gap: 10px; }
@@ -290,15 +291,28 @@ footer p { margin-bottom: 6px; }
   @page { size: A4; margin: 12mm; }
   :root { --paper: #fff; --surface: #fff; --ink: #111; --ink-2: #333; --line: #bbb; --deep: #fff; --signal: #111; --bar: #1f5a3a; --bar-zero: #999; --fill-bg: #e5e5e5; }
   html, body { background: #fff; color: #111; }
-  body { font-size: 10.5pt; line-height: 1.4; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-size: 9.5pt; line-height: 1.35; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   header.top .wrap { min-height: 0; padding-top: 0; padding-bottom: 6px; }
   .wrap { max-width: none; padding: 0; }
   main { padding: 8px 0 0; }
   h1 { font-size: 20pt; margin-bottom: 4px; }
   h2 { font-size: 12pt; margin-bottom: 4px; }
-  .lede { display: none; }
-  .note { margin: 8px 0 10px; padding: 8px 10px; font-size: 9pt; }
-  .card { break-inside: avoid; padding: 10px 12px; margin-bottom: 8px; border-radius: 10px; }
+  .lede, header.top .tag { display: none; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .grid .card { margin: 0; }
+  .sec-streak { grid-column: 1; grid-row: 1; }
+  .sec-cr { grid-column: 2; grid-row: 1; }
+  .sec-counts { grid-column: 1 / span 2; grid-row: 2; }
+  .sec-triggers { grid-column: 1; grid-row: 3; }
+  .sec-hours { grid-column: 2; grid-row: 3; }
+  .grid:not(.has-hours) .sec-triggers { grid-column: 1 / span 2; }
+  .sec-about { grid-column: 1 / span 2; grid-row: 4; }
+  .hbar { grid-template-columns: 6.5rem 1fr auto; gap: 6px; }
+  .hbar-n { min-width: 0; }
+  .note { margin: 6px 0 8px; padding: 6px 10px; font-size: 8.5pt; }
+  .note p { margin-bottom: 4px; }
+  .card { break-inside: avoid; padding: 8px 10px; margin-bottom: 8px; border-radius: 10px; }
+  .sec-triggers .cap, .sec-hours .cap { display: none; }
   .streak { background: #fff; color: #111; border: 1px solid #bbb; }
   .streak h2, .streak .cap, .streak .unit { color: #111; }
   .big { margin: 0 0 2px; }
@@ -310,7 +324,8 @@ footer p { margin-bottom: 6px; }
   .charts { grid-template-columns: 1fr 1fr; gap: 12px; }
   .chart, .axis-labels { max-width: none; }
   .hbars { gap: 6px; }
-  .about ul { font-size: 8.5pt; }
+  .about ul { font-size: 7.5pt; columns: 2; column-gap: 14px; }
+  .about li { break-inside: avoid; margin-bottom: 3px; }
   .btn, .no-print { display: none !important; }
   .js .print-only { display: block; }
   a { color: #111; text-decoration: none; }
@@ -371,14 +386,14 @@ export function renderSharePage(view) {
 <p class="print-only" id="printed">Printed on <span id="printed-on"></span></p>`;
 
   const sections = view.hasData
-    ? [
+    ? `<div class="grid${view.detail ? ' has-hours' : ''}">\n${[
         streakSection(view.streak),
         countsSection(view),
         triggersSection(view),
         competingSection(view.competingResponse),
         view.detail ? hoursSection(view.detail) : '',
         aboutSection(view),
-      ].join('\n')
+      ].join('\n')}\n</div>`
     : `<section class="card" aria-labelledby="h-empty">
   <h2 id="h-empty">No history to show yet</h2>
   <p>The person who made this link has not synced any history from the Stop Biting app, so there is nothing to show yet. Sharing works from history they choose to sync; once they do, their summary will appear here.</p>
