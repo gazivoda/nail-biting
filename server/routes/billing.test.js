@@ -221,4 +221,26 @@ describe('boot warnings the owner should see', () => {
     expect(out.join('\n')).toMatch(/PADDLE_PRICE_ID_GIFT is not set/);
     expect(out.join('\n')).toMatch(/nothing will be rewarded/);
   });
+
+  it('flag referrals that cannot recognise a monthly or yearly payment (only lifetime and gift ids are known)', () => {
+    const env = { PADDLE_PRICE_ID_LIFETIME: 'pri_life', PADDLE_PRICE_ID_GIFT: 'pri_gift' };
+    const text = bootChecks({ env, flags: flagsOf('referrals'), shellPath: '/nonexistent', ...quiet }).join('\n');
+    expect(text).toMatch(/does not know the monthly and yearly price ids/);
+    // PADDLE_PRICE_IDS that lists only lifetime and gift is the same problem.
+    const onlyOneTime = bootChecks({ env: { ...env, PADDLE_PRICE_IDS: 'pri_life pri_gift' }, flags: flagsOf('referrals'), shellPath: '/nonexistent', ...quiet });
+    expect(onlyOneTime.join('\n')).toMatch(/does not know the monthly and yearly/);
+  });
+
+  it.each([
+    ['both runtime names', { PADDLE_PRICE_ID_MONTHLY: 'pri_m', PADDLE_PRICE_ID_YEARLY: 'pri_y' }],
+    ['PADDLE_PRICE_IDS with a subscription price in it', { PADDLE_PRICE_IDS: 'pri_m pri_y pri_life', PADDLE_PRICE_ID_LIFETIME: 'pri_life' }],
+  ])('stay quiet about referrals when the subscription prices are known: %s', (_n, env) => {
+    expect(bootChecks({ env, flags: flagsOf('referrals'), shellPath: '/nonexistent', ...quiet })).toEqual([]);
+  });
+
+  it('flag gift_plan without PADDLE_API_KEY', () => {
+    const out = bootChecks({ env: { PADDLE_PRICE_ID_GIFT: 'pri_gift' }, flags: flagsOf('gift_plan'), shellPath: '/nonexistent', ...quiet });
+    expect(out.join('\n')).toMatch(/PADDLE_API_KEY is not set/);
+    expect(bootChecks({ env: { PADDLE_PRICE_ID_GIFT: 'pri_gift', PADDLE_API_KEY: 'k' }, flags: flagsOf('gift_plan'), shellPath: '/nonexistent', ...quiet })).toEqual([]);
+  });
 });

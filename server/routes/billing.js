@@ -25,7 +25,7 @@ import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import { sendEmail as defaultSendEmail } from '../../email.js';
 import { TRIAL_DAYS, trialDaysProblem } from '../../shared/plans.js';
 import { clientIp } from '../auth/session.js';
-import { billingConfig, priceIdsMissingFromFilter } from '../billing/config.js';
+import { billingConfig, priceIdsMissingFromFilter, subscriptionPricesKnown } from '../billing/config.js';
 import { createEntitlements } from '../billing/entitlements.js';
 import { createGifts } from '../billing/gift.js';
 import { buildGiftEmail } from '../billing/giftEmail.js';
@@ -77,7 +77,8 @@ export function bootChecks({ env = process.env, flags, shellPath = DEFAULT_SHELL
   }
   if (flags?.isOn('lifetime_plan') && !config.lifetimePriceId) warn('lifetime_plan is on but PADDLE_PRICE_ID_LIFETIME is not set: no lifetime payment can be recognised.');
   if (flags?.isOn('gift_plan') && !config.giftPriceId) warn('gift_plan is on but PADDLE_PRICE_ID_GIFT is not set: no gift payment can be recognised.');
-  if (flags?.isOn('referrals') && config.ourPriceIds.size === 0) warn('referrals is on but no Paddle price id is configured (PADDLE_PRICE_IDS, PADDLE_PRICE_ID_MONTHLY/YEARLY, ...): no payment can be recognised as ours, so nothing will be rewarded.');
+  if (flags?.isOn('referrals') && !subscriptionPricesKnown(env)) warn('referrals is on but the server does not know the monthly and yearly price ids (set PADDLE_PRICE_IDS, or PADDLE_PRICE_ID_MONTHLY and PADDLE_PRICE_ID_YEARLY as RUNTIME variables; the VITE_ ones are build arguments): a payment is only rewarded when its price is known to be ours, so nothing will be rewarded.');
+  if (flags?.isOn('gift_plan') && !config.paddleApiKey) warn('gift_plan is on but PADDLE_API_KEY is not set: the email address of a gift buyer who is not signed in cannot be looked up, so those gift emails fail and Paddle retries them until it gives up.');
   return out;
 }
 

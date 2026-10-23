@@ -50,3 +50,20 @@ export function priceIdsMissingFromFilter(env = process.env) {
   return [['PADDLE_PRICE_ID_LIFETIME', one(env.PADDLE_PRICE_ID_LIFETIME)], ['PADDLE_PRICE_ID_GIFT', one(env.PADDLE_PRICE_ID_GIFT)]]
     .filter(([, id]) => id && !filter.has(id)).map(([name]) => name);
 }
+
+/**
+ * Whether the monthly and yearly prices are known to the server, which referral rewards depend on (a payment is only
+ * rewarded when its price is positively one of ours). The VITE_ ids are build arguments and usually NOT in the
+ * runtime environment, so this looks for the server-side names.
+ *   * PADDLE_PRICE_IDS set: it must list something besides the lifetime and gift ids;
+ *   * otherwise PADDLE_PRICE_ID_MONTHLY and PADDLE_PRICE_ID_YEARLY must both be set.
+ */
+export function subscriptionPricesKnown(env = process.env) {
+  const lifetime = one(env.PADDLE_PRICE_ID_LIFETIME);
+  const gift = one(env.PADDLE_PRICE_ID_GIFT);
+  const listed = list(env.PADDLE_PRICE_IDS).filter(id => id !== lifetime && id !== gift);
+  if (list(env.PADDLE_PRICE_IDS).length > 0) return listed.length > 0;
+  const monthly = one(env.PADDLE_PRICE_ID_MONTHLY) ?? one(env.VITE_PADDLE_PRICE_ID_MONTHLY);
+  const yearly = one(env.PADDLE_PRICE_ID_YEARLY) ?? one(env.VITE_PADDLE_PRICE_ID_YEARLY);
+  return !!(monthly && yearly);
+}

@@ -77,7 +77,10 @@ Two things on `app.locals` are read by the existing handlers in `server.js`: `bi
 1. Coolify: add `TRIAL_DAYS=7` as a **build** variable (Docker build arg; the Dockerfile has `ARG TRIAL_DAYS`) AND as a
    **runtime** variable. A line in `.env` is not enough.
 2. Locally: `TRIAL_DAYS=7 npm run seo:sync`, review and commit `public/llms.txt`, `public/sitemap.xml`,
-   `src/data/pageUpdates.json` (the pages whose visible text changed get a new `lastmod`, which is true). `seo:check`
+   `src/data/pageUpdates.json` (the pages whose visible text changed get a new `lastmod`. Plainly: because `sync-seo` fills the tokens with the CURRENT
+   `TRIAL_DAYS` in every commit it looks at, it finds the same text back to the commit that introduced the tokens, so that
+   `lastmod` is the date of that commit, not the date of the deploy. It is an older-than-true date, not a freshness claim
+   that is false; edit `src/data/pageUpdates.json` by hand if you want today's date on them). `seo:check`
    reports exactly these as stale until you do; the Docker build does not run it.
 3. Hand-edit the four shared sentences and the three legal sentences above, deploy.
 4. At boot the server warns when `dist` was built with a different `TRIAL_DAYS` than it runs with.
@@ -113,7 +116,10 @@ answer is unchanged, and covers each new state and precedence.
    `transaction.payment_failed` only). Without them lifetime, gifts, referral rewards and refunds do nothing.
 3. **Environment** (Coolify). Build arguments: `VITE_PADDLE_PRICE_ID_LIFETIME`, `VITE_PADDLE_PRICE_ID_GIFT` (the app shows
    the options only when its id is present), `TRIAL_DAYS` if changed. Runtime: `PADDLE_PRICE_ID_LIFETIME`,
-   `PADDLE_PRICE_ID_GIFT`, `PADDLE_API_KEY` (needed to look up a gift buyer's email and for verify-transaction),
+   `PADDLE_PRICE_ID_GIFT`, **`PADDLE_PRICE_ID_MONTHLY` and `PADDLE_PRICE_ID_YEARLY`** (or `PADDLE_PRICE_IDS`; the `VITE_` ones
+   are build arguments and are not in the running server's environment, and without the server-side names no monthly or yearly
+   payment is recognised as ours, so no referral is ever rewarded; the server warns at boot), `PADDLE_API_KEY` (needed to look
+   up the email of a gift buyer who is not signed in, and for verify-transaction),
    `REFERRAL_CREDIT_DAYS`, `GIFT_PLAN_DAYS`, `GIFT_CODE_EXPIRY_DAYS`, `FREE_TIER_*`, `TRIAL_DAYS`, and the Paddle filter below.
    `EMAIL_FROM` on a domain verified in Resend, or no gift email reaches anybody but you.
 4. **The shared Paddle account:** the owner's uncommitted patch (`PADDLE_PRICE_IDS`, `isOurPaddleData`) is compatible
@@ -204,6 +210,10 @@ reads its own flag and needs no session when the flag is off. `email.js` was not
 * A referral reward needs the Paddle API only for lifetime/gift lookups; it works from the webhook payload alone.
 * The `/pricing` Lifetime card sends visitors to start the free trial; the purchase itself is in the app (it needs an account).
 * After a change of `TRIAL_DAYS` the generated `public/llms.txt` is stale until `seo:sync` (see above).
+* `PaywallPage` shows "N days left in your free trial" from `trial_end_date` whenever the voluntary paywall is open and the
+  trial has time left, even for an account that also has a lifetime grant (one-line fix for the orchestrator: gate
+  `trialLeftText` on `accessStatus === 'trial_active'`). Left alone: it already behaves this way for a subscriber who upgraded
+  mid-trial, and changing it changes flag-off output. `TabBar` and `Dashboard` already gate on `accessStatus`.
 
 ## What is and is not verified
 
