@@ -865,6 +865,7 @@ if (!existsSync(distPath)) {
   // [href, label] pairs the noscript site nav gains for the open pages. The only place this
   // site lists them in its chrome; the React footer never did.
   const GATED_NAV = gatedNavLinks(GATED_CONTENT);
+  if (GATED_NAV.length) console.log(`[marketing] pages open (flag on): ${GATED_NAV.map(([href]) => href).join(', ')}`);
   // path → { lastmod } — the core-page freshness ledger from
   // src/data/pageUpdates.json, the same dates sitemap.xml carries. Each one is
   // pinned to a fingerprint of that page's content and only moves when the
