@@ -9,6 +9,9 @@ import type { DetectionSensitivity } from '../../types';
 import type { Behavior } from '../../storage/eventModel';
 import { useActiveBehaviors } from '../../detection/useBehaviors';
 import { alarmHandExtras } from '../../detection/controlsRegistry';
+import { useWatchGate } from '../../background/gate';
+import { PausedOverlay } from '../../background/PausedOverlay';
+import { effectiveAlertType, inferenceEnabled, isDetecting } from '../../background/pauseMachine';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -35,6 +38,11 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   const { pipActive, pipWindow, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
   const behaviors = useActiveBehaviors();
+  // WS7a: with the background_watching flag off the gate is a constant "running, not silent", and everything below
+  // reduces to what it was. Paused: nothing runs (no inference, `detecting` false for the tray and WS9's meter).
+  // Meeting mode: watching goes on, the alarm is a flash only.
+  const gate = useWatchGate();
+  const inferenceOn = inferenceEnabled(cameraEnabled, gate.state);
   // SEAM (WS3): alarmHandExtras() is {} unless the false-alarm controls are on, then { hand } (left or right as the person sees it).
   const handleAlert = (behavior: Behavior) => logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });
 
@@ -46,7 +54,7 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
 
   const { status } = useDetection(
     videoRef,
-    cameraEnabled,
+    inferenceOn,
     detectionSensitivity as DetectionSensitivity,
     alertType,
     alertSound,
@@ -61,12 +69,13 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   // and stays true when the camera is refused or the models fail. Anything
   // that should only happen while detection really runs (the check-in
   // reminders) reads this instead.
-  const running = cameraEnabled && !cameraError && (status === 'watching' || status === 'alert');
+  const running = isDetecting({ cameraEnabled, cameraError, status, watch: gate.state });
   useEffect(() => { setDetecting(running); }, [running, setDetecting]);
   useEffect(() => () => setDetecting(false), [setDetecting]);
   useEffect(() => { onModelError?.(modelFailed); }, [modelFailed, onModelError]);
 
-  const showFlash = status === 'alert' && (alertType === 'flash' || alertType === 'both');
+  const shownAlertType = effectiveAlertType(alertType, gate.state);
+  const showFlash = status === 'alert' && (shownAlertType === 'flash' || shownAlertType === 'both');
   // When PiP is active the floating window already shows the feed — hide it in the main view
   const effectiveShowFeed = showCameraFeed && !pipActive;
 
@@ -75,13 +84,14 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
       <DetectionSurface
         videoRef={videoRef}
         status={status}
-        cameraEnabled={cameraEnabled}
+        cameraEnabled={inferenceOn}
         showFeed={effectiveShowFeed}
         showFlash={showFlash}
         onRetry={handleRetry}
         cameraError={cameraError}
         flush
       >
+        <PausedOverlay />{/* WS7a: the pause panel over the frame; nothing unless watching is paused. Before the PiP button so that button stays on top. */}
         {/* PiP button — keeps detection alive when tab is minimized */}
         {cameraEnabled && pipSupported && !cameraError && !modelFailed && (
           <button

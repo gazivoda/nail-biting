@@ -1,0 +1,162 @@
+{
+ "variant": "plain",
+ "browser": "Chrome/155.0.8059.85",
+ "startedAt": "2026-10-23T13:41:42.099Z",
+ "VIS": 30,
+ "HID": 700,
+ "BACK": 30,
+ "checkpoints": [
+  {
+   "hiddenSec": 60,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 120,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 180,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 240,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 300,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 360,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 420,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 480,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 540,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 600,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 660,
+   "vis": "hidden",
+   "frames": null
+  },
+  {
+   "hiddenSec": 700,
+   "vis": "hidden",
+   "frames": null
+  }
+ ],
+ "events": [],
+ "info": "{\"started\":[\"main\",\"worker\"],\"errors\":[]}",
+ "visibleEndMs": 31523.199999999255,
+ "visBefore": "visible",
+ "hiddenAtMs": 31839.900000002235,
+ "visHidden": "hidden",
+ "pipOpen": false,
+ "visBack": "visible",
+ "backMs": 762352.8000000007,
+ "finalInfo": "{\"started\":[\"main\",\"worker\"],\"errors\":[]}",
+ "table": [
+  {
+   "window": "-29..0s",
+   "chain200": 4.92,
+   "raf": 59.36,
+   "wkchain200": 4.85,
+   "iv100": 9.92,
+   "wkiv100": 9.95
+  },
+  {
+   "window": "0..10s",
+   "chain200": 1,
+   "raf": 0,
+   "wkchain200": 3.8,
+   "iv100": 1,
+   "wkiv100": 4.3
+  },
+  {
+   "window": "10..60s",
+   "chain200": 1,
+   "raf": 0,
+   "wkchain200": 3.68,
+   "iv100": 1,
+   "wkiv100": 4
+  },
+  {
+   "window": "60..180s",
+   "chain200": 1,
+   "raf": 0,
+   "wkchain200": 3.68,
+   "iv100": 1,
+   "wkiv100": 5.1
+  },
+  {
+   "window": "180..300s",
+   "chain200": 1,
+   "raf": 0,
+   "wkchain200": 3.86,
+   "iv100": 1,
+   "wkiv100": 7.63
+  },
+  {
+   "window": "300..360s",
+   "chain200": 0.02,
+   "raf": 0,
+   "wkchain200": 3.83,
+   "iv100": 0.02,
+   "wkiv100": 7.37
+  },
+  {
+   "window": "360..480s",
+   "chain200": 0.02,
+   "raf": 0,
+   "wkchain200": 3.79,
+   "iv100": 0.02,
+   "wkiv100": 7.32
+  },
+  {
+   "window": "480..600s",
+   "chain200": 0.02,
+   "raf": 0,
+   "wkchain200": 3.43,
+   "iv100": 0.02,
+   "wkiv100": 6.35
+  },
+  {
+   "window": "600..660s",
+   "chain200": 0.02,
+   "raf": 0,
+   "wkchain200": 3.85,
+   "iv100": 0.02,
+   "wkiv100": 7.55
+  },
+  {
+   "window": "660..701s",
+   "chain200": 0.17,
+   "raf": 1.75,
+   "wkchain200": 3.92,
+   "iv100": 0.32,
+   "wkiv100": 7.03
+  }
+ ]
+}

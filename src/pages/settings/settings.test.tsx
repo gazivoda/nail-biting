@@ -69,9 +69,11 @@ describe('<SettingsSlots />', () => {
   it('renders nothing even with the flags on while the section files are empty', () => {
     // Left out because their cards have content now: hrt_coaching (WS2, see coachingSettings.test.tsx),
     // detection_behaviors (WS1, see src/detection/useBehaviors.test.tsx), event_sync and data_backup
-    // (WS4, see syncData.test.tsx), false_positive_controls (WS3, see src/falsePositive/settings.test.tsx)
-    // and share_links (WS10, see sharingSettings.test.tsx).
-    setFlags('background_watching');
+    // (WS4, see syncData.test.tsx), false_positive_controls (WS3, see src/falsePositive/settings.test.tsx),
+    // share_links (WS10, see sharingSettings.test.tsx) and background_watching (WS7a, see
+    // src/background/scheduleSettings.test.tsx). Every section has content now, so this case uses flags that have no
+    // section of their own: they show nothing.
+    setFlags('phone_companion', 'desktop_app');
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 
@@ -82,7 +84,7 @@ describe('<SettingsSlots />', () => {
     setFlags('detection_behaviors');
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('<p>behaviors card</p>');
 
-    setFlags('background_watching'); // a different flag: behaviors stays hidden
+    setFlags('phone_companion'); // a different flag, with no section of its own: behaviors stays hidden
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('');
   });
 });

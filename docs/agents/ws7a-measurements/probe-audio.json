@@ -1,0 +1,208 @@
+{
+ "variant": "audio",
+ "browser": "Chrome/155.0.8059.85",
+ "startedAt": "2026-10-23T13:41:42.215Z",
+ "VIS": 30,
+ "HID": 700,
+ "BACK": 30,
+ "checkpoints": [
+  {
+   "hiddenSec": 60,
+   "vis": "hidden",
+   "frames": {
+    "total": 1829,
+    "t": 91.39754
+   }
+  },
+  {
+   "hiddenSec": 120,
+   "vis": "hidden",
+   "frames": {
+    "total": 3029,
+    "t": 151.403884
+   }
+  },
+  {
+   "hiddenSec": 180,
+   "vis": "hidden",
+   "frames": {
+    "total": 4226,
+    "t": 211.408961
+   }
+  },
+  {
+   "hiddenSec": 240,
+   "vis": "hidden",
+   "frames": {
+    "total": 5426,
+    "t": 271.412545
+   }
+  },
+  {
+   "hiddenSec": 300,
+   "vis": "hidden",
+   "frames": {
+    "total": 6626,
+    "t": 331.415983
+   }
+  },
+  {
+   "hiddenSec": 360,
+   "vis": "hidden",
+   "frames": {
+    "total": 7826,
+    "t": 391.421097
+   }
+  },
+  {
+   "hiddenSec": 420,
+   "vis": "hidden",
+   "frames": {
+    "total": 9026,
+    "t": 451.424843
+   }
+  },
+  {
+   "hiddenSec": 480,
+   "vis": "hidden",
+   "frames": {
+    "total": 10226,
+    "t": 511.428788
+   }
+  },
+  {
+   "hiddenSec": 540,
+   "vis": "hidden",
+   "frames": {
+    "total": 11426,
+    "t": 571.433062
+   }
+  },
+  {
+   "hiddenSec": 600,
+   "vis": "hidden",
+   "frames": {
+    "total": 12626,
+    "t": 631.4377
+   }
+  },
+  {
+   "hiddenSec": 660,
+   "vis": "hidden",
+   "frames": {
+    "total": 13826,
+    "t": 691.441776
+   }
+  },
+  {
+   "hiddenSec": 700,
+   "vis": "hidden",
+   "frames": {
+    "total": 14625,
+    "t": 731.391054
+   }
+  }
+ ],
+ "events": [],
+ "info": "{\"started\":[\"main\",\"worker\",\"audio\",\"camera\"],\"errors\":[],\"audioState\":\"running\"}",
+ "visibleEndMs": 31510.800000000745,
+ "visBefore": "visible",
+ "hiddenAtMs": 31824.60000000149,
+ "visHidden": "hidden",
+ "pipOpen": false,
+ "visBack": "visible",
+ "backMs": 762334.3000000007,
+ "finalInfo": "{\"started\":[\"main\",\"worker\",\"audio\",\"camera\"],\"errors\":[],\"audioState\":\"running\"}",
+ "table": [
+  {
+   "window": "-29..0s",
+   "chain200": 4.93,
+   "raf": 59.36,
+   "iv100": 9.92,
+   "wkchain200": 4.89,
+   "wkiv100": 10.06,
+   "audio200": 5.03
+  },
+  {
+   "window": "0..10s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.9,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "10..60s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.86,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "60..180s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.88,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "180..300s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.92,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "300..360s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.92,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "360..480s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.92,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "480..600s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.92,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "600..660s",
+   "chain200": 1,
+   "raf": 0,
+   "iv100": 1,
+   "wkchain200": 4.92,
+   "wkiv100": 10,
+   "audio200": 5
+  },
+  {
+   "window": "660..701s",
+   "chain200": 1.14,
+   "raf": 1.75,
+   "iv100": 1.28,
+   "wkchain200": 4.99,
+   "wkiv100": 10.12,
+   "audio200": 5.06
+  }
+ ]
+}

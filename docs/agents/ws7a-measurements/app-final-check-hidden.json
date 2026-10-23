@@ -1,0 +1,114 @@
+{
+ "label": "final-check-hidden",
+ "mode": "hidden",
+ "flags": "background_watching",
+ "browser": "Chrome/155.0.8059.85",
+ "startedAt": "2026-10-23T19:11:21.676Z",
+ "VIS": 25,
+ "HID": 85,
+ "BACK": 5,
+ "checkpoints": [
+  {
+   "hiddenSec": 31,
+   "vis": "hidden",
+   "video": {
+    "frames": 1399,
+    "t": 69.89
+   },
+   "fresh": true
+  },
+  {
+   "hiddenSec": 71,
+   "vis": "hidden",
+   "video": {
+    "frames": 2204,
+    "t": 110.17
+   },
+   "fresh": true
+  }
+ ],
+ "cpu": {
+  "visible": {
+   "seconds": 15,
+   "browser": 0.6,
+   "renderer": 15.8,
+   "GPU": 7,
+   "network.mojom.NetworkService": 0,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.5
+  },
+  "hiddenFirstMinute": {
+   "seconds": 72.5,
+   "browser": 1,
+   "renderer": 10.5,
+   "GPU": 1.5,
+   "network.mojom.NetworkService": 0.1,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.5,
+   "audio.mojom.AudioService": 0.1
+  },
+  "hiddenRest": {
+   "seconds": 13,
+   "browser": 0.7,
+   "renderer": 12.3,
+   "GPU": 1.5,
+   "network.mojom.NetworkService": 0,
+   "storage.mojom.StorageService": 0,
+   "video_capture.mojom.VideoCaptureService": 0.6,
+   "audio.mojom.AudioService": 0
+  }
+ },
+ "alarms": [
+  {
+   "tag": "visible",
+   "latencyMs": 555,
+   "logged": 1,
+   "vis": "visible"
+  },
+  {
+   "tag": "hidden+20s",
+   "latencyMs": 447,
+   "logged": 1,
+   "vis": "hidden"
+  },
+  {
+   "tag": "hidden+60s",
+   "latencyMs": 567,
+   "logged": 1,
+   "vis": "hidden"
+  }
+ ],
+ "startedDetectionAfterMs": 4003.5999999940395,
+ "hiddenAtMs": 39348,
+ "visHidden": "hidden",
+ "visBack": "visible",
+ "cadenceReport": "{\"at\":1792782806699,\"seconds\":86,\"stepsPerSecond\":5}",
+ "endMs": 130455,
+ "table": [
+  {
+   "window": "-27..0s",
+   "raf": 59.05,
+   "iv100": 10.24,
+   "stepsPerSec": 3.8
+  },
+  {
+   "window": "0..10s",
+   "raf": 0,
+   "iv100": 10,
+   "stepsPerSec": 5
+  },
+  {
+   "window": "10..60s",
+   "raf": 0,
+   "iv100": 9.22,
+   "stepsPerSec": 4.4
+  },
+  {
+   "window": "60..86s",
+   "raf": 2.41,
+   "iv100": 9.84,
+   "stepsPerSec": 3.91
+  }
+ ],
+ "longestSecondsWithoutAStepWhileHidden": 6
+}

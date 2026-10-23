@@ -7,6 +7,7 @@ import { ReplacementPrompt } from '../components/dashboard/ReplacementPrompt';
 import { PanicButton } from '../components/dashboard/PanicButton';
 import { CoachingDashboardSlot } from '../coaching/CoachingDashboardSlot';
 import { FalsePositiveSlot } from '../falsePositive/FalsePositiveSlot';
+import { BackgroundSlot } from '../background/BackgroundSlot';
 import { useAuth } from '../contexts/AuthContext';
 import { trialLeft } from '../utils/trial';
 import { FreeTierNotice } from '../components/billing/FreeTierNotice';
@@ -89,6 +90,7 @@ export function Dashboard({ onUpgrade, onNavigate }: { onUpgrade?: () => void; o
             <PanicButton />
           </div>
           <CoachingDashboardSlot />{/* WS2: urge timer, coaching bridge, program link. Renders nothing while its flags are off. */}
+          <BackgroundSlot />{/* WS7a: pause and meeting mode (background_watching). Renders nothing while its flag is off. */}
           <FalsePositiveSlot />{/* WS3: arms the false-alarm controls and the "Not a bite" toast. Renders nothing; does nothing while its flag is off. */}
         </div>
       </div>

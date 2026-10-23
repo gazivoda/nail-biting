@@ -47,6 +47,7 @@ import { OnboardingTour } from './components/onboarding/OnboardingTour';
 import { ProgramHost } from './coaching/ProgramHost';
 import { SyncHost } from './sync/SyncHost';
 import { BillingHost } from './components/billing/BillingHost';
+import { BackgroundHost } from './background/BackgroundHost';
 import { MilestoneHost } from './insights/ui/MilestoneHost';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
@@ -137,6 +138,7 @@ function AppRouter() {
       <ProgramHost />{/* WS2: the 4-week program view (hrt_coaching). Nothing while the flag is off. */}
       <SyncHost />{/* WS4: background sync, only for a person who switched it on. Nothing, and no request, otherwise. */}
       <BillingHost />{/* WS9: referral code, waiting gift, free-tier meter. Nothing while every flag is off. */}
+      <BackgroundHost />{/* WS7a: pause clock, desktop commands, schedule reminders (background_watching). Nothing while the flag is off. */}
       <MilestoneHost />{/* WS5: milestone celebrations (insights). Nothing, and no extra download, while the flag is off. */}
       </div>
     </Suspense>

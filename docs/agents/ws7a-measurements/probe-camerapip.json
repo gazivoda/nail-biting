@@ -1,0 +1,203 @@
+{
+ "variant": "camerapip",
+ "browser": "Chrome/155.0.8059.85",
+ "startedAt": "2026-10-23T13:41:42.073Z",
+ "VIS": 30,
+ "HID": 700,
+ "BACK": 30,
+ "checkpoints": [
+  {
+   "hiddenSec": 60,
+   "vis": "hidden",
+   "frames": {
+    "total": 1832,
+    "t": 91.526564
+   }
+  },
+  {
+   "hiddenSec": 120,
+   "vis": "hidden",
+   "frames": {
+    "total": 3032,
+    "t": 151.530733
+   }
+  },
+  {
+   "hiddenSec": 180,
+   "vis": "hidden",
+   "frames": {
+    "total": 4228,
+    "t": 211.533636
+   }
+  },
+  {
+   "hiddenSec": 240,
+   "vis": "hidden",
+   "frames": {
+    "total": 5428,
+    "t": 271.535631
+   }
+  },
+  {
+   "hiddenSec": 300,
+   "vis": "hidden",
+   "frames": {
+    "total": 6628,
+    "t": 331.539235
+   }
+  },
+  {
+   "hiddenSec": 360,
+   "vis": "hidden",
+   "frames": {
+    "total": 7828,
+    "t": 391.542873
+   }
+  },
+  {
+   "hiddenSec": 420,
+   "vis": "hidden",
+   "frames": {
+    "total": 9028,
+    "t": 451.546658
+   }
+  },
+  {
+   "hiddenSec": 480,
+   "vis": "hidden",
+   "frames": {
+    "total": 10228,
+    "t": 511.549934
+   }
+  },
+  {
+   "hiddenSec": 540,
+   "vis": "hidden",
+   "frames": {
+    "total": 11428,
+    "t": 571.553659
+   }
+  },
+  {
+   "hiddenSec": 600,
+   "vis": "hidden",
+   "frames": {
+    "total": 12628,
+    "t": 631.558915
+   }
+  },
+  {
+   "hiddenSec": 660,
+   "vis": "hidden",
+   "frames": {
+    "total": 13828,
+    "t": 691.562494
+   }
+  },
+  {
+   "hiddenSec": 700,
+   "vis": "hidden",
+   "frames": {
+    "total": 14628,
+    "t": 731.520303
+   }
+  }
+ ],
+ "events": [
+  {
+   "at": "pip-open",
+   "r": "ok"
+  }
+ ],
+ "info": "{\"started\":[\"main\",\"worker\",\"camera\"],\"errors\":[]}",
+ "visibleEndMs": 31556.300000000745,
+ "visBefore": "visible",
+ "hiddenAtMs": 31872.199999999255,
+ "visHidden": "hidden",
+ "pipOpen": true,
+ "visBack": "visible",
+ "backMs": 762383,
+ "finalInfo": "{\"started\":[\"main\",\"worker\",\"camera\"],\"errors\":[]}",
+ "table": [
+  {
+   "window": "-29..0s",
+   "chain200": 4.99,
+   "raf": 60.23,
+   "wkchain200": 4.85,
+   "iv100": 10.04,
+   "wkiv100": 10.04
+  },
+  {
+   "window": "0..10s",
+   "chain200": 4.9,
+   "raf": 60,
+   "wkchain200": 4.9,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "10..60s",
+   "chain200": 4.96,
+   "raf": 60,
+   "wkchain200": 4.86,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "60..180s",
+   "chain200": 4.96,
+   "raf": 60.01,
+   "wkchain200": 4.88,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "180..300s",
+   "chain200": 4.97,
+   "raf": 59.99,
+   "wkchain200": 4.92,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "300..360s",
+   "chain200": 4.97,
+   "raf": 59.88,
+   "wkchain200": 4.92,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "360..480s",
+   "chain200": 4.97,
+   "raf": 56.62,
+   "wkchain200": 4.91,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "480..600s",
+   "chain200": 4.96,
+   "raf": 60,
+   "wkchain200": 4.92,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "600..660s",
+   "chain200": 4.97,
+   "raf": 60,
+   "wkchain200": 4.92,
+   "iv100": 10,
+   "wkiv100": 10
+  },
+  {
+   "window": "660..701s",
+   "chain200": 5.04,
+   "raf": 60.75,
+   "wkchain200": 4.99,
+   "iv100": 10.12,
+   "wkiv100": 10.12
+  }
+ ]
+}

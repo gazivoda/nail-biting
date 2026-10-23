@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>cadence probe</title></head>
+<body>
+<video id="v" autoplay playsinline muted style="width:160px"></video>
+<script>
+// Cadence probe: several candidate tick sources side by side. Every source counts into 1-second buckets
+// of performance.now() since t0, so the harness can read "ticks per second" for any hidden-time window.
+const params = new URLSearchParams(location.search);
+const T0 = performance.now();
+const buckets = {};
+function bump(name) {
+  const s = Math.floor((performance.now() - T0) / 1000);
+  (buckets[name] ??= {})[s] = (buckets[name][s] ?? 0) + 1;
+}
+window.__buckets = buckets;
+window.__t0 = T0;
+window.__info = { started: [], errors: [] };
+
+// 1. main-thread setInterval(100)
+setInterval(() => bump('iv100'), 100);
+// 2. main-thread setTimeout chain (200 ms): the shape of an app loop that re-arms itself
+(function chain() { bump('chain200'); setTimeout(chain, 200); })();
+// 3. rAF
+(function raf() { bump('raf'); requestAnimationFrame(raf); })();
+window.__info.started.push('main');
+
+// 4. dedicated worker: setInterval(100) and a setTimeout chain(200), ticks posted to the main thread
+if (params.get('worker') !== '0') {
+  const w = new Worker('probe-worker.js');
+  w.onmessage = (e) => bump(e.data);
+  window.__info.started.push('worker');
+}
+
+// 5. audio: a silent context driving a ScriptProcessor-free tick (AudioWorklet posts every ~200 ms)
+async function startAudio() {
+  try {
+    const ctx = new AudioContext();
+    const src = `class T extends AudioWorkletProcessor { constructor(){super(); this.n=0;} process(){ this.n++; if (this.n % 75 === 0) this.port.postMessage(1); return true; } } registerProcessor('t', T);`;
+    await ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+    const node = new AudioWorkletNode(ctx, 't');
+    node.port.onmessage = () => bump('audio200');
+    const g = ctx.createGain(); g.gain.value = 0;
+    node.connect(g).connect(ctx.destination);
+    if (ctx.state === 'suspended') await ctx.resume().catch(() => {});
+    window.__info.audioState = ctx.state;
+    window.__info.started.push('audio');
+  } catch (e) { window.__info.errors.push('audio ' + e); }
+}
+if (params.get('audio') === '1') startAudio();
+
+// 6. camera, as the real app has it
+async function startCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }, audio: false });
+    const v = document.getElementById('v');
+    v.srcObject = stream; await v.play().catch(() => {});
+    window.__info.started.push('camera');
+  } catch (e) { window.__info.errors.push('camera ' + e); }
+}
+if (params.get('camera') === '1') startCamera();
+
+// 7. Web Locks heartbeat is not a clock; skipped on purpose.
+window.__ready = true;
+</script>
+</body></html>
