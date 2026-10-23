@@ -95,9 +95,8 @@ export function comparePair(a, b) {
   return rows;
 }
 
-const pairs = [];
-for (const l of labels.slice(1)) pairs.push([labels[0], l]);
-for (const p of pairArgs) pairs.push(p);
+// with --pair a,b (repeatable) exactly those pairs; otherwise every label against the first
+const pairs = pairArgs.length ? pairArgs : labels.slice(1).map((l) => [labels[0], l]);
 const report = {};
 for (const [a, b] of pairs) {
   const rows = comparePair(a, b);
