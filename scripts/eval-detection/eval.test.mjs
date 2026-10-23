@@ -199,7 +199,8 @@ describe('the evaluation and its gate', () => {
     expect(verdict.failures.join(' ')).not.toMatch(/nose_picking|hair_pulling/);
   });
 
-  it('the command exits 0 on the committed bars and 1 on an impossible one', () => {
+  // The command runs the app's TypeScript under plain Node (type stripping, Node 22.18 or newer).
+  it.skipIf(!process.features?.typescript)('the command exits 0 on the committed bars and 1 on an impossible one', () => {
     const run = (thresholdsPath) => spawnSync(process.execPath, [join(HERE, 'run.mjs'), '--thresholds', thresholdsPath], { encoding: 'utf8', cwd: REPO });
     const ok = run(THRESHOLDS);
     expect(ok.status, ok.stderr).toBe(0);
