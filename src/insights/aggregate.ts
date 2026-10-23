@@ -210,7 +210,9 @@ export function computeInsights(events: readonly InsightEvent[], opts: InsightsO
       if (bite) trendPrevBites++;
     }
 
-    if (bite && ts >= rangeStart) {
+    // The heatmap and the reasons look at [rangeStart, end of today]: an entry dated tomorrow (a clock that was
+    // ahead) is in no day of the daily chart either, so it is in neither.
+    if (bite && ts >= rangeStart && ts < trendEnd) {
       const p = zone.parts(ts);
       cells[((p.weekday + 6) % 7) * 24 + p.hour]++;
       bitesInRange++;

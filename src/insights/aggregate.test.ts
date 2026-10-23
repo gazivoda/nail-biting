@@ -152,6 +152,9 @@ describe('computeInsights: day, week and window boundaries', () => {
     const r = computeInsights([bite(NOW - 40 * DAY), bite(NOW + 3 * DAY)], { now: NOW });
     expect(r.daily.reduce((n, d) => n + d.bites, 0)).toBe(0);
     expect(r.totals.bites).toBe(2);
+    // The heatmap and the reasons stop at the end of today too: tomorrow's entry is in neither.
+    expect(r.heatmap.total).toBe(1);
+    expect(r.triggers.total).toBe(1);
   });
 
   it('weeks start on Monday', () => {
