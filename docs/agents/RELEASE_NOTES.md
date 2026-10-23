@@ -487,7 +487,7 @@ features within about 10 minutes of the next visit. To turn one off, remove just
 | `event_sync` | `habit_events`, `habit_event_epochs` rows stay until deleted | `sync:optin`, `sync:state`, `sync:versions`, `sync:notice`, `sync:device-name` |
 | `insights`, `photo_diary` | | `insights:milestones`, `insights:photo-diary`, `insights:photo-reminder-snooze`; photo bytes in IndexedDB `stop-biting-local-blobs` |
 | `weekly_email` | `email_preferences` rows (opted-in people stop receiving mail when the job stops; unsubscribe still works) | |
-| `phone_companion` | | `phone:grant` (not read while the flag is off or after 14 days; removed by sign-out or a 401) |
+| `phone_companion` | | `phone:grant` (not read while the flag is off or after 14 days; removed by sign-out or a 401 or 403) |
 | `background_watching` | | `background:state`, `schedule`, `last-reminded`, `cadence` |
 | `signin_*` | `auth_identities`, `magic_link_tokens`, `auth_oauth_states`; accounts made this way keep working (Google finds them by address) | `auth:providers` |
 | `free_tier`, `lifetime_plan`, `gift_plan`, `referrals` | `paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`, `referral_codes`, `referrals` | `billing:pending-referral`, `pending-gift`, `free-usage` |
