@@ -16,6 +16,7 @@ import { topTrigger, peakHour, hourRange, behaviorsIn, filterByBehavior } from '
 import { BEHAVIOR_REGISTRY } from '../detection/registry';
 import { useBehaviorFilterEnabled } from '../detection/useBehaviors';
 import type { Behavior } from '../storage/eventModel';
+import { useHistoryWindow } from '../billing/useFreeTier';
 import type { CustomTag, Incident, StatsMetric } from '../types';
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
@@ -216,6 +217,8 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const [pickedBehavior, setPickedBehavior] = useState<Behavior | 'all'>('all');
   const behaviorFilter = showBehaviorFilter && pickedBehavior !== 'all' && behaviorsPresent.includes(pickedBehavior) ? pickedBehavior : 'all';
   const incidents = filterByBehavior(allIncidents, behaviorFilter);
+  // WS9 (flag free_tier): a free account's list shows the last few days. Same array for every other account.
+  const { visible: shown, hidden: hiddenCount } = useHistoryWindow(incidents);
 
   // One tap on the bin used to remove an entry for good, and deleting a bite
   // silently moves the streak. The last deletion can be undone for a few
@@ -236,14 +239,14 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   };
 
   // "Not a bite" entries stay in the list (so they can be taken back) but are not entries that count.
-  const markedCount = incidents.filter(isFalsePositive).length;
-  const countedEntries = incidents.length - markedCount;
+  const markedCount = shown.filter(isFalsePositive).length;
+  const countedEntries = shown.length - markedCount;
 
   // Group by day
   const grouped: { date: string; items: typeof incidents }[] = [];
   const seen = new Set<string>();
 
-  for (const inc of incidents) {
+  for (const inc of shown) {
     const key = formatDate(inc.timestamp);
     if (!seen.has(key)) {
       seen.add(key);
@@ -321,7 +324,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
               <div className="flex items-center justify-between gap-3 px-1">
                 <p className="shrink-0 whitespace-nowrap text-sm font-semibold text-stone-700 dark:text-stone-200">
                   {markedCount === 0
-                    ? <>{incidents.length} {incidents.length !== 1 ? 'entries' : 'entry'}</>
+                    ? <>{shown.length} {shown.length !== 1 ? 'entries' : 'entry'}</>
                     : <>{countedEntries} {countedEntries !== 1 ? 'entries' : 'entry'}, {markedCount} marked not a bite</>}
                 </p>
                 <ClearAllButton />
@@ -404,6 +407,12 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                   </div>
                 </div>
               ))}
+
+              {hiddenCount > 0 && (
+                <p className="px-1 text-sm text-stone-600 dark:text-stone-300">
+                  {hiddenCount} older {hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan.
+                </p>
+              )}
             </div>
           )}
         </div>

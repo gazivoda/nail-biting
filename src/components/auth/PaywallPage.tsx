@@ -7,6 +7,12 @@ import { isAlarmOrBite } from '../../storage/eventModel';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { PLAN_FEATURES, YEARLY_EXTRA } from '../site/plans';
 import { Rings } from '../site/Rings';
+import { PRICE_IDS } from '../../billing/env';
+import { hasAll, useLocalizedPrices } from '../../billing/prices';
+import { useGiftDays } from '../../billing/useGiftInfo';
+import { useFeature } from '../../features/useFeature';
+import { LifetimePlate } from '../billing/LifetimePlate';
+import { describeDays } from '../../../shared/plans.js';
 
 interface Props {
   onBack?: () => void;
@@ -31,6 +37,18 @@ export function PaywallPage({ onBack }: Props) {
   const [paddle, setPaddle] = useState<Paddle | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // WS9: lifetime, gift and localized prices. Every one of these is inert while its flag is off.
+  const lifetimeOn = useFeature('lifetime_plan') && PRICE_IDS.lifetime !== '';
+  const lifetimeRef = useRef(false);   // read by the checkout callback, which is created once
+  useEffect(() => { lifetimeRef.current = lifetimeOn; }, [lifetimeOn]);
+  const giftOn = useFeature('gift_plan') && PRICE_IDS.gift !== '';
+  const lastPriceRef = useRef('');
+  const [giftSent, setGiftSent] = useState(false);
+  const giftDays = useGiftDays();
+  const regional = useLocalizedPrices([PRICE_MONTHLY, PRICE_YEARLY].filter(Boolean), { paddle });
+  const localized = hasAll(regional, [PRICE_MONTHLY, PRICE_YEARLY]);
+  const lifetimePrice = useLocalizedPrices(lifetimeOn ? [PRICE_IDS.lifetime] : [], { paddle, always: true })[PRICE_IDS.lifetime]?.total;
+
   const plansConfigured = !!(PRICE_MONTHLY && PRICE_YEARLY && PADDLE_CLIENT_TOKEN);
 
   // Initialize Paddle SDK
@@ -46,6 +64,8 @@ export function PaywallPage({ onBack }: Props) {
           // checkout.completed provides transaction_id, not subscription_id.
           // The server will look up the transaction to find the subscription.
           const txId = (event.data as CheckoutEventsData | undefined)?.transaction_id ?? null;
+          // WS9: a gift is for someone else; the buyer's own plan does not change.
+          if (lastPriceRef.current !== '' && lastPriceRef.current === PRICE_IDS.gift) { setGiftSent(true); return; }
           handleCheckoutComplete(txId);
         }
       },
@@ -86,6 +106,11 @@ export function PaywallPage({ onBack }: Props) {
           body: JSON.stringify({ transactionId }),
         });
       }
+      // WS9: a lifetime payment has no subscription to verify; the webhook grants it, and this asks the
+      // server to check the payment now instead of waiting. Best effort: the webhook still does it.
+      if (lifetimeRef.current && transactionId) {
+        await apiFetch('/api/billing/verify-transaction', { method: 'POST', body: JSON.stringify({ transactionId }) }).catch(() => undefined);
+      }
       // Wait briefly for webhook to process, then refresh
       await new Promise(resolve => setTimeout(resolve, 2000));
       await refreshProfile();
@@ -103,6 +128,7 @@ export function PaywallPage({ onBack }: Props) {
   const openCheckout = (priceId: string) => {
     if (!paddle) return;
     setError(null);
+    lastPriceRef.current = priceId;
 
     paddle.Checkout.open({
       items: [{ priceId, quantity: 1 }],
@@ -216,16 +242,16 @@ export function PaywallPage({ onBack }: Props) {
           {/* Yearly first at every width, as on /pricing. */}
           <div className="sg-dark relative flex flex-col rounded-2xl bg-deep p-7 text-white dark:bg-deep-2 sm:p-9">
             <p className="absolute -top-3.5 left-7 rounded-full bg-lime-300 px-3 py-1 text-[0.8125rem] font-bold text-deep">
-              Best value: save 19%
+              {localized ? 'Best value' : 'Best value: save 19%'}
             </p>
             <div className="mb-4">
               <p className="sg-h3">Yearly</p>
             </div>
             <p className="mt-1 flex items-baseline gap-1.5">
-              <span className="sg-figure">$29.00</span>
+              <span className="sg-figure">{localized ? regional[PRICE_YEARLY].total : '$29.00'}</span>
               <span className="sg-small">/ year</span>
             </p>
-            <p className="sg-small mt-2">$2.42/month, billed yearly</p>
+            <p className="sg-small mt-2">{localized ? 'Billed yearly' : '$2.42/month, billed yearly'}</p>
             <ul className="mt-7 mb-8 flex-1 space-y-2.5">
               {[...PLAN_FEATURES, YEARLY_EXTRA].map(f => (
                 <li key={f} className="sg-small flex items-center gap-2.5 !text-white">
@@ -250,7 +276,7 @@ export function PaywallPage({ onBack }: Props) {
               <p className="sg-h3 text-stone-900 dark:text-stone-100">Monthly</p>
             </div>
             <p className="mt-1 flex items-baseline gap-1.5 text-stone-900 dark:text-stone-100">
-              <span className="sg-figure">$2.99</span>
+              <span className="sg-figure">{localized ? regional[PRICE_MONTHLY].total : '$2.99'}</span>
               <span className="text-sm text-stone-600 dark:text-stone-300">/ month</span>
             </p>
             <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">Billed monthly</p>
@@ -275,6 +301,35 @@ export function PaywallPage({ onBack }: Props) {
 
         </div>
 
+        {lifetimeOn && (
+          <LifetimePlate
+            price={lifetimePrice}
+            disabled={activating || !paddle}
+            onBuy={() => openCheckout(PRICE_IDS.lifetime)}
+          />
+        )}
+
+        {localized && (
+          <p className="mt-6 w-full max-w-4xl text-sm text-stone-600 dark:text-stone-300">
+            These prices are shown in your local currency. The list prices are $2.99 a month and $29 a year.
+          </p>
+        )}
+
+        {giftSent && (
+          <p role="status" className="mt-6 w-full max-w-4xl rounded-full border border-stone-200 bg-white px-5 py-2.5 text-sm text-stone-700 dark:border-ink-400 dark:bg-ink-50 dark:text-stone-200">
+            Thank you. The gift link is being emailed to the address you paid with. It can take a few minutes.
+          </p>
+        )}
+
+        {giftOn && paddle && plansConfigured && (
+          <button
+            type="button"
+            onClick={() => openCheckout(PRICE_IDS.gift)}
+            className="mt-6 inline-flex min-h-11 items-center px-2 text-sm font-semibold text-stone-700 underline underline-offset-4 hover:text-stone-900 dark:text-stone-200 dark:hover:text-white"
+          >
+            {giftDays ? `Buy ${describeDays(giftDays)} as a gift for someone else` : 'Buy a gift for someone else'}
+          </button>
+        )}
 
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 text-xs text-stone-500 dark:text-stone-400">
           <div className="flex items-center gap-1.5"><Shield size={11} /><span>Secure payment via Paddle</span></div>

@@ -1,4 +1,5 @@
 import type { UserProfile, AccessStatus } from '../types/access';
+import { evaluateAccess, type Access } from '../../shared/access.js';
 
 /**
  * Decides what a signed-in user can reach.
@@ -17,23 +18,24 @@ import type { UserProfile, AccessStatus } from '../types/access';
  *
  * The remaining failure mode is the opposite one — a missed downgrade webhook
  * leaves access on slightly too long. That is the right direction to fail.
+ *
+ * WS9 added lifetime, gift and referral-credit grants and the free tier. They
+ * arrive as `user.entitlement` (see shared/access.js for the order the states are
+ * tried in) and are absent for every account that has none, which then gets the
+ * answer it always got: the matrix test in access.test.ts pins that.
  */
 export function computeAccessStatus(
   user: UserProfile,
   now: number = Date.now(),
 ): Exclude<AccessStatus, 'loading'> {
-  if (user.subscription_status === 'active' || user.subscription_status === 'paused') {
-    return 'subscribed';
-  }
+  return evaluateAccess(user, now).status;
+}
 
-  if (
-    user.trial_end_date &&
-    new Date(user.trial_end_date).getTime() > now &&
-    user.subscription_status !== 'expired' &&
-    user.subscription_status !== 'cancelled'
-  ) {
-    return 'trial_active';
-  }
-
-  return 'paywall';
+/**
+ * The same decision with the reason attached: what grants access (`source`) and until
+ * when. Screens that word the plan ("Lifetime", "Gift", "Referral credit") read this.
+ * The rules live in shared/access.js so the server judges an account the same way.
+ */
+export function computeAccess(user: UserProfile, now: number = Date.now()): Access {
+  return evaluateAccess(user, now);
 }

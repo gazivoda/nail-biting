@@ -14,11 +14,12 @@
 // All decisions come from linkPolicy.js; this file only reads and writes.
 
 import { randomUUID } from 'node:crypto';
+import { TRIAL_MS } from '../../shared/plans.js';
 import { normalizeEmail } from './emailAddress.js';
 import { decideSignIn, googleAssertion, isLegacyGoogleUserId, pickLinkTarget } from './linkPolicy.js';
 
-/** WS9 centralises the trial length; until then this mirrors the Google callback (3 days). */
-export const TRIAL_MS = 3 * 24 * 60 * 60 * 1000;
+/** The trial new accounts get: the one TRIAL_DAYS constant (shared/plans.js), the same as the Google callback. */
+export { TRIAL_MS };
 
 export function createAccounts({ db, getUser, saveUser, now = Date.now, randomId = randomUUID, trialMs = TRIAL_MS }) {
   const selIdentity = db.prepare('SELECT * FROM auth_identities WHERE provider = ? AND provider_subject = ?');
