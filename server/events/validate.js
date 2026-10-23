@@ -11,15 +11,14 @@
 
 import { BEHAVIORS, HANDS, LIMITS, SOURCES } from './limits.js';
 
-const TOP_KEYS = new Set(['since', 'events', 'deviceId', 'epoch']);
-const EVENT_KEYS = new Set([
+export const TOP_KEYS = new Set(['since', 'events', 'deviceId', 'epoch']);
+export const EVENT_KEYS = new Set([
   'id', 'ts', 'source', 'behavior', 'hand', 'triggers', 'falsePositive',
   'competingResponse', 'confirmed', 'deviceId', 'updatedAt', 'deleted',
 ]);
 const RESPONSE_KEYS = new Set(['done', 'durationSec']);
 
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/;
-// eslint-disable-next-line no-control-regex
 const CONTROL_RE = /[\u0000-\u001f\u007f]/;
 
 const isObject = x => x !== null && typeof x === 'object' && !Array.isArray(x);
