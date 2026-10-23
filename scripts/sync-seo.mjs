@@ -32,6 +32,11 @@ const { BLOG_POSTS } = await import('../src/data/blogPosts.ts');
 // need a freshness entry. Their bodies are read out of the file as text (see
 // PAGE_SOURCES), which is also how they can be read at a historical commit.
 const { PAGE_MAP } = await import('../src/data/comparePages.ts');
+// The pages behind the compare_competitors flag (src/data/competitorPages.ts). They
+// are NOT in PAGE_MAP and so are in no sitemap, llms.txt or llms-full.txt; they get
+// a freshness date (the server adds them to sitemap.xml at serve time, only while
+// the flag is on) and their meta is checked against their body like every other page.
+const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHECK_ONLY = process.argv.includes('--check');
@@ -108,6 +113,7 @@ const CORE_PAGES = [
 const LEDGER_PATH = join(ROOT, 'src/data/pageUpdates.json');
 const SERVER = 'server.js';
 const COMPARE = 'src/data/comparePages.ts';
+const GATED = 'src/data/competitorPages.ts';
 const SHELL = 'index.html';
 
 const reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -401,7 +407,7 @@ const pageComponent = file => [file, src => visibleText(src)];
 // One /compare/* or /solutions/* page: the getter PAGE_MAP points at, rendered
 // to text, plus whatever shared copy it names (the medical disclaimer section),
 // so an edit to shared copy still moves the pages that show it.
-const comparePage = path => [COMPARE, src => {
+const comparePageIn = (file, path) => [file, src => {
   const name = src.match(new RegExp(`'${reEscape(path)}':\\s*(\\w+)`))?.[1];
   if (!name) return undefined;
   const slice = src.match(new RegExp(`\\nfunction ${name}\\([\\s\\S]*?\\n\\}\\n`))?.[0];
@@ -409,6 +415,7 @@ const comparePage = path => [COMPARE, src => {
   const seen = new Set([name]);
   return htmlToText([literals(slice), refsText(src, slice, seen)].join(' '));
 }];
+const comparePage = path => comparePageIn(COMPARE, path);
 
 const PAGE_SOURCES = {
   // The homepage article is homeArticleHtml(), which the handler passes to
@@ -435,6 +442,7 @@ const PAGE_SOURCES = {
   '/refund-policy':          [pageComponent('src/pages/RefundPage.tsx')],
 };
 for (const p of Object.keys(PAGE_MAP)) PAGE_SOURCES[p] = [comparePage(p)];
+for (const p of Object.keys(GATED_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(GATED, p)];
 
 const readWorkTree = file => safeRead(join(ROOT, file));
 function fingerprint(read, path) {
@@ -488,7 +496,10 @@ const TODAY = new Date().toISOString().slice(0, 10);
 const NEWEST_POST = BLOG_POSTS.reduce((max, p) => (p.dateModified > max ? p.dateModified : max), '2026-01-01');
 const ledger = JSON.parse(safeRead(LEDGER_PATH) ?? '{}');
 const nextLedger = {};
-for (const { path } of CORE_PAGES) {
+// Gated pages are dated too, so the server can put a true lastmod on them when it adds
+// them to sitemap.xml and in their JSON-LD; they are not in CORE_PAGES, so this script
+// never writes them into the sitemap itself.
+for (const path of [...CORE_PAGES.map(p => p.path), ...Object.keys(GATED_PAGE_MAP)]) {
   if (path === '/blog') {
     nextLedger[path] = { lastmod: NEWEST_POST, source: 'newest article dateModified' };
     continue;
@@ -896,7 +907,8 @@ function siteCorpus() {
     if (!files.has(f)) files.set(f, readWorkTree(f));
     return files.get(f);
   };
-  for (const sources of Object.values(PAGE_SOURCES)) {
+  for (const [path, sources] of Object.entries(PAGE_SOURCES)) {
+    if (path in GATED_PAGE_MAP) continue;   // unpublished copy proves nothing about what the site says
     for (const [file, pick] of sources) {
       const src = cachedRead(file);
       if (src) parts.push(pick(src) ?? '');
@@ -963,7 +975,7 @@ function checkLlmsUrls(text) {
 //     /about, /pricing, /how-it-works, the legal pages). Same defect class, and
 //     llms.txt now quotes them verbatim so a stale one propagates. It was
 //     TRIED against the PAGE_SOURCES visible text and rejected: the metas for
-//     /, /how-it-works and /about all say "100% private", and all three bodies
+//     /, /how-it-works and /about once carried a privacy figure, and all three bodies
 //     make that claim in words instead — "no camera data ever leaves your
 //     device", "entirely on-device" — without ever writing the figure. The
 //     rule would fail three pages whose copy is not wrong, and a gate that
@@ -1215,6 +1227,8 @@ function readProp(src, code, prop) {
   return htmlToText(literals(src.slice(from, i))) || null;
 }
 
+// Published and flagged pages alike: a flagged page's meta must not out-claim its body either.
+const ALL_COMPARE_PAGES = { ...PAGE_MAP, ...GATED_PAGE_MAP };
 checkMirrors();
 
 function checkMirrors() {
@@ -1235,15 +1249,15 @@ function checkMirrors() {
     problems.push('COMPARE_META: cannot read the declaration in server.js — the extractor in sync-seo.mjs no longer matches it, which silently un-gates every hand-written /compare and /solutions meta description');
     return;
   }
-  for (const path of Object.keys(PAGE_MAP)) {
+  for (const path of Object.keys(ALL_COMPARE_PAGES)) {
     if (!metas.some(m => m.path === path)) {
       problems.push(`COMPARE_META: no entry for ${path} — server.js serves that page with meta from somewhere this check cannot see`);
     }
   }
   for (const { path, title, description } of metas) {
-    const page = PAGE_MAP[path]?.();
+    const page = ALL_COMPARE_PAGES[path]?.();
     if (!page) {
-      problems.push(`COMPARE_META: ${path} has no page in comparePages.ts — its meta describes a body that does not exist`);
+      problems.push(`COMPARE_META: ${path} has no page in comparePages.ts or competitorPages.ts — its meta describes a body that does not exist`);
       continue;
     }
     if (!title || !description) {

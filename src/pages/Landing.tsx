@@ -8,6 +8,7 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { Rings } from '../components/site/Rings';
+import { Testimonials } from '../components/site/Testimonials';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 
@@ -526,6 +527,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             </div>
           </div>
         </section>
+
+        {/* Real quotes only; renders nothing while the data file is empty or social_proof is off. */}
+        <Testimonials />
 
         {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
         <div className="bg-[color:var(--sg-plate)] py-20 lg:py-28">

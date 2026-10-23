@@ -13,6 +13,11 @@ export interface PageContent {
   // comparison tables) — same convention as blog post sections in blogPosts.ts.
   sections: { heading: string; body: string; html?: string }[];
   relatedPosts: { href: string; label: string }[];
+  // Set on pages whose competitor facts have not been checked by a human yet
+  // (the flagged pages in competitorPages.ts). Never rendered; read by tests and
+  // by docs/agents/ws11a-notes.md. Flip it to false only after someone has
+  // opened every source URL in the page's facts and confirmed the wording.
+  needsVerification?: boolean;
 }
 
 /**
@@ -1378,3 +1383,10 @@ export const PAGE_MAP: Record<string, () => PageContent> = {
   '/solutions/for-mac': getMacContent,
   '/solutions/for-windows': getWindowsContent,
 };
+
+// The page-building helpers, for src/data/competitorPages.ts. A trailing export
+// list rather than `export` on each declaration: scripts/sync-seo.mjs follows a
+// page's copy to `const NAME =` / `function NAME(` at the start of a line, and an
+// `export` prefix would make it stop seeing the shared sections, which would
+// move the freshness date of every page that uses them.
+export { faqSection, verificationSection, MEDICAL_DISCLAIMER_SECTION };

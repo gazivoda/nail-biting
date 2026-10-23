@@ -1,23 +1,59 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { useTheme } from '../hooks/useTheme';
-import { PAGE_MAP } from '../data/comparePages';
+import { PAGE_MAP, type PageContent } from '../data/comparePages';
+import { GATED_COMPARE_FLAG, isGatedComparePath } from '../data/gatedComparePaths';
+import { refreshFlags } from '../features/flags';
+import { useFeature } from '../features/useFeature';
 import { AuthorBox } from './EditorialPolicyPage';
 
 interface Props {
   path: string;
 }
 
-
+// Every ordinary compare/solutions page: no flag, no extra request, unchanged.
+// The two competitor profile pages behind `compare_competitors` take the other
+// branch, so only they ever read the flag or load their (unverified) copy.
 export function ComparePage({ path }: Props) {
-  useTheme('light');
+  if (isGatedComparePath(path)) return <FlaggedComparePage path={path} />;
+  return <ComparePageView path={path} content={PAGE_MAP[path]?.()} />;
+}
 
-  const getContent = PAGE_MAP[path];
-  const content = getContent?.();
+// A flagged page does not exist until its flag is on: the 404 below until then.
+// The server already answers 404 for these URLs while the flag is off, so this
+// is the second lock (and the only one in `vite dev`, which has no server).
+// The copy is a separate chunk, fetched only once the flag is known to be on.
+function FlaggedComparePage({ path }: Props) {
+  const on = useFeature(GATED_COMPARE_FLAG);
+  const [settled, setSettled] = useState(false);
+  const [content, setContent] = useState<PageContent | undefined>();
+
+  // useFeature is false while the answer is unknown. Wait for the first answer
+  // before showing a 404, or a visitor to a live page sees it flash.
+  useEffect(() => {
+    let live = true;
+    void refreshFlags().finally(() => { if (live) setSettled(true); });
+    return () => { live = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!on) return;
+    let live = true;
+    void import('../data/competitorPages').then(m => { if (live) setContent(m.GATED_PAGE_MAP[path]?.()); });
+    return () => { live = false; };
+  }, [on, path]);
+
+  if (on && content) return <ComparePageView path={path} content={content} />;
+  if (settled && !on) return <ComparePageView path={path} content={undefined} />;
+  return null;
+}
+
+function ComparePageView({ path, content }: Props & { content: PageContent | undefined }) {
+  useTheme('light');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
