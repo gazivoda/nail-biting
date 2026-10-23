@@ -36,4 +36,24 @@ describe.skipIf(!enabled)('privacy audit smoke (real browser, 45 s per mode)', (
       rmSync(out, { recursive: true, force: true });
     }
   }, 420_000);
+
+  it('the canary: deliberate leaks sent by the page are all caught (the audit is not blind)', async () => {
+    const out = mkdtempSync(join(tmpdir(), 'sb-privacy-canary-'));
+    const child = spawn(process.execPath, [
+      join(ROOT, 'scripts/privacy-audit/run.mjs'), '--mode', 'canary', '--out', out,
+      '--port', process.env.PRIVACY_AUDIT_PORT ?? '3213', '--chrome-port', process.env.PRIVACY_AUDIT_CHROME_PORT ?? '4213',
+    ], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+    let log = '';
+    child.stdout.on('data', d => { log += d; });
+    child.stderr.on('data', d => { log += d; });
+    const code = await new Promise(resolve => child.on('exit', resolve));
+    try {
+      expect(code, log.split('\n').slice(-30).join('\n')).toBe(0);
+      const r = JSON.parse(readFileSync(join(out, 'canary.json'), 'utf8'));
+      expect(r.verdict).toBe('CAUGHT');
+      expect(r.canaryMissed).toEqual([]);
+    } finally {
+      rmSync(out, { recursive: true, force: true });
+    }
+  }, 120_000);
 });
