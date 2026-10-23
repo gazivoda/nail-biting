@@ -51,6 +51,8 @@ export function hasEnglishWord(str) {
 export function looksLikeEnglishCopy(str) {
   const t = str.replace(KEEP, '').trim();
   if (t.length < 3) return false;
+  // CSS media queries read like prose to the heuristics below: "(pointer: coarse) and (max-width: 767px)".
+  if (/\b(?:max|min)-(?:width|height)\b|\(\s*(?:pointer|hover|orientation|prefers-[a-z-]+|display-mode)\s*:/.test(t)) return false;
   const tokens = t.split(/\s+/);
   const words = tokens.filter(tok => PURE_WORD.test(tok));
   if (words.length === 0) return false;
@@ -79,12 +81,12 @@ function literalsIn(expr, out = []) {
     case 'Literal':
       if (typeof expr.value === 'string') out.push({ node: expr, text: expr.value });
       break;
-    case 'TemplateLiteral':
-      for (const q of expr.quasis) {
-        const text = q.value.cooked ?? q.value.raw;
-        if (text) out.push({ node: q, text });
-      }
+    case 'TemplateLiteral': {
+      // one finding per template, however many `${}` split it
+      const text = expr.quasis.map(q => q.value.cooked ?? q.value.raw).join(' ');
+      if (text.trim()) out.push({ node: expr, text });
       break;
+    }
     case 'ConditionalExpression':
       literalsIn(expr.consequent, out);
       literalsIn(expr.alternate, out);
