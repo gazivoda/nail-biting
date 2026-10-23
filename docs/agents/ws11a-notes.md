@@ -146,6 +146,10 @@ again: the freshness ledger fingerprints these pages.
 ## Owner TODO
 
 - [ ] Verify the tables above, then set `needsVerification: false` in `src/data/competitorPages.ts` and decide the overlap question.
+- [ ] On the day the flag goes on, set `date` on both new `COMPARE_META` entries in `server.js` to that day: it is the Article's
+      `datePublished`, and the pages are not public until then.
+- [ ] Refresh the live `/compare/stop-biting-vs-habitaware` page: it says HabitAware's pages state no bracelet price, and the new page
+      shows Keen3 at $199.00 (preorder). It is the first contradiction a reader will meet once both are live.
 - [ ] Testimonials: collect real, consented ones, add them following `src/data/README-testimonials.md`, deploy, then set `FEATURE_FLAGS=social_proof`.
 - [ ] Align the privacy and terms pages' "camera feed never leaves your device" with the approved line (NEEDS HUMAN REVIEW; not edited).
 - [ ] No env vars or `.env.example` changes. Flags are in `src/features/registry.ts`; nothing new was added.
