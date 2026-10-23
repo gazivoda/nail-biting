@@ -20,6 +20,7 @@
 
 import { BEHAVIORS, type Behavior } from '../storage/eventModel.ts';
 import { RULES, type ZoneRule } from './rules.ts';
+import { t } from '../i18n/scopes/common';
 
 export type ValidationLevel = 'validated' | 'experimental';
 
@@ -37,54 +38,55 @@ export interface BehaviorInfo {
   rule: ZoneRule;
 }
 
+// label, shortLabel and description are getters: read when a screen renders, in the language showing then.
 export const BEHAVIOR_REGISTRY: Readonly<Record<Behavior, BehaviorInfo>> = {
   nail_biting: {
     id: 'nail_biting',
-    label: 'Nail biting',
-    shortLabel: 'Nails',
-    description: 'A fingertip held near your mouth for about 0.6 seconds. This is the check the app has always used.',
+    get label() { return t('behavior.nail_biting.label'); },
+    get shortLabel() { return t('behavior.nail_biting.short'); },
+    get description() { return t('behavior.nail_biting.description'); },
     validation: 'validated',
     group: 'mouth',
     rule: RULES.nail_biting,
   },
   cuticle_skin_biting: {
     id: 'cuticle_skin_biting',
-    label: 'Cuticle and skin biting',
-    shortLabel: 'Cuticles',
-    description: 'The same mouth check as nail biting, recorded under this name. Choose the one that fits you; they share one check, so only one can be on.',
+    get label() { return t('behavior.cuticle_skin_biting.label'); },
+    get shortLabel() { return t('behavior.cuticle_skin_biting.short'); },
+    get description() { return t('behavior.cuticle_skin_biting.description'); },
     validation: 'validated',
     group: 'mouth',
     rule: RULES.cuticle_skin_biting,
   },
   nose_picking: {
     id: 'nose_picking',
-    label: 'Nose picking',
-    shortLabel: 'Nose',
-    description: 'An index or little fingertip at your nose for about 1.6 seconds.',
+    get label() { return t('behavior.nose_picking.label'); },
+    get shortLabel() { return t('behavior.nose_picking.short'); },
+    get description() { return t('behavior.nose_picking.description'); },
     validation: 'experimental',
     rule: RULES.nose_picking,
   },
   eye_area_pulling: {
     id: 'eye_area_pulling',
-    label: 'Eyelash and eyebrow pulling',
-    shortLabel: 'Eyes',
-    description: 'A thumb and finger pinched together at your eye or brow for about 1.4 seconds.',
+    get label() { return t('behavior.eye_area_pulling.label'); },
+    get shortLabel() { return t('behavior.eye_area_pulling.short'); },
+    get description() { return t('behavior.eye_area_pulling.description'); },
     validation: 'experimental',
     rule: RULES.eye_area_pulling,
   },
   face_skin_picking: {
     id: 'face_skin_picking',
-    label: 'Face skin picking',
-    shortLabel: 'Face skin',
-    description: 'A fingertip moving in small repeated movements on your cheek, chin or forehead for about 3 seconds.',
+    get label() { return t('behavior.face_skin_picking.label'); },
+    get shortLabel() { return t('behavior.face_skin_picking.short'); },
+    get description() { return t('behavior.face_skin_picking.description'); },
     validation: 'experimental',
     rule: RULES.face_skin_picking,
   },
   hair_pulling: {
     id: 'hair_pulling',
-    label: 'Hair pulling',
-    shortLabel: 'Hair',
-    description: 'A pinch above your forehead for about 2 seconds. Needs your camera framed high enough to see the top of your head.',
+    get label() { return t('behavior.hair_pulling.label'); },
+    get shortLabel() { return t('behavior.hair_pulling.short'); },
+    get description() { return t('behavior.hair_pulling.description'); },
     validation: 'experimental',
     rule: RULES.hair_pulling,
   },
