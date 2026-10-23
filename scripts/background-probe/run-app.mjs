@@ -7,6 +7,11 @@
 //   iv100     a plain 100 ms setInterval on the page's main thread
 //   raf       requestAnimationFrame callbacks
 // plus the CPU time of the browser's processes in each phase. Result: <RESULTS_DIR>/app-<label>.json
+//
+// With a probe build (VITE_WS7A_PROBE=1, src/background/probeHook.ts) it can also make the detector see a hand on
+// the mouth and time the real alarm (the tab title changes when the alarm starts):
+//   INJECT_VISIBLE=1        once, while the tab is visible
+//   INJECT_AT=20,650        and at these seconds after the tab was hidden
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { SP, launchChrome, CDP, openPage, sleep } from './cdp.mjs';
@@ -15,6 +20,8 @@ import { startRig } from './rig.mjs';
 const [label, portArg, mode, visArg, hidArg, backArg, distDir, flags = ''] = process.argv.slice(2);
 const port = Number(portArg);
 const VIS = Number(visArg), HID = Number(hidArg), BACK = Number(backArg);
+const INJECT_VISIBLE = process.env.INJECT_VISIBLE === '1';
+const INJECT_AT = (process.env.INJECT_AT ?? '').split(',').filter(Boolean).map(Number).sort((a, b) => a - b);
 
 const PROBE = `(() => {
   const T0 = performance.now(); window.__t0 = T0; const B = window.__b = {};
@@ -31,7 +38,7 @@ const rig = await startRig({ dist: distDir, port, flags });
 const chrome = await launchChrome({ port: port + 1000, headless: 'new' });
 const cdp = new CDP(chrome.wsUrl);
 await cdp.ready;
-const result = { label, mode, flags, browser: chrome.version, startedAt: new Date().toISOString(), VIS, HID, BACK, checkpoints: [], cpu: {} };
+const result = { label, mode, flags, browser: chrome.version, startedAt: new Date().toISOString(), VIS, HID, BACK, checkpoints: [], cpu: {}, alarms: [] };
 
 async function cpuNow() {
   const r = await cdp.send('SystemInfo.getProcessInfo');
@@ -44,6 +51,33 @@ function cpuDelta(a, b) {
   const out = { seconds: +secs.toFixed(1) };
   for (const k of new Set([...Object.keys(a.sum), ...Object.keys(b.sum)])) out[k] = +(((b.sum[k] ?? 0) - (a.sum[k] ?? 0)) / secs * 100).toFixed(1);
   return out;
+}
+
+async function injectOnce(page, tag) {
+  const started = await page.eval(`(() => {
+    if (!window.__sbProbe) return null;
+    if (!window.__alarmLog) {
+      window.__alarmLog = [];
+      new MutationObserver(() => { if (document.title.startsWith('\u26a0')) window.__alarmLog.push(performance.now()); })
+        .observe(document.querySelector('title'), { childList: true, characterData: true, subtree: true });
+    }
+    window.__before = window.__alarmLog.length;
+    window.__incidentsBefore = (JSON.parse(localStorage.getItem('stop-biting-state') || '{}').state?.incidents || []).length;
+    window.__injectAt = performance.now();
+    window.__sbProbe.inject = true;
+    return window.__injectAt;
+  })()`);
+  if (started === null) { result.alarms.push({ tag, error: 'no probe in this build' }); return; }
+  await sleep(6000);
+  const r = await page.eval(`(() => {
+    const first = window.__alarmLog.slice(window.__before)[0];
+    window.__sbProbe.inject = false;
+    const incidents = (JSON.parse(localStorage.getItem('stop-biting-state') || '{}').state?.incidents || []).length;
+    return { latencyMs: first === undefined ? null : +(first - window.__injectAt).toFixed(0), logged: incidents - window.__incidentsBefore, vis: document.visibilityState };
+  })()`);
+  result.alarms.push({ tag, ...r });
+  console.log(label, 'alarm', JSON.stringify({ tag, ...r }));
+  await sleep(4000); // the hand is gone: let the alarm end before the next measurement
 }
 
 try {
@@ -72,6 +106,7 @@ try {
   await sleep(Math.max(1000, (VIS - 10) * 1000));
   const c1 = await cpuNow();
   result.cpu.visible = cpuDelta(c0, c1);
+  if (INJECT_VISIBLE) await injectOnce(page, 'visible');
 
   if (mode === 'pip') {
     result.pipRequest = await page.eval(`(() => { const b = document.querySelector('button[title^="Float"]'); if (!b) return 'no minimize button'; b.click(); return 'clicked'; })()`, { userGesture: true });
@@ -86,9 +121,19 @@ try {
   const hiddenStart = Date.now();
   let cpuMark = await cpuNow();
   let firstWindowDone = false;
+  let nextCheckpoint = 30;
+  let injectIdx = 0;
   while (Date.now() - hiddenStart < HID * 1000) {
-    await sleep(Math.min(30000, HID * 1000 - (Date.now() - hiddenStart)));
-    const cp = { hiddenSec: Math.round((Date.now() - hiddenStart) / 1000) };
+    await sleep(1000);
+    const t = Math.round((Date.now() - hiddenStart) / 1000);
+    if (injectIdx < INJECT_AT.length && t >= INJECT_AT[injectIdx]) {
+      await injectOnce(page, `hidden+${INJECT_AT[injectIdx]}s`);
+      injectIdx++;
+      continue;
+    }
+    if (t < nextCheckpoint) continue;
+    nextCheckpoint = t + 30;
+    const cp = { hiddenSec: t };
     try {
       cp.vis = await page.eval('document.visibilityState');
       cp.video = await page.eval(`(() => { const v = document.querySelector('video'); return v && v.srcObject ? { frames: v.getVideoPlaybackQuality().totalVideoFrames, t: +v.currentTime.toFixed(2) } : null; })()`);

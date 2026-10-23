@@ -13,6 +13,7 @@ import { getAppTicker } from '../background/appTicker';
 import { createHiddenSource, type HiddenSource } from '../background/hiddenSource';
 import { getPipTickWindow, subscribePipTickWindow } from '../background/tickHost';
 import { silentNow } from '../background/silent';
+import { withProbe } from '../background/probeHook';
 
 // --------------------------------------------------------------------------
 // Module-level model cache — init once, reuse across React remounts
@@ -361,12 +362,12 @@ export function useDetection(
           getVideo: () => videoRef.current,
           getSensitivity: () => sensitivityRef.current,
           getBehaviors: () => behaviorsRef.current ?? DEFAULT_BEHAVIOR_LIST,
-          source: {
+          source: withProbe({ // WS7a: identity unless this is a VITE_WS7A_PROBE measurement build
             // SEAM (WS3): with the false-alarm controls off this is exactly `.landmarks ?? []`; see src/detection/handedness.ts.
             detectHands: (video, ts) => detectHandsWithSides(hand, video as HTMLVideoElement, ts),
             detectFace: (video, ts) =>
               face.detectForVideo(video as HTMLVideoElement, ts).faceLandmarks ?? [],
-          },
+          }),
           onBiteStart: startBiting,
           onBiteEnd: stopBiting,
         });
