@@ -5,7 +5,8 @@
 // dark, with digits masked (times and counters depend on the clock), and compares. Prints SAME or the first difference.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { SP, launchChrome, CDP, openPage, sleep } from './cdp.mjs';
+import { tmpdir } from 'node:os';
+import { launchChrome, CDP, openPage, sleep } from './cdp.mjs';
 import { startRig } from './rig.mjs';
 
 const [portArg, distA, distB, flags = ''] = process.argv.slice(2);
@@ -43,7 +44,8 @@ async function capture(dist, portN) {
 
 const a = await capture(distA, port);
 const b = await capture(distB, port + 10);
-mkdirSync(join(SP, 'dom'), { recursive: true });
+const outDir = join(tmpdir(), 'ws7a-dom'); // differences are written here, not into the repo
+mkdirSync(outDir, { recursive: true });
 let same = true;
 for (const key of Object.keys(a)) {
   const x = a[key], y = b[key];
@@ -51,8 +53,8 @@ for (const key of Object.keys(a)) {
   same = false;
   let i = 0; while (i < x.length && x[i] === y[i]) i++;
   console.log('DIFFERENT', key, 'at', i, '\n  A:', x.slice(Math.max(0, i - 80), i + 120), '\n  B:', y.slice(Math.max(0, i - 80), i + 120));
-  writeFileSync(join(SP, 'dom', key.replace('/', '-') + '.A.html'), x);
-  writeFileSync(join(SP, 'dom', key.replace('/', '-') + '.B.html'), y);
+  writeFileSync(join(outDir, key.replace('/', '-') + '.A.html'), x);
+  writeFileSync(join(outDir, key.replace('/', '-') + '.B.html'), y);
 }
 console.log(same ? 'ALL SAME' : 'DIFFERENCES FOUND');
 process.exit(0);
