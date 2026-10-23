@@ -67,7 +67,7 @@ describe('<SettingsSlots />', () => {
   });
 
   it('renders nothing even with the flags on while the section files are empty', () => {
-    setFlags('detection_behaviors', 'event_sync', 'share_links', 'hrt_coaching', 'false_positive_controls', 'background_watching');
+    setFlags('detection_behaviors', 'event_sync', 'share_links', 'false_positive_controls', 'background_watching'); // hrt_coaching is left out: WS2's Alerts card has content now (see coachingSettings.test.tsx)
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 

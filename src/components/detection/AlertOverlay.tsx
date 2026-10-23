@@ -1,12 +1,23 @@
 import { AlertTriangle } from 'lucide-react';
+import { CoachingSeam } from '../../coaching/CoachingSeam';
 
 interface Props {
   visible: boolean;
 }
 
+// The flash is only mounted while `visible`; the coaching seam is not, because
+// its countdown (15 to 60 s) outlives the flash and sound-only users never see
+// the flash at all. It renders nothing unless the app armed it (flag on).
 export function AlertOverlay({ visible }: Props) {
-  if (!visible) return null;
+  return (
+    <>
+      <CoachingSeam surface="main" />{/* SEAM (WS2). WS3's "Not a bite" goes beside it. */}
+      {visible && <AlertFlash />}
+    </>
+  );
+}
 
+function AlertFlash() {
   return (
     <div className="fixed inset-0 z-50 pointer-events-none">
       {/* Alert border flash */}

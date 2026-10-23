@@ -1,7 +1,7 @@
 import type { EventExtras, EventPatch, HabitEvent, StoredEvent, Tombstone } from '../storage/eventModel';
 
 // Preset ids are suggested for autocomplete, but custom tag ids (arbitrary strings) are also valid.
-export type TriggerTag = 'auto-detected' | 'stress' | 'focus' | 'boredom' | 'unknown' | (string & {});
+export type TriggerTag = 'auto-detected' | 'stress' | 'focus' | 'boredom' | 'unknown' | 'urge' | (string & {});
 export type Theme = 'light' | 'dark' | 'system';
 export type AlertSound = 'alarm' | 'chime' | 'buzz' | 'chirp' | 'whistle';
 

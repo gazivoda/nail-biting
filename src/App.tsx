@@ -40,6 +40,7 @@ import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { PWAGuideModal } from './components/PWAGuideModal';
 import { OnboardingTour } from './components/onboarding/OnboardingTour';
+import { ProgramHost } from './coaching/ProgramHost';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -125,6 +126,7 @@ function AppRouter() {
       </div>
       <OnboardingTour />
       <PWAGuideModal />
+      <ProgramHost />{/* WS2: the 4-week program view (hrt_coaching). Nothing while the flag is off. */}
       </div>
     </Suspense>
   );

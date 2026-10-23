@@ -6,6 +6,7 @@ import {
   MAX_TOMBSTONES,
   addTombstone,
   createStoredEvent,
+  isUrge,
   makeTombstone,
   patchStoredEvent,
   upgradeIncident,
@@ -18,9 +19,13 @@ import { getDeviceId } from '../storage/deviceId';
 import { detectLocalStorage } from '../storage/adapter';
 import { createStatePersistStorage } from '../storage/persistStorage';
 
-/** A real bite: logged by hand, or an alarm the user confirmed. Alarms start unconfirmed. */
+/**
+ * A real bite: logged by hand, or an alarm the user confirmed. Alarms start
+ * unconfirmed. An urge-timer entry (WS2) is logged by hand too, but it is an
+ * urge that was felt, not a bite, so it never breaks a streak.
+ */
 export function isBite(inc: Incident): boolean {
-  return !inc.autoDetected || inc.confirmed === true;
+  return (!inc.autoDetected || inc.confirmed === true) && !isUrge(inc);
 }
 
 function latestBiteTime(incidents: Incident[]): number | null {
