@@ -119,6 +119,35 @@ describe('resolveFailedSession: only "could not find out" falls back, and only w
   });
 });
 
+describe('the rest of the WS9 access model, offline as online', () => {
+  const expiredTrial = { subscription_status: 'expired' as const, trial_end_date: new Date(NOW - DAY).toISOString() };
+
+  it('a lifetime, gift or referral grant that is running keeps a phone open offline; one that ended does not', () => {
+    saveGrant(user({ ...expiredTrial, entitlement: { grants: [{ kind: 'gift', ends_at: new Date(NOW + 10 * DAY).toISOString() }] } }), NOW);
+    expect(grantProfile(NOW + DAY)).not.toBeNull();
+    expect(grantProfile(NOW + 11 * DAY)).toBeNull(); // its own end, before even the 14-day session limit
+    saveGrant(user({ ...expiredTrial, entitlement: { grants: [{ kind: 'lifetime', ends_at: null }] } }), NOW);
+    expect(grantProfile(NOW + 13 * DAY)).not.toBeNull();
+    expect(grantProfile(NOW + 15 * DAY)).toBeNull(); // lifetime is honoured, but a stale copy is not trusted past the session
+  });
+  it('the free tier opens the app offline with its limits, exactly like online', () => {
+    const free = { detection_minutes_per_day: 30, history_days: 7 };
+    saveGrant(user({ ...expiredTrial, entitlement: { free_tier: free } }), NOW);
+    const p = grantProfile(NOW + DAY);
+    expect(p?.entitlement?.free_tier).toEqual(free);
+  });
+  it('an expired account with nothing else stays a paywall: offline is no way around it', () => {
+    saveGrant(user(expiredTrial), NOW);
+    expect(grantProfile(NOW + DAY)).toBeNull();
+  });
+  it('saves only the parts of the entitlement the decision reads, never banked days', () => {
+    saveGrant(user({ entitlement: { grants: [{ kind: 'referral_credit', ends_at: null }], banked_days: 90 } }), NOW);
+    const raw = JSON.stringify(kv.get('phone', 'grant', null));
+    expect(raw).toContain('referral_credit');
+    expect(raw).not.toContain('banked');
+  });
+});
+
 describe('serverRefusedSession', () => {
   it('is true only for the answers that mean "no"', () => {
     expect(serverRefusedSession(apiError(401))).toBe(true);

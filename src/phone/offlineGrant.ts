@@ -23,12 +23,17 @@
 //   - it holds no email, avatar or payment ids: the id (sync is opted in per
 //     account), the first name, and the plan and date facts access depends on.
 //
+// The access decision itself is WS9's (shared/access.js, through computeAccessStatus): trial,
+// paid plan, lifetime, gift, referral credit, free tier, expired. This file saves the INPUTS to
+// that decision and runs it again, so a new kind of access added there is honoured here with no
+// change. It decides nothing of its own.
+//
 // Light on purpose (kv and one small util): AuthContext imports it, and
 // AuthContext is in the bundle every visitor downloads.
 
 import { kv } from '../storage/kv';
 import { computeAccessStatus } from '../utils/access';
-import type { UserProfile } from '../types/access';
+import type { Entitlement, UserProfile } from '../types/access';
 
 const NS = 'phone' as const;
 const KEY = 'grant';
@@ -44,6 +49,8 @@ interface Grant {
   status: UserProfile['subscription_status'];
   plan: UserProfile['subscription_plan'];
   endDate: string | null;
+  /** WS9: only the two parts the access decision reads (running grants, free-tier limits); never banked days. */
+  entitlement?: Pick<Entitlement, 'grants' | 'free_tier'>;
   savedAt: number;
 }
 
@@ -69,6 +76,10 @@ export function saveGrant(user: UserProfile, now: number = Date.now()): void {
     endDate: user.subscription_end_date ?? null,
     savedAt: now,
   };
+  if (user.entitlement) {
+    const { grants, free_tier } = user.entitlement;
+    grant.entitlement = { ...(grants ? { grants } : {}), ...(free_tier ? { free_tier } : {}) };
+  }
   kv.set(NS, KEY, grant);
 }
 
@@ -92,9 +103,11 @@ export function grantProfile(now: number = Date.now()): UserProfile | null {
     subscription_end_date: g.endDate,
     paddle_subscription_id: null,
     paddle_customer_id: null,
+    ...(g.entitlement ? { entitlement: g.entitlement } : {}),
   };
+  // The same three states the app opens for online. 'paywall' (a trial that ended while offline) is not one of them.
   const access = computeAccessStatus(profile, now);
-  return access === 'trial_active' || access === 'subscribed' ? profile : null;
+  return access === 'trial_active' || access === 'subscribed' || access === 'free_tier' ? profile : null;
 }
 
 /** The flags answer last cached by src/features/flags.ts, read without importing it. */

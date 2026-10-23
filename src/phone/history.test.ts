@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { describeEntry, recentRows, todayCounts, todaySentence, whenLabel } from './history';
 import { isBite } from '../store/useAppStore';
+import { isFalsePositive, isPendingAlarm, isUrge } from '../storage/eventModel';
 import type { CustomTag, Incident } from '../types';
 
 const T = new Date(2026, 9, 23, 15, 0, 0).getTime(); // 23 Oct 2026, 15:00 local
@@ -37,6 +38,40 @@ describe('describeEntry: the words History uses', () => {
   it('an alarm confirmed as a bite with the tag "urge" is still a bite, never an urge', () => {
     const tricky: Incident = { id: 't', timestamp: T, tag: 'urge', autoDetected: true, confirmed: true };
     expect(describeEntry(tricky).kind).toBe('bite');
+  });
+});
+
+describe('the WS3 review states (src/storage/eventModel.ts state table)', () => {
+  const marked = (id: string, ts: number, confirmed?: boolean): Incident => ({ ...alarm(id, ts, confirmed), falsePositive: true });
+
+  it('an alarm marked "Not a bite" is its own quiet entry, never an alarm and never a bite', () => {
+    expect(describeEntry(marked('m', T))).toEqual({ kind: 'dismissed', label: 'Not a bite' });
+    // falsePositive outranks confirmed, which is left alone so Undo restores the entry exactly.
+    expect(describeEntry(marked('m', T, true))).toEqual({ kind: 'dismissed', label: 'Not a bite' });
+  });
+  it('Undo (falsePositive: false) puts the alarm back where it was', () => {
+    expect(describeEntry({ ...alarm('x', T), falsePositive: false })).toEqual({ kind: 'alarm', label: 'Alarm' });
+    expect(describeEntry({ ...alarm('x', T, true), falsePositive: false })).toEqual({ kind: 'bite', label: 'Bite' });
+  });
+  it('today: "Not a bite" entries and urges never count as bites, and a marked alarm is not waiting for review', () => {
+    const list = [
+      bite('b', T - H), urge('u', T - H),
+      alarm('pending', T - H), marked('m1', T - H), marked('m2', T - H, true), alarm('c', T - H, true),
+    ];
+    expect(todayCounts(list, T)).toEqual({ bites: 2, urges: 1, alarmsToReview: 1 });
+  });
+  it('every number agrees with the shared predicates on every state in the table', () => {
+    const states: Incident[] = [
+      alarm('unreviewed', T - H), alarm('confirmed', T - H, true), marked('fp', T - H), marked('fp-confirmed', T - H, true),
+      bite('manual', T - H, 'stress'), urge('urge', T - H),
+      { ...alarm('fp-undone', T - H), falsePositive: false },
+    ];
+    const c = todayCounts(states, T);
+    expect(c.bites).toBe(states.filter(isBite).length);
+    expect(c.urges).toBe(states.filter(isUrge).length);
+    expect(c.alarmsToReview).toBe(states.filter(isPendingAlarm).length);
+    // a marked alarm is in no count at all
+    for (const i of states.filter(isFalsePositive)) expect(isBite(i) || isUrge(i) || isPendingAlarm(i)).toBe(false);
   });
 });
 

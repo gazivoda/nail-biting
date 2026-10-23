@@ -42,7 +42,7 @@ export function usePhoneView(): boolean {
   // Keep a small copy of the access facts so an installed phone app can open
   // with no connection (offlineGrant.ts). Written only while the flag is on and
   // only for a person who has access right now.
-  const signedInWithAccess = !!user && (accessStatus === 'trial_active' || accessStatus === 'subscribed');
+  const signedInWithAccess = !!user && (accessStatus === 'trial_active' || accessStatus === 'subscribed' || accessStatus === 'free_tier');
   useEffect(() => {
     if (flagOn && signedInWithAccess && user) saveGrant(user);
   }, [flagOn, signedInWithAccess, user]);

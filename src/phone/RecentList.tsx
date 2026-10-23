@@ -3,12 +3,15 @@
 // alarm nobody has reviewed. Counts and labels come from ./history.ts.
 
 import { useAppStore } from '../store/useAppStore';
+import { useHistoryWindow } from '../billing/useFreeTier';
 import { recentRows, todayCounts, todaySentence, whenLabel, type EntryKind } from './history';
 
 const PILL: Record<EntryKind, string> = {
   bite: 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
   urge: 'text-forest-700 dark:text-forest-300 bg-forest-50 dark:bg-forest-800/50 border-forest-300 dark:border-forest-700',
   alarm: 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700',
+  // An alarm marked "Not a bite" (WS3): reviewed and not counted, so quiet, like History's muted label.
+  dismissed: 'text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-ink-fill border-stone-200 dark:border-ink-400',
 };
 
 export function TodayLine() {
@@ -19,7 +22,9 @@ export function TodayLine() {
 export function RecentList({ onSeeAll }: { onSeeAll?: () => void }) {
   const incidents = useAppStore(s => s.incidents);
   const customTags = useAppStore(s => s.customTags);
-  const rows = recentRows(incidents, customTags, 6);
+  // A free account sees the last N days (WS9), here as in History; counts and the streak use everything.
+  const { visible } = useHistoryWindow(incidents);
+  const rows = recentRows(visible, customTags, 6);
 
   return (
     <section aria-labelledby="phone-recent">

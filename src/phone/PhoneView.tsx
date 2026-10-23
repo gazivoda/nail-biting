@@ -12,6 +12,7 @@ import { UrgeTimer } from '../coaching/UrgeTimer';
 import { useAuth } from '../contexts/AuthContext';
 import { useFeature } from '../features/useFeature';
 import { useAppStore } from '../store/useAppStore';
+import { useFreeTier } from '../billing/useFreeTier';
 import { track } from '../utils/track';
 import { trialLeft } from '../utils/trial';
 import { canShare, PHONE_SHARE, shareToComputer } from '../utils/phoneLink';
@@ -52,6 +53,7 @@ export default function PhoneView({ onUpgrade, onNavigate }: {
 }) {
   const { user, accessStatus } = useAuth();
   const customTags = useAppStore(s => s.customTags);
+  const free = useFreeTier();
   const urgeTimerOn = useFeature('urge_timer');
   const { flow, toast } = useLogFlow();
   const urgeRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,18 @@ export default function PhoneView({ onUpgrade, onNavigate }: {
           {greeting},{' '}
           <span className="sg-mark whitespace-nowrap dark:![background:none]">{firstName}</span>.
         </h1>
+        {free.active && (
+          // WS9's free plan: the limits are on detection time and how far back History reaches. Detection is not
+          // on this screen, so the one limit that touches it is the history window.
+          <p className="mt-2 flex flex-wrap items-center gap-x-3 text-sm text-stone-600 dark:text-stone-300">
+            <span>Free plan{free.historyDays ? `: History shows your last ${free.historyDays} days` : ''}.</span>
+            {onUpgrade && (
+              <button type="button" onClick={onUpgrade} className={`${TEXT_BUTTON} -mx-3`}>
+                Choose a plan
+              </button>
+            )}
+          </p>
+        )}
         {trialLeftText && (
           <p className="mt-2 flex flex-wrap items-center gap-x-3 text-sm text-stone-600 dark:text-stone-300">
             <span>Free trial: {trialLeftText}.</span>
