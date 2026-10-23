@@ -111,6 +111,18 @@ Changing sensitivity or alert settings does not restart the loop: they are read 
   `onAlert(behavior)`; `CameraView.handleAlert` passes it to `logIncident(..., { behavior })`. Details and the
   evaluation harness: `docs/agents/ws1-notes.md`, `scripts/eval-detection/README.md`.
 
+- **WS3 update (fewer false alarms, flag `false_positive_controls`).** `createEngine`/`createBiteDetector` take an optional
+  `getControls()` (default: the registry in `src/detection/controlsRegistry.ts`, which is empty until the flag is on and the
+  app's `FalsePositiveBridge` fills it). With none, the engine takes exactly the path above. With controls: the **hand filter**
+  (`both|left|right`, as the person sees it; `src/detection/handedness.ts` maps MediaPipe's label, which assumes a mirrored
+  picture, to the person's own hand; unknown sides are always watched), the **chin-rest rule** (`judgeContact` in
+  `src/detection/controls.ts`: knuckles, wrist or palm within 0.25 face widths of the chin and no fingertip within 0.15 of the
+  lips: the frame is a miss), **learned poses** (six numbers from `src/detection/pose.ts` per "Not a bite" tap, kept in `kv`
+  namespace `falsePositive`, max 40, 30 days; a like pose waits 2 frames longer, two like poses need a fingertip within 0.2
+  face widths) and **silence** (`requestSilence()` stops the alarm that is sounding and keeps it quiet until the hand has gone).
+  Controls can only remove or delay an alarm. The one line in `useDetection.ts` is the hand source
+  (`detectHandsWithSides`); `getModels` is exported for the calibration. Details: `docs/agents/ws3-notes.md`.
+
 **Alarm.** `useDetection.startBiting`: starts the sound (`startAlarm(sound, volume)`, Web Audio, profiles
 `alarm | chime | buzz | chirp | whistle`), sets status `alert`, calls `onAlert()` once, flashes the tab title, and
 when the tab is hidden sets the app badge and a `Notification` if permission is granted; also
@@ -197,8 +209,10 @@ the primary trigger**; `triggers` is only stored when a caller supplies an expli
 
 **`confirmed` is not in the plan's `HabitEvent`, but every count and streak depends on it.** It travels as an extra
 field (`HabitEventWire = HabitEvent & { confirmed?: boolean }`). Anything that merges, syncs or exports events (WS4,
-WS10) must carry it unchanged. WS3: "Not a bite" sets `falsePositive: true`; make `isBite` return false for it in
-that one function and every screen follows.
+WS10) must carry it unchanged. WS3: "Not a bite" sets `falsePositive: true`; `isBite` returns false for it, and
+`isFalsePositive` / `isPendingAlarm` / `isAlarmOrBite` (`eventModel.ts`) are the other three predicates every counter uses. The state
+table (unreviewed alarm, confirmed bite, false positive, manual log, urge) is at the head of the predicates in `eventModel.ts` and in
+`docs/agents/ws3-notes.md`. The pose numbers that "Not a bite" teaches are NOT an event field and never travel with events.
 
 `Incident` (`src/types/index.ts`) is what screens import: the five v1 fields required, the v2 fields optional, so
 v1-shaped literals still type-check.
@@ -660,7 +674,7 @@ although no server is spawned any more, commit 2b633d6).
 | `Dockerfile` | WS0 added `COPY server ./server` | any new top-level server path must be copied |
 | Detection rule: `biteDetector.ts`, `src/detection/**` (zones, rules, registry, engine), `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand`; `getBehaviors` on `createBiteDetector` |
 | Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
-| Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 adds "Not a bite" at the same seam | `handleAlert` is the one-line seam for `{ behavior, hand }` |
+| Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 mounted `<NotABiteSeam />` beside it (and in `PiPWindow.tsx`) | `handleAlert` is the one-line seam for `{ behavior, hand }` (`alarmHandExtras()`) |
 | `Settings.tsx` | frozen; nobody edits it (WS9 may touch `PlanSection` for plans) | `<SettingsSlots />` |
 | `src/pages/settings/sections/*.tsx` | one workstream per file (table in section 7) | |
 | `src/pages/settings/meta.ts`, `sectionComponents.ts` | WS0; add a section = a line in each | |

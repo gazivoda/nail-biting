@@ -6,7 +6,7 @@
     "_about": "A rule can be promoted only when its bar is met on REAL fixtures alone and those fixtures contain at least this many labelled events for it.",
     "minRealEvents": 10
   },
-  "_about_the_validated_bars": "The two validated bars below are a regression ratchet, not a goal: set just under what the unchanged shipped rule scores on the committed synthetic fixtures, which include scenes drawn on purpose to fool it (chin rest, drinking, covering a yawn). WS3 (fewer false alarms) should raise minPrecision as it improves.",
+  "_about_the_validated_bars": "The two validated bars below are a regression ratchet, not a goal: set just under what the unchanged shipped rule scores on the committed synthetic fixtures, which include scenes drawn on purpose to fool it (chin rest, drinking, covering a yawn). These bars are for the SHIPPED detector (the false_positive_controls flag off) and stay where they are: WS3 does not change that detector. WS3's raised bars, for the flag on, are withControls and withLearning below.",
   "rules": {
     "nail_biting": { "minPrecision": 0.3, "minRecall": 0.95 },
     "cuticle_skin_biting": { "minPrecision": 0.3, "minRecall": 0.95 },

@@ -16,7 +16,7 @@ import {
   type DetectionControls, type FireInfo, type LearnedSample,
 } from './controls.ts';
 import { attachSides, detectHandsWithSides, userHandFromLabel } from './handedness.ts';
-import { getDetectionControls, recentFire, requestSilence, setDetectionControls } from './controlsRegistry.ts';
+import { alarmHandExtras, getDetectionControls, recentFire, requestSilence, setDetectionControls } from './controlsRegistry.ts';
 import type { Behavior } from '../storage/eventModel.ts';
 import type { Landmark } from './types.ts';
 
@@ -445,6 +445,18 @@ describe('the engine with the controls on', () => {
       const controls = defaultControls({ now: () => Date.now() });
       run([away, ...hold(indexAtLips(), 6, ['right']), away, away], controls);
       expect(recentFire(Date.now())).toMatchObject({ hand: 'right', behavior: 'nail_biting' });
+    });
+
+    it('the hand goes onto the alarm\'s event only while controls are on, and only for an alarm that has just started', () => {
+      expect(alarmHandExtras()).toEqual({});                                  // nothing registered: the event is what it always was
+      const controls = defaultControls({ now: () => Date.now() });
+      setDetectionControls(controls);
+      expect(alarmHandExtras()).toEqual({});                                  // registered, no alarm yet
+      run([away, ...hold(indexAtLips(), 6, ['left']), away, away], controls);
+      expect(alarmHandExtras()).toEqual({ hand: 'left' });                    // the side the source reported for the hand at the lips
+      expect(alarmHandExtras(Date.now() + 60_000)).toEqual({});               // a stale alarm start is never attached to a later event
+      setDetectionControls(null);
+      expect(alarmHandExtras()).toEqual({});                                  // the flag off again
     });
 
     it('a throwing onFire cannot stop or delay the alarm', () => {
