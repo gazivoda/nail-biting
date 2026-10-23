@@ -44,18 +44,22 @@ export function PhotoReminderView({ lastPhotoAge, onOpen, onSnooze }: { lastPhot
 /** `onOpen` takes the person to the diary (the Insights view). */
 export function PhotoReminder({ onOpen }: { onOpen: () => void }) {
   const on = useFeature('photo_diary');
-  const { photos, now } = usePhotoRecords();
-  const [snoozedUntil, setSnoozedUntil] = useState<number | null>(readSnoozedUntil);
+  const { photos, now: readAt } = usePhotoRecords();
+  // `readAt` is when the records were last read, which can be hours ago in a long-lived tab. A snooze is
+  // judged against the moment it was made, so it keeps the clock it was made with.
+  const [snooze, setSnooze] = useState<{ until: number | null; madeAt: number }>(() => ({ until: readSnoozedUntil(), madeAt: 0 }));
+  const now = Math.max(readAt, snooze.madeAt);
 
-  if (!on || !isDue(photos, now, snoozedUntil)) return null;
+  if (!on || !isDue(photos, now, snooze.until)) return null;
 
   return (
     <PhotoReminderView
       lastPhotoAge={describeAge(photos[0].takenAt, now)}
       onOpen={onOpen}
       onSnooze={() => {
-        snoozeReminder(Date.now());
-        setSnoozedUntil(readSnoozedUntil());
+        const madeAt = Date.now();
+        snoozeReminder(madeAt);
+        setSnooze({ until: readSnoozedUntil(), madeAt });
       }}
     />
   );

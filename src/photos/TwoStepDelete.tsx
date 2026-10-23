@@ -32,7 +32,7 @@ export function TwoStepDelete(p: TwoStepDeleteProps) {
         <span className="text-stone-700 dark:text-stone-200">{p.question}</span>
         <button
           type="button"
-          onClick={() => { setOpen(false); p.onConfirm(); }}
+          onClick={() => { setOpen(false); setReturnFocus(false); p.onConfirm(); }}
           className="inline-flex min-h-11 items-center rounded-full bg-alert-600 px-5 font-semibold text-cream-100 transition-colors hover:bg-alert-800"
         >
           {p.confirmLabel}

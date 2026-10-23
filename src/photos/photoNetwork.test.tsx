@@ -24,7 +24,7 @@ const spy = (name: string) => () => {
   throw new Error(`network API used: ${name}`);
 };
 class SpyClass {
-  constructor(public readonly kind: string) {
+  constructor(kind: string) {
     calls.push(kind);
     throw new Error(`network API used: ${kind}`);
   }
@@ -71,7 +71,7 @@ describe('the spies are live (so a silent pass means something)', () => {
     expect(() => new (globalThis as unknown as { WebSocket: new () => void }).WebSocket()).toThrow();
     expect(() => new (globalThis as unknown as { EventSource: new () => void }).EventSource()).toThrow();
     expect(() => new (globalThis as unknown as { Image: new () => void }).Image()).toThrow();
-    const nav = (globalThis as { navigator?: { sendBeacon?: () => void } }).navigator;
+    const nav = (globalThis as unknown as { navigator?: { sendBeacon?: () => void } }).navigator;
     if (nav?.sendBeacon) expect(() => nav.sendBeacon!()).toThrow();
     expect(calls.length).toBeGreaterThanOrEqual(5);
     calls.length = 0;
