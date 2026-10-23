@@ -69,8 +69,9 @@ describe('<SettingsSlots />', () => {
   it('renders nothing even with the flags on while the section files are empty', () => {
     // Left out because their cards have content now: hrt_coaching (WS2, see coachingSettings.test.tsx),
     // detection_behaviors (WS1, see src/detection/useBehaviors.test.tsx), event_sync and data_backup
-    // (WS4, see syncData.test.tsx) and false_positive_controls (WS3, see src/falsePositive/settings.test.tsx).
-    setFlags('share_links', 'background_watching');
+    // (WS4, see syncData.test.tsx), false_positive_controls (WS3, see src/falsePositive/settings.test.tsx)
+    // and share_links (WS10, see sharingSettings.test.tsx).
+    setFlags('background_watching');
     expect(renderToStaticMarkup(<SettingsSlots />)).toBe('');
   });
 
@@ -81,7 +82,7 @@ describe('<SettingsSlots />', () => {
     setFlags('detection_behaviors');
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('<p>behaviors card</p>');
 
-    setFlags('share_links'); // a different flag: behaviors stays hidden
+    setFlags('background_watching'); // a different flag: behaviors stays hidden
     expect(renderToStaticMarkup(<SettingsSlots components={components} />)).toBe('');
   });
 });

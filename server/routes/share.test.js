@@ -226,6 +226,20 @@ describe('one account cannot touch another\'s links', () => {
   });
 });
 
+// ── Billing state never blocks revoking ──────────────────────────────────────
+
+describe('an expired or lapsed account', () => {
+  it('can still list and revoke its links (sharing has no entitlement check of its own)', async () => {
+    const h = await boot();
+    seedRich(h);
+    const made = (await h.create('u1', { label: 'before the trial ended' })).body;
+    h.db.prepare("UPDATE users SET subscription_status = 'expired', trial_end_date = '2000-01-01' WHERE id = 'u1'").run();
+    expect((await h.list('u1')).body.links).toHaveLength(1);
+    expect((await h.revoke('u1', made.id)).status).toBe(200);
+    expect((await h.page(made.token)).status).toBe(404);
+  });
+});
+
 // ── Revoked, expired, unknown: one answer ────────────────────────────────────
 
 describe('a dead link gets ONE answer', () => {
@@ -480,7 +494,9 @@ describe('the page', () => {
     expect(page.text).toContain('Shared by the person who made this link');
     expect(page.text).toMatch(/revoked links stop working/);
     expect(page.text).toMatch(/not a clinician/);
-    expect(page.text).not.toMatch(/\b(cures?|heals?|treats|treatment for|clinically proven|therapy works|prevents?|100%)/i); // no medical or outcome claims
+    const visible = page.text.replace(/<style>[\s\S]*?<\/style>/g, '').replace(/<script>[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ');
+    expect(visible).not.toMatch(/\b(cures?|heals?|treats|treatment for|clinically proven|therapy works|prevents?|100%)/i); // no medical or outcome claims
+    expect(visible).not.toMatch(/no cloud|nothing leaves|zero network|100% private/i); // the retired privacy wording
   });
 
   it('is printable: an A4 print stylesheet and a Print or save as PDF button wired in the page script', async () => {
