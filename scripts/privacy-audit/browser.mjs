@@ -48,7 +48,20 @@ function startProxy(listenPort, targetPort) {
     up.on('error', () => { if (!res.headersSent) res.writeHead(502); res.end(); });
     req.pipe(up);
   });
-  return new Promise((resolve, reject) => { proxy.once('error', reject); proxy.listen(listenPort, '127.0.0.1', () => resolve(proxy)); });
+  // Both loopback families, so a stranger already listening on the same port on [::1] cannot silently answer for us
+  // ("localhost" resolves to ::1 first): EADDRINUSE on either is an error.
+  const listenOn = (srv, host) => new Promise((resolve, reject) => {
+    srv.once('error', (e) => (e.code === 'EADDRNOTAVAIL' || e.code === 'EAFNOSUPPORT' ? resolve(false) : reject(e)));
+    srv.listen(listenPort, host, () => resolve(true));
+  });
+  return (async () => {
+    await listenOn(proxy, '127.0.0.1');
+    const v6 = http.createServer(proxy.listeners('request')[0]);
+    await listenOn(v6, '::1');
+    const close = proxy.close.bind(proxy);
+    proxy.close = (...a) => { v6.close(); v6.closeAllConnections?.(); return close(...a); };
+    return proxy;
+  })();
 }
 
 export async function startServer({ root, port, flags = '', nodeEnv, keepUpgradeInsecure = false }) {

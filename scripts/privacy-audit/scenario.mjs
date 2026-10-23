@@ -130,10 +130,10 @@ export function makePage(cdp, sessionId, origin, log) {
  * @param {number} o.seconds  how long detection runs in total
  * @param {string[]} o.flags  the server's feature flags
  */
-export async function runScenario({ page, rec, mode, seconds, flags, log, shotDir }) {
+export async function runScenario({ page, rec, mode, seconds, flags, log, shotDir, probe = false }) {
   const has = (f) => flags.includes(f);
   const steps = [];
-  const out = { steps, bitesLogged: 0, urgeLogged: 0, syncSwitchedOn: false, photo: null, frameSamples: [], notes: [] };
+  const out = { steps, bitesLogged: 0, urgeLogged: 0, alarmsRaised: 0, syncSwitchedOn: false, photo: null, frameSamples: [], notes: [] };
   const step = async (name, fn, { required = false } = {}) => {
     const t = Date.now();
     try {
@@ -248,6 +248,35 @@ export async function runScenario({ page, rec, mode, seconds, flags, log, shotDi
   }
   sample();
 
+  // ── 3b. real alarms, with real landmark data in the page (probe build only) ──
+  if (probe) {
+    const incidents = () => page.eval(`(JSON.parse(localStorage.getItem('stop-biting-state') || '{}').state?.incidents || []).length`);
+    const alarmRound = async (n, react) => {
+      const before = await incidents();
+      await page.eval('window.__sbProbe.inject = true');
+      let got = false;
+      for (let i = 0; i < 50 && !got; i++) { await sleep(500); got = (await incidents()) > before; }
+      await sleep(1500);
+      await page.eval('window.__sbProbe.inject = false');
+      if (!got) throw new Error('no alarm event was created while the detector saw a hand on the mouth');
+      out.alarmsRaised++;
+      await sleep(800);
+      await page.shot(`alarm-${n}`, shotDir);
+      if (react) await react();
+      await sleep(1500);
+      return `alarm ${n} logged`;
+    };
+    out.alarmRound = alarmRound;
+    await step('real alarm 1: detector sees 21 hand + 478 face points on the mouth; pick a reason, do the coaching response', () => alarmRound(1, async () => {
+      await page.click({ text: 'Stress', exact: true, inside: 'what set it off' }, { optional: true, timeout: 3000 });
+      await page.click({ text: 'Sip water mindfully' }, { optional: true, timeout: 2000 });
+      await sleep(1500);
+      await page.click({ text: 'Done', exact: true }, { optional: true, timeout: 3000 });
+    }));
+    out.alarm1At = elapsed();
+    sample();
+  }
+
   // ── 4. History and the photo diary ──
   await step('History tab', () => nav('History'));
   await page.shot('06-history', shotDir);
@@ -295,6 +324,12 @@ export async function runScenario({ page, rec, mode, seconds, flags, log, shotDi
   let round = 0;
   while (elapsed() < total) {
     const left = total - elapsed();
+    if (probe && out.alarmRound && !out.alarm2Done && seconds >= 150 && elapsed() >= Math.max(0.3 * seconds, (out.alarm1At ?? 0) + 33)) {
+      out.alarm2Done = true; // the detector's episode window is 30 s, so this one is a new entry
+      await step('real alarm 2 (a new episode): "Not a bite"', () => out.alarmRound(2, async () => {
+        await page.click({ text: 'Not a bite', exact: true }, { optional: true, timeout: 3000 });
+      }));
+    }
     const nextAt = [0.5, 0.75].map(f => f * seconds).find(a => a > elapsed() && round < 2);
     if (nextAt !== undefined && nextAt - elapsed() < 12 && seconds >= 120) {
       round++;

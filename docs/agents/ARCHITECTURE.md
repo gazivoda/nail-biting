@@ -850,6 +850,15 @@ checks `electron/` (`tsc -b` does not).
   `seo:check` and `og:check` in sync. Do not add new lint errors: compare by file and rule. Plain `npm run lint` also scans
   `.claude/worktrees/*`, so lint `src server scripts electron shared` instead. WS13's own run is in
   `docs/agents/RELEASE_NOTES.md` ("QA results").
+- QA tooling (WS13), all Node ESM with no dependencies, driving Chrome over CDP:
+  `npm run privacy:audit` (`scripts/privacy-audit/`: the real server and a fake camera, every request recorded with its body,
+  fails on image data, landmarks, video, the photo diary, an unknown host or an `/api/events` call while sync is off;
+  `check.mjs` is the judge, `check.test.mjs` proves it can fail and runs in every `npm test`; `smoke.test.mjs` runs a 45 s
+  real-browser smoke only with `PRIVACY_AUDIT=1`; `probe-root.sh` builds the WS7a probe copy so real alarms with landmark data
+  can be audited; report in `docs/agents/privacy-audit-report.md`), `scripts/qa/gates.sh` (every release gate in one command)
+  and `scripts/qa/docker-repro.sh` (the Dockerfile reproduced by hand), `scripts/lighthouse/run.mjs` (Lighthouse and
+  installability against a local server; `docs/agents/lighthouse-report.md`) and `scripts/flags-off-diff/` (sameness against
+  another commit with all flags off; `docs/agents/flags-off-diff-report.md`). Accessibility: `docs/agents/accessibility-report.md`.
 - Verifying the server: `GOOGLE_CLIENT_ID=x GOOGLE_CLIENT_SECRET=x JWT_SECRET=<32+ chars> PORT=32NN
   DATA_DIR=<scratch> node server.js`, then `curl`. Restart after every build (it caches `dist/index.html`).
 - Headless Chrome without puppeteer: launch with `--remote-debugging-port` and drive it over CDP using Node's global
