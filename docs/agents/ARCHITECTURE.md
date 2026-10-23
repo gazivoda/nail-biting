@@ -171,6 +171,9 @@ Changing sensitivity or alert settings does not restart the loop: they are read 
   (inference off, camera released) and the alarm can be silenced (meeting mode). With the flag off every path above is exactly what it
   was. Measurements, mechanism, pause semantics: section 15 and `docs/agents/ws7a-notes.md`.
 
+- **WS2 update (coaching, flags `hrt_coaching`, `urge_timer`).** Nothing in the detector or the loop changed: the competing-response card
+  is mounted at the alarm UI's seams and hears about an alarm only after the sound is playing and the event is logged. Section 19.
+
 **Alarm.** `useDetection.startBiting`: starts the sound (`startAlarm(sound, volume)`, Web Audio, profiles
 `alarm | chime | buzz | chirp | whistle`), sets status `alert`, calls `onAlert()` once, flashes the tab title, and
 when the tab is hidden sets the app badge and a `Notification` if permission is granted; also
@@ -588,9 +591,10 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 - Client: `src/contexts/AuthContext.tsx`. `apiFetch(path, init)` sends `credentials: 'include'`, adds the Electron
   bearer token, throws `API error <status>` on non-2xx. On mount it calls `/api/user/me`; `sb_has_session` in
   localStorage only chooses the initial status (`loading` vs `no_auth`) so the landing page renders without waiting.
-  `AccessStatus = 'loading' | 'no_auth' | 'trial_active' | 'subscribed' | 'paywall'`, derived by
-  `computeAccessStatus(user)` in `src/utils/access.ts` (`active`/`paused` -> subscribed; unexpired non-cancelled trial
-  -> trial_active; else paywall). `App.tsx` `AppRouter` renders Landing, PaywallPage or the tabbed app from it.
+  `AccessStatus = 'loading' | 'no_auth' | 'trial_active' | 'subscribed' | 'free_tier' | 'paywall'` (`src/types/access.ts`),
+  derived by `computeAccessStatus(user)` in `src/utils/access.ts`, which calls `shared/access.js` (`active`/`paused` -> subscribed;
+  a running lifetime, gift or referral grant -> subscribed; unexpired non-cancelled trial -> trial_active; the free plan only if the
+  account carries free-tier limits -> free_tier; else paywall; section 18). `App.tsx` `AppRouter` renders Landing, PaywallPage or the tabbed app from it.
   `?preview=trial|subscribed|paywall` fixtures load `src/dev/preview.ts` by dynamic import behind
   `import.meta.env.DEV` only.
 
@@ -685,7 +689,9 @@ names it.
 
 **Routes.** `/`, `/blog`, `/blog/:slug`, `/about`, `/pricing`, `/how-it-works`, `/privacy`, `/terms-and-conditions`,
 `/refund-policy`, `/editorial-policy`, three `/tools/*` pages, and one handler per entry of `COMPARE_META` (the
-`/compare/*` and `/solutions/*` pages). Static serving order: `/assets`, `/fonts`, `/og` (1 year, immutable), `/posts`
+`/compare/*` and `/solutions/*` pages, plus WS11a's two gated competitor pages and WS11b's five `/features/*` pages and
+`/solutions/cuticle-biting`, which answer the branded 404 while their flag is off). Route modules own `/signin` (WS8), `/redeem`
+(WS9) and `/share/...` (WS10), each the app shell or its own document, each the normal 404 while its flag is off. Static serving order: `/assets`, `/fonts`, `/og` (1 year, immutable), `/posts`
 (5 min, noindex), a noindex rule for stray `.json`/`.txt`, then `express.static(distPath)`.
 `KNOWN_ROUTES` + the `/{*path}` catch-all return the branded `NOT_FOUND_HTML` with status 404 for any GET that no
 handler matched.
@@ -1138,3 +1144,261 @@ A real hand on a real camera while hidden; a windowed Chrome (minimised, covered
 size and always-on-top behaviour (headless opens a larger one); the tray clicks; a worker under `file://` in the packaged app (it falls
 back to timers); the OS notification itself; screen readers. Flag-off sameness was checked on the HTML of Watch, History and Settings
 against a build of main: byte-identical.
+
+---
+
+## 16. Sign-in providers (WS8, flags `signin_magic_link`, `signin_apple`, `signin_microsoft`)
+
+Details, the setup steps for Apple and Microsoft and the security table: `docs/agents/ws8-notes.md`. Code: `server/routes/authProviders.js`
+(registered in `ROUTE_MODULES`) and `server/auth/`; client `src/pages/SignIn.tsx`, `src/components/auth/ProviderButtons.tsx`, `src/auth/`.
+
+**A method is offered only when its flag is on AND its keys are configured.** `GET /auth/providers` returns
+`{ magic_link, apple, microsoft }` and is the one source of truth; it answers 404 while all three flags are off and sits outside
+`/api/` on purpose (marketing traffic must not spend the shared `/api/` limit). The client caches the answer for 10 minutes
+(`sb:auth:providers`, `src/auth/providers.ts`).
+
+| Route | Purpose |
+|---|---|
+| `POST /api/auth/magic-link/request` `{email}` | always `{ok:true}` for a valid address (no account enumeration); sends the link |
+| `POST /api/auth/magic-link/verify` `{token}` | JSON only, foreign `Origin` refused; sets the session and returns `{ok, redirect}` |
+| `GET /api/auth/apple`, `POST /auth/apple/callback`, `GET /api/auth/apple/finish` | Apple: start, Apple's `form_post` return (outside `/api/`: Apple's `Origin` would be refused), second hop that checks the cookie and exchanges the code |
+| `GET /api/auth/microsoft`, `GET /api/auth/microsoft/callback` | authorization code + PKCE (S256, verifier kept in the database) |
+| `GET /.well-known/apple-developer-domain-association.txt` | served from `APPLE_DOMAIN_VERIFICATION` while it is set, flag or not (`express.static` ignores dot directories) |
+| `GET /signin` | the app shell, `noindex`, `no-store`, with a script first in `<head>` that moves the token out of the address bar; the branded 404 while all flags are off |
+
+**One person, one account** (`server/auth/linkPolicy.js`, `accounts.js`). Every sign-in is an identity (`google:<sub>`,
+`email:<address>`, `apple:<sub>`, `microsoft:<tid>:<oid>`) in `auth_identities`. A known identity signs in to its account. A new identity
+joins an existing account only if the provider vouches for the address AND the existing account's address is itself vouched for (a
+legacy Google user, or an identity row with `email_verified = 1`); several candidates: a paying one, then the oldest. An unverified
+address is never stored on `users.email`; if an account already has it the sign-in is refused (`email_unverified`) and the person is
+told to use the emailed link. Apple vouches for any returned address (relay addresses included); Microsoft only for the personal-account
+tenant `9188040d-6c67-4c5b-b112-36a304b66dad` or when the optional claim `xms_edov` is true, never from `email` alone. The ID tokens are
+verified against the provider's JWKS (RS256 pinned, `aud`, `iss` per tenant, `exp`, `nonce`).
+
+**The Google seam** is the only edit to existing sign-in code: `server.js` creates `createGoogleLinker({ db, getUser })` and the Google
+callback does `if (!user) user = linkGoogleSignIn(googlePayload)`, which runs only when no user has that Google subject, so an existing
+Google user never reaches it. It returns an account made by another method with the same verified address, else `null`, and any
+error returns `null`.
+
+**Emailed link.** 32 random bytes, only the SHA-256 stored, single use (one conditional `UPDATE ... WHERE used_at IS NULL AND
+expires_at > now`), 15 minutes. The token travels in the URL fragment (`#t=...`), never sent to a server, and signing in needs a press of
+"Sign in to Stop Biting" (a POST), because mail scanners open GET links. Limits: 5 per address per hour and 30 s apart (counted in the
+database), 20 per caller per hour. Resend click tracking must be off for the sending domain or the fragment is lost. Retention:
+`magic_link_tokens` rows are deleted 24 hours after they expire, `auth_oauth_states` after use or 10 minutes.
+
+**Client.** `useSignInHref()` (used by `SiteHeader.tsx` and `TrialButton.tsx`) is `/api/auth/google` while no extra method is on, else
+`/signin`; `PricingSection` and `HeroDemo` still link straight to Google. New accounts get the trial from `TRIAL_MS`
+(`shared/plans.js`). `/signin` is in the service worker's `navigateFallbackDenylist`. `UserProfile.email` can be `NULL` for an account
+made by an unverified Microsoft sign-in; the client only reads it as `user?.email ?? ...`.
+
+Not built: showing the linked methods in Settings, deleting identities with an account. Not verified: any real Apple, Microsoft or Resend call.
+
+---
+
+## 17. Optional sync, export and import (WS4, flags `event_sync`, `data_backup`)
+
+Details, the contract for other features and the verification: `docs/agents/ws4-notes.md`. Privacy rule: **only the whitelisted
+`HabitEvent` fields can leave the device**; never video, frames, landmarks, photos, calibration or learned poses.
+
+**Server** (`server/routes/events.js`, `server/events/`). Flag `event_sync` first, then sign-in; with the flag off every path is a plain 404.
+
+| Route | |
+|---|---|
+| `POST /api/events/sync` `{ since, events[], deviceId, epoch? }` | the body is parsed by the route (512 kb; exempted from the global 10 kb parser). Returns `{ events[], cursor, hasMore, epoch }`: what other devices changed after `since`, plus the server's own version of any pushed event it kept instead |
+| `GET /api/events/status` | `{ epoch, count, live, deleted, quota, lastChangeAt }` |
+| `DELETE /api/events` | wipes the caller's synced events and starts a new **epoch** |
+
+Limits (`server/events/limits.js`): 500 events per batch, 1000 per page, 50,000 rows per account (`EVENTS_QUOTA_PER_USER`), 40 sync
+requests per 5 minutes and 30 status or delete requests per 15 minutes per account, on top of the global limit. Any key outside the
+whitelist (top level, event, `competingResponse`) refuses the whole batch with a 400 that names the field, never the value. Tables:
+`habit_events` (`seq` AUTOINCREMENT is the since-cursor; `UNIQUE(user_id, id)`; `false_positive` and `confirmed` are NULL when absent)
+and `habit_event_epochs`. **Other server features read a user's events only through
+`createEventStore(db).listUserEvents(userId, { since, until, includeDeleted, limit })`** (weekly email, share links); it hides deleted rows
+and decodes the JSON columns. A user who never synced has no rows, and a consumer must say so rather than show zeros.
+
+**Client** (`src/sync/`, pure TypeScript with injected ports: `engine.ts`, `payload.ts`, `controller.ts`; browser wiring in `api.ts`,
+`ports.ts`, `runtime.ts`, `optIn.ts`; `SyncHost.tsx` is mounted once in `App.tsx`). Opt-in belongs to **one account on one browser**
+(`sb:sync:optin = { userId, at }`); a different person signing in on the same browser starts with sync off. `SyncHost` renders nothing
+for an account that did not opt in (no request, no flag request, no chunk); only an opted-in account loads the lazy `SyncRunner`, and an
+engine exists only while someone is signed in AND `event_sync` is on AND that person opted in. The queue is **derived**, not kept: the
+engine remembers the `updatedAt` the server last acknowledged per event id (`sb:sync:versions`) and an event is waiting when its
+`updatedAt` differs, so it survives reloads, offline weeks and a clock that jumps backwards. A cycle pushes up to 500, pulls, merges
+through `events.merge`, and repeats while `hasMore` (at most 40 requests); it runs on start, about every 5 minutes (jittered), 30 s after a
+local change, on focus (at most once a minute) and on `online`; errors back off from 30 s to 30 min; a 401 stops, a 404 waits 30 minutes, a
+409 `epoch_changed` stops this device and tells the person. Conflicts: last write wins by `updatedAt`, ties by `compareEventVersions`
+(identical on client and server, proven on 20,000 random pairs). A delete is a tombstone that syncs; an edit made after a delete elsewhere
+brings the event back.
+
+**Data controls** (Settings > Data, `src/pages/settings/DataSettings.tsx`, `src/backup/`). "Delete synced data" pauses the engine, deletes the
+server rows, starts a new epoch and switches sync off on that device, so a second device cannot silently re-upload. "Delete everything"
+removes the server copy first (a box, ticked by default, when sync is on), then local history, settings and sync state; it does **not** touch
+nail photos. Export is JSON (`events.exportAll()`, restorable, with the streak anchors) or CSV (formula-looking cells defused); import checks
+size (10 MB), validates every entry with `parseWireEvent`, shows a preview and then applies it: a device with no history is restored whole
+through `replaceAll`, otherwise through `merge`. Both work with no account and no network.
+
+Limits worth knowing: custom bite reasons are not synced; streak start dates are per device; the app keeps the newest 5,000 events
+locally while the server keeps up to 50,000; server rows are kept until deleted, including for lapsed accounts and tombstones; deleting
+an account by hand must also delete its `habit_events` and `habit_event_epochs` rows. Guards: `scripts/syncGuard.test.mjs`,
+`server/events/payload.parity.test.js`.
+
+---
+
+## 18. Billing, trial length, referrals, free plan (WS9, flags `free_tier`, `lifetime_plan`, `gift_plan`, `referrals`, `regional_pricing`)
+
+Details, the owner's Paddle steps and the verification: `docs/agents/ws9-notes.md`. Legal drafts: `docs/agents/legal/ws9-*.md`.
+
+**One place for the numbers.** `shared/plans.js` (with `plans.d.ts`): `TRIAL_DAYS` (default 3, whole number 1 to 90 from the environment,
+read at import time, so it is a build argument AND a runtime variable; `vite.config.ts` copies it into the bundle with `define`),
+`TRIAL_MS`, the `${TRIAL_*}` copy tokens (`{{TRIAL_*}}` in `index.html`), free-tier limits, referral and gift numbers.
+`scripts/trialLength.test.mjs` fails when a literal trial length appears outside its `ALLOWED` list, which is also the list of the sentences
+a human must edit if the length changes. **One access decision:** `shared/access.js` (`evaluateAccess`), called by
+`src/utils/access.ts` and by the server. Order: active or paused Paddle subscription, then a running grant (lifetime, gift, referral
+credit), then trial, then the free plan (only if the account carries the limits, i.e. `free_tier` is on), else paywall. **Flags decide who
+is sold something and what the server reports, never whether something already paid for is honoured.**
+
+**Server** (`server/routes/billing.js`, `server/billing/`). Tables `paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`,
+`referral_codes`, `referrals`; grants live in `entitlements`, so a cancelled subscription cannot overwrite a lifetime buyer.
+
+| Route | Flag | |
+|---|---|---|
+| `GET /api/referrals/me`, `POST /api/referrals/attach` | `referrals` | my code and counts; tie a NEW account (under 7 days old, nothing paid) to a link |
+| `GET /api/billing/gift-info`, `POST /api/billing/gift/redeem` | `gift_plan` | single use; 10 tries per 15 minutes per address |
+| `POST /api/billing/verify-transaction` | `lifetime_plan` | fallback after checkout; only for the caller's own payment |
+| `GET /redeem` | `gift_plan` | the app shell, `noindex`, with the gift code moved out of the address bar; the normal 404 while off; in the service worker denylist |
+
+**The webhook** keeps its raw-body parser and signature check. After the JSON parse, `app.locals.billingWebhook.take(event, res)`
+ignores an event id already in `paddle_events`, handles `transaction.completed` (lifetime grant, gift code and email, first payment for the
+referral program) and `adjustment.*` (refund, chargeback: revoke grant, gift, the referral credits that payment earned) itself, and records
+the other events once the existing `subscription.*` handlers have answered 2xx. Two layers of idempotence: the event id, and a unique key
+on every effect (`txn:<id>`). Out-of-order `subscription.*` delivery is still not guarded. The destination in Paddle must also send
+`transaction.completed`, `adjustment.created` and `adjustment.updated`. `GET /api/user/me` gets an optional `entitlement` key
+(`grants`, `banked_days`, `free_tier`) from `app.locals.decorateUser`; with every flag off and no grants it is exactly the users row.
+
+**Referrals.** Link `<site>/?ref=CODE` (kept 30 days in the browser, only when the flag is on). Reward when the referred user's FIRST
+payment completes: both get `REFERRAL_CREDIT_DAYS` (default 30). Checks: not the same user, same normalised email, same Paddle customer,
+or the same card; one reward per referred user; a refund or chargeback takes both credits back. A payment is rewarded only if its price id
+is positively one of ours (`PADDLE_PRICE_IDS`, or `PADDLE_PRICE_ID_MONTHLY` and `_YEARLY`, in the runtime environment). Gift and referral days
+are banked and start when the account has no other access.
+
+**Free plan.** Detection minutes are counted in the browser per local day (`src/billing/useFreeTier.ts`, `sb:billing:free-usage`; paused
+time never counts, WS7a) and the camera is switched off at the limit; History lists the last N days while statistics and streaks use
+everything. It replaces the paywall for accounts whose trial ended or lapsed. **Client:** `src/billing/` (env, Paddle loader,
+localized prices through `Paddle.PricePreview`, referral and gift-code storage), `src/components/billing/` (`PlanExtras`, `LifetimePlate`,
+`ReferralCard`, `FreeTierNotice`, `BillingHost`), `src/pages/RedeemPage.tsx`; any failure of localized prices keeps $2.99 and $29.
+
+---
+
+## 19. Coaching, urge timer and the false-alarm controls (WS2 and WS3, flags `hrt_coaching`, `urge_timer`, `false_positive_controls`)
+
+Detection-side detail of WS3 is in section 2; the full notes are `docs/agents/ws2-notes.md` and `ws3-notes.md`.
+
+**WS2 (`src/coaching/`).** After an alarm an optional card offers the person's competing response (15 to 60 s; Done, Skip, Escape; the prompt
+policy is off, hourly or every alarm, and defaults to **off per person** even with the flag on). It can never block, delay or silence the
+alarm: `useDetection.startBiting` starts the sound first and `logIncident` only then notifies; coaching hears about an alarm from a store
+listener (`watcher.ts`) that does one pure check, defers the rest with `queueMicrotask` and is wrapped in try/catch;
+`scripts/coachingGuards.test.mjs` fails if any coaching file imports the detector, camera, alarm sound or PiP code, or if the seam imports the
+store. Seams: `<CoachingSeam surface="main" />` in `AlertOverlay.tsx`, `surface="pip"` in `PiPWindow.tsx`, `<CoachingDashboardSlot />` in
+`Dashboard.tsx` (bridge, urge timer, program link), `<ProgramHost />` in `App.tsx`. The "I feel an urge" timer (`UrgeTimer.tsx`, 60 or 90 s,
+`urge_timer` alone is enough) logs a **manual event with trigger `urge`, which is not a bite** (`isUrge`, used by `isBite`, History, Today and
+the charts). The 4-week program (`src/data/hrtProgram.json`, 28 lessons, `reviewed: false`, NEEDS HUMAN REVIEW) is an in-app full-screen view
+(`Program.tsx`, `ProgramView.tsx`), not a URL; one new lesson a day, no backlog or streak. Data: `competingResponse` on the event; kv
+namespace `hrt` (`settings`, `last-prompt-at`, `program`); `src/utils/coachingStats.ts` gives the share of alarms followed by a finished response.
+
+**WS3 (`src/falsePositive/`, `src/calibration/`, `src/detection/controls.ts` and friends).** The controls can only remove or delay an alarm:
+chin-rest rule, learned poses (six numbers per "Not a bite" tap), hand filter, silence. `falsePositive: true` outranks `confirmed`
+(state table in `eventModel.ts`). The learned data and the calibration are kv namespace `falsePositive`: never an event field, never in
+the export, never synced (`localOnly.test.ts`, `falsePositiveGuards.test.mjs`). "Clear all data" does not touch `kv`; Settings > Detection
+has "Forget what it learned" and "Delete calibration". The MediaPipe handedness mapping assumes a mirrored picture and is one constant,
+`HANDEDNESS_INPUT_IS_MIRRORED` (`handedness.ts`), unverified on a real device.
+
+---
+
+## 20. Insights, photo diary and the weekly email (WS5, flags `insights`, `photo_diary`, `weekly_email`)
+
+Details: `docs/agents/ws5-notes.md`; legal drafts `legal/ws5-*.md`.
+
+**Insights is a view inside History, not a URL** (a new top-level path needs `server.js` `KNOWN_ROUTES` and the service worker's navigation
+fallback). `Log.tsx` has a History / Insights switch (`useInsightsAvailability()`, a lazy `InsightsView` in `src/insights/ui/`); with
+both flags off the switch renders nothing and `Log` renders what it did. The charts are plain HTML and CSS (recharts renders an empty box
+without a DOM, which would have left the 0 / 1 / 10,000-event tests with nothing to assert, and a scaled SVG shrinks its text on a phone).
+`src/insights/aggregate.ts` is one pass over the history (`computeInsights`; 10,000 events in about 2 ms in the browser's zone, 22 ms with a named zone), `zone.ts` does calendar maths in
+the browser's time zone (or a named IANA zone in tests), weeks start on Monday, and `predicate.ts` is the one place the charts decide what a
+bite is, built on WS3's predicates. Milestones (`milestones.ts`, clock injected): first hour without a bite, first day, 7 days, 30 days, and
+the 100th alarm that still stands; each celebrated once ever (`sb:insights:milestones`), with a baseline on first run so a new user is not
+greeted with old ones. The share card (`shareCard.ts`) is a 1080 x 1080 PNG drawn on a canvas: the figure, one sentence, the date, the app's
+name; no photo, name, email or other number, and it leaves the device only if the person sends it.
+
+**Photo diary (`src/photos/`).** Hands-only guided capture with a separate `getUserMedia` (all tracks stopped on save, discard, cancel,
+error, unmount and when the page is hidden), weekly in-app reminder strip (7 days, "Not now" snoozes a day, no Notification API),
+before/after slider. Bytes in IndexedDB through `localBlobs` (collection `photo-diary`), metadata in `sb:insights:photo-diary`, one JPEG per
+photo, at most 1,280 px and 104 photos. Photos are drawn on canvases via `createImageBitmap`, never `<img src="blob:...">`, because the CSP has no
+`blob:` image source. **Local only, by construction:** `scripts/photoGuard.test.mjs` (no network or sync imports, no photo-like key in either
+whitelist, the service worker caches no photo) and `src/photos/photoNetwork.test.tsx` (throwing spies on every network API through the
+lifecycle). The diary has no export; "Delete everything" does not delete it.
+
+**Weekly summary email.** Routes `GET` and `PUT /api/email/weekly` (flag `weekly_email`, then sign-in; the browser never sends an address)
+and `GET` and `POST /api/email/unsubscribe/:token` (**never flag-gated, no sign-in**: a dead unsubscribe link is a compliance problem; GET shows
+a confirmation and changes nothing, POST unsubscribes, including RFC 8058 one-click). The token is `base64url(userId).base64url(HMAC-SHA256(
+per-account secret, "weekly-summary-unsubscribe:v1:" + userId))`. Table `email_preferences`. The job (`server/jobs/weeklyEmail.js`) starts in
+`register()` only when `weekly_email` is on, `RESEND_API_KEY` is set and `ELECTRON_PROTOCOL` is not; it runs hourly, `.unref()`'d, and for each
+opted-in account with synced events works out the last completed ISO week in the person's own time zone and sends between 8 and 72 hours
+after it ended, only if the week ended after they opted in and either week had a bite. **Claim, then send:** `UPDATE ... SET last_sent_week = week
+WHERE ... last_sent_week < week` must change one row before anything is sent; if the send throws or returns `{ error }` the claim is put back.
+At most 200 sends per tick. The body is plain and branded, with no image or name, and says "A log is a way to notice a habit, not a treatment."
+
+---
+
+## 21. Share links (WS10, flag `share_links`)
+
+Details, the scope table and the verification: `docs/agents/ws10-notes.md`; legal draft `legal/ws10-*.md`.
+
+Owner routes (flag, then sign-in; 60 requests per 15 minutes per account): `POST /api/share/links` (body exactly `label?`, `expiresInDays?` of 7, 30,
+90 or null, `detailed?`, `timezone?`; returns the token ONCE; at most 5 active links), `GET /api/share/links` (no token, no hash),
+`DELETE /api/share/links/:id` (no entitlement needed, so an expired account can always revoke). Public routes (no sign-in, no cookie; the address
+is the credential): `GET /share/:token` (the page) and `GET /share/:token/data.json`. A revoked, expired, unknown or malformed token gets one
+answer: the same 404, body and headers (one query that already excludes revoked and expired rows). Table `share_links`: only the SHA-256 of the
+32-byte token is stored; revoked or expired rows are deleted 30 days later, whenever anyone next makes a link.
+
+**What a link reveals is whatever `buildShareView` returns** (`server/share/summary.js`; `toPublicView` names every key literally, no spread),
+pinned by exact-key-set tests for both modes: streak in whole days, bites in the last 7 days / the 7 before / the last 12 weeks, 28 daily and 12
+weekly counts as positions with no dates, reasons in the fixed groups `stress, focus, boredom, unknown, other`, the competing-response rate,
+and, only when the owner ticked "detailed", day-level dates and an hour-of-day histogram. Never: ids, device ids, hands, behaviours, free text,
+custom reason names, per-event timestamps, name, email, account id, time zone, photos, the private label. Definitions are the server's copy of
+the app's WS3 predicates (`server/share/semantics.test.js`). Events come from `createEventStore(db).listUserEvents`.
+
+**The page is not the app shell** (the shell loads Google Analytics and the address holds the token): `server/share/page.js` renders one
+self-contained document with an inline stylesheet and one inline script allowed by SHA-256 in its own CSP (`default-src 'none'`), no third
+party, no cookie, `Cache-Control: no-store`, `X-Robots-Tag: noindex, nofollow`, `Referrer-Policy: no-referrer`, a print stylesheet for one A4
+page. Two shared-file edits make it work: `server.js` exempts `/share/` from the canonicalising lower-case redirect (tokens are mixed case) and
+`vite.config.ts` has `/^\/share\//` in `navigateFallbackDenylist`. Known: the address is a bearer secret and may appear in host logs; a chat
+app that previews the link counts as a view.
+
+---
+
+## 22. Where each flag is checked
+
+All 27 flags are in `src/features/registry.ts` and `server/features.js`. This is where each one is actually read, to answer "what does
+turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePaths.ts`).
+
+| Flag | Server | Client |
+|---|---|---|
+| `detection_behaviors`, `experimental` | none (the worked-example route uses `experimental`); page `/solutions/cuticle-biting` for the first | `src/detection/useBehaviors.ts` (reads both), `registry.ts` `effectiveBehaviors()`, `BehaviorsSection` |
+| `hrt_coaching` | page `/features/habit-reversal-coaching` | `CoachingDashboardSlot.tsx`, `ProgramView.tsx`, Settings > Alerts, `InsightsView.tsx` |
+| `urge_timer` | | `CoachingDashboardSlot.tsx`, `src/phone/PhoneView.tsx` |
+| `false_positive_controls` | | `FalsePositiveSlot.tsx`, `useEnabled.ts`, `InsightsView.tsx`, Settings > Detection |
+| `event_sync` | `server/routes/events.js`; copy rules in `shared/flagCopy.js` | `SyncRunner.tsx`, `src/sync/ports.ts`, `SyncNoteView.tsx`, `DataSettings.tsx`, `SharingSettings.tsx` |
+| `data_backup` | none (export and import are client-only) | `DataSection.tsx`, `DataSettings.tsx` |
+| `insights`, `photo_diary` | none | `useInsightsAvailability.ts`, `MilestoneHost.tsx`, `PhotoReminder.tsx`, `PhotoDiarySettings.tsx` |
+| `weekly_email` | `server/routes/weeklyEmail.js` (routes and job start; unsubscribe is ungated) | `WeeklyEmailSettings.tsx` |
+| `phone_companion` | `server/routes/phone.js` (manifest shortcuts); copy rules; page `/features/phone-companion` | `src/phone/usePhoneView.ts`, `offlineGrant.ts` |
+| `background_watching` | none | `src/background/gate.ts`, `BackgroundHost.tsx`, `useDetection.ts`, `usePictureInPicture.ts`, `useNotifications.ts` |
+| `desktop_app` | page `/features/desktop-app` only | none |
+| `signin_magic_link`, `signin_apple`, `signin_microsoft` | `server/routes/authProviders.js`; copy rules (only when keys are configured, `server/marketing/copyFlags.js`) | `src/auth/`, `SignIn.tsx` |
+| `free_tier` | `server/billing/userDecorator.js` | `src/billing/useFreeTier.ts` (reads `entitlement.free_tier`) |
+| `lifetime_plan`, `gift_plan` | `server/routes/billing.js` | `PaywallPage.tsx`, `PlanExtras.tsx`, `useGiftInfo.ts` |
+| `referrals` | `server/routes/billing.js`, `server/billing/referrals.js`; page `/features/referral-program` | `ReferralCard.tsx`, `referralCapture.ts` |
+| `regional_pricing` | none | `src/billing/prices.ts` |
+| `share_links` | `server/routes/share.js`; page `/features/share-with-therapist` | `SharingSection.tsx`, `SharingSettings.tsx` |
+| `compare_competitors` | `server.js` (`GATED_FLAG`), `server/marketing/gatedPages.js` | `ComparePage.tsx` |
+| `social_proof` | `server.js` (testimonials article) | `src/components/site/Testimonials.tsx` |
+| `locale_es`, `locale_de`, `locale_pt_br` | none yet (WS12) | none yet (WS12) |
