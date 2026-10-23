@@ -405,6 +405,9 @@ export function evaluate(records, opts) {
         const sig = findSignature(head);
         if (sig) fail(rec, sig.kind === 'video' ? 'video-bytes' : 'image-bytes', `${rec.api} body starts with a ${sig.name} signature`, `${rec.api} ${rec.url} head ${rec.head}`);
       }
+      if (['RTCPeerConnection', 'webkitRTCPeerConnection', 'MediaRecorder'].includes(rec.api)) {
+        fail(rec, 'webrtc-or-recorder-used', `the page created a ${rec.api}, a way to send or record camera media that this app does not use`, `${rec.api} in ${rec.target ?? 'page'}`);
+      }
       if (rec.bodyType === 'ReadableStream' && rec.url) {
         warn(rec, 'stream-body', `${rec.api} used a ReadableStream body that cannot be read here`, `${rec.api} ${rec.url}`);
       }

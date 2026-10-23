@@ -119,6 +119,11 @@ describe('the privacy audit judge: it fails bad requests', () => {
     expect(codes(run([{ kind: 'hook', id: 'h', target: 'worker', api: 'xhr', url: `${ORIGIN}/api/x`, bodyType: 'FormData', fileEntries: [{ name: 'photo', type: 'image/jpeg', size: 3 }] }]))).toContain('file-upload');
     expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api: 'fetch', url: `${ORIGIN}/api/x`, bodyType: 'Blob', head: 'ffd8ffe000104a46' }]))).toContain('image-bytes');
   });
+  it('a WebRTC connection or a MediaRecorder', () => {
+    for (const api of ['RTCPeerConnection', 'MediaRecorder']) {
+      expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api, url: '', method: 'new', bodyType: api }]))).toContain('webrtc-or-recorder-used');
+    }
+  });
   it('a body the audit cannot read, to a stranger', () => {
     expect(codes(run([http({ url: 'https://example.net/x', bodyState: 'unavailable' })]))).toEqual(expect.arrayContaining(['host-not-allowed', 'body-unreadable']));
   });
