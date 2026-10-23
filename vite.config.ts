@@ -161,6 +161,9 @@ export default defineConfig({
           // The copy of the pages behind the compare_competitors flag: fetched only
           // once that flag is on, so it must not ride into every visitor's precache.
           '**/assets/competitorPages-*.js',
+          // The desktop shell's tray bridge and camera notice (src/desktop). Loaded
+          // only when window.desktop exists, which a browser never has.
+          '**/assets/desktopHost-*.js',
         ],
       },
     })] : []),

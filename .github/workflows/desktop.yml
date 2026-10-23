@@ -1,0 +1,136 @@
+# Desktop app build (WS7b): macOS universal (.dmg + .zip) and Windows x64 (installer + portable).
+#
+# Runs on a tag named desktop-v* (for example desktop-v1.2.0) or by hand
+# (Actions tab > "Desktop app" > Run workflow). It never publishes anything: the
+# installers are uploaded as workflow artifacts for the owner to download.
+#
+# Signed or unsigned: if the signing secrets exist the build is signed (and, on
+# macOS, notarized); if they do not, it still builds, unsigned. No secret is
+# needed for the workflow to run. Which secrets to create, and how, is in
+# docs/DESKTOP_SIGNING.md (OWNER TODO).
+
+name: Desktop app
+
+on:
+  push:
+    tags:
+      - 'desktop-v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mac:
+    name: macOS (universal)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # .npmrc sets ELECTRON_SKIP_BINARY_DOWNLOAD=1: electron-builder downloads the
+      # Electron zips it packages (x64 and arm64) by itself.
+      - run: npm ci
+
+      - name: Typecheck the desktop sources
+        run: npm run electron:typecheck
+
+      - name: Build the renderer, main process and preload
+        run: npm run electron:build
+
+      - name: Package (signed and notarized if the secrets exist, otherwise unsigned)
+        env:
+          # Secrets cannot be tested in `if:`; they are mapped to env and tested in the script.
+          CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          if [ -n "$CSC_LINK" ]; then
+            echo "Signing with the Developer ID Application certificate."
+            if [ -n "$APPLE_API_KEY_P8" ]; then
+              # electron-builder wants APPLE_API_KEY to be the PATH of the .p8 file.
+              printf '%s' "$APPLE_API_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+              export APPLE_API_KEY="$RUNNER_TEMP/AuthKey.p8"
+            fi
+            # Notarization starts by itself when one complete set of Apple variables is present.
+            npx electron-builder --mac --universal --publish never
+          else
+            echo "::warning::No MAC_CSC_LINK secret: building an UNSIGNED, not notarized app. Gatekeeper will warn on first open."
+            CSC_IDENTITY_AUTO_DISCOVERY=false npx electron-builder --mac --universal --publish never
+          fi
+
+      - name: Report the signature
+        continue-on-error: true
+        run: |
+          app="release/mac-universal/Stop Biting.app"
+          lipo -archs "$app/Contents/MacOS/Stop Biting"
+          codesign -dvv "$app" 2>&1 | grep -E "Authority|Signature|flags|TeamIdentifier" || true
+          spctl --assess --type execute -vv "$app" || echo "Gatekeeper does not accept this build (expected when unsigned)."
+          xcrun stapler validate "$app" || echo "No notarization ticket on this build (expected when unsigned)."
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stop-biting-mac-universal
+          path: |
+            release/*.dmg
+            release/*-mac.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  windows:
+    name: Windows (x64)
+    runs-on: windows-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck the desktop sources
+        run: npm run electron:typecheck
+
+      - name: Build the renderer, main process and preload
+        run: npm run electron:build
+
+      - name: Package (signed if the secrets exist, otherwise unsigned)
+        env:
+          # Option 1 in docs/DESKTOP_SIGNING.md: a certificate file.
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          # Option 2: Azure Trusted Signing (also needs build.win.azureSignOptions in package.json).
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          if [ -n "$WIN_CSC_LINK" ] || [ -n "$AZURE_CLIENT_SECRET" ]; then
+            echo "Signing the Windows build."
+            npx electron-builder --win --x64 --publish never
+          else
+            echo "::warning::No Windows signing secret: building UNSIGNED installers. Windows SmartScreen will warn on first run."
+            CSC_IDENTITY_AUTO_DISCOVERY=false npx electron-builder --win --x64 --publish never
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stop-biting-windows-x64
+          path: release/*.exe
+          if-no-files-found: error
+          retention-days: 14
