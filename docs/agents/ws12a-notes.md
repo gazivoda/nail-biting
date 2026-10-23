@@ -80,7 +80,7 @@ and anything a person typed (custom tags).
 
 ## What was checked, and how
 
-All numbers are from this branch (base: main at c3b3510, "tasks: WS7a merged, WS12a launched").
+All numbers are from this branch after merging main once (main at b6b16f9, which includes WS11b), compared with a `build:web` of that same main.
 
 | Acceptance | Result |
 |---|---|
@@ -90,7 +90,7 @@ All numbers are from this branch (base: main at c3b3510, "tasks: WS7a merged, WS
 | Lint rule works, zero new violations | `scripts/i18n/no-hardcoded-text.test.mjs` (ESLint RuleTester, 59 tests); `scripts/i18n/guard.test.mjs` runs the real config over the app inside `npm test`: 0 findings. `npx eslint src server scripts electron shared`: **23 errors, 4 warnings, the baseline** (same files and rules). 20 `// i18n-ignore:` comments, each with a reason: 7 internal section titles in `settings/meta.ts` (never rendered, pinned by `settings.test.tsx`), 7 landmark-zone descriptions in `detection/zones.ts` (documentation, never rendered), 2 CSS font stacks, 1 dev-build-only note, 1 diagnostic string, 1 English reference constant pinned by `photoGuard`, 1 internal session label. |
 | English-only bundle growth | Main entry chunk (every page): 230.4 KB -> 249.3 KB raw, **68.7 -> 74.6 KB gzip (+5.9 KB, +8.6 percent of that chunk)**. Home page first load (entry + vendor + css): **179.9 -> 184.6 KB gzip (+4.7 KB, 2.6 percent)**. Home page with the live demo: +8.1 KB gzip (the alarm text and the pause/cadence words ride in the demo's chunk). Everything an English visitor could ever download (all chunks): 468.8 -> 490.6 KB gzip (+21.8 KB, 4.6 percent). What it is made of: the i18n core (message format, locale state, hooks, scope factory, host: about 8 KB raw / 3.8 KB gzip) and the keys around moved strings; the strings themselves were in the same chunks before. Catalogs: `locale-de` 77.8 KB raw / 22.9 gzip, `locale-es` 75.7 / 22.1, `locale-pt-BR` 75.1 / 21.9, fetched only after a person picks that language; **0 of them in the service worker precache** (`sw.js` checked; `vite.config.ts` `globIgnores: **/assets/locale-*.js`). Script: `scripts/i18n/dom-probe/bundle-size.mjs <main dist> <this dist>`. |
 | Layout in de and pt-BR | **Checked** with `scripts/i18n/dom-probe/layout.mjs` (headless Chrome over CDP; sideways scroll, boxes past the edge, clipped text) at 390 and 1280 px for Watch, History, Insights, Settings, the upgrade page, the phone view and sign-in, in de, pt-BR and es, against an English baseline. Found and fixed: the language card's four names overflowed 390 px (now a wrapping row of pills); a preset-response list in Settings > Alerts pushed the page 8 px wide in Portuguese (`min-width: 0` on grid items, and wrapping instead of an ellipsis, in `src/index.css`, scoped to `html:not([lang='en'])` so the English markup and layout are unchanged). What is left is also in the English baseline (the decorative rings on the streak card, the sidebar's trial pill). Screenshots at 390 px: `docs/agents/ws12a-evidence/`. |
-| Definition of done | `npm run build:web` exit 0; `npm test` 166 files / 3,324 tests (baseline 146 / 2,684); `node --check server.js` ok (server untouched); `npm run seo:check` in sync; `grep -l "seedPreviewData\|previewKind" dist/assets/*.js` and `grep -l "dev-override\|readDevOverrides" dist/assets/*.js` print nothing. |
+| Definition of done | `npm run build:web` exit 0; `npm test` 171 files / 3,483 tests (baseline 146 / 2,684); `node --check server.js` ok (server untouched); `npm run seo:check` in sync; `grep -l "seedPreviewData\|previewKind" dist/assets/*.js` and `grep -l "dev-override\|readDevOverrides" dist/assets/*.js` print nothing. |
 
 ### Not verified
 
@@ -105,7 +105,8 @@ A native speaker has read none of it. Real Safari, Firefox, Edge, a real phone, 
 5. **Server-rendered text stays English**: the share page, unsubscribe pages and the weekly email (`server/**` untouched), the OAuth error redirect text, the PWA manifest, the OS-level app badge, and the Electron tray menu (built in the main process, which has no renderer language; `src/desktop/trayModel.ts` is on the exemption list as a follow-up for the desktop app).
 6. **Marketing is untouched.** A person who picked German and opens the home page, the blog or the pricing page sees English (those pages never mount `<LocaleHost />`), with an English `<html lang>`.
 7. The sign-in page translates "By continuing you agree to the Terms and the Privacy Policy" and its two link labels, but the legal pages themselves stay English. Decide whether that sentence should stay English until a lawyer-approved translation exists.
-8. The lesson text of the 4-week program (`src/data/**`) stays English inside an otherwise translated program view.
+8. **WS11b interplay (Settings > Privacy card).** WS11b rewrites that card's English sentence when `event_sync` is on (`shared/flagCopy.js` rule `settings-privacy-log`, which only knows the English words). It still does for English (the rule now finds the sentence in `src/i18n/scopes/settings.ts`; `scripts/flagCopySources.test.mjs` was pointed there, a one-line change). Other languages have their own sync-on wording (`privacy.bodySync`). If WS12b or WS11b adds more flag-dependent sentences to the app, give each a second message per language the same way; `flagAware` cannot rewrite a translation.
+9. The lesson text of the 4-week program (`src/data/**`) stays English inside an otherwise translated program view.
 
 ## For WS12b (marketing pages), on top of this infrastructure
 

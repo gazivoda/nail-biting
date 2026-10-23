@@ -19,7 +19,7 @@ const port = Number(portArg);
 const outDir = outDirArg ?? join(tmpdir(), 'ws12a-dom');
 mkdirSync(outDir, { recursive: true });
 
-const mask = (html) => html.replace(/\d+/g, '0').replace(/blob:[^"']+/g, 'blob:x').replace(/assets\/[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{6,}\.(js|css)/g, 'assets/x.$1').replace(/ref=[A-Z0-9]+/g, 'ref=X');
+const mask = (html) => html.replace(/\d+/g, '0').replace(/blob:[^"']+/g, 'blob:x').replace(/assets\/[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{6,}\.(js|css)/g, 'assets/x.$1').replace(/ref=[A-Z0-9]+/g, 'ref=X').replace(/_r_[a-z0-9]+_/g, '_r_'); // referral codes are random; React's useId counter depends on mount order
 
 async function clickTab(page, label) {
   await page.eval(`(() => { const b = [...document.querySelectorAll('nav button')].find((x) => x.innerText.trim() === ${JSON.stringify(label)}); if (b) b.click(); })()`, { userGesture: true });
