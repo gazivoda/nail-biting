@@ -35,6 +35,28 @@ function fillTrialCopy(): Plugin {
   }
 }
 
+// WS6: the web manifest is answered by server/routes/phone.js while phone_companion is on (it adds
+// the home-screen shortcuts), so it must not be served from the service worker's precache: a
+// precached copy would go to every returning visitor and the flag-aware answer would never reach
+// them. vite-plugin-pwa adds the manifest to the precache list itself (workbox's manifestTransforms
+// never sees that entry), so it is taken out through the plugin's own API, after it was added.
+// The browser then fetches the manifest from the network (and its HTTP cache) like any other file.
+function manifestOutOfPrecache(): Plugin {
+  type Entry = string | { url: string }
+  type PwaApi = { extendManifestEntries(fn: (entries: Entry[]) => Entry[] | void): void }
+  let api: PwaApi | undefined
+  return {
+    name: 'manifest-out-of-precache',
+    apply: 'build',
+    configResolved(config) {
+      api = (config.plugins.find((p) => p.name === 'vite-plugin-pwa') as { api?: PwaApi } | undefined)?.api
+    },
+    buildStart() {
+      api?.extendManifestEntries((entries) => entries.filter((e) => (typeof e === 'string' ? e : e.url) !== 'manifest.webmanifest'))
+    },
+  }
+}
+
 const isWeb = process.env.VITE_BUILD_TARGET === 'web'
 
 export default defineConfig({
@@ -160,6 +182,18 @@ export default defineConfig({
             },
           },
           {
+            // WS6: the brand fonts and the logo, kept by the worker after the first visit so the
+            // installed phone app opens looking like itself with no signal. Before this they relied
+            // on the browser's HTTP cache alone, which a browser may empty at any time. Not
+            // precached: nobody downloads them earlier than they do today.
+            urlPattern: /\/(fonts\/.+\.woff2|logo(-dark)?\.svg)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'brand-static',
+              expiration: { maxEntries: 12, maxAgeSeconds: 30 * 24 * 60 * 60 },
+            },
+          },
+          {
             // Icons and static images — cache for 7 days
             urlPattern: /\/icons\/.+\.png$/,
             handler: 'CacheFirst',
@@ -185,5 +219,6 @@ export default defineConfig({
         ],
       },
     })] : []),
+    ...(isWeb ? [manifestOutOfPrecache()] : []),
   ],
 })

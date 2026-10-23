@@ -3,6 +3,7 @@ import { trialLeft } from '../../utils/trial';
 import { useAuth } from '../../contexts/AuthContext';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
 import { Rings } from '../site/Rings';
+import { usePhoneViewActive } from '../../phone/activeStore';
 
 type Tab = 'dashboard' | 'log' | 'settings';
 
@@ -21,6 +22,9 @@ const tabs: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
 export function TabBar({ active, onChange, onUpgrade }: Props) {
   const { user, accessStatus, signOut } = useAuth();
   const { canInstall, triggerInstall } = usePWAInstall();
+  // WS6: while the phone view is showing, the first tab is not about watching.
+  const phoneView = usePhoneViewActive();
+  const items = phoneView ? tabs.map(t => (t.id === 'dashboard' ? { ...t, label: 'Today' } : t)) : tabs;
 
   const trialLeftText = trialLeft(user?.trial_end_date);
   const m = trialLeftText?.match(/^(\d+) (day|hour)s? left$/);
@@ -50,7 +54,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
 
         {/* Nav items */}
         <nav className="flex-1 p-3 space-y-0.5" aria-label="Main navigation">
-          {tabs.map(({ id, label, icon: Icon }) => {
+          {items.map(({ id, label, icon: Icon }) => {
             const isActive = active === id;
             return (
               <button
@@ -152,7 +156,7 @@ export function TabBar({ active, onChange, onUpgrade }: Props) {
         className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-ink-200 border-t border-stone-200 dark:border-ink-400 flex items-stretch"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
-        {tabs.map(({ id, label, icon: Icon }) => {
+        {items.map(({ id, label, icon: Icon }) => {
           const isActive = active === id;
           return (
             <button
