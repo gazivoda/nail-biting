@@ -29,7 +29,7 @@ import {
 import { createBiteDetector as createLegacyDetector } from './__reference__/legacyBiteDetector';
 import type { DetectionSensitivity } from '../types';
 
-type Create = typeof createBiteDetector;
+type Create = typeof createLegacyDetector;
 
 const MOUTH = { x: 0.5, y: 0.5 };
 

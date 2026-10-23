@@ -125,7 +125,7 @@ function generateFrames(seed: number, count: number): Frame[] {
 
 // ── running a detector over frames ──────────────────────────────────────────
 
-type Create = typeof createBiteDetector;
+type Create = typeof createLegacyDetector;
 
 interface Outcome {
   /** One entry per frame: '' when nothing was called, otherwise the calls in order, e.g. 'S', 'E'. */
