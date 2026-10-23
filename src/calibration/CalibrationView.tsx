@@ -45,13 +45,20 @@ function Overlay() {
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
     const root = document.getElementById('root');
+    // Something else (the 4-week program view) may already have made the page inert: leave it as we found it.
+    const wasInert = root?.hasAttribute('inert') ?? false;
     root?.setAttribute('inert', '');
     dialogRef.current?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && !e.defaultPrevented) closeCalibration(); };
-    document.addEventListener('keydown', onKey);
+    // Capture phase and marked as handled: this view is on top, so Escape closes only it, not a view underneath.
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || e.defaultPrevented) return;
+      e.preventDefault();
+      closeCalibration();
+    };
+    document.addEventListener('keydown', onKey, { capture: true });
     return () => {
-      document.removeEventListener('keydown', onKey);
-      root?.removeAttribute('inert');
+      document.removeEventListener('keydown', onKey, { capture: true });
+      if (!wasInert) root?.removeAttribute('inert');
       if (opener && document.contains(opener)) opener.focus({ preventScroll: true });
     };
   }, []);

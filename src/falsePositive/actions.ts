@@ -7,8 +7,9 @@
 //      false positives out).
 //   2. Mark the event `falsePositive: true` through the storage module (stamps updatedAt; the streak and
 //      every count re-derive, because isBite and the other predicates follow the mark).
-//   3. Tell the engine to stop the alarm that is sounding and not restart it while the hand stays
-//      (requestSilence; dropped by the engine if nothing is sounding).
+//   3. If this is the newest alarm entry, tell the engine to stop the alarm that is sounding and not restart it
+//      while the hand stays (requestSilence; dropped by the engine if nothing is sounding). An older entry
+//      never asks: it cannot be the alarm that is sounding.
 //   4. Remember the pose the alarm started with, on this device only (poseStore), so a like pose is
 //      treated with more care next time. Never written to the event.
 //
@@ -31,7 +32,9 @@ export function markNotABite(eventId: string): boolean {
   } catch { /* an optional prompt must never stop this */ }
 
   events.update(eventId, { falsePositive: true });
-  requestSilence();
+  // Silence the alarm that is sounding only if THIS entry is the alarm that is sounding: the newest alarm entry (a long
+  // hold is one entry, however old it gets). A tap on an older entry from History must never quiet a live alarm.
+  if (events.list({ source: 'alarm', limit: 1 })[0]?.id === eventId) requestSilence();
 
   try {
     const pose = alarmPoseAt(event.ts);

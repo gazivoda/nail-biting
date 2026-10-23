@@ -83,6 +83,17 @@ describe('marking an alarm Not a bite', () => {
     expect(takeSilenceRequest()).toBe(false); // nothing registered: nothing to silence, nothing queued
   });
 
+  it('only the newest alarm entry can silence a sounding alarm: marking an older entry from History leaves a live alarm alone', () => {
+    setDetectionControls(buildControls());
+    const older = logAlarm();
+    vi.setSystemTime(T0 + 10 * 60_000);
+    const newest = logAlarm();
+    markNotABite(older);
+    expect(takeSilenceRequest()).toBe(false);
+    markNotABite(newest);
+    expect(takeSilenceRequest()).toBe(true);
+  });
+
   describe('while a coaching prompt is open for this alarm', () => {
     function openPrompt(eventId: string) {
       const saved: Array<[string, boolean]> = [];
