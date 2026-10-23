@@ -60,8 +60,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Built React frontend
 COPY --from=frontend /app/dist ./dist
 
-# Express server
+# Express server (server/ holds the route modules and the feature flags)
 COPY server.js email.js trialFollowup.js ./
+COPY server ./server
 
 # DATA_DIR is where SQLite lives.
 # Mount a Coolify persistent volume at /app/data to survive redeploys.
