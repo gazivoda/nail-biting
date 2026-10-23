@@ -17,8 +17,12 @@ import * as auth from './auth';
 import * as coaching from './coaching';
 import * as phone from './phone';
 import * as language from './language';
+import * as trial from './trial';
+import * as labels from './labels';
 
 export const SCOPES = {
+  labels,
+  trial,
   common,
   shell,
   alarm,

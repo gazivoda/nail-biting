@@ -8,11 +8,6 @@ import { createScope } from '../scope';
 
 export const messages = {
   // ── Trial wording (src/utils/trial.ts): the paywall, dashboard banner, tab bar and settings share these ──
-  'trial.left.days': '{count, plural, one {{count} day left} other {{count} days left}}',
-  'trial.left.hours': '{count, plural, one {{count} hour left} other {{count} hours left}}',
-  'trial.left.underHour': 'Less than an hour left',
-  'trial.ended.none': 'Your free trial has ended. Your history is still saved on this device.',
-  'trial.ended.logged': 'Your free trial has ended. It logged {count, plural, one {{count} alert} other {{count} alerts}}, and your history is still saved on this device.',
 
   // ── Plan labels (src/billing/planLabel.ts) ──
   'plan.lifetime': 'Lifetime',

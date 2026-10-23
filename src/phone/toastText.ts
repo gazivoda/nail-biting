@@ -3,7 +3,7 @@
 import type { TagOption } from '../components/dashboard/triggerTags';
 import type { LogToast } from './logFlow';
 import { t } from '../i18n/scopes/phone';
-import { t as tc } from '../i18n/scopes/common';
+import { t as tc } from '../i18n/scopes/labels';
 
 function triggerLabel(trigger: string, options: ReadonlyArray<TagOption>): string {
   return options.find(o => o.id === trigger)?.label ?? tc('tag.unknown');

@@ -21,10 +21,14 @@ import { messages as auth } from './auth';
 import { messages as coaching } from './coaching';
 import { messages as phone } from './phone';
 import { messages as language } from './language';
+import { messages as trial } from './trial';
+import { messages as labels } from './labels';
 
 export const reviewed = false;
 
 export const catalog = {
+  labels,
+  trial,
   common,
   shell,
   alarm,

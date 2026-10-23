@@ -2,7 +2,7 @@
 // Every function reads the language when it is called (nothing here is computed at module level).
 
 import type { CustomTag } from '../types';
-import { t as tc } from '../i18n/scopes/common';
+import { t as tc } from '../i18n/scopes/labels';
 import { t } from '../i18n/scopes/insights';
 import { formatDatePattern } from '../i18n/format';
 import { hourLabel, hourRange } from '../utils/insights';

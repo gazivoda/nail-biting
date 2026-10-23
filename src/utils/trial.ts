@@ -1,4 +1,4 @@
-import { t } from '../i18n/scopes/billing';
+import { t } from '../i18n/scopes/trial';
 
 // How much of the free trial is left, in the words every screen uses. Days
 // were rounded up, so the last minutes of a trial still read "1 day

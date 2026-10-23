@@ -1,6 +1,6 @@
 import { Brain, CircleHelp, Hourglass, Wind, Zap, type LucideIcon } from 'lucide-react';
 import type { TriggerTag } from '../../types';
-import { t } from '../../i18n/scopes/common';
+import { t } from '../../i18n/scopes/labels';
 
 // The preset triggers, shared by the "I just bit my nails" sheet and the
 // post-alarm prompt so both ask the same question with the same words.
