@@ -983,3 +983,17 @@ Topics checked against 178 existing slugs (no title overlap):
 - [x] nail-biting-self-esteem
 Pipeline: writers -> newposts2/p11..p20.json -> insert -> inbound links -> seo-content + seo-geo review -> og:generate -> sync-seo -> build, vitest, eslint, local sweep. No commit/push/IndexNow without approval.
 Review: 10 posts inserted, 40+ SEO/GEO edits applied (verified against abstracts by seo-content), 188 posts / 219 URLs, vitest 115, build ok, local sweep 0 problems, 0 posts without inbound link. NOT committed/pushed, IndexNow not pinged.
+
+# Swarm: Stop Biting gap-analysis plan (started 2026-10-23)
+
+Plan: `docs/agents/PLAN.md` (owner's md, verbatim). Operating rules + orchestrator decisions: `docs/agents/SWARM_RULES.md`.
+Each workstream runs in an isolated worktree/branch; the orchestrator merges into main wave by wave and pushes ONCE at the end
+(push auto-deploys to stopbiting.today). Owner's uncommitted Paddle WIP (server.js, COOLIFY_DEPLOY.md) is stashed during
+merges and restored afterwards; backup patch kept in the session scratchpad.
+
+- [ ] Wave 0: WS0 foundation (schema v2 + migration, flags, storage module, settings slots, server route registry, ARCHITECTURE.md)
+- [ ] Wave 1 (parallel): WS1 detect more behaviors · WS2 HRT coaching · WS7a background watching · WS8 sign-in options · WS9 pricing/trial/referrals · WS11a marketing fixes
+- [ ] Wave 2 (parallel): WS4 sync · WS3 fewer false alarms (needs WS1 harness + WS2 overlay) · WS7b desktop wrapper
+- [ ] Wave 3 (parallel, need WS4): WS5 insights · WS6 phone companion · WS10 share link
+- [ ] Wave 4 (sequential): WS11b feature marketing → WS12 localization
+- [ ] Final: WS13 integration/QA, RELEASE_NOTES.md, seo:sync, full verification, commit, push, verify deploy
