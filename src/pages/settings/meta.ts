@@ -34,7 +34,7 @@ export const SETTINGS_SECTIONS: readonly SettingsSectionMeta[] = [
   { id: 'alerts',       title: 'Alerts',         owner: 'WS2',  flags: ['hrt_coaching'] },
   { id: 'behaviors',    title: 'Behaviors',      owner: 'WS1',  flags: ['detection_behaviors'] },
   { id: 'schedule',     title: 'Schedule',       owner: 'WS7a', flags: ['background_watching'] },
-  { id: 'account-sync', title: 'Account & Sync', owner: 'WS4',  flags: ['event_sync', 'signin_magic_link', 'signin_apple', 'signin_microsoft', 'weekly_email', 'referrals'] },
+  { id: 'account-sync', title: 'Account & Sync', owner: 'WS4',  flags: ['event_sync', 'signin_magic_link', 'signin_apple', 'signin_microsoft', 'weekly_email', 'referrals', 'locale_es', 'locale_de', 'locale_pt_br'] },
   { id: 'data',         title: 'Data',           owner: 'WS4',  flags: ['data_backup', 'event_sync', 'photo_diary'] },
   { id: 'sharing',      title: 'Sharing',        owner: 'WS10', flags: ['share_links'] },
 ];

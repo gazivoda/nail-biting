@@ -216,6 +216,9 @@ export default defineConfig({
           // The desktop shell's tray bridge and camera notice (src/desktop). Loaded
           // only when window.desktop exists, which a browser never has.
           '**/assets/desktopHost-*.js',
+          // The translations (src/i18n/locale-*.ts): fetched only by a person who picked that language,
+          // so an English visitor's worker must not download them on install.
+          '**/assets/locale-*.js',
         ],
       },
     })] : []),

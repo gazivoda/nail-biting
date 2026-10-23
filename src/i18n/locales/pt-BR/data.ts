@@ -1,0 +1,5 @@
+// NEEDS NATIVE REVIEW (machine draft). Scope "data", locale pt-BR.
+import type { messages as en } from '../../scopes/data';
+
+export const messages: Record<keyof typeof en, string> = {
+};

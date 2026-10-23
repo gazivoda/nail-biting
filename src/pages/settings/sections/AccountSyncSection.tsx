@@ -1,7 +1,7 @@
 // Settings > Account & Sync   (section id "account-sync")
 //
 // OWNER: WS4 (with WS8 sign-in methods, WS5 weekly email, WS9 referral link). Nobody else edits this file.
-// SHOWN WHEN: event_sync, signin_*, weekly_email, referrals (see ../meta.ts; the page does the flag check, not this file).
+// SHOWN WHEN: event_sync, signin_*, weekly_email, referrals, locale_* (see ../meta.ts; the page does the flag check, not this file).
 // HOLDS: the sync opt-in, its status and the device name (WS4; ../SyncSettings.tsx, flag event_sync).
 //
 // WS8, WS5 and WS9: add your own cards below the sync card, each behind its own
@@ -21,6 +21,7 @@ import { WeeklyEmailSettings } from '../WeeklyEmailSettings';
 const SyncSettings = lazy(() => import('../SyncSettings').then(m => ({ default: m.SyncSettings })));
 
 import { ReferralCard } from '../../../components/billing/ReferralCard';
+import { LanguageSettings } from '../LanguageSettings';
 
 export function AccountSyncSection() {
   const flags = useFeatures();
@@ -34,6 +35,7 @@ export function AccountSyncSection() {
       <WeeklyEmailSettings />{/* WS5: the weekly summary email opt-in (flag weekly_email); renders nothing while it is off */}
       {/* WS9: the referral card (flag referrals; it draws nothing while the flag is off). Keep this line. */}
       <ReferralCard />
+      <LanguageSettings />{/* WS12a: the language picker (flags locale_es, locale_de, locale_pt_br); renders nothing while all three are off */}
     </>
   );
 }

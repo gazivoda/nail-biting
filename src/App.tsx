@@ -49,6 +49,8 @@ import { SyncHost } from './sync/SyncHost';
 import { BillingHost } from './components/billing/BillingHost';
 import { BackgroundHost } from './background/BackgroundHost';
 import { MilestoneHost } from './insights/ui/MilestoneHost';
+import { LocaleHost } from './i18n/LocaleHost';
+import { useLocaleVersion } from './i18n/hooks';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -86,6 +88,7 @@ function AppRouter() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showPaywall, setShowPaywall] = useState(false);
   const { remindersEnabled, reminderIntervalMinutes, detecting } = useAppStore();
+  useLocaleVersion(); // WS12a: a language change re-renders the whole signed-in tree below (state is kept)
 
   useNotifications(remindersEnabled, reminderIntervalMinutes, detecting);
   // The landing page below is light-only by design. Pinning it here rather than
@@ -111,6 +114,7 @@ function AppRouter() {
         />
         <PWAGuideModal />
         <BillingHost />{/* WS9: a waiting gift or referral code. Nothing while every flag is off. */}
+        <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
         </div>
       </Suspense>
     );
@@ -140,6 +144,7 @@ function AppRouter() {
       <BillingHost />{/* WS9: referral code, waiting gift, free-tier meter. Nothing while every flag is off. */}
       <BackgroundHost />{/* WS7a: pause clock, desktop commands, schedule reminders (background_watching). Nothing while the flag is off. */}
       <MilestoneHost />{/* WS5: milestone celebrations (insights). Nothing, and no extra download, while the flag is off. */}
+      <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
       </div>
     </Suspense>
   );

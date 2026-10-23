@@ -160,6 +160,11 @@ export function isLocaleLoaded(locale: Locale): boolean {
   return locale === 'en' || catalogs.has(locale);
 }
 
+/** True when fetching this locale's catalog failed (offline, blocked). Cleared by the next setLocale. */
+export function didLocaleLoadFail(locale: Locale): boolean {
+  return failed.has(locale);
+}
+
 // ── Writing ──────────────────────────────────────────────────────────────────
 
 /** The person picks a language. Stored, and applied as soon as its flag is on and its catalog is here. */
