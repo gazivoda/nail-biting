@@ -62,18 +62,18 @@ export function buildContext(partial, env = process.env) {
  *
  * @returns the finished context.
  */
-export function registerRoutes(partialCtx, modules = ROUTE_MODULES, env = process.env) {
+export function registerRoutes(partialCtx, modules = ROUTE_MODULES, env = process.env, log = console.log) {
   const ctx = buildContext(partialCtx, env);
 
   const steps = modules.flatMap(m => m.migrations ?? []);
   if (steps.length > 0) {
     const ran = runMigrations(ctx.db, steps);
-    if (ran.length) console.log(`[routes] applied migrations: ${ran.join(', ')}`);
+    if (ran.length) log(`[routes] applied migrations: ${ran.join(', ')}`);
   }
 
   for (const mod of modules) mod.register(ctx);
 
   const on = ctx.flags.enabled();
-  console.log(`[routes] ${modules.map(m => m.name).join(', ')} registered; flags on: ${on.length ? on.join(', ') : 'none'}`);
+  log(`[routes] ${modules.map(m => m.name).join(', ')} registered; flags on: ${on.length ? on.join(', ') : 'none'}`);
   return ctx;
 }

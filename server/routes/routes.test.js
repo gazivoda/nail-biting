@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import express from 'express';
 import { registerRoutes, buildContext, ROUTE_MODULES } from './index.js';
 import { createMemoryDb } from '../../test-utils/memorySqlite.js';
@@ -9,9 +9,8 @@ let servers = [];
 afterEach(async () => {
   await Promise.all(servers.map(s => s.close()));
   servers = [];
-  vi.restoreAllMocks();
 });
-beforeEach(() => vi.spyOn(console, 'log').mockImplementation(() => {}));
+const quiet = () => {};
 
 // A stand-in for server.js's authMiddleware: a header carries the user id.
 const fakeAuth = (req, res, next) => {
@@ -24,7 +23,7 @@ const fakeAuth = (req, res, next) => {
 async function boot(env = {}, modules = ROUTE_MODULES) {
   const app = express();
   const db = createMemoryDb({ users: true });
-  const ctx = registerRoutes({ app, db, authMiddleware: fakeAuth }, modules, env);
+  const ctx = registerRoutes({ app, db, authMiddleware: fakeAuth }, modules, env, quiet);
   // What server.js has after the registry: a catch-all that would swallow a missed API route.
   app.get('/{*path}', (_req, res) => res.status(404).type('html').send('<h1>page not found</h1>'));
   const srv = await startTestServer(app);
@@ -92,7 +91,7 @@ describe('registerRoutes', () => {
     const mod = { name: 'probe', register(ctx) { Object.assign(seen, ctx); } };
     const app = express();
     const db = createMemoryDb();
-    registerRoutes({ app, db, authMiddleware: fakeAuth, getUser() {}, saveUser() {}, signToken() {}, findUserByEmail() {}, config: { APP_URL: 'http://x' } }, [mod], {});
+    registerRoutes({ app, db, authMiddleware: fakeAuth, getUser() {}, saveUser() {}, signToken() {}, findUserByEmail() {}, config: { APP_URL: 'http://x' } }, [mod], {}, quiet);
     for (const key of ['app', 'db', 'authMiddleware', 'getUser', 'saveUser', 'signToken', 'findUserByEmail', 'sendEmail', 'flags', 'requireFeature', 'config']) {
       expect(seen[key], key).toBeDefined();
     }
@@ -118,7 +117,7 @@ describe('registerRoutes', () => {
 
   it('fails at boot, not at request time, when a module gates on a mistyped flag', () => {
     const bad = { name: 'bad', register({ app, requireFeature }) { app.get('/x', requireFeature('evnt_sync'), () => {}); } };
-    expect(() => registerRoutes({ app: express(), db: createMemoryDb(), authMiddleware: fakeAuth }, [bad], {})).toThrow(/unknown feature flag/);
+    expect(() => registerRoutes({ app: express(), db: createMemoryDb(), authMiddleware: fakeAuth }, [bad], {}, quiet)).toThrow(/unknown feature flag/);
   });
 
   it('buildContext keeps an explicitly supplied flag set', () => {
