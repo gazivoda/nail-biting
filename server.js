@@ -16,6 +16,7 @@ import { startTrialFollowupJob } from './trialFollowup.js';
 import { registerRoutes } from './server/routes/index.js';
 import { createGoogleLinker } from './server/auth/googleLink.js';
 import { gatedNavLinks, gatedSitemapEntries, isGateOpen, withGatedSitemapEntries } from './server/marketing/gatedPages.js';
+import { TRIAL_HYPHEN, TRIAL_MS } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -373,7 +374,7 @@ app.get('/api/auth/callback', async (req, res) => {
     if (!user) user = linkGoogleSignIn(googlePayload);   // WS8: null for everyone who has no other-method account
     const isNewUser = !user;
     if (!user) {
-      const trialEnd = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
+      const trialEnd = new Date(Date.now() + TRIAL_MS).toISOString();
       user = {
         id: googleId,
         email: googlePayload.email,
@@ -428,7 +429,8 @@ app.post('/api/auth/signout', (req, res) => {
 app.get('/api/user/me', authMiddleware, (req, res) => {
   const user = getUser(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  res.json(user);
+  // WS9: adds `entitlement` (lifetime / gift / referral credit / free tier) only when the account has one.
+  res.json(app.locals.decorateUser ? app.locals.decorateUser(user) : user);
 });
 
 // H-2: PATCH /api/user/me removed — subscription fields are only written
@@ -480,6 +482,14 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
 
   const eventType = event.event_type;
   const data = event.data;
+  // WS9: a replayed event is acknowledged and ignored; lifetime, gift, referral and refund events are
+  // handled in server/billing (see docs/agents/ws9-notes.md). Everything else falls through to the handlers below.
+  try {
+    if (await app.locals.billingWebhook?.take(event, res)) return res.json({ received: true });
+  } catch (err) {
+    console.error('Paddle webhook billing error:', err.message);
+    return res.status(500).json({ error: 'Webhook processing failed' });
+  }
 
   console.log(`Paddle webhook: ${eventType}`);
 
@@ -1618,7 +1628,7 @@ if (!existsSync(distPath)) {
       '<p class="article-summary">Stop Biting uses your webcam and on-device AI to detect nail biting in real time: ' +
       'it checks 21 hand landmarks and your face mesh five times a second, and the moment your hand moves toward your mouth an ' +
       'audible alarm fires within a second, catching the automatic episodes you never notice. All detection runs ' +
-      'locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The 3-day free trial needs no ' +
+      `locally via MediaPipe and WebAssembly: no camera data ever leaves your device. The ${TRIAL_HYPHEN} free trial needs no ` +
       'credit card; after that it is $2.99/month or $29.00/year.</p>' +
       '<p>Your webcam watches your hands while you work. The moment a fingertip reaches your lips, an alarm sounds, ' +
       'so you catch the bites you would otherwise never notice. Made for a laptop or desktop with a webcam. ' +
@@ -1658,7 +1668,7 @@ if (!existsSync(distPath)) {
       'thing that notices for me. Igor Gazivoda. <a href="/about">The longer story</a>.</p></section>' +
       testimonialsArticleHtml() +
       '<section><h2>$2.99 a month, or $29 a year.</h2>' +
-      '<p>Start with a 3-day free trial, no credit card required. ' +
+      `<p>Start with a ${TRIAL_HYPHEN} free trial, no credit card required. ` +
       'Monthly: $2.99/month. Yearly: $29.00/year, just $2.42/month, saving 19%. ' +
       'Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types. ' +
       'Secure payment via Paddle, cancel anytime. You can ask for a full refund within 14 days of your first payment (<a href="/refund-policy">refund policy</a>). See <a href="/pricing">pricing details</a>.</p></section>' +
@@ -1674,7 +1684,7 @@ if (!existsSync(distPath)) {
   // Homepage — serve with FAQPage schema (only this route should have it)
   app.get('/', (_req, res) => {
     if (!indexHtmlFaqOnly) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    const homeDescription = 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. 3-day free trial.';
+    const homeDescription = `Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. ${TRIAL_HYPHEN} free trial.`;
     // The homepage FAQ names onychophagia and habit reversal training in flow,
     // so it earns the MedicalCondition entity — but which therapies it may list
     // is read off the article it actually renders, never assumed.
@@ -2134,11 +2144,11 @@ if (!existsSync(distPath)) {
   // reuses the same PricingSection component as the landing page, so crawler
   // view and user view carry the same figures. Prices in the prose and the
   // Offer schema below MUST match PricingSection.tsx exactly:
-  // $2.99/month, $29.00/year, 3-day free trial.
+  // $2.99/month, $29.00/year, free trial (${TRIAL_HYPHEN}).
   // The two questions an AI engine actually resolves against a pricing page,
   // answered directly and in the page's own first section. Every figure here is
   // already on the page and in PricingSection.tsx — $2.99/month, $29.00/year,
-  // $2.42/month equivalent, 19% saving, 3-day trial, no credit card. Nothing is
+  // $2.42/month equivalent, 19% saving, ${TRIAL_HYPHEN} trial, no credit card. Nothing is
   // introduced; the page simply never stated it in the shape of an answer, so
   // "how much does Stop Biting cost" had no extractable passage to lift.
   //
@@ -2151,8 +2161,8 @@ if (!existsSync(distPath)) {
   // with its link, for the crawler copy; the schema carries the plain `a`.
   const PRICING_FAQS = [
     {
-      q: 'How does the 3-day free trial work?',
-      a: 'Every account starts with a 3-day free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.',
+      q: `How does the ${TRIAL_HYPHEN} free trial work?`,
+      a: `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.`,
     },
     {
       q: 'What is the difference between Monthly and Yearly?',
@@ -2173,7 +2183,7 @@ if (!existsSync(distPath)) {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
       title: 'Pricing: $2.99/month or $29/year | Stop Biting',
-      description: 'Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.',
+      description: `Stop Biting pricing: ${TRIAL_HYPHEN} free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.`,
       canonical: 'https://stopbiting.today/pricing',
     });
     // This page used to declare its own SoftwareApplication with its own copy of
@@ -2191,7 +2201,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/pricing',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
-      description: 'Pricing for Stop Biting: 3-day free trial, then $2.99/month or $29/year.',
+      description: `Pricing for Stop Biting: ${TRIAL_HYPHEN} free trial, then $2.99/month or $29/year.`,
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
       // Selectors resolve against the SSR <h1> and the `article-summary`
@@ -2224,7 +2234,7 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', `    ${schemaTag(pricingSchema)}\n    ${schemaTag(pricingFaq)}\n    ${schemaTag(breadcrumb)}\n  </head>`);
     injected = injectSsrArticle(injected,
       '<h1>$2.99 a month, or $29 a year.</h1>' +
-      '<p class="article-summary">Simple, honest pricing: start with a 3-day free trial — no credit card required — ' +
+      `<p class="article-summary">Simple, honest pricing: start with a ${TRIAL_HYPHEN} free trial — no credit card required — ` +
       'then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing.</p>' +
       // Answer target first: the question verbatim as a heading, then the
       // answer in one self-contained paragraph, before any plan detail.
@@ -2243,7 +2253,7 @@ if (!existsSync(distPath)) {
       '</ul></section>' +
       '<section><h2>Payments and cancellation</h2>' +
       '<p>Secure payment via Paddle. Cancel anytime, and you can ask for a full refund within 14 days of your first payment: see the <a href="/refund-policy">refund policy</a>. ' +
-      'The 3-day free trial includes full detection and tracking features with no credit card required.</p></section>' +
+      `The ${TRIAL_HYPHEN} free trial includes full detection and tracking features with no credit card required.</p></section>` +
       testimonialsArticleHtml() +
       '<section><h2>Start free</h2>' +
       '<p><a href="/">Launch the app</a> to start your free trial, or read <a href="/how-it-works">how the AI detection works</a>. ' +
@@ -2359,7 +2369,7 @@ if (!existsSync(distPath)) {
       '<li><a href="/blog/habit-reversal-training-guide">Habit Reversal Training: the clinical method behind the app</a></li>' +
       '<li><a href="/blog/webcam-privacy-nail-biting-app">How we verified on-device processing</a></li>' +
       '<li><a href="/compare/bitter-polish-alternative">Stop Biting vs bitter nail polish</a></li>' +
-      '<li><a href="/pricing">Pricing — $2.99/month or $29/year, 3-day free trial</a></li>' +
+      `<li><a href="/pricing">Pricing — $2.99/month or $29/year, ${TRIAL_HYPHEN} free trial</a></li>` +
       '</ul></section>';
     // This page describes the clinical mechanism but its prose never names
     // onychophagia as the MedicalCondition block defines it, so it does not
@@ -2436,11 +2446,11 @@ if (!existsSync(distPath)) {
     },
     '/solutions/for-mac': {
       title: 'Stop Nail Biting on a Mac | Stop Biting',
-      description: 'Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
+      description: `Stop Biting runs on a Mac in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. ${TRIAL_HYPHEN} free trial.`,
     },
     '/solutions/for-windows': {
       title: 'Stop Nail Biting on Windows | Stop Biting',
-      description: 'Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. 3-day free trial.',
+      description: `Stop Biting runs on Windows in a browser tab, with no install. On-device webcam detection sounds an alarm as your hand reaches your mouth. ${TRIAL_HYPHEN} free trial.`,
     },
     // Competitor comparison pages. All competitor facts in the page bodies
     // (src/data/comparePages.ts) were verified against the competitors' own

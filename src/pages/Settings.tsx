@@ -8,6 +8,7 @@ import { PageTitle } from '../components/ui/PageTitle';
 import { Rings } from '../components/site/Rings';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { trialLeft } from '../utils/trial';
+import { planOverride } from '../billing/planLabel';
 import { radioGroupKeyDown, radioTabIndex } from '../components/ui/radioKeys';
 import { Section, Row, Toggle } from './settings/ui';
 import { SettingsSlots } from './settings/SettingsSlots';
@@ -327,7 +328,9 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
   if (!user) return null;
 
   const { subscription_status, subscription_plan, subscription_end_date, trial_end_date } = user;
-  const badge = STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired;
+  // WS9: lifetime, gift, referral credit and the free plan have their own wording. null for everyone else.
+  const override = planOverride(user);
+  const badge = override ? { label: override.badge } : (STATUS_BADGE[subscription_status] ?? STATUS_BADGE.expired);
 
   const trialLeftText = trialLeft(trial_end_date);
 
@@ -345,12 +348,12 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 
   const canManage = subscription_status === 'active' || subscription_status === 'paused' || subscription_status === 'cancelled';
 
-  const headline = subscription_status === 'trial'
+  const headline = override ? override.headline : subscription_status === 'trial'
     ? (trialLeftText ?? 'Trial ended')
     : subscription_status === 'active' || subscription_status === 'paused'
       ? (subscription_plan === 'yearly' ? 'Yearly' : subscription_plan === 'monthly' ? 'Monthly' : badge.label)
       : badge.label;
-  const detail = subscription_status === 'trial' && trial_end_date
+  const detail = override ? override.detail : subscription_status === 'trial' && trial_end_date
     ? (trialLeftText ? `In your free trial, ends ${fmt(trial_end_date)}` : 'Your free trial has ended')
     : subscription_status === 'active' && subscription_end_date
       ? `Renews ${fmt(subscription_end_date)}`
@@ -374,9 +377,9 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
         <p className="mt-4 font-display text-5xl font-extrabold leading-none tracking-[-0.045em] sm:text-6xl">{headline}</p>
         {detail && <p className="mt-3 text-base text-white/80">{detail}</p>}
 
-        {(accessStatus === 'trial_active' && onUpgrade) || canManage ? (
+        {((accessStatus === 'trial_active' || override?.upgrade) && onUpgrade) || canManage ? (
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            {accessStatus === 'trial_active' && onUpgrade && (
+            {(accessStatus === 'trial_active' || override?.upgrade) && onUpgrade && (
               <button
                 onClick={onUpgrade}
                 type="button"

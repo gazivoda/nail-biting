@@ -13,6 +13,9 @@ export interface Landmark {
 /** Just the shape the readiness check needs; a real HTMLVideoElement fits. */
 export interface VideoLike {
   readyState: number;
+  /** The picture's size, when the source knows it (an HTMLVideoElement does). Only the false-alarm controls read it, to correct distances for the camera's shape. */
+  videoWidth?: number;
+  videoHeight?: number;
 }
 
 /** MediaPipe's two landmarkers, narrowed to the calls the detector makes. */

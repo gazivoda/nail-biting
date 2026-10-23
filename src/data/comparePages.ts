@@ -5,6 +5,8 @@
 // never run JS receive. If this lived inside the component, the server copy
 // would be hand-maintained and would drift from what visitors actually see.
 
+import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN } from '../../shared/plans.js';
+
 export interface PageContent {
   title: string;
   subtitle: string;
@@ -297,7 +299,7 @@ function getStudentsContent(): PageContent {
   return {
     title: 'Stop Nail Biting as a Student: Exams, Laptops and Late Nights',
     subtitle: 'Studying is long, screen-heavy and stressful, which is when automatic biting runs unnoticed: how webcam detection fits a student’s week',
-    intro: 'Students bite most where studying puts them: alone, at a laptop, working through hard problems for hours. In one study of 40 undergraduate biters, participants bit most when left alone and while working on maths problems, which are better-evidenced triggers than stress alone. Bitter polish wears off between study sessions and a phone reminder needs attention you are spending on the exam, so the useful fix is an interruption that does not depend on remembering. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with a 3-day free trial and no card, then $2.99/month or $29/year.',
+    intro: `Students bite most where studying puts them: alone, at a laptop, working through hard problems for hours. In one study of 40 undergraduate biters, participants bit most when left alone and while working on maths problems, which are better-evidenced triggers than stress alone. Bitter polish wears off between study sessions and a phone reminder needs attention you are spending on the exam, so the useful fix is an interruption that does not depend on remembering. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with a ${TRIAL_HYPHEN} free trial and no card, then $2.99/month or $29/year.`,
     sections: [
       {
         heading: 'Why do I bite my nails while studying?',
@@ -326,7 +328,7 @@ function getStudentsContent(): PageContent {
         [
           ['Will it work on a shared or quiet study space?', 'The alarm volume is adjustable, but it is audible by design. Many students keep detection for their own room and desk, where most solo studying happens.'],
           ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
-          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['What does it cost?', `A ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`],
           ['Will it catch biting during lectures or on my phone?', 'No. It only sees what your laptop webcam can see.'],
         ],
       ),
@@ -347,7 +349,7 @@ function getRemoteWorkersContent(): PageContent {
   return {
     title: 'Stop Nail Biting Working From Home: Laptops, Calls and Home Offices',
     subtitle: 'Working from home removes the audience that used to stop you biting: how webcam detection fits a remote workday',
-    intro: 'Remote work puts the three biggest nail biting conditions in one place: long stretches of focused screen work, idle hands near your face and nobody around to notice. Bitter polish is washed off by lunch and a phone reminder asks for attention you are spending on the work, so the fix that holds up is an interruption that does not depend on remembering. Stop Biting uses the webcam you already have and on-device AI to sound an alarm the moment your hand reaches your mouth, with a 3-day free trial and no card, then $2.99/month or $29/year. One honest limit up front: whether detection can run while a video call is using your camera depends on your operating system and call software, so test that before you rely on it.',
+    intro: `Remote work puts the three biggest nail biting conditions in one place: long stretches of focused screen work, idle hands near your face and nobody around to notice. Bitter polish is washed off by lunch and a phone reminder asks for attention you are spending on the work, so the fix that holds up is an interruption that does not depend on remembering. Stop Biting uses the webcam you already have and on-device AI to sound an alarm the moment your hand reaches your mouth, with a ${TRIAL_HYPHEN} free trial and no card, then $2.99/month or $29/year. One honest limit up front: whether detection can run while a video call is using your camera depends on your operating system and call software, so test that before you rely on it.`,
     sections: [
       {
         heading: 'Why do I bite my nails more when I work from home?',
@@ -376,7 +378,7 @@ function getRemoteWorkersContent(): PageContent {
         [
           ['Does it work during video calls?', 'It depends on your operating system and call software, because both want the camera. Test it on your own setup first. It does not depend on the call itself: it works alongside your normal screen work.'],
           ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
-          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['What does it cost?', `A ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`],
           ['Will it catch biting away from my desk?', 'No. It only sees what your laptop webcam can see.'],
         ],
       ),
@@ -397,7 +399,7 @@ function getMacContent(): PageContent {
   return {
     title: 'Stop Nail Biting on a Mac: Webcam Detection in Your Browser',
     subtitle: 'Your Mac already has the sensor this needs: how on-device webcam detection works in a browser tab, and where it stops',
-    intro: 'Stop Biting runs on a Mac in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Macs have a built-in camera; a Mac mini or Mac Studio needs an external webcam. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a 3-day free trial with no credit card, then $2.99/month or $29/year.',
+    intro: `Stop Biting runs on a Mac in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Macs have a built-in camera; a Mac mini or Mac Studio needs an external webcam. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`,
     sections: [
       {
         heading: 'Can I use Stop Biting on a Mac?',
@@ -422,7 +424,7 @@ function getMacContent(): PageContent {
           ['Do I need to install anything on my Mac?', 'No. It runs in a browser tab as a web app. You can add it to your Dock from the browser if you like.'],
           ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
           ['Does my Mac need a camera?', 'Yes. MacBooks and iMacs have one built in; a Mac mini or Mac Studio needs an external webcam.'],
-          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['What does it cost?', `A ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`],
         ],
       ),
       verificationSection('This page was last reviewed on 6 October 2026. It describes the browser version only. It names two competitors only to link to the pages where their details are checked against their own sites, and makes no claim about either here.'),
@@ -443,7 +445,7 @@ function getWindowsContent(): PageContent {
   return {
     title: 'Stop Nail Biting on Windows: Webcam Detection in Your Browser',
     subtitle: 'A Windows laptop or desktop with a webcam is all this needs: how on-device detection works in a browser tab, and where it stops',
-    intro: 'Stop Biting runs on Windows in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Windows laptops have a built-in webcam; a desktop PC usually needs an external one. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a 3-day free trial with no credit card, then $2.99/month or $29/year.',
+    intro: `Stop Biting runs on Windows in a browser tab, with no install: you allow the camera, keep the tab open while you work, and an alarm sounds the moment your hand reaches your mouth. Most Windows laptops have a built-in webcam; a desktop PC usually needs an external one. Detection runs on your device and no camera data is sent anywhere while it runs, which you can check in your browser’s network monitor. There is a ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`,
     sections: [
       {
         heading: 'Can I use Stop Biting on Windows?',
@@ -468,7 +470,7 @@ function getWindowsContent(): PageContent {
           ['Do I need to install anything on Windows?', 'No. It runs in a browser tab as a web app, with no installer.'],
           ['Does it send my webcam video anywhere?', 'No. Detection runs on your device and no camera data is sent while it runs.'],
           ['Does my PC need a webcam?', 'Yes. Most laptops have one built in; a desktop PC usually needs an external webcam.'],
-          ['What does it cost?', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.'],
+          ['What does it cost?', `A ${TRIAL_HYPHEN} free trial with no credit card, then $2.99/month or $29/year.`],
         ],
       ),
       verificationSection('This page was last reviewed on 6 October 2026. It describes the browser version only. It names competitors only to link to the pages where their details are checked against their own sites, and makes no claim about them here.'),
@@ -744,7 +746,7 @@ function getVsHandsOffContent(): PageContent {
           '<tr><td>Behaviors detected</td><td>Nail biting (focused)</td><td>Five BFRBs — its site lists nail biting, skin picking, eyebrow or eyelash pulling, ear picking, and nose picking</td></tr>' +
           '<tr><td>Detection</td><td>On-device AI (MediaPipe/WebAssembly)</td><td>On-device AI — all processing local</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>€2.99/month (monthly plan only listed)</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>3 days</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>3 days</td></tr>` +
           '<tr><td>Progress tracking</td><td>Bite-free streaks and a timestamped incident history</td><td>Yes — its site says it “includes a statistics tracker to show your progress over time”</td></tr>' +
           '<tr><td>Privacy</td><td>Detection runs on your device; no camera data is sent while it runs</td><td>States no video is recorded, GDPR compliant, no personal data collected</td></tr>' +
           '</tbody></table>',
@@ -763,7 +765,7 @@ function getVsHandsOffContent(): PageContent {
       },
       {
         heading: 'How much do Stop Biting and Hands Off cost?',
-        body: 'Stop Biting: $2.99/month or $29/year (about $2.42/month), with a 3-day free trial and no credit card required to start.\n\nHands Off: €2.99/month with a 3-day free trial, cancel anytime. No yearly or lifetime option is listed on its pricing page.\n\nOver one year at these listed prices, Stop Biting’s annual plan costs $29 versus roughly €35.88 for twelve months of Hands Off. If you only need an app for a month or two, the two are effectively the same price. Pricing verified on both sites on 10 September 2026 and subject to change.',
+        body: `Stop Biting: $2.99/month or $29/year (about $2.42/month), with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nHands Off: €2.99/month with a 3-day free trial, cancel anytime. No yearly or lifetime option is listed on its pricing page.\n\nOver one year at these listed prices, Stop Biting’s annual plan costs $29 versus roughly €35.88 for twelve months of Hands Off. If you only need an app for a month or two, the two are effectively the same price. Pricing verified on both sites on 10 September 2026 and subject to change.`,
       },
       {
         heading: 'How does each app handle your camera data?',
@@ -815,7 +817,7 @@ function getVsNailedContent(): PageContent {
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Nailed</th></tr></thead><tbody>' +
           '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>macOS only (menu bar app); its store listing requires macOS 12 or later and an Apple M1 chip or later</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>nailedapp.io advertises $4.99 one-time; its Mac App Store listing currently shows “Free”, with no in-app purchases</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>None listed</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>None listed</td></tr>` +
           '<tr><td>Detection engine</td><td>MediaPipe models via WebAssembly, on-device</td><td>MediaPipe models via WebAssembly, on-device</td></tr>' +
           '<tr><td>Alerts</td><td>Audible alarm, multiple alert types</td><td>Red screen flash, optional beep</td></tr>' +
           '<tr><td>Tracking</td><td>Bite-free streaks and a timestamped incident history</td><td>Its App Store listing is subtitled “Offline nail-biting tracking” and says it helps you track the habit; no streaks or incident history are described</td></tr>' +
@@ -831,7 +833,7 @@ function getVsNailedContent(): PageContent {
       },
       {
         heading: 'Why choose Stop Biting over Nailed?',
-        body: 'Platforms: Nailed is macOS-only, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs as a no-install web app in any modern browser on Mac or Windows, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial. Stop Biting’s 3-day trial requires no credit card, so you can test detection accuracy on your actual desk before paying. This is a smaller advantage than it looks right now — if Nailed’s store listing is free, trying it costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.',
+        body: `Platforms: Nailed is macOS-only, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs as a no-install web app in any modern browser on Mac or Windows, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial. Stop Biting’s ${TRIAL_HYPHEN} trial requires no credit card, so you can test detection accuracy on your actual desk before paying. This is a smaller advantage than it looks right now — if Nailed’s store listing is free, trying it costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.`,
       },
       {
         heading: 'Which is cheaper, Stop Biting or Nailed?',
@@ -847,7 +849,7 @@ function getVsNailedContent(): PageContent {
           ['Does Nailed work on Windows?', 'No — it’s a macOS menu bar app, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later. Stop Biting runs as a web app in any modern browser on Mac or Windows.'],
           ['How much does Nailed cost?', 'Its site advertises $4.99 as a one-time purchase, while the Mac App Store listing it links to currently shows the app as a free download with no in-app purchases. Check the store page before assuming a price.'],
           ['Does Nailed track your progress?', 'Yes. Its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks or a reviewable incident history.'],
-          ['Does Nailed have a free trial?', 'No free trial is listed. Its App Store listing showed the app as a free download when we checked, so trying it may cost nothing anyway; Stop Biting’s 3-day trial needs no credit card.'],
+          ['Does Nailed have a free trial?', `No free trial is listed. Its App Store listing showed the app as a free download when we checked, so trying it may cost nothing anyway; Stop Biting’s ${TRIAL_HYPHEN} trial needs no credit card.`],
         ],
       ),
       verificationSection('Every Nailed detail on this page was re-verified on 10 September 2026 against nailedapp.io and the Mac App Store listing that site links to as its only download button. Two things changed in Nailed’s favour and are corrected above: its store listing now shows the app as a free download with no in-app purchases, so we no longer present $4.99 as the price you pay, and that listing describes nail-biting tracking, which an earlier version of this page said was absent. Where a vendor’s own two sources disagree — as they do here on price — we show both and name each rather than picking the one that flatters us. Confirm on the App Store page before downloading.', ['https://nailedapp.io']),
@@ -873,7 +875,7 @@ function getVsSmartBehaviorContent(): PageContent {
     // platform correction can falsify.
     title: 'Stop Biting vs SmartBehavior: Which Fits Where You Bite?',
     subtitle: 'The clearest split in the category: where do you actually bite your nails: at a computer, or everywhere else?',
-    intro: 'Choose SmartBehavior if most of your biting happens away from a computer — it’s the only app here with native iPhone and Android apps, and though its own website publishes no price, its US App Store listing showed $0.99. Choose Stop Biting, at $2.99/month or $29/year with a 3-day free trial, if you bite at a desk, on Mac, Windows or in a browser. Both use on-device AI to catch nail biting through a camera, and both keep processing entirely local — SmartBehavior claims 85% accuracy and runs 100% offline. The decision between them is mostly about platform. SmartBehavior has native iPhone and Android apps plus Windows; Stop Biting covers Mac, Windows, and the browser. Disclosure: Stop Biting is our product — this comparison aims to be honest, and every SmartBehavior claim was re-verified against smart-behavior.com and its App Store listing on 10 September 2026.',
+    intro: `Choose SmartBehavior if most of your biting happens away from a computer — it’s the only app here with native iPhone and Android apps, and though its own website publishes no price, its US App Store listing showed $0.99. Choose Stop Biting, at $2.99/month or $29/year with a ${TRIAL_HYPHEN} free trial, if you bite at a desk, on Mac, Windows or in a browser. Both use on-device AI to catch nail biting through a camera, and both keep processing entirely local — SmartBehavior claims 85% accuracy and runs 100% offline. The decision between them is mostly about platform. SmartBehavior has native iPhone and Android apps plus Windows; Stop Biting covers Mac, Windows, and the browser. Disclosure: Stop Biting is our product — this comparison aims to be honest, and every SmartBehavior claim was re-verified against smart-behavior.com and its App Store listing on 10 September 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs SmartBehavior: what’s the difference?',
@@ -883,7 +885,7 @@ function getVsSmartBehaviorContent(): PageContent {
           '<tr><td>Native mobile app</td><td>No</td><td>Yes — iPhone and Android</td></tr>' +
           '<tr><td>Behaviors detected</td><td>Nail biting (focused)</td><td>Nail biting, skin picking, hair pulling, and other BFRBs</td></tr>' +
           '<tr><td>Detection</td><td>On-device (MediaPipe/WebAssembly); offline after initial load</td><td>On-device, 100% offline; claims 85% accuracy</td></tr>' +
-          '<tr><td>Pricing</td><td>Published: $2.99/month or $29/year, 3-day free trial</td><td>Not published on its website; its US App Store listing showed $0.99</td></tr>' +
+          `<tr><td>Pricing</td><td>Published: $2.99/month or $29/year, ${TRIAL_HYPHEN} free trial</td><td>Not published on its website; its US App Store listing showed $0.99</td></tr>` +
           '<tr><td>Tracking</td><td>Streaks and incident history</td><td>Daily, weekly, and monthly trend analytics</td></tr>' +
           '</tbody></table>',
       },
@@ -893,7 +895,7 @@ function getVsSmartBehaviorContent(): PageContent {
       },
       {
         heading: 'What does Stop Biting do better than SmartBehavior?',
-        body: 'Desktop coverage. SmartBehavior lists iOS, Android, and Windows apps and no dedicated macOS app — but to be fair to them, its App Store listing states the iPad app runs on a Mac with an Apple M1 chip or later, so Apple Silicon Mac users are not shut out. They get the iPad app rather than something built for a desktop. Stop Biting is built for desktop use on both Mac and Windows, including older Intel Macs, and because it also runs in the browser it works even on machines where you can’t install anything.\n\nPublished pricing. Stop Biting publishes its prices: $2.99/month or $29/year, with a 3-day free trial and no credit card required. SmartBehavior publishes none on its own website — the footer’s “Pricing” link doesn’t go anywhere — so you have to open an app store to find out what you’d pay. Its US App Store listing showed $0.99 when we checked, and storefront prices vary, so check your own.\n\nDepth of treatment content. Stop Biting surrounds its detector with over 100 science-backed guides on habit reversal training — the method with the strongest clinical evidence for stopping nail biting — plus streak tracking and a full incident history.\n\nWorth stating plainly: for many desk workers, most biting happens during focused computer use, which is exactly the context a webcam app on your work machine covers.',
+        body: `Desktop coverage. SmartBehavior lists iOS, Android, and Windows apps and no dedicated macOS app — but to be fair to them, its App Store listing states the iPad app runs on a Mac with an Apple M1 chip or later, so Apple Silicon Mac users are not shut out. They get the iPad app rather than something built for a desktop. Stop Biting is built for desktop use on both Mac and Windows, including older Intel Macs, and because it also runs in the browser it works even on machines where you can’t install anything.\n\nPublished pricing. Stop Biting publishes its prices: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required. SmartBehavior publishes none on its own website — the footer’s “Pricing” link doesn’t go anywhere — so you have to open an app store to find out what you’d pay. Its US App Store listing showed $0.99 when we checked, and storefront prices vary, so check your own.\n\nDepth of treatment content. Stop Biting surrounds its detector with over 100 science-backed guides on habit reversal training — the method with the strongest clinical evidence for stopping nail biting — plus streak tracking and a full incident history.\n\nWorth stating plainly: for many desk workers, most biting happens during focused computer use, which is exactly the context a webcam app on your work machine covers.`,
       },
       {
         heading: 'Should I use a phone app or a webcam app to stop nail biting?',
@@ -942,7 +944,7 @@ function getAiDetectionAppsContent(): PageContent {
           '<tr><td>Behaviors</td><td>Nail biting</td><td>Five BFRBs (nail biting, skin picking, brow/lash pulling, ear picking, nose picking listed)</td><td>Nail biting</td><td>Nail biting, skin picking, hair pulling, other BFRBs</td></tr>' +
           '<tr><td>Detection</td><td>On-device (MediaPipe/WASM)</td><td>On-device, all processing local</td><td>On-device (MediaPipe/WASM)</td><td>On-device, 100% offline</td></tr>' +
           '<tr><td>Price</td><td>$2.99/mo or $29/yr</td><td>€2.99/mo</td><td>$4.99 one-time on its site; its App Store listing shows “Free”</td><td>Not published on site; US App Store listing showed $0.99</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no card</td><td>3 days</td><td>None listed</td><td>Not stated on site</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no card</td><td>3 days</td><td>None listed</td><td>Not stated on site</td></tr>` +
           '<tr><td>Tracking</td><td>Streaks + incident history</td><td>Statistics tracker showing progress over time</td><td>Store listing describes offline nail-biting tracking</td><td>Daily/weekly/monthly trends</td></tr>' +
           '</tbody></table>',
       },
@@ -952,7 +954,7 @@ function getAiDetectionAppsContent(): PageContent {
       },
       {
         heading: 'Which app is best for nail biting at a computer?',
-        body: 'Stop Biting — our app, so read this row knowing that. It runs — uniquely in this group as of 10 September 2026 — as a no-install PWA in a web browser, on Mac or Windows. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with no camera data sent during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.',
+        body: `Stop Biting — our app, so read this row knowing that. It runs — uniquely in this group as of 10 September 2026 — as a no-install PWA in a web browser, on Mac or Windows. Detection uses MediaPipe hand and face models in WebAssembly, fully on-device, with no camera data sent during detection. It tracks bite-free streaks and a timestamped incident history, and pairs the detector with over 100 science-backed guides on habit reversal.\n\nPricing is published: $2.99/month or $29/year (~$2.42/month), with a ${TRIAL_HYPHEN} free trial and no credit card.\n\nHonest limits: it detects nail biting only, and there’s no native phone app — on mobile it runs as a web app, not an installed detector.`,
       },
       {
         heading: 'Which app is best for multiple BFRBs on desktop?',
@@ -973,7 +975,7 @@ function getAiDetectionAppsContent(): PageContent {
       faqSection(
         'Every answer below rests on the same 10 September 2026 check of the four vendors’ own websites and app store listings.',
         [
-          ['Are there any free nail biting detection apps?', 'Nailed’s Mac App Store listing showed the app as a free download with no in-app purchases when we checked, though its own site advertises $4.99. Stop Biting has a 3-day free trial that needs no credit card.'],
+          ['Are there any free nail biting detection apps?', `Nailed’s Mac App Store listing showed the app as a free download with no in-app purchases when we checked, though its own site advertises $4.99. Stop Biting has a ${TRIAL_HYPHEN} free trial that needs no credit card.`],
           ['Do these apps upload your camera feed?', 'No. All four process video on-device: Stop Biting and Nailed run MediaPipe models in WebAssembly, Hands Off states all processing is local, and SmartBehavior states it works 100% offline.'],
           ['Which of them detect more than nail biting?', 'Hands Off lists five BFRBs — nail biting, skin picking, brow or lash pulling, ear picking and nose picking — and SmartBehavior covers nail biting, skin picking, hair pulling and other BFRBs. Stop Biting and Nailed detect nail biting.'],
           ['Is there a nail biting detection app for iPhone or Android?', 'SmartBehavior has native iOS and Android apps. Stop Biting runs on a phone as a web app rather than an installed detector.'],
@@ -996,7 +998,7 @@ function getVsNailBiteMenuContent(): PageContent {
   return {
     title: 'Stop Biting vs NailBiteMenu: Browser App or Open-Source Mac Menu Bar App?',
     subtitle: 'Two webcam detectors that process video on your device: one is a Mac-only menu bar app with open source code, the other runs in a browser on Mac or Windows',
-    intro: 'NailBiteMenu, by its own pages, is an open-source macOS menu bar app that uses your Mac’s camera to detect nail biting in real time, with no accounts and no cloud, and requires macOS 15.6 or later. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, needs a Google sign-in, and costs $2.99/month or $29/year after a 3-day trial with no card. Pick NailBiteMenu if you are on a recent Mac and want a local app with no account; pick Stop Biting if you use Windows or an older Mac, want nothing to install, or want streaks, history and habit reversal guides beside the alarm. Disclosure: Stop Biting is our product, and every NailBiteMenu detail here was checked against its GitHub README and project page on 13 October 2026.',
+    intro: `NailBiteMenu, by its own pages, is an open-source macOS menu bar app that uses your Mac’s camera to detect nail biting in real time, with no accounts and no cloud, and requires macOS 15.6 or later. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, needs a Google sign-in, and costs $2.99/month or $29/year after a ${TRIAL_HYPHEN} trial with no card. Pick NailBiteMenu if you are on a recent Mac and want a local app with no account; pick Stop Biting if you use Windows or an older Mac, want nothing to install, or want streaks, history and habit reversal guides beside the alarm. Disclosure: Stop Biting is our product, and every NailBiteMenu detail here was checked against its GitHub README and project page on 13 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs NailBiteMenu: what’s the difference?',
@@ -1008,7 +1010,7 @@ function getVsNailBiteMenuContent(): PageContent {
           '<tr><td>Alert</td><td>An alarm (sound, flash or both)</td><td>A compact overlay with a countdown and a “Stay mindful” action, plus an optional macOS notification with sound</td></tr>' +
           '<tr><td>Source code</td><td>Not part of this comparison</td><td>Swift source and Core ML models described as open source</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Not found on its pages</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not applicable: no price found</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>Not applicable: no price found</td></tr>` +
           '</tbody></table>',
       },
       {
@@ -1025,7 +1027,7 @@ function getVsNailBiteMenuContent(): PageContent {
       },
       {
         heading: 'How much do Stop Biting and NailBiteMenu cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nNailBiteMenu: we found no price and no mention of the word free on its README or project page on 13 October 2026, only a DMG on GitHub releases and a note that the app is open source. We do not know its terms, so check its repository.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nNailBiteMenu: we found no price and no mention of the word free on its README or project page on 13 October 2026, only a DMG on GitHub releases and a note that the app is open source. We do not know its terms, so check its repository.`,
       },
       faqSection(
         'Every answer below uses the same 13 October 2026 check of the NailBiteMenu README and project page as the rest of this page.',
@@ -1057,7 +1059,7 @@ function getVsHabitCamContent(): PageContent {
   return {
     title: 'Stop Biting vs HabitCam: Browser Subscription or Installed Lifetime License?',
     subtitle: 'Two webcam detectors that process video on your device: one runs in a browser tab, the other is installed on Windows or Linux with a one-time price',
-    intro: 'Both use your webcam and process the video on your device. HabitCam’s own site describes a Windows and Linux program that watches for hair pulling, skin picking and nail biting, sold as a lifetime license at a launch price of $19.99 (regularly $39.99), with a 7-day trial. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, detects nail biting only, and costs $2.99/month or $29/year after a 3-day trial with no card. Pick HabitCam if you are on Windows or Linux, want one purchase instead of a subscription, or have more than one of those behaviours; pick Stop Biting if you want nothing to install, use a Mac, or want to try it in a browser tab first. Disclosure: Stop Biting is our product, and every HabitCam detail here was checked against habitcam.app on 13 October 2026.',
+    intro: `Both use your webcam and process the video on your device. HabitCam’s own site describes a Windows and Linux program that watches for hair pulling, skin picking and nail biting, sold as a lifetime license at a launch price of $19.99 (regularly $39.99), with a 7-day trial. Stop Biting is a web app that runs in a browser on a Mac or Windows computer, detects nail biting only, and costs $2.99/month or $29/year after a ${TRIAL_HYPHEN} trial with no card. Pick HabitCam if you are on Windows or Linux, want one purchase instead of a subscription, or have more than one of those behaviours; pick Stop Biting if you want nothing to install, use a Mac, or want to try it in a browser tab first. Disclosure: Stop Biting is our product, and every HabitCam detail here was checked against habitcam.app on 13 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs HabitCam: what’s the difference?',
@@ -1067,7 +1069,7 @@ function getVsHabitCamContent(): PageContent {
           '<tr><td>Behaviours</td><td>Nail biting only</td><td>Hair pulling, face-focused skin picking and nail biting, within your webcam’s view</td></tr>' +
           '<tr><td>Detection</td><td>On-device AI on your webcam feed</td><td>Webcam, processed locally on your device, per its site</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Lifetime license: $19.99 launch special, regularly $39.99; one device; no subscription</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>7 days, no credit card</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>7 days, no credit card</td></tr>` +
           '<tr><td>Internet use</td><td>No camera data is sent while it runs</td><td>Connects for initial license validation and when you check for updates, per its site</td></tr>' +
           '</tbody></table>',
       },
@@ -1085,7 +1087,7 @@ function getVsHabitCamContent(): PageContent {
       },
       {
         heading: 'How much do Stop Biting and HabitCam cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nHabitCam: its site on 13 October 2026 showed a lifetime license at a $19.99 launch special price, regularly $39.99, for use on one device with no subscription, and a 7-day free trial with no credit card. Launch prices change, so check habitcam.app.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nHabitCam: its site on 13 October 2026 showed a lifetime license at a $19.99 launch special price, regularly $39.99, for use on one device with no subscription, and a 7-day free trial with no credit card. Launch prices change, so check habitcam.app.`,
       },
       faqSection(
         'Every answer below uses the same 13 October 2026 check of habitcam.app as the rest of this page.',
@@ -1118,7 +1120,7 @@ function getVsBiteLessContent(): PageContent {
   return {
     title: 'Stop Biting vs BiteLess: Apple Watch or Webcam?',
     subtitle: 'An Apple Watch app that senses hand movement towards your face versus a webcam app that watches your hand: compared honestly',
-    intro: 'BiteLess is the better fit if you wear an Apple Watch and bite away from your computer; Stop Biting is the better fit if you bite while you work and would rather not wear anything. BiteLess’s App Store listing describes an Apple Watch and iPhone app that uses AI trained on hand motion data to detect nail biting and alerts you with a vibration or alarm. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac or Windows in a browser. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every BiteLess detail here was checked against its US App Store listing on 8 October 2026.',
+    intro: `BiteLess is the better fit if you wear an Apple Watch and bite away from your computer; Stop Biting is the better fit if you bite while you work and would rather not wear anything. BiteLess’s App Store listing describes an Apple Watch and iPhone app that uses AI trained on hand motion data to detect nail biting and alerts you with a vibration or alarm. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac or Windows in a browser. Stop Biting costs $2.99/month or $29/year with a ${TRIAL_HYPHEN} free trial and no card. Disclosure: Stop Biting is our product, and every BiteLess detail here was checked against its US App Store listing on 8 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs BiteLess: what’s the difference?',
@@ -1130,7 +1132,7 @@ function getVsBiteLessContent(): PageContent {
           '<tr><td>Where it works</td><td>Only in front of your computer webcam</td><td>Wherever you wear the watch, in sessions of up to one hour</td></tr>' +
           '<tr><td>Wrist</td><td>Not applicable</td><td>Left wrist at the time of its listing; right wrist listed as an upcoming update</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free to download; in-app purchases of $9.99 monthly and $69.99 annual</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on its listing</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>Not stated on its listing</td></tr>` +
           '</tbody></table>',
       },
       {
@@ -1143,11 +1145,11 @@ function getVsBiteLessContent(): PageContent {
       },
       {
         heading: 'What does Stop Biting do better than BiteLess?',
-        body: 'It needs no watch. It runs in a browser tab on a Mac or Windows computer, so there is nothing to buy or wear, and the 3-day trial needs no card.\n\nIt does not need an Apple device. BiteLess’s listing requires an Apple Watch and an iPhone, so Android and Windows users are out.\n\nIt costs less over a year: $29 against the $69.99 annual purchase on BiteLess’s listing.\n\nIt is not limited to a wrist. BiteLess’s listing says it currently supports watches worn on the left wrist, with right-wrist support coming. We make no claim about how accurate either approach is, because we found no figure on its listing and have not tested it.\n\nThe honest limit: Stop Biting only sees biting that happens in front of your computer webcam.',
+        body: `It needs no watch. It runs in a browser tab on a Mac or Windows computer, so there is nothing to buy or wear, and the ${TRIAL_HYPHEN} trial needs no card.\n\nIt does not need an Apple device. BiteLess’s listing requires an Apple Watch and an iPhone, so Android and Windows users are out.\n\nIt costs less over a year: $29 against the $69.99 annual purchase on BiteLess’s listing.\n\nIt is not limited to a wrist. BiteLess’s listing says it currently supports watches worn on the left wrist, with right-wrist support coming. We make no claim about how accurate either approach is, because we found no figure on its listing and have not tested it.\n\nThe honest limit: Stop Biting only sees biting that happens in front of your computer webcam.`,
       },
       {
         heading: 'How much do Stop Biting and BiteLess cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nBiteLess: free to download. Its US App Store listing on 8 October 2026 showed in-app purchases of $9.99 for a monthly subscription and $69.99 for an annual one. You also need an Apple Watch and an iPhone. App Store prices vary by storefront and change, so check the listing.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nBiteLess: free to download. Its US App Store listing on 8 October 2026 showed in-app purchases of $9.99 for a monthly subscription and $69.99 for an annual one. You also need an Apple Watch and an iPhone. App Store prices vary by storefront and change, so check the listing.`,
       },
       faqSection(
         'Every answer below uses the same 8 October 2026 check of the BiteLess App Store listing as the rest of this page.',
@@ -1155,7 +1157,7 @@ function getVsBiteLessContent(): PageContent {
           ['Does BiteLess need an Apple Watch?', 'Yes. Its listing says it runs primarily on a smartwatch and requires an Apple Watch and an iPhone, with iOS 16.0 and watchOS 9.0 or later. Stop Biting needs only a computer webcam.'],
           ['Does BiteLess detect nail biting automatically?', 'Its listing says it automatically monitors your nail-biting actions and alerts you on your watch with a vibration or alarm if it detects nail biting for over 1 to 2 seconds. Stop Biting also detects it automatically, through your webcam.'],
           ['Which works away from a computer?', 'BiteLess, because it is worn on your wrist. Stop Biting only works in front of a webcam.'],
-          ['Which is cheaper?', 'Stop Biting is $2.99/month or $29/year after a 3-day free trial. BiteLess’s listing shows $9.99 monthly or $69.99 annual, and does not state a trial.'],
+          ['Which is cheaper?', `Stop Biting is $2.99/month or $29/year after a ${TRIAL_HYPHEN} free trial. BiteLess’s listing shows $9.99 monthly or $69.99 annual, and does not state a trial.`],
         ],
       ),
       {
@@ -1180,7 +1182,7 @@ function getVsPavlokContent(): PageContent {
   return {
     title: 'Stop Biting vs Pavlok: An Alert or a Shock?',
     subtitle: 'A wearable that, by its own description, uses an electric shock you trigger yourself, versus a webcam app that sounds an alarm: compared honestly',
-    intro: 'They are built on opposite ideas. Pavlok describes itself as a habit-breaking wearable that uses aversion technology, with an electric shock, vibration or a chime, and its nail biting page describes you triggering the shock yourself when you catch yourself biting. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with no shock, on Mac or Windows in a browser. Pick Pavlok if you want a wearable that works anywhere and are comfortable with aversive feedback; pick Stop Biting if you bite at a computer and want an alert that catches the moment for you. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every Pavlok detail here was checked against pavlok.com on 8 October 2026.',
+    intro: `They are built on opposite ideas. Pavlok describes itself as a habit-breaking wearable that uses aversion technology, with an electric shock, vibration or a chime, and its nail biting page describes you triggering the shock yourself when you catch yourself biting. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, with no shock, on Mac or Windows in a browser. Pick Pavlok if you want a wearable that works anywhere and are comfortable with aversive feedback; pick Stop Biting if you bite at a computer and want an alert that catches the moment for you. Stop Biting costs $2.99/month or $29/year with a ${TRIAL_HYPHEN} free trial and no card. Disclosure: Stop Biting is our product, and every Pavlok detail here was checked against pavlok.com on 8 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs Pavlok: what’s the difference?',
@@ -1192,7 +1194,7 @@ function getVsPavlokContent(): PageContent {
           '<tr><td>Automatic nail biting detection</td><td>Yes, on-device AI through your webcam</td><td>Not described on the pages we checked</td></tr>' +
           '<tr><td>Where it works</td><td>Only in front of your computer webcam</td><td>Wherever you wear it</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Its home page shows a Shock Clock 3 at $134.99, a Pavlok Ring at $99.99, and a $19/month subscription option</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on the pages we checked</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>Not stated on the pages we checked</td></tr>` +
           '</tbody></table>',
       },
       {
@@ -1205,11 +1207,11 @@ function getVsPavlokContent(): PageContent {
       },
       {
         heading: 'What does Stop Biting do better than Pavlok?',
-        body: 'It catches the moment for you. On the nail biting page we read, Pavlok needs you to notice the biting and trigger the feedback yourself, which is the part that is hard when biting is automatic. Stop Biting detects the movement and alerts you without you having to catch it first. We found no automatic nail biting detection described on Pavlok’s pages, but we make no claim about every Pavlok model.\n\nIt needs no hardware and no shock. It runs in a browser tab, the 3-day trial needs no card, and the alarm is a sound or a flash.\n\nIt costs far less to try: $2.99/month or $29/year, against the device prices on Pavlok’s home page.\n\nThe honest limit: it only sees biting that happens in front of your computer webcam.',
+        body: `It catches the moment for you. On the nail biting page we read, Pavlok needs you to notice the biting and trigger the feedback yourself, which is the part that is hard when biting is automatic. Stop Biting detects the movement and alerts you without you having to catch it first. We found no automatic nail biting detection described on Pavlok’s pages, but we make no claim about every Pavlok model.\n\nIt needs no hardware and no shock. It runs in a browser tab, the ${TRIAL_HYPHEN} trial needs no card, and the alarm is a sound or a flash.\n\nIt costs far less to try: $2.99/month or $29/year, against the device prices on Pavlok’s home page.\n\nThe honest limit: it only sees biting that happens in front of your computer webcam.`,
       },
       {
         heading: 'How much do Stop Biting and Pavlok cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nPavlok: its home page on 8 October 2026 showed a Shock Clock 3 at $134.99, a Pavlok Ring at $99.99 and a $19/month subscription option for the Shock Clock 3. It did not state a price for the Pavlok 3 or a refund or guarantee. Check pavlok.com for current prices.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nPavlok: its home page on 8 October 2026 showed a Shock Clock 3 at $134.99, a Pavlok Ring at $99.99 and a $19/month subscription option for the Shock Clock 3. It did not state a price for the Pavlok 3 or a refund or guarantee. Check pavlok.com for current prices.`,
       },
       faqSection(
         'Every answer below uses the same 8 October 2026 check of pavlok.com as the rest of this page.',
@@ -1217,7 +1219,7 @@ function getVsPavlokContent(): PageContent {
           ['Does Pavlok use an electric shock?', 'Its home page describes feedback as an electric shock, vibration or a chime. Stop Biting uses none of these: it sounds an alarm, flashes the screen, or both.'],
           ['Does Pavlok detect nail biting automatically?', 'The nail biting page we read describes the user triggering the shock when they catch themselves biting. We found no automatic nail biting detection described there, and we make no claim about every Pavlok model. Stop Biting’s detection is automatic.'],
           ['Which works away from a computer?', 'Pavlok, because it is a wearable. Stop Biting only works in front of a webcam.'],
-          ['Which is cheaper to try?', 'Stop Biting: a 3-day free trial with no card, then $2.99/month or $29/year. Pavlok’s home page shows $99.99 for the ring and $134.99 for the Shock Clock 3.'],
+          ['Which is cheaper to try?', `Stop Biting: a ${TRIAL_HYPHEN} free trial with no card, then $2.99/month or $29/year. Pavlok’s home page shows $99.99 for the ring and $134.99 for the Shock Clock 3.`],
         ],
       ),
       {
@@ -1242,7 +1244,7 @@ function getVsNailKeeperContent(): PageContent {
   return {
     title: 'Stop Biting vs NailKeeper: Real-Time Detection or Photo Tracking?',
     subtitle: 'A webcam app that interrupts nail biting as it happens versus a phone app built around photos, a quit timer and reminders: compared honestly',
-    intro: 'They solve different halves of the problem. NailKeeper, by its own description, tracks your nails with photos, a quit timer and reminder notifications on iPhone and Android. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac, Windows and in a browser. One records progress; the other tries to interrupt the habit while it is happening, and some people reasonably use both. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card. Disclosure: Stop Biting is our product, and every NailKeeper detail here was checked against nailkeeper.app and its App Store listing on 6 October 2026.',
+    intro: `They solve different halves of the problem. NailKeeper, by its own description, tracks your nails with photos, a quit timer and reminder notifications on iPhone and Android. Stop Biting uses your laptop webcam and on-device AI to sound an alarm the moment your hand reaches your mouth, on Mac, Windows and in a browser. One records progress; the other tries to interrupt the habit while it is happening, and some people reasonably use both. Stop Biting costs $2.99/month or $29/year with a ${TRIAL_HYPHEN} free trial and no card. Disclosure: Stop Biting is our product, and every NailKeeper detail here was checked against nailkeeper.app and its App Store listing on 6 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs NailKeeper: what’s the difference?',
@@ -1251,7 +1253,7 @@ function getVsNailKeeperContent(): PageContent {
           '<tr><td>What it centres on</td><td>Real-time alarm when your hand nears your mouth</td><td>Photo tracking of nail growth, a time-since-quitting timer, and reminders to take photos</td></tr>' +
           '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows; needs a webcam</td><td>iOS and Android; its App Store listing also shows iPad and Mac (Apple M1 or later)</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free to download; its App Store listing shows in-app purchases of $4.99, $9.99 and $19.99</td></tr>' +
-          '<tr><td>Free trial</td><td>3 days, no credit card</td><td>Not stated on the pages we checked</td></tr>' +
+          `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>Not stated on the pages we checked</td></tr>` +
           '<tr><td>Real-time detection</td><td>Yes, on-device AI through your webcam</td><td>Not mentioned on its site or App Store listing</td></tr>' +
           '</tbody></table>',
       },
@@ -1261,7 +1263,7 @@ function getVsNailKeeperContent(): PageContent {
       },
       {
         heading: 'What does NailKeeper do better than Stop Biting?',
-        body: 'It lives on your phone. Its site and store listings describe an iPhone and Android app, so it goes where you go, while Stop Biting only works at a computer with a webcam.\n\nIt shows your nails recovering. The before-and-after photos and growth tracking it describes give you something visible to hold on to, which Stop Biting does not offer; we track bite-free streaks and logged incidents instead.\n\nIt has a free tier. Its listing shows the app as free to download, with purchases inside. Stop Biting starts with a 3-day trial and then charges.',
+        body: `It lives on your phone. Its site and store listings describe an iPhone and Android app, so it goes where you go, while Stop Biting only works at a computer with a webcam.\n\nIt shows your nails recovering. The before-and-after photos and growth tracking it describes give you something visible to hold on to, which Stop Biting does not offer; we track bite-free streaks and logged incidents instead.\n\nIt has a free tier. Its listing shows the app as free to download, with purchases inside. Stop Biting starts with a ${TRIAL_HYPHEN} trial and then charges.`,
       },
       {
         heading: 'What does Stop Biting do better than NailKeeper?',
@@ -1269,12 +1271,12 @@ function getVsNailKeeperContent(): PageContent {
       },
       {
         heading: 'How much do Stop Biting and NailKeeper cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nNailKeeper: free to download. Its US App Store listing on 6 October 2026 shows in-app purchases named NailKeeper Pro at $19.99, Unlimited Access at $4.99 and NailKeeper Pro Annual at $9.99. App Store prices vary by storefront and change, so check the listing.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nNailKeeper: free to download. Its US App Store listing on 6 October 2026 shows in-app purchases named NailKeeper Pro at $19.99, Unlimited Access at $4.99 and NailKeeper Pro Annual at $9.99. App Store prices vary by storefront and change, so check the listing.`,
       },
       faqSection(
         'Every answer below uses the same 6 October 2026 check of nailkeeper.app and its App Store listing as the rest of this page.',
         [
-          ['Is NailKeeper free?', 'It is free to download, and its US App Store listing on 6 October 2026 shows in-app purchases of $4.99, $9.99 and $19.99. Stop Biting has a 3-day free trial, then $2.99/month or $29/year.'],
+          ['Is NailKeeper free?', `It is free to download, and its US App Store listing on 6 October 2026 shows in-app purchases of $4.99, $9.99 and $19.99. Stop Biting has a ${TRIAL_HYPHEN} free trial, then $2.99/month or $29/year.`],
           ['Does NailKeeper detect nail biting in real time?', 'Its site and App Store listing, as we read them, describe photo tracking, a timer and reminders. They do not mention real-time detection, so we do not say whether it has it. Stop Biting’s whole approach is real-time detection through your webcam.'],
           ['Which works on a phone?', 'NailKeeper has iPhone and Android apps. Stop Biting needs a laptop or desktop webcam.'],
           ['Can I use both?', 'Yes. They cover different moments: NailKeeper describes tracking your progress with photos and a timer, while Stop Biting interrupts biting at your computer.'],
@@ -1302,7 +1304,7 @@ function getVsHabitAwareContent(): PageContent {
   return {
     title: 'Stop Biting vs HabitAware (Keen): Wrist Sensor or Webcam?',
     subtitle: 'A vibrating bracelet that senses hand movement versus an on-device webcam app that watches your hand reach your mouth: compared honestly',
-    intro: 'Pick HabitAware’s Keen bracelet if you want something worn on your wrist that works away from a screen, or if you also pull hair or pick skin; pick Stop Biting if nail biting is your problem and you spend the hours you bite at a computer. Both interrupt the behavior at the moment it starts, which is the awareness step habit reversal training depends on. Stop Biting costs $2.99/month or $29/year with a 3-day free trial and no card; HabitAware’s own pages we checked do not state a bracelet price, so this page does not quote one. Disclosure: Stop Biting is our product, and every HabitAware detail here was checked against habitaware.com on 5 October 2026.',
+    intro: `Pick HabitAware’s Keen bracelet if you want something worn on your wrist that works away from a screen, or if you also pull hair or pick skin; pick Stop Biting if nail biting is your problem and you spend the hours you bite at a computer. Both interrupt the behavior at the moment it starts, which is the awareness step habit reversal training depends on. Stop Biting costs $2.99/month or $29/year with a ${TRIAL_HYPHEN} free trial and no card; HabitAware’s own pages we checked do not state a bracelet price, so this page does not quote one. Disclosure: Stop Biting is our product, and every HabitAware detail here was checked against habitaware.com on 5 October 2026.`,
     sections: [
       {
         heading: 'Stop Biting vs HabitAware: what’s the difference?',
@@ -1313,7 +1315,7 @@ function getVsHabitAwareContent(): PageContent {
           '<tr><td>How it alerts</td><td>On-screen and sound alert when your hand nears your mouth</td><td>The device vibrates on the wrist, “like a ‘hug’”, when it detects the behavior</td></tr>' +
           '<tr><td>Where it works</td><td>Only while you are in front of your computer webcam</td><td>Wherever you wear it</td></tr>' +
           '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Not stated on the pages we checked</td></tr>' +
-          '<tr><td>Trial or guarantee</td><td>3 days, no credit card</td><td>A “90-Day Guarantee”</td></tr>' +
+          `<tr><td>Trial or guarantee</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>A “90-Day Guarantee”</td></tr>` +
           '</tbody></table>',
       },
       {
@@ -1322,15 +1324,15 @@ function getVsHabitAwareContent(): PageContent {
       },
       {
         heading: 'What does HabitAware do better than Stop Biting?',
-        body: 'It works away from your desk. A bracelet goes with you to the commute, the sofa and the meeting room, while Stop Biting can only act where a webcam can see your hand. If you bite mostly away from a computer, a wearable is the better fit and we would say so plainly.\n\nIt covers more behaviors. Its site names hair pulling (trichotillomania), skin picking (dermatillomania) and nail biting (onychophagia). Stop Biting detects nail biting only.\n\nIt offers a longer money-back window. HabitAware advertises a 90-day guarantee; our trial is 3 days.',
+        body: `It works away from your desk. A bracelet goes with you to the commute, the sofa and the meeting room, while Stop Biting can only act where a webcam can see your hand. If you bite mostly away from a computer, a wearable is the better fit and we would say so plainly.\n\nIt covers more behaviors. Its site names hair pulling (trichotillomania), skin picking (dermatillomania) and nail biting (onychophagia). Stop Biting detects nail biting only.\n\nIt offers a longer money-back window. HabitAware advertises a 90-day guarantee; our trial is ${TRIAL_DAYS_TEXT}.`,
       },
       {
         heading: 'What does Stop Biting do better than HabitAware?',
-        body: 'It needs no hardware. There is nothing to buy, charge or wear: it runs on a Mac, a Windows PC or in a browser tab, and the 3-day trial needs no credit card.\n\nIt is a subscription with a published price: $2.99/month or $29/year, about $2.42/month on the annual plan.\n\nIt pairs detection with treatment content: a library of over 100 guides on habit reversal training, competing responses and trigger mapping, plus bite-free streaks and a timestamped incident history.\n\nThe honest limit: if you bite on the train, in bed or on the phone, a webcam app will not see it.',
+        body: `It needs no hardware. There is nothing to buy, charge or wear: it runs on a Mac, a Windows PC or in a browser tab, and the ${TRIAL_HYPHEN} trial needs no credit card.\n\nIt is a subscription with a published price: $2.99/month or $29/year, about $2.42/month on the annual plan.\n\nIt pairs detection with treatment content: a library of over 100 guides on habit reversal training, competing responses and trigger mapping, plus bite-free streaks and a timestamped incident history.\n\nThe honest limit: if you bite on the train, in bed or on the phone, a webcam app will not see it.`,
       },
       {
         heading: 'How much do Stop Biting and HabitAware cost?',
-        body: 'Stop Biting: $2.99/month or $29/year, with a 3-day free trial and no credit card required to start.\n\nHabitAware: the homepage and shop pages we checked on 5 October 2026 did not state a bracelet price, bundle price or subscription cost, so we are not guessing one. Check habitaware.com for the current price. Hardware is normally a larger one-off cost than a $2.99 subscription, but compare the real figures before deciding.',
+        body: `Stop Biting: $2.99/month or $29/year, with a ${TRIAL_HYPHEN} free trial and no credit card required to start.\n\nHabitAware: the homepage and shop pages we checked on 5 October 2026 did not state a bracelet price, bundle price or subscription cost, so we are not guessing one. Check habitaware.com for the current price. Hardware is normally a larger one-off cost than a $2.99 subscription, but compare the real figures before deciding.`,
       },
       faqSection(
         'Every answer below uses the same 5 October 2026 check of habitaware.com as the rest of this page.',

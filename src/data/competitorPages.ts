@@ -71,6 +71,7 @@
 //
 // Our own facts come from our published pages: /pricing, /how-it-works, llms.txt.
 
+import { TRIAL_HYPHEN } from '../../shared/plans.js';
 import {
   MEDICAL_DISCLAIMER_SECTION,
   faqSection,
@@ -124,7 +125,7 @@ function getHandsOffProfileContent(): PageContent {
       },
       {
         heading: 'How do Hands Off and Stop Biting compare on price and privacy?',
-        body: 'Monthly prices are close: Stop Biting is $2.99 a month and Hands Off lists €2.99 a month. Each starts with a free trial: Stop Biting’s is a 3-day free trial with no card required, and Hands Off’s site says “3 days free”. Over a year, Stop Biting’s annual plan is $29, while twelve months of Hands Off at its listed price is €35.88 and its site lists no annual option. The currencies differ, so compare the real figures at checkout.\n\nOn camera data the two say similar things in different words. Stop Biting: detection runs on your device and no camera data is sent while it runs; signing in and paying use the network. Hands Off: processing is local and no video is recorded, and its FAQ adds that the app makes a subscription check every 5 minutes.\n\nOne number on its site we do not repeat is the “70-90% reduction in episodes within the first week for most users” in its FAQ. The page cites no study or method for it, so we cannot check it, and we make no equivalent claim for Stop Biting.',
+        body: `Monthly prices are close: Stop Biting is $2.99 a month and Hands Off lists €2.99 a month. Each starts with a free trial: Stop Biting’s is a ${TRIAL_HYPHEN} free trial with no card required, and Hands Off’s site says “3 days free”. Over a year, Stop Biting’s annual plan is $29, while twelve months of Hands Off at its listed price is €35.88 and its site lists no annual option. The currencies differ, so compare the real figures at checkout.\n\nOn camera data the two say similar things in different words. Stop Biting: detection runs on your device and no camera data is sent while it runs; signing in and paying use the network. Hands Off: processing is local and no video is recorded, and its FAQ adds that the app makes a subscription check every 5 minutes.\n\nOne number on its site we do not repeat is the “70-90% reduction in episodes within the first week for most users” in its FAQ. The page cites no study or method for it, so we cannot check it, and we make no equivalent claim for Stop Biting.`,
       },
       faqSection(
         'Short answers, from the same ' + checked + ' read of handsoffapp.com as the rest of this page.',
@@ -134,7 +135,7 @@ function getHandsOffProfileContent(): PageContent {
           ['Which behaviours does Hands Off cover?', 'Its site says it supports 5 common BFRBs, such as nail biting, skin picking, eyebrow/eyelash pulling, ear picking, and nose picking. Stop Biting detects nail biting only.'],
           ['Does Hands Off need an internet connection?', 'Its FAQ says the only network activity is a lightweight authentication check every 5 minutes to verify your subscription, and that it continues working if the internet goes down, with a grace period for the subscription check.'],
           ['Is Hands Off the same kind of app as Stop Biting?', 'Broadly, yes: both are webcam apps that alert you when your hand moves toward your face, and both say detection runs on your device. They differ in platform (a desktop download or a browser tab), in coverage (five behaviours or nail biting only) and in plans (€2.99 a month, or $2.99 a month and $29 a year).'],
-          ['Can I try both?', 'Yes. Hands Off’s site offers 3 days free and Stop Biting has a 3-day free trial with no card required, so you can run each for a few days at your own desk before deciding.'],
+          ['Can I try both?', `Yes. Hands Off’s site offers 3 days free and Stop Biting has a ${TRIAL_HYPHEN} free trial with no card required, so you can run each for a few days at your own desk before deciding.`],
         ],
       ),
       {
@@ -159,7 +160,7 @@ function getHabitAwareKeenContent(): PageContent {
     needsVerification: true,
     title: 'HabitAware Keen3 Bracelet: Price, How It Works, Who It Suits',
     subtitle: 'What HabitAware’s Keen3 bracelet does according to its own site, where it is the better choice, and where a webcam app fits instead',
-    intro: 'Keen3 is HabitAware’s vibrating wrist bracelet for hair pulling, skin picking and nail biting. Its own site lists it at $199.00 with a year of the Keen3 Pro subscription included, then $99 a year for Pro, and shows it as a preorder estimated to ship in January 2027. It is the better fit if you bite away from a screen or want one device for more than one behaviour; Stop Biting is the better fit if you bite at a computer and want to start today, at $2.99 a month or $29 a year after a 3-day free trial. Disclosure: Stop Biting is our product, so read this as a fair attempt, not an independent review. Every HabitAware detail below was read on habitaware.com on ' + checked + ', with the page it came from linked beside it.',
+    intro: `Keen3 is HabitAware’s vibrating wrist bracelet for hair pulling, skin picking and nail biting. Its own site lists it at $199.00 with a year of the Keen3 Pro subscription included, then $99 a year for Pro, and shows it as a preorder estimated to ship in January 2027. It is the better fit if you bite away from a screen or want one device for more than one behaviour; Stop Biting is the better fit if you bite at a computer and want to start today, at $2.99 a month or $29 a year after a ${TRIAL_HYPHEN} free trial. Disclosure: Stop Biting is our product, so read this as a fair attempt, not an independent review. Every HabitAware detail below was read on habitaware.com on ` + checked + ', with the page it came from linked beside it.',
     sections: [
       {
         heading: 'What is Keen3 and how does it work?',
@@ -178,15 +179,15 @@ function getHabitAwareKeenContent(): PageContent {
       },
       {
         heading: 'When is Keen3 the better fit?',
-        body: 'Keen3 is the better fit if you bite or pick away from a screen. A bracelet on your wrist is not limited to what a webcam can see, so it can act on the train, on the sofa or on a phone call, where Stop Biting cannot. It is also the better fit if hair pulling or skin picking is part of the picture, since its site names those alongside nail biting, and if you want one device for more than one behaviour.\n\nIt is a bigger commitment: $199.00 upfront, a preorder that its site says is estimated to ship in January 2027, and a subscription of $99 a year after the first year if you want the Pro features. The site says Keen3’s vibrations and lessons keep working without Pro. It also advertises a 90-day guarantee, a longer window than our 3-day free trial.',
+        body: `Keen3 is the better fit if you bite or pick away from a screen. A bracelet on your wrist is not limited to what a webcam can see, so it can act on the train, on the sofa or on a phone call, where Stop Biting cannot. It is also the better fit if hair pulling or skin picking is part of the picture, since its site names those alongside nail biting, and if you want one device for more than one behaviour.\n\nIt is a bigger commitment: $199.00 upfront, a preorder that its site says is estimated to ship in January 2027, and a subscription of $99 a year after the first year if you want the Pro features. The site says Keen3’s vibrations and lessons keep working without Pro. It also advertises a 90-day guarantee, a longer window than our ${TRIAL_HYPHEN} free trial.`,
       },
       {
         heading: 'When is Stop Biting the better fit?',
-        body: 'Stop Biting is the better fit if you bite while you work at a computer and want to start today without waiting for hardware. It is a web app at $2.99 a month or $29 a year after a 3-day free trial with no card required, and there is nothing to charge or wear.\n\nDetection is a camera watching your hand reach your mouth, where Keen3 uses a motion sensor on your wrist. We have no head-to-head accuracy data for the two and do not claim either is more accurate.\n\nThe limits are plain. Stop Biting detects nail biting only, and only while you are in front of a webcam.',
+        body: `Stop Biting is the better fit if you bite while you work at a computer and want to start today without waiting for hardware. It is a web app at $2.99 a month or $29 a year after a ${TRIAL_HYPHEN} free trial with no card required, and there is nothing to charge or wear.\n\nDetection is a camera watching your hand reach your mouth, where Keen3 uses a motion sensor on your wrist. We have no head-to-head accuracy data for the two and do not claim either is more accurate.\n\nThe limits are plain. Stop Biting detects nail biting only, and only while you are in front of a webcam.`,
       },
       {
         heading: 'How much do Keen3 and Stop Biting cost?',
-        body: 'Keen3: $199.00 USD, which includes one year of Keen3 Pro. After that, Pro is $99 a year, and the site says the vibrations and lessons keep working without it. Stop Biting: $2.99 a month or $29 a year, with a 3-day free trial.\n\nOver the first year at the listed prices that is $199.00 for Keen3 against $29.00 for Stop Biting’s annual plan, or $35.88 for twelve monthly payments. They are different kinds of product, so price is only one input: a wearable that goes where you go, against a subscription that works at your desk. Prices change, so confirm on habitaware.com and stopbiting.today before buying.',
+        body: `Keen3: $199.00 USD, which includes one year of Keen3 Pro. After that, Pro is $99 a year, and the site says the vibrations and lessons keep working without it. Stop Biting: $2.99 a month or $29 a year, with a ${TRIAL_HYPHEN} free trial.\n\nOver the first year at the listed prices that is $199.00 for Keen3 against $29.00 for Stop Biting’s annual plan, or $35.88 for twelve monthly payments. They are different kinds of product, so price is only one input: a wearable that goes where you go, against a subscription that works at your desk. Prices change, so confirm on habitaware.com and stopbiting.today before buying.`,
       },
       faqSection(
         'Short answers, from the same ' + checked + ' read of habitaware.com as the rest of this page.',

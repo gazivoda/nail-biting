@@ -48,7 +48,8 @@ export const FEATURES = {
   // ── WS3 fewer false alarms ─────────────────────────────────────────────────
   false_positive_controls: {
     owner: 'WS3',
-    description: '"Not a bite" button, hand filter, chin-rest rule, optional calibration, false-positive rate in stats.',
+    description: '"Not a bite" (alarm toast, minimized window, History), learned poses, hand filter, chin-rest rule, optional calibration, false-alarm rate (Settings > Detection).',
+    before: 'Read docs/agents/legal/ws3-privacy.md (NEEDS HUMAN REVIEW); record real fixtures to check the chin-rest rule (docs/agents/ws3-notes.md).',
   },
 
   // ── WS4 sync ───────────────────────────────────────────────────────────────

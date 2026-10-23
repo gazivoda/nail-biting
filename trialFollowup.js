@@ -3,6 +3,8 @@
 // didn't work. Runs hourly inside the web server; each user is mailed at most
 // once (trial_followup_sent_at), so restarts and redeploys never double-send.
 
+import { tableExists } from './server/db/migrate.js';
+
 const HOUR = 60 * 60 * 1000;
 const DELAY = 24 * HOUR;
 // Only trials that ended within this window qualify. Without it, the first run
@@ -15,6 +17,10 @@ export function migrateTrialFollowup(db) {
 
 // Trial users (status 'trial' or lazily-flipped 'expired') who never subscribed.
 // 'cancelled' users paid at some point, so they are not trial leavers.
+// WS9: someone who bought a lifetime plan, redeemed a gift or has referral days is not a trial leaver
+// (the table exists once server/billing has migrated; before that there is nothing to exclude).
+const NO_GRANT = `AND NOT EXISTS (SELECT 1 FROM entitlements e WHERE e.user_id = users.id AND e.revoked_at IS NULL)`;
+
 export function findDueUsers(db, now = Date.now()) {
   return db.prepare(`
     SELECT * FROM users
@@ -24,6 +30,7 @@ export function findDueUsers(db, now = Date.now()) {
       AND paddle_subscription_id IS NULL
       AND trial_end_date <= ?
       AND trial_end_date >  ?
+      ${tableExists(db, 'entitlements') ? NO_GRANT : ''}
   `).all(new Date(now - DELAY).toISOString(), new Date(now - MAX_AGE).toISOString());
 }
 

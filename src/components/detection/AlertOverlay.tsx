@@ -1,5 +1,6 @@
 import { AlertTriangle } from 'lucide-react';
 import { CoachingSeam } from '../../coaching/CoachingSeam';
+import { NotABiteSeam } from '../../falsePositive/NotABiteSeam';
 
 interface Props {
   visible: boolean;
@@ -11,7 +12,8 @@ interface Props {
 export function AlertOverlay({ visible }: Props) {
   return (
     <>
-      <CoachingSeam surface="main" />{/* SEAM (WS2). WS3's "Not a bite" goes beside it. */}
+      <CoachingSeam surface="main" />{/* SEAM (WS2). */}
+      <NotABiteSeam surface="main" />{/* SEAM (WS3): the "Not a bite" toast. Renders nothing unless the false-alarm controls are on. */}
       {visible && <AlertFlash />}
     </>
   );

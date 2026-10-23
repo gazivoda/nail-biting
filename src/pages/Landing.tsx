@@ -11,6 +11,7 @@ import { Rings } from '../components/site/Rings';
 import { Testimonials } from '../components/site/Testimonials';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
+import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN } from '../../shared/plans.js';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
 // page's critical path must never pay for. Lazy so it lands in its own chunk,
@@ -26,10 +27,10 @@ const DEMO_LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
 
 // The offer, stated beside every trial button. The figures MUST match
 // PricingSection and the Offer schema server.js injects for /pricing
-// ($2.99/month, $29.00/year, 3-day trial, no card).
+// ($2.99/month, $29.00/year, free trial, no card).
 // Commas, not middle dots: Overpass draws its middle dot hard against the
 // following word, so a dotted line reads as "free ·no card".
-const OFFER_LINE = '3 days free, no card, then $2.99/month';
+const OFFER_LINE = `${TRIAL_DAYS_TEXT} free, no card, then $2.99/month`;
 
 // Pulled from the real post data so titles and reading times can't drift.
 const FEATURED_SLUGS = [
@@ -102,7 +103,7 @@ const READING_LIST: ReadingRow[] = (() => {
 const FAQS: { q: string; a: string }[] = [
   {
     q: 'What is Stop Biting and how does it work?',
-    a: 'Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device. No camera data is sent while it runs. It costs $2.99 a month or $29 a year after a 3-day free trial with no card. It is not a medical treatment or a replacement for a therapist.',
+    a: `Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device. No camera data is sent while it runs. It costs $2.99 a month or $29 a year after a ${TRIAL_HYPHEN} free trial with no card. It is not a medical treatment or a replacement for a therapist.`,
   },
   {
     q: 'Why do people bite their nails?',
@@ -130,7 +131,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: 'Do I need a credit card, and can I cancel anytime?',
-    a: 'No card is needed for the 3-day free trial. After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period. Payments are handled by Paddle, so Stop Biting never sees your card details.',
+    a: `No card is needed for the ${TRIAL_HYPHEN} free trial. After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period. Payments are handled by Paddle, so Stop Biting never sees your card details.`,
   },
   {
     q: 'Does Stop Biting work on a phone?',
@@ -207,7 +208,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 <a href="#how" className="sg-link inline-flex min-h-11 items-center">How to start</a>
               </div>
               <p className="sg-note mt-4">{OFFER_LINE}</p>
-              {/* Said before the button is pressed: the 3-day clock starts at
+              {/* Said before the button is pressed: the trial clock starts at
                   sign-in, and a phone visitor would spend it finding out. */}
               <p className="sg-note mt-1">Made for a laptop or desktop with a webcam.</p>
               {/* The three questions a visitor has before pressing the button, answered
@@ -245,7 +246,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 // ever referenced above, so a page view fetches no chunk, no
                 // WebAssembly and no MediaPipe model.
                 <figure className="relative w-full">
-                  <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">3 days free, no card</span>
+                  <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">{TRIAL_DAYS_TEXT} free, no card</span>
                   <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-w-[10.5rem] text-center leading-tight max-sm:hidden sm:-right-4">No camera data is sent while it runs</span>
                   <img
                     src="/shots/app-watch-1280.webp"

@@ -26,6 +26,8 @@ const ComparePage = lazy(() =>
 );
 // The sign-in page (WS8): only visitors who open /signin download it.
 const SignInPage = lazy(() => import('./pages/SignIn').then(m => ({ default: m.SignInPage })));
+// The gift redeem page (WS9): only a recipient who opens a gift link downloads it.
+const RedeemPage = lazy(() => import('./pages/RedeemPage').then(m => ({ default: m.RedeemPage })));
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 import { RefundPage } from './pages/RefundPage';
@@ -44,6 +46,7 @@ import { PWAGuideModal } from './components/PWAGuideModal';
 import { OnboardingTour } from './components/onboarding/OnboardingTour';
 import { ProgramHost } from './coaching/ProgramHost';
 import { SyncHost } from './sync/SyncHost';
+import { BillingHost } from './components/billing/BillingHost';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -102,9 +105,10 @@ function AppRouter() {
       <Suspense fallback={<AppLoading />}>
         <div className="app-type">
         <PaywallPage
-          onBack={accessStatus === 'trial_active' ? () => setShowPaywall(false) : undefined}
+          onBack={accessStatus === 'trial_active' || accessStatus === 'free_tier' || accessStatus === 'subscribed' ? () => setShowPaywall(false) : undefined}
         />
         <PWAGuideModal />
+        <BillingHost />{/* WS9: a waiting gift or referral code. Nothing while every flag is off. */}
         </div>
       </Suspense>
     );
@@ -131,6 +135,7 @@ function AppRouter() {
       <PWAGuideModal />
       <ProgramHost />{/* WS2: the 4-week program view (hrt_coaching). Nothing while the flag is off. */}
       <SyncHost />{/* WS4: background sync, only for a person who switched it on. Nothing, and no request, otherwise. */}
+      <BillingHost />{/* WS9: referral code, waiting gift, free-tier meter. Nothing while every flag is off. */}
       </div>
     </Suspense>
   );
@@ -221,6 +226,17 @@ export default function App() {
       <Suspense fallback={null}>
         <SignInPage />
       </Suspense>
+    );
+  }
+
+  // Redeem a gift (served by server/routes/billing.js only while gift_plan is on)
+  if (path === '/redeem') {
+    return (
+      <AuthProvider>
+        <Suspense fallback={null}>
+          <RedeemPage />
+        </Suspense>
+      </AuthProvider>
     );
   }
 

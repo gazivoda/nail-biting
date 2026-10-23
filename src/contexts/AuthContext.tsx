@@ -200,9 +200,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useAuth() {
+/** `useAuth({ optional: true })` returns undefined outside an AuthProvider instead of throwing. For hooks that merely
+ * adapt to a signed-in account (the free-tier history window) and are rendered on their own in page tests; the app
+ * always has a provider. */
+export function useAuth(): AuthContextType;
+export function useAuth(options: { optional: true }): AuthContextType | undefined;
+export function useAuth(options?: { optional?: boolean }): AuthContextType | undefined {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+  if (!ctx && !options?.optional) throw new Error('useAuth must be used within AuthProvider');
   return ctx;
 }
 
