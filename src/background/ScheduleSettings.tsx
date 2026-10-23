@@ -164,8 +164,11 @@ export function ScheduleSettings() {
 
       <p className="text-sm text-stone-600 dark:text-stone-300">
         Reminders show while Stop Biting is open in a browser tab or window, and in the desktop app. A closed browser tab
-        cannot show one. &ldquo;Pause until tomorrow&rdquo; on the Watch tab ends at the start of these hours when the
-        reminder is on, and at 6:00 AM when it is off. Pause and meeting mode are on the Watch tab and in the mini window.
+        cannot show one.
+      </p>
+      <p className="text-sm text-stone-600 dark:text-stone-300">
+        Pause and meeting mode are on the Watch tab and in the mini window. &ldquo;Until tomorrow&rdquo; ends at the start of
+        these hours when the reminder is on, and at 6:00 AM when it is off.
       </p>
     </Section>
   );

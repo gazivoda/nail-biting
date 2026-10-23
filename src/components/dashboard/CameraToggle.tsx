@@ -66,7 +66,7 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
               {problem ?? note?.title ?? 'Detection active'}
             </p>
             <p className="mt-0.5 text-xs text-white/75">
-              {cameraProblem ? 'See below for how to fix it' : note ? note.short : 'Runs on this device'}
+              {cameraProblem ? 'See below for how to fix it' : note ? note.hint : 'Runs on this device'}
             </p>
           </div>
         </div>

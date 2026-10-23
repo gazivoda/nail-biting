@@ -50,7 +50,8 @@ export function BackgroundSlot() {
       {note && (
         <div role="status" className="mb-5">
           <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{note.title}</p>
-          <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{note.detail}</p>
+          {/* a pause already explains itself in the camera card; meeting mode has no other place to say what it does */}
+          {note.kind === 'meeting' && <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{note.detail}</p>}
           <button type="button" onClick={resumeWatching} className={`${PRIMARY} mt-3`}>
             {note.kind === 'paused' ? 'Resume now' : 'End meeting mode'}
           </button>
