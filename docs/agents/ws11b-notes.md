@@ -72,17 +72,27 @@ served `llms-full.txt`, `seo-content.json` and `/posts/*.json`; the browser appl
 
 `TrialButton` (WS6 left this for me): on a phone it used to send the visitor's link to a computer, because signing up on a phone
 spent the trial on a screen that could not detect anything. With `phone_companion` on, a phone gets the ordinary "Start free trial"
-button. Only a phone reads the flag, so a computer's visit makes no extra request. The home FAQ answer still offers "Email me the link".
+button, and the home FAQ answer then points at the link on the phone screen after sign-in (the "Email me the link" button is gone from
+the page while the flag is on).
 
 How the three views stay identical (tested in every state, `scripts/featurePages.test.mjs`): the home FAQ in the React page, the
 crawler article and the FAQPage JSON-LD are compared question for question with sync on, phone on, both, Microsoft on and
 configured, and Microsoft's flag on but not configured (which changes nothing); every rule's sentence is compared in the React
 page and in the article for the home page, About and How it works.
 
+**How a marketing page learns the flags, and the flags-off request delta (none).** A marketing page makes no request for the flags
+(`/api/features` counts against the shared `/api/` limits, which WS8 flagged as possibly one bucket behind the proxy, and WS11a
+refused a footer hook for the same reason). The server writes `<meta name="sb-copy-flags" content="event_sync phone_companion">` into
+every 200 page, listing only those two flags and only the ones that are on (`copyMarkerTag` in `sendHtml`, `server.js`); the browser
+reads it synchronously at first render (`src/features/copyFlags.ts`). With both off the tag is not written and the page is byte for
+byte what it was, so with every flag off the client's request set is also unchanged (no new request on any page). The sign-in methods
+come from `/auth/providers`, which these pages already fetched.
+
 Flag-state limits worth knowing:
-* A returning visitor whose service worker serves the cached app shell gets the browser's cached flags (asked again at idle, at
-  most once in ten minutes). Flipping a flag can take up to ten minutes to show on such a visit; crawlers and first visits get the
-  server's answer at once. The text can also change a moment after first paint when the flags arrive (the FAQ is below the fold).
+* **A returning visitor whose service worker serves the cached app shell gets no marker** (the shell is a static file). For them the
+  copy follows the app's last answer from `/api/features` if it is under ten minutes old (a visit to the signed-in app refreshes it),
+  and otherwise says what it has always said. Unknown is treated as off, never as on, so the worst case is the old sentence (for
+  example "history is stored in this browser") on an anonymous returning visit while sync is on. Crawlers and first visits are exact.
 * `dateModified` and `Last-Modified` on a page whose copy a rule changed are the ledger's (the flag-off text's date). The ledger
   fingerprints the page sources, which hold the flag-off text. Not a false date, but not "the day the flag went on" either.
 * The service-worker-cached shell has no embedded page data, so a feature page fetches `/page-data<path>.json` there (a blank
@@ -148,7 +158,7 @@ the `/og` card guard, the `/posts` handler that exists only while a copy rule is
 rules when one is active; the gated-page state is rebuilt per page flag (it was one flag); the sitemap, `llms.txt`, `llms-full.txt`,
 `seo-content.json` and `/page-data` handlers (each registered only when needed); `homeShell` (the homepage FAQPage block);
 `injectSsrArticle`, `faqPageSchema` and the How it works schema apply the rules; six `COMPARE_META` entries with `gated: true`;
-the gated handler embeds the page data. `src/pages/Landing.tsx`, `About.tsx`, `HowItWorks.tsx` (copy goes through `useFlagCopy`; the
+the gated handler embeds the page data; `sendHtml` writes the copy-flags marker (nothing while both flags are off). `src/pages/Landing.tsx`, `About.tsx`, `HowItWorks.tsx` (copy goes through `useFlagCopy`; the
 text is unchanged with flags off), `Settings.tsx` (**the one edit to a page the architecture calls frozen, made on the
 orchestrator's instruction**: the Privacy card's log sentence), `ComparePage.tsx` (feature pages, flag-aware compare pages, no hub in
 a feature page's breadcrumb), `TrialButton.tsx`, `App.tsx` (one `/features/` condition). `scripts/sync-seo.mjs` (edited in bytes:
@@ -181,8 +191,11 @@ four registrations), `generate-seo-content.mjs`, `generate-og-images.mjs`. Chang
   `server/marketing/*.js`, the three scripts. `eslint src server scripts electron shared`: **23 errors / 4 warnings, the baseline**,
   no new problem by file and rule. `npm run seo:check`: in sync. `npm run og:check`: exit 0. The two dev-leak greps print nothing.
   Retired privacy phrases: zero in `dist/seo-gated.json`, `llms*.txt`, `seo-content.json`, `featurePages.ts` and everything the server serves.
-- JS size: the entry chunk grew by 8.0 KB raw / 2.2 KB gzip (the rules and the hook, shared by Landing, About, How it works and
-  `TrialButton`), `ComparePage` by 1.0 KB raw / 0.4 KB gzip.
+- JS size: the entry chunk grew by about 8 KB raw / 2.2 KB gzip (the rules and the hook, shared by Landing, About, How it works and
+  `TrialButton`), `ComparePage` by 1.0 KB raw / 0.4 KB gzip. **Deliberate, stated plainly:** the replacement sentences of the copy
+  rules ("turn on sync", "Apple, Microsoft or an emailed link", the phone answer) are therefore in the JavaScript and in the service
+  worker's precache of every visitor with every flag off (not rendered, not in any HTML, sitemap, llms file or schema). The six
+  pages' copy is not. Keeping the rules out of the entry chunk would mean fetching them by flag, which brings back the request.
 
 ## NOT verified
 

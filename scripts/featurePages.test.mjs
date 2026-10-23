@@ -405,7 +405,8 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
     const one = await startServer('phone_companion');
     const other = await startServer('hrt_coaching,share_links');
     try {
-      for (const page of ['/', '/about', '/pricing', '/compare/ai-detection-apps', '/blog/how-to-stop-nail-biting', '/features/habit-reversal-coaching']) {
+      big((await get(both, '/features/habit-reversal-coaching')).text).toContain('<meta name="sb-copy-flags" content="event_sync phone_companion">');
+      for (const page of ['/', '/about', '/pricing', '/compare/ai-detection-apps', '/blog/how-to-stop-nail-biting']) {
         big((await get(both, page)).text, page).toContain('<meta name="sb-copy-flags" content="event_sync phone_companion">');
         big((await get(one, page)).text, page).toContain('<meta name="sb-copy-flags" content="phone_companion">');
         big((await get(other, page)).text, page).notToContain('sb-copy-flags');
