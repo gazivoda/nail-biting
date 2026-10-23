@@ -119,6 +119,10 @@ describe('the privacy audit judge: it fails bad requests', () => {
     expect(codes(run([{ kind: 'hook', id: 'h', target: 'worker', api: 'xhr', url: `${ORIGIN}/api/x`, bodyType: 'FormData', fileEntries: [{ name: 'photo', type: 'image/jpeg', size: 3 }] }]))).toContain('file-upload');
     expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api: 'fetch', url: `${ORIGIN}/api/x`, bodyType: 'Blob', head: 'ffd8ffe000104a46' }]))).toContain('image-bytes');
   });
+  it('an in-page call to a stranger is an attempt even if the browser then blocks it', () => {
+    expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api: 'sendBeacon', method: 'POST', url: 'https://telemetry.example.net/c', bodyType: 'Blob', blobType: 'application/json' }]))).toContain('host-not-allowed');
+    expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api: 'fetch', method: 'POST', url: 'https://www.google-analytics.com/g/collect?v=2', bodyType: 'none', keepalive: true }]))).toEqual([]);
+  });
   it('a WebRTC connection or a MediaRecorder', () => {
     for (const api of ['RTCPeerConnection', 'MediaRecorder']) {
       expect(codes(run([{ kind: 'hook', id: 'h', target: 'page', api, url: '', method: 'new', bodyType: api }]))).toContain('webrtc-or-recorder-used');

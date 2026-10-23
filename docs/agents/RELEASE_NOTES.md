@@ -45,6 +45,7 @@ build arguments · (d) Things only a human can review or verify · (e) Known gap
 | | |
 |---|---|
 | Already on production | PUSH #1, `origin/main` at ffbf29a: WS0 to WS5, WS7b, WS8 to WS11a, all 27 flags off. The only visible differences are the WS11a site fixes. |
+| **Moved since** | **`origin/main` is no longer ffbf29a.** Another session (the SEO traffic work) pushed two more commits on top of it: a2f94c5 and 46a484c ("Record verified SEO release..."), touching `server.js` (+25 lines), `vite.config.ts`, the blog data, `public/sitemap.xml`, `public/llms.txt`, three OG images and tests. Local `main` does not contain them. `git merge-tree --write-tree main origin/main` merges cleanly, but **merge `origin/main` into `main` before PUSH #2** (a plain push would be rejected as non-fast-forward), then re-run the gates, `seo:check` (sitemap and llms changed) and `git apply --check` of your Paddle patch (46a484c touched `server.js`). |
 | Not on production yet | WS6 (phone view), WS7a (background watching), WS11b (feature pages and flag-aware copy), WS12 (when it lands) and the WS13 fixes, which go out with PUSH #2. |
 | Migrations | All 13 additive migrations (list in (f)) came with PUSH #1. WS6, WS7a and WS11b add none. |
 

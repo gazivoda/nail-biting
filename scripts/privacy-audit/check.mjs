@@ -391,6 +391,14 @@ export function evaluate(records, opts) {
     byTarget[rec.target ?? 'page'] = (byTarget[rec.target ?? 'page'] ?? 0) + 1;
     if (rec.kind === 'hook') {
       const t = String(rec.bodyType ?? '');
+      // An attempt counts even if the site's CSP then blocks it: the page tried to talk to a stranger.
+      if (/^https?:|^wss?:/i.test(String(rec.url ?? ''))) {
+        try {
+          const u = new URL(rec.url);
+          hosts.set(u.host, hosts.get(u.host) ?? 0);
+          if (!hostAllowed(u.host, origin, allowedHosts).ok) fail(rec, 'host-not-allowed', `${rec.api} to a host outside the allowlist (${u.host})`, `${rec.api} ${rec.method ?? ''} ${rec.url}`);
+        } catch { /* relative or malformed */ }
+      }
       if (/ImageBitmap|MediaStream|VideoFrame|ImageData|HTMLVideoElement|HTMLCanvasElement|OffscreenCanvas|HTMLImageElement|MediaStreamTrack/.test(t)) {
         fail(rec, 'media-object-sent', `${rec.api} was handed a ${t} as its body`, `${rec.api} ${rec.method ?? ''} ${rec.url} body=${t}`);
       }
