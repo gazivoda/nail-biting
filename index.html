@@ -20,7 +20,9 @@
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icons/icon-192x192.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon-180x180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/apple-touch-icon-167x167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png" />
     <!-- Fonts are self-hosted. The @font-face rules live in src/index.css and ship
          inside the app CSS bundle, so there is no third-party stylesheet on the
          critical path: the fonts.googleapis.com <link> used to be render-blocking
@@ -35,6 +37,14 @@
     <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#F7F7F1" />
+    <!-- Added to a home screen (WS6). iOS reads these when the person adds the app (the manifest
+         is read too since iOS 16.4); Android and desktop Chrome read manifest.webmanifest.
+         Full-bleed icons above: iOS rounds the corners itself. The status bar stays the default
+         style (dark text on the light bar) because the page background is #F7F7F1. -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Stop Biting" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
     <!-- Primary SEO -->
     <title>Nail Biting App: Stop Biting with AI | Stop Biting</title>

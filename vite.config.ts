@@ -142,6 +142,18 @@ export default defineConfig({
             },
           },
           {
+            // WS6: the brand fonts and the logo, kept by the worker after the first visit so the
+            // installed phone app opens looking like itself with no signal. Before this they relied
+            // on the browser's HTTP cache alone, which a browser may empty at any time. Not
+            // precached: nobody downloads them earlier than they do today.
+            urlPattern: /\/(fonts\/.+\.woff2|logo(-dark)?\.svg)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'brand-static',
+              expiration: { maxEntries: 12, maxAgeSeconds: 30 * 24 * 60 * 60 },
+            },
+          },
+          {
             // Icons and static images — cache for 7 days
             urlPattern: /\/icons\/.+\.png$/,
             handler: 'CacheFirst',
@@ -153,6 +165,14 @@ export default defineConfig({
           // MediaPipe WASM and model files are intentionally NOT cached by
           // the service worker. They are served directly and rely on the
           // browser's HTTP cache (Cache-Control headers from Express).
+        ],
+        // WS6: the manifest is answered by server/routes/phone.js while phone_companion is on
+        // (it adds the home-screen shortcuts). A precached copy would be served to every
+        // returning visitor, so the flag-aware answer would never reach them. The browser
+        // fetches it from the network (and its HTTP cache) like any other file; installing needs
+        // a connection anyway.
+        manifestTransforms: [
+          async (entries) => ({ manifest: entries.filter((e) => e.url !== 'manifest.webmanifest'), warnings: [] }),
         ],
         // Exclude WASM, MediaPipe models, and API routes from precaching
         globIgnores: [

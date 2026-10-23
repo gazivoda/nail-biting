@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { computeAccessStatus } from '../utils/access';
+import { clearGrant, resolveFailedSession } from '../phone/offlineGrant';
 import type { UserProfile, AccessStatus } from '../types/access';
 
 export type { UserProfile, AccessStatus };
@@ -127,10 +128,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Attempt to load the current session (cookie on web, localStorage on Electron)
     apiFetch('/api/user/me')
       .then(applyUser)
-      .catch(() => {
+      .catch(err => {
         // No valid session — clear any stale Electron token too
         if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
-        setAccessStatus('no_auth');
+        // WS6: if the server could not be reached (not "no"), the phone app opens from the access
+        // facts it last saw, while phone_companion is on. Otherwise this is the same as before.
+        const offline = resolveFailedSession(err);
+        if (offline) applyUser(offline);
+        else setAccessStatus('no_auth');
       });
 
     return () => window.removeEventListener('electron-auth', onElectronAuth);
@@ -180,6 +185,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
     localStorage.removeItem(SESSION_FLAG);
+    clearGrant(); // WS6: signed out means signed out, offline too
     setUser(null);
     setAccessStatus('no_auth');
   };
