@@ -23,12 +23,16 @@ export function heatmapSummary(h: Heatmap): string {
   return `${h.total} ${plural(h.total, 'bite')} in this range. The busiest slot is ${WEEKDAY_LONG[row]}, ${hourSpan(hour)}, with ${count}.`;
 }
 
-export function dailySummary(values: readonly number[], noun: string, nounPlural: string, dayNames: readonly string[]): string {
+/**
+ * "12 bites in this period. The most in one day was 4, on Tue 20 Oct."
+ * `where[i]` is the finished phrase for bucket i ("on Tue 20 Oct", "in the week of 19 Oct").
+ */
+export function seriesSummary(values: readonly number[], noun: string, nounPlural: string, unit: 'day' | 'week', where: readonly string[]): string {
   const total = values.reduce((n, v) => n + v, 0);
   if (total === 0) return `No ${nounPlural} in this period.`;
   let best = 0;
   for (let i = 1; i < values.length; i++) if (values[i] > values[best]) best = i;
-  return `${total} ${plural(total, noun, nounPlural)} in this period. The most in one day was ${values[best]}, on ${dayNames[best]}.`;
+  return `${total} ${plural(total, noun, nounPlural)} in this period. The most in one ${unit} was ${values[best]}, ${where[best]}.`;
 }
 
 export function coachingSentence(c: CoachingStats): string | null {

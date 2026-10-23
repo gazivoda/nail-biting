@@ -256,7 +256,7 @@ export function computeInsights(events: readonly InsightEvent[], opts: InsightsO
 
   return {
     generatedAt: now,
-    hasData: totalEntries > 0 || totalUrges > 0 || raisedAlarms > 0,
+    hasData: totalEntries > 0,
     totals: { bites: totalBites, entries: totalEntries, alarms: totalAlarms, urges: totalUrges },
     daily,
     weekly,

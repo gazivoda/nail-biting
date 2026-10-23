@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Trash2, Check, CheckCircle, ArrowRight } from 'lucide-react';
 import { useAppStore, isBite } from '../store/useAppStore';
 import { isUrge } from '../storage/eventModel';
@@ -14,6 +14,11 @@ import { BEHAVIOR_REGISTRY } from '../detection/registry';
 import { useBehaviorFilterEnabled } from '../detection/useBehaviors';
 import type { Behavior } from '../storage/eventModel';
 import type { CustomTag, Incident, StatsMetric } from '../types';
+import { HistoryInsightsSwitch, type HistoryView } from '../insights/ui/ViewSwitch';
+import { useInsightsAvailability } from '../insights/useInsightsAvailability';
+import { PhotoReminder } from '../photos/PhotoReminder';
+// WS5: the Insights view is its own chunk, fetched only when someone opens it (flags `insights` / `photo_diary`).
+const InsightsView = lazy(() => import('../insights/ui/InsightsView').then(m => ({ default: m.InsightsView })));
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
 // quiet day read as "safe" and clashed with the amber/red used for alarms and
 // bites right beside the chart.
@@ -208,6 +213,10 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   const behaviorFilter = showBehaviorFilter && pickedBehavior !== 'all' && behaviorsPresent.includes(pickedBehavior) ? pickedBehavior : 'all';
   const incidents = filterByBehavior(allIncidents, behaviorFilter);
 
+  // Insights (WS5): a second view under the title, only while `insights` or `photo_diary` is on.
+  const insightsTab = useInsightsAvailability();
+  const [view, setView] = useState<HistoryView>('history');
+
   // One tap on the bin used to remove an entry for good, and deleting a bite
   // silently moves the streak. The last deletion can be undone for a few
   // seconds; the bar sits above the list so it survives deleting the last one.
@@ -239,9 +248,23 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
     grouped[grouped.length - 1].items.push(inc);
   }
 
+  if (insightsTab && view === 'insights') {
+    return (
+      <div className="p-5 sm:p-8 pb-10">
+        <PageTitle mark="History" />
+        <HistoryInsightsSwitch view={view} onChange={setView} insightsLabel={insightsTab.label} />
+        <Suspense fallback={null}>
+          <InsightsView onGoToWatch={onGoToWatch} />
+        </Suspense>
+      </div>
+    );
+  }
+
   return (
     <div className="p-5 sm:p-8 pb-10">
       <PageTitle mark="History" />
+      {insightsTab && <HistoryInsightsSwitch view={view} onChange={setView} insightsLabel={insightsTab.label} />}
+      <PhotoReminder onOpen={() => setView('insights')} />
 
       <div role="status" aria-live="polite">
         {lastDeleted && (
