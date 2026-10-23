@@ -188,6 +188,15 @@ describe('History', () => {
     expect(render(alarms.filter(a => a.id !== 'fp'))).toContain('3 entries');
   });
 
+  it('the long entries line may wrap (at 320 px it pushed Clear all off the screen); the short one stays on one line', () => {
+    flagsOn('false_positive_controls');
+    const long = render(alarms).match(/<p class="([^"]*)">3 entries, 1 marked not a bite<\/p>/)?.[1] ?? '';
+    expect(long).toContain('min-w-0');
+    expect(long).not.toContain('whitespace-nowrap');
+    const short = render(alarms.filter(a => a.id !== 'fp')).match(/<p class="([^"]*)">3 entries<\/p>/)?.[1] ?? '';
+    expect(short).toContain('whitespace-nowrap');
+  });
+
   it('without any marked alarm the History markup is the same with the flag on as with it off, apart from the Not a bite buttons and the rate line', () => {
     const clean = alarms.filter(a => a.id !== 'fp');
     flagsOn();
