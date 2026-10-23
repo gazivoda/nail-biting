@@ -87,6 +87,8 @@ export const messages = {
   'privacy.title': 'Privacy',
   'privacy.heading': 'Detection runs on your computer',
   'privacy.body': 'Your camera is processed in this browser. No camera data is sent while it runs; your alarm and bite log stays in this browser too.',
+  // The sync-on wording, for languages other than English (English shows 'privacy.body' rewritten by shared/flagCopy.js).
+  'privacy.bodySync': 'Your camera is processed in this browser. No camera data is sent while it runs. Your alarm and bite log stays in this browser too, unless you turn on sync.',
 
   // Data card
   'data.title': 'Data',

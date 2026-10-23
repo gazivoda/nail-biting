@@ -78,6 +78,7 @@ export const messages: Record<keyof typeof en, string> = {
   'privacy.title': 'Datenschutz',
   'privacy.heading': 'Die Erkennung läuft auf deinem Computer',
   'privacy.body': 'Deine Kamera wird in diesem Browser verarbeitet. Solange sie läuft, werden keine Kameradaten gesendet; auch dein Alarm- und Bissprotokoll bleibt in diesem Browser.',
+  'privacy.bodySync': 'Deine Kamera wird in diesem Browser verarbeitet. Solange sie läuft, werden keine Kameradaten gesendet; auch dein Alarm- und Bissprotokoll bleibt in diesem Browser, es sei denn, du schaltest die Synchronisierung ein.',
 
   'data.title': 'Daten',
   'data.clearWarning': 'Das löscht deinen Verlauf, deine Serie, deine Bissgründe und alle Einstellungen auf diesem Gerät. Das lässt sich nicht rückgängig machen.',

@@ -235,6 +235,17 @@ describe('Detection card (false-alarm controls), pseudo-locale', () => {
   });
 });
 
+describe('Privacy card with sync on (WS11b rewrites the English sentence; other languages have their own wording)', () => {
+  usePseudoLocale({ flags: ['event_sync'] });
+
+  it('German says the log stays in the browser unless sync is turned on', () => {
+    const html = page();
+    expectAllTranslated(html);
+    expect(html).toContain('es sei denn, du schaltest die Synchronisierung ein');
+    expect(html).not.toContain('auch dein Alarm- und Bissprotokoll bleibt in diesem Browser.');
+  });
+});
+
 describe('the registry titles are internal, never rendered', () => {
   it('SETTINGS_SECTIONS keeps its English words (settings.test.tsx pins them)', () => {
     expect(SETTINGS_SECTIONS.map(s => s.title)).toEqual(['Detection', 'Alerts', 'Behaviors', 'Schedule', 'Account & Sync', 'Data', 'Sharing']);

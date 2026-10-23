@@ -78,6 +78,7 @@ export const messages: Record<keyof typeof en, string> = {
   'privacy.title': 'Privacidad',
   'privacy.heading': 'La detección se ejecuta en tu equipo',
   'privacy.body': 'Tu cámara se procesa en este navegador. No se envían datos de la cámara mientras funciona; tu alarma y tu registro de mordiscos también se quedan en este navegador.',
+  'privacy.bodySync': 'Tu cámara se procesa en este navegador. No se envían datos de la cámara mientras funciona; tu alarma y tu registro de mordiscos también se quedan en este navegador, a menos que actives la sincronización.',
 
   'data.title': 'Datos',
   'data.clearWarning': 'Esto borra tu historial, tu racha, tus motivos de mordisco y todos los ajustes de este dispositivo. No se puede deshacer.',

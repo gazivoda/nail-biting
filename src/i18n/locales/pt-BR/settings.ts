@@ -78,6 +78,7 @@ export const messages: Record<keyof typeof en, string> = {
   'privacy.title': 'Privacidade',
   'privacy.heading': 'A detecção roda no seu computador',
   'privacy.body': 'Sua câmera é processada neste navegador. Nenhum dado da câmera é enviado enquanto ela funciona; seu alarme e seu registro de mordidas também ficam neste navegador.',
+  'privacy.bodySync': 'Sua câmera é processada neste navegador. Nenhum dado da câmera é enviado enquanto ela funciona; seu alarme e seu registro de mordidas também ficam neste navegador, a menos que você ative a sincronização.',
 
   'data.title': 'Dados',
   'data.clearWarning': 'Isso apaga seu histórico, sua sequência, seus motivos de mordida e todas as configurações deste dispositivo. Não dá para desfazer.',

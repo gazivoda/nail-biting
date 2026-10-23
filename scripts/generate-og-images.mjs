@@ -598,6 +598,9 @@ async function collectTargets() {
   // under /og/ that nothing links to, so having one for an unpublished page leaks nothing
   // and spares a regeneration step on the day the flag is turned on.
   const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
+  // WS11b: the pages for features behind a flag each. The server answers the branded 404 for
+  // a card whose page's flag is off (server.js, "closed gated page" guard before /og).
+  const { FEATURE_PAGE_MAP } = await import('../src/data/featurePages.ts');
 
   const targets = BLOG_POSTS.map((post) => ({
     file: `${post.slug}.png`,
@@ -608,13 +611,13 @@ async function collectTargets() {
     meta: `${post.readingMinutes} min read`,
   }));
 
-  for (const [path, load] of Object.entries({ ...PAGE_MAP, ...GATED_PAGE_MAP })) {
+  for (const [path, load] of Object.entries({ ...PAGE_MAP, ...GATED_PAGE_MAP, ...FEATURE_PAGE_MAP })) {
     const content = load();
     targets.push({
       // /compare/foo -> compare-foo.png, /solutions/bar -> solutions-bar.png
       file: `${path.replace(/^\//, '').replace(/\//g, '-')}.png`,
       title: content.title,
-      tag: path.startsWith('/compare/') ? 'Comparison' : 'Guide',
+      tag: path.startsWith('/compare/') ? 'Comparison' : path.startsWith('/features/') ? 'Feature' : 'Guide',
       // These pages carry no reading time, so the eyebrow is the tag alone.
       meta: '',
     });

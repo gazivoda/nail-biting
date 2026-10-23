@@ -37,6 +37,10 @@ const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 // a freshness date (the server adds them to sitemap.xml at serve time, only while
 // the flag is on) and their meta is checked against their body like every other page.
 const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
+// WS11b: the pages for features that ship behind a flag each (src/data/featurePages.ts). Treated like the
+// competitor pages above: dated in the ledger so the server can put a true lastmod on them while their
+// flag is on, never written into sitemap.xml or llms.txt here, and their meta is checked against their body.
+const { FEATURE_PAGE_MAP } = await import('../src/data/featurePages.ts');
 // Source files spell this site's trial length with ${TRIAL_*} (JS/TS) and {{TRIAL_*}} (index.html)
 // placeholders (shared/plans.js). Every extractor below reads the SOURCE as text, so the placeholders are
 // filled in at the two read points (readWorkTree, readAtCommit) before any extractor runs: what they see is
@@ -120,6 +124,7 @@ const LEDGER_PATH = join(ROOT, 'src/data/pageUpdates.json');
 const SERVER = 'server.js';
 const COMPARE = 'src/data/comparePages.ts';
 const GATED = 'src/data/competitorPages.ts';
+const FEATURES = 'src/data/featurePages.ts';
 const SHELL = 'index.html';
 
 const reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -449,6 +454,7 @@ const PAGE_SOURCES = {
 };
 for (const p of Object.keys(PAGE_MAP)) PAGE_SOURCES[p] = [comparePage(p)];
 for (const p of Object.keys(GATED_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(GATED, p)];
+for (const p of Object.keys(FEATURE_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(FEATURES, p)];
 
 const readWorkTree = file => {
   const text = safeRead(join(ROOT, file));
@@ -511,7 +517,7 @@ const nextLedger = {};
 // Gated pages are dated too, so the server can put a true lastmod on them when it adds
 // them to sitemap.xml and in their JSON-LD; they are not in CORE_PAGES, so this script
 // never writes them into the sitemap itself.
-for (const path of [...CORE_PAGES.map(p => p.path), ...Object.keys(GATED_PAGE_MAP)]) {
+for (const path of [...CORE_PAGES.map(p => p.path), ...Object.keys(GATED_PAGE_MAP), ...Object.keys(FEATURE_PAGE_MAP)]) {
   if (path === '/blog') {
     nextLedger[path] = { lastmod: NEWEST_POST, source: 'newest article dateModified' };
     continue;
@@ -920,7 +926,7 @@ function siteCorpus() {
     return files.get(f);
   };
   for (const [path, sources] of Object.entries(PAGE_SOURCES)) {
-    if (path in GATED_PAGE_MAP) continue;   // unpublished copy proves nothing about what the site says
+    if (path in GATED_PAGE_MAP || path in FEATURE_PAGE_MAP) continue;   // unpublished copy proves nothing about what the site says
     for (const [file, pick] of sources) {
       const src = cachedRead(file);
       if (src) parts.push(pick(src) ?? '');
@@ -1240,7 +1246,7 @@ function readProp(src, code, prop) {
 }
 
 // Published and flagged pages alike: a flagged page's meta must not out-claim its body either.
-const ALL_COMPARE_PAGES = { ...PAGE_MAP, ...GATED_PAGE_MAP };
+const ALL_COMPARE_PAGES = { ...PAGE_MAP, ...GATED_PAGE_MAP, ...FEATURE_PAGE_MAP };
 checkMirrors();
 
 function checkMirrors() {
@@ -1269,7 +1275,7 @@ function checkMirrors() {
   for (const { path, title, description } of metas) {
     const page = ALL_COMPARE_PAGES[path]?.();
     if (!page) {
-      problems.push(`COMPARE_META: ${path} has no page in comparePages.ts or competitorPages.ts — its meta describes a body that does not exist`);
+      problems.push(`COMPARE_META: ${path} has no page in comparePages.ts, competitorPages.ts or featurePages.ts — its meta describes a body that does not exist`);
       continue;
     }
     if (!title || !description) {

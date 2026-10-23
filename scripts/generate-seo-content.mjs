@@ -26,7 +26,12 @@ const { PAGE_MAP } = await import('../src/data/comparePages.ts');
 // llms-full.txt, both of which are served to anyone: they go to dist/seo-gated.json,
 // which server.js reads and never serves.
 const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
-const { GATED_COMPARE_PATHS } = await import('../src/data/gatedComparePaths.ts');
+const { GATED_COMPARE_PATHS, GATED_COMPARE_FLAG } = await import('../src/data/gatedComparePaths.ts');
+// WS11b: the pages for features that ship behind a flag each (src/data/featurePages.ts). Same
+// treatment as the competitor pages: unpublished copy goes to dist/seo-gated.json, never to
+// seo-content.json or llms-full.txt.
+const { FEATURE_PAGE_MAP } = await import('../src/data/featurePages.ts');
+const { FEATURE_PAGE_FLAGS } = await import('../src/data/featurePagePaths.ts');
 // Same validator the Testimonials component renders through, so the crawler copy
 // and the page cannot disagree about which entries are publishable.
 const { parseTestimonials, testimonialDetail, TESTIMONIALS_HEADING } = await import('../src/components/site/testimonialsModel.ts');
@@ -110,11 +115,30 @@ for (const [path, get] of Object.entries(GATED_PAGE_MAP)) {
 if (Object.keys(flaggedPages).sort().join(',') !== [...GATED_COMPARE_PATHS].sort().join(',')) {
   problems.push('GATED_PAGE_MAP (competitorPages.ts) and GATED_COMPARE_PATHS (gatedComparePaths.ts) list different paths');
 }
+const featurePages = {};
+for (const [path, get] of Object.entries(FEATURE_PAGE_MAP)) {
+  const page = get();
+  if (!page?.title) problems.push(`feature page missing title: ${path}`);
+  if (!page?.sections?.length) problems.push(`feature page has no sections: ${path}`);
+  if (PAGE_MAP[path] || flaggedPages[path]) problems.push(`feature page is also a published or competitor page: ${path}`);
+  if (!FEATURE_PAGE_FLAGS[path]) problems.push(`feature page has no flag in featurePagePaths.ts: ${path}`);
+  featurePages[path] = page;
+}
+if (Object.keys(featurePages).sort().join(',') !== Object.keys(FEATURE_PAGE_FLAGS).sort().join(',')) {
+  problems.push('FEATURE_PAGE_MAP (featurePages.ts) and FEATURE_PAGE_FLAGS (featurePagePaths.ts) list different paths');
+}
 if (problems.length) {
-  console.error('generate-seo-content: structural problems in the flagged competitor pages:');
+  console.error('generate-seo-content: structural problems in the flagged pages:');
   for (const p of problems) console.error(`  ! ${p}`);
   process.exit(1);
 }
+// Every gated page, with the flag that opens it. The server reads this map; it is the one place the
+// path -> flag pairing is written down for the running site.
+const gatedFlags = {
+  ...Object.fromEntries(Object.keys(flaggedPages).map(path => [path, GATED_COMPARE_FLAG])),
+  ...FEATURE_PAGE_FLAGS,
+};
+const allGatedPages = { ...flaggedPages, ...featurePages };
 
 // The testimonial section's crawler copy (server.js testimonialsArticleHtml). Empty
 // while src/data/testimonials.json is empty; the server renders nothing then.
@@ -142,7 +166,7 @@ try {
 }
 
 // The ledger rows of the flagged pages travel with their copy, not in seo-content.json.
-const isFlaggedPath = path => GATED_COMPARE_PATHS.includes(path);
+const isFlaggedPath = path => path in gatedFlags;
 const flaggedUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => isFlaggedPath(path)));
 pageUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => !isFlaggedPath(path)));
 
@@ -159,10 +183,7 @@ writeFileSync(
     testimonials,
   }),
 );
-writeFileSync(
-  join(DIST, 'seo-gated.json'),
-  JSON.stringify({ generatedAt: new Date().toISOString(), comparePages: flaggedPages, pageUpdates: flaggedUpdates }),
-);
+// dist/seo-gated.json is written at the end of this file, once the llms-full text of each page exists.
 // ─── dist/posts/<slug>.json — one file per article, for the client ──────────
 // BlogPost.tsx used to import src/data/blogPosts.ts, which put every article
 // (~1 MB) in the BlogPost chunk of every reader and in the service worker's
@@ -252,25 +273,30 @@ full.push('');
 full.push(`${AUTHOR_BIO.name} — ${AUTHOR_BIO.role}. ${AUTHOR_BIO.bio}`);
 full.push('');
 
-for (const [path, page] of Object.entries(comparePages)) {
-  full.push(`## ${page.title}`);
-  full.push(`URL: ${ORIGIN}${path}`);
-  full.push('');
-  full.push(stripTags(page.subtitle));
-  full.push('');
-  full.push(stripTags(page.intro));
-  full.push('');
+// One /compare/*, /solutions/* or /features/* page, as the lines llms-full.txt carries for it.
+function pageLines(path, page) {
+  const lines = [];
+  lines.push(`## ${page.title}`);
+  lines.push(`URL: ${ORIGIN}${path}`);
+  lines.push('');
+  lines.push(stripTags(page.subtitle));
+  lines.push('');
+  lines.push(stripTags(page.intro));
+  lines.push('');
   for (const s of page.sections) {
-    full.push(`### ${s.heading}`);
-    full.push('');
-    full.push(stripTags(s.body));
+    lines.push(`### ${s.heading}`);
+    lines.push('');
+    lines.push(stripTags(s.body));
     if (s.html) {
-      full.push('');
-      full.push(htmlToText(s.html));
+      lines.push('');
+      lines.push(htmlToText(s.html));
     }
-    full.push('');
+    lines.push('');
   }
+  return lines;
 }
+
+for (const [path, page] of Object.entries(comparePages)) full.push(...pageLines(path, page));
 
 for (const p of BLOG_POSTS) {
   full.push(`## ${p.title}`);
@@ -297,3 +323,21 @@ for (const p of BLOG_POSTS) {
 
 writeFileSync(join(DIST, 'llms-full.txt'), full.join('\n'));
 console.log('generate-seo-content: llms-full.txt written');
+
+// ─── dist/seo-gated.json — the unpublished pages, for the server only ───────
+// Never served (server.js answers 404 for it). `flags` says which flag opens each page; `llmsFull` is the
+// block each page adds to llms-full.txt, built by the same code as the published pages' blocks, which the
+// server appends only while the page's flag is on. The copy may carry {{if flag}} markers and {{TOKEN}}
+// placeholders: the server resolves both at start-up (shared/flagCopy.js).
+const llmsFull = Object.fromEntries(Object.entries(allGatedPages).map(([path, page]) => [path, pageLines(path, page).join('\n')]));
+writeFileSync(
+  join(DIST, 'seo-gated.json'),
+  JSON.stringify({
+    generatedAt: new Date().toISOString(),
+    comparePages: allGatedPages,
+    flags: gatedFlags,
+    llmsFull,
+    pageUpdates: flaggedUpdates,
+  }),
+);
+console.log(`generate-seo-content: seo-gated.json — ${Object.keys(allGatedPages).length} flagged pages`);

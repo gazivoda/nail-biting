@@ -15,6 +15,9 @@ import { SettingsSlots } from './settings/SettingsSlots';
 import { useT, type messages } from '../i18n/scopes/settings';
 import { useT as useCommonT } from '../i18n/scopes/common';
 import { formatDate } from '../i18n/format';
+import { useFeatures } from '../features/useFeature';
+import { getLocale } from '../i18n/core';
+import { flagAware } from '../../shared/flagCopy.js';
 
 // --------------------------------------------------------------------------
 // Web Audio preview — fires a one-shot preview of a sound
@@ -421,6 +424,13 @@ function PlanSection({ onUpgrade }: { onUpgrade?: () => void }) {
 export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
   const t = useT();
   const tc = useCommonT();
+  // WS11b: the Privacy card's log sentence is not true once sync is on. English is rewritten by shared/flagCopy.js (its
+  // rule 'settings-privacy-log' finds the sentence in the catalog); any other language has a second message for it
+  // (privacy.bodySync), because the rule only knows the English words. This page already asks for the flags
+  // (SettingsSlots), so reading one here costs no request.
+  const syncOn = useFeatures().event_sync;
+  const copy = (text: string) => flagAware(text, flag => flag === 'event_sync' && syncOn);
+  const english = getLocale() === 'en';
   const {
     detectionSensitivity, setSensitivity,
     theme, setTheme,
@@ -550,7 +560,7 @@ export function Settings({ onUpgrade }: { onUpgrade?: () => void }) {
           <div>
             <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('privacy.heading')}</p>
             <p className="mt-0.5 text-sm text-stone-600 dark:text-stone-300">
-              {t('privacy.body')}
+              {syncOn && !english ? t('privacy.bodySync') : copy(t('privacy.body'))}
             </p>
           </div>
         </div>

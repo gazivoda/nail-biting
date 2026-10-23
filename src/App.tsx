@@ -201,7 +201,7 @@ export default function App() {
   }
 
   // Compare pages
-  if (path.startsWith('/compare/') || path.startsWith('/solutions/')) {
+  if (path.startsWith('/compare/') || path.startsWith('/solutions/') || path.startsWith('/features/')) {
     return (
       <Suspense fallback={null}>
         <ComparePage path={path} />

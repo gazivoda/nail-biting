@@ -12,6 +12,7 @@ import { Testimonials } from '../components/site/Testimonials';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
 import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN } from '../../shared/plans.js';
+import { useFlagCopy } from '../features/useFlagCopy';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
 // page's critical path must never pay for. Lazy so it lands in its own chunk,
@@ -167,6 +168,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
   // Stays false until the visitor asks for the demo: the lazy import is only
   // ever triggered by this flag, which is what keeps MediaPipe off a page view.
   const [demoStarted, setDemoStarted] = useState(false);
+  // Sentences that stop being true when a feature flag is on (sync, other sign-in methods, a phone
+  // screen) go through `copy`. With every flag off it returns the text it was given, unchanged.
+  const copy = useFlagCopy();
 
   // Links from blog posts, the calculator and the tracker point at /#live-demo.
   // The page is client-rendered after the session check, so the browser's own
@@ -215,8 +219,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                   beside it rather than in the privacy section and FAQ further down.
                   Mirrored in server.js. */}
               <p className="sg-note mt-1">
-                Detection runs on your device and sends no camera data while it runs. Sign in with Google
-                (it opens in a new tab). Cancel anytime.
+                {copy('Detection runs on your device and sends no camera data while it runs. Sign in with Google (it opens in a new tab). Cancel anytime.')}
               </p>
             </div>
 
@@ -391,8 +394,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             </div>
             <div className="lg:col-span-8">
               <p className="sg-lede text-[color:var(--sg-ink)]">
-                Sign in with Google (it opens in a new tab), allow the camera, and get on with your
-                work. When your hand reaches your mouth, it goes off. That's the whole setup.
+                {copy("Sign in with Google (it opens in a new tab), allow the camera, and get on with your work. When your hand reaches your mouth, it goes off. That's the whole setup.")}
               </p>
               <p className="sg-small mt-3">
                 It runs in your desktop browser, so there's nothing to download. You can install it
@@ -409,7 +411,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 <li>Keep the app open while you work. If you switch to another tab, press Minimize so a small window keeps watching.</li>
                 <li>It reacts to a hand near your mouth, not only to biting, so resting your chin on your fingers can set it off. Sensitivity has three levels.</li>
                 <li>It makes a noise. Pick a quieter sound, turn it down, or use a screen flash instead.</li>
-                <li>Your history is stored in this browser, so it doesn't follow you to another computer.</li>
+                <li>{copy("Your history is stored in this browser, so it doesn't follow you to another computer.")}</li>
               </ul>
             </div>
           </div>
@@ -491,17 +493,13 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               </div>
               <div className="grid gap-6 border-t border-[color:var(--sg-rule)] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:px-14">
                 <p className="sg-body text-[color:var(--sg-ink)]">
-                  A camera pointed at you all day is a lot to trust an app with, so detection runs
-                  entirely in your browser, on your own computer. No camera data is sent while it runs. Signing in and paying
-                  use the network.
+                  {copy('A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, on your own computer. No camera data is sent while it runs. Signing in and paying use the network.')}
                 </p>
                 {/* "The list stays empty" was not true on a first run: starting
                     detection downloads the models. Say what a visitor will see. */}
                 <p className="sg-body text-[color:var(--sg-ink)]">
-                  <strong className="font-bold">Check it yourself:</strong> open your browser's developer
-                  tools, go to the Network tab and start detection. Once the detection models have
-                  downloaded, nothing carrying camera data is sent while it watches. It keeps working with the Wi-Fi off,
-                  and your history lives in this browser: clear the site's data and it's gone.
+                  <strong className="font-bold">Check it yourself:</strong>{' '}
+                  {copy("open your browser's developer tools, go to the Network tab and start detection. Once the detection models have downloaded, nothing carrying camera data is sent while it watches. It keeps working with the Wi-Fi off, and your history lives in this browser: clear the site's data and it's gone.")}
                 </p>
               </div>
             </div>
@@ -560,7 +558,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                     {q}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
                   </summary>
-                  <p className="sg-body sg-measure pb-6">{a}</p>
+                  <p className="sg-body sg-measure pb-6">{copy(a)}</p>
                 </details>
               ))}
             </div>

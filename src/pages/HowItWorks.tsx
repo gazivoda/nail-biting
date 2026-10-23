@@ -6,6 +6,7 @@ import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
 import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
+import { useFlagCopy } from '../features/useFlagCopy';
 
 // /how-it-works, in the homepage's sign system (tokens in `.sg-page`, see
 // DESIGN.md). The h1, the standfirst, "Why awareness is the bottleneck", the
@@ -75,6 +76,7 @@ const LINKS = [
 
 export function HowItWorks() {
   useTheme('light');
+  const copy = useFlagCopy();   // the log row and one answer change when sync is on; unchanged otherwise
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -152,7 +154,7 @@ export function HowItWorks() {
             {SPECS.map(spec => (
               <div key={spec.label} className="grid gap-1 border-b border-[color:var(--sg-rule)] py-4 sm:grid-cols-12 sm:gap-10">
                 <dt className="font-bold sm:col-span-4">{spec.label}</dt>
-                <dd className="sg-body sm:col-span-8">{spec.value}</dd>
+                <dd className="sg-body sm:col-span-8">{copy(spec.value)}</dd>
               </div>
             ))}
           </dl>
@@ -168,7 +170,7 @@ export function HowItWorks() {
                     {q}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
                   </summary>
-                  <p className="sg-body pb-5">{a}</p>
+                  <p className="sg-body pb-5">{copy(a)}</p>
                 </details>
               ))}
             </div>
