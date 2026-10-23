@@ -8,6 +8,7 @@ import { useAppStore } from '../../store/useAppStore';
 import type { DetectionSensitivity } from '../../types';
 import type { Behavior } from '../../storage/eventModel';
 import { useActiveBehaviors } from '../../detection/useBehaviors';
+import { alarmHandExtras } from '../../detection/controlsRegistry';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -34,7 +35,8 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   const { pipActive, pipWindow, pipSupported, togglePiP } = usePictureInPicture(videoRef);
 
   const behaviors = useActiveBehaviors();
-  const handleAlert = (behavior: Behavior) => logIncident('auto-detected', true, { behavior });
+  // SEAM (WS3): alarmHandExtras() is {} unless the false-alarm controls are on, then { hand } (left or right as the person sees it).
+  const handleAlert = (behavior: Behavior) => logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });
 
   const handleRetry = useCallback(() => {
     if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
