@@ -89,7 +89,7 @@ export function DetectionSettings() {
         </div>
       </Row>
 
-      <FalsePositiveRate incidents={incidents} className="!mt-0" />
+      <FalsePositiveRate incidents={incidents} />
 
       <p className="text-sm text-stone-600 dark:text-stone-300">
         What is remembered is a handful of numbers per pose, for example how far a fingertip was from your lips. No picture, no video. They are kept on this device only: they are not part of your history, are not synced and are not uploaded.

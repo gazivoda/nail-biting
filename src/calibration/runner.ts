@@ -41,7 +41,8 @@ export async function openCamera(video: HTMLVideoElement): Promise<{ ok: true; c
       camera: {
         stop() {
           stream.getTracks().forEach(t => t.stop());
-          video.srcObject = null;
+          // Only if the picture is still ours: a second open on the same element (React's double mount in development) must not be blanked by the first one's late cleanup.
+          if (video.srcObject === stream) video.srcObject = null;
         },
       },
     };
