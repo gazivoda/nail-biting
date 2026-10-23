@@ -47,7 +47,8 @@ export function RecentList({ onSeeAll }: { onSeeAll?: () => void }) {
       ) : (
         <ul className="mt-2 divide-y divide-stone-200 overflow-hidden rounded-2xl border border-stone-200 bg-white dark:divide-ink-400 dark:border-ink-400 dark:bg-ink-50">
           {rows.map(row => (
-            <li key={row.id} className="flex min-h-12 items-center gap-3 px-4 py-2">
+            // flex-wrap: at 320 px (400% zoom) the row, with its no-wrap time, was 6 px wider than the screen and the page scrolled sideways.
+            <li key={row.id} className="flex min-h-12 flex-wrap items-center gap-x-3 px-4 py-2">
               <span className={`inline-flex items-center rounded-full border px-3 py-1 text-[13px] font-semibold ${PILL[row.kind]}`}>{row.label}</span>
               <span className="ml-auto whitespace-nowrap text-right font-mono text-[13px] font-semibold tabular-nums text-stone-600 dark:text-stone-300">{whenLabel(row.ts)}</span>
             </li>
