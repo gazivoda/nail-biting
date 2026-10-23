@@ -34,6 +34,10 @@ server/
   routes/index.js         the route registry (ROUTE_MODULES, buildContext, registerRoutes)
   routes/features.js      GET /api/features
   routes/_example.js      worked example of a flagged route module
+  routes/billing.js       WS9: lifetime, gifts, referrals, free tier (flagged); hooks for the webhook and /api/user/me
+  billing/                WS9: entitlements, gift codes, referrals, purchases, webhook hook (see ws9-notes.md)
+shared/                   WS9: plans.js (TRIAL_DAYS and the other plan numbers), access.js (the one access decision);
+                          plain JS + .d.ts, imported by src/, server/, scripts/ and vite.config.ts
 email.js                  Resend: welcome, feedback, admin notice, generic sendEmail()
 trialFollowup.js          hourly job: one email 24 h after a trial ends
 src/
@@ -457,7 +461,8 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 
 - `GET /api/auth/google`: sets a 5-minute `oauth_state` cookie, redirects to Google (`profile`, `email`).
 - `GET /api/auth/callback`: checks `state` against the cookie (skipped when `ELECTRON_PROTOCOL` is set), exchanges the
-  code, verifies the id token, **creates the user on first sign-in with a trial of 3 days (hard-coded inline)**,
+  code, verifies the id token, **creates the user on first sign-in with a trial of `TRIAL_MS`
+  (`shared/plans.js`, `TRIAL_DAYS` env, default 3 days)**,
   sends the welcome + admin emails, signs a JWT (`signToken`, HS256, 14 days), then either sets the `nh_session`
   HttpOnly cookie and redirects to `/` (web) or redirects to `stopbiting://auth?token=...` (when `ELECTRON_PROTOCOL`).
   Errors redirect to `/#auth_error=...`.
@@ -487,7 +492,12 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 - `POST /api/paddle/webhook` (raw body, HMAC-SHA256 `Paddle-Signature` `ts=...;h1=...` check in
   `verifyPaddleWebhookSignature`): `subscription.created|activated|updated` -> active (+ plan from the billing
   interval, end date), `paused`, `resumed`, `canceled` -> cancelled, `transaction.payment_failed` -> expired. User is
-  found by `custom_data.userId`, else by customer email. It is **not idempotent today** (WS9 must make it so).
+  found by `custom_data.userId`, else by customer email. WS9 (no flag; it acts whenever the matching price id is
+  configured): right after the signature check and the JSON parse, `app.locals.billingWebhook.take(event, res)`
+  (`server/billing/webhook.js`) ignores an event id it has already handled (table `paddle_events`), handles
+  `transaction.completed` (lifetime, gift, first payment for referrals) and `adjustment.*` (refund, chargeback) itself,
+  and records the other events once the handlers below have answered 2xx. The subscription handlers are unchanged.
+  Out-of-order delivery of `subscription.*` is still not guarded (`ws9-notes.md`).
 - `POST /api/paddle/verify-subscription` (auth): looks the transaction up via the Paddle API, then the subscription;
   accepts `active`/`trialing`; writes the same fields. `GET /api/paddle/portal-session` (auth): returns the Paddle
   customer-portal URL.
@@ -648,7 +658,8 @@ although no server is spawned any more, commit 2b633d6).
 | `server/routes/<ws>.js` | that workstream | `ROUTE_MODULES` (one import + one entry each) |
 | `server/db/migrate.js` | WS0 | `h.createTable / createIndex / addColumn` |
 | `email.js` | WS0 added `sendEmail`; WS8/WS5 call it, new templates go in their own module | `ctx.sendEmail` |
-| `Dockerfile` | WS0 added `COPY server ./server` | any new top-level server path must be copied |
+| `Dockerfile` | WS0 added `COPY server ./server`; WS9 `COPY shared ./shared` (both stages) and the `TRIAL_DAYS`, lifetime and gift build args | any new top-level server path must be copied |
+| `shared/plans.js`, `shared/access.js` | WS9 | the trial length, free-tier / referral / gift numbers, and the access decision; edit them, not copies of them |
 | Detection rule: `biteDetector.ts`, zone modules, `scripts/eval-detection/**` | WS1 then WS3 | extras on `logIncident` carry `behavior`/`hand` |
 | Detection loop / PiP: `useDetection.ts` loop, `usePictureInPicture.ts`, `PiPWindow.tsx` | WS7a (wave 3) | before then, one-line seams only |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 adds "Not a bite" at the same seam | `handleAlert` is the one-line seam for `{ behavior, hand }` |
@@ -693,7 +704,9 @@ although no server is spawned any more, commit 2b633d6).
 - **`ELECTRON_PROTOCOL` is global.** If production sets it (`COOLIFY_DEPLOY.md` says to), the web OAuth callback would
   redirect to `stopbiting://` instead of setting the cookie. The production value is unverified; WS8 must check before
   adding sign-in methods.
-- **Trial length is hard-coded** (`3 * 24 * 60 * 60 * 1000` in the Google callback) and in copy; WS9 centralises it.
+- **Trial length** is now one constant, `TRIAL_DAYS` in `shared/plans.js` (default 3, env override, build and runtime).
+  Copy spells it with `${TRIAL_*}` tokens (`{{TRIAL_*}}` in `index.html`); `scripts/trialLength.test.mjs` fails when a
+  literal reappears. `scripts/sync-seo.mjs` fills the tokens before its extractors run.
 - **`PWAGuideModal` says "Works offline: detection runs fully on-device, no internet needed"**, but the worker does not
   cache the models. WS11a/WS6: do not repeat that claim.
 - The persisted payload grew by about 60 percent with v2 (see section 3). `MAX_INCIDENTS` is still 5000.
