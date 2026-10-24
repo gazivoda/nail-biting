@@ -109,8 +109,9 @@ if (mode === 'compare') {
         for (const path of PAGES) {
           await page.send('Page.navigate', { url: rig.url + path });
           await sleep(5000);
-          // outerHTML hides where one text run ends and the next begins ("Three days" + " free first..." is two text nodes),
-          // and Chrome positions glyphs per run, so the shape of the text nodes is compared too: the same HTML can still paint differently
+          // outerHTML hides where one text run ends and the next begins (a heading word and the rest of its sentence can be two
+          // text nodes), and Chrome positions glyphs per run, so the shape of the text nodes is compared too: the same HTML can
+          // still paint differently
           out[`${name} ${path}`] = mask(await page.eval('document.documentElement.outerHTML')) + '\n<!-- text nodes -->\n' + await page.eval(SHAPE);
         }
       }
