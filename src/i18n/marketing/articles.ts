@@ -86,8 +86,46 @@ export function buildPricing(tr: Translator, locale: SiteLocale): PageFile {
     faq,
     faqName: m('pricing.faqName'),
     breadcrumb: [
-      [p('bc.home'), `https://stopbiting.today${pagePath(locale, 'home')}`],
+      [c('bc.home'), `https://stopbiting.today${pagePath(locale, 'home')}`],
       [p('bc.pricing'), `https://stopbiting.today${pagePath(locale, 'pricing')}`],
     ],
+  };
+}
+
+// ── /about ───────────────────────────────────────────────────────────────────
+
+export function buildAbout(tr: Translator, locale: SiteLocale): PageFile {
+  const a = (key: string) => tr.text('marketing-about', key);
+  const c = (key: string) => tr.text('marketing-chrome', key);
+  const m = (key: string) => tr.text('marketing-meta', key);
+  const html = (key: string, tags?: Parameters<Translator['html']>[3]) => tr.html('marketing-about', key, undefined, tags);
+  const paragraphs = (scope: string, count: number) => Array.from({ length: count }, (_, i) => `<p>${html(`${scope}.p${i + 1}`)}</p>`).join('');
+
+  const article =
+    `<h1>${e(a('hero.title'))}</h1>` +
+    `<p class="article-summary">${e(a('hero.lede'))}</p>` +
+    `<section><h2>${e(a('story.heading'))}</h2>${paragraphs('story', 4)}</section>` +
+    `<section><h2>${e(a('does.heading'))}</h2>${paragraphs('does', 3)}</section>` +
+    `<section><h2>${e(a('privacy.heading'))}</h2>${paragraphs('privacy', 3)}</section>` +
+    `<section><h2>${e(a('tech.heading'))}</h2>` +
+    `<p>${html('tech.p1', { link: inner => `<a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker">${inner}</a>` })}</p>` +
+    `<p>${html('tech.p2')}</p></section>` +
+    `<section><h2>${e(a('site.heading'))}</h2>` +
+    `<p>${html('site.p1', { link: inner => `<a href="/editorial-policy">${inner}</a>` })}</p></section>` +
+    `<section><h2>${e(c('bottom.heading'))}</h2><p>${e(c('bottom.note'))}</p></section>`;
+
+  return {
+    title: m('about.title'),
+    description: m('about.description'),
+    name: m('about.name'),
+    schemaDescription: m('about.description'),
+    article,
+    faq: [],
+    faqName: '',
+    breadcrumb: [
+      [c('bc.home'), `https://stopbiting.today${pagePath(locale, 'home')}`],
+      [a('bc.about'), `https://stopbiting.today${pagePath(locale, 'about')}`],
+    ],
+    personDescription: m('about.personDescription'),
   };
 }

@@ -9,7 +9,7 @@
 
 import { LOCALE_INFO } from '../core.ts';
 import { siteBag } from './bag.ts';
-import { buildPricing, type PageFile } from './articles.ts';
+import { buildAbout, buildPricing, type PageFile } from './articles.ts';
 import { createTranslator, mergeCatalogs, type CatalogLike } from './translate.ts';
 import {
   HREFLANG, LOCALIZED_PAGES, OG_LOCALE, SITE_FLAG, URL_PREFIX, pagePath, type SiteLocale, type SitePage,
@@ -84,6 +84,7 @@ export function buildLocaleFile({ locale, ledger = {}, site, meta, reviewed, tri
 
   const builders: Partial<Record<SitePage, () => PageFile>> = {
     pricing: () => buildPricing(tr, locale),
+    about: () => buildAbout(tr, locale),
   };
   const pages: Partial<Record<SitePage, PageFile>> = {};
   const paths: Partial<Record<SitePage, string>> = {};

@@ -13,6 +13,12 @@ export const messages = {
   'pricing.schemaDescription': 'Pricing for Stop Biting: {trialHyphen} free trial, then $2.99/month or $29/year.',
   'pricing.faqName': 'Stop Biting pricing questions',
 
+  // ── /about ──
+  'about.title': 'About Stop Biting | Built by Igor Gazivoda',
+  'about.description': 'Stop Biting was built by Igor Gazivoda, a developer who bit his nails for 20 years. On-device AI detection that sends no camera data anywhere while it runs.',
+  'about.name': 'About Stop Biting',
+  'about.personDescription': 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
+
   // ── The product, as structured data (SoftwareApplication, on every localized page) ──
   'app.description': 'Web app that uses your webcam and on-device AI (MediaPipe) to detect nail biting (onychophagia) in real-time. Sounds an alarm the moment your hand nears your mouth. Includes streak tracking, incident logging, habit reversal training guidance, and 7-day bite history. No camera data is sent while it runs.',
   'app.os': 'Web browser (Mac or Windows)',

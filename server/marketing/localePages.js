@@ -267,6 +267,26 @@ export function schemaNodes(page, data, content, canonical, k) {
         primaryImageOfPage: image,
         ...dated,
       }, faq, breadcrumb].filter(Boolean);
+    case 'about':
+      return [{
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        '@id': canonical,
+        url: canonical,
+        name: content.name,
+        description: content.schemaDescription,
+        isPartOf: { '@id': k.WEBSITE_ID },
+        about: { '@id': k.ORG_ID },
+        publisher: { '@id': k.ORG_ID },
+        speakable: k.SCHEMA_SPEAKABLE,
+        inLanguage,
+        ...dated,
+      }, {
+        // The founder: the same node (@id) as on every article and on the English page, described in this language.
+        '@context': 'https://schema.org',
+        ...k.SCHEMA_AUTHOR,
+        description: content.personDescription,
+      }, breadcrumb];
     default:
       return [breadcrumb];
   }

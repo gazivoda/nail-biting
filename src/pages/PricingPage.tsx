@@ -52,8 +52,8 @@ export function PricingPage() {
       <SiteHeader page="pricing" />
 
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
-        <nav aria-label={t('bc.label')} className="sg-note mb-8 flex items-center gap-2">
-          <a href={paths.home} className="hover:text-[color:var(--sg-ink)]">{t('bc.home')}</a>
+        <nav aria-label={c('bc.label')} className="sg-note mb-8 flex items-center gap-2">
+          <a href={paths.home} className="hover:text-[color:var(--sg-ink)]">{c('bc.home')}</a>
           <span aria-hidden="true">/</span>
           <span className="text-[color:var(--sg-ink)]">{t('bc.pricing')}</span>
         </nav>

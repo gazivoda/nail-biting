@@ -12,6 +12,9 @@ export const messages: Record<keyof typeof en, string> = {
   'nav.blog': 'Blog',
   'nav.signin': 'Entrar',
 
+  'bc.label': 'Trilha de navegação',
+  'bc.home': 'Início',
+
   'trial.start': 'Começar o teste grátis',
   'trial.send': 'Enviar o link para o meu computador',
   'trial.email': 'Enviar o link para o meu computador por e-mail',
@@ -26,6 +29,9 @@ export const messages: Record<keyof typeof en, string> = {
   'cta.body': 'Deixe rodando durante o seu próximo dia de trabalho e depois abra o Histórico para ver quando você rói as unhas.',
 
   'footer.about': 'Um alarme de consciência para roer as unhas (onicofagia), criado por <link>Igor Gazivoda</link>. A detecção roda no seu navegador. Nenhum dado da câmera é enviado enquanto ela funciona.',
+  'bottom.heading': 'Experimente grátis por {trialDays, plural, one {# dia} other {# dias}}.',
+  'bottom.note': 'Sem cartão para começar. Depois, {pMonthly} por mês ou {pYearlyShort} por ano, cancele quando quiser.',
+
   'footer.nav': 'Navegação do rodapé',
   'footer.home': 'Início',
   'footer.blog': 'Blog',

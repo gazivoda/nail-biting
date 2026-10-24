@@ -12,6 +12,9 @@ export const messages: Record<keyof typeof en, string> = {
   'nav.blog': 'Blog',
   'nav.signin': 'Anmelden',
 
+  'bc.label': 'Brotkrümelnavigation',
+  'bc.home': 'Startseite',
+
   'trial.start': 'Kostenlose Testphase starten',
   'trial.send': 'Link an meinen Computer senden',
   'trial.email': 'Link für meinen Computer per E-Mail schicken',
@@ -26,6 +29,9 @@ export const messages: Record<keyof typeof en, string> = {
   'cta.body': 'Lass es durch deinen nächsten Arbeitstag laufen, öffne dann den Verlauf und sieh, wann du beißt.',
 
   'footer.about': 'Ein Alarm, der dir Nägelkauen (Onychophagie) bewusst macht, entwickelt von <link>Igor Gazivoda</link>. Die Erkennung läuft in deinem Browser. Solange sie läuft, werden keine Kameradaten gesendet.',
+  'bottom.heading': 'Teste es {trialDays, plural, one {# Tag} other {# Tage}} kostenlos.',
+  'bottom.note': 'Ohne Karte zum Start. Danach {pMonthly} im Monat oder {pYearlyShort} im Jahr, jederzeit kündbar.',
+
   'footer.nav': 'Navigation im Seitenfuß',
   'footer.home': 'Startseite',
   'footer.blog': 'Blog',

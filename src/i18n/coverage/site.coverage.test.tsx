@@ -35,6 +35,7 @@ import { TrialButton } from '../../components/site/TrialButton';
 import { LanguageSwitcher } from '../../components/site/LanguageSwitcher';
 import { PricingSection } from '../../components/PricingSection';
 import { PricingPage } from '../../pages/PricingPage';
+import { About } from '../../pages/About';
 import { LocalizedSite } from '../../pages/LocalizedSite';
 import { PRICE_IDS } from '../../billing/env';
 
@@ -46,6 +47,7 @@ export const COVERS = [
   'src/components/site/LanguageSwitcher.tsx',
   'src/components/PricingSection.tsx',
   'src/pages/PricingPage.tsx',
+  'src/pages/About.tsx',
   'src/pages/LocalizedSite.tsx',
 ];
 
@@ -79,15 +81,15 @@ describe('site chrome and pricing, pseudo-locale', () => {
     const html = renderToStaticMarkup(<div><ClosingCta /><TrialButton /></div>);
     expectAllTranslated(html, { allow: ALLOW });
     expectNoMissingParams(html);
-    expect(html).toMatch(/3 Tage gratis, ohne Karte, danach 2,99[\s ]\$\/Monat/);
+    expect(html).toMatch(/3 Tage gratis, ohne Karte, danach 2,99[\s\u00a0]\$\/Monat/);
   });
 
   it('the pricing cards show the list prices the way German writes money, in both branches', () => {
     const plain = renderToStaticMarkup(<PricingSection />);
     expectAllTranslated(plain, { allow: ALLOW });
     expectNoMissingParams(plain);
-    expect(plain).toMatch(/29,00[\s ]\$/);
-    expect(plain).toMatch(/2,99[\s ]\$/);
+    expect(plain).toMatch(/29,00[\s\u00a0]\$/);
+    expect(plain).toMatch(/2,99[\s\u00a0]\$/);
     // regional prices from Paddle: the localized branch (its own two sentences)
     h.prices = { [PRICE_IDS.monthly]: { total: '€2,79', currency: 'EUR' }, [PRICE_IDS.yearly]: { total: '€27', currency: 'EUR' } };
     if (PRICE_IDS.monthly && PRICE_IDS.yearly) {
@@ -102,6 +104,14 @@ describe('site chrome and pricing, pseudo-locale', () => {
     expectAllTranslated(html, { allow: ALLOW });
     expectNoMissingParams(html);
     expect(html).toContain('Fragen zu den Preisen');
+  });
+
+  it('the whole /about page is translated, in both states of the log sentence', () => {
+    const html = renderToStaticMarkup(<About />);
+    expectAllTranslated(html, { allow: [...ALLOW, 'MediaPipe', 'WebAssembly', 'HRT', 'Analytics', 'Hand', 'Landmarker'] });
+    expectNoMissingParams(html);
+    expect(html).toContain('Die Geschichte des Gründers');
+    expect(html).toContain('Dein Alarm- und Bissprotokoll wird in deinem Browser gespeichert.');   // sync off
   });
 
   it('LocalizedSite draws the page of its address once the catalog is here, and nothing before', () => {
@@ -165,6 +175,20 @@ describe('site chrome and pricing, English', () => {
       'Can I cancel anytime?', 'Yes. Cancel anytime from the app settings and you keep access until the end of the paid period. See the <a href="/refund-policy" class="sg-link">refund policy</a> for details.',
       'Try it free for 3 days.', 'No card to start. Curious first? Read <a href="/how-it-works" class="sg-link">how the detection works</a>, or <a href="/tools/nail-biting-cost-calculator" class="sg-link">work out what biting costs you</a>.',
       '<a href="/" class="hover:text-[color:var(--sg-ink)]">Home</a>',
+    ]) expect(html, s).toContain(s);
+  });
+
+  it('the about page says what it always said', () => {
+    const html = renderToStaticMarkup(<About />);
+    for (const s of [
+      'About Stop <span class="sg-hl">Biting</span>', 'Built by a nail biter, for nail biters. Here&#x27;s why this app exists.',
+      'The founder&#x27;s story', 'I&#x27;m Igor Gazivoda, a software developer. I bit my nails for over 20 years. Not occasionally: constantly, automatically, without noticing until the damage was already done.',
+      'The gold-standard treatment literally starts with &quot;awareness training&quot; before anything else.',
+      'What Stop Biting does', 'Privacy: the non-negotiable', 'Your alarm and bite log is stored in your browser. The site counts page visits with Google Analytics; that never includes anything from your camera.',
+      'The technology', '<a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" class="sg-link">Google MediaPipe&#x27;s Hand Landmarker</a>',
+      'How this site is written', '<a href="/editorial-policy" class="sg-link">editorial policy and corrections page</a>',
+      'Try it free for 3 days.', 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
+      '<span class="text-[color:var(--sg-ink)]">About</span>',
     ]) expect(html, s).toContain(s);
   });
 

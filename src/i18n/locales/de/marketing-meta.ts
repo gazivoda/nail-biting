@@ -8,6 +8,11 @@ export const messages: Record<keyof typeof en, string> = {
   'pricing.schemaDescription': 'Preise von Stop Biting: kostenlose Testphase von {trialDays, plural, one {# Tag} other {# Tagen}}, danach {pMonthly}/Monat oder {pYearlyShort}/Jahr.',
   'pricing.faqName': 'Fragen zu den Preisen von Stop Biting',
 
+  'about.title': 'Über Stop Biting | Entwickelt von Igor Gazivoda',
+  'about.description': 'Entwickelt von Igor Gazivoda, einem Entwickler, der 20 Jahre an den Nägeln kaute. KI-Erkennung auf dem Gerät: Solange sie läuft, werden keine Kameradaten gesendet.',
+  'about.name': 'Über Stop Biting',
+  'about.personDescription': 'Igor Gazivoda ist der Gründer von Stop Biting, einer App mit KI auf dem Gerät zur Erkennung von Nägelkauen, entwickelt mit MediaPipe und WebAssembly.',
+
   'app.description': 'Web-App, die deine Webcam und eine KI auf deinem Gerät (MediaPipe) nutzt, um Nägelkauen (Onychophagie) in Echtzeit zu erkennen. Sie löst einen Alarm aus, sobald sich deine Hand dem Mund nähert. Mit Serien-Tracking, Vorfallsprotokoll, Anleitung zum Habit-Reversal-Training (HRT) und einem 7-Tage-Verlauf der Bisse. Solange sie läuft, werden keine Kameradaten gesendet.',
   'app.os': 'Webbrowser (Mac oder Windows)',
   'app.offer.trial.name': 'Kostenlose Testphase',

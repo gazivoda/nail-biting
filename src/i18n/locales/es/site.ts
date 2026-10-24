@@ -5,9 +5,11 @@ import type { SiteCatalog } from '../../scopes/site';
 import { messages as plans } from './plans.ts';
 import { messages as chrome } from './marketing-chrome.ts';
 import { messages as pricing } from './marketing-pricing.ts';
+import { messages as about } from './marketing-about.ts';
 
 export const catalog = {
   plans,
   'marketing-chrome': chrome,
   'marketing-pricing': pricing,
+  'marketing-about': about,
 } satisfies SiteCatalog;

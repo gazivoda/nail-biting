@@ -30,7 +30,7 @@ export type SitePage = (typeof SITE_PAGES)[number];
  * copy follows it section by section and its tests pass; until then it has no localized address, no hreflang and no
  * language switcher. (The other core pages are English only.)
  */
-export const LOCALIZED_PAGES: readonly SitePage[] = ['pricing'];
+export const LOCALIZED_PAGES: readonly SitePage[] = ['pricing', 'about'];
 
 /** The English address of each localized page. */
 export const ENGLISH_PATHS: Readonly<Record<SitePage, string>> = {

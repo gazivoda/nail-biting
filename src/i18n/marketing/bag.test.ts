@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { BAG_NAMES, siteBag } from './bag';
 import { TRIAL_COPY, TRIAL_DAYS } from '../../../shared/plans.js';
 
-const nbsp = (s: unknown) => String(s).replace(/ /g, ' ');
+const nbsp = (s: unknown) => String(s).replace(/\u00a0/g, ' ');
 
 describe('the shared values of the marketing messages', () => {
   it('has every name the catalog tests treat as shared', () => {

@@ -5,8 +5,6 @@
 import { createScope } from '../scope.ts';
 
 export const messages = {
-  'bc.label': 'Breadcrumb',
-  'bc.home': 'Home',
   'bc.pricing': 'Pricing',
 
   'includes.heading': 'What every plan includes',

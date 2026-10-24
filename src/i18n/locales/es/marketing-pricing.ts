@@ -2,8 +2,6 @@
 import type { messages as en } from '../../scopes/marketing-pricing';
 
 export const messages: Record<keyof typeof en, string> = {
-  'bc.label': 'Ruta de navegación',
-  'bc.home': 'Inicio',
   'bc.pricing': 'Precios',
 
   'includes.heading': 'Qué incluye cada plan',

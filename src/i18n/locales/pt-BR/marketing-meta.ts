@@ -8,6 +8,11 @@ export const messages: Record<keyof typeof en, string> = {
   'pricing.schemaDescription': 'Preços do Stop Biting: teste grátis de {trialDays, plural, one {# dia} other {# dias}}, depois {pMonthly}/mês ou {pYearlyShort}/ano.',
   'pricing.faqName': 'Perguntas sobre os preços do Stop Biting',
 
+  'about.title': 'Sobre o Stop Biting | Criado por Igor Gazivoda',
+  'about.description': 'Criado por Igor Gazivoda, um desenvolvedor que roeu as unhas por 20 anos. Detecção por IA no dispositivo: nenhum dado da câmera é enviado enquanto ela funciona.',
+  'about.name': 'Sobre o Stop Biting',
+  'about.personDescription': 'Igor Gazivoda é o fundador do Stop Biting, um app com IA no dispositivo para detectar quando você rói as unhas, criado com MediaPipe e WebAssembly.',
+
   'app.description': 'App web que usa sua webcam e uma IA que roda no seu dispositivo (MediaPipe) para detectar em tempo real quando você rói as unhas (onicofagia). Toca um alarme no momento em que sua mão se aproxima da boca. Inclui acompanhamento de sequências, registro de ocorrências, orientação de treinamento de reversão de hábito (HRT) e histórico de mordidas de 7 dias. Nenhum dado da câmera é enviado enquanto ela funciona.',
   'app.os': 'Navegador web (Mac ou Windows)',
   'app.offer.trial.name': 'Teste grátis',

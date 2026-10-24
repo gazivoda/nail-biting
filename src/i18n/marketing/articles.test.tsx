@@ -26,10 +26,11 @@ vi.mock('../../billing/prices', async importOriginal => ({
 }));
 
 import { PricingPage } from '../../pages/PricingPage';
+import { About } from '../../pages/About';
 
 const SITE = { es: esSite, de: deSite, 'pt-BR': ptSite } as const;
 const META = { es: esMeta, de: deMeta, 'pt-BR': ptMeta } as const;
-const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage };
+const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage, about: About };
 
 const decode = (s: string) => s
   .replace(/&nbsp;/g, ' ').replace(/&#x27;|&#39;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -38,7 +39,7 @@ const decode = (s: string) => s
 const norm = (s: string) => decode(s)
   .replace(/<\/?(?:a|strong|em|b|i|mark)\b[^>]*>/g, '')
   .replace(/<[^>]*>/g, ' ')
-  .replace(/[  ]/g, ' ')
+  .replace(/[\u00a0\u202f]/g, ' ')
   .replace(/\s+/g, ' ')
   .trim();
 /** The text of each heading, paragraph, list item and question, in order. */
@@ -84,6 +85,7 @@ describe.each(SITE_LOCALES)('the server-rendered article follows the page: %s', 
 
   it.each(LOCALIZED_PAGES)('%s: the FAQPage pairs are the visible questions and answers', page => {
     const content = resolved.pages[page]!;
+    if (content.faq.length === 0) return;   // a page without a visible FAQ has no FAQPage markup (About)
     const text = norm(mainOf(renderPage(locale, page)));
     expect(content.faq.length).toBeGreaterThan(0);
     for (const { q, a } of content.faq) {

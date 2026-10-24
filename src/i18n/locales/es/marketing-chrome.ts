@@ -12,6 +12,9 @@ export const messages: Record<keyof typeof en, string> = {
   'nav.blog': 'Blog',
   'nav.signin': 'Iniciar sesión',
 
+  'bc.label': 'Ruta de navegación',
+  'bc.home': 'Inicio',
+
   'trial.start': 'Empezar la prueba gratuita',
   'trial.send': 'Enviar el enlace a mi computadora',
   'trial.email': 'Enviarme por correo el enlace para mi computadora',
@@ -26,6 +29,9 @@ export const messages: Record<keyof typeof en, string> = {
   'cta.body': 'Déjalo funcionando durante tu próxima jornada laboral y luego abre el Historial para ver cuándo te muerdes las uñas.',
 
   'footer.about': 'Una alarma para tomar conciencia de cuándo te muerdes las uñas (onicofagia), creada por <link>Igor Gazivoda</link>. La detección se ejecuta en tu navegador. No se envían datos de la cámara mientras funciona.',
+  'bottom.heading': 'Pruébalo gratis durante {trialDays, plural, one {# día} other {# días}}.',
+  'bottom.note': 'Sin tarjeta para empezar. Después, {pMonthly} al mes o {pYearlyShort} al año; cancela cuando quieras.',
+
   'footer.nav': 'Navegación del pie de página',
   'footer.home': 'Inicio',
   'footer.blog': 'Blog',

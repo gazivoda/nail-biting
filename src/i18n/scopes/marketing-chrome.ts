@@ -19,6 +19,10 @@ export const messages = {
   'nav.blog': 'Blog',
   'nav.signin': 'Sign in',
 
+  // ── Breadcrumb (every inner page) ──
+  'bc.label': 'Breadcrumb',
+  'bc.home': 'Home',
+
   // ── Trial button ──
   'trial.start': 'Start free trial',
   'trial.send': 'Send the link to my computer',
@@ -34,6 +38,10 @@ export const messages = {
   'cta.aria': 'Call to action',
   'cta.heading': 'Catch your next <hl>bite.</hl>',
   'cta.body': 'Leave it running through your next workday, then open History and see when you bite.',
+
+  // ── The offer at the foot of an inner page (About, How it works) ──
+  'bottom.heading': 'Try it free for {trialDaysText}.',
+  'bottom.note': 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
 
   // ── Footer ──
   'footer.about': 'An awareness alarm for nail biting (onychophagia), made by <link>Igor Gazivoda</link>. Detection runs in your browser. No camera data is sent while it runs.',
