@@ -70,15 +70,16 @@ each with the flag named. The sentences on those pages that go stale are tabled 
 
 ## WS13 QA reports
 
-Written by the WS13 agent at the same time as this index, so some may not exist yet when you read this; the summary is in the "QA
-results" section at the end of `RELEASE_NOTES.md`. Owner and developers.
+The summary is in the "QA results" section at the end of `RELEASE_NOTES.md`. Owner and developers. The raw results and the
+tools that produced them are kept so every number can be reproduced (commands are in each report).
 
 | File | What it is |
 |---|---|
-| `privacy-audit-report.md` | What the privacy audit recorded during detection sessions with sync off and on: whether any request carried image data, landmarks or frames. (The audit script lives in `scripts/privacy-audit/`.) |
-| `flags-off-diff-report.md` | A comparison of the build with every flag off against what was live before: that nothing visible changed. |
-| `accessibility-report.md` | Keyboard navigation of the new overlays, reduced-motion support for the breathing animation, colour contrast. |
-| `lighthouse-report.md` | Lighthouse results for the site and the PWA / mobile checks. |
+| [`privacy-audit-report.md`](privacy-audit-report.md) | What the privacy audit recorded during 5-minute detection sessions with sync off and on (and a probe build with real alarms): whether any request carried image data, landmarks, frames, video or the diary photo, which hosts were contacted, what a fake camera cannot prove. Raw results in `privacy-audit-results/`; tool in `scripts/privacy-audit/` (`npm run privacy:audit`). |
+| [`flags-off-diff-report.md`](flags-off-diff-report.md) | The build with every flag off compared with what is live (ffbf29a and 46a484c): files, 91 HTTP responses, signed-in DOM and pixels at 1280 and 390 px; every difference explained; findings F1 to F8. Tool in `scripts/flags-off-diff/`. |
+| [`accessibility-report.md`](accessibility-report.md) | Keyboard, focus, Escape, roles, reduced motion and contrast of every new overlay and screen, 29 surfaces, 15 fixes, 14 open issues. Repeatable scripts in `a11y-audit/`. |
+| [`lighthouse-report.md`](lighthouse-report.md) | Lighthouse (performance, SEO, best practices, accessibility) for eight site pages, mobile and desktop, plus Chrome's installability check with `phone_companion` on and off. Raw results in `lighthouse-results/`; tool in `scripts/lighthouse/`. |
+| `../../scripts/qa/gates.sh`, `../../scripts/qa/docker-repro.sh` | Every release gate in one command, and the Dockerfile reproduced by hand (no docker needed). Re-run both after any merge. |
 
 ## Outside this folder, but part of the same hand-over
 
