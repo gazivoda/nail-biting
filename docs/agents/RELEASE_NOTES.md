@@ -1,7 +1,8 @@
 # Stop Biting: release notes for the owner
 
-Written by WS13 on 2026-10-24 against `main` at b6b16f9 (WS11b merged). WS12 (localization) is **not** in this file yet:
-it lands later and the WS13 agent will update this file after it.
+Written by WS13 on 2026-10-24, first against `main` at b6b16f9 (WS11b merged), then updated after WS12a (localization of the app screens) and the
+SEO session's `origin/main` commits were merged. **WS12b (the marketing pages in es, de and pt-BR) is not in this file yet:** it lands later and
+the WS13 agent will update this file after it.
 
 How to read this: every new feature is switched off. With `FEATURE_FLAGS` empty the site behaves as it did before, apart from
 the WS11a site fixes (privacy wording, meta tags, FAQ markup), which are meant to be visible. The detail for each workstream is in
@@ -29,7 +30,7 @@ build arguments · (d) Things only a human can review or verify · (e) Known gap
    same release as the flag. The exact sentences are in section (d).
 4. **Keep `desktop_app` and `experimental` off.** Desktop sign-in does not work against the hosted server, the Mac app is unsigned and
    the Windows app has never been built (`docs/agents/ws7b-notes.md`). The four experimental behaviours were tuned on scenes drawn by
-   the person who wrote the rules. The three `locale_*` flags do nothing until WS12 lands.
+   the person who wrote the rules. The three `locale_*` flags show a machine translation of the signed-in app that no native speaker has read (section (b)).
 5. **Turn `share_links` on a day or two after the deploy that contains it, and together with `event_sync`.** A link shows synced
    history only, and an old service worker can answer `/share/...` with the cached app shell (which loads Google Analytics with the
    token in the address). Details in (f).
@@ -45,8 +46,8 @@ build arguments · (d) Things only a human can review or verify · (e) Known gap
 | | |
 |---|---|
 | Already on production | PUSH #1, `origin/main` at ffbf29a: WS0 to WS5, WS7b, WS8 to WS11a, all 27 flags off. The only visible differences are the WS11a site fixes. |
-| **Moved since** | **`origin/main` is no longer ffbf29a.** Another session (the SEO traffic work) pushed two more commits on top of it: a2f94c5 and 46a484c ("Record verified SEO release..."), touching `server.js` (+25 lines), `vite.config.ts`, the blog data, `public/sitemap.xml`, `public/llms.txt`, three OG images and tests. Local `main` does not contain them. `git merge-tree --write-tree main origin/main` merges cleanly, but **merge `origin/main` into `main` before PUSH #2** (a plain push would be rejected as non-fast-forward), then re-run the gates, `seo:check` (sitemap and llms changed) and `git apply --check` of your Paddle patch (46a484c touched `server.js`). |
-| Not on production yet | WS6 (phone view), WS7a (background watching), WS11b (feature pages and flag-aware copy), WS12 (when it lands) and the WS13 fixes, which go out with PUSH #2. |
+| **Moved since** | `origin/main` is no longer ffbf29a: another session (the SEO traffic work) pushed a2f94c5 and 46a484c ("Record verified SEO release...") on top of it. **`main` has since merged it (`f871859`)** and the WS13 branch has merged `main`, so a push after WS13 merges is a fast-forward. If you ever see "rejected, non-fast-forward", `origin/main` moved again: merge it first, then re-run `bash scripts/qa/gates.sh`. |
+| Not on production yet | WS6 (phone view), WS7a (background watching), WS11b (feature pages and flag-aware copy), WS12a (localization of the app, flags off), WS12b (when it lands) and the WS13 fixes, which go out with PUSH #2. |
 | Migrations | All 13 additive migrations (list in (f)) came with PUSH #1. WS6, WS7a and WS11b add none. |
 
 ---
@@ -135,8 +136,12 @@ normal 404, not in the sitemap or `llms` files): `/features/habit-reversal-coach
 sentences that stop being true with a flag on (history stored in the browser, Google-only sign-in, phone support) now change with the
 flag. Pages for skin picking, nose picking and hair pulling were deliberately **not** built: those behaviours are not validated.
 
-**WS12, Localization** (Spanish, German, Brazilian Portuguese). Pending. The flags `locale_es`, `locale_de`, `locale_pt_br` exist and
-do nothing yet. All machine translations will need native review before a locale flag goes on.
+**WS12a, Localization of the signed-in app** (Spanish, German, Brazilian Portuguese; `docs/agents/ws12a-notes.md`). Every string of the signed-in
+screens now goes through a small translation layer (`src/i18n/`), with machine-drafted catalogs for es, de and pt-BR, one flag per language
+(`locale_es`, `locale_de`, `locale_pt_br`, all off). With a flag on, Settings > Account & Sync gets a Language card; a person's choice is kept on
+their device and the browser language is never read. Dates, numbers and money follow the language. Lint rules and tests fail any English
+that is not translated. Marketing pages, the blog, legal pages, the 28 coaching lessons, server-rendered pages and emails stay English.
+**WS12b** (translated marketing pages, hreflang) is still to come.
 
 ---
 
@@ -171,7 +176,7 @@ switched off). **Do first** is the `before` field plus what the notes add. Paths
 | `share_links` (WS10) | Settings > Sharing, `/share/<token>`. Opens `/features/share-with-therapist`. | `event_sync` (not enforced: no `dependsOn`, see appendix) | Publish `legal/ws10-privacy.md` and `ws10-terms.md`. Decide whether `/share/` stays out of access logs. Turn on a day or two after the deploy. | The address is a bearer secret and may appear in host logs. A chat app that previews the link counts as a view. The streak shown can differ from the app's streak. |
 | `compare_competitors` (WS11a) | Two competitor pages, indexable and in the sitemap only while on. | | Verify every fact against its source URL (`ws11a-notes.md` tables), then set `needsVerification: false` (`src/data/competitorPages.ts`, 2 places) and redeploy. Decide whether to run these next to the live `vs` pages. Refresh the live `/compare/stop-biting-vs-habitaware`. Re-date both `COMPARE_META` entries in `server.js`. | Competitor facts may be out of date (habitaware.com rate-limited the fact check). |
 | `social_proof` (WS11a) | Testimonials on the home and pricing pages. | | Add real, consented entries to `src/data/testimonials.json` following `src/data/README-testimonials.md`, deploy, then turn on. | Hidden anyway while the file is empty. |
-| `locale_es`, `locale_de`, `locale_pt_br` (WS12) | Nothing yet. | | WS12 must land; then native review of each machine translation. | |
+| `locale_es`, `locale_de`, `locale_pt_br` (WS12a) | A Language card in Settings > Account & Sync; the signed-in app in that language for people who pick it. | | A native speaker reads `src/i18n/locales/<language>/*.ts` (glossary in `ws12a-notes.md`), fixes the wording, sets `reviewed` to `true` in `src/i18n/locales/<language>/index.ts` and flips the matching expectation in `src/i18n/catalogs.test.ts`; then add the flag. The marketing pages are not translated until WS12b. | Machine translation of health-adjacent copy; text length changes layouts (German was checked at 390 px: no sideways scroll). |
 
 ### Recommended turn-on order
 
@@ -196,7 +201,7 @@ rule). Restart after each change.
    because it replaces the paywall for people whose trial ended.
 6. **Marketing:** `compare_competitors` after the verification, `social_proof` after real testimonials. The six `/features/...`
    pages need no extra flag: each opens with its feature flag, so re-read its copy when you turn the feature on.
-7. **Not yet:** `desktop_app`, `experimental`, `locale_es`, `locale_de`, `locale_pt_br`.
+7. **Not yet:** `desktop_app`, `experimental`; each `locale_*` flag only after a native speaker has read that language.
 
 ---
 
@@ -296,7 +301,7 @@ Line numbers are as of b6b16f9 and will drift.
 | Email wording | `server/weeklyEmail/template.js`, `server/auth/magicLinkEmail.js`, `server/billing/giftEmail.js` | Read each once; the weekly email says "A log is a way to notice a habit, not a treatment." |
 | `/features/desktop-app` | `getDesktopAppContent()` in `src/data/featurePages.ts` | "It is the same account and the same detection as in the browser" and "the same account, the same plans and the same free trial" are only true after desktop sign-in works. |
 | An older claim on a blog post | `src/data/blogPosts.ts`, `stop-biting-app-review`: "You can disconnect from the internet after the initial load and the app functions identically" | The service worker does not cache the models, so this is not true on a fresh profile. |
-| Translations | not yet | WS12 machine translations need native review before each `locale_*` flag. |
+| Translations | `src/i18n/locales/{es,de,pt-BR}/` (all `reviewed = false`) | Machine drafts; a native speaker must read them before each `locale_*` flag (steps in `ws12a-notes.md`, "Turning a language on"). The 28 coaching lessons and all server-rendered pages stay English. |
 
 ### d4. Decisions that are yours (all configurable, safe defaults)
 
@@ -381,13 +386,16 @@ tomorrow" (08:00, `TOMORROW_RESUME_HOUR` in `src/desktop/trayModel.ts`) and the 
 - **Blog posts have a layout shift of 0.72 (mobile Lighthouse CLS; performance 54 mobile, 73 desktop).** The article is rendered
   from `dist/posts/<slug>.json` after it is fetched, so the bottom call-to-action block jumps down when it arrives. A CLS above 0.1
   is "poor" in Core Web Vitals. It predates the swarm and was not touched (`docs/agents/lighthouse-report.md`).
-- **With every flag off, the build still fetches code for features that are off** (WS13 flags-off report, F2 and F3): the signed-in
-  Watch tab loads 5 more small JS files (+11 kB gzip) and Settings 1 more; the service worker precache grows from 49 to 60 entries
-  (+58 KiB), so a returning visitor downloads the phone view and the background-watching code once, in the background, although no flag is
+- **With every flag off, the build still fetches code for features that are off** (WS13 flags-off report, F2 and F3; the figures are after WS12a):
+  the signed-in Watch tab loads 10 more JS files (+24.9 kB gzip) and Settings 3 more (+3.7 kB), the landing page +8.8 kB gzip; the service worker
+  precache grows from 49 to 60 entries before WS12a (+58 KiB, 75 requests of its own in the audit after it), so a returning visitor downloads the phone view and the background-watching code once, in the background, although no flag is
   on. No visible change, no request on a page load. Fix if it matters: import those chunks dynamically behind their flag.
 - A closed gated OG card (`/og/features-*.png`, `/og/solutions-cuticle-biting.png`) answers 404 gzip-compressed with
   `Vary: Accept-Encoding` instead of plain (F4 in the flags-off report). Harmless.
-- **Open accessibility issues** (14, none High; `docs/agents/accessibility-report.md`): text-field borders are 1.3 to 2.0:1 against
+- **Open accessibility issues** (16, none High; `docs/agents/accessibility-report.md`). Two are contrast fixes that were made and then reverted so the
+  flags-off site stays identical, and are yours to take: Settings > Bite reasons has dark-mode placeholders at 2.33:1 (two class names,
+  `dark:placeholder:text-stone-600` to `-400`) and the 12 px "Detected!" label is 3.96:1 in light mode (one colour constant); the exact
+  one-line changes are in the report ("Recommended, owner decision"). The rest: text-field borders are 1.3 to 2.0:1 against
   the 3:1 that WCAG 1.4.11 asks for, and the switch's off-state track is 1.99:1 in light mode (1.39:1 in dark), both design-token
   decisions; an unreviewed alarm row is wider than the card under about 380 px and its delete button is cut off at 320 px (the
   fix is `flex-wrap`, but the WS3 parity test pins that row's markup); the alarm flash is never announced when
@@ -546,9 +554,11 @@ The code was trusted. Items marked *fixed* were corrected in `ARCHITECTURE.md` b
 
 ## QA results
 
-Run by WS13 on 2026-10-24 on the branch `worktree-agent-a69ebea783dc66ca0` (= `main` at b6b16f9 plus the WS13 commits), headless
-Chrome 155 on macOS, Node 24. **WS12 (localization) was not merged yet: re-run the gates, the privacy audit and Lighthouse after it
-lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-diff-report.md`, `accessibility-report.md`,
+Run by WS13 on 2026-10-24 on the branch `worktree-agent-a69ebea783dc66ca0`, headless Chrome 155 on macOS, Node 24. First on
+`main` at b6b16f9 plus the WS13 commits, then again after merging `main` (which by then held **WS12a, the localization of the app screens, and
+the SEO session's `origin/main` commits**) into the branch (merge `3be2efc`, conflicts resolved, see `accessibility-report.md`). The numbers
+below are the merged tree's unless a line says otherwise. **WS12b (the marketing pages in es, de and pt-BR) was not merged yet: re-run the
+gates, the privacy audit and Lighthouse after it lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-diff-report.md`, `accessibility-report.md`,
 `lighthouse-report.md`.
 
 ### Gates (`bash scripts/qa/gates.sh`, one command)
@@ -556,19 +566,18 @@ lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-di
 | Gate | Result |
 |---|---|
 | `npm run build:web` | exit 0 |
-| `npm test` | 152 files passed + 1 skipped (the real-browser privacy smoke, which runs with `PRIVACY_AUDIT=1`); 2,885 tests passed, 2 skipped (baseline before WS13: 151 files / 2,842 tests; +43 tests = the privacy-audit judge's 37 and the accessibility regression tests) |
+| `npm test` | 174 files passed + 1 skipped (the real-browser privacy smoke, which runs with `PRIVACY_AUDIT=1`); 3,559 tests passed, 2 skipped (before WS12a and the merge: 152 files / 2,885 tests; before WS13: 151 files / 2,842) |
 | lint, scoped to `src server scripts electron shared` | 23 errors / 4 warnings: the pre-existing baseline, same files and rules (plain `npm run lint` also walks `.claude/worktrees/*`) |
 | `node --check` | `server.js`, `email.js`, `trialFollowup.js`, every file under `server/` and `shared/`: 85 files, 0 failures |
 | `npm run electron:typecheck`, `seo:check`, `og:check`, `eval:detection` | all pass |
 | dev-only code in the bundle (`seedPreviewData`, `previewKind`, `dev-override`, `readDevOverrides`, `__sbProbe` over `dist/assets`) | 0 files |
 | secret scan of `git diff ffbf29a..HEAD` (added lines: API keys, private keys, JWTs, provider tokens) | 0 hits. The base is ffbf29a, not `origin/main`, because `origin/main` moved (see below) and ffbf29a was already scanned for push #1 |
-| the owner's uncommitted Paddle patch (`PADDLE_PRICE_IDS`) | `git apply --check` clean, also on the merge candidate below |
+| the owner's uncommitted Paddle patch (`PADDLE_PRICE_IDS`) | `git apply --check` clean on the merged tree |
 | Dockerfile reproduced by hand (`bash scripts/qa/docker-repro.sh`; docker was not used) | stage 1 builds from only the files the Dockerfile copies; stage 3 boots `server.js` from only the files it copies; 23 key routes answer as expected; all 27 flags off; server log clean. Production dependencies are not reproduced (`node_modules` is the repo's), see (f) |
-| **Merge candidate** = this branch + `origin/main` (46a484c), in a scratch worktree | merges without conflict; every gate above passes (154 files / 2,918 tests); Docker reproduction passes |
 
-**`origin/main` has moved.** It is 46a484c, not ffbf29a: another session pushed two SEO commits (a2f94c5, 46a484c) on top of push
-#1. Local `main` does not contain them, so **merge `origin/main` before the next push** (a plain push is rejected), then re-run
-`bash scripts/qa/gates.sh`. The merge is clean and both sets of changes coexist (`flags-off-diff-report.md`, section 5.4).
+**`origin/main` and `main`.** `origin/main` moved to 46a484c while the swarm worked (another session's SEO commits on top of push #1). `main`
+has since merged it (`f871859`), and this branch has merged `main`, so it contains all of it; a push of `main` after this branch is merged is a
+fast-forward. (Earlier in this QA the same merge was tried in a scratch worktree: clean, all gates green.)
 
 ### Privacy audit (`npm run privacy:audit`; 5 minutes of detection per mode, fake camera, real server, real sign-in)
 
@@ -584,23 +593,31 @@ lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-di
 No request carried image data, landmarks, frames or video; the diary photo's bytes (4 fingerprints, raw/hex/base64/percent-encoded)
 appear in no request; the service worker (active, 65 requests of its own) and its code have no upload path. **What it cannot
 prove:** a real hand or face (Chrome's fake camera is a test pattern; the probe build injects generated landmarks), Safari or
-Firefox, the desktop app, Paddle checkout. Details and limits: `privacy-audit-report.md` section 5.
+Firefox, the desktop app, Paddle checkout. Details and limits: `privacy-audit-report.md` section 5. **The table is the 5-minute run on the
+tree before the merge. After the merge (WS12a, origin/main) all four normal modes were run again at 90 seconds: flags off, sync off, sync on PASS
+(135, 150 and 154 requests; sync on sent 4 POSTs with 7 events and only whitelisted keys; the service worker, now with 75 precache requests, is
+still the only other context), canary CAUGHT. The 5-minute set and the probe-build runs will be refreshed after WS12b.**
 
 ### Flags off against production (`flags-off-diff-report.md`)
 
-With every flag off the tree behaves like production apart from changes that each trace to WS6, WS7a or WS11b: 0 unexplained
-differences in 531 dist files, 91 HTTP responses (61 identical) and 25 signed-in DOM captures per build (identical in body, title,
-console errors and every pixel, at 1280 and 390 px, light and dark). Merging `origin/main` is additive. Findings: F2/F3 (extra JS fetched and
-precached with flags off), F4 (a gzip quirk on closed OG cards), F5 (WS6 head tags are unconditional). **Four accessibility fixes
-afterwards are visible with flags off** (section 10 of that report): two class names on the Bite reasons fields in Settings and the
-colour of the "Detected!" label in light mode (commit `2d5491c`: revert it if "nothing visible" must hold literally), and two
-reflow fixes that only act when something is marked "Not a bite" or in the phone view.
+With every flag off the tree behaves like production apart from changes that each trace to WS6, WS7a, WS11b or WS12a. Re-verified on the
+merged tree against production (46a484c): **23 of 25 signed-in and signed-out DOM captures identical in body, title, console errors and every
+pixel** at 1280 and 390 px, light and dark; the 2 others (390 px Watch tab) differ in 236 of 329,160 pixels, sub-pixel anti-aliasing of one line
+because "Free trial: N days left." became one translated string instead of three text nodes (same text, same layout; cause verified in
+`Dashboard.tsx`); **91 HTTP responses: 66 identical, the other 25 are the same 25 as before** (19 pages differing in the same 6 head lines of WS6, `sw.js`,
+the entry bundle, 2 closed OG cards, 2 new icon files). Nothing unexplained. Findings: F2/F3 (extra JS fetched and precached with flags off:
+**the landing page now downloads +8.8 kB gzip and the signed-in Watch tab +10 files / +24.9 kB gzip compared with production, roughly twice what it
+was before WS12a**), F4 (a gzip quirk on closed OG cards), F5 (WS6 head tags are unconditional). The two accessibility fixes that were visible with
+every flag off (Bite reasons placeholder classes, "Detected!" label colour; commit `2d5491c`) **were reverted** on the coordinator's decision and
+are recommendations (O15, O16 below). The two reflow fixes that remain only act when something is marked "Not a bite" or in the phone view.
 
 ### Accessibility (`accessibility-report.md`)
 
 29 surfaces with every UI flag on, light and dark, 1280 / 390 / 320 px: real Tab walks, focus indicators by pixel comparison, Escape
 and focus return, accessibility tree, live regions, reduced motion, contrast, target size, reflow, axe 4.13 in every state.
-**29 issues found: 15 fixed (21 files under `src/`, with tests), 14 open, none High** (list in (e)). Lighthouse accessibility 100 on all
+**29 issues found: 13 fixed (with tests), 16 open, none High** (list in (e); two of the open ones are the reverted contrast fixes). After the
+merge with WS12a the touched surfaces were re-checked in English and in German (`docs/agents/a11y-audit/a23_de.mjs`): focus hand-offs, one
+announcement per step, no churn, no sideways scroll at 390 px, contrast: all OK. Lighthouse accessibility 100 on all
 9 reachable URL and form-factor combinations, and 100 on all 16 site-page runs below. Not verified: a real screen reader, Safari,
 Firefox, forced colours, 200 % zoom, the Picture-in-Picture strip.
 
