@@ -8,19 +8,20 @@
 
 import { useEffect, useId, useRef } from 'react';
 import { Rings } from '../../components/site/Rings';
+import { useT as useCommonT } from '../../i18n/scopes/common';
+import { useT, type messages } from '../../i18n/scopes/insights';
 import type { ShareResult } from '../shareCard';
 import { formatCardDate } from '../shareCard';
 import type { MilestoneStatus } from '../milestones';
 
 export type ShareUiState = 'idle' | 'working' | ShareResult;
 
-const SHARE_NOTE: Record<ShareUiState, string> = {
-  idle: '',
-  working: 'Making the picture',
-  shared: 'Shared.',
-  downloaded: 'Saved as a picture to your downloads.',
-  cancelled: '',
-  failed: 'Could not make the picture on this browser.',
+// The line under the buttons for each state of the share step; no line for "idle" and "cancelled".
+const SHARE_NOTE_KEYS: Partial<Record<ShareUiState, keyof typeof messages>> = {
+  working: 'card.working',
+  shared: 'card.shared',
+  downloaded: 'card.downloaded',
+  failed: 'card.failed',
 };
 
 export function CelebrationCard({ status, shareState = 'idle', onShare, onClose }: {
@@ -29,6 +30,9 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
   onShare?: () => void;
   onClose: () => void;
 }) {
+  const t = useT();
+  const tc = useCommonT();
+  const noteKey = SHARE_NOTE_KEYS[shareState];
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -75,11 +79,11 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
       >
         <Rings className="-bottom-24 -left-20 h-72 w-72" />
         <div className="relative">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-lime-300">Milestone</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-lime-300">{t('milestone.kicker')}</p>
           <p className="mt-3 font-display text-6xl font-extrabold leading-[0.9] tracking-[-0.045em] sm:text-7xl">{status.def.figure}</p>
           <h2 id={titleId} className="mt-4 font-display text-2xl font-bold tracking-[-0.03em]">{status.def.title}</h2>
           <p className="mt-2 text-pretty text-base leading-relaxed text-white/80">{status.def.detail}</p>
-          {status.reachedAt !== null && <p className="mt-3 text-sm text-white/70">Reached {formatCardDate(status.reachedAt)}.</p>}
+          {status.reachedAt !== null && <p className="mt-3 text-sm text-white/70">{t('card.reached', { date: formatCardDate(status.reachedAt) })}</p>}
 
           <div className="mt-7 flex flex-wrap gap-3">
             <button
@@ -88,7 +92,7 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
               onClick={onClose}
               className="inline-flex min-h-12 items-center rounded-full bg-lime-300 px-6 font-display text-base font-bold text-deep transition-colors hover:bg-lime-200"
             >
-              Continue
+              {tc('continue')}
             </button>
             {onShare && (
               <button
@@ -97,14 +101,14 @@ export function CelebrationCard({ status, shareState = 'idle', onShare, onClose 
                 disabled={shareState === 'working'}
                 className="inline-flex min-h-12 items-center rounded-full border border-white/30 px-6 text-base font-semibold text-white/90 transition-colors hover:border-white/60 disabled:opacity-60"
               >
-                Make a share card
+                {t('card.share')}
               </button>
             )}
           </div>
-          <p role="status" aria-live="polite" className="mt-3 min-h-5 text-sm text-white/75">{SHARE_NOTE[shareState]}</p>
+          <p role="status" aria-live="polite" className="mt-3 min-h-5 text-sm text-white/75">{noteKey ? t(noteKey) : ''}</p>
           {onShare && (
             <p className="mt-1 text-xs leading-relaxed text-white/60">
-              The picture shows only this milestone. It is made on this device, and only goes where you send it.
+              {t('card.note')}
             </p>
           )}
         </div>

@@ -4,6 +4,7 @@ import { CoachingSeam } from '../../coaching/CoachingSeam';
 import { NotABiteSeam } from '../../falsePositive/NotABiteSeam';
 import { useWatchGate } from '../../background/gate';
 import { pauseForMinutes, resumeWatching } from '../../background/actions';
+import { useT, type messages } from '../../i18n/scopes/watch';
 
 interface Props {
   pipWindow: Window;
@@ -14,15 +15,16 @@ interface Props {
 // it is a dim, still strip: a small dot, one line of muted text and a
 // text-only stop control. No wave, no white panel, nothing that moves. Only an
 // alert changes it, because that is the one thing it must not hide.
-const LABEL: Record<Props['status'], string> = {
-  idle: 'Waiting',
-  loading: 'Starting',
-  watching: 'Watching',
-  alert: 'Nail biting detected',
-  error: 'Not running',
+const LABEL: Record<Props['status'], keyof typeof messages> = {
+  idle: 'mini.status.idle',
+  loading: 'mini.status.loading',
+  watching: 'mini.status.watching',
+  alert: 'mini.status.alert',
+  error: 'mini.status.error',
 };
 
 export function PiPWindow({ pipWindow, status }: Props) {
+  const t = useT();
   const { cameraEnabled, setCameraEnabled } = useAppStore();
   const isAlerting = status === 'alert';
   // WS7a (flag background_watching): the strip says when watching is paused or silent, and can pause or resume it.
@@ -30,7 +32,7 @@ export function PiPWindow({ pipWindow, status }: Props) {
   const gate = useWatchGate();
   const note = gate.note;
   const paused = gate.on && gate.paused;
-  const label = !cameraEnabled ? 'Stopped' : paused && note ? note.strip.status : note?.kind === 'meeting' && status === 'watching' ? note.strip.status : LABEL[status];
+  const label = !cameraEnabled ? t('mini.status.stopped') : paused && note ? note.strip.status : note?.kind === 'meeting' && status === 'watching' ? note.strip.status : t(LABEL[status]);
   // Two lines (a status word, and under it until when) only while paused or silent: the strip is 64 px high.
   const detail = cameraEnabled && note && (paused || (note.kind === 'meeting' && status === 'watching')) ? note.strip.detail : null;
 
@@ -75,14 +77,14 @@ export function PiPWindow({ pipWindow, status }: Props) {
       {gate.on && cameraEnabled && (
         <button
           type="button"
-          title={paused ? 'Resume watching' : 'Pause for 15 minutes'}
+          title={paused ? t('mini.resumeTitle') : t('mini.pauseTitle')}
           onClick={() => { if (paused) resumeWatching(); else void pauseForMinutes(15); }}
           className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors"
           style={{ color: paused ? '#d5e2da' : '#6f8478', background: 'transparent' }}
           onMouseEnter={e => { e.currentTarget.style.color = '#d5e2da'; }}
           onMouseLeave={e => { e.currentTarget.style.color = paused ? '#d5e2da' : '#6f8478'; }}
         >
-          {paused ? 'Resume' : 'Pause'}
+          {paused ? t('mini.resume') : t('mini.pause')}
         </button>
       )}
 
@@ -94,7 +96,7 @@ export function PiPWindow({ pipWindow, status }: Props) {
         onMouseEnter={e => { e.currentTarget.style.color = '#d5e2da'; }}
         onMouseLeave={e => { e.currentTarget.style.color = '#6f8478'; }}
       >
-        {cameraEnabled ? 'Stop' : 'Start'}
+        {cameraEnabled ? t('mini.stop') : t('mini.start')}
       </button>
     </div>,
     body

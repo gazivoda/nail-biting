@@ -19,19 +19,28 @@ import type { HandFilter } from '../detection/controls';
 import { openCalibration } from '../calibration/state';
 import { clearCalibration, learnedCount, readCalibration, readSettings, resetLearning, subscribeStore, writeSettings } from './poseStore';
 import { FalsePositiveRate } from './FalsePositiveRate';
+import { useT, type messages } from '../i18n/scopes/settings';
+import { useT as useCommonT } from '../i18n/scopes/common';
+import { formatDate } from '../i18n/format';
 
-const HAND_LABEL: Record<HandFilter, string> = { both: 'Both', left: 'Left', right: 'Right' };
+const HAND_LABEL_KEY = {
+  both: 'falsePositive.hand.both',
+  left: 'falsePositive.hand.left',
+  right: 'falsePositive.hand.right',
+} as const satisfies Record<HandFilter, keyof typeof messages>;
 
 // useSyncExternalStore compares snapshots with Object.is: a string, never a fresh object.
 const snapshot = () => JSON.stringify({ s: readSettings(), n: learnedCount(), c: readCalibration()?.at ?? null });
 
 function dateOf(at: number): string {
-  try { return new Date(at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return ''; }
+  try { return formatDate(new Date(at), { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return ''; }
 }
 
 const buttonClass = 'min-h-11 shrink-0 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 disabled:opacity-50 disabled:hover:bg-transparent dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill';
 
 export function DetectionSettings() {
+  const t = useT();
+  const tc = useCommonT();
   useSyncExternalStore(subscribeStore, snapshot, snapshot);
   const incidents = useAppStore(s => s.incidents);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -41,58 +50,58 @@ export function DetectionSettings() {
   const calibration = readCalibration();
 
   return (
-    <Section title="Detection" icon={SlidersHorizontal} fullWidth>
+    <Section title={t('falsePositive.title')} icon={SlidersHorizontal} fullWidth>
       <p className="text-sm text-stone-600 dark:text-stone-300">
-        Fewer false alarms. These controls only ever make the alarm quieter in the cases below: they never add one. Tap “Not a bite” on an alarm and the app learns from it.
+        {t('falsePositive.intro')}
       </p>
 
-      <Row label="Which hand" description="Watch both hands, only your left, or only your right. Left and right are your hands as you see them in the camera preview.">
+      <Row label={t('falsePositive.hand.label')} description={t('falsePositive.hand.description')}>
         <SegmentedControl<HandFilter>
-          ariaLabel="Which hand to watch"
+          ariaLabel={t('falsePositive.hand.aria')}
           value={settings.handFilter}
           onChange={handFilter => writeSettings({ handFilter })}
-          options={(['both', 'left', 'right'] as const).map(v => ({ label: HAND_LABEL[v], value: v }))}
+          options={(['both', 'left', 'right'] as const).map(v => ({ label: t(HAND_LABEL_KEY[v]), value: v }))}
         />
       </Row>
 
-      <Row label="Chin rest" description="Stay quiet when the back of your hand or your palm rests on your chin and no fingertip is near your lips.">
-        <Toggle value={settings.chinRest} onChange={chinRest => writeSettings({ chinRest })} label="Stay quiet when my hand rests on my chin" />
+      <Row label={t('falsePositive.chin.label')} description={t('falsePositive.chin.description')}>
+        <Toggle value={settings.chinRest} onChange={chinRest => writeSettings({ chinRest })} label={t('falsePositive.chin.toggle')} />
       </Row>
 
       <Row
-        label="Learned from “Not a bite”"
+        label={t('falsePositive.learned.label')}
         description={learned === 0
-          ? 'Nothing yet. Each time you mark an alarm “Not a bite”, the app remembers a few numbers about where your hand was.'
-          : `${learned} ${learned === 1 ? 'pose' : 'poses'} remembered. When your hand is in a pose like ones you rejected, the alarm waits a little longer, and after two it wants a fingertip right at your lips.`}
+          ? t('falsePositive.learned.none')
+          : t('falsePositive.learned.some', { count: learned })}
       >
         {confirmReset ? (
           <div className="flex flex-wrap items-center gap-2">
             <button type="button" onClick={() => { resetLearning(); setConfirmReset(false); }} className="min-h-11 rounded-full bg-alert-600 px-5 text-sm font-semibold text-cream-100 transition-colors hover:bg-alert-800">
-              Yes, forget them
+              {t('falsePositive.learned.confirm')}
             </button>
-            <button type="button" autoFocus onClick={() => setConfirmReset(false)} className={buttonClass}>Cancel</button>
+            <button type="button" autoFocus onClick={() => setConfirmReset(false)} className={buttonClass}>{tc('cancel')}</button>
           </div>
         ) : (
-          <button type="button" disabled={learned === 0} onClick={() => setConfirmReset(true)} className={buttonClass}>Forget what it learned</button>
+          <button type="button" disabled={learned === 0} onClick={() => setConfirmReset(true)} className={buttonClass}>{t('falsePositive.learned.forget')}</button>
         )}
       </Row>
 
       <Row
-        label="Calibrate"
+        label={t('falsePositive.calibrate.label')}
         description={calibration
-          ? `Calibrated on ${dateOf(calibration.at)}. The chin-rest rule uses how you rest your chin and where your fingertip sits.`
-          : 'Optional, about a minute: rest your chin on your hand, then bring a fingertip near your lips, and the app tunes itself to you.'}
+          ? t('falsePositive.calibrate.done', { date: dateOf(calibration.at) })
+          : t('falsePositive.calibrate.none')}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <button type="button" onClick={() => openCalibration()} className={buttonClass}>{calibration ? 'Calibrate again' : 'Calibrate'}</button>
-          {calibration && <button type="button" onClick={() => clearCalibration()} className={buttonClass}>Delete calibration</button>}
+          <button type="button" onClick={() => openCalibration()} className={buttonClass}>{calibration ? t('falsePositive.calibrate.again') : t('falsePositive.calibrate.label')}</button>
+          {calibration && <button type="button" onClick={() => clearCalibration()} className={buttonClass}>{t('falsePositive.calibrate.delete')}</button>}
         </div>
       </Row>
 
       <FalsePositiveRate incidents={incidents} />
 
       <p className="text-sm text-stone-600 dark:text-stone-300">
-        What is remembered is a handful of numbers per pose, for example how far a fingertip was from your lips. No picture, no video. They are kept on this device only: they are not part of your history, are not synced and are not uploaded.
+        {t('falsePositive.footer')}
       </p>
     </Section>
   );

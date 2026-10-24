@@ -7,30 +7,29 @@ import { Images } from 'lucide-react';
 import { Section } from '../pages/settings/ui';
 import { TwoStepDelete } from './TwoStepDelete';
 import { formatBytes, totalBytes, type PhotoMeta } from './diaryMeta';
-import { PRIVACY_DETAIL, PRIVACY_STATEMENT } from './copy';
+import { useT } from '../i18n/scopes/photos';
 import { photoStore } from './photoStore';
 import { usePhotoRecords } from './usePhotoRecords';
 
 export function PhotoDiarySettingsView({ photos, status, onDeleteAll }: { photos: readonly PhotoMeta[]; status: string; onDeleteAll: () => void }) {
+  const t = useT();
   return (
-    <Section title="Photo diary" icon={Images} fullWidth>
-      <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">{PRIVACY_STATEMENT} {PRIVACY_DETAIL}</p>
+    <Section title={t('diary.title')} icon={Images} fullWidth>
+      <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">{t('diary.privacy.statement')} {t('diary.privacy.detail')}</p>
       <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">
-        {photos.length === 0
-          ? 'No photos saved.'
-          : `${photos.length} ${photos.length === 1 ? 'photo' : 'photos'} saved, ${formatBytes(totalBytes(photos))} in this browser.`}
+        {t('settings.saved', { count: photos.length, size: formatBytes(totalBytes(photos)) })}
       </p>
       {photos.length > 0 && (
         <div className="space-y-2">
           <TwoStepDelete
-            label="Delete all photos"
-            question={`Delete all ${photos.length} ${photos.length === 1 ? 'photo' : 'photos'} from this browser?`}
-            confirmLabel="Delete all"
-            keepLabel="Keep my photos"
+            label={t('diary.deleteAll')}
+            question={t('settings.deleteQuestion', { count: photos.length })}
+            confirmLabel={t('diary.deleteAll.confirm')}
+            keepLabel={t('diary.deleteAll.keep')}
             onConfirm={onDeleteAll}
           />
           <p className="text-sm text-stone-600 dark:text-stone-300">
-            Clearing your history, or "Delete everything" in this section, does not remove photos. Use this button for them.
+            {t('settings.note')}
           </p>
         </div>
       )}
@@ -40,13 +39,14 @@ export function PhotoDiarySettingsView({ photos, status, onDeleteAll }: { photos
 }
 
 export function PhotoDiarySettingsCard() {
+  const t = useT();
   const { photos } = usePhotoRecords();
   const [status, setStatus] = useState('');
   return (
     <PhotoDiarySettingsView
       photos={photos}
       status={status}
-      onDeleteAll={() => { void photoStore.removeAll().then(n => setStatus(n === 0 ? '' : 'All photos deleted.')); }}
+      onDeleteAll={() => { void photoStore.removeAll().then(n => setStatus(n === 0 ? '' : t('settings.allDeleted'))); }}
     />
   );
 }

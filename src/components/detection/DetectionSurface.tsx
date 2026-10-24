@@ -5,7 +5,8 @@ import { DetectionWave } from '../DetectionWave';
 import { DetectionStatus as DetectionStatusBadge } from './DetectionStatus';
 import { AlertOverlay } from './AlertOverlay';
 import type { DetectionStatus } from '../../hooks/useDetection';
-import { MODEL_ERROR_MESSAGE } from './cameraErrorCopy';
+import { modelErrorMessage } from './cameraErrorCopy';
+import { useT as useCommonT } from '../../i18n/scopes/common';
 
 interface DetectionSurfaceProps {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -48,9 +49,10 @@ export function DetectionSurface({
   cameraError = null,
   children,
 }: DetectionSurfaceProps) {
+  const tc = useCommonT();
   // A camera that never started and models that never loaded are the same
   // thing to the user: nothing is watching. Both get the one message and retry.
-  const failure = cameraError ?? (status === 'error' ? MODEL_ERROR_MESSAGE : null);
+  const failure = cameraError ?? (status === 'error' ? modelErrorMessage() : null);
   const isAlerting = status === 'alert' && !failure;
   const cameraFailed = cameraEnabled && failure !== null;
 
@@ -91,7 +93,7 @@ export function DetectionSurface({
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-stone-100 transition-colors hover:border-stone-300"
               >
                 <RotateCcw size={14} aria-hidden="true" />
-                Try again
+                {tc('tryAgain')}
               </button>
             )}
           </div>

@@ -3,10 +3,12 @@
 import type { TriggerBreakdown } from '../aggregate';
 import { triggerLabel } from '../labels';
 import type { CustomTag } from '../../types';
+import { useT } from '../../i18n/scopes/insights';
 
 const MAX_ROWS = 8;
 
 export function TriggerBars({ breakdown, customTags }: { breakdown: TriggerBreakdown; customTags: readonly CustomTag[] }) {
+  const t = useT();
   const shown = breakdown.items.slice(0, MAX_ROWS);
   const rest = breakdown.items.slice(MAX_ROWS);
   const max = shown.reduce((m, i) => (i.count > m ? i.count : m), 0);
@@ -19,7 +21,7 @@ export function TriggerBars({ breakdown, customTags }: { breakdown: TriggerBreak
               <span className="min-w-0 truncate font-medium text-stone-800 dark:text-stone-100">{triggerLabel(item.tag, customTags)}</span>
               <span className="shrink-0 tabular-nums text-stone-600 dark:text-stone-300">
                 {item.count} <span aria-hidden="true">({Math.round(item.share * 100)}%)</span>
-                <span className="sr-only">, {Math.round(item.share * 100)} percent</span>
+                <span className="sr-only">{t('triggers.percent', { share: Math.round(item.share * 100) })}</span>
               </span>
             </div>
             <div className="mt-1.5 h-2.5 rounded-full bg-stone-100 dark:bg-ink-fill" aria-hidden="true">
@@ -30,7 +32,7 @@ export function TriggerBars({ breakdown, customTags }: { breakdown: TriggerBreak
       </ul>
       {rest.length > 0 && (
         <p className="mt-3 text-sm text-stone-600 dark:text-stone-300">
-          and {rest.length} more, {rest.reduce((n, i) => n + i.count, 0)} bites in all.
+          {t('triggers.rest', { count: rest.length, bites: rest.reduce((n, i) => n + i.count, 0) })}
         </p>
       )}
     </div>

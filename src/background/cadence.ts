@@ -4,6 +4,7 @@
 // this is how the app says so instead of leaving a quiet gap. Pure: the numbers come in, a sentence goes out.
 
 import { kv } from '../storage/kv';
+import { t } from '../i18n/scopes/background';
 
 /** Checks per second when the tab is in front (one every 200 ms). */
 export const FULL_RATE = 5;
@@ -34,11 +35,11 @@ export const isSlow = (r: CadenceReport): boolean => r.stepsPerSecond < SLOW_BEL
 /** "Last time this tab was in the background ..." or null when there is nothing worth saying. */
 export function cadenceNote(report: CadenceReport | null, now: number, canFloatWindow: boolean): string | null {
   if (!report || !isSlow(report) || now - report.at > REPORT_TTL_MS || now < report.at) return null;
-  const rate = report.stepsPerSecond >= 1.5 ? `about ${Math.round(report.stepsPerSecond)} a second` : 'about once a second';
-  const advice = canFloatWindow
-    ? 'The Minimize button floats a small window that keeps the full speed.'
-    : 'Keeping Stop Biting in its own window, in view, keeps the full speed.';
-  return `While this tab was in the background, checks ran ${rate} instead of ${FULL_RATE}. ${advice}`;
+  const slow = report.stepsPerSecond >= 1.5
+    ? t('cadence.slow.some', { n: Math.round(report.stepsPerSecond), full: FULL_RATE })
+    : t('cadence.slow.once', { full: FULL_RATE });
+  const advice = canFloatWindow ? t('cadence.advice.float') : t('cadence.advice.window');
+  return `${slow} ${advice}`;
 }
 
 // ─── storage ─────────────────────────────────────────────────────────────────

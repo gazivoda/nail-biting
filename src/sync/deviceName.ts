@@ -2,6 +2,8 @@
 // card. Pure string work on the user agent; the name stays on this device and is
 // never sent to the server (the server only ever sees the random device id).
 
+import { t } from '../i18n/scopes/data';
+
 export function defaultDeviceName(userAgent: string | undefined): string {
   const ua = userAgent ?? '';
   const os =
@@ -17,10 +19,10 @@ export function defaultDeviceName(userAgent: string | undefined): string {
     /Edg\//.test(ua) ? 'Edge'
     : /OPR\/|Opera/.test(ua) ? 'Opera'
     : /Firefox\/|FxiOS/.test(ua) ? 'Firefox'
-    : /Electron\//.test(ua) ? 'Stop Biting app'
+    : /Electron\//.test(ua) ? t('device.app')
     : /Chrome\/|CriOS/.test(ua) ? 'Chrome'
     : /Safari\//.test(ua) ? 'Safari'
     : null;
-  if (browser && os) return `${browser} on ${os}`;
-  return browser ?? os ?? 'This device';
+  if (browser && os) return t('device.browserOnOs', { browser, os });
+  return browser ?? os ?? t('device.fallback');
 }

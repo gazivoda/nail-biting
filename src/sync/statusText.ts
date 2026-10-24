@@ -1,7 +1,8 @@
 // The words for what sync is doing. Pure, so every state has a test and a person
 // is never left with a code like "phase: backoff".
 
-import { formatDistance } from 'date-fns';
+import { formatDistance } from '../i18n/format';
+import { t } from '../i18n/scopes/data';
 import type { SyncStatus } from './types';
 import type { SyncNotice } from './optIn';
 
@@ -14,10 +15,8 @@ export interface StatusLine {
   tone: 'ok' | 'busy' | 'warn';
 }
 
-const plural = (n: number, one: string, many: string) => `${n.toLocaleString('en')} ${n === 1 ? one : many}`;
-
 function waiting(pending: number): string | undefined {
-  return pending > 0 ? `${plural(pending, 'change is', 'changes are')} waiting to be sent.` : undefined;
+  return pending > 0 ? t('status.waiting', { pending }) : undefined;
 }
 
 /** How long until `at`, in plain words ("in about 2 minutes"). */
@@ -28,54 +27,54 @@ function inAbout(at: number, now: number): string {
 export function describeStatus(status: SyncStatus, now: number): StatusLine {
   switch (status.phase) {
     case 'syncing':
-      return { headline: 'Syncing…', tone: 'busy' };
+      return { headline: t('status.syncing'), tone: 'busy' };
 
     case 'offline':
       return {
-        headline: 'You are offline.',
-        detail: `Everything is saved on this device and will sync when you are back online.${status.pending > 0 ? ` ${waiting(status.pending)}` : ''}`,
+        headline: t('status.offline.headline'),
+        detail: status.pending > 0 ? t('status.offline.detailPending', { pending: status.pending }) : t('status.offline.detail'),
         tone: 'warn',
       };
 
     case 'backoff':
       return {
-        headline: 'Could not reach the server.',
-        detail: `Your history is safe on this device. Trying again ${status.retryAt ? inAbout(status.retryAt, now) : 'soon'}.`,
+        headline: t('status.backoff.headline'),
+        detail: status.retryAt ? t('status.backoff.detailAt', { when: inAbout(status.retryAt, now) }) : t('status.backoff.detailSoon'),
         tone: 'warn',
       };
 
     case 'signed_out':
       return {
-        headline: 'You have been signed out.',
-        detail: 'Sign in again to keep syncing. Your history on this device is untouched.',
+        headline: t('status.signedOut.headline'),
+        detail: t('status.signedOut.detail'),
         tone: 'warn',
       };
 
     case 'unavailable':
       return {
-        headline: 'Sync is not available right now.',
-        detail: 'Your history is safe on this device. It will try again later.',
+        headline: t('status.unavailable.headline'),
+        detail: t('status.unavailable.detail'),
         tone: 'warn',
       };
 
     case 'rejected':
       return {
-        headline: 'The server did not accept some changes.',
-        detail: 'Nothing is lost on this device. Try Sync now.',
+        headline: t('status.rejected.headline'),
+        detail: t('status.rejected.detail'),
         tone: 'warn',
       };
 
     case 'quota':
       return {
-        headline: 'Your synced history is full.',
-        detail: 'Export a copy from Data below, then delete the synced copy to start fresh.',
+        headline: t('status.quota.headline'),
+        detail: t('status.quota.detail'),
         tone: 'warn',
       };
 
     case 'server_reset':
       return {
-        headline: 'Synced data was deleted, so sync is off.',
-        detail: 'Your history on this device is untouched.',
+        headline: t('status.serverReset.headline'),
+        detail: t('status.serverReset.detail'),
         tone: 'warn',
       };
 
@@ -84,10 +83,10 @@ export function describeStatus(status: SyncStatus, now: number): StatusLine {
     default: {
       const w = waiting(status.pending);
       if (status.lastSyncedAt === null) {
-        return { headline: 'Waiting for the first sync.', detail: w, tone: 'busy' };
+        return { headline: t('status.firstSync'), detail: w, tone: 'busy' };
       }
       return {
-        headline: `Last synced ${formatDistance(status.lastSyncedAt, now, { addSuffix: true })}.`,
+        headline: t('status.lastSynced', { when: formatDistance(status.lastSyncedAt, now, { addSuffix: true }) }),
         detail: w,
         tone: 'ok',
       };
@@ -100,9 +99,17 @@ export function describeNotice(notice: SyncNotice): StatusLine {
   switch (notice) {
     case 'server_reset':
       return {
-        headline: 'Your synced data was deleted from another device, so sync is off here.',
-        detail: 'Your history on this device is untouched. Turn sync on to upload it again.',
+        headline: t('notice.serverReset.headline'),
+        detail: t('notice.serverReset.detail'),
         tone: 'warn',
       };
   }
+}
+
+/** Why deleting the synced copy failed, for a server answer (`status` 0 means no answer at all). Called when the answer arrives. */
+export function describeDeleteFailure(status: number): string {
+  return status === 0 ? t('failure.network')
+    : status === 401 ? t('failure.signedOut')
+    : status === 429 ? t('failure.rateLimited')
+    : t('failure.server');
 }

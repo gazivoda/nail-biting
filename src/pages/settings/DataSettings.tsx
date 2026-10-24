@@ -10,12 +10,15 @@
 // what will be lost, and puts keyboard focus on the safe button.
 
 import { useId, useRef, useState } from 'react';
-import { format } from 'date-fns';
 import { Database, Trash2 } from 'lucide-react';
 import { Row, Section } from './ui';
 import { useFeatures } from '../../features/useFeature';
 import { events } from '../../storage';
-import { useAppStore } from '../../store/useAppStore';
+import { MAX_INCIDENTS, useAppStore } from '../../store/useAppStore';
+import { describeDeleteFailure } from '../../sync/statusText';
+import { t, useT } from '../../i18n/scopes/data';
+import { useT as useCommonT } from '../../i18n/scopes/common';
+import { formatDatePattern } from '../../i18n/format';
 import { eventsToCsv } from '../../backup/csv';
 import { applyImport, isNoop, planImport, type ImportPlan, type ImportRefusal } from '../../backup/importPlan';
 import { downloadTextFile, exportFileName, readChosenFile } from '../../backup/files';
@@ -33,15 +36,29 @@ const primary = 'inline-flex min-h-11 items-center justify-center rounded-full b
 const danger = 'inline-flex min-h-11 items-center justify-center rounded-full bg-alert-600 px-6 text-sm font-semibold text-cream-100 transition-colors hover:bg-alert-800 disabled:cursor-not-allowed disabled:opacity-40';
 const panel = 'space-y-3 rounded-2xl border border-stone-200 bg-stone-50 p-4 dark:border-ink-400 dark:bg-ink-100';
 
-const nice = (n: number) => n.toLocaleString('en');
-const when = (ms: number) => format(ms, 'PP p');
-const behaviorWord = (b: string) => b.replace(/_/g, ' ');
+// Dates: English keeps date-fns' "Oct 23, 2026 3:45 PM"; other languages get their own medium date and short time.
+const when = (ms: number) => formatDatePattern(ms, 'PP p', { dateStyle: 'medium', timeStyle: 'short' });
+const day = (ms: number) => formatDatePattern(ms, 'PP', { dateStyle: 'medium' });
+
+// The stored behavior id is shown as words. The words of the known ids are translated; an id this
+// build does not know (from a newer export file) is shown as it was, underscores turned into spaces.
+const BEHAVIOR_KEYS = {
+  nail_biting: 'behavior.nail_biting',
+  cuticle_skin_biting: 'behavior.cuticle_skin_biting',
+  nose_picking: 'behavior.nose_picking',
+  eye_area_pulling: 'behavior.eye_area_pulling',
+  face_skin_picking: 'behavior.face_skin_picking',
+  hair_pulling: 'behavior.hair_pulling',
+} as const satisfies Record<string, Parameters<typeof t>[0]>;
+const behaviorWord = (b: string) =>
+  Object.prototype.hasOwnProperty.call(BEHAVIOR_KEYS, b) ? t(BEHAVIOR_KEYS[b as keyof typeof BEHAVIOR_KEYS]) : b.replace(/_/g, ' ');
 
 // ── The card ────────────────────────────────────────────────────────────────
 
 export function DataCard({ backup, sync }: { backup: boolean; sync: boolean }) {
+  const t = useT();
   return (
-    <Section title="Data" icon={Database} fullWidth>
+    <Section title={t('card.title')} icon={Database} fullWidth>
       {backup && <BackupRows />}
       {sync && <DeleteSyncedRow />}
       <DeleteEverythingRow sync={sync} />
@@ -51,28 +68,30 @@ export function DataCard({ backup, sync }: { backup: boolean; sync: boolean }) {
 
 // ── Export and restore ──────────────────────────────────────────────────────
 
-type ImportState =
+export type ImportState =
   | { step: 'idle' }
   | { step: 'preview'; plan: ImportPlan; fileName: string }
   | { step: 'refused'; message: string }
   | { step: 'done'; plan: ImportPlan };
 
-function BackupRows() {
-  const [exported, setExported] = useState<string | null>(null);
-  const [imp, setImp] = useState<ImportState>({ step: 'idle' });
+/** `seed` only starts the card in a given state, so a test can render every step; the page never passes it. */
+export function BackupRows({ seed }: { seed?: { exported?: string | null; imp?: ImportState } } = {}) {
+  const t = useT();
+  const [exported, setExported] = useState<string | null>(seed?.exported ?? null);
+  const [imp, setImp] = useState<ImportState>(seed?.imp ?? { step: 'idle' });
   const fileInput = useRef<HTMLInputElement>(null);
   const fileId = useId();
 
   const exportJson = () => {
     const data = events.exportAll();
     downloadTextFile(exportFileName('json'), 'application/json', JSON.stringify(data, null, 2));
-    setExported(`Saved ${nice(data.events.length)} ${data.events.length === 1 ? 'event' : 'events'} as a file you can restore from.`);
+    setExported(t('export.savedJson', { count: data.events.length }));
   };
 
   const exportCsv = () => {
     const list = events.list();
     downloadTextFile(exportFileName('csv'), 'text/csv', eventsToCsv(list), true);
-    setExported(`Saved ${nice(list.length)} ${list.length === 1 ? 'row' : 'rows'} for a spreadsheet.`);
+    setExported(t('export.savedCsv', { count: list.length }));
   };
 
   const onFile = async (file: File | undefined) => {
@@ -97,22 +116,22 @@ function BackupRows() {
   return (
     <>
       <Row
-        label="Export your history"
-        description="JSON restores everything, including your streak dates. CSV opens in a spreadsheet. Both are saved to your computer; nothing is uploaded."
+        label={t('export.label')}
+        description={t('export.description')}
       >
         <div className="flex flex-wrap items-center gap-2">
-          <button type="button" onClick={exportJson} className={pill}>Export JSON</button>
-          <button type="button" onClick={exportCsv} className={pill}>Export CSV</button>
+          <button type="button" onClick={exportJson} className={pill}>{t('export.json')}</button>
+          <button type="button" onClick={exportCsv} className={pill}>{t('export.csv')}</button>
         </div>
       </Row>
       {exported && <p role="status" className="-mt-3 text-sm text-stone-700 dark:text-stone-200">{exported}</p>}
 
       <Row
-        label="Restore from a file"
-        description="Choose a JSON file you exported before. You see what it would change first. Events you already have are not duplicated, and newer ones here are never overwritten."
+        label={t('restore.label')}
+        description={t('restore.description')}
       >
         <div>
-          <label htmlFor={fileId} className="sr-only">Choose a history file to restore</label>
+          <label htmlFor={fileId} className="sr-only">{t('restore.fileLabel')}</label>
           <input
             ref={fileInput}
             id={fileId}
@@ -121,14 +140,14 @@ function BackupRows() {
             className="sr-only"
             onChange={e => { void onFile(e.target.files?.[0]); }}
           />
-          <button type="button" onClick={() => fileInput.current?.click()} className={pill}>Choose file</button>
+          <button type="button" onClick={() => fileInput.current?.click()} className={pill}>{t('restore.chooseFile')}</button>
         </div>
       </Row>
 
       {imp.step === 'refused' && (
         <div role="alert" className={panel}>
           <p className="text-sm text-alert-600 dark:text-alert-400">{imp.message}</p>
-          <button type="button" onClick={reset} className={pill}>OK</button>
+          <button type="button" onClick={reset} className={pill}>{t('restore.ok')}</button>
         </div>
       )}
 
@@ -139,80 +158,89 @@ function BackupRows() {
   );
 }
 
-function ImportPreview({ plan, fileName, onConfirm, onCancel }: { plan: ImportPlan; fileName: string; onConfirm(): void; onCancel(): void }) {
+export function ImportPreview({ plan, fileName, onConfirm, onCancel }: { plan: ImportPlan; fileName: string; onConfirm(): void; onCancel(): void }) {
+  const t = useT();
+  const tc = useCommonT();
   const noop = isNoop(plan);
   return (
-    <div className={panel} role="group" aria-label="Import preview">
+    <div className={panel} role="group" aria-label={t('preview.aria')}>
       <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">
-        {fileName}: {nice(plan.total)} {plan.total === 1 ? 'entry' : 'entries'}
-        {plan.exportedAt ? `, exported ${when(plan.exportedAt)}` : ''}
+        {plan.exportedAt
+          ? t('preview.titleExported', { fileName, total: plan.total, when: when(plan.exportedAt) })
+          : t('preview.title', { fileName, total: plan.total })}
       </p>
       {plan.restoresWhole && (
         <p className="text-sm text-stone-700 dark:text-stone-200">
-          This device has no history yet, so this restores everything from the file, including your streak dates.
+          {t('preview.restoresWhole')}
         </p>
       )}
       <ul className="list-disc space-y-1 pl-5 text-sm text-stone-700 dark:text-stone-200">
         <li>
-          {nice(plan.added)} new {plan.added === 1 ? 'event' : 'events'} will be added
-          {plan.addedRange ? ` (${format(plan.addedRange.from, 'PP')} to ${format(plan.addedRange.to, 'PP')})` : ''}
+          {plan.addedRange
+            ? t('preview.addedRange', { count: plan.added, from: day(plan.addedRange.from), to: day(plan.addedRange.to) })
+            : t('preview.added', { count: plan.added })}
         </li>
-        {plan.updated > 0 && <li>{nice(plan.updated)} here will be replaced by a newer version from the file</li>}
-        {plan.deletions > 0 && <li>{nice(plan.deletions)} deletion {plan.deletions === 1 ? 'record' : 'records'} from the file will be applied</li>}
-        {plan.unchanged > 0 && <li>{nice(plan.unchanged)} already here and unchanged</li>}
-        {plan.keptNewer > 0 && <li>{nice(plan.keptNewer)} here are newer than the file’s version and stay as they are</li>}
-        {plan.duplicatesInFile > 0 && <li>{nice(plan.duplicatesInFile)} listed twice in the file (counted once)</li>}
-        {plan.invalid > 0 && <li>{nice(plan.invalid)} {plan.invalid === 1 ? 'entry is' : 'entries are'} not valid and will be skipped</li>}
+        {plan.updated > 0 && <li>{t('preview.updated', { count: plan.updated })}</li>}
+        {plan.deletions > 0 && <li>{t('preview.deletions', { count: plan.deletions })}</li>}
+        {plan.unchanged > 0 && <li>{t('preview.unchanged', { count: plan.unchanged })}</li>}
+        {plan.keptNewer > 0 && <li>{t('preview.keptNewer', { count: plan.keptNewer })}</li>}
+        {plan.duplicatesInFile > 0 && <li>{t('preview.duplicates', { count: plan.duplicatesInFile })}</li>}
+        {plan.invalid > 0 && <li>{t('preview.invalid', { count: plan.invalid })}</li>}
       </ul>
       {plan.exceedsLimit && (
         <p className="text-sm text-alert-600 dark:text-alert-400">
-          The app keeps the newest 5,000 events, so the oldest ones in this file will be left out.
+          {t('preview.exceedsLimit', { max: MAX_INCIDENTS })}
         </p>
       )}
       {plan.sample.length > 0 && (
         <div>
-          <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">Newest events being added</p>
+          <p className="text-sm font-semibold text-stone-800 dark:text-stone-100">{t('preview.sampleHeading')}</p>
           <ul className="mt-1 space-y-0.5 text-sm text-stone-700 dark:text-stone-200">
             {plan.sample.map(e => (
-              <li key={e.id}>{when(e.ts)} · {e.source === 'alarm' ? 'alarm' : 'logged by hand'} · {behaviorWord(e.behavior)}</li>
+              <li key={e.id}>{t('preview.sampleLine', { when: when(e.ts), source: e.source, behavior: behaviorWord(e.behavior) })}</li>
             ))}
           </ul>
         </div>
       )}
-      {noop && <p className="text-sm text-stone-700 dark:text-stone-200">There is nothing new in this file. Your history stays exactly as it is.</p>}
+      {noop && <p className="text-sm text-stone-700 dark:text-stone-200">{t('preview.noop')}</p>}
       <div className="flex flex-wrap gap-2">
-        {!noop && <button type="button" onClick={onConfirm} className={primary}>Import</button>}
-        <button type="button" autoFocus onClick={onCancel} className={pill}>{noop ? 'Close' : 'Cancel'}</button>
+        {!noop && <button type="button" onClick={onConfirm} className={primary}>{t('preview.import')}</button>}
+        <button type="button" autoFocus onClick={onCancel} className={pill}>{noop ? tc('close') : tc('cancel')}</button>
       </div>
     </div>
   );
 }
 
-function ImportDone({ plan, onClose }: { plan: ImportPlan; onClose(): void }) {
+export function ImportDone({ plan, onClose }: { plan: ImportPlan; onClose(): void }) {
+  const t = useT();
+  const tc = useCommonT();
+  const summaryKey =
+    plan.updated > 0 && plan.deletions > 0 ? 'done.addedUpdatedDeletions'
+    : plan.updated > 0 ? 'done.addedUpdated'
+    : plan.deletions > 0 ? 'done.addedDeletions'
+    : 'done.added';
   return (
     <div role="status" className={panel}>
       <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">
-        Done. Added {nice(plan.added)} {plan.added === 1 ? 'event' : 'events'}
-        {plan.updated > 0 ? `, updated ${nice(plan.updated)}` : ''}
-        {plan.deletions > 0 ? `, applied ${nice(plan.deletions)} ${plan.deletions === 1 ? 'deletion' : 'deletions'}` : ''}.
+        {t(summaryKey, { added: plan.added, updated: plan.updated, deletions: plan.deletions })}
       </p>
       {plan.keptNewer > 0 && (
-        <p className="text-sm text-stone-700 dark:text-stone-200">{nice(plan.keptNewer)} newer {plan.keptNewer === 1 ? 'event was' : 'events were'} kept as they were.</p>
+        <p className="text-sm text-stone-700 dark:text-stone-200">{t('done.keptNewer', { count: plan.keptNewer })}</p>
       )}
       {plan.sample.length > 0 && (
         <ul className="space-y-0.5 text-sm text-stone-700 dark:text-stone-200">
           {plan.sample.map(e => <li key={e.id}>{when(e.ts)} · {behaviorWord(e.behavior)}</li>)}
-          {plan.added > plan.sample.length && <li>and {nice(plan.added - plan.sample.length)} more</li>}
+          {plan.added > plan.sample.length && <li>{t('done.andMore', { count: plan.added - plan.sample.length })}</li>}
         </ul>
       )}
-      <button type="button" onClick={onClose} className={pill}>Close</button>
+      <button type="button" onClick={onClose} className={pill}>{tc('close')}</button>
     </div>
   );
 }
 
 // ── Delete synced data ──────────────────────────────────────────────────────
 
-type WipeState =
+export type WipeState =
   | { step: 'idle' }
   | { step: 'checking' }
   | { step: 'asking'; count: number }
@@ -220,20 +248,18 @@ type WipeState =
   | { step: 'done'; count: number }
   | { step: 'error'; message: string };
 
-const failure = (status: number) =>
-  status === 0 ? 'Could not reach the server. Nothing was deleted. Check your connection and try again.'
-  : status === 401 ? 'You are signed out. Sign in again, then try once more.'
-  : status === 429 ? 'Too many requests. Wait a minute and try again.'
-  : 'The server could not delete it. Nothing was deleted. Try again in a moment.';
 
-function DeleteSyncedRow() {
-  const [s, setS] = useState<WipeState>({ step: 'idle' });
+/** `seed` only starts the row in a given step, so a test can render every one; the page never passes it. */
+export function DeleteSyncedRow({ seed }: { seed?: WipeState } = {}) {
+  const t = useT();
+  const tc = useCommonT();
+  const [s, setS] = useState<WipeState>(seed ?? { step: 'idle' });
 
   // Look first, so the confirmation can say exactly how much is about to go.
   const ask = async () => {
     setS({ step: 'checking' });
     const r = await loadRemoteStatus();
-    setS(r.ok ? { step: 'asking', count: r.status.live } : { step: 'error', message: failure(r.status) });
+    setS(r.ok ? { step: 'asking', count: r.status.live } : { step: 'error', message: describeDeleteFailure(r.status) });
   };
 
   const proceed = async () => {
@@ -241,42 +267,36 @@ function DeleteSyncedRow() {
     const count = s.count;
     setS({ step: 'working', count });
     const r = await deleteSyncedData();
-    setS(r.ok ? { step: 'done', count } : { step: 'error', message: failure(r.status) });
+    setS(r.ok ? { step: 'done', count } : { step: 'error', message: describeDeleteFailure(r.status) });
   };
 
   const busy = s.step === 'checking' || s.step === 'working';
   return (
     <>
       <Row
-        label="Delete synced data"
-        description="Removes the copy of your history held on your account. History on this device stays, and sync is switched off."
+        label={t('wipe.label')}
+        description={t('wipe.description')}
       >
         <button type="button" onClick={() => { void ask(); }} disabled={busy || s.step === 'asking'} className={pill}>
-          {s.step === 'checking' ? 'Checking…' : 'Delete synced data'}
+          {s.step === 'checking' ? t('wipe.checking') : t('wipe.label')}
         </button>
       </Row>
       {(s.step === 'asking' || s.step === 'working') && (
-        <div className={panel} role="group" aria-label="Confirm deleting synced data">
+        <div className={panel} role="group" aria-label={t('wipe.confirmAria')}>
           <p className="text-sm text-alert-600 dark:text-alert-400">
-            {s.count > 0
-              ? `This permanently deletes ${nice(s.count)} synced ${s.count === 1 ? 'event' : 'events'} from your account.`
-              : 'This permanently clears the history held on your account.'}
-            {' '}Other devices will stop syncing. It can’t be undone.
+            {s.count > 0 ? t('wipe.confirmSome', { count: s.count }) : t('wipe.confirmNone')}
           </p>
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => { void proceed(); }} disabled={busy} className={danger}>
-              {s.step === 'working' ? 'Deleting…' : 'Yes, delete synced data'}
+              {s.step === 'working' ? t('wipe.deleting') : t('wipe.yes')}
             </button>
-            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={busy} className={pill}>Cancel</button>
+            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={busy} className={pill}>{tc('cancel')}</button>
           </div>
         </div>
       )}
       {s.step === 'done' && (
         <p role="status" className="-mt-3 text-sm text-stone-700 dark:text-stone-200">
-          {s.count > 0
-            ? `Deleted ${nice(s.count)} synced ${s.count === 1 ? 'event' : 'events'} from your account.`
-            : 'Cleared the history held on your account.'}
-          {' '}Sync is off. History on this device is untouched.
+          {s.count > 0 ? t('wipe.doneSome', { count: s.count }) : t('wipe.doneNone')}
         </p>
       )}
       {s.step === 'error' && <p role="alert" className="-mt-3 text-sm text-alert-600 dark:text-alert-400">{s.message}</p>}
@@ -286,15 +306,18 @@ function DeleteSyncedRow() {
 
 // ── Delete everything ───────────────────────────────────────────────────────
 
-type EverythingState =
+export type EverythingState =
   | { step: 'idle' }
   | { step: 'asking'; alsoSynced: boolean }
   | { step: 'working' }
   | { step: 'done' }
   | { step: 'error'; message: string };
 
-function DeleteEverythingRow({ sync }: { sync: boolean }) {
-  const [s, setS] = useState<EverythingState>({ step: 'idle' });
+/** `seed` only starts the row in a given step, so a test can render every one; the page never passes it. */
+export function DeleteEverythingRow({ sync, seed }: { sync: boolean; seed?: EverythingState }) {
+  const t = useT();
+  const tc = useCommonT();
+  const [s, setS] = useState<EverythingState>(seed ?? { step: 'idle' });
   const boxId = useId();
   // Whether there may be a synced copy to offer to delete: the feature is on and this browser has used it.
   const mayHaveCopy = sync && isSyncSwitchedOn();
@@ -303,24 +326,24 @@ function DeleteEverythingRow({ sync }: { sync: boolean }) {
     const alsoSynced = s.step === 'asking' && s.alsoSynced;
     setS({ step: 'working' });
     const r = await deleteEverything({ alsoDeleteSynced: alsoSynced, clearLocal: () => useAppStore.getState().clearAllData() });
-    setS(r.ok ? { step: 'done' } : { step: 'error', message: failure(r.status) });
+    setS(r.ok ? { step: 'done' } : { step: 'error', message: describeDeleteFailure(r.status) });
   };
 
   return (
     <>
       <Row
-        label="Delete everything"
-        description="Erases your history, streak, bite reasons and settings on this device."
+        label={t('all.label')}
+        description={t('all.description')}
       >
         <button type="button" onClick={() => setS({ step: 'asking', alsoSynced: mayHaveCopy })} disabled={s.step === 'asking' || s.step === 'working'} className={`${pill} !text-alert-600 dark:!text-alert-400`}>
           <Trash2 size={14} aria-hidden="true" className="mr-2" />
-          Delete everything
+          {t('all.label')}
         </button>
       </Row>
       {(s.step === 'asking' || s.step === 'working') && (
-        <div className={panel} role="group" aria-label="Confirm deleting everything">
+        <div className={panel} role="group" aria-label={t('all.confirmAria')}>
           <p className="text-sm text-alert-600 dark:text-alert-400">
-            This erases your history, streak, bite reasons and every setting on this device. It can’t be undone.
+            {t('all.confirm')}
           </p>
           {sync && (
             <div className="flex items-start gap-3">
@@ -333,19 +356,19 @@ function DeleteEverythingRow({ sync }: { sync: boolean }) {
                 className="mt-1 h-5 w-5 accent-[oklch(25%_0.05_162)] dark:accent-[oklch(90%_0.2_124)]"
               />
               <label htmlFor={boxId} className="text-sm text-stone-700 dark:text-stone-200">
-                Also delete the copy synced to my account. If you leave this off, the copy stays and sync is switched off on this device.
+                {t('all.alsoSynced')}
               </label>
             </div>
           )}
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => { void proceed(); }} disabled={s.step === 'working'} className={danger}>
-              {s.step === 'working' ? 'Deleting…' : 'Yes, delete everything'}
+              {s.step === 'working' ? t('all.deleting') : t('all.yes')}
             </button>
-            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={s.step === 'working'} className={pill}>Cancel</button>
+            <button type="button" autoFocus onClick={() => setS({ step: 'idle' })} disabled={s.step === 'working'} className={pill}>{tc('cancel')}</button>
           </div>
         </div>
       )}
-      {s.step === 'done' && <p role="status" className="-mt-3 text-sm text-stone-700 dark:text-stone-200">Everything on this device has been erased.</p>}
+      {s.step === 'done' && <p role="status" className="-mt-3 text-sm text-stone-700 dark:text-stone-200">{t('all.done')}</p>}
       {s.step === 'error' && <p role="alert" className="-mt-3 text-sm text-alert-600 dark:text-alert-400">{s.message}</p>}
     </>
   );

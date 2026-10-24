@@ -19,6 +19,7 @@ import type { BlobStore } from '../storage/blobs';
 import { blobStorageStatus, localBlobs } from '../storage/blobs';
 import { MAX_PHOTOS, PHOTO_COLLECTION, type PhotoMeta } from './diaryMeta';
 import { kvMetaPort, type MetaPort } from './metaKv';
+import { messages, t } from '../i18n/scopes/photos';
 
 export interface PhotoStorePorts {
   blobs: Pick<BlobStore, 'put' | 'get' | 'delete' | 'keys' | 'clear'>;
@@ -41,8 +42,9 @@ export interface NewPhoto {
   takenAt?: number;
 }
 
-export const FULL_MESSAGE = `The diary holds ${MAX_PHOTOS} photos. Delete some older ones to add more.`;
-export const WRITE_FAILED_MESSAGE = 'This browser would not save the photo. Free up space or try again.';
+/** The English wording of the two failures (what the tests compare with); add() says them with t() when they happen. */
+export const FULL_MESSAGE = messages['store.full'].replace('{max}', String(MAX_PHOTOS));
+export const WRITE_FAILED_MESSAGE = messages['store.writeFailed'];
 
 export function createPhotoStore(ports: PhotoStorePorts) {
   let chain: Promise<unknown> = Promise.resolve();
@@ -77,10 +79,10 @@ export function createPhotoStore(ports: PhotoStorePorts) {
     add(photo: NewPhoto): Promise<AddResult> {
       return serial(async () => {
         const records = ports.meta.read();
-        if (records.length >= MAX_PHOTOS) return { ok: false, reason: 'full', message: FULL_MESSAGE } as const;
+        if (records.length >= MAX_PHOTOS) return { ok: false, reason: 'full', message: t('store.full', { max: MAX_PHOTOS }) } as const;
         const id = ports.newId();
         const stored = await ports.blobs.put(PHOTO_COLLECTION, id, photo.blob);
-        if (!stored) return { ok: false, reason: 'write-failed', message: WRITE_FAILED_MESSAGE } as const;
+        if (!stored) return { ok: false, reason: 'write-failed', message: t('store.writeFailed') } as const;
         const meta: PhotoMeta = {
           id,
           takenAt: photo.takenAt ?? ports.now(),
@@ -90,7 +92,7 @@ export function createPhotoStore(ports: PhotoStorePorts) {
         };
         if (!ports.meta.write([meta, ...records])) {
           await ports.blobs.delete(PHOTO_COLLECTION, id);
-          return { ok: false, reason: 'write-failed', message: WRITE_FAILED_MESSAGE } as const;
+          return { ok: false, reason: 'write-failed', message: t('store.writeFailed') } as const;
         }
         return { ok: true, photo: meta, persisted: ports.isPersistent() } as const;
       });

@@ -10,6 +10,8 @@
 // is pure, `drawShareCard` only needs something shaped like a 2D context.
 
 import type { MilestoneStatus } from './milestones';
+import { intlLocaleArg } from '../i18n/core';
+import { t } from '../i18n/scopes/insights';
 
 export const SHARE_CARD_SIZE = 1080;
 export const SHARE_CARD_SITE = 'stopbiting.today';
@@ -29,26 +31,27 @@ export interface ShareCardModel {
   alt: string;
 }
 
+// English keeps the day-first "23 October 2026" (en-GB) whatever the browser's language; another language gets its own.
 export function formatCardDate(ts: number, locale?: string): string {
-  return new Intl.DateTimeFormat(locale ?? 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(ts));
+  return new Intl.DateTimeFormat(locale ?? intlLocaleArg() ?? 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(ts));
 }
 
 export function buildShareCardModel(status: MilestoneStatus, locale?: string): ShareCardModel {
   const at = status.reachedAt;
   if (at === null) throw new Error('A share card needs a milestone that has been reached');
   const { def } = status;
-  const reached = `Reached ${formatCardDate(at, locale)}`;
+  const reached = t('milestone.reached', { date: formatCardDate(at, locale) });
   return {
     width: SHARE_CARD_SIZE,
     height: SHARE_CARD_SIZE,
-    kicker: 'Milestone',
+    kicker: t('milestone.kicker'),
     figure: def.figure,
     title: def.title,
     detail: def.detail,
     reached,
     brand: 'Stop Biting',
     site: SHARE_CARD_SITE,
-    alt: `Stop Biting milestone: ${def.title}. ${reached}.`,
+    alt: t('share.alt', { title: def.title, reached }),
   };
 }
 
@@ -91,8 +94,8 @@ export function wrapLines(text: string, maxWidth: number, measure: (s: string) =
 const DEEP = '#0B2A1E';
 const LIME = '#C6F24E';
 const WHITE = '#FFFFFF';
-const DISPLAY = '"Bricolage Grotesque", "Geist", -apple-system, "Segoe UI", sans-serif';
-const TEXT = '"Geist", -apple-system, "Segoe UI", sans-serif';
+const DISPLAY = '"Bricolage Grotesque", "Geist", -apple-system, "Segoe UI", sans-serif'; // i18n-ignore: CSS font stack
+const TEXT = '"Geist", -apple-system, "Segoe UI", sans-serif'; // i18n-ignore: CSS font stack
 
 /** Draws the card. Uses only rectangles, circles and text: no image is ever drawn. */
 export function drawShareCard(ctx: CardContext, m: ShareCardModel): void {

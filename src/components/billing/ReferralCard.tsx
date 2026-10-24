@@ -3,12 +3,13 @@
 
 import { useEffect, useState } from 'react';
 import { Check, Copy, Users } from 'lucide-react';
-import { describeDays } from '../../../shared/plans.js';
+import { describeLength } from '../../billing/planLabel';
+import { useT } from '../../i18n/scopes/billing';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
 import { useFeature } from '../../features/useFeature';
 import { Row, Section } from '../../pages/settings/ui';
 
-interface Summary {
+export interface Summary {
   code: string;
   link: string;
   credit_days: number;
@@ -52,43 +53,50 @@ function ReferralCardBody() {
     }
   }
 
-  const days = summary ? describeDays(summary.credit_days) : null;
+  return <ReferralView summary={summary} failed={failed} copied={copied} onCopy={copy} />;
+}
+
+/** The card for each state of the lookup and of the copy button (the state itself lives in ReferralCardBody). */
+export function ReferralView({ summary, failed, copied, onCopy }: { summary: Summary | null; failed: boolean; copied: boolean; onCopy: () => void }) {
+  const t = useT();
+  const days = summary ? describeLength(summary.credit_days) : null;
 
   return (
-    <Section title="Refer a friend" icon={Users} fullWidth>
+    <Section title={t('referral.title')} icon={Users} fullWidth>
       <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
         {days
-          ? `When someone you refer pays for the first time, you both get ${days} of bonus access. The days are saved and start by themselves when your trial or subscription is not covering you. If that payment is refunded, the days are taken back.`
-          : 'When someone you refer pays for the first time, you both get bonus access.'}
+          ? t('referral.intro.days', { days })
+          : t('referral.intro.plain')}
       </p>
 
-      {failed && <p role="alert" className="text-sm text-alert-600 dark:text-alert-400">Your link could not be loaded. Please try again later.</p>}
+      {failed && <p role="alert" className="text-sm text-alert-600 dark:text-alert-400">{t('referral.failed')}</p>}
 
       {summary && (
         <>
-          <Row label="Your link" description="Anyone who signs up through it is counted for you.">
+          <Row label={t('referral.link')} description={t('referral.link.description')}>
             <div className="flex w-full max-w-md items-center gap-2 sm:w-auto">
               <input
                 readOnly
                 value={summary.link}
-                aria-label="Your referral link"
+                aria-label={t('referral.link.aria')}
                 onFocus={e => e.currentTarget.select()}
                 className="h-11 min-w-0 flex-1 rounded-full border border-stone-200 bg-stone-50 px-4 text-sm text-stone-800 dark:border-ink-400 dark:bg-ink-fill dark:text-stone-100 sm:w-72"
               />
               <button
                 type="button"
-                onClick={copy}
+                onClick={onCopy}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full bg-deep px-5 text-sm font-semibold text-white transition-colors hover:bg-forest-500 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
               >
                 {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
-                {copied ? 'Copied' : 'Copy'}
+                {copied ? t('referral.copied') : t('referral.copy')}
               </button>
             </div>
           </Row>
           <p className="text-sm text-stone-600 dark:text-stone-300" aria-live="polite">
-            {summary.rewarded} {summary.rewarded === 1 ? 'person has' : 'people have'} paid through your link
-            {summary.credit_days_earned > 0 ? `, earning you ${describeDays(summary.credit_days_earned)}` : ''}.
-            {summary.pending > 0 ? ` ${summary.pending} ${summary.pending === 1 ? 'is' : 'are'} signed up and have not paid yet.` : ''}
+            {summary.credit_days_earned > 0
+              ? t('referral.paid.earned', { count: summary.rewarded, days: describeLength(summary.credit_days_earned) })
+              : t('referral.paid', { count: summary.rewarded })}
+            {summary.pending > 0 ? ` ${t('referral.pending', { count: summary.pending })}` : ''}
           </p>
         </>
       )}

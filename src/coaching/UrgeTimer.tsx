@@ -19,10 +19,12 @@ import { SegmentedControl } from '../components/ui/SegmentedControl';
 import { IDLE, elapsedMs, offer, remainingSec, skip, tick, type CoachingResult, type CoachingSession } from './session';
 import { DEFAULT_URGE_DURATION, URGE_DURATIONS_SEC, breathAt, type UrgeDuration } from './breathing';
 import { finishUrge, logUrge, undoUrge } from './urgeLog';
+import { useT } from '../i18n/scopes/coaching';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 type RunningSession = Extract<CoachingSession, { phase: 'running' }>;
 
-type Ui =
+export type Ui =
   | { step: 'idle' }
   | { step: 'choose' }
   | { step: 'running'; session: RunningSession }
@@ -32,8 +34,11 @@ const CONFIRM_MS = 8000;
 const SMALL = 0.55;
 type DurationValue = `${UrgeDuration}`;
 
-export function UrgeTimer() {
-  const [ui, setUi] = useState<Ui>({ step: 'idle' });
+/** `initial` is for the pseudo-locale test (src/i18n/coverage): it renders a later step without a click. */
+export function UrgeTimer({ initial }: { initial?: Ui } = {}) {
+  const t = useT();
+  const tc = useCommonT();
+  const [ui, setUi] = useState<Ui>(initial ?? { step: 'idle' });
   const [duration, setDuration] = useState<UrgeDuration>(DEFAULT_URGE_DURATION);
   const [now, setNow] = useState(() => Date.now());
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -56,11 +61,12 @@ export function UrgeTimer() {
   };
 
   const start = () => {
-    const t = Date.now();
+    const startedAt = Date.now();
     const eventId = logUrge(); // the urge happened: it is logged now, not only if the timer is finished
-    const session = offer(IDLE, { eventId, text: 'Breathe with the circle', durationSec: duration }, t);
+    // The session's label is internal: this timer shows its own words (Breathing below), and the label is never shown or saved.
+    const session = offer(IDLE, { eventId, text: 'Breathe with the circle', durationSec: duration }, startedAt); // i18n-ignore: internal label of the session, never rendered or stored
     if (session.phase !== 'running') return;
-    setNow(t);
+    setNow(startedAt);
     setUi({ step: 'running', session });
     moveFocus();
   };
@@ -84,9 +90,9 @@ export function UrgeTimer() {
   useEffect(() => {
     if (!running) return;
     const id = setInterval(() => {
-      const t = Date.now();
-      setNow(t);
-      const r = tick(running, t).result;
+      const at = Date.now();
+      setNow(at);
+      const r = tick(running, at).result;
       if (r) conclude(r);
     }, 250);
     return () => clearInterval(id);
@@ -109,8 +115,8 @@ export function UrgeTimer() {
 
   // Always in the page, so screen readers announce the change of text.
   const announcement =
-    ui.step === 'running' ? `Breathing timer started, ${ui.session.durationSec} seconds. Press Stop, or Escape, to end it.`
-    : ui.step === 'logged' ? 'Logged as an urge. Your streak is not affected.'
+    ui.step === 'running' ? t('urge.announceStarted', { count: ui.session.durationSec })
+    : ui.step === 'logged' ? t('urge.logged')
     : '';
 
   return (
@@ -123,22 +129,22 @@ export function UrgeTimer() {
           onClick={() => { setUi({ step: 'choose' }); moveFocus(); }}
           className="w-full select-none rounded-full border-2 border-deep min-h-14 py-3.5 font-display text-lg font-bold tracking-[-0.01em] text-deep transition-colors duration-150 hover:bg-deep hover:text-white active:scale-[0.99] motion-reduce:active:scale-100 dark:border-lime-300 dark:text-lime-300 dark:hover:bg-lime-300 dark:hover:text-deep"
         >
-          I feel an urge
+          {t('urge.start')}
         </button>
       )}
 
       {ui.step === 'choose' && (
         <div className="rounded-2xl border border-stone-200 bg-white p-5 motion-safe:animate-fade-up dark:border-ink-400 dark:bg-ink-50">
-          <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">Breathe it out</h2>
+          <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{t('urge.sheetTitle')}</h2>
           <p className="mt-1 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-            Follow the breathing for a minute or so, and keep your hands busy with something else. This logs an urge, not a bite, so your streak is not affected.
+            {t('urge.sheetBody')}
           </p>
           <div className="mt-4">
             <SegmentedControl<DurationValue>
-              ariaLabel="Length of the timer"
+              ariaLabel={t('urge.lengthLabel')}
               value={`${duration}`}
               onChange={v => setDuration(Number(v) as UrgeDuration)}
-              options={URGE_DURATIONS_SEC.map(d => ({ label: `${d} seconds`, value: `${d}` as DurationValue }))}
+              options={URGE_DURATIONS_SEC.map(d => ({ label: t('duration.seconds', { count: d }), value: `${d}` as DurationValue }))}
             />
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
@@ -148,14 +154,14 @@ export function UrgeTimer() {
               onClick={start}
               className="min-h-11 rounded-full bg-deep px-6 font-display text-sm font-bold text-white transition-colors hover:bg-deep-2 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
             >
-              Start
+              {t('urge.begin')}
             </button>
             <button
               type="button"
               onClick={cancel}
               className="min-h-11 rounded-full px-5 text-sm font-semibold text-stone-600 transition-colors hover:text-stone-900 dark:text-stone-300 dark:hover:text-stone-100"
             >
-              Cancel
+              {tc('cancel')}
             </button>
           </div>
         </div>
@@ -167,7 +173,7 @@ export function UrgeTimer() {
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border border-forest-300 bg-forest-50 px-4 py-2 motion-safe:animate-fade-up dark:border-forest-700 dark:bg-forest-800/50">
           <p className="flex items-center gap-2 text-sm font-medium text-forest-700 dark:text-forest-300">
             <Wind size={15} aria-hidden="true" />
-            <span>{ui.done ? 'Timer finished. Logged as an urge.' : 'Logged as an urge.'} Your streak is not affected.</span>
+            <span>{ui.done ? t('urge.loggedDone') : t('urge.logged')}</span>
           </p>
           <button
             ref={mainRef}
@@ -175,7 +181,7 @@ export function UrgeTimer() {
             onClick={undo}
             className="inline-flex min-h-11 items-center text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
           >
-            Undo
+            {tc('undo')}
           </button>
         </div>
       )}
@@ -189,6 +195,7 @@ function Breathing({ session, now, onStop, stopRef }: {
   onStop: () => void;
   stopRef: React.RefObject<HTMLButtonElement | null>;
 }) {
+  const t = useT();
   const elapsed = elapsedMs(session, now);
   const b = breathAt(elapsed);
   const left = remainingSec(session, now);
@@ -204,17 +211,17 @@ function Breathing({ session, now, onStop, stopRef }: {
         />
       </div>
       <p aria-hidden="true" className="mt-4 font-display text-3xl font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">
-        {b.phase === 'in' ? 'Breathe in' : 'Breathe out'}
+        {b.phase === 'in' ? t('urge.breatheIn') : t('urge.breatheOut')}
         <span className="hidden tabular-nums motion-reduce:inline"> {b.secondsLeft}</span>
       </p>
-      <p aria-hidden="true" className="mt-1 text-sm tabular-nums text-stone-600 dark:text-stone-300">{left} seconds left</p>
+      <p aria-hidden="true" className="mt-1 text-sm tabular-nums text-stone-600 dark:text-stone-300">{t('urge.secondsLeft', { count: left })}</p>
       <button
         ref={stopRef}
         type="button"
         onClick={onStop}
         className="mt-4 min-h-11 rounded-full border border-stone-300 px-6 text-sm font-semibold text-stone-800 transition-colors hover:border-stone-500 dark:border-ink-400 dark:text-stone-100 dark:hover:border-stone-400"
       >
-        Stop
+        {t('urge.stop')}
       </button>
     </div>
   );

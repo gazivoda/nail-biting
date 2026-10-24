@@ -5,8 +5,10 @@ import { useState } from 'react';
 import type { Incident } from '../types';
 import { describeFalsePositiveRate, falsePositiveRates } from './stats';
 import { useFalsePositiveEnabled } from './useEnabled';
+import { useLocale } from '../i18n/hooks';
 
 export function FalsePositiveRate({ incidents, className = '' }: { incidents: readonly Incident[]; className?: string }) {
+  useLocale(); // the sentence is built by describeFalsePositiveRate with t(): re-render when the language changes
   const on = useFalsePositiveEnabled();
   // Anchored at mount so render stays pure; the two weeks are counted back from the moment the page opened.
   const [now] = useState(() => Date.now());

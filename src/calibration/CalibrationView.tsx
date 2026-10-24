@@ -13,7 +13,7 @@
 // Keyboard: the dialog takes focus when it opens, Escape closes it (cancelling), and the page behind is
 // inert. Every phase has a Cancel/Close.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type Ref } from 'react';
 import { createPortal } from 'react-dom';
 import { useAppStore } from '../store/useAppStore';
 import { writeCalibration } from '../falsePositive/poseStore';
@@ -21,8 +21,10 @@ import { CALIBRATION } from '../detection/calibration';
 import { openCamera, startFrames } from './runner';
 import { addFrame, begin, failureMessage, framesSoFar, profileToSave, secondsLeft, START, tick, type CalibrationState } from './steps';
 import { closeCalibration } from './state';
+import { t as tNow, useT } from '../i18n/scopes/calibration';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
-type Link = 'starting' | 'ready' | 'error';
+export type Link = 'starting' | 'ready' | 'error';
 
 export function CalibrationView() {
   if (typeof document === 'undefined') return null;
@@ -92,7 +94,7 @@ function Overlay() {
         stopFrames = frames.stop;
         setLink('ready');
       } catch {
-        if (!cancelled) { setProblem("Detection couldn't load. Check your connection and try again."); setLink('error'); }
+        if (!cancelled) { setProblem(tNow('link.models')); setLink('error'); }
       }
     })();
     return () => {
@@ -113,9 +115,32 @@ function Overlay() {
     return () => clearInterval(id);
   }, [update]);
 
+  // Start, and Try again: begin step 1 from now.
+  const restart = useCallback(() => update(begin(stateRef.current, Date.now())), [update]);
+
+  return <CalibrationPanel state={state} now={now} link={link} problem={problem} seen={seen} onBegin={restart} dialogRef={dialogRef} videoRef={videoRef} />;
+}
+
+export interface CalibrationPanelProps {
+  state: CalibrationState;
+  now: number;
+  link: Link;
+  /** What went wrong with the camera or the models, when `link` is 'error'. */
+  problem: string | null;
+  seen: { hand: boolean; face: boolean };
+  /** Start (from the intro) and Try again (from the result): begin step 1. */
+  onBegin: () => void;
+  dialogRef?: Ref<HTMLDivElement>;
+  videoRef?: Ref<HTMLVideoElement>;
+}
+
+/** Everything the person reads and presses. The view above owns the camera, the clock and the state; this only draws them. */
+export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dialogRef, videoRef }: CalibrationPanelProps) {
+  const t = useT();
+  const tc = useCommonT();
   const left = secondsLeft(state, now);
   const profile = profileToSave(state);
-  const stepTitle = state.phase === 'rest' ? 'Step 1 of 2' : state.phase === 'real' ? 'Step 2 of 2' : state.phase === 'between' ? 'Step 2 of 2 next' : 'Calibrate';
+  const stepTitle = state.phase === 'rest' ? t('title.rest') : state.phase === 'real' ? t('title.real') : state.phase === 'between' ? t('title.between') : t('title.default');
 
   return (
     <div
@@ -136,21 +161,21 @@ function Overlay() {
             onClick={() => closeCalibration()}
             className="min-h-11 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
           >
-            {state.phase === 'result' ? 'Close' : 'Cancel'}
+            {state.phase === 'result' ? tc('close') : tc('cancel')}
           </button>
         </div>
 
         {/* The person's own live picture, mirrored like the preview in the app. */}
         <div>
           <div className="overflow-hidden rounded-2xl border border-stone-200 bg-stone-100 dark:border-ink-400 dark:bg-ink-50">
-            <video ref={videoRef} autoPlay playsInline muted aria-label="Your camera" className="aspect-video w-full object-cover" style={{ transform: 'scaleX(-1)' }} />
+            <video ref={videoRef} autoPlay playsInline muted aria-label={t('camera.aria')} className="aspect-video w-full object-cover" style={{ transform: 'scaleX(-1)' }} />
           </div>
           <p role="status" className="mt-2 text-sm text-stone-600 dark:text-stone-300">
-            {link === 'starting' && 'Starting the camera…'}
-            {link === 'error' && (problem ?? 'The camera could not start.')}
+            {link === 'starting' && t('link.starting')}
+            {link === 'error' && (problem ?? t('link.failed'))}
             {link === 'ready' && (state.phase === 'rest' || state.phase === 'real'
-              ? (seen.face ? (seen.hand ? 'The camera sees your face and your hand.' : 'The camera sees your face. It does not see your hand yet.') : 'The camera does not see your face. Sit so your face is in the picture.')
-              : 'The camera is on. Detection is paused while you calibrate.')}
+              ? (seen.face ? (seen.hand ? t('seen.both') : t('seen.faceOnly')) : t('seen.none'))
+              : t('link.paused'))}
           </p>
         </div>
 
@@ -158,26 +183,26 @@ function Overlay() {
           {state.phase === 'intro' && (
             <>
               <p className="text-base leading-relaxed">
-                This is optional and takes about a minute. It helps the app tell resting your chin from the real thing. You will do two short things while the camera looks at you.
+                {t('intro.lead')}
               </p>
               <ol className="list-decimal space-y-1 pl-5 text-base">
-                <li>Rest your chin on your hand as you normally would.</li>
-                <li>Bring a fingertip near your lips.</li>
+                <li>{t('instruction.rest')}</li>
+                <li>{t('instruction.real')}</li>
               </ol>
               <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-                Nothing is recorded. Only a few numbers about where your hand was are kept, on this device: no picture. They are not part of your history, are not synced and are not uploaded. You can delete them in Settings, under Detection. Watching is paused while you do this.
+                {t('intro.privacy')}
               </p>
               <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
                   disabled={link !== 'ready'}
-                  onClick={() => update(begin(stateRef.current, Date.now()))}
+                  onClick={onBegin}
                   className="min-h-11 rounded-full bg-deep px-6 text-sm font-semibold text-white transition-colors enabled:hover:bg-deep-2 disabled:opacity-50 dark:bg-lime-300 dark:text-deep"
                 >
-                  Start
+                  {t('start')}
                 </button>
                 <button type="button" onClick={() => closeCalibration()} className="min-h-11 rounded-full px-5 text-sm font-semibold text-stone-600 hover:text-stone-900 dark:text-stone-300 dark:hover:text-stone-100">
-                  Not now
+                  {t('notNow')}
                 </button>
               </div>
             </>
@@ -185,24 +210,24 @@ function Overlay() {
 
           {state.phase === 'rest' && (
             <div aria-live="polite">
-              <p className="text-xl font-semibold">Rest your chin on your hand as you normally would.</p>
-              <p className="mt-3 text-base">Hold it there. {left} seconds left.</p>
-              <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{framesSoFar(state)} of {CALIBRATION.minFrames} needed.</p>
+              <p className="text-xl font-semibold">{t('instruction.rest')}</p>
+              <p className="mt-3 text-base">{t('hold', { left: left ?? 0 })}</p>
+              <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{t('progress', { count: framesSoFar(state), needed: CALIBRATION.minFrames })}</p>
             </div>
           )}
 
           {state.phase === 'between' && (
             <div aria-live="polite">
-              <p className="text-xl font-semibold">Take your hand away.</p>
-              <p className="mt-3 text-base">Step 2 starts in {left} seconds: you will bring a fingertip near your lips.</p>
+              <p className="text-xl font-semibold">{t('between.lead')}</p>
+              <p className="mt-3 text-base">{t('between.next', { left: left ?? 0 })}</p>
             </div>
           )}
 
           {state.phase === 'real' && (
             <div aria-live="polite">
-              <p className="text-xl font-semibold">Bring a fingertip near your lips.</p>
-              <p className="mt-3 text-base">Hold it there. {left} seconds left.</p>
-              <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{framesSoFar(state)} of {CALIBRATION.minFrames} needed.</p>
+              <p className="text-xl font-semibold">{t('instruction.real')}</p>
+              <p className="mt-3 text-base">{t('hold', { left: left ?? 0 })}</p>
+              <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{t('progress', { count: framesSoFar(state), needed: CALIBRATION.minFrames })}</p>
             </div>
           )}
 
@@ -210,9 +235,9 @@ function Overlay() {
             <div aria-live="polite" className="space-y-4">
               {profile ? (
                 <>
-                  <p className="text-xl font-semibold">Done.</p>
+                  <p className="text-xl font-semibold">{t('result.done')}</p>
                   <p className="text-base leading-relaxed">
-                    The app saw {state.restFrames} frames of you resting your chin and {state.realFrames} with a fingertip near your lips. Saving keeps a few numbers from them, on this device, and the chin-rest rule will use them.
+                    {t('result.summary', { rest: state.restFrames, real: state.realFrames })}
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <button
@@ -220,19 +245,19 @@ function Overlay() {
                       onClick={() => { writeCalibration(profile); closeCalibration(); }}
                       className="min-h-11 rounded-full bg-deep px-6 text-sm font-semibold text-white transition-colors hover:bg-deep-2 dark:bg-lime-300 dark:text-deep"
                     >
-                      Save
+                      {tc('save')}
                     </button>
-                    <button type="button" onClick={() => update(begin(stateRef.current, Date.now()))} className="min-h-11 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill">
-                      Try again
+                    <button type="button" onClick={onBegin} className="min-h-11 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill">
+                      {tc('tryAgain')}
                     </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <p className="text-xl font-semibold">That did not work.</p>
+                  <p className="text-xl font-semibold">{t('result.failed')}</p>
                   <p className="text-base leading-relaxed">{state.outcome.ok ? '' : failureMessage(state.outcome.reason)}</p>
-                  <button type="button" onClick={() => update(begin(stateRef.current, Date.now()))} className="min-h-11 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill">
-                    Try again
+                  <button type="button" onClick={onBegin} className="min-h-11 rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill">
+                    {tc('tryAgain')}
                   </button>
                 </>
               )}

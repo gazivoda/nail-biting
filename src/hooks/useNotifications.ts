@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { ReminderInterval } from '../types';
-import { SUGGESTIONS } from '../components/dashboard/suggestions';
+import { reminderBody } from '../components/dashboard/suggestions';
 import { isFeatureOn } from '../features/flags';
+import { t } from '../i18n/scopes/alarm';
 
 // A periodic check-in for when detection is off. While the camera is watching,
 // the alarm already does this job, and a second nudge every 15 minutes only
@@ -18,8 +19,8 @@ export function useNotifications(enabled: boolean, intervalMinutes: ReminderInte
     const ms = intervalMinutes * 60 * 1000;
     let n = 0;
     const show = () => {
-      const title = 'Hands check';
-      const body = `Where are your hands? If they're near your face, try: ${SUGGESTIONS[n++ % SUGGESTIONS.length].toLowerCase()}.`;
+      const title = t('reminder.title');
+      const body = reminderBody(n++);
       if (window.electronAPI) {
         // Electron: native OS notification, works even when window is hidden
         window.electronAPI.notify(title, body);

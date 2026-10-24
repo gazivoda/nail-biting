@@ -7,7 +7,8 @@
 
 import { useState } from 'react';
 import { ArrowRight, Gift } from 'lucide-react';
-import { describeDays } from '../../../shared/plans.js';
+import { describeLength } from '../../billing/planLength';
+import { useT } from '../../i18n/scopes/plans';
 import { useSignInHref } from '../../auth/useSignInProviders';
 import { PRICE_IDS } from '../../billing/env';
 import { completedTransactionId, onPaddleEvent, openGiftCheckout, paddleAvailable } from '../../billing/paddleClient';
@@ -17,11 +18,12 @@ import { useFeature } from '../../features/useFeature';
 import { track } from '../../utils/track';
 
 export function PlanExtras() {
+  const t = useT();
   const lifetimeOn = useFeature('lifetime_plan') && PRICE_IDS.lifetime !== '';
   const giftOn = useFeature('gift_plan') && PRICE_IDS.gift !== '' && paddleAvailable();
   if (!lifetimeOn && !giftOn) return null;
   return (
-    <section aria-label="Other ways to buy" className="mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
+    <section aria-label={t('extras.label')} className="mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
       {lifetimeOn && <LifetimeBand />}
       {giftOn && <GiftBand />}
     </section>
@@ -29,18 +31,16 @@ export function PlanExtras() {
 }
 
 function LifetimeBand() {
+  const t = useT();
   const signIn = useSignInHref();
   const prices = useLocalizedPrices([PRICE_IDS.lifetime], { always: true });
   const price = prices[PRICE_IDS.lifetime]?.total;
   return (
     <div className="sg-plate flex flex-col p-7 sm:p-8">
-      <p className="sg-h3">Lifetime</p>
-      <p className="mt-4 flex items-baseline gap-1.5">
-        {price ? <><span className="sg-figure">{price}</span><span className="sg-small">once</span></> : <span className="sg-small">Price shown at checkout</span>}
-      </p>
+      <p className="sg-h3">{t('plan.lifetime')}</p>
+      <PriceLine price={price} />
       <p className="sg-small mt-3 flex-1">
-        Pay once instead of every month or year. It includes everything in the monthly plan, with no renewals,
-        for as long as Stop Biting is offered. Start the free trial, then choose Lifetime in the app.
+        {t('lifetime.band.body')}
       </p>
       <a
         href={signIn}
@@ -48,10 +48,19 @@ function LifetimeBand() {
         onClick={() => track('trial_click', 'pricing_lifetime')}
         className="sg-btn sg-btn-ink group mt-6 w-full"
       >
-        Start free trial
+        {t('lifetime.band.cta')}
         <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
       </a>
     </div>
+  );
+}
+
+function PriceLine({ price }: { price: string | undefined }) {
+  const t = useT();
+  return (
+    <p className="mt-4 flex items-baseline gap-1.5">
+      {price ? <><span className="sg-figure">{price}</span><span className="sg-small">{t('lifetime.once')}</span></> : <span className="sg-small">{t('lifetime.priceAtCheckout')}</span>}
+    </p>
   );
 }
 
@@ -59,8 +68,7 @@ function GiftBand() {
   const days = useGiftDays();
   const prices = useLocalizedPrices([PRICE_IDS.gift], { always: true });
   const price = prices[PRICE_IDS.gift]?.total;
-  const [state, setState] = useState<'idle' | 'opening' | 'done' | 'failed'>('idle');
-  const length = days ? describeDays(days) : null;
+  const [state, setState] = useState<GiftState>('idle');
 
   async function buy() {
     setState('opening');
@@ -71,33 +79,38 @@ function GiftBand() {
     if (!opened) { off(); setState('failed'); } else setState('idle');
   }
 
+  return <GiftBandView price={price} days={days} state={state} onBuy={buy} />;
+}
+
+export type GiftState = 'idle' | 'opening' | 'done' | 'failed';
+
+/** What the gift card shows for each state of the purchase (the state itself lives in GiftBand). */
+export function GiftBandView({ price, days, state, onBuy }: { price: string | undefined; days: number | null; state: GiftState; onBuy: () => void }) {
+  const t = useT();
   return (
     <div className="sg-plate flex flex-col p-7 sm:p-8">
-      <p className="sg-h3 flex items-center gap-2"><Gift size={20} aria-hidden="true" />Give it as a gift</p>
-      <p className="mt-4 flex items-baseline gap-1.5">
-        {price ? <><span className="sg-figure">{price}</span><span className="sg-small">once</span></> : <span className="sg-small">Price shown at checkout</span>}
-      </p>
+      <p className="sg-h3 flex items-center gap-2"><Gift size={20} aria-hidden="true" />{t('gift.title')}</p>
+      <PriceLine price={price} />
       <p className="sg-small mt-3 flex-1">
-        Buy {length ? length : 'access'} of Stop Biting for someone else. We email you a link to pass on. They sign in,
-        open it and redeem it once. The gift starts when no trial or subscription is covering them.
+        {days ? t('gift.body.length', { length: describeLength(days) }) : t('gift.body.plain')}
       </p>
       {state === 'done' && (
         <p role="status" className="sg-small mt-4 font-semibold text-[color:var(--sg-ink)]">
-          Thank you. The gift link is being emailed to the address you paid with. It can take a few minutes.
+          {t('gift.thanks')}
         </p>
       )}
       {state === 'failed' && (
         <p role="alert" className="sg-small mt-4">
-          Checkout could not load. If you use an ad blocker, allow paddle.com for this site and reload, or email hello@stopbiting.today.
+          {t('gift.failed')}
         </p>
       )}
       <button
         type="button"
-        onClick={buy}
+        onClick={onBuy}
         disabled={state === 'opening'}
         className="sg-btn sg-btn-ink group mt-6 w-full disabled:opacity-60"
       >
-        Buy a gift
+        {t('gift.buy')}
         <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
       </button>
     </div>

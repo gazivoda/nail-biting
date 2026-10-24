@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import localI18n from './scripts/i18n/no-hardcoded-text.mjs'
 
 // Persistent browser storage is reached through src/storage/ and nowhere else
 // (docs/agents/ARCHITECTURE.md, "Storage module"). The files below touched
@@ -46,6 +47,17 @@ export default defineConfig([
         ...['window', 'globalThis', 'self'].flatMap(object =>
           STORAGE_GLOBALS.map(property => ({ object, property, message: STORAGE_MESSAGE }))),
       ],
+    },
+  },
+  {
+    // WS12a: no English in the code of the app. scripts/i18n/scope.mjs lists every
+    // exemption (marketing pages, legal text, blog data...) with its reason; a file
+    // that is not listed there is checked. Strings go through t() from src/i18n.
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: { 'local-i18n': localI18n },
+    rules: {
+      'local-i18n/no-hardcoded-text': 'error',
+      'local-i18n/no-english-literals': 'error',
     },
   },
 ])

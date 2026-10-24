@@ -49,6 +49,9 @@ import { SyncHost } from './sync/SyncHost';
 import { BillingHost } from './components/billing/BillingHost';
 import { BackgroundHost } from './background/BackgroundHost';
 import { MilestoneHost } from './insights/ui/MilestoneHost';
+import { LocaleHost } from './i18n/LocaleHost';
+import { useLocaleVersion } from './i18n/hooks';
+import { useT as useCommonT } from './i18n/scopes/common';
 
 // Real path-based routing (no hash fragments — required for Google indexability).
 function usePath() {
@@ -67,6 +70,7 @@ type Tab = 'dashboard' | 'log' | 'settings';
 // Same markup for both so a signed-in user sees one continuous state rather than
 // a spinner, a flash, and then another spinner.
 function AppLoading() {
+  const tc = useCommonT();
   return (
     <div
       role="status"
@@ -76,7 +80,7 @@ function AppLoading() {
       <img src="/logo.svg" alt="" className="h-16 w-16 motion-safe:animate-pulse dark:hidden" />
       <img src="/logo-dark.svg" alt="" className="hidden h-16 w-16 motion-safe:animate-pulse dark:block" />
       <span className="font-display text-2xl font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100">Stop Biting</span>
-      <span className="sr-only">Loading…</span>
+      <span className="sr-only">{tc('loading')}</span>
     </div>
   );
 }
@@ -86,6 +90,7 @@ function AppRouter() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [showPaywall, setShowPaywall] = useState(false);
   const { remindersEnabled, reminderIntervalMinutes, detecting } = useAppStore();
+  useLocaleVersion(); // WS12a: a language change re-renders the whole signed-in tree below (state is kept)
 
   useNotifications(remindersEnabled, reminderIntervalMinutes, detecting);
   // The landing page below is light-only by design. Pinning it here rather than
@@ -111,6 +116,7 @@ function AppRouter() {
         />
         <PWAGuideModal />
         <BillingHost />{/* WS9: a waiting gift or referral code. Nothing while every flag is off. */}
+        <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
         </div>
       </Suspense>
     );
@@ -140,6 +146,7 @@ function AppRouter() {
       <BillingHost />{/* WS9: referral code, waiting gift, free-tier meter. Nothing while every flag is off. */}
       <BackgroundHost />{/* WS7a: pause clock, desktop commands, schedule reminders (background_watching). Nothing while the flag is off. */}
       <MilestoneHost />{/* WS5: milestone celebrations (insights). Nothing, and no extra download, while the flag is off. */}
+      <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
       </div>
     </Suspense>
   );

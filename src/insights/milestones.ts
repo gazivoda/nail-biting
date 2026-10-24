@@ -17,6 +17,7 @@
 // gap is "time since the last logged bite", and the wording says exactly that.
 
 import { countsAsAlarm, countsAsBite, type InsightEvent } from './predicate';
+import { t } from '../i18n/scopes/insights';
 
 export type MilestoneId = 'hour' | 'day' | 'week' | 'month' | 'caught100';
 
@@ -38,12 +39,38 @@ export interface MilestoneDef {
 const HOUR_MS = 3_600_000;
 const DAY_MS = 86_400_000;
 
+// title, figure and detail are getters: read when a screen renders, in the language showing then (src/i18n).
 export const MILESTONES: readonly MilestoneDef[] = [
-  { id: 'hour', kind: 'streak', title: 'First hour without a bite', figure: '1 hour', detail: 'An hour has passed since your last logged bite.', thresholdMs: HOUR_MS },
-  { id: 'day', kind: 'streak', title: 'First day without a bite', figure: '1 day', detail: 'A full day has passed since your last logged bite.', thresholdMs: DAY_MS },
-  { id: 'week', kind: 'streak', title: 'Seven days without a bite', figure: '7 days', detail: 'A week has passed since your last logged bite.', thresholdMs: 7 * DAY_MS },
-  { id: 'month', kind: 'streak', title: 'Thirty days without a bite', figure: '30 days', detail: 'Thirty days have passed since your last logged bite.', thresholdMs: 30 * DAY_MS },
-  { id: 'caught100', kind: 'count', title: '100 alarms', figure: '100 alarms', detail: 'The alarm has gone off 100 times. Each one was a moment to notice and stop.', threshold: 100 },
+  {
+    id: 'hour', kind: 'streak', thresholdMs: HOUR_MS,
+    get title() { return t('milestone.hour.title'); },
+    get figure() { return t('milestone.hour.figure'); },
+    get detail() { return t('milestone.hour.detail'); },
+  },
+  {
+    id: 'day', kind: 'streak', thresholdMs: DAY_MS,
+    get title() { return t('milestone.day.title'); },
+    get figure() { return t('milestone.day.figure'); },
+    get detail() { return t('milestone.day.detail'); },
+  },
+  {
+    id: 'week', kind: 'streak', thresholdMs: 7 * DAY_MS,
+    get title() { return t('milestone.week.title'); },
+    get figure() { return t('milestone.week.figure'); },
+    get detail() { return t('milestone.week.detail'); },
+  },
+  {
+    id: 'month', kind: 'streak', thresholdMs: 30 * DAY_MS,
+    get title() { return t('milestone.month.title'); },
+    get figure() { return t('milestone.month.figure'); },
+    get detail() { return t('milestone.month.detail'); },
+  },
+  {
+    id: 'caught100', kind: 'count', threshold: 100,
+    get title() { return t('milestone.caught100.title'); },
+    get figure() { return t('milestone.caught100.figure'); },
+    get detail() { return t('milestone.caught100.detail'); },
+  },
 ];
 
 export const MILESTONE_IDS: readonly MilestoneId[] = MILESTONES.map(m => m.id);
@@ -84,9 +111,9 @@ export function evaluateMilestones(input: MilestoneInput): MilestoneStatus[] {
   // A record that starts after its first bite (an import, a clock set back) starts the first gap at the bite.
   const gaps: { from: number; ms: number }[] = [];
   let from = bites.length > 0 ? Math.min(input.startedAt, bites[0]) : input.startedAt;
-  for (const t of bites) {
-    if (t > from) gaps.push({ from, ms: t - from });
-    from = t;
+  for (const at of bites) {
+    if (at > from) gaps.push({ from, ms: at - from });
+    from = at;
   }
   const openGap = Math.max(0, now - from);
   if (openGap > 0) gaps.push({ from, ms: openGap });

@@ -9,6 +9,7 @@ import { useEffect, useId, useState, useSyncExternalStore } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { Row, Section, Toggle } from './ui';
 import { useFeatures } from '../../features/useFeature';
+import { useT } from '../../i18n/scopes/data';
 import { useAuth } from '../../contexts/AuthContext';
 import { useSyncStatus } from '../../sync/useSyncStatus';
 import { describeNotice, describeStatus, type StatusLine } from '../../sync/statusText';
@@ -38,6 +39,7 @@ function useNow(everyMs: number): number {
 }
 
 function SyncCard() {
+  useT(); // re-render on a language change: the default device name below is worked out here
   const { user } = useAuth();
   const optedInFor = useSyncExternalStore(subscribeSyncOptIn, getOptedInUserId, () => null);
   const notice = useSyncExternalStore(subscribeSyncNotice, getSyncNotice, () => null);
@@ -86,13 +88,14 @@ const toneClass: Record<StatusLine['tone'], string> = {
 
 /** The card itself, without any hook of its own, so every state can be rendered in a test. */
 export function SyncCardView(p: SyncCardViewProps) {
+  const t = useT();
   const nameId = useId();
   const [draft, setDraft] = useState<string | null>(null);
   const line = describeStatus(p.status, p.now);
   const syncing = p.status.phase === 'syncing';
 
   return (
-    <Section title="Account & Sync" icon={RefreshCw} fullWidth>
+    <Section title={t('sync.title')} icon={RefreshCw} fullWidth>
       {p.notice && (
         <div role="status" className="rounded-2xl border border-stone-200 bg-stone-50 p-4 dark:border-ink-400 dark:bg-ink-100">
           <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{describeNotice(p.notice).headline}</p>
@@ -102,31 +105,29 @@ export function SyncCardView(p: SyncCardViewProps) {
             onClick={p.onDismissNotice}
             className="mt-2 inline-flex min-h-11 items-center rounded-full px-1 text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
           >
-            Dismiss
+            {t('sync.dismiss')}
           </button>
         </div>
       )}
 
       <Row
-        label="Sync my history across devices"
-        description="Your history syncs to your account when this is on. Camera data never leaves your device."
+        label={t('sync.toggle')}
+        description={t('sync.toggleDescription')}
       >
         {p.signedIn ? (
-          <Toggle value={p.enabled} onChange={p.onToggle} label="Sync my history across devices" />
+          <Toggle value={p.enabled} onChange={p.onToggle} label={t('sync.toggle')} />
         ) : (
-          <span className="text-sm text-stone-600 dark:text-stone-300">Sign in to use sync.</span>
+          <span className="text-sm text-stone-600 dark:text-stone-300">{t('sync.signInToUse')}</span>
         )}
       </Row>
 
       <p className="-mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-        What syncs: for each entry, its time, its type, the bite reason you picked, which hand if known, and whether you finished a
-        competing response. Never video, pictures, face or hand tracking points, or your photo diary. It is off until you turn it on,
-        and you can turn it off or delete the synced copy at any time (see Data).
+        {t('sync.whatSyncs')}
       </p>
 
       {p.enabled && (
         <>
-          <Row label="Status">
+          <Row label={t('sync.statusLabel')}>
             <div className="flex flex-wrap items-center justify-end gap-3">
               <button
                 type="button"
@@ -134,7 +135,7 @@ export function SyncCardView(p: SyncCardViewProps) {
                 disabled={syncing}
                 className="inline-flex min-h-11 items-center justify-center rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
               >
-                Sync now
+                {t('sync.syncNow')}
               </button>
             </div>
           </Row>
@@ -143,9 +144,9 @@ export function SyncCardView(p: SyncCardViewProps) {
             {line.detail && <p className="text-sm text-stone-600 dark:text-stone-300">{line.detail}</p>}
           </div>
 
-          <Row label="This device" description="Only you see this name. It stays on this device.">
+          <Row label={t('sync.deviceLabel')} description={t('sync.deviceDescription')}>
             <div className="flex items-center gap-2">
-              <label htmlFor={nameId} className="sr-only">Name of this device</label>
+              <label htmlFor={nameId} className="sr-only">{t('sync.deviceNameLabel')}</label>
               <input
                 id={nameId}
                 type="text"

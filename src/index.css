@@ -697,3 +697,13 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
   .sg-btn:active { transform: none; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* WS12a: longer languages (German, Portuguese, Spanish). A list item in a grid may shrink below its own text, so a
+   `truncate` label ends in an ellipsis instead of widening the whole card. Scoped to non-English pages on purpose:
+   the English markup and layout stay exactly as they were. */
+@layer components {
+  html:not([lang='en']) .grid > li,
+  html:not([lang='en']) .grid > li > label { min-width: 0; }
+  /* ...and a preset response that is longer than the pill wraps instead of being cut off with an ellipsis */
+  html:not([lang='en']) .grid > li > label > .truncate { white-space: normal; text-overflow: clip; }
+}

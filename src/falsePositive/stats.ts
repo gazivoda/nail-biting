@@ -6,6 +6,7 @@
 // figure about this person's own tapping, not a measure of the detector.
 
 import type { Incident } from '../types';
+import { t } from '../i18n/scopes/watch';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -49,11 +50,18 @@ export const MIN_ALARMS_TO_COMPARE = 3;
 export function describeFalsePositiveRate(rates: FalsePositiveRates): string | null {
   const { thisWeek, lastWeek } = rates;
   if (thisWeek.alarms === 0) return null;
-  const now = `${thisWeek.falsePositives} of ${thisWeek.alarms} ${thisWeek.alarms === 1 ? 'alarm' : 'alarms'} in the last 7 days marked not a bite (${percent(thisWeek)}%)`;
-  if (thisWeek.alarms < MIN_ALARMS_TO_COMPARE || lastWeek.alarms < MIN_ALARMS_TO_COMPARE) return `${now}.`;
-  const change = percent(thisWeek) - percent(lastWeek);
-  const before = `${lastWeek.falsePositives} of ${lastWeek.alarms} (${percent(lastWeek)}%) the 7 days before`;
-  if (change <= -5) return `${now}, down from ${before}.`;
-  if (change >= 5) return `${now}, up from ${before}.`;
-  return `${now}, about the same as ${before}.`;
+  // One whole sentence per outcome (no fragments glued together), so each language orders it its own way.
+  const params = {
+    marked: thisWeek.falsePositives,
+    alarms: thisWeek.alarms,
+    percent: percent(thisWeek),
+    beforeMarked: lastWeek.falsePositives,
+    beforeAlarms: lastWeek.alarms,
+    beforePercent: percent(lastWeek),
+  };
+  if (thisWeek.alarms < MIN_ALARMS_TO_COMPARE || lastWeek.alarms < MIN_ALARMS_TO_COMPARE) return t('rate.alone', params);
+  const change = params.percent - params.beforePercent;
+  if (change <= -5) return t('rate.down', params);
+  if (change >= 5) return t('rate.up', params);
+  return t('rate.same', params);
 }

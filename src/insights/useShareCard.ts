@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import type { ShareUiState } from './ui/CelebrationCard';
 import type { MilestoneStatus } from './milestones';
 import { buildShareCardModel, downloadBlob, renderShareCardPng, shareOrDownload } from './shareCard';
+import { t } from '../i18n/scopes/insights';
 
 /** Makes the share card for a milestone and hands it to the share sheet or a download. Local only. */
 export function useShareCard() {
@@ -15,7 +16,7 @@ export function useShareCard() {
       const result = await shareOrDownload(
         png,
         `stop-biting-${status.def.id}.png`,
-        `Stop Biting: ${model.title}. ${model.reached}.`,
+        t('share.text', { title: model.title, reached: model.reached }),
         navigator,
         downloadBlob,
       );

@@ -1,7 +1,9 @@
 import { useAppStore, isBite } from '../../store/useAppStore';
 import { isPendingAlarm } from '../../storage/eventModel';
+import { useT } from '../../i18n/scopes/watch';
 
 export function TodayStats() {
+  const t = useT();
   const { incidents } = useAppStore();
 
   const today = new Date();
@@ -12,14 +14,14 @@ export function TodayStats() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 sm:p-7">
-      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-5">Today</p>
+      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-5">{t('today.title')}</p>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <p className="font-display text-[56px] font-extrabold tabular-nums tracking-[-0.04em] text-amber-700 dark:text-amber-400 leading-none">
             {incidentCount}
           </p>
           <p className="text-sm text-stone-600 dark:text-stone-300 mt-2">
-            alarms to review
+            {t('today.alarms')}
           </p>
         </div>
         <div>
@@ -27,7 +29,7 @@ export function TodayStats() {
             {biteCount}
           </p>
           <p className="text-sm text-stone-600 dark:text-stone-300 mt-2">
-            bites
+            {t('today.bites')}
           </p>
         </div>
       </div>

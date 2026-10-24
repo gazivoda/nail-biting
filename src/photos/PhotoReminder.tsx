@@ -9,16 +9,19 @@ import { useFeature } from '../features/useFeature';
 import { describeAge, isDue } from './diaryMeta';
 import { readSnoozedUntil, snoozeReminder } from './metaKv';
 import { usePhotoRecords } from './usePhotoRecords';
+import { useT } from '../i18n/scopes/photos';
 
 export function PhotoReminderView({ lastPhotoAge, onOpen, onSnooze }: { lastPhotoAge: string; onOpen: () => void; onSnooze: () => void }) {
+  const t = useT();
   return (
     <section
-      aria-label="Photo diary reminder"
+      aria-label={t('reminder.aria')}
       className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-2xl border border-stone-200 bg-white px-5 py-3 dark:border-ink-400 dark:bg-ink-50"
     >
       <p className="min-w-0 text-sm text-stone-700 dark:text-stone-200">
-        <span className="font-semibold text-stone-900 dark:text-stone-100">Time for this week's hand photo.</span>{' '}
-        Your last one was {lastPhotoAge}.
+        {t.rich('reminder.text', { age: lastPhotoAge }, {
+          b: chunks => <span className="font-semibold text-stone-900 dark:text-stone-100">{chunks}</span>,
+        })}
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <button
@@ -27,14 +30,14 @@ export function PhotoReminderView({ lastPhotoAge, onOpen, onSnooze }: { lastPhot
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-deep px-5 font-display text-sm font-bold text-white transition-colors hover:bg-deep-2 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
         >
           <Camera size={15} aria-hidden="true" />
-          Open the photo diary
+          {t('reminder.open')}
         </button>
         <button
           type="button"
           onClick={onSnooze}
           className="inline-flex min-h-11 items-center rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
         >
-          Not now
+          {t('reminder.snooze')}
         </button>
       </div>
     </section>

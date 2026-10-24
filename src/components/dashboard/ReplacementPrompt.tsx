@@ -3,7 +3,8 @@ import { X } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
-import { SUGGESTIONS } from './suggestions';
+import { suggestion } from './suggestions';
+import { useT } from '../../i18n/scopes/watch';
 import type { TriggerTag } from '../../types';
 import { isPendingAlarm } from '../../storage/eventModel';
 import { useFalsePositiveEnabled } from '../../falsePositive/useEnabled';
@@ -17,6 +18,7 @@ const RECENT_MS = 10 * 60 * 1000;
 // say whether it was a bite and what set it off. Tagging used to be possible
 // only later, from a hover button in History, which is where it never happened.
 export function ReplacementPrompt() {
+  const t = useT();
   const { incidents, customTags, confirmIncident, deleteIncident } = useAppStore();
   const falsePositiveControls = useFalsePositiveEnabled();
   const [dismissed, setDismissed] = useState<number>(0);
@@ -33,11 +35,12 @@ export function ReplacementPrompt() {
 
   if (!shouldShow) return null;
 
-  const suggestion = SUGGESTIONS[lastAuto.timestamp % SUGGESTIONS.length];
+  // Not a module-level list: the words are read now, in the language showing now (see suggestions.ts).
+  const tip = suggestion(lastAuto.timestamp);
   // Every choice here records a bite, so "Not sure" must read as "a bite, not
   // sure why", never as "not sure it was a bite": it resets the streak.
-  const tags: TagOption[] = [...PRESET_TAGS, ...customTags].map(t =>
-    t.id === 'unknown' ? { ...t, label: 'Bite, not sure why' } : t,
+  const tags: TagOption[] = [...PRESET_TAGS, ...customTags].map(tag =>
+    tag.id === 'unknown' ? { ...tag, label: t('followUp.unknownTag') } : tag,
   );
 
   const answer = (tag?: TriggerTag) => {
@@ -60,12 +63,12 @@ export function ReplacementPrompt() {
       <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">
-            Alarm: try this instead
+            {t('followUp.title')}
           </h2>
         </div>
         <button
           onClick={() => answer()}
-          aria-label="Close. The alarm stays in History to review"
+          aria-label={t('followUp.closeLabel')}
           className="flex h-11 w-11 -m-2 items-center justify-center rounded-full text-stone-500 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-ink-400 transition-colors"
         >
           <X size={14} />
@@ -73,11 +76,11 @@ export function ReplacementPrompt() {
       </div>
 
       <p className="text-[13px] text-stone-700 dark:text-stone-200 leading-relaxed bg-forest-50 dark:bg-forest-900/20 rounded-2xl px-4 py-3 border border-forest-100 dark:border-forest-800/50">
-        {suggestion}
+        {tip}
       </p>
 
       <p className="mt-5 text-[13px] font-semibold text-stone-800 dark:text-stone-100">
-        If it was a bite, what set it off?
+        {t('followUp.question')}
       </p>
       <div className="mt-2 grid grid-cols-2 gap-2">
         {tags.map(tag => (
@@ -95,7 +98,7 @@ export function ReplacementPrompt() {
         onClick={notABite}
         className="mt-2 min-h-11 w-full rounded-full text-[13px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
       >
-        Not a bite, just my hand nearby
+        {t('followUp.notABite')}
       </button>
     </div>
   );

@@ -5,9 +5,11 @@
 import type { ReactNode } from 'react';
 import type { Insights } from '../aggregate';
 import { coachingSentence, falseAlarmSentence, heatmapSummary, seriesSummary } from '../copy';
-import { plural, triggerLabel } from '../labels';
+import { countPhrase, triggerLabel, type Series } from '../labels';
 import type { MilestoneStatus } from '../milestones';
 import type { CustomTag } from '../../types';
+import { formatDate } from '../../i18n/format';
+import { useT } from '../../i18n/scopes/insights';
 import { SegmentedControl } from '../../components/ui/SegmentedControl';
 import { BarSeries, type BarDatum } from './BarSeries';
 import { EmptyInsights } from './EmptyInsights';
@@ -18,7 +20,7 @@ import { RateCard } from './RateCard';
 import { TriggerBars } from './TriggerBars';
 import { WeekHero } from './WeekHero';
 
-export type Series = 'bites' | 'entries';
+export type { Series };
 export type RangeDays = 30 | 90 | null;
 
 export interface InsightsBodyProps {
@@ -43,14 +45,13 @@ export interface InsightsBodyProps {
   onOpenMilestone: (s: MilestoneStatus) => void;
 }
 
-const dayLabel = (ts: number) => new Date(ts).toLocaleDateString([], { weekday: 'short', day: 'numeric', month: 'short' });
-const shortDate = (ts: number) => new Date(ts).toLocaleDateString([], { day: 'numeric', month: 'short' });
+const dayLabel = (ts: number) => formatDate(ts, { weekday: 'short', day: 'numeric', month: 'short' });
+const shortDate = (ts: number) => formatDate(ts, { day: 'numeric', month: 'short' });
 
 export function InsightsBody(p: InsightsBodyProps) {
+  const t = useT();
   const { insights: r } = p;
   const bites = p.series === 'bites';
-  const noun = bites ? 'bite' : 'entry';
-  const nounPlural = bites ? 'bites' : 'entries';
   const pick = (b: { bites: number; entries: number }) => (bites ? b.bites : b.entries);
 
   const daily: BarDatum[] = r.daily.map((d, i) => {
@@ -60,15 +61,15 @@ export function InsightsBody(p: InsightsBodyProps) {
       key: d.start,
       value: pick(d),
       // Every fifth day is labelled; the month is added to the first label and wherever the month turns over.
-      label: fromEnd % 5 === 0 ? (i === 0 || date.getDate() <= 5 ? `${date.getDate()} ${date.toLocaleDateString([], { month: 'short' })}` : String(date.getDate())) : '',
-      title: `${dayLabel(d.start)}: ${pick(d)} ${plural(pick(d), noun, nounPlural)}`,
+      label: fromEnd % 5 === 0 ? (i === 0 || date.getDate() <= 5 ? `${date.getDate()} ${formatDate(date, { month: 'short' })}` : String(date.getDate())) : '',
+      title: t('bar.title', { label: dayLabel(d.start), count: countPhrase(p.series, pick(d)) }),
     };
   });
   const weekly: BarDatum[] = r.weekly.map(w => ({
     key: w.start,
     value: pick(w),
     label: shortDate(w.start),
-    title: `Week of ${shortDate(w.start)}: ${pick(w)} ${plural(pick(w), noun, nounPlural)}`,
+    title: t('bar.weekTitle', { date: shortDate(w.start), count: countPhrase(p.series, pick(w)) }),
   }));
 
   const showCoaching = r.coaching.rate !== null || p.coachingOn;
@@ -82,44 +83,44 @@ export function InsightsBody(p: InsightsBodyProps) {
       {p.charts && r.hasData && (
         <>
           <div className="space-y-6 lg:col-span-2">
-            <WeekHero trend={bites ? r.trend : r.entryTrend} noun={noun} nounPlural={nounPlural} />
+            <WeekHero trend={bites ? r.trend : r.entryTrend} series={p.series} />
             {sparse && (
               <p role="note" className="rounded-2xl border border-stone-200 bg-white px-5 py-3 text-sm text-stone-700 dark:border-ink-400 dark:bg-ink-50 dark:text-stone-200">
-                Only {r.totals.entries} {plural(r.totals.entries, 'entry', 'entries')} so far. The charts say more after a week or two of use.
+                {t('body.sparse', { entries: countPhrase('entries', r.totals.entries) })}
               </p>
             )}
             {!!p.hiddenCount && (
               <p role="note" className="text-sm text-stone-600 dark:text-stone-300">
-                {p.hiddenCount} older {p.hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan, so these charts cover the days you can see.
+                {t('body.hidden', { count: p.hiddenCount })}
               </p>
             )}
             <div className="flex flex-wrap items-center gap-3">
               <SegmentedControl<Series>
-                ariaLabel="Charts count"
+                ariaLabel={t('body.chartsCount')}
                 value={p.series}
                 onChange={p.onSeries}
                 options={[
-                  { label: 'Bites', value: 'bites' },
-                  { label: 'Alarms and bites', value: 'entries' },
+                  { label: t('body.seriesBites'), value: 'bites' },
+                  { label: t('body.seriesEntries'), value: 'entries' },
                 ]}
               />
               <p className="text-sm text-stone-600 dark:text-stone-300">
-                {bites ? 'Alarms count once you confirm them or log the bite yourself.' : 'Includes alarms nobody has reviewed yet.'}
+                {bites ? t('body.noteBites') : t('body.noteEntries')}
               </p>
             </div>
           </div>
 
-          <InsightCard title="Each day" subtitle={`Last ${r.daily.length} days, today on the right.`} className="lg:col-span-2">
+          <InsightCard title={t('daily.title')} subtitle={t('daily.subtitle', { count: r.daily.length })} className="lg:col-span-2">
             <BarSeries
               data={daily}
-              summary={seriesSummary(daily.map(d => d.value), noun, nounPlural, 'day', r.daily.map(d => `on ${dayLabel(d.start)}`))}
-              emptyText={`No ${nounPlural} in the last ${r.daily.length} days.`}
+              summary={seriesSummary(daily.map(d => d.value), p.series, 'day', r.daily.map(d => dayLabel(d.start)))}
+              emptyText={t(bites ? 'daily.emptyBites' : 'daily.emptyEntries', { count: r.daily.length })}
             />
           </InsightCard>
 
           <InsightCard
-            title="When it happens"
-            subtitle={`Bites by weekday and hour of the day, ${rangeName(p.rangeDays)}.`}
+            title={t('when.title')}
+            subtitle={p.rangeDays === null ? t('when.subtitleAll') : t('when.subtitleDays', { days: p.rangeDays })}
             className="lg:col-span-2"
             action={<RangeSwitch value={p.rangeDays} onChange={p.onRangeDays} />}
           >
@@ -127,28 +128,28 @@ export function InsightsBody(p: InsightsBodyProps) {
             <p className="mt-3 text-sm text-stone-600 dark:text-stone-300">{heatmapSummary(r.heatmap)}</p>
           </InsightCard>
 
-          <InsightCard title="Each week" subtitle={`Last ${r.weekly.length} weeks, weeks start on Monday.`}>
+          <InsightCard title={t('weekly.title')} subtitle={t('weekly.subtitle', { count: r.weekly.length })}>
             <BarSeries
               data={weekly}
               showValues
-              summary={seriesSummary(weekly.map(d => d.value), noun, nounPlural, 'week', r.weekly.map(w => `in the week of ${shortDate(w.start)}`))}
-              emptyText={`No ${nounPlural} in the last ${r.weekly.length} weeks.`}
+              summary={seriesSummary(weekly.map(d => d.value), p.series, 'week', r.weekly.map(w => shortDate(w.start)))}
+              emptyText={t(bites ? 'weekly.emptyBites' : 'weekly.emptyEntries', { count: r.weekly.length })}
             />
           </InsightCard>
 
           <InsightCard
-            title="What sets it off"
-            subtitle={`The reasons you picked for bites, ${rangeName(p.rangeDays)}.`}
+            title={t('triggers.title')}
+            subtitle={p.rangeDays === null ? t('triggers.subtitleAll') : t('triggers.subtitleDays', { days: p.rangeDays })}
           >
             {r.triggers.total === 0 ? (
-              <p className="text-sm text-stone-600 dark:text-stone-300">No bites in this range.</p>
+              <p className="text-sm text-stone-600 dark:text-stone-300">{t('range.noBites')}</p>
             ) : (
               <>
                 <TriggerBars breakdown={r.triggers} customTags={p.customTags} />
                 <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">
                   {r.triggers.top
-                    ? `Most often: ${triggerLabel(r.triggers.top.tag, p.customTags)}, ${r.triggers.top.count} of ${r.triggers.top.of} bites with a reason.`
-                    : 'Not enough bites with a reason yet to name the most common one.'}
+                    ? t('triggers.top', { label: triggerLabel(r.triggers.top.tag, p.customTags), count: r.triggers.top.count, total: r.triggers.top.of })
+                    : t('triggers.notEnough')}
                 </p>
               </>
             )}
@@ -156,18 +157,18 @@ export function InsightsBody(p: InsightsBodyProps) {
 
           {showCoaching && (
             <RateCard
-              title="Competing response"
+              title={t('rate.coachingTitle')}
               rate={r.coaching.rate}
               sentence={coachingSentence(r.coaching)}
-              empty="No finished competing responses to count yet. Turn on the prompt under Settings, Alerts, and this shows how often you finish it after an alarm."
+              empty={t('rate.coachingEmpty')}
             />
           )}
           {showFalseAlarms && (
             <RateCard
-              title="False alarms"
+              title={t('rate.falseTitle')}
               rate={r.falseAlarms.rate}
               sentence={falseAlarmSentence(r.falseAlarms)}
-              empty="No alarms yet. Alarms you mark as not a bite are counted here."
+              empty={t('rate.falseEmpty')}
             />
           )}
         </>
@@ -184,21 +185,18 @@ export function InsightsBody(p: InsightsBodyProps) {
   );
 }
 
-function rangeName(r: RangeDays): string {
-  return r === null ? 'all your history' : `last ${r} days`;
-}
-
 function RangeSwitch({ value, onChange }: { value: RangeDays; onChange: (r: RangeDays) => void }) {
+  const t = useT();
   const key = (v: RangeDays) => (v === null ? 'all' : String(v));
   return (
     <SegmentedControl<string>
-      ariaLabel="Period"
+      ariaLabel={t('range.label')}
       value={key(value)}
       onChange={v => onChange(v === 'all' ? null : (Number(v) as 30 | 90))}
       options={[
-        { label: '30 days', value: '30' },
-        { label: '90 days', value: '90' },
-        { label: 'All', value: 'all' },
+        { label: t('range.days30'), value: '30' },
+        { label: t('range.days90'), value: '90' },
+        { label: t('range.all'), value: 'all' },
       ]}
     />
   );

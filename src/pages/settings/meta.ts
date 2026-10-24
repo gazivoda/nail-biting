@@ -30,13 +30,13 @@ export interface SettingsSectionMeta {
 
 /** Render order. The order of the plan: Detection, Alerts, Behaviors, Schedule, Account & Sync, Data, Sharing. */
 export const SETTINGS_SECTIONS: readonly SettingsSectionMeta[] = [
-  { id: 'detection',    title: 'Detection',      owner: 'WS3',  flags: ['false_positive_controls'] },
-  { id: 'alerts',       title: 'Alerts',         owner: 'WS2',  flags: ['hrt_coaching'] },
-  { id: 'behaviors',    title: 'Behaviors',      owner: 'WS1',  flags: ['detection_behaviors'] },
-  { id: 'schedule',     title: 'Schedule',       owner: 'WS7a', flags: ['background_watching'] },
-  { id: 'account-sync', title: 'Account & Sync', owner: 'WS4',  flags: ['event_sync', 'signin_magic_link', 'signin_apple', 'signin_microsoft', 'weekly_email', 'referrals'] },
-  { id: 'data',         title: 'Data',           owner: 'WS4',  flags: ['data_backup', 'event_sync', 'photo_diary'] },
-  { id: 'sharing',      title: 'Sharing',        owner: 'WS10', flags: ['share_links'] },
+  { id: 'detection',    title: 'Detection',      owner: 'WS3',  flags: ['false_positive_controls'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'alerts',       title: 'Alerts',         owner: 'WS2',  flags: ['hrt_coaching'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'behaviors',    title: 'Behaviors',      owner: 'WS1',  flags: ['detection_behaviors'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'schedule',     title: 'Schedule',       owner: 'WS7a', flags: ['background_watching'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'account-sync', title: 'Account & Sync', owner: 'WS4',  flags: ['event_sync', 'signin_magic_link', 'signin_apple', 'signin_microsoft', 'weekly_email', 'referrals', 'locale_es', 'locale_de', 'locale_pt_br'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'data',         title: 'Data',           owner: 'WS4',  flags: ['data_backup', 'event_sync', 'photo_diary'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
+  { id: 'sharing',      title: 'Sharing',        owner: 'WS10', flags: ['share_links'] }, // i18n-ignore: internal registry label, never rendered (settings.test.tsx pins it)
 ];
 
 export function sectionIsEnabled(section: SettingsSectionMeta, flags: FlagMap): boolean {

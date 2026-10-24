@@ -113,7 +113,7 @@ function set(out: ResolvedZone, i: number, x: number, y: number) {
 
 export const ZONES: Record<ZoneId, ZoneDefinition> = {
   mouth: {
-    description: 'The middle of the mouth opening: the midpoint of the inner lip centres (13 and 14). In normalised image units.',
+    description: 'The middle of the mouth opening: the midpoint of the inner lip centres (13 and 14). In normalised image units.', // i18n-ignore: developer documentation of landmark zones, not rendered
     landmarks: [FACE.INNER_LIP_UPPER, FACE.INNER_LIP_LOWER],
     resolve(face, out) {
       // Written exactly as the shipped detector wrote it (src/hooks/biteDetector.ts at cec2120).
@@ -125,7 +125,7 @@ export const ZONES: Record<ZoneId, ZoneDefinition> = {
   },
 
   nose: {
-    description: 'The nostril area: the midpoint between the nose tip (1) and the base of the nose (2). Unit: face width.',
+    description: 'The nostril area: the midpoint between the nose tip (1) and the base of the nose (2). Unit: face width.', // i18n-ignore: developer documentation of landmark zones, not rendered
     landmarks: [FACE.NOSE_TIP, FACE.NOSE_BASE, FACE.OVAL_SIDE_RIGHT, FACE.OVAL_SIDE_LEFT],
     resolve(face, out) {
       out.count = 1;
@@ -135,7 +135,7 @@ export const ZONES: Record<ZoneId, ZoneDefinition> = {
   },
 
   eye_area: {
-    description: 'Both eyes and both eyebrows: four anchors, the middle of each eye (between its corners) and the middle of each brow. Unit: face width.',
+    description: 'Both eyes and both eyebrows: four anchors, the middle of each eye (between its corners) and the middle of each brow. Unit: face width.', // i18n-ignore: developer documentation of landmark zones, not rendered
     landmarks: [
       FACE.EYE_RIGHT_OUTER, FACE.EYE_RIGHT_INNER, FACE.EYE_LEFT_INNER, FACE.EYE_LEFT_OUTER,
       FACE.BROW_RIGHT_MID, FACE.BROW_LEFT_MID, FACE.OVAL_SIDE_RIGHT, FACE.OVAL_SIDE_LEFT,
@@ -152,8 +152,8 @@ export const ZONES: Record<ZoneId, ZoneDefinition> = {
 
   face_skin: {
     description:
-      'Cheeks, chin and forehead: four anchors. Each cheek is the centre of the triangle (lower eyelid, mouth corner, widest point of the face oval); '
-      + 'the chin is halfway between the lower lip (17) and the bottom of the chin (152); the forehead is halfway between the top of the face oval (10) and the inner brow ends. Unit: face width.',
+      'Cheeks, chin and forehead: four anchors. Each cheek is the centre of the triangle (lower eyelid, mouth corner, widest point of the face oval); ' // i18n-ignore: developer documentation of landmark zones, not rendered
+      + 'the chin is halfway between the lower lip (17) and the bottom of the chin (152); the forehead is halfway between the top of the face oval (10) and the inner brow ends. Unit: face width.', // i18n-ignore: developer documentation of landmark zones, not rendered
     landmarks: [
       FACE.EYE_RIGHT_LOWER_LID, FACE.MOUTH_CORNER_RIGHT, FACE.OVAL_SIDE_RIGHT,
       FACE.EYE_LEFT_LOWER_LID, FACE.MOUTH_CORNER_LEFT, FACE.OVAL_SIDE_LEFT,
@@ -176,8 +176,8 @@ export const ZONES: Record<ZoneId, ZoneDefinition> = {
 
   scalp: {
     description:
-      'The hair above the forehead, ESTIMATED: the face mesh stops at the top of the forehead, so three anchors are placed above landmark 10 along the chin-to-forehead axis '
-      + '(one centred, two towards the sides). Needs the camera framed high enough to see the top of the head. Unit: face height (10 to 152).',
+      'The hair above the forehead, ESTIMATED: the face mesh stops at the top of the forehead, so three anchors are placed above landmark 10 along the chin-to-forehead axis ' // i18n-ignore: developer documentation of landmark zones, not rendered
+      + '(one centred, two towards the sides). Needs the camera framed high enough to see the top of the head. Unit: face height (10 to 152).', // i18n-ignore: developer documentation of landmark zones, not rendered
     landmarks: [FACE.OVAL_TOP, FACE.OVAL_CHIN, FACE.OVAL_SIDE_RIGHT, FACE.OVAL_SIDE_LEFT],
     resolve(face, out) {
       const top = face[FACE.OVAL_TOP];
