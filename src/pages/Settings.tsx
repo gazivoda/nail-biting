@@ -285,7 +285,7 @@ function ReasonsSection() {
           placeholder="🏷️"
           maxLength={4}
           aria-label="Emoji"
-          className="w-14 text-center text-lg bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-2 text-sm placeholder:text-stone-500 dark:placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="w-14 text-center text-lg bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-2 text-sm placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <input
           type="text"
@@ -294,7 +294,7 @@ function ReasonsSection() {
           placeholder="e.g. Tiredness"
           maxLength={30}
           aria-label="Reason label"
-          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-4 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-500 dark:placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-forest-400"
+          className="flex-1 min-w-0 bg-stone-50 dark:bg-ink-100 border border-stone-200 dark:border-ink-400 rounded-full min-h-11 px-4 text-sm text-stone-700 dark:text-stone-300 placeholder:text-stone-500 dark:placeholder:text-stone-600 focus:outline-none focus:ring-2 focus:ring-forest-400"
         />
         <button
           type="submit"
