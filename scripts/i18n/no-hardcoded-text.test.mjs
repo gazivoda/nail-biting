@@ -35,7 +35,7 @@ tester.run('no-hardcoded-text', plugin.rules['no-hardcoded-text'], {
     // a deliberate exception, with the reason on the same line
     { filename: file, code: 'const A = () => <code>npm install</code>; // i18n-ignore: a shell command' },
     // files the scope list exempts are not checked at all
-    { filename: 'src/pages/Landing.tsx', code: 'const A = () => <h1>Stop biting your nails</h1>;' },
+    { filename: 'src/pages/BlogIndex.tsx', code: 'const A = () => <h1>Stop biting your nails</h1>;' },
     { filename: 'src/components/site/BlogMidCta.tsx', code: 'const A = () => <p>All rights reserved</p>;' },
     { filename: 'src/data/example.tsx', code: 'export const x = <p>Anything at all</p>;' },
     { filename: 'src/pages/Log.test.tsx', code: 'const A = () => <p>Expected text</p>;' },
@@ -76,7 +76,7 @@ tester.run('no-english-literals', plugin.rules['no-english-literals'], {
     { filename: file, code: 'const s = "stress"; const id = "pause-15m"; const url = "/api/user/me";' },
     { filename: file, code: 'const x = "Hello there"; // i18n-ignore: a test fixture' },
     { filename: file, code: 'const A = () => <p className="Capital words in a class">{t("a")}</p>;' }, // attributes are the other rule's business
-    { filename: 'src/pages/Landing.tsx', code: 'const x = "Stop biting your nails today";' },
+    { filename: 'src/pages/BlogIndex.tsx', code: 'const x = "Stop biting your nails today";' },
     { filename: 'src/data/blogPosts.ts', code: 'const x = "Nail biting is common.";' },
     { filename: 'src/i18n/scopes/watch.ts', code: 'export const messages = { title: "Watch", note: "Your hands are near your mouth." };' },
   ],

@@ -9,8 +9,10 @@
 
 import { LOCALE_INFO } from '../core.ts';
 import { siteBag } from './bag.ts';
-import { buildAbout, buildHow, buildPricing, type PageFile } from './articles.ts';
-import { createTranslator, mergeCatalogs, type CatalogLike } from './translate.ts';
+import { buildAbout, buildHome, buildHow, buildPricing, type PageFile } from './articles.ts';
+import { createTranslator, escapeHtml, mergeCatalogs, type CatalogLike } from './translate.ts';
+import { composeSignInAnswer, methodsText, signInCombos } from './signin.ts';
+import { BLOG_INDEX } from '../../data/blogIndex.ts';
 import {
   HREFLANG, LOCALIZED_PAGES, OG_LOCALE, SITE_FLAG, URL_PREFIX, pagePath, type SiteLocale, type SitePage,
 } from './routes.ts';
@@ -43,6 +45,12 @@ export interface LocaleFile {
     offers: Array<{ name: string; description: string }>;
     featureList: string[];
   };
+  /**
+   * The sign-in methods written in this language, for every combination of the optional ones the owner can turn on.
+   * Key: "" (Google only), "apple", "apple+magic", ... The server picks the key from its own flags and keys, and fills
+   * {{SIGNIN_METHODS}}, {{SIGNIN_ANSWER}} and {{SIGNIN_ANSWER_HTML}} in the pages with it.
+   */
+  signin: Record<string, { methods: string; answer: string; answerHtml: string }>;
   /** The noscript site navigation: [path, label] for the pages that exist in this language. */
   nav: Array<[string, string]>;
   /** aria-label of that navigation. */
@@ -86,6 +94,7 @@ export function buildLocaleFile({ locale, ledger = {}, site, meta, reviewed, tri
     pricing: () => buildPricing(tr, locale),
     about: () => buildAbout(tr, locale),
     how: () => buildHow(tr, locale),
+    home: () => buildHome(tr, locale, { blogCount: BLOG_INDEX.length }),
   };
   const pages: Partial<Record<SitePage, PageFile>> = {};
   const paths: Partial<Record<SitePage, string>> = {};
@@ -94,6 +103,21 @@ export function buildLocaleFile({ locale, ledger = {}, site, meta, reviewed, tri
     if (!build) throw new Error(`LOCALIZED_PAGES lists "${page}" but no builder writes it`);
     pages[page] = build();
     paths[page] = pagePath(locale, page);
+  }
+
+  // The sign-in methods in words, once per combination (the translator above leaves them as a token).
+  const catalogFor = mergeCatalogs(site, meta);
+  const tag = LOCALE_INFO[locale].tag;
+  const names = {
+    google: tr.text('marketing-chrome', 'signin.google'), apple: tr.text('marketing-chrome', 'signin.apple'),
+    microsoft: tr.text('marketing-chrome', 'signin.microsoft'), magic: tr.text('marketing-chrome', 'signin.magic'),
+  };
+  const signin: LocaleFile['signin'] = {};
+  for (const combo of signInCombos()) {
+    const methods = methodsText(tag, names, combo.isOn);
+    const trCombo = createTranslator({ locale, catalog: catalogFor, english: englishMessages(), bag: siteBag({ locale, methods, trialDays }) });
+    const answer = composeSignInAnswer((key, params) => trCombo.text('marketing-home', key, params), combo.isOn);
+    signin[combo.key] = { methods, answer, answerHtml: escapeHtml(answer) };
   }
 
   return {
@@ -121,6 +145,7 @@ export function buildLocaleFile({ locale, ledger = {}, site, meta, reviewed, tri
       ],
       featureList: [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => m(`app.feature.${n}`)),
     },
+    signin,
     nav: LOCALIZED_PAGES.map(page => [pagePath(locale, page), m(`nav.${page}`)] as [string, string]),
     navLabel: tr.text('marketing-chrome', 'nav.label'),
     imageCaption: m('image.caption'),

@@ -13,7 +13,6 @@
 
 export const EXCLUDED = [
   // ── Marketing pages: WS12b (localised routes /es/..., hreflang, SSR) ──────
-  { pattern: 'src/pages/Landing.tsx', reason: 'Marketing home page. WS12b: needs localised routes and server-rendered meta, not just a catalog.' },
   { pattern: 'src/pages/ComparePage.tsx', reason: 'Competitor and solutions pages; the copy lives in src/data/comparePages.ts (WS12b or never).' },
   { pattern: 'src/pages/BlogIndex.tsx', reason: 'Blog index: ~190 English articles are not translated (WS12 scope decision).' },
   { pattern: 'src/pages/BlogPost.tsx', reason: 'Blog article page: articles are English only (WS12 scope decision).' },
@@ -31,9 +30,7 @@ export const EXCLUDED = [
   { pattern: 'src/components/site/testimonialsData.ts', reason: 'Loader of the testimonial data file (English quotes).' },
   { pattern: 'src/components/site/plans.ts', reason: 'The four English plan lines are lookup keys shared with the in-app paywall (planFeature); the marketing pages show them through marketing-chrome plan.f1..f4, and a test pins that the two agree.' },
   { pattern: 'src/components/site/midCtaRules.ts', reason: 'Which blog posts get a call to action; blog is English only.' },
-  { pattern: 'src/components/demo/', reason: 'The marketing live demo on the home page. WS12b.' },
   { pattern: 'src/components/blog/', reason: 'Blog helpers (tag pill).' },
-  { pattern: 'src/components/ContactForm.tsx', reason: 'Used only on the marketing home page (WS12b).' },
   { pattern: 'src/components/PromoVideo.tsx', reason: 'Marketing promo video block on the home page.' },
   { pattern: 'src/hooks/useScrollReveal.ts', reason: 'Marketing scroll animation; no text.' },
   { pattern: 'src/data/', reason: 'Content files: blog posts, compare pages, program lessons (28 coaching lessons), testimonials. Not translated (WS12 scope decision).' },

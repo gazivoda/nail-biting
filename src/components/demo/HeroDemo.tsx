@@ -2,45 +2,27 @@ import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState }
 import { AlertTriangle, Camera, Loader2, RotateCcw, Zap } from 'lucide-react';
 import { DetectionSurface } from '../detection/DetectionSurface';
 import { useCamera } from '../../hooks/useCamera';
-import { CAMERA_ERROR_MESSAGE, MODEL_ERROR_MESSAGE } from '../detection/cameraErrorCopy';
+import { CAMERA_ERROR_MESSAGE, modelErrorMessage } from '../detection/cameraErrorCopy';
 import { useDetection } from '../../hooks/useDetection';
 import { initialSession, remainingMs, sessionReducer } from './demoSession';
 import { track } from '../../utils/track';
-import { TRIAL_DAYS_TEXT } from '../../../shared/plans.js';
+import { useT as useChromeT } from '../../i18n/scopes/marketing-chrome';
+import { useT as useDemoT } from '../../i18n/scopes/marketing-demo';
+import { useSitePaths, useSiteT } from '../../i18n/marketing/useSite';
 
 // --------------------------------------------------------------------------
 // Copy
 //
-// None of these strings are in server.js's crawler block: only the demo's
-// heading and paragraph in Landing.tsx are mirrored there, and they render
-// outside this component. Plain language, no dashes (the homepage has none).
+// The words are in the marketing-demo scope (src/i18n/scopes/marketing-demo.ts), read through t() inside the component so
+// they follow the language of the page. None of them is in server.js's crawler block: only the demo's heading and
+// paragraph in Landing.tsx are mirrored there, and they render outside this component. Plain language, no dashes (the
+// homepage has none). The loading line is also Landing's `Suspense` fallback (its own copy, marketing-home demo.loading):
+// the lazy chunk fetch and the model download are one continuous wait to the visitor, so they read one continuous
+// message. A test keeps the two identical.
+//
+// A zero is the most likely result of a minute of sitting still, and "Nice" read as "nothing happened": the `result`
+// message tells the visitor how to see it work instead.
 // --------------------------------------------------------------------------
-
-const START_LABEL = 'Try the live demo';
-const RETRY_LABEL = 'Try again';
-
-/**
- * Also used as the `Suspense` fallback in `Landing.tsx` — the lazy chunk fetch
- * and the model download are one continuous wait to the visitor, so they read
- * one continuous message. Keep the two copies identical.
- */
-const LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
-
-/** Shown on the plate while it watches, until the first catch. */
-const HINT_LABEL = 'Bring a fingertip to your lips to hear the alarm';
-
-/** The offer, next to every trial link this component renders. */
-const OFFER_LABEL = `${TRIAL_DAYS_TEXT} free, no card`;
-
-
-
-function resultLine(catches: number): string {
-  // A zero is the most likely result of a minute of sitting still, and "Nice"
-  // read as "nothing happened". Tell the visitor how to see it work instead.
-  if (catches === 0) return 'Nothing caught in 60 seconds. Run it again and touch your lips to hear the alarm.';
-  if (catches === 1) return 'Caught you once in 60 seconds. The app does this all day, while you work.';
-  return `Caught you ${catches} times in 60 seconds. The app does this all day, while you work.`;
-}
 
 // --------------------------------------------------------------------------
 // Buttons, in the homepage's sign set (`.sg-btn` in index.css): the primary
@@ -57,10 +39,11 @@ const SECONDARY_BTN =
 
 /** The trial link. A new tab on purpose (see 92360d2): the demo tab keeps running. */
 function TrialLink() {
+  const c = useChromeT();
   return (
     <a href="/api/auth/google" target="_blank" rel="nofollow noopener noreferrer" onClick={() => track('trial_click', 'demo_catch')} className={PRIMARY_BTN}>
       <Zap size={15} aria-hidden="true" />
-      Start free trial
+      {c('trial.start')}
     </a>
   );
 }
@@ -96,6 +79,8 @@ interface Props {
  * here may reach the `stop-biting-state` localStorage key.
  */
 export function HeroDemo({ autoStart = false }: Props) {
+  const t = useSiteT(useDemoT);
+  const paths = useSitePaths();
   const [state, dispatch] = useReducer(sessionReducer, initialSession, init =>
     autoStart ? sessionReducer(init, { type: 'start', now: Date.now() }) : init,
   );
@@ -172,7 +157,7 @@ export function HeroDemo({ autoStart = false }: Props) {
   const failureNow = error
     ? CAMERA_ERROR_MESSAGE[error.kind]
     : status === 'error'
-      ? MODEL_ERROR_MESSAGE
+      ? modelErrorMessage()
       : null;
 
   // A camera that never started is not a session: leave the running phase, which
@@ -185,8 +170,7 @@ export function HeroDemo({ autoStart = false }: Props) {
   // about to forget" case; the cascade is one render, on a failure path.
   useEffect(() => {
     if (!failureNow) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- see above
-    setFailure(failureNow);
+    setFailure(failureNow);   // (see above: copied out of a system that is about to forget it)
     dispatch({ type: 'reset' });
     // The error kind is a fixed label ('permission-denied', 'no-camera', ...).
     track('demo_camera_failed', failureKind);
@@ -239,7 +223,7 @@ export function HeroDemo({ autoStart = false }: Props) {
               in the next minute. Gone after the first catch: it has done its job. */}
           {isDetecting && state.catches === 0 && (
             <p className="absolute top-3 left-3 right-24 rounded-lg bg-stone-900/75 px-2.5 py-1.5 text-xs font-medium text-stone-100">
-              {HINT_LABEL}
+              {t('hint')}
             </p>
           )}
         </DetectionSurface>
@@ -259,7 +243,7 @@ export function HeroDemo({ autoStart = false }: Props) {
               <span>{failure}</span>
             </p>
           ) : isFinished ? (
-            <p className="max-w-md text-[1.0625rem] font-bold text-white">{resultLine(state.catches)}</p>
+            <p className="max-w-md text-[1.0625rem] font-bold text-white">{t('result', { count: state.catches })}</p>
           ) : null}
 
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -274,10 +258,10 @@ export function HeroDemo({ autoStart = false }: Props) {
               ) : (
                 <RotateCcw size={14} aria-hidden="true" />
               )}
-              {failure ? RETRY_LABEL : isFinished ? 'Run it again' : START_LABEL}
+              {failure ? t('retry') : isFinished ? t('again') : t('start')}
             </button>
           </div>
-          {isFinished && <p className="sg-note text-white/80">{OFFER_LABEL}</p>}
+          {isFinished && <p className="sg-note text-white/80">{t('offer')}</p>}
         </div>
       )}
 
@@ -288,7 +272,7 @@ export function HeroDemo({ autoStart = false }: Props) {
             className="animate-spin flex-shrink-0"
             aria-hidden="true"
           />
-          {LOADING_LABEL}
+          {t('loading')}
         </p>
       )}
 
@@ -301,7 +285,7 @@ export function HeroDemo({ autoStart = false }: Props) {
         {isRunning && state.catches > 0 && (
           <div className="animate-fade-in flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
             <p className="text-[1.0625rem] font-bold">
-              That&apos;s the alarm. Caught {state.catches === 1 ? 'once' : `${state.catches} times`} so far.
+              {t('catch', { count: state.catches })}
             </p>
             <TrialLink />
           </div>
@@ -311,21 +295,20 @@ export function HeroDemo({ autoStart = false }: Props) {
       {/* A failed camera is a dead end for the demo, not for the visitor. */}
       {failure && (
         <p className="sg-small text-center">
-          You can still{' '}
-          <a
-            href="/api/auth/google"
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-            onClick={() => track('trial_click', 'demo_failure')}
-            className="sg-link"
-          >
-            start the free trial
-          </a>{' '}
-          ({OFFER_LABEL}) or read{' '}
-          <a href="/how-it-works" className="sg-link">
-            how detection works
-          </a>
-          .
+          {t.rich('failure', { offer: t('offer') }, {
+            trial: chunks => (
+              <a
+                href="/api/auth/google"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                onClick={() => track('trial_click', 'demo_failure')}
+                className="sg-link"
+              >
+                {chunks}
+              </a>
+            ),
+            how: chunks => <a href={paths.how} className="sg-link">{chunks}</a>,
+          })}
         </p>
       )}
     </div>

@@ -2,6 +2,9 @@
 import type { messages as en } from '../../scopes/marketing-meta';
 
 export const messages: Record<keyof typeof en, string> = {
+  'home.title': 'App contra roer unhas: Stop Biting com IA | Stop Biting',
+  'home.description': 'Pare de roer as unhas com a sua webcam: uma IA no seu dispositivo toca um alarme assim que um dedo chega à sua boca. Nenhum dado da câmera é enviado enquanto funciona. Teste grátis de {trialDays, plural, one {# dia} other {# dias}}.',
+
   'pricing.title': 'Preços: {pMonthly}/mês ou {pYearlyShort}/ano | Stop Biting',
   'pricing.description': 'Preços do Stop Biting: teste grátis de {trialDays, plural, one {# dia} other {# dias}}, sem cartão. Depois, {pMonthly}/mês ou {pYearlyShort}/ano (cerca de {pMonthlyEq}/mês, economize {pSave}). Cancele quando quiser.',
   'pricing.name': 'Preços do Stop Biting',

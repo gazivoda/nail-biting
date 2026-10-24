@@ -32,6 +32,46 @@ export function methodsText(tag: string, names: MethodNames, isOn: (flag: string
   return new Intl.ListFormat(tag, { type: 'disjunction', style: 'long' }).format(list);
 }
 
+/** Says one of the answer's pieces (marketing-home faq.10.alt.*), in the language on screen or being built. */
+export type SignInSay = (
+  key: 'faq.10.alt.intro' | 'faq.10.alt.google' | 'faq.10.alt.relay' | 'faq.10.alt.magic' | 'faq.10.alt.demo',
+  params?: Readonly<Record<string, string | number>>,
+) => string;
+
+/**
+ * "Do I need a Google account to use it?" for the sign-in methods that are on: the same five pieces, in the same order,
+ * as `signInAnswer` in shared/flagCopy.js writes for English (a test compares the English pieces with it). The
+ * `{methods}` in the first piece comes from the bag, so the caller's `say` has already been given the list.
+ */
+export function composeSignInAnswer(say: SignInSay, isOn: (flag: string) => boolean): string {
+  const parts = [say('faq.10.alt.intro'), say('faq.10.alt.google')];
+  const who = relayWho(isOn);
+  if (who) parts.push(say('faq.10.alt.relay', { who }));
+  if (isOn('signin_magic_link')) parts.push(say('faq.10.alt.magic'));
+  parts.push(say('faq.10.alt.demo'));
+  return parts.join(' ');
+}
+
+/** Every combination of the three extra sign-in methods, as the key the build writes and the server reads ("", "apple", "apple+magic", ...). */
+export function signInCombos(): Array<{ key: string; isOn: (flag: string) => boolean }> {
+  const out: Array<{ key: string; isOn: (flag: string) => boolean }> = [];
+  for (let mask = 0; mask < 8; mask += 1) {
+    const on = new Set<string>();
+    if (mask & 1) on.add('signin_apple');
+    if (mask & 2) on.add('signin_microsoft');
+    if (mask & 4) on.add('signin_magic_link');
+    out.push({ key: comboKey(flag => on.has(flag)), isOn: flag => on.has(flag) });
+  }
+  return out;
+}
+
+/** "" with only Google; otherwise the extra methods that are on, joined with "+" (apple, microsoft, magic). */
+export function comboKey(isOn: (flag: string) => boolean): string {
+  return [isOn('signin_apple') ? 'apple' : '', isOn('signin_microsoft') ? 'microsoft' : '', isOn('signin_magic_link') ? 'magic' : '']
+    .filter(Boolean)
+    .join('+');
+}
+
 /**
  * Which "who" the second sentence of the Google-account answer names: Apple, Microsoft or both; null when neither is on.
  * (The message picks the words: `{who, select, apple {..} microsoft {..} both {..} other {..}}`.)

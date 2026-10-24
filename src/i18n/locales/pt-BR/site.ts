@@ -7,6 +7,8 @@ import { messages as chrome } from './marketing-chrome.ts';
 import { messages as pricing } from './marketing-pricing.ts';
 import { messages as about } from './marketing-about.ts';
 import { messages as how } from './marketing-how.ts';
+import { messages as home } from './marketing-home.ts';
+import { messages as demo } from './marketing-demo.ts';
 
 export const catalog = {
   plans,
@@ -14,4 +16,6 @@ export const catalog = {
   'marketing-pricing': pricing,
   'marketing-about': about,
   'marketing-how': how,
+  'marketing-home': home,
+  'marketing-demo': demo,
 } satisfies SiteCatalog;

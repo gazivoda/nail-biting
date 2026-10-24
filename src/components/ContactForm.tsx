@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useT as useHomeT } from '../i18n/scopes/marketing-home';
 
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_FORM_ID}`;
 
@@ -21,7 +22,9 @@ const FIELD_CLASS =
 
 const LABEL_CLASS = 'text-[0.9375rem] font-bold';
 
+// The words are in the marketing-home scope (contact.*), so the form follows the language of the home page.
 export function ContactForm() {
+  const t = useHomeT();
   const [form, setForm] = useState<FormState>({ fullName: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
@@ -33,7 +36,7 @@ export function ContactForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: 'Contact from Stop Biting Nails',
+          _subject: 'Contact from Stop Biting Nails', // i18n-ignore: the subject of the email I receive, not shown to the visitor
           fromName: form.fullName,
           email: form.email,
           body: form.message,
@@ -50,10 +53,10 @@ export function ContactForm() {
     <section aria-labelledby="contact-heading" className="grid gap-10 border-t border-[color:var(--sg-rule)] pt-16 lg:grid-cols-12">
       <div className="lg:col-span-4">
         <h2 id="contact-heading" className="sg-h2">
-          Get in touch
+          {t('contact.heading')}
         </h2>
         <p className="sg-body mt-4">
-          Questions, bugs, a false alarm that annoyed you: this goes straight to my inbox.
+          {t('contact.intro')}
         </p>
       </div>
 
@@ -67,7 +70,7 @@ export function ContactForm() {
           <div className="grid gap-6 sm:grid-cols-2">
           <div className="flex flex-col gap-2.5">
             <label htmlFor="contact-name" className={LABEL_CLASS}>
-              Name
+              {t('contact.name')}
             </label>
             <input
               id="contact-name"
@@ -76,13 +79,13 @@ export function ContactForm() {
               autoComplete="name"
               value={form.fullName}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, fullName: e.target.value })); }}
-              placeholder="Your name"
+              placeholder={t('contact.namePh')}
               className={FIELD_CLASS}
             />
           </div>
           <div className="flex flex-col gap-2.5">
             <label htmlFor="contact-email" className={LABEL_CLASS}>
-              Email
+              {t('contact.email')}
             </label>
             <input
               id="contact-email"
@@ -91,14 +94,14 @@ export function ContactForm() {
               autoComplete="email"
               value={form.email}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, email: e.target.value })); }}
-              placeholder="you@example.com"
+              placeholder={t('contact.emailPh')}
               className={FIELD_CLASS}
             />
           </div>
           </div>
           <div className="flex flex-col gap-2.5">
             <label htmlFor="contact-message" className={LABEL_CLASS}>
-              Message
+              {t('contact.message')}
             </label>
             <textarea
               id="contact-message"
@@ -107,19 +110,19 @@ export function ContactForm() {
               autoComplete="off"
               value={form.message}
               onChange={e => { if (status === 'error') setStatus('idle'); setForm(f => ({ ...f, message: e.target.value })); }}
-              placeholder="What happened?"
+              placeholder={t('contact.messagePh')}
               className={`${FIELD_CLASS} resize-none`}
             />
           </div>
           <div aria-live="polite" aria-atomic="true" className="empty:-mt-6">
             {status === 'success' && (
               <p className="sg-body font-semibold text-[color:var(--sg-green)]">
-                Sent. I'll get back to you soon.
+                {t('contact.sent')}
               </p>
             )}
             {status === 'error' && (
               <p className="sg-body font-semibold text-red-700">
-                Something went wrong. Please try again or email us at hello@stopbiting.today.
+                {t('contact.error')}
               </p>
             )}
           </div>
@@ -128,7 +131,7 @@ export function ContactForm() {
             disabled={status === 'sending'}
             className="sg-btn sg-btn-ink self-start disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {status === 'sending' ? 'Sending…' : 'Send message'}
+            {status === 'sending' ? t('contact.sending') : t('contact.send')}
           </button>
         </form>
       </div>

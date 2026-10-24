@@ -267,6 +267,22 @@ export function schemaNodes(page, data, content, canonical, k) {
         primaryImageOfPage: image,
         ...dated,
       }, faq, breadcrumb].filter(Boolean);
+    case 'home':
+      return [{
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': canonical,
+        url: canonical,
+        name: content.name,
+        description: content.schemaDescription,
+        isPartOf: { '@id': k.WEBSITE_ID },
+        speakable: k.SCHEMA_SPEAKABLE,
+        inLanguage,
+        about: { '@id': k.APP_ID },
+        author: k.SCHEMA_AUTHOR,
+        primaryImageOfPage: image,
+        ...dated,
+      }, breadcrumb, faq].filter(Boolean);
     case 'how':
       return [{
         '@context': 'https://schema.org',
@@ -327,6 +343,30 @@ export function resolveLocaleFile(data, { isOn, tokens }) {
   return flagAwareDeep(fillCopyTokensDeep(data, tokens), isOn);
 }
 
+/** The extra sign-in methods (Google is always there). */
+export const SIGNIN_FLAGS = ['signin_apple', 'signin_microsoft', 'signin_magic_link'];
+
+/** The key build.ts writes for a combination of the extra sign-in methods: "", "apple", "apple+magic", ... */
+export function signInKey(isOn) {
+  return [isOn('signin_apple') ? 'apple' : '', isOn('signin_microsoft') ? 'microsoft' : '', isOn('signin_magic_link') ? 'magic' : '']
+    .filter(Boolean)
+    .join('+');
+}
+
+/**
+ * A language's file for THIS process: the markers resolved with the server's flags (`copyIsOn` also knows a sign-in
+ * method counts only when its keys are configured), the sign-in methods written in the language, and the pseudo-flag
+ * `signin_any` ("some method besides Google is usable") that the answer about a Google account is keyed on.
+ */
+export function resolveForProcess(raw, copyIsOn) {
+  const variant = raw.signin?.[signInKey(copyIsOn)] ?? raw.signin?.[''] ?? {};
+  const isOn = name => (name === 'signin_any' ? SIGNIN_FLAGS.some(flag => copyIsOn(flag)) : copyIsOn(name));
+  return resolveLocaleFile(raw, {
+    isOn,
+    tokens: { SIGNIN_METHODS: variant.methods ?? 'Google', SIGNIN_ANSWER: variant.answer ?? '', SIGNIN_ANSWER_HTML: variant.answerHtml ?? '' },
+  });
+}
+
 // ── routes ───────────────────────────────────────────────────────────────────
 
 /**
@@ -334,7 +374,7 @@ export function resolveLocaleFile(data, { isOn, tokens }) {
  *
  * `h` is the bundle of helpers server.js already has (they close over its constants):
  *   app, files, states, shell (the index.html with FAQPage and MedicalCondition stripped), notFoundHtml,
- *   sendHtml, injectMeta, injectSsrArticle, schemaTag, noscriptNav(html, data), copyIsOn, tokens(locale),
+ *   sendHtml, injectMeta, injectSsrArticle, schemaTag, noscriptNav(html, data), copyIsOn,
  *   k: the structured-data constants and builders (see schemaNodes)
  */
 export function registerLocalePages(h) {
@@ -343,7 +383,7 @@ export function registerLocalePages(h) {
   for (const locale of served) {
     const raw = h.files[locale];
     const state = h.states[locale];
-    const data = resolveLocaleFile(raw, { isOn: h.copyIsOn, tokens: h.tokens(locale) });
+    const data = resolveForProcess(raw, h.copyIsOn);
     const shell = localizeSoftwareApplication(h.shell, data);
     const notFound = localizedNotFound(h.notFoundHtml, data) ?? h.notFoundHtml;
     if (notFound === h.notFoundHtml) notices.push(`${locale}: 404 template not recognised, using English`);
@@ -375,7 +415,13 @@ export function registerLocalePages(h) {
         }
         const set = hreflangSet(page, h.states, h.files);
         const marker = `<meta name="sb-locales" content="${servedLocales(h.states).filter(l => h.files[l]?.paths[page]).join(' ')}">`;
+        // The home page's hero screenshot is the largest thing above the fold, but React only creates its <img> after the
+        // JavaScript has run: preloading it from the HTML starts the download in parallel (srcset/sizes mirror the <img>).
+        const heroPreload = page === 'home'
+          ? ['<link rel="preload" as="image" href="/shots/app-watch-1280.webp" imagesrcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" imagesizes="(min-width: 1024px) 36rem, 100vw" fetchpriority="high">']
+          : [];
         const head = [
+          ...heroPreload,
           ...(state === 'live' && set.length ? [hreflangLinkTags(set)] : []),
           marker,
           ...schemaNodes(page, data, content, canonical, h.k).map(obj => h.schemaTag(obj)),

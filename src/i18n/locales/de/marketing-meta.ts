@@ -2,6 +2,9 @@
 import type { messages as en } from '../../scopes/marketing-meta';
 
 export const messages: Record<keyof typeof en, string> = {
+  'home.title': 'Nägelkauen-App: Stop Biting mit KI | Stop Biting',
+  'home.description': 'Hör mit der Webcam auf, an den Nägeln zu kauen: Eine KI auf deinem Gerät löst einen Alarm aus, sobald ein Finger deinen Mund erreicht. Solange sie läuft, werden keine Kameradaten gesendet. Kostenlose Testphase von {trialDays, plural, one {# Tag} other {# Tagen}}.',
+
   'pricing.title': 'Preise: {pMonthly}/Monat oder {pYearlyShort}/Jahr | Stop Biting',
   'pricing.description': 'Preise von Stop Biting: kostenlose Testphase von {trialDays, plural, one {# Tag} other {# Tagen}}, ohne Karte. Danach {pMonthly}/Monat oder {pYearlyShort}/Jahr (rund {pMonthlyEq}/Monat, {pSave} sparen). Jederzeit kündbar.',
   'pricing.name': 'Preise von Stop Biting',

@@ -50,7 +50,7 @@ export const messages: Record<keyof typeof en, string> = {
   'signin.google': 'Google',
   'signin.apple': 'Apple',
   'signin.microsoft': 'Microsoft',
-  'signin.magic': 'einen Link per E-Mail',
+  'signin.magic': 'einem Link per E-Mail',
 
   'plan.f1': 'Erkennung, solange du sie laufen lässt',
   'plan.f2': 'Aktuelle und beste Serie',

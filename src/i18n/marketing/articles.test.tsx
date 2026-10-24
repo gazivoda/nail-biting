@@ -18,7 +18,7 @@ import { catalog as deMeta } from '../locales/de/meta';
 import { catalog as ptMeta } from '../locales/pt-BR/meta';
 import { installSiteCatalogForTests, resetLocaleForTests, setPageLocale } from '../core';
 import { useMemoryStorage, resetStorage } from '../../../test-utils/memoryStorage';
-import { flagAwareDeep } from '../../../shared/flagCopy.js';
+import { resolveForProcess } from '../../../server/marketing/localePages.js';
 import { setFlags } from '../testing/pseudo';
 
 vi.mock('../../billing/prices', async importOriginal => ({
@@ -29,16 +29,18 @@ vi.mock('../../billing/prices', async importOriginal => ({
 import { PricingPage } from '../../pages/PricingPage';
 import { About } from '../../pages/About';
 import { HowItWorks } from '../../pages/HowItWorks';
+import { Landing } from '../../pages/Landing';
 
 const SITE = { es: esSite, de: deSite, 'pt-BR': ptSite } as const;
 const META = { es: esMeta, de: deMeta, 'pt-BR': ptMeta } as const;
-const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage, about: About, how: HowItWorks };
+const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage, about: About, how: HowItWorks, home: Landing };
 
 const decode = (s: string) => s
   .replace(/&nbsp;/g, ' ').replace(/&#x27;|&#39;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
   .replace(/<!-- -->/g, '');
 // Inline tags (a link, a highlighted word) vanish; every other tag is a break between words.
 const norm = (s: string) => decode(s)
+  .replace(/<span class="sg-(?:hl|mark)">([\s\S]*?)<\/span>/g, '$1')   // a highlighted word inside a heading
   .replace(/<\/?(?:a|strong|em|b|i|mark)\b[^>]*>/g, '')
   .replace(/<[^>]*>/g, ' ')
   .replace(/[\u00a0\u202f]/g, ' ')
@@ -63,7 +65,7 @@ describe.each(SITE_LOCALES)('the server-rendered article follows the page: %s', 
 
   const file = buildLocaleFile({ locale, site: SITE[locale], meta: META[locale], reviewed: false });
   // no optional feature on: the markers resolve to their plain wording
-  const resolved = flagAwareDeep(file, () => false);
+  const resolved = resolveForProcess(file, () => false);
 
   it.each(LOCALIZED_PAGES)('%s: every sentence of the article is on the page, in order', page => {
     const article = blocks(resolved.pages[page]!.article);
@@ -87,7 +89,7 @@ describe.each(SITE_LOCALES)('the server-rendered article follows the page: %s', 
 
   it.each(LOCALIZED_PAGES)('%s: with the optional history sync on, the page and the article change together', page => {
     const off = norm(resolved.pages[page]!.article);
-    const on = flagAwareDeep(file, (name: string) => name === 'event_sync');
+    const on = resolveForProcess(file, (name: string) => name === 'event_sync');
     const onBlocks = blocks(on.pages[page]!.article);
     if (norm(on.pages[page]!.article) === off) return;   // this page says nothing about where the history lives
     setFlags('event_sync');

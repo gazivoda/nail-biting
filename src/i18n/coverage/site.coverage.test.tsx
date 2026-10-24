@@ -39,6 +39,7 @@ import { About } from '../../pages/About';
 import { HowItWorks } from '../../pages/HowItWorks';
 import { LocalizedSite } from '../../pages/LocalizedSite';
 import { PRICE_IDS } from '../../billing/env';
+import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN, TRIAL_WORDS_CAP } from '../../../shared/plans.js';
 
 export const COVERS = [
   'src/components/site/SiteHeader.tsx',
@@ -150,12 +151,11 @@ describe('site chrome and pricing, pseudo-locale', () => {
     expect(header).toContain('href="/es/pricing"');
   });
 
-  it('draws no switcher without the marker, on a page with no translation, or for a page that is not one of the four', () => {
+  it('draws no switcher without the marker, or for a page that is not one of the four', () => {
     h.marker = null;
     expect(renderToStaticMarkup(<LanguageSwitcher page="pricing" variant="footer" />)).toBe('');
     h.marker = 'es';
     expect(renderToStaticMarkup(<LanguageSwitcher variant="footer" />)).toBe('');
-    expect(renderToStaticMarkup(<LanguageSwitcher page="home" variant="footer" />)).toBe('');   // the home page is not translated (yet)
   });
 });
 
@@ -167,7 +167,7 @@ describe('site chrome and pricing, English', () => {
     const html = renderToStaticMarkup(<PricingSection />);
     for (const s of [
       '$2.99 a month, or <span class="sg-mark">$29 a year.</span>',
-      'Three days free first, and no card to start. You pick a plan when the trial ends.',
+      `${TRIAL_WORDS_CAP} free first, and no card to start. You pick a plan when the trial ends.`,
       'Best value: save 19%',
       '$29.00', '/ year', '$2.42/month, billed yearly', 'Priority support',
       '$2.99', '/ month', 'Billed monthly', 'Everything in Yearly except priority support.',
@@ -181,13 +181,13 @@ describe('site chrome and pricing, English', () => {
     const html = renderToStaticMarkup(<PricingPage />);
     for (const s of [
       'What every plan includes', 'Detection runs on your device; no camera data leaves it', 'Pricing questions',
-      'How does the 3-day free trial work?',
-      'Every account starts with a 3-day free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.',
+      `How does the ${TRIAL_HYPHEN} free trial work?`,
+      `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.`,
       'What is the difference between Monthly and Yearly?',
       'Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support.',
       'How do payments work?', 'Payments are handled by Paddle, a secure merchant of record. Stop Biting never sees or stores your card details.',
       'Can I cancel anytime?', 'Yes. Cancel anytime from the app settings and you keep access until the end of the paid period. See the <a href="/refund-policy" class="sg-link">refund policy</a> for details.',
-      'Try it free for 3 days.', 'No card to start. Curious first? Read <a href="/how-it-works" class="sg-link">how the detection works</a>, or <a href="/tools/nail-biting-cost-calculator" class="sg-link">work out what biting costs you</a>.',
+      `Try it free for ${TRIAL_DAYS_TEXT}.`, 'No card to start. Curious first? Read <a href="/how-it-works" class="sg-link">how the detection works</a>, or <a href="/tools/nail-biting-cost-calculator" class="sg-link">work out what biting costs you</a>.',
       '<a href="/" class="hover:text-[color:var(--sg-ink)]">Home</a>',
     ]) expect(html, s).toContain(s);
   });
@@ -206,7 +206,7 @@ describe('site chrome and pricing, English', () => {
       'Alarm latency', 'Incident logging', 'Timestamped log stored locally, never transmitted',
       'Common questions', 'What happens to my camera data?', 'Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
       'Will it false-alarm when I&#x27;m eating or touching my face?', 'Does it work in the dark?', 'Learn more',
-      'Try it free for 3 days.', 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
+      `Try it free for ${TRIAL_DAYS_TEXT}.`, 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
     ]) expect(html, s).toContain(s);
     expect(html).not.toContain('These articles are in English');   // the note is only for the other languages
     expect(html).not.toContain(' lang="en"');
@@ -221,7 +221,7 @@ describe('site chrome and pricing, English', () => {
       'What Stop Biting does', 'Privacy: the non-negotiable', 'Your alarm and bite log is stored in your browser. The site counts page visits with Google Analytics; that never includes anything from your camera.',
       'The technology', '<a href="https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker" target="_blank" rel="noopener noreferrer" class="sg-link">Google MediaPipe&#x27;s Hand Landmarker</a>',
       'How this site is written', '<a href="/editorial-policy" class="sg-link">editorial policy and corrections page</a>',
-      'Try it free for 3 days.', 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
+      `Try it free for ${TRIAL_DAYS_TEXT}.`, 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
       '<span class="text-[color:var(--sg-ink)]">About</span>',
     ]) expect(html, s).toContain(s);
   });
@@ -233,7 +233,7 @@ describe('site chrome and pricing, English', () => {
     for (const s of [
       'Catch your next <span class="sg-hl">bite.</span>',
       'Leave it running through your next workday, then open History and see when you bite.',
-      '3 days free, no card, then $2.99/month',
+      `${TRIAL_DAYS_TEXT} free, no card, then $2.99/month`,
       'An awareness alarm for nail biting (onychophagia), made by <a href="/about" class="sg-link">Igor Gazivoda</a>. Detection runs in your browser. No camera data is sent while it runs.',
       'aria-label="Footer navigation"', 'Editorial Policy', 'Privacy Policy', 'Terms of Service', 'Refund Policy', 'href="/#pricing"', 'Stop biting.',
     ]) expect(footer, s).toContain(s);

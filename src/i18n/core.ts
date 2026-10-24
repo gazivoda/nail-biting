@@ -113,7 +113,9 @@ function load(locale: ForeignLocale) {
     LOADERS[locale]()
       .then(mod => { catalogs.set(locale, mod); })
       .catch(() => { failed.add(locale); }) // offline and never fetched: stay English
-      .finally(() => { loading.delete(locale); recompute(); }),
+      // notify: on a localized marketing page the language does not change when the app's catalog arrives (the demo asks for
+      // it), but the words that read it must be drawn again
+      .finally(() => { loading.delete(locale); recompute(); notify(); }),
   );
 }
 

@@ -11,8 +11,13 @@ import { Rings } from '../components/site/Rings';
 import { Testimonials } from '../components/site/Testimonials';
 import { PricingSection } from '../components/PricingSection';
 import { BLOG_INDEX } from '../data/blogIndex';
-import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN } from '../../shared/plans.js';
-import { useFlagCopy } from '../features/useFlagCopy';
+import { useFlagCopy, useFlagIsOn } from '../features/useFlagCopy';
+import { ensureLocaleLoaded } from '../i18n/core';
+import { useLocale } from '../i18n/hooks';
+import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
+import { useT as useHomeT } from '../i18n/scopes/marketing-home';
+import { anySignIn, composeSignInAnswer } from '../i18n/marketing/signin';
+import { useSitePaths, useSiteT } from '../i18n/marketing/useSite';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
 // page's critical path must never pay for. Lazy so it lands in its own chunk,
@@ -22,131 +27,43 @@ const HeroDemo = lazy(() =>
   import('../components/demo/HeroDemo').then(m => ({ default: m.HeroDemo })),
 );
 
-// Verbatim copy of HeroDemo's own loading line: the chunk fetch runs straight
-// into the model download, and the visitor should see one message, not two.
-const DEMO_LOADING_LABEL = 'Downloading AI models (~20 MB, one time)…';
-
-// The offer, stated beside every trial button. The figures MUST match
-// PricingSection and the Offer schema server.js injects for /pricing
-// ($2.99/month, $29.00/year, free trial, no card).
+// The words of this page are in the marketing-home scope (src/i18n/scopes/marketing-home.ts) and the pricing cards,
+// the header, the footer and the closing call to action in marketing-chrome. The figures in the offer line and in the
+// pricing cards MUST match the Offer schema server.js injects ($2.99/month, $29.00/year, free trial, no card).
 // Commas, not middle dots: Overpass draws its middle dot hard against the
 // following word, so a dotted line reads as "free ·no card".
-const OFFER_LINE = `${TRIAL_DAYS_TEXT} free, no card, then $2.99/month`;
 
-// Pulled from the real post data so titles and reading times can't drift.
-const FEATURED_SLUGS = [
-  'habit-reversal-training-guide',
-  'nail-biting-health-risks',
-  'how-ai-can-help-stop-nail-biting',
-];
-const FEATURED_POSTS = FEATURED_SLUGS
-  .map(slug => BLOG_INDEX.find(p => p.slug === slug))
-  .filter((p): p is NonNullable<typeof p> => p !== undefined);
-
-// The ten hand-picked guides. Labels are the page's own copy, not the post
+// The ten hand-picked guides. The titles are the page's own copy, not the post
 // titles, because a reading list wants the shortest true description of the
-// destination rather than the article's full SEO headline.
-const FEATURED_GUIDES: { href: string; label: string }[] = [
-  { href: '/how-it-works', label: 'How the AI nail biting detection works' },
-  { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the science behind stopping nail biting' },
-  { href: '/blog/how-to-stop-nail-biting', label: 'How to stop nail biting: the complete guide' },
-  { href: '/blog/nail-biting-30-day-plan', label: 'The 30-day plan to stop biting your nails' },
-  { href: '/blog/nail-biting-trigger-mapping', label: 'Trigger mapping: find out when you actually bite' },
-  { href: '/blog/best-apps-to-stop-nail-biting', label: 'Best apps to stop nail biting (2026)' },
-  { href: '/blog/best-nail-biting-remedies', label: 'Every nail biting remedy, ranked by evidence' },
-  { href: '/blog/nail-biting-health-risks', label: 'The real health risks of nail biting' },
-  { href: '/blog/nail-biting-in-children', label: 'Nail biting in children: a guide for parents' },
-  { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
-  { href: '/blog/how-ai-can-help-stop-nail-biting', label: 'Can an app help? The camera approach, in depth' },
-];
+// destination rather than the article's full SEO headline. The articles are English only, so the titles are the same
+// in every language (marketing-home guide.N); this list says where each one goes.
+const FEATURED_GUIDES = [
+  { href: '/how-it-works', key: 'guide.1' },
+  { href: '/blog/habit-reversal-training-guide', key: 'guide.2' },
+  { href: '/blog/how-to-stop-nail-biting', key: 'guide.3' },
+  { href: '/blog/nail-biting-30-day-plan', key: 'guide.4' },
+  { href: '/blog/nail-biting-trigger-mapping', key: 'guide.5' },
+  { href: '/blog/best-apps-to-stop-nail-biting', key: 'guide.6' },
+  { href: '/blog/best-nail-biting-remedies', key: 'guide.7' },
+  { href: '/blog/nail-biting-health-risks', key: 'guide.8' },
+  { href: '/blog/nail-biting-in-children', key: 'guide.9' },
+  { href: '/compare/bitter-polish-alternative', key: 'guide.10' },
+  { href: '/blog/how-ai-can-help-stop-nail-biting', key: 'guide.11' },
+] as const;
 
 // Three places to start, each with a line on who it is for. Everything else in
-// READING_LIST follows as a compact list, so every destination is still linked
+// FEATURED_GUIDES follows as a compact list, so every destination is still linked
 // exactly once, but the section reads as a recommendation, not a link dump.
-const START_HERE: { href: string; note: string }[] = [
-  { href: '/blog/habit-reversal-training-guide', note: "Start here if you've tried polish and given up." },
-  { href: '/blog/nail-biting-trigger-mapping', note: 'For when you want to know why you bite, not just when.' },
-  { href: '/compare/bitter-polish-alternative', note: "If you're deciding between this and bitter polish." },
-];
+const START_HERE = [
+  { href: '/blog/habit-reversal-training-guide', key: 'start.1' },
+  { href: '/blog/nail-biting-trigger-mapping', key: 'start.2' },
+  { href: '/compare/bitter-polish-alternative', key: 'start.3' },
+] as const;
 
-// Section 06 is one reading list, so the two old lists are merged here rather
-// than in the markup. Two of the guides above point at articles the blog
-// preview also carried (habit-reversal-training-guide and
-// nail-biting-health-risks), so the merge is by href: every destination
-// survives and each one is printed exactly once, under the guide's own label.
-// The kicker is the post's tag wherever the destination is a post and "Guide"
-// where it isn't, and the reading time is read from the post data so it can't
-// drift. The two destinations that aren't articles simply have none.
-type ReadingRow = { href: string; title: string; kicker: string; minutes?: number };
-
-const READING_LIST: ReadingRow[] = (() => {
-  const postFor = (href: string) =>
-    href.startsWith('/blog/')
-      ? BLOG_INDEX.find(p => p.slug === href.slice('/blog/'.length))
-      : undefined;
-
-  const rows: ReadingRow[] = FEATURED_GUIDES.map(({ href, label }) => {
-    const post = postFor(href);
-    return { href, title: label, kicker: post?.tag ?? 'Guide', minutes: post?.readingMinutes };
-  });
-
-  for (const post of FEATURED_POSTS) {
-    const href = `/blog/${post.slug}`;
-    if (rows.some(row => row.href === href)) continue;
-    rows.push({ href, title: post.title, kicker: post.tag, minutes: post.readingMinutes });
-  }
-
-  return rows;
-})();
-
-// Mirrors the FAQPage JSON-LD in index.html. Google requires FAQ structured data
-// to have a visible on-page counterpart, so these two must stay in step.
-const FAQS: { q: string; a: string }[] = [
-  {
-    q: 'What is Stop Biting and how does it work?',
-    a: `Stop Biting is a webcam app that catches nail biting as it happens. You open it in your browser, allow the camera, and carry on with your work. On-device AI from Google MediaPipe checks 21 hand landmarks and your face mesh five times a second, and when your hand stays near your mouth for about six tenths of a second, an alarm sounds. That alarm is the awareness signal habit reversal training depends on: it interrupts the habit while it is still automatic. Each alert is logged in your browser, so you can tag what set it off, such as stress, boredom or deep focus, and watch your streak grow. Detection runs entirely on your device. No camera data is sent while it runs. It costs $2.99 a month or $29 a year after a ${TRIAL_HYPHEN} free trial with no card. It is not a medical treatment or a replacement for a therapist.`,
-  },
-  {
-    q: 'Why do people bite their nails?',
-    a: 'Nail biting (onychophagia) is a body-focused repetitive behaviour affecting up to 30% of adults (Lee and Lipner, 2022). Common triggers are stress, anxiety, boredom, and deep focus. The habit usually starts in childhood and becomes automatic, happening without conscious awareness. Genetic predisposition, perfectionism, and OCD-spectrum tendencies are also linked.',
-  },
-  {
-    q: 'What are the best remedies to stop nail biting?',
-    a: 'The evidence-based options are habit reversal training (the strongest by some margin), bitter-taste polishes like Mavala Stop, real-time awareness tools such as AI detection, competing response training, and stress reduction. Most people do best combining an awareness method with a competing response rather than relying on any single remedy.',
-  },
-  {
-    q: 'What is habit reversal training for nail biting?',
-    a: 'Habit reversal training (HRT) is a cognitive-behavioural method with three parts: awareness training, learning to notice every time you bite; a competing response, an incompatible action like clenching a fist or pressing your palms flat; and social support. In the original Azrin and Nunn clinical trial, participants who practised it consistently achieved a near-complete reduction in biting.',
-  },
-  {
-    q: 'Is nail biting harmful?',
-    a: 'Yes. Chronic nail biting causes dental damage including chipped teeth and jaw strain, nail fold infections, transfer of pathogens from fingers to mouth, and permanent nail deformity in severe cases. The visible damage also drives shame and social anxiety, which increases biting: a self-reinforcing cycle.',
-  },
-  {
-    q: 'Does Stop Biting send my camera feed to the internet?',
-    a: 'No. Detection uses MediaPipe (Google\'s WebAssembly vision framework) running entirely on your device. Your camera feed is never uploaded, streamed, or stored anywhere outside it. Once the detection models have downloaded, nothing carrying camera data is sent while it watches: you can disconnect from the internet and it keeps working.',
-  },
-  {
-    q: 'How long does it take to stop biting your nails?',
-    a: 'Most people notice more biting in week one, because they are finally catching episodes they used to miss. No controlled trial has measured week-by-week biting frequency during self-directed habit reversal training, so treat any schedule, including ours, as an expectation rather than a measured result. The best-evidenced anchor is Lally et al. 2010: among the 39 volunteers whose data fitted the model, the median time for a new daily habit to become automatic was 66 days, with a range of 18 to 254. That is a general habit-formation figure, not one measured for nail biting.',
-  },
-  {
-    q: 'Do I need a credit card, and can I cancel anytime?',
-    a: `No card is needed for the ${TRIAL_HYPHEN} free trial. After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period. Payments are handled by Paddle, so Stop Biting never sees your card details.`,
-  },
-  {
-    q: 'Does Stop Biting work on a phone?',
-    a: 'It is made for a laptop or desktop with a webcam, because the detection needs a camera that can see your hands while you work. On a phone, use the Email me the link button to send yourself the address and open it on your computer.',
-  },
-  {
-    q: 'Do I need a Google account to use it?',
-    a: 'Accounts are created through Google sign-in, which gives us your name, email address and profile picture and never your Google password. The live demo on the homepage needs no account at all.',
-  },
-  {
-    q: 'Is there an app that detects nail biting with a webcam?',
-    a: 'Yes. Several apps now watch for hand-to-mouth movement through a camera and interrupt the habit as it happens: Stop Biting, Hands Off (Mac and Windows), Nailed (a Mac menu bar app) and SmartBehavior (iPhone, Android and Windows). They differ in platform, price and which behaviours they cover. Stop Biting is our own product: it runs in a browser on a laptop or desktop with a webcam and detects nail biting only. Our comparison pages say where each of the others is the better fit, with details checked against each vendor\'s own site.',
-  },
-];
+// Mirrors the FAQPage JSON-LD in index.html (English) and in dist/i18n/<locale>.json (the other languages). Google
+// requires FAQ structured data to have a visible on-page counterpart, so these must stay in step: the questions are
+// the messages faq.N.q / faq.N.a of the marketing-home scope, N = 1..11.
+const FAQ_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
 // ── The page ────────────────────────────────────────────────────────────────
 // The sign system (see the `.sg-*` block in index.css and the surface brief in
@@ -155,22 +72,33 @@ const FAQS: { q: string; a: string }[] = [
 // Light only, no dashes in copy, no scroll-reveal: every section is visible
 // from the first paint, and the warning pictogram is the one thing that moves.
 
+const LOOP_CARDS = [
+  { n: '01', k: 1, cls: 'bg-lime-300 text-deep', num: 'text-deep/90' },
+  { n: '02', k: 2, cls: 'bg-deep text-white', num: 'text-lime-300' },
+  { n: '03', k: 3, cls: 'bg-ember text-deep', num: 'text-deep/90' },
+] as const;
 
-// What a cancelled or failed Google sign-in means, in the visitor's words.
-// access_denied is Google's code for "you pressed Cancel".
-function authErrorMessage(code: string) {
-  return code === 'access_denied'
-    ? 'Sign-in was cancelled, so nothing was set up. You can try again whenever you like.'
-    : "Sign-in didn't finish, so nothing was set up. Please try again.";
-}
+const REFERENCES = [
+  { href: 'https://pubmed.ncbi.nlm.nih.gov/7436976/', key: 'science.ref1' },
+  { href: 'https://pubmed.ncbi.nlm.nih.gov/21549664/', key: 'science.ref2' },
+] as const;
 
 export function Landing({ authError = null, onDismissAuthError }: { authError?: string | null; onDismissAuthError?: () => void } = {}) {
   // Stays false until the visitor asks for the demo: the lazy import is only
   // ever triggered by this flag, which is what keeps MediaPipe off a page view.
   const [demoStarted, setDemoStarted] = useState(false);
   // Sentences that stop being true when a feature flag is on (sync, other sign-in methods, a phone
-  // screen) go through `copy`. With every flag off it returns the text it was given, unchanged.
+  // screen) go through `copy` for English. With every flag off it returns the text it was given, unchanged.
+  // The other languages word those sentences themselves (a {sync, select, ...} in the message, or the sign-in answer
+  // composed from its pieces).
   const copy = useFlagCopy();
+  const isOn = useFlagIsOn();
+  const t = useSiteT(useHomeT);
+  const c = useSiteT(useChromeT);
+  const paths = useSitePaths();
+  const { locale } = useLocale();
+  // The guides and the comparison pages are English only: on a localized page their links say so.
+  const english = locale === 'en' ? {} : { lang: 'en' };
 
   // Links from blog posts, the calculator and the tracker point at /#live-demo.
   // The page is client-rendered after the session check, so the browser's own
@@ -180,14 +108,31 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
     document.getElementById('live-demo')?.scrollIntoView({ block: 'center' });
   }, []);
 
+  // What a cancelled or failed Google sign-in means, in the visitor's words.
+  // access_denied is Google's code for "you pressed Cancel".
+  const authErrorMessage = (code: string) => (code === 'access_denied' ? t('authError.cancelled') : t('authError.failed'));
+
+  // The answer to a question, with the sentences that follow the flags. The one about a Google account has a second
+  // form in the other languages when another sign-in method is on (English: shared/flagCopy.js).
+  const faqAnswer = (n: (typeof FAQ_NUMBERS)[number]): string => {
+    if (n === 10 && locale !== 'en' && anySignIn(isOn)) return composeSignInAnswer(t, isOn);
+    return copy(t(`faq.${n}.a`));
+  };
+
+  const startDemo = () => {
+    // The demo draws the detector's own words (camera errors, the alarm) from the app's catalog: fetch it with the click.
+    if (locale !== 'en') void ensureLocaleLoaded(locale);
+    setDemoStarted(true);
+  };
+
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
 
-      <SiteHeader onHome />
+      <SiteHeader onHome page="home" />
 
       <main id="main">
         {/* ── HERO ──────────────────────────────────────────────────────── */}
-        <section aria-label="Hero" className="pt-20 pb-16 lg:pt-24 lg:pb-24">
+        <section aria-label={t('hero.aria')} className="pt-20 pb-16 lg:pt-24 lg:pb-24">
           <div className="sg-container">
           <div className="sg-hero sg-dark bite relative grid items-start gap-12 overflow-hidden p-6 pb-10 sm:p-10 lg:grid-cols-12 lg:gap-10 lg:p-14">
             <Rings className="-bottom-72 -left-72 h-[44rem] w-[44rem]" />
@@ -195,31 +140,30 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               {authError && (
                 <div role="alert" className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-[color:var(--sg-rule)] bg-white/10 px-4 py-3">
                   <p className="sg-small flex-1 text-[color:var(--sg-ink)]">{authErrorMessage(authError)}</p>
-                  <a href="/api/auth/google" rel="nofollow" className="sg-link inline-flex min-h-11 items-center">Try again</a>
+                  <a href="/api/auth/google" rel="nofollow" className="sg-link inline-flex min-h-11 items-center">{t('authError.retry')}</a>
                   <button type="button" onClick={onDismissAuthError} className="sg-small inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">
-                    Dismiss
+                    {t('authError.dismiss')}
                   </button>
                 </div>
               )}
-              <h1 className="sg-h1">Stop <span className="sg-hl">biting</span> your nails.</h1>
+              <h1 className="sg-h1">{t.rich('hero.title', undefined, { hl: chunks => <span className="sg-hl">{chunks}</span> })}</h1>
               <p className="sg-lede sg-measure mt-6">
-                Your webcam watches your hands while you work. The moment a fingertip reaches your lips,
-                an alarm sounds, so you catch the bites you would otherwise never notice.
+                {t('hero.lede')}
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <TrialButton source="landing_hero" />
-                <a href="#how" className="sg-link inline-flex min-h-11 items-center">How to start</a>
+                <a href="#how" className="sg-link inline-flex min-h-11 items-center">{t('hero.howLink')}</a>
               </div>
-              <p className="sg-note mt-4">{OFFER_LINE}</p>
+              <p className="sg-note mt-4">{c('offer.line')}</p>
               {/* Said before the button is pressed: the trial clock starts at
                   sign-in, and a phone visitor would spend it finding out. */}
-              <p className="sg-note mt-1">Made for a laptop or desktop with a webcam.</p>
+              <p className="sg-note mt-1">{t('hero.note1')}</p>
               {/* The three questions a visitor has before pressing the button, answered
                   beside it rather than in the privacy section and FAQ further down.
                   Mirrored in server.js. */}
               <p className="sg-note mt-1">
-                {copy('Detection runs on your device and sends no camera data while it runs. Sign in with Google (it opens in a new tab). Cancel anytime.')}
+                {copy(t('hero.note2'))}
               </p>
             </div>
 
@@ -236,7 +180,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                       <div className="flex aspect-video w-full items-center justify-center rounded-3xl bg-[color:var(--sg-deep-2)] px-6">
                         <p role="status" className="flex items-center gap-2 text-center text-[0.9375rem] text-white">
                           <Loader2 size={15} className="flex-shrink-0 animate-spin" aria-hidden="true" />
-                          {DEMO_LOADING_LABEL}
+                          {t('demo.loading')}
                         </p>
                       </div>
                     }
@@ -249,8 +193,8 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 // ever referenced above, so a page view fetches no chunk, no
                 // WebAssembly and no MediaPipe model.
                 <figure className="relative w-full">
-                  <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">{TRIAL_DAYS_TEXT} free, no card</span>
-                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-w-[10.5rem] text-center leading-tight max-sm:hidden sm:-right-4">No camera data is sent while it runs</span>
+                  <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">{t('hero.sticker.trial')}</span>
+                  <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-w-[10.5rem] text-center leading-tight max-sm:hidden sm:-right-4">{t('hero.sticker.privacy')}</span>
                   <img
                     src="/shots/app-watch-1280.webp"
                     srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
@@ -259,11 +203,11 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                     height={792}
                     fetchPriority="high"
                     decoding="async"
-                    alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running."
+                    alt={t('hero.shot.alt')}
                     className="w-full rounded-3xl"
                   />
                   <figcaption className="sg-note mt-3">
-                    The Watch screen, shown with example data.
+                    {t('hero.shot.caption')}
                   </figcaption>
                 </figure>
               )}
@@ -278,26 +222,24 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 aria-labelledby="live-demo-heading"
                 className="mt-8 flex w-full flex-col items-start border-t border-[color:var(--sg-rule)] pt-8"
               >
-                <h2 id="live-demo-heading" className="sg-h3">Try the detector right now</h2>
+                <h2 id="live-demo-heading" className="sg-h3">{t('demo.heading')}</h2>
                 <p className="sg-note mt-2 max-w-md">
-                  The same detector the app uses, on your own camera, before you sign up for anything.
+                  {t('demo.intro')}
                 </p>
                 {!demoStarted && (
                   <>
                     <button
                       type="button"
-                      onClick={() => setDemoStarted(true)}
+                      onClick={startDemo}
                       className="sg-btn sg-btn-ink mt-5"
                     >
                       <Camera size={18} aria-hidden="true" />
-                      Try the live demo
+                      {t('demo.start')}
                     </button>
                   </>
                 )}
                 <p className="sg-small mt-4 max-w-[46ch]">
-                  Runs on your own camera for 60 seconds, no account needed. Your browser will ask for camera
-                  access first. Turn your sound on. About
-                  20 MB of AI models download once; after that, no video leaves the page.
+                  {t('demo.small')}
                 </p>
               </section>
 
@@ -313,9 +255,9 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             <div className="sg-tape__track">
               {[0, 1].map(n => (
                 <div key={n} className="sg-tape__item">
-                  {['Notice it', 'Interrupt it', 'Replace it', 'Repeat'].map(w => (
-                    <span key={w} className="inline-flex items-center gap-8">
-                      {w}
+                  {(['tape.1', 'tape.2', 'tape.3', 'tape.4'] as const).map(key => (
+                    <span key={key} className="inline-flex items-center gap-8">
+                      {t(key)}
                       <svg width="34" height="34" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="30" fill="currentColor" /><circle cx="48" cy="48" r="16" fill="var(--c-signal)" /><circle cx="54" cy="42" r="5" fill="currentColor" /></svg>
                     </span>
                   ))}
@@ -330,18 +272,14 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             section below describes: notice, interrupt, replace. */}
         <section aria-labelledby="loop-heading" className="py-16 lg:py-24">
           <div className="sg-container">
-            <h2 id="loop-heading" className="sg-h2 max-w-[18ch]">A habit loop, <span className="sg-mark">broken</span> in three moves</h2>
+            <h2 id="loop-heading" className="sg-h2 max-w-[18ch]">{t.rich('loop.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}</h2>
             <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {[
-                { n: '01', t: 'Notice', d: 'The alarm catches the bite you would never have noticed. Most of them happen on autopilot.', cls: 'bg-lime-300 text-deep', num: 'text-deep/90' },
-                { n: '02', t: 'Interrupt', d: 'It sounds the moment a fingertip reaches your lips, while the habit is still automatic.', cls: 'bg-deep text-white', num: 'text-lime-300' },
-                { n: '03', t: 'Replace', d: 'Press your palms flat or clench a fist. That part is yours, and it is what makes the habit fade.', cls: 'bg-ember text-deep', num: 'text-deep/90' },
-              ].map(({ n, t, d, cls, num }) => (
+              {LOOP_CARDS.map(({ n, k, cls, num }) => (
                 <div key={n} className={`bite flex min-h-[22rem] flex-col justify-between rounded-2xl p-7 sm:p-8 [--bite:44px] ${cls}`}>
                   <span className={`font-display text-[7.5rem] font-extrabold leading-[0.8] tracking-[-0.06em] ${num}`}>{n}</span>
                   <div>
-                    <h3 className="font-display text-3xl font-extrabold tracking-[-0.03em]">{t}</h3>
-                    <p className="mt-3 text-lg leading-snug opacity-85">{d}</p>
+                    <h3 className="font-display text-3xl font-extrabold tracking-[-0.03em]">{t(`loop.${k}.title`)}</h3>
+                    <p className="mt-3 text-lg leading-snug opacity-85">{t(`loop.${k}.body`)}</p>
                   </div>
                 </div>
               ))}
@@ -359,24 +297,23 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               of the page. */}
           <div className="sg-container grid items-start gap-10 lg:grid-cols-12">
             <div className="lg:col-span-6 lg:sticky lg:top-28 lg:pt-10">
-              <h2 id="app-heading" className="sg-h2 max-w-[18ch]">Every catch ends up in <span className="sg-mark">History</span></h2>
+              <h2 id="app-heading" className="sg-h2 max-w-[18ch]">{t.rich('history.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}</h2>
               <p className="sg-body sg-measure mt-5">
-                Each alarm and each bite you log lands here with the time. Tag what set it off
-                (stress, boredom, deep focus) and after a week you can see which one is yours.
+                {t('history.body')}
               </p>
             </div>
             <figure className="relative mx-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:col-span-4 lg:col-start-8">
-              <span className="sg-sticker sg-sticker-ember -left-6 top-28 max-sm:hidden sm:-left-14">Tag what set it off</span>
+              <span className="sg-sticker sg-sticker-ember -left-6 top-28 max-sm:hidden sm:-left-14">{t('history.sticker')}</span>
               <img
                 src="/shots/app-history-390.webp"
                 width={390}
                 height={844}
                 loading="lazy"
                 decoding="async"
-                alt="The History screen on a phone: each day's alarms and bites with their times, an alarm waiting to be reviewed, and bites tagged with what set them off, such as Deep focus."
+                alt={t('history.alt')}
                 className="w-full rounded-2xl border border-[color:var(--sg-rule)]"
               />
-              <figcaption className="sg-note mt-3">Shown with example data.</figcaption>
+              <figcaption className="sg-note mt-3">{t('history.caption')}</figcaption>
             </figure>
           </div>
         </section>
@@ -390,28 +327,27 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
           <div className="bite grid gap-6 rounded-2xl bg-[color:var(--sg-signal)] p-6 sm:p-10 lg:grid-cols-12 lg:items-start lg:gap-10 lg:rounded-[3rem] lg:p-14">
             <div className="flex items-center gap-4 lg:col-span-4">
               <span className="sg-sign sg-sign-m"><ArrowRight size={26} aria-hidden="true" /></span>
-              <h2 id="how-heading" className="sg-h2">How to start</h2>
+              <h2 id="how-heading" className="sg-h2">{t('how.heading')}</h2>
             </div>
             <div className="lg:col-span-8">
               <p className="sg-lede text-[color:var(--sg-ink)]">
-                {copy("Sign in with Google (it opens in a new tab), allow the camera, and get on with your work. When your hand reaches your mouth, it goes off. That's the whole setup.")}
+                {copy(t('how.lede'))}
               </p>
               <p className="sg-small mt-3">
-                It runs in your desktop browser, so there's nothing to download. You can install it
-                like an app later if you want it one click away.
+                {t('how.small')}
               </p>
 
               {/* The limits, said plainly. Each line is checked against the
                   code: useDetection (hidden tabs need the Minimize window),
                   biteDetector (fingertip distance, three sensitivity levels),
                   Settings (sound, volume, flash), the store (local history). */}
-              <h3 className="sg-h3 mt-8">Before you start</h3>
+              <h3 className="sg-h3 mt-8">{t('how.before')}</h3>
               <ul className="sg-body mt-3 list-disc space-y-2 pl-5 marker:text-[color:var(--sg-ink-2)]">
-                <li>You need a webcam and a laptop or desktop browser. It's made for the hours you spend at a screen.</li>
-                <li>Keep the app open while you work. If you switch to another tab, press Minimize so a small window keeps watching.</li>
-                <li>It reacts to a hand near your mouth, not only to biting, so resting your chin on your fingers can set it off. Sensitivity has three levels.</li>
-                <li>It makes a noise. Pick a quieter sound, turn it down, or use a screen flash instead.</li>
-                <li>{copy("Your history is stored in this browser, so it doesn't follow you to another computer.")}</li>
+                <li>{t('how.b1')}</li>
+                <li>{t('how.b2')}</li>
+                <li>{t('how.b3')}</li>
+                <li>{t('how.b4')}</li>
+                <li>{copy(t('how.b5'))}</li>
               </ul>
             </div>
           </div>
@@ -423,29 +359,25 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
           <div className="sg-container grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <h2 id="science-heading" className="sg-h2 max-w-[18ch]">
-                Why an alarm works when <span className="sg-mark">willpower</span> doesn't
+                {t.rich('science.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}
               </h2>
 
               <div className="sg-measure mt-8 space-y-5">
                 <p className="sg-body">
-                  Nail biting runs on autopilot: by the time you notice, you're already doing it. That is
-                  why bitter polish and willpower rarely stick. The method with the strongest evidence,
-                  habit reversal training, starts with one hard step: noticing every time.
+                  {t('science.p1')}
                 </p>
                 <p className="sg-body">
-                  In a clinic, a therapist would tap your shoulder. The alarm is that tap, available all
-                  day while you work. What you do next (press your palms flat, clench a fist) is the
-                  other half of the method, and it's yours.
+                  {t('science.p2')}
                 </p>
                 <p className="sg-body">
-                  An app is not a clinician. For severe or distressing biting, the{' '}
-                  <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="sg-link">TLC Foundation for Body-Focused Repetitive Behaviors</a>{' '}
-                  lists BFRB-informed therapists.
+                  {t.rich('science.p3', undefined, {
+                    link: chunks => <a href="https://www.bfrb.org/" target="_blank" rel="noopener noreferrer" className="sg-link">{chunks}</a>,
+                  })}
                 </p>
               </div>
 
-              <a href="/blog/habit-reversal-training-guide" className="sg-link mt-8 inline-flex min-h-11 items-center gap-2">
-                Read the habit reversal training guide
+              <a href="/blog/habit-reversal-training-guide" {...english} className="sg-link mt-8 inline-flex min-h-11 items-center gap-2">
+                {t('science.guideLink')}
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
@@ -455,25 +387,18 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 <p className="sg-body">
                   {/* The figures in ink, the device the privacy plate uses for
                       "0 bytes": the proof was the quietest text on the page. */}
-                  Somewhere <strong className="font-extrabold text-[color:var(--sg-ink)]">between 20 and 30% of adults</strong> bite their nails chronically (Halteh, Scher
-                  &amp; Lipner, 2017).
+                  {t.rich('science.stat1', undefined, { strong: chunks => <strong className="font-extrabold text-[color:var(--sg-ink)]">{chunks}</strong> })}
                 </p>
                 <p className="sg-body mt-4">
-                  In the landmark habit reversal trial, participants' own daily counts fell by{' '}
-                  <strong className="font-extrabold text-[color:var(--sg-ink)]">about 99% over five months</strong> (Azrin, Nunn &amp; Frantz, 1980). That trial had a therapist
-                  teaching the method and people practising it every day. The app does the noticing
-                  part; the rest is still yours.
+                  {t.rich('science.stat2', undefined, { strong: chunks => <strong className="font-extrabold text-[color:var(--sg-ink)]">{chunks}</strong> })}
                 </p>
               </div>
 
               <ul className="mt-6 space-y-1">
-                {[
-                  ['https://pubmed.ncbi.nlm.nih.gov/7436976/', 'Azrin, Nunn & Frantz (1980), Behaviour Research and Therapy'],
-                  ['https://pubmed.ncbi.nlm.nih.gov/21549664/', 'Bate et al. (2011), Clinical Psychology Review meta-analysis'],
-                ].map(([href, label]) => (
+                {REFERENCES.map(({ href, key }) => (
                   <li key={href}>
                     <a href={href} target="_blank" rel="noopener noreferrer" className="sg-note inline-block py-3 text-[color:var(--sg-ink)] underline decoration-[color:var(--sg-rule)] decoration-2 underline-offset-4 hover:decoration-[color:var(--sg-accent)]">
-                      {label}{' '}<span className="whitespace-nowrap">(PubMed)</span>
+                      {t(key)}{' '}<span className="whitespace-nowrap">{t('science.pubmed')}</span>
                     </a>
                   </li>
                 ))}
@@ -489,17 +414,17 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
               <Rings className="-bottom-80 -right-40 h-[42rem] w-[42rem]" />
               <div className="flex flex-col items-start gap-6 p-6 sm:p-10 lg:p-14">
                 <span className="sg-sign sg-sign-e"><ShieldCheck size={28} aria-hidden="true" /></span>
-                <h2 id="privacy-heading" className="sg-h2 max-w-[20ch]">Your camera never leaves <span className="sg-hl">your device.</span></h2>
+                <h2 id="privacy-heading" className="sg-h2 max-w-[20ch]">{t.rich('privacy.heading', undefined, { hl: chunks => <span className="sg-hl">{chunks}</span> })}</h2>
               </div>
               <div className="grid gap-6 border-t border-[color:var(--sg-rule)] p-6 sm:p-10 lg:grid-cols-2 lg:gap-10 lg:px-14">
                 <p className="sg-body text-[color:var(--sg-ink)]">
-                  {copy('A camera pointed at you all day is a lot to trust an app with, so detection runs entirely in your browser, on your own computer. No camera data is sent while it runs. Signing in and paying use the network.')}
+                  {copy(t('privacy.p1'))}
                 </p>
                 {/* "The list stays empty" was not true on a first run: starting
                     detection downloads the models. Say what a visitor will see. */}
                 <p className="sg-body text-[color:var(--sg-ink)]">
-                  <strong className="font-bold">Check it yourself:</strong>{' '}
-                  {copy("open your browser's developer tools, go to the Network tab and start detection. Once the detection models have downloaded, nothing carrying camera data is sent while it watches. It keeps working with the Wi-Fi off, and your history lives in this browser: clear the site's data and it's gone.")}
+                  <strong className="font-bold">{t('privacy.p2.lead')}</strong>{' '}
+                  {copy(t('privacy.p2.rest'))}
                 </p>
               </div>
             </div>
@@ -512,23 +437,21 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             plain: no sign, no plate, a narrow measure. */}
         <section aria-labelledby="maker-heading" className="pb-16 lg:pb-20">
           <div className="sg-container grid gap-3 lg:grid-cols-12 lg:gap-10">
-            <h2 id="maker-heading" className="sg-h3 lg:col-span-4">Why this exists</h2>
+            <h2 id="maker-heading" className="sg-h3 lg:col-span-4">{t('maker.heading')}</h2>
             <div className="max-w-[60ch] lg:col-span-7 lg:col-start-5">
               {/* Lede size: the most human proof on the page was set like a
                   caption beside a small label. */}
               <p className="sg-lede text-[color:var(--sg-ink)]">
-                I bit my nails for over twenty years. Bitter polish, reminder bands, willpower: none of
-                it lasted, because I never noticed I was doing it until the damage was done. I write
-                software and I had a webcam, so I built the thing that notices for me.
+                {t('maker.p')}
               </p>
-              <p className="mt-4 font-bold">Igor Gazivoda</p>
-              <a href="/about" className="sg-link mt-1 inline-flex min-h-11 items-center">The longer story</a>
+              <p className="mt-4 font-bold">{t('maker.name')}</p>
+              <a href={paths.about} className="sg-link mt-1 inline-flex min-h-11 items-center">{t('maker.more')}</a>
             </div>
           </div>
         </section>
 
-        {/* Real quotes only; renders nothing while the data file is empty or social_proof is off. */}
-        <Testimonials />
+        {/* Real quotes only (written in English, so not shown next to a translation); renders nothing while the data file is empty or social_proof is off. */}
+        {locale === 'en' && <Testimonials />}
 
         {/* ── PRICING (shared with /pricing: see PricingSection.tsx) ────── */}
         <div className="bg-[color:var(--sg-plate)] py-20 lg:py-28">
@@ -538,7 +461,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         </div>
 
         {/* ── FAQ ───────────────────────────────────────────────────────── */}
-        {/* The same six questions and answers, byte-identical to the FAQPage
+        {/* The same eleven questions and answers, byte-identical to the FAQPage
             JSON-LD in index.html: Google requires the structured data to have
             a visible counterpart, and server.js parses that same block for its
             crawler prose. Any edit here is an edit there. <details> keeps this
@@ -548,17 +471,17 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             {/* Heading across the row, list on the same column line (5) as How
                 to start, Why this exists and the contact form: in a 4-column
                 slot the heading broke into four lines. */}
-            <h2 id="faq-heading" className="sg-h2 max-w-[22ch] lg:col-span-12">Questions people ask about nail biting</h2>
+            <h2 id="faq-heading" className="sg-h2 max-w-[22ch] lg:col-span-12">{t('faq.heading')}</h2>
             <div className="lg:col-span-8 lg:col-start-5">
-              {FAQS.map(({ q, a }, i) => (
+              {FAQ_NUMBERS.map((n, i) => (
                 // The first answer is the definition ("what is Stop Biting"), so it
                 // starts open: a reader and a crawler both meet it without a click.
-                <details key={q} open={i === 0} className="group mb-3 rounded-3xl bg-[color:var(--sg-plate)] px-6 open:bg-[color:var(--sg-plate)]">
+                <details key={n} open={i === 0} className="group mb-3 rounded-3xl bg-[color:var(--sg-plate)] px-6 open:bg-[color:var(--sg-plate)]">
                   <summary className="flex min-h-11 [text-wrap:balance] cursor-pointer list-none items-center justify-between gap-6 py-5 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
-                    {q}
+                    {t(`faq.${n}.q`)}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
                   </summary>
-                  <p className="sg-body sg-measure pb-6">{copy(a)}</p>
+                  <p className="sg-body sg-measure pb-6">{faqAnswer(n)}</p>
                 </details>
               ))}
             </div>
@@ -572,19 +495,20 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         <section aria-labelledby="featured-guides-heading" className="pb-20 lg:pb-24">
           <div className="sg-container">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 id="featured-guides-heading" className="sg-h2">Featured guides</h2>
-              <a href="/blog" className="sg-link inline-flex min-h-11 items-center gap-2">
-                All {BLOG_INDEX.length} articles <ArrowRight size={16} aria-hidden="true" />
+              <h2 id="featured-guides-heading" className="sg-h2">{t('guides.heading')}</h2>
+              <a href="/blog" {...english} className="sg-link inline-flex min-h-11 items-center gap-2">
+                {t('guides.all', { count: BLOG_INDEX.length })} <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
+            {locale !== 'en' && <p className="sg-small mt-3">{t('guides.note')}</p>}
             <ol className="mt-8 grid gap-6 md:grid-cols-3">
-              {START_HERE.map(({ href, note }) => {
-                const row = READING_LIST.find(r => r.href === href);
+              {START_HERE.map(({ href, key }) => {
+                const guide = FEATURED_GUIDES.find(g => g.href === href);
                 return (
                   <li key={href}>
-                    <a href={href} className="group block border-t-2 border-[color:var(--sg-ink)] pt-4">
-                      <span className="sg-h3 block group-hover:text-[color:var(--sg-accent)] group-hover:underline group-hover:underline-offset-4">{row?.title}</span>
-                      <span className="sg-small mt-2 block">{note}</span>
+                    <a href={href} {...english} className="group block border-t-2 border-[color:var(--sg-ink)] pt-4">
+                      <span className="sg-h3 block group-hover:text-[color:var(--sg-accent)] group-hover:underline group-hover:underline-offset-4">{guide && t(guide.key)}</span>
+                      <span className="sg-small mt-2 block">{t(key)}</span>
                     </a>
                   </li>
                 );
@@ -594,10 +518,10 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             {/* Desktop only: on a phone these rows repeated what "All N articles"
                 above already offers, after the three featured guides. */}
             <ul className="mt-10 hidden border-t border-[color:var(--sg-rule)] md:grid md:grid-cols-2 md:gap-x-10">
-              {READING_LIST.filter(r => !START_HERE.some(p => p.href === r.href)).map(({ href, title }) => (
+              {FEATURED_GUIDES.filter(g => !START_HERE.some(p => p.href === g.href)).map(({ href, key }) => (
                 <li key={href} className="border-b border-[color:var(--sg-rule)]">
-                  <a href={href} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-accent)] hover:underline hover:underline-offset-4">
-                    {title}
+                  <a href={href} {...english} className="flex min-h-12 items-center py-2.5 text-[0.9375rem] font-semibold transition-colors hover:text-[color:var(--sg-accent)] hover:underline hover:underline-offset-4">
+                    {t(key)}
                   </a>
                 </li>
               ))}
@@ -612,21 +536,21 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
         {/* ── FINAL CTA: last, so the page ends on the offer rather than on
             back matter (guides and the contact form used to follow it) ─────────────────────────────────────────────────── */}
         {/* The one full green field on the page: a mandatory sign, blown up. */}
-        <section aria-label="Call to action" className="sg-band pb-10 lg:pb-14">
+        <section aria-label={c('cta.aria')} className="sg-band pb-10 lg:pb-14">
           <div className="sg-container">
           <div className="sg-hero sg-dark bite relative flex flex-col items-start gap-8 overflow-hidden p-8 py-14 sm:p-12 lg:flex-row lg:items-center lg:justify-between lg:p-16">
             <Rings className="-left-64 -top-64 h-[40rem] w-[40rem]" />
             <div className="relative">
               {/* Display size, like the hero's h1: the page's one full-bleed field
                   is its closing peak, not one more section heading. */}
-              <h2 className="sg-h1 max-w-[12ch]">Catch your next <span className="sg-hl">bite.</span></h2>
+              <h2 className="sg-h1 max-w-[12ch]">{c.rich('cta.heading', undefined, { hl: chunks => <span className="sg-hl">{chunks}</span> })}</h2>
               <p className="mt-5 max-w-[48ch] text-lg text-white/80">
-                Leave it running through your next workday, then open History and see when you bite.
+                {c('cta.body')}
               </p>
             </div>
             <div className="relative flex flex-col items-start gap-3">
               <TrialButton tone="light" source="landing_final" />
-              <p className="sg-note whitespace-nowrap">{OFFER_LINE}</p>
+              <p className="sg-note whitespace-nowrap">{c('offer.line')}</p>
             </div>
           </div>
           </div>
@@ -634,7 +558,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
 
       </main>
 
-      <SiteFooter cta={false} />
+      <SiteFooter cta={false} page="home" />
     </div>
   );
 }

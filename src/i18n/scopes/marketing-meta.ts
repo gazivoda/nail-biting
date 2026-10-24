@@ -6,6 +6,10 @@
 import { createScope } from '../scope.ts';
 
 export const messages = {
+  // ── The home page ──
+  'home.title': 'Nail Biting App: Stop Biting with AI | Stop Biting',
+  'home.description': 'Stop nail biting with your webcam: on-device AI sounds an alarm the moment a finger reaches your mouth. No camera data is sent while it runs. {trialHyphen} free trial.',
+
   // ── /pricing ──
   'pricing.title': 'Pricing: $2.99/month or $29/year | Stop Biting',
   'pricing.description': 'Stop Biting pricing: {trialHyphen} free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.',
