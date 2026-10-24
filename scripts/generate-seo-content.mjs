@@ -167,8 +167,11 @@ try {
 
 // The ledger rows of the flagged pages travel with their copy, not in seo-content.json.
 const isFlaggedPath = path => path in gatedFlags;
+// WS12b: and the rows of the localized pages (/es, /de/pricing, ...) travel in dist/i18n/<locale>.json
+// (scripts/generate-locale-pages.mjs), so seo-content.json stays what it was.
+const isLocalizedPath = path => /^\/(?:es|de|pt-br)(?:\/|$)/.test(path);
 const flaggedUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => isFlaggedPath(path)));
-pageUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => !isFlaggedPath(path)));
+pageUpdates = Object.fromEntries(Object.entries(pageUpdates).filter(([path]) => !isFlaggedPath(path) && !isLocalizedPath(path)));
 
 if (!existsSync(DIST)) mkdirSync(DIST, { recursive: true });
 writeFileSync(

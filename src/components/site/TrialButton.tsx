@@ -31,7 +31,7 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
       onClick={() => track('trial_click', source)}
       className={className}
     >
-      {t('trial.start')}
+      {size === 'sm' ? t('trial.startShort') : t('trial.start')}
       <ArrowRight size={size === 'sm' ? 15 : 18} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
     </a>
   );

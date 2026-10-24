@@ -25,6 +25,7 @@ export const messages = {
 
   // ── Trial button ──
   'trial.start': 'Start free trial',
+  'trial.startShort': 'Start free trial',   // the small button in the header: a language that runs long says it shorter
   'trial.send': 'Send the link to my computer',
   'trial.email': 'Email me the link for my computer',
   'trial.mailSubject': 'Stop Biting, for my computer',

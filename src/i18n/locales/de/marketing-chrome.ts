@@ -16,6 +16,7 @@ export const messages: Record<keyof typeof en, string> = {
   'bc.home': 'Startseite',
 
   'trial.start': 'Kostenlose Testphase starten',
+  'trial.startShort': 'Gratis testen',
   'trial.send': 'Link an meinen Computer senden',
   'trial.email': 'Link für meinen Computer per E-Mail schicken',
   'trial.mailSubject': 'Stop Biting, für meinen Computer',
