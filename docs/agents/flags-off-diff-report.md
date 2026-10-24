@@ -336,21 +336,73 @@ node scripts/flags-off-diff/dom-diff.mjs <out2> A B 4214
 node scripts/flags-off-diff/weight.mjs <out2> A=<A>/dist B=<B>/dist
 ```
 
-## 10. Changes made after this comparison (WS13 accessibility fixes, `b6b16f9..HEAD`)
+## 10. Re-check after the accessibility fixes, the WS12a merge and the revert of `2d5491c`
 
-The comparison above was run on `b6b16f9`. The accessibility pass (`docs/agents/accessibility-report.md`) then made small fixes
-in 21 files under `src/`. Almost all of them are in code that only runs with a flag on (calibration, urge timer, insights
-charts, sharing card, photo diary, schedule and pause controls, phone view, sign-in page). **Four changes are visible with
-every flag off**, all contrast or reflow fixes to screens that already existed. None was in the DOM comparison, so they are
-the known, deliberate differences from production in addition to sections 3 to 7:
+Sections 1 to 9 compared `b6b16f9` with production. Three things changed after that: the WS13 accessibility pass touched 21 files under
+`src/`; WS12a (localization, flags off) and the SEO session's commits were merged into this branch; and the two accessibility fixes that were
+visible with every flag off (the Bite reasons placeholder classes in `Settings.tsx` and the colour of the "Detected!" label in `DetectionWave.tsx`,
+commit `2d5491c`) were **reverted** (`caa871f`) because the site has to stay identical with every flag off. They are kept as recommendations in
+`accessibility-report.md` ("Recommended, owner decision"). The two reflow fixes (`Log.tsx`, `RecentList.tsx`) stay: the first only changes the class
+string while some alarms are marked "Not a bite" (needs `false_positive_controls`), the second is in the phone view (needs `phone_companion`); every
+other changed file renders only with a flag on.
 
-| File | Change with all flags off | Why | How to take it out |
+### How the flags-off DOM was re-verified (same method as section 6)
+
+| | |
+|---|---|
+| Baseline **S** | `46a484c` = `origin/main`, what is live, a clean checkout, `npm run build:web` |
+| Under test **H** | this branch after the merge, the revert and the German accessibility script (`218a67a`), a clean checkout, `npm run build:web` (not the shared worktree's `dist/`) |
+| Server | the real `server.js` of each checkout, `FEATURE_FLAGS` empty, scratch database with one signed-in trial user (fixed dates) |
+| Browser | headless Chrome 155 with the fake camera, ports 3224 and 4224 |
+| Captures | 25 per build: 11 signed-out pages (home, how-it-works, pricing, about, blog, a post, a compare page, a solutions page, privacy, a calculator at 1280, home at 390) and signed-in Watch, History and Settings at 1280 and 390 px, light and dark, plus Watch with detection running and stopped |
+| Compared | body HTML, title, console errors, head, network requests, sideways scroll, and every pixel (Chrome decodes both PNGs and counts the differing pixels) |
+| Commands | `node scripts/flags-off-diff/dom-all.mjs 3224 4224 <out> S=<S> H=<H>`, then `dom-diff.mjs <out> S H 4224`, then `weight.mjs` (section 9) |
+
+### Result
+
+- **23 of 25 captures are identical to the eye**: body HTML, title, console errors and **every pixel**; 16 of 25 are also identical in head and
+  requests. No capture scrolls sideways. The head differs in the known ways only: WS6's home-screen tags and `modulepreload` links of lazy chunks.
+- The other 9 differ **only in the files the page requests** (extra lazy chunks, listed below): same body, same pixels.
+- **2 captures differ in pixels: the 390 px Watch tab, light and dark.** 236 of 329,160 pixels (0.07 %), all inside one 157 x 13 px band that holds
+  "Free trial: 3 days left. Choose a plan"; the zoomed difference is sub-pixel anti-aliasing of four glyphs, the text and the layout are the same.
+  Cause found and verified in the code: `Dashboard.tsx` used to render `Free trial: {trialLeftText}.` as three React text nodes and now renders one
+  string from the catalog (`t('dashboard.trial', { text })`); `innerHTML` is identical, but Chrome shapes one text run slightly differently from
+  three. It is deterministic (H against a second capture of H: 25 of 25 identical in every pixel), so it is not noise. At 1280 px the same line is
+  pixel-identical. Not a visible difference to a person. The only way to remove it is to render the line as three nodes again, which would undo
+  WS12a's translation of that sentence; not done.
+- **Nothing else is different** with the flags off: no new console error, no new route, no changed text.
+
+### What is fetched with flags off, now (it grew with WS12a)
+
+Compared with production, from `weight.mjs` (own-origin JS and CSS the browser requests, gzip):
+
+| Page | Live (S) | This branch (H) | Change |
 |---|---|---|---|
-| `src/pages/Settings.tsx` | two class names on the "Bite reasons" emoji and label fields: `dark:placeholder:text-stone-600` becomes `dark:placeholder:text-stone-400` | the dark placeholder measured 2.33:1 (WCAG AA wants 4.5:1) | revert commit `2d5491c` |
-| `src/components/DetectionWave.tsx` | in light mode the 12 px "Detected!" label is a darker red (`oklch(50% .18 25)` instead of `62%`) | 3.96:1 on the white card, needs 4.5:1 | same commit `2d5491c` |
-| `src/pages/Log.tsx` | the History count line may wrap and shrink only when some alarms are marked "Not a bite" (needs `false_positive_controls`); with nothing marked the class string is unchanged | at 320 px "Clear all" was pushed off the screen | commit `f32b80c` |
-| `src/phone/RecentList.tsx` | phone view only (`phone_companion`): rows wrap | scrolled the page sideways at 320 px | commit `0a5c2dc` |
+| Landing and every marketing page | 3 files, 182,573 B | 3 files, 191,329 B | **+8,756 B** (the entry bundle alone: +7,942 B gz, from i18n core, flags, WS6, WS7a, WS11b) |
+| Signed-in Watch tab | 13 files, 252,766 B | 23 files, 277,628 B | **+10 files, +24,862 B** |
+| Signed-in History | 4 files, 83,643 B | 4 files, 85,828 B | +2,185 B |
+| Signed-in Settings | 3 files, 10,899 B | 6 files, 14,609 B | +3 files, +3,710 B |
 
-No behaviour, request, route, persisted value or copy changed. If "nothing visible with flags off" must hold literally,
-revert `2d5491c` (the first two rows); everything else is flag-gated. The DOM comparison in section 6 was not re-run after
-these commits; the privacy audit's `flagsoff` mode and the full test suite were (`docs/agents/privacy-audit-report.md`).
+Before WS12a (section 7) the figures were +3,940 B on the landing page and +11.1 kB on the Watch tab: WS12a roughly doubles them. The Watch tab
+now also requests `appTicker`, `billing`, `coaching`, `coachingCard`, `format`, `pauseMachine`, `scheduleStore`, `silent` and `watchStore`
+(chunks that a static import now pulls in, although no flag is on), Settings `planLabel`, `planLength` and `reminders`. No visible effect, but it
+is bytes a flags-off visitor pays; the fix, if it matters, is dynamic imports behind the flags (finding F2).
+
+### HTTP, repeated on the merged tree
+
+The same 91 requests (pages, API paths, closed gated URLs, sitemap, llms files, robots, manifest, `sw.js`, social cards) against the real server of S
+and of H, `FEATURE_FLAGS` empty, `http-snapshot.mjs` and `http-diff.mjs` as in section 5, ports 3224:
+
+- **66 of 91 identical** in status, every header and the body (the same count as `b6b16f9` against `ffbf29a`), and none is unstable between two fetches.
+- **25 differ, and they are the same 25 as before**: 19 HTML pages (every marketing and legal page), `/sw.js`, the entry bundle `assets/index.js`, two
+  closed OG cards (`/og/features-phone-companion.png`, `/og/solutions-cuticle-biting.png`: still the 404 page, now with `Vary: Accept-Encoding`, finding F4),
+  and two new icon files (`apple-touch-icon-152x152.png`, `shortcut-bite-96x96.png`, served with 200 and referenced by nothing while
+  `phone_companion` is off).
+- **The 19 HTML pages differ in exactly the same 6 lines**, checked programmatically against `/`: WS6's home-screen tags (the three `apple-touch-icon`
+  sizes replacing one, and their comment). Nothing else in any page's head or body.
+- All gated URLs (`/compare/hands-off`, `/compare/habitaware-keen`, the five `/features/*` pages, `/solutions/cuticle-biting`, `/share/<id>`,
+  `/api/events/sync` and the other flagged routes) answer exactly as production does with every flag off.
+
+Not repeated for the merged tree: the file-by-file `dist/` diff (section 3). WS12a's notes report the flags-off app as byte-identical to `main`,
+the DOM and HTTP checks above cover what a visitor and a crawler get, the privacy audit's `flagsoff` mode runs on the merged build with all flags off
+(`privacy-audit-report.md`), and the Docker reproduction answers 23 key routes with all 27 flags off.
