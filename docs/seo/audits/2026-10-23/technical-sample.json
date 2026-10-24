@@ -1,0 +1,310 @@
+[
+  {
+    "key": "home",
+    "url": "https://stopbiting.today/",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1529,
+    "jsonldBlocks": 7,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "blog",
+    "url": "https://stopbiting.today/blog",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 6854,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "guide",
+    "url": "https://stopbiting.today/blog/how-to-stop-nail-biting",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 2111,
+    "jsonldBlocks": 7,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "newpost",
+    "url": "https://stopbiting.today/blog/nail-biting-self-esteem",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1237,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "compare",
+    "url": "https://stopbiting.today/compare/ai-detection-apps",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1652,
+    "jsonldBlocks": 7,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "solution",
+    "url": "https://stopbiting.today/solutions/for-desk-workers",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1006,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "tool",
+    "url": "https://stopbiting.today/tools/nail-biting-tracker-printable",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 207,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "pricing",
+    "url": "https://stopbiting.today/pricing",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 305,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "about",
+    "url": "https://stopbiting.today/about",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 439,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "how",
+    "url": "https://stopbiting.today/how-it-works",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 396,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "cost",
+    "url": "https://stopbiting.today/tools/nail-biting-cost-calculator",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 127,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "growth",
+    "url": "https://stopbiting.today/tools/nail-growth-timeline-calculator",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 195,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "adhd",
+    "url": "https://stopbiting.today/blog/nail-biting-adhd",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1382,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "ocd",
+    "url": "https://stopbiting.today/blog/nail-biting-ocd-connection",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1041,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "nac",
+    "url": "https://stopbiting.today/blog/nac-nail-biting",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1303,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "children",
+    "url": "https://stopbiting.today/blog/nail-biting-in-children",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1160,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "polish",
+    "url": "https://stopbiting.today/blog/bitter-nail-polish-review",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1025,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "stats",
+    "url": "https://stopbiting.today/blog/nail-biting-statistics",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1957,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "urge",
+    "url": "https://stopbiting.today/blog/nail-biting-urge-surfing",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1012,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "sanitizer",
+    "url": "https://stopbiting.today/blog/nail-biting-hand-sanitizer",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1286,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "editorial",
+    "url": "https://stopbiting.today/editorial-policy",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 772,
+    "jsonldBlocks": 5,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  },
+  {
+    "key": "comparehabit",
+    "url": "https://stopbiting.today/compare/stop-biting-vs-habitaware",
+    "status": "200",
+    "canonicalCount": 1,
+    "h1": 1,
+    "articleWords": 1263,
+    "jsonldBlocks": 6,
+    "jsonldErrors": [],
+    "robotsNoindex": false,
+    "lang": [
+      "en"
+    ]
+  }
+]
