@@ -563,7 +563,7 @@ lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-di
 | dev-only code in the bundle (`seedPreviewData`, `previewKind`, `dev-override`, `readDevOverrides`, `__sbProbe` over `dist/assets`) | 0 files |
 | secret scan of `git diff ffbf29a..HEAD` (added lines: API keys, private keys, JWTs, provider tokens) | 0 hits. The base is ffbf29a, not `origin/main`, because `origin/main` moved (see below) and ffbf29a was already scanned for push #1 |
 | the owner's uncommitted Paddle patch (`PADDLE_PRICE_IDS`) | `git apply --check` clean, also on the merge candidate below |
-| Dockerfile reproduced by hand (`bash scripts/qa/docker-repro.sh`; docker was not used) | stage 1 builds from only the files the Dockerfile copies; stage 3 boots `server.js` from only the files it copies; 24 key routes answer as expected; all 27 flags off; server log clean. Production dependencies are not reproduced (`node_modules` is the repo's), see (f) |
+| Dockerfile reproduced by hand (`bash scripts/qa/docker-repro.sh`; docker was not used) | stage 1 builds from only the files the Dockerfile copies; stage 3 boots `server.js` from only the files it copies; 23 key routes answer as expected; all 27 flags off; server log clean. Production dependencies are not reproduced (`node_modules` is the repo's), see (f) |
 | **Merge candidate** = this branch + `origin/main` (46a484c), in a scratch worktree | merges without conflict; every gate above passes (154 files / 2,918 tests); Docker reproduction passes |
 
 **`origin/main` has moved.** It is 46a484c, not ffbf29a: another session pushed two SEO commits (a2f94c5, 46a484c) on top of push
