@@ -51,3 +51,4 @@ VITE_PADDLE_PRICE_ID_YEARLY=<Paddle yearly price ID>
 - `DATA_DIR` env var controls the data directory path
 - `APP_URL` must match exactly what is registered in Google Cloud Console (including `https://`)
 - Paddle env vars must be set as build args (VITE_ prefix) and as runtime env vars (PADDLE_API_KEY, PADDLE_WEBHOOK_SECRET, PADDLE_ENV)
+- `PADDLE_PRICE_IDS` (runtime, comma separated): this app's Paddle price ids, including archived ones existing subscribers may still use. REQUIRED because the Paddle account is shared with another product; until it is set the webhook does not filter events by product.

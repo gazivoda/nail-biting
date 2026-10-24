@@ -47,6 +47,22 @@ const PADDLE_API = (process.env.VITE_PADDLE_ENV || process.env.PADDLE_ENV) === '
   ? 'https://api.paddle.com'
   : 'https://sandbox-api.paddle.com';
 
+// This Paddle account is shared with other products. Paddle sends EVERY subscription and transaction
+// event on the account to every webhook destination, so events for other products' prices must be ignored
+// or they would change this app's users. PADDLE_PRICE_IDS = this app's price ids (comma or space separated,
+// include archived prices that existing subscribers may still be on). Until it is set nothing is filtered
+// (the previous behaviour) and a warning is logged at startup.
+const PADDLE_PRICE_IDS = (process.env.PADDLE_PRICE_IDS || '').split(/[\s,]+/).filter(Boolean);
+if (PADDLE_PRICE_IDS.length === 0) {
+  console.warn('PADDLE_PRICE_IDS is not set: Paddle events for other products on this account are NOT filtered');
+}
+function isOurPaddleData(data) {
+  if (PADDLE_PRICE_IDS.length === 0) return true;
+  const items = Array.isArray(data?.items) ? data.items : [];
+  if (items.length === 0) return true; // no price information to judge by
+  return items.some((i) => PADDLE_PRICE_IDS.includes(i?.price?.id) || PADDLE_PRICE_IDS.includes(i?.price_id));
+}
+
 // When running inside Electron, redirect auth results to the custom protocol.
 const ELECTRON_PROTOCOL = process.env.ELECTRON_PROTOCOL || null;
 
@@ -502,6 +518,11 @@ app.post('/api/paddle/webhook', express.raw({ type: 'application/json' }), async
 
   console.log(`Paddle webhook: ${eventType}`);
 
+  if (!isOurPaddleData(data)) {
+    console.log(`Paddle webhook: ignored ${eventType} (price belongs to another product)`);
+    return res.json({ received: true }); // 200 so Paddle does not retry events that are not ours
+  }
+
   try {
     if (eventType === 'subscription.created' || eventType === 'subscription.activated' || eventType === 'subscription.updated') {
       // Find user by customData.userId or by customer email
@@ -648,6 +669,11 @@ app.post('/api/paddle/verify-subscription', authMiddleware, async (req, res) => 
     // Accept active or trialing status (Paddle may use either)
     if (data.status !== 'active' && data.status !== 'trialing') {
       return res.status(402).json({ error: `Subscription status is '${data.status}', not active` });
+    }
+
+    // A subscription for another product on the shared Paddle account must not unlock this app.
+    if (!isOurPaddleData(data)) {
+      return res.status(409).json({ error: 'Subscription is not a plan of this app' });
     }
 
     const user = getUser(req.userId);
