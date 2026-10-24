@@ -120,7 +120,7 @@ and the `<noscript>` navigation labels them as English (`lang="en"`).
 | `seo:sync` once, `seo:check`, `og:check` | `src/data/pageUpdates.json` gained 12 localized rows (dated 2026-10-24); localized pages are kept out of `seo-content.json` and the claim corpus. `seo:check` and `og:check` pass; `og:generate` changes nothing (no localized cards). |
 | Switcher | Header and footer links map `/pricing` to `/de/pricing`, not the home page; a click stores the pick and `<html lang>` follows; English pages do not redirect when a pick is stored. |
 | Bundle | English home first load 186.84 to 191.93 KB gzip (+5.08 KB, +2.7 percent); everything an English visitor could download +5.32 KB gzip. Page catalogs `locale-site-*` 10.2 to 10.9 KB gzip each, fetched only on a localized page; none of the `locale-*` chunks (nor any chunk only they import) is in the service worker precache: `bundle-size.mjs` checks both, `scripts/i18n/precache.test.mjs` pins the config. |
-| Suite | 185 files / 3807 tests (2 skipped) against 175 / 3561 on `main`; scoped lint 23 errors / 4 warnings, as on `main`. |
+| Suite | 186 files / 3810 tests (2 skipped, as on `main`) against 175 / 3561 on `main`; scoped lint 23 errors / 4 warnings, as on `main`. |
 
 ## NOT verified
 
