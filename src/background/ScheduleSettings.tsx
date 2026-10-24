@@ -5,7 +5,7 @@
 // The browser's notification prompt is shown only when the person turns the reminder ON, after the card has said
 // what it is for (reminders.planTurnOn). A refusal is explained, not worked around, and leaves the reminder off.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type Ref } from 'react';
 import { CalendarClock } from 'lucide-react';
 import { Section, Row, Toggle } from '../pages/settings/ui';
 import {
@@ -29,11 +29,13 @@ const TIME_INPUT =
   'min-h-11 rounded-full border border-stone-300 bg-white px-4 text-sm text-stone-900 dark:border-ink-400 dark:bg-ink-100 dark:text-stone-100';
 
 /** What the card says after the person turned the reminder on: why we ask, or why it stayed off. Nothing when `notice` is null. */
-export function ScheduleNotice({ notice, asking, onAllow, onNotNow }: {
+export function ScheduleNotice({ notice, asking, onAllow, onNotNow, allowRef }: {
   notice: Notice;
   asking: boolean;
   onAllow: () => void;
   onNotNow: () => void;
+  /** The "Allow notifications" button, so the card can move focus to it when the explanation opens (keyboard and screen reader). */
+  allowRef?: Ref<HTMLButtonElement>;
 }) {
   const t = useT();
   return (
@@ -44,7 +46,7 @@ export function ScheduleNotice({ notice, asking, onAllow, onNotNow }: {
             {t('schedule.explain.body')}
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" disabled={asking} onClick={onAllow} className={PRIMARY}>{t('schedule.explain.allow')}</button>
+            <button ref={allowRef} type="button" disabled={asking} onClick={onAllow} className={PRIMARY}>{t('schedule.explain.allow')}</button>
             <button type="button" onClick={onNotNow} className={QUIET}>{t('schedule.explain.notNow')}</button>
           </div>
         </div>
@@ -73,8 +75,15 @@ export function ScheduleSettings() {
   const [schedule, setSchedule] = useState<Schedule>(loadSchedule);
   const [notice, setNotice] = useState<Notice>(null);
   const [asking, setAsking] = useState(false);
+  const allowButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => subscribeSchedule(() => setSchedule(loadSchedule())), []);
+
+  // Turning the switch on only opens the explanation below it; the switch itself stays "off" until the person allows
+  // notifications. So the explanation takes focus (it is the next thing to do, and a screen reader says what it is).
+  useEffect(() => {
+    if (notice === 'explain') allowButton.current?.focus();
+  }, [notice]);
 
   const update = (patch: Partial<Schedule>) => {
     const next = { ...schedule, ...patch };
@@ -86,6 +95,13 @@ export function ScheduleSettings() {
     const plan = planTurnOn(notificationPermission());
     if (plan === 'enable') { setNotice(null); update({ enabled: true }); return; }
     setNotice(plan);
+  };
+
+  // "Not now" removes the buttons: put focus back on the switch that opened them.
+  const notNow = () => {
+    setNotice(null);
+    const label = t('schedule.remind.label');
+    window.setTimeout(() => [...document.querySelectorAll<HTMLElement>('button[role="switch"]')].find((b) => b.getAttribute('aria-label') === label)?.focus(), 0);
   };
 
   const allow = async () => {
@@ -127,7 +143,7 @@ export function ScheduleSettings() {
         />
       </Row>
 
-      <ScheduleNotice notice={notice} asking={asking} onAllow={allow} onNotNow={() => setNotice(null)} />
+      <ScheduleNotice notice={notice} asking={asking} onAllow={allow} onNotNow={notNow} allowRef={allowButton} />
 
       {schedule.enabled && notificationPermission() === 'denied' && (
         <p role="status" className="text-sm text-stone-700 dark:text-stone-300">

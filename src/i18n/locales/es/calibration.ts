@@ -28,6 +28,11 @@ export const messages: Record<keyof typeof en, string> = {
   'between.lead': 'Aparta la mano.',
   'between.next': 'El paso 2 empieza en {left, plural, one {# segundo} other {# segundos}}: acercarás la punta de un dedo a los labios.',
 
+  'announce.rest': 'Paso 1 de 2. Apoya la barbilla en la mano como lo harías normalmente. Mantén la posición.',
+  'announce.between': 'Aparta la mano. El paso 2 empieza en unos segundos.',
+  'announce.real': 'Paso 2 de 2. Acerca la punta de un dedo a los labios. Mantén la posición.',
+  'announce.done': 'Listo. Puedes guardar el resultado o intentarlo de nuevo.',
+  'announce.failed': 'No funcionó. Puedes intentarlo de nuevo.',
   'result.done': 'Listo.',
   'result.summary': 'La app vio {rest} fotogramas de ti apoyando la barbilla y {real} con la punta de un dedo cerca de los labios. Al guardar se conservan unos pocos números de ellos, en este dispositivo, y la regla del apoyo de barbilla los usará.',
   'result.failed': 'Eso no funcionó.',

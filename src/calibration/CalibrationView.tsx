@@ -19,7 +19,7 @@ import { useAppStore } from '../store/useAppStore';
 import { writeCalibration } from '../falsePositive/poseStore';
 import { CALIBRATION } from '../detection/calibration';
 import { openCamera, startFrames } from './runner';
-import { addFrame, begin, failureMessage, framesSoFar, profileToSave, secondsLeft, START, tick, type CalibrationState } from './steps';
+import { addFrame, begin, failureMessage, framesSoFar, profileToSave, secondsLeft, START, stepAnnouncement, tick, type CalibrationState } from './steps';
 import { closeCalibration } from './state';
 import { t as tNow, useT } from '../i18n/scopes/calibration';
 import { useT as useCommonT } from '../i18n/scopes/common';
@@ -141,6 +141,10 @@ export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dia
   const left = secondsLeft(state, now);
   const profile = profileToSave(state);
   const stepTitle = state.phase === 'rest' ? t('title.rest') : state.phase === 'real' ? t('title.real') : state.phase === 'between' ? t('title.between') : t('title.default');
+  // One short line per step, read out once when the step starts. It lives in a region that is always in the page, and the
+  // ticking "seconds left" and frame count are NOT inside any live region: they used to be, and a screen reader read out
+  // a new number every second for the whole step.
+  const announcement = stepAnnouncement(state);
 
   return (
     <div
@@ -180,6 +184,7 @@ export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dia
         </div>
 
         <div className="space-y-5">
+          <p role="status" aria-live="polite" className="sr-only">{announcement}</p>
           {state.phase === 'intro' && (
             <>
               <p className="text-base leading-relaxed">
@@ -209,7 +214,7 @@ export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dia
           )}
 
           {state.phase === 'rest' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">{t('instruction.rest')}</p>
               <p className="mt-3 text-base">{t('hold', { left: left ?? 0 })}</p>
               <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{t('progress', { count: framesSoFar(state), needed: CALIBRATION.minFrames })}</p>
@@ -217,14 +222,14 @@ export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dia
           )}
 
           {state.phase === 'between' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">{t('between.lead')}</p>
               <p className="mt-3 text-base">{t('between.next', { left: left ?? 0 })}</p>
             </div>
           )}
 
           {state.phase === 'real' && (
-            <div aria-live="polite">
+            <div>
               <p className="text-xl font-semibold">{t('instruction.real')}</p>
               <p className="mt-3 text-base">{t('hold', { left: left ?? 0 })}</p>
               <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{t('progress', { count: framesSoFar(state), needed: CALIBRATION.minFrames })}</p>
@@ -232,7 +237,7 @@ export function CalibrationPanel({ state, now, link, problem, seen, onBegin, dia
           )}
 
           {state.phase === 'result' && (
-            <div aria-live="polite" className="space-y-4">
+            <div className="space-y-4">
               {profile ? (
                 <>
                   <p className="text-xl font-semibold">{t('result.done')}</p>

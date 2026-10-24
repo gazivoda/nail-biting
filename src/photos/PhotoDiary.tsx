@@ -3,7 +3,7 @@
 // browser's local storage, with a before/after slider. See PhotoDiaryView for the
 // screen and photoStore.ts for where the bytes go.
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CapturePanel, type SavedPhoto } from './CapturePanel';
 import { PhotoDiaryView, TAKE_BUTTON_ID } from './PhotoDiaryView';
 import { canDecodePhotos } from './drawBlob';
@@ -22,6 +22,15 @@ export function PhotoDiary() {
   const { photos, persistent, now } = usePhotos();
   const [captureOpen, setCaptureOpen] = useState(false);
   const [status, setStatus] = useState('');
+  // The first photo turns the page from "no photos yet" into "your photos": the Take button that has focus is replaced
+  // when the new list arrives, a moment after the save, and focus would fall to the top of the page. Focus it again then.
+  const refocusWhenPhotosArrive = useRef(false);
+  useEffect(() => {
+    if (refocusWhenPhotosArrive.current && photos !== null && photos.length > 0) {
+      refocusWhenPhotosArrive.current = false;
+      document.getElementById(TAKE_BUTTON_ID)?.focus();
+    }
+  }, [photos]);
 
   const closeCapture = () => {
     setCaptureOpen(false);
@@ -31,6 +40,7 @@ export function PhotoDiary() {
   const saved = ({ persisted }: SavedPhoto) => {
     setCaptureOpen(false);
     setStatus(persisted ? t('status.saved') : t('status.savedTabOnly'));
+    if (!photos || photos.length === 0) refocusWhenPhotosArrive.current = true;
     focusTakeButton();
   };
 

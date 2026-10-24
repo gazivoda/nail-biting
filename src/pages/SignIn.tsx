@@ -60,6 +60,12 @@ export function SignInPage() {
   const [formError, setFormError] = useState<SendFailure | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const emailRef = useRef<HTMLInputElement>(null);
+  const sentHeading = useRef<HTMLHeadingElement>(null);
+
+  // The form is replaced by "Check your inbox" when the link has been sent: take focus there, not to the top of the page.
+  useEffect(() => {
+    if (sentTo) sentHeading.current?.focus();
+  }, [sentTo]);
 
   useEffect(() => {
     document.title = t('page.title');
@@ -166,6 +172,7 @@ export function SignInPage() {
                   cooldown={cooldown}
                   sending={sending}
                   error={formErrorText}
+                  headingRef={sentHeading}
                   onResend={() => void sendLink()}
                   onDifferent={() => { setSentTo(null); setFormError(null); window.setTimeout(() => emailRef.current?.focus(), 0); }}
                 />
@@ -209,13 +216,15 @@ export function FinishCard({ confirming, onConfirm }: { confirming: boolean; onC
 }
 
 /** "Check your inbox", with the resend button and its cooldown. */
-export function SentNotice({ email, cooldown, sending, error, onResend, onDifferent }: {
+export function SentNotice({ email, cooldown, sending, error, onResend, onDifferent, headingRef }: {
   email: string; cooldown: number; sending: boolean; error: string | null; onResend: () => void; onDifferent: () => void;
+  /** The heading takes focus when the form is replaced by this notice (the form's button is gone: focus must not fall to the page top). */
+  headingRef?: RefObject<HTMLHeadingElement | null>;
 }) {
   const t = useT();
   return (
     <div role="status" aria-live="polite">
-      <h2 className="sg-h3">{t('sent.title')}</h2>
+      <h2 ref={headingRef} tabIndex={-1} className="sg-h3 outline-none">{t('sent.title')}</h2>
       <p className="sg-small mt-2">
         {t.rich('sent.body', { email }, { b: c => <strong className="break-all text-[color:var(--sg-ink)]">{c}</strong> })}
       </p>

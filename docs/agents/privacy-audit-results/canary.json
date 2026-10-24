@@ -1,0 +1,251 @@
+{
+  "mode": "canary",
+  "flags": "event_sync,data_backup,insights,photo_diary,urge_timer,hrt_coaching,false_positive_controls",
+  "seconds": 300,
+  "startedAt": "2026-10-24T03:33:48.151Z",
+  "origin": "http://localhost:3213",
+  "signedIn": true,
+  "chrome": "Chrome/155.0.8059.85",
+  "stats": {
+    "records": 130,
+    "requests": 119,
+    "webSocketFrames": 0,
+    "webSocketsOpened": 0,
+    "hookCalls": 11,
+    "localSchemeRequests": 0,
+    "bodiesChecked": 8,
+    "bytesChecked": 20893,
+    "bodiesUnreadable": 0,
+    "eventsRequests": 1,
+    "syncPosts": 0,
+    "syncEvents": 0,
+    "hosts": {
+      "localhost:3213": 116,
+      "www.google-analytics.com": 2,
+      "www.googletagmanager.com": 1,
+      "telemetry.canary.invalid": 0
+    },
+    "byTarget": {
+      "page": 66,
+      "service_worker": 64
+    },
+    "byResourceType": {
+      "Document": 1,
+      "Font": 2,
+      "Script": 22,
+      "Stylesheet": 1,
+      "Image": 7,
+      "Manifest": 1,
+      "Fetch": 80,
+      "Other": 4,
+      "XHR": 1
+    },
+    "eventKeysSeen": [],
+    "topKeysSeen": [],
+    "responseKeysSeen": [],
+    "needlesSearched": 0
+  },
+  "findings": [
+    {
+      "severity": "fail",
+      "code": "media-content-type",
+      "url": "http://localhost:3213/api/canary/blob",
+      "message": "the request body carries media-content-type",
+      "evidence": "Content-Type image/jpeg",
+      "recordId": "h111"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "http://localhost:3213/api/canary/blob",
+      "message": "the request body carries image-bytes",
+      "evidence": "JPEG signature at offset 0 (ffd8ffe000104a464946000101000001)",
+      "recordId": "h111"
+    },
+    {
+      "severity": "fail",
+      "code": "media-blob-sent",
+      "url": "/api/canary/blob",
+      "message": "fetch sent a image/jpeg Blob",
+      "evidence": "fetch /api/canary/blob blob type image/jpeg, 2344 bytes",
+      "recordId": "k112"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "/api/canary/blob",
+      "message": "fetch body starts with a JPEG signature",
+      "evidence": "fetch /api/canary/blob head ffd8ffe000104a46494600010100000100010000ffe201d84943435f50524f46",
+      "recordId": "k112"
+    },
+    {
+      "severity": "fail",
+      "code": "media-key",
+      "url": "http://localhost:3213/api/canary/json",
+      "message": "the request body carries media-key",
+      "evidence": "$.frame: key names image/video/frame data",
+      "recordId": "h114"
+    },
+    {
+      "severity": "fail",
+      "code": "image-base64",
+      "url": "http://localhost:3213/api/canary/json",
+      "message": "the request body carries image-base64",
+      "evidence": "base64 of a JPEG (/9j/...), 3128 chars",
+      "recordId": "h114"
+    },
+    {
+      "severity": "fail",
+      "code": "image-base64",
+      "url": "http://localhost:3213/api/canary/json",
+      "message": "the request body carries image-base64",
+      "evidence": "a base64 run of 3128 chars decodes to JPEG data at offset 0",
+      "recordId": "h114"
+    },
+    {
+      "severity": "fail",
+      "code": "landmark-array",
+      "url": "http://localhost:3213/api/canary/landmarks",
+      "message": "the request body carries landmark-array",
+      "evidence": "$.hand: array of 21 point-like items (hand = 21, face mesh = 468/478)",
+      "recordId": "h116"
+    },
+    {
+      "severity": "fail",
+      "code": "float-array",
+      "url": "http://localhost:3213/api/canary/mesh",
+      "message": "the request body carries float-array",
+      "evidence": "$.v: flat array of 1404 mostly non-integer numbers (a tensor or 21/468 points flattened)",
+      "recordId": "h118"
+    },
+    {
+      "severity": "fail",
+      "code": "float-run",
+      "url": "http://localhost:3213/api/canary/mesh",
+      "message": "the request body carries float-run",
+      "evidence": "a run of 30+ decimal numbers in a row: \"0.28537,0.66807,0.89624,0.76012,0.38484,0.11544,0.19961,0.55995,0.86518,0.83466,...\"",
+      "recordId": "h118"
+    },
+    {
+      "severity": "fail",
+      "code": "media-object-sent",
+      "url": "/api/canary/bitmap",
+      "message": "fetch was handed a ImageBitmap as its body",
+      "evidence": "fetch POST /api/canary/bitmap body=ImageBitmap",
+      "recordId": "k119"
+    },
+    {
+      "severity": "fail",
+      "code": "file-upload",
+      "url": "/api/canary/form",
+      "message": "fetch sent a FormData with file entries",
+      "evidence": "photo:image/jpeg:2344",
+      "recordId": "k121"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "http://localhost:3213/api/canary/form",
+      "message": "the request body carries image-bytes",
+      "evidence": "JPEG signature at offset 137 (ffd8ffe000104a464946000101000001)",
+      "recordId": "h122"
+    },
+    {
+      "severity": "fail",
+      "code": "multipart-media",
+      "url": "http://localhost:3213/api/canary/form",
+      "message": "the request body carries multipart-media",
+      "evidence": "multipart part with Content-Type image/jpeg",
+      "recordId": "h122"
+    },
+    {
+      "severity": "fail",
+      "code": "media-content-type",
+      "url": "http://localhost:3213/api/canary/form",
+      "message": "the request body carries media-content-type",
+      "evidence": "(multipart part) Content-Type image/jpeg",
+      "recordId": "h122"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "http://localhost:3213/api/canary/form",
+      "message": "the request body carries image-bytes",
+      "evidence": "(multipart part) JPEG signature at offset 0 (ffd8ffe000104a464946000101000001)",
+      "recordId": "h122"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "/api/canary/xhr",
+      "message": "xhr body starts with a PNG signature",
+      "evidence": "xhr /api/canary/xhr head 89504e470d0a1a0a0000000d4948445200000040000000300806000000a14b7c",
+      "recordId": "k123"
+    },
+    {
+      "severity": "fail",
+      "code": "image-bytes",
+      "url": "http://localhost:3213/api/canary/xhr",
+      "message": "the request body carries image-bytes",
+      "evidence": "PNG signature at offset 0 (89504e470d0a1a0a0000000d49484452)",
+      "recordId": "h124"
+    },
+    {
+      "severity": "fail",
+      "code": "data-uri",
+      "url": "http://localhost:3213/api/canary/q?i=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgo%3D",
+      "message": "the URL carries data-uri",
+      "evidence": "contains a data: URI (data:image/png;)",
+      "recordId": "h125"
+    },
+    {
+      "severity": "fail",
+      "code": "host-not-allowed",
+      "url": "https://telemetry.canary.invalid/collect",
+      "message": "sendBeacon to a host outside the allowlist (telemetry.canary.invalid)",
+      "evidence": "sendBeacon POST https://telemetry.canary.invalid/collect",
+      "recordId": "k126"
+    },
+    {
+      "severity": "fail",
+      "code": "events-call-while-sync-off",
+      "url": "http://localhost:3213/api/events/sync",
+      "message": "a request to /api/events/sync while sync is off",
+      "evidence": "POST http://localhost:3213/api/events/sync",
+      "recordId": "h128"
+    }
+  ],
+  "canaryExpected": [
+    "image-bytes",
+    "image-base64",
+    "media-key",
+    "landmark-array",
+    "float-array",
+    "media-object-sent",
+    "file-upload",
+    "multipart-media",
+    "host-not-allowed",
+    "data-uri",
+    "events-call-while-sync-off"
+  ],
+  "canaryCaught": [
+    "data-uri",
+    "events-call-while-sync-off",
+    "file-upload",
+    "float-array",
+    "float-run",
+    "host-not-allowed",
+    "image-base64",
+    "image-bytes",
+    "landmark-array",
+    "media-blob-sent",
+    "media-content-type",
+    "media-key",
+    "media-object-sent",
+    "multipart-media"
+  ],
+  "canaryMissed": [],
+  "verdict": "CAUGHT",
+  "exitCode": 0,
+  "violations": 0
+}

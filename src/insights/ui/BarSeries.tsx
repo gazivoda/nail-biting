@@ -3,7 +3,7 @@
 // Plain HTML and CSS (flex columns), no chart library: the labels stay at a fixed, readable size at any width
 // (an SVG that scales to a phone would shrink its text with it), the markup is real in a server-side render so
 // it can be tested, and the bars are drawn in the app's own tokens. The picture is hidden from assistive
-// technology (`aria-hidden`); the figure's name carries the summary sentence, and each bar has a `title` for
+// technology (`aria-hidden`); the image's name carries the summary sentence, and each bar has a `title` for
 // pointer users.
 
 export interface BarDatum {
@@ -28,7 +28,7 @@ export function BarSeries({ data, summary, showValues = false, emptyText }: {
   const gap = data.length > 14 ? 'gap-[3px]' : 'gap-2';
 
   return (
-    <figure role="img" aria-label={summary} className="m-0">
+    <div role="img" aria-label={summary} className="m-0">
       <div className="relative" aria-hidden="true">
         <div className={`flex h-40 items-end ${gap} border-b border-stone-200 dark:border-ink-400`}>
           {data.map(d => (
@@ -60,6 +60,6 @@ export function BarSeries({ data, summary, showValues = false, emptyText }: {
           </span>
         ))}
       </div>
-    </figure>
+    </div>
   );
 }

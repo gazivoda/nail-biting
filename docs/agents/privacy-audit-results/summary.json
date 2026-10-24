@@ -1,0 +1,57 @@
+{
+  "commit": "unknown",
+  "finishedAt": "2026-10-24T03:59:32.073Z",
+  "seconds": 300,
+  "note": "rebuilt from the per-mode files: the original was overwritten by the probe run (fixed in run.mjs, which now writes summary-probe.json for probe runs)",
+  "results": [
+    {
+      "mode": "canary",
+      "verdict": "CAUGHT",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 119,
+      "hosts": {
+        "localhost:3213": 116,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1,
+        "telemetry.canary.invalid": 0
+      }
+    },
+    {
+      "mode": "flagsoff",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 118,
+      "hosts": {
+        "localhost:3213": 115,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    },
+    {
+      "mode": "off",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 130,
+      "hosts": {
+        "localhost:3213": 127,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    },
+    {
+      "mode": "on",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 140,
+      "hosts": {
+        "localhost:3213": 137,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    }
+  ]
+}

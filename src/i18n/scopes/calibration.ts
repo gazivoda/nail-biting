@@ -37,6 +37,13 @@ export const messages = {
   'between.lead': 'Take your hand away.',
   'between.next': 'Step 2 starts in {left, plural, one {# seconds} other {# seconds}}: you will bring a fingertip near your lips.',
 
+  // What a screen reader says once when a step starts (the view keeps it in one live region; no clock, no counts).
+  'announce.rest': 'Step 1 of 2. Rest your chin on your hand as you normally would. Hold it there.',
+  'announce.between': 'Take your hand away. Step 2 starts in a few seconds.',
+  'announce.real': 'Step 2 of 2. Bring a fingertip near your lips. Hold it there.',
+  'announce.done': 'Done. You can save the result or try again.',
+  'announce.failed': 'That did not work. You can try again.',
+
   // The result.
   'result.done': 'Done.',
   'result.summary': 'The app saw {rest} frames of you resting your chin and {real} with a fingertip near your lips. Saving keeps a few numbers from them, on this device, and the chin-rest rule will use them.',

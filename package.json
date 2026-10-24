@@ -17,6 +17,7 @@
     "og:generate": "node scripts/generate-og-images.mjs",
     "og:check": "node scripts/generate-og-images.mjs --check",
     "eval:detection": "node scripts/eval-detection/run.mjs",
+    "privacy:audit": "node scripts/privacy-audit/run.mjs",
     "seo:indexnow": "node scripts/indexnow-ping.mjs",
     "preview": "vite preview",
     "electron:build-main": "vite build --config vite.electron.config.ts && vite build --config vite.electron.preload.config.ts",

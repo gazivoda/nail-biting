@@ -1,0 +1,31 @@
+{
+  "commit": "unknown",
+  "finishedAt": "2026-10-24T03:59:32.073Z",
+  "seconds": 300,
+  "results": [
+    {
+      "mode": "off",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 133,
+      "hosts": {
+        "localhost:3213": 130,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    },
+    {
+      "mode": "on",
+      "verdict": "PASS",
+      "exitCode": 0,
+      "violations": 0,
+      "requests": 142,
+      "hosts": {
+        "localhost:3213": 139,
+        "www.google-analytics.com": 2,
+        "www.googletagmanager.com": 1
+      }
+    }
+  ]
+}

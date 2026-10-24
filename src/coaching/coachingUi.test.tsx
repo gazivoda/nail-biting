@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { createRef } from 'react';
 import { CoachingCard } from './CoachingCard';
+import { Breathing } from './UrgeTimer';
+import { IDLE, offer, type CoachingSession } from './session';
 import { CoachingSeam } from './CoachingSeam';
 import { alarmCoaching } from './controller';
 import { AlertOverlay } from '../components/detection/AlertOverlay';
@@ -146,5 +149,31 @@ describe('Settings > Alerts', () => {
     } finally {
       globalThis.fetch = original;
     }
+  });
+});
+
+describe('the breathing guide (assistive technology)', () => {
+  const T0 = 1_800_000_000_000;
+  const running = offer(IDLE, { eventId: 'e1', text: 'Breathe with the circle', durationSec: 60 }, T0) as Extract<CoachingSession, { phase: 'running' }>;
+  const guide = (ms: number) =>
+    renderToStaticMarkup(<Breathing session={running} now={T0 + ms} onStop={() => {}} stopRef={createRef()} />);
+  const live = (html: string) => html.match(/<p role="status" aria-live="polite" aria-atomic="true" class="sr-only">([^<]*)<\/p>/)?.[1];
+
+  it('says the phase in one polite live region, as words only', () => {
+    expect(live(guide(1000))).toBe('Breathe in');
+    expect(live(guide(5000))).toBe('Breathe out');
+    expect(live(guide(11000))).toBe('Breathe in');
+  });
+
+  it('keeps the same text for the whole phase, so a screen reader hears it once per phase and never the ticking seconds', () => {
+    expect(live(guide(500))).toBe(live(guide(3500)));
+    expect(live(guide(4500))).toBe(live(guide(9500)));
+    expect(live(guide(1000))).not.toMatch(/\d/);
+  });
+
+  it('still hides the picture and the ticking text from assistive technology', () => {
+    const html = guide(1000);
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).toMatch(/<button[^>]*>Stop<\/button>/);
   });
 });

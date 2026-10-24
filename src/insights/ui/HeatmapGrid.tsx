@@ -2,7 +2,7 @@
 //
 // A CSS grid of small squares: empty cells are a quiet tint, the rest are the accent colour at a strength
 // that follows the count (never fully transparent, so a single bite is visible). The figure is named by a
-// sentence; the squares themselves are hidden from assistive technology and carry a `title` for pointer users.
+// sentence (a div with role img, not a figure: figure does not take that role); the squares themselves are hidden from assistive technology and carry a `title` for pointer users.
 
 import type { Heatmap } from '../aggregate';
 import { useT } from '../../i18n/scopes/insights';
@@ -15,7 +15,7 @@ export function HeatmapGrid({ heatmap, summary }: { heatmap: Heatmap; summary: s
   const t = useT();
   const { cells, max } = heatmap;
   return (
-    <figure role="img" aria-label={summary} className="m-0">
+    <div role="img" aria-label={summary} className="m-0">
       <div className="grid gap-[3px]" style={{ gridTemplateColumns: 'auto repeat(24, minmax(0, 1fr))' }} aria-hidden="true">
         <span />
         {HOURS.map(h => (
@@ -31,7 +31,7 @@ export function HeatmapGrid({ heatmap, summary }: { heatmap: Heatmap; summary: s
           <Row key={row} row={row} cells={cells} max={max} />
         ))}
       </div>
-      <figcaption className="mt-3 flex items-center justify-end gap-2 text-xs text-stone-600 dark:text-stone-300" aria-hidden="true">
+      <div className="mt-3 flex items-center justify-end gap-2 text-xs text-stone-600 dark:text-stone-300" aria-hidden="true">
         {t('heat.fewer')}
         {[0, 0.25, 0.5, 0.75, 1].map(step => (
           <span
@@ -41,8 +41,8 @@ export function HeatmapGrid({ heatmap, summary }: { heatmap: Heatmap; summary: s
           />
         ))}
         {t('heat.more')}
-      </figcaption>
-    </figure>
+      </div>
+    </div>
   );
 }
 
