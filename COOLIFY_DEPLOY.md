@@ -21,7 +21,6 @@ Set all of these in the Coolify service settings:
 GOOGLE_CLIENT_ID=<from Google Cloud Console>
 GOOGLE_CLIENT_SECRET=<from Google Cloud Console>
 JWT_SECRET=<generate: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))">
-ELECTRON_PROTOCOL=stopbiting
 APP_URL=https://stopbiting.today
 PORT=3000
 DATA_DIR=/app/data
