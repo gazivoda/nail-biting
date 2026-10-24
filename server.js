@@ -3068,7 +3068,6 @@ if (!existsSync(distPath)) {
     const { notices } = registerLocalePages({
       app, files: LOCALE_FILES, states: LOCALE_STATES, shell: indexHtml, notFoundHtml: NOT_FOUND_HTML,
       sendHtml, injectMeta, injectSsrArticle, schemaTag, copyIsOn,
-      tokens: () => ({}),
       noscriptNav: (html, data) => localizedNoscriptNav(html, data, [...SITE_NAV, ...GATED_NAV], escapeHtml),
       k: {
         WEBSITE_ID, ORG_ID, APP_ID, PERSON_ID, SCHEMA_AUTHOR, SCHEMA_SPEAKABLE, PERSON_KNOWS_ABOUT, breadcrumbSchema, faqPageSchema,

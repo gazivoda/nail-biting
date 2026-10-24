@@ -154,5 +154,53 @@
   "/solutions/cuticle-biting": {
     "lastmod": "2026-10-23",
     "fingerprint": "5fce64cafff53cac"
+  },
+  "/es": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "9117877ba77457dd"
+  },
+  "/es/how-it-works": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "a890e663b22b81f6"
+  },
+  "/es/pricing": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "d1c2ae50b0d4eb5c"
+  },
+  "/es/about": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "5703b9fca0a3fc2c"
+  },
+  "/de": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "1fc1977bdcc00344"
+  },
+  "/de/how-it-works": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "cb967b4f0af37f34"
+  },
+  "/de/pricing": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "0b8bca5115b0e74e"
+  },
+  "/de/about": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "69d6718dc24c6ea7"
+  },
+  "/pt-br": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "f78d33492ca765cf"
+  },
+  "/pt-br/how-it-works": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "a4c09e464d27bc4b"
+  },
+  "/pt-br/pricing": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "dec807496679aee3"
+  },
+  "/pt-br/about": {
+    "lastmod": "2026-10-24",
+    "fingerprint": "392bff8ce311cc97"
   }
 }

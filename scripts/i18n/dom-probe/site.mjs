@@ -166,6 +166,14 @@ if (mode === 'layout') {
     const demo = await page.eval(`(document.querySelector('#live-demo')?.closest('div.grid')?.innerText ?? document.body.innerText).slice(0, 900)`);
     console.log(`\n=== demo after the click on /${PREFIX}\n    errors: ${errors.length ? errors.slice(0, 4).join(' || ') : 'none'}\n    text: ${JSON.stringify(demo)}`);
     await shot(page, outDir, `${locale}-demo`);
+    // the English page while languages are served: the switcher is there, links to the SAME page, and a stored pick never redirects
+    await page.eval(`localStorage.setItem('sb:i18n:locale', JSON.stringify(${JSON.stringify(locale)}))`);
+    for (const path of ['/pricing', '/']) {
+      await page.send('Page.navigate', { url: rig.url + path });
+      await sleep(3500);
+      const en = await page.eval(`({ path: location.pathname, lang: document.documentElement.lang, h1: document.querySelector('h1')?.innerText, hreflangs: [...document.querySelectorAll('link[rel=alternate][hreflang]')].map(l => l.hreflang + '=' + l.href).join(' '), switcher: [...document.querySelectorAll('footer nav[aria-label] a, footer nav[aria-label] span[aria-current]')].slice(0, 4).map(a => a.textContent + '->' + (a.getAttribute('href') ?? 'current')).join(' | '), headerSwitcher: !!document.querySelector('nav[aria-label] details summary') })`);
+      console.log(`\n=== English ${path} with the pick "${locale}" stored and every language served: ${JSON.stringify(en)}`);
+    }
   });
   process.exit(0);
 }
