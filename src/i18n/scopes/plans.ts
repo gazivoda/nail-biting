@@ -6,6 +6,7 @@ import { createScope } from '../scope.ts';
 export const messages = {
   'extras.label': 'Other ways to buy',
   'plan.lifetime': 'Lifetime',
+  'lifetime.badge': 'Best deal',
   'lifetime.once': 'once',
   'lifetime.priceAtCheckout': 'Price shown at checkout',
   'lifetime.band.body': 'Pay once instead of every month or year. It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered. Start the free trial, then choose Lifetime in the app.',

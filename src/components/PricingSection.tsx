@@ -3,6 +3,8 @@ import { ArrowRight, Check } from 'lucide-react';
 import { track } from '../utils/track';
 import { PRICE_IDS } from '../billing/env';
 import { hasAll, useLocalizedPrices } from '../billing/prices';
+import { LifetimeCard } from './billing/LifetimeCard';
+import { useLifetimeOn } from '../billing/useLifetimeOn';
 import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
 import { useSiteBag, useSiteT } from '../i18n/marketing/useSite';
 
@@ -65,6 +67,9 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
   // below, while the flag is off, when Paddle is not set up, and whenever anything goes wrong.
   const regional = useLocalizedPrices([PRICE_IDS.monthly, PRICE_IDS.yearly].filter(Boolean));
   const localized = hasAll(regional, [PRICE_IDS.monthly, PRICE_IDS.yearly]);
+  // WS9 (flag lifetime_plan): the Lifetime plan is the third card of the same row. Off, the section is what it was.
+  const lifetimeOn = useLifetimeOn();
+  const priceLine = lifetimeOn ? 'mt-5 flex flex-wrap items-baseline gap-x-1.5' : 'mt-5 flex items-baseline gap-1.5';
 
   return (
     <section ref={ref} id="pricing" aria-labelledby="pricing-heading" className="sg-page">
@@ -77,14 +82,14 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         </p>
       </div>
 
-      <div className="mt-12 grid max-w-4xl gap-6 md:grid-cols-2">
+      <div className={lifetimeOn ? 'mt-12 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3' : 'mt-12 grid max-w-4xl gap-6 md:grid-cols-2'}>
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
         <div className="sg-plate sg-dark relative flex flex-col !border-transparent !bg-[color:var(--sg-deep)] p-7 sm:p-9">
           <p className="absolute -top-3.5 left-7 rounded-full bg-[color:var(--sg-signal)] px-3 py-1 text-[0.8125rem] font-bold text-[color:var(--sg-deep)]">
             {localized ? t('pricing.badge.localized') : t('pricing.badge.save')}
           </p>
           <p className="sg-h3">{t('pricing.yearly')}</p>
-          <p className="mt-5 flex items-baseline gap-1.5">
+          <p className={priceLine}>
             <span className="sg-figure">{localized ? regional[PRICE_IDS.yearly].total : String(bag.pYearly)}</span>
             <span className="sg-small">{t('pricing.perYear')}</span>
           </p>
@@ -107,7 +112,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         {/* ── Monthly ─────────────────────────────────────────────────── */}
         <div className="sg-plate flex flex-col p-7 sm:p-8">
           <p className="sg-h3">{t('pricing.monthly')}</p>
-          <p className="mt-5 flex items-baseline gap-1.5">
+          <p className={priceLine}>
             <span className="sg-figure">{localized ? regional[PRICE_IDS.monthly].total : String(bag.pMonthly)}</span>
             <span className="sg-small">{t('pricing.perMonth')}</span>
           </p>
@@ -130,6 +135,9 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
           </a>
         </div>
+
+        {/* ── Lifetime (flag lifetime_plan): the third plate, marked as the best deal ── */}
+        {lifetimeOn && <LifetimeCard featured className="md:col-span-2 lg:col-span-1" />}
       </div>
 
       {localized && (

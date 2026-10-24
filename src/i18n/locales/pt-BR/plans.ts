@@ -4,6 +4,7 @@ import type { messages as en } from '../../scopes/plans';
 export const messages: Record<keyof typeof en, string> = {
   'extras.label': 'Outras formas de comprar',
   'plan.lifetime': 'Vitalício',
+  'lifetime.badge': 'Melhor oferta',
   'lifetime.once': 'uma única vez',
   'lifetime.priceAtCheckout': 'O preço é exibido no pagamento',
   'lifetime.band.body': 'Pague uma única vez em vez de todo mês ou todo ano. Inclui tudo do plano mensal, sem renovações, enquanto o Stop Biting estiver disponível. Comece o teste grátis e depois escolha Vitalício no app.',

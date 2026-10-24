@@ -64,6 +64,7 @@ import { PaywallPage, PaymentReceived, ActivatingNotice, CheckoutProblem, GiftTh
 import { LifetimePlate } from '../../components/billing/LifetimePlate';
 import { FreeTierNotice } from '../../components/billing/FreeTierNotice';
 import { PlanExtras, GiftBandView } from '../../components/billing/PlanExtras';
+import { LifetimeCard } from '../../components/billing/LifetimeCard';
 import { ReferralCard, ReferralView, type Summary } from '../../components/billing/ReferralCard';
 import { RedeemPage, RedeemedCard, RedeemForm, FailureNote, type Failure } from '../../pages/RedeemPage';
 import { SignInPage, FinishCard, SentNotice, EmailForm } from '../../pages/SignIn';
@@ -80,6 +81,7 @@ export const COVERS = [
   'src/components/billing/LifetimePlate.tsx',
   'src/components/billing/FreeTierNotice.tsx',
   'src/components/billing/PlanExtras.tsx',
+  'src/components/billing/LifetimeCard.tsx',
   'src/components/billing/ReferralCard.tsx',
   'src/billing/planLabel.ts',
   'src/billing/planLength.ts', // describeLength, called through planLabel's re-export below
@@ -243,15 +245,21 @@ describe('free plan notice', () => {
 describe('lifetime and gift cards (/pricing)', () => {
   usePseudoLocale();
 
-  it('both cards, with and without prices and a gift length', () => {
-    h.flags.add('lifetime_plan');
+  it('the gift card, with and without a price and a gift length', () => {
     h.flags.add('gift_plan');
     check(html(<PlanExtras />));
-    h.prices = { pri_life: { total: '$79.00', currency: 'USD' }, pri_gift: { total: '$29.00', currency: 'USD' } };
+    h.prices = { pri_gift: { total: '$29.00', currency: 'USD' } };
     h.giftDays = 365;
     check(html(<PlanExtras />));
     h.giftDays = 30;
     check(html(<PlanExtras />));
+  });
+
+  it('the lifetime card, plain and with the best-deal badge, with and without a price', () => {
+    check(html(<LifetimeCard />));
+    check(html(<LifetimeCard featured className="md:col-span-2" />));
+    h.prices = { pri_life: { total: '$99.00', currency: 'USD' } };
+    check(html(<LifetimeCard featured />));
   });
 
   it('the gift card in each state of the purchase', () => {

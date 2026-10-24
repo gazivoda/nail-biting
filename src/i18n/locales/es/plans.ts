@@ -4,6 +4,7 @@ import type { messages as en } from '../../scopes/plans';
 export const messages: Record<keyof typeof en, string> = {
   'extras.label': 'Otras formas de comprar',
   'plan.lifetime': 'De por vida',
+  'lifetime.badge': 'La mejor oferta',
   'lifetime.once': 'una sola vez',
   'lifetime.priceAtCheckout': 'El precio se muestra al pagar',
   'lifetime.band.body': 'Paga una sola vez en lugar de cada mes o cada año. Incluye todo lo del plan mensual, sin renovaciones, mientras Stop Biting esté disponible. Empieza la prueba gratuita y luego elige De por vida en la app.',

@@ -1,6 +1,6 @@
-// Lifetime and gift on the /pricing page (flags lifetime_plan, gift_plan). Nothing renders while a flag
-// is off, or when the matching Paddle price id was not given to the build, so with every flag off the
-// page is what it was.
+// The gift card on the /pricing page (flag gift_plan). Nothing renders while the flag is off, or when the Paddle
+// price id was not given to the build, so with the flag off the page is what it was. The Lifetime card is in
+// LifetimeCard.tsx and sits in the plan row (PricingSection).
 //
 // Wording is plain and says exactly what is bought. No price is written here: the figure is what Paddle
 // reports it will charge (src/billing/prices.ts), and "Price shown at checkout" when that cannot be read.
@@ -9,58 +9,21 @@ import { useState } from 'react';
 import { ArrowRight, Gift } from 'lucide-react';
 import { describeLength } from '../../billing/planLength';
 import { useT } from '../../i18n/scopes/plans';
-import { useSignInHref } from '../../auth/useSignInProviders';
 import { PRICE_IDS } from '../../billing/env';
 import { completedTransactionId, onPaddleEvent, openGiftCheckout, paddleAvailable } from '../../billing/paddleClient';
 import { useLocalizedPrices } from '../../billing/prices';
 import { useGiftDays } from '../../billing/useGiftInfo';
 import { useFeature } from '../../features/useFeature';
-import { track } from '../../utils/track';
+import { PriceLine } from './LifetimeCard';
 
 export function PlanExtras() {
   const t = useT();
-  const lifetimeOn = useFeature('lifetime_plan') && PRICE_IDS.lifetime !== '';
   const giftOn = useFeature('gift_plan') && PRICE_IDS.gift !== '' && paddleAvailable();
-  if (!lifetimeOn && !giftOn) return null;
+  if (!giftOn) return null;
   return (
     <section aria-label={t('extras.label')} className="mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
-      {lifetimeOn && <LifetimeBand />}
-      {giftOn && <GiftBand />}
+      <GiftBand />
     </section>
-  );
-}
-
-function LifetimeBand() {
-  const t = useT();
-  const signIn = useSignInHref();
-  const prices = useLocalizedPrices([PRICE_IDS.lifetime], { always: true });
-  const price = prices[PRICE_IDS.lifetime]?.total;
-  return (
-    <div className="sg-plate flex flex-col p-7 sm:p-8">
-      <p className="sg-h3">{t('plan.lifetime')}</p>
-      <PriceLine price={price} />
-      <p className="sg-small mt-3 flex-1">
-        {t('lifetime.band.body')}
-      </p>
-      <a
-        href={signIn}
-        rel="nofollow"
-        onClick={() => track('trial_click', 'pricing_lifetime')}
-        className="sg-btn sg-btn-ink group mt-6 w-full"
-      >
-        {t('lifetime.band.cta')}
-        <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
-      </a>
-    </div>
-  );
-}
-
-function PriceLine({ price }: { price: string | undefined }) {
-  const t = useT();
-  return (
-    <p className="mt-4 flex items-baseline gap-1.5">
-      {price ? <><span className="sg-figure">{price}</span><span className="sg-small">{t('lifetime.once')}</span></> : <span className="sg-small">{t('lifetime.priceAtCheckout')}</span>}
-    </p>
   );
 }
 
