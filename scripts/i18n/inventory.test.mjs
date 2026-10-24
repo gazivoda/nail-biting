@@ -75,7 +75,7 @@ describe('pseudo-locale coverage inventory', () => {
     expect(coverageFiles.length).toBeGreaterThan(0);
     for (const f of coverageFiles) {
       const text = readFileSync(join(root, f), 'utf8');
-      expect(text, `${f} must call usePseudoLocale()`).toMatch(/usePseudoLocale\(/);
+      expect(text, `${f} must call usePseudoLocale() (or usePseudoSiteLocale() for the marketing pages)`).toMatch(/usePseudo(?:Site)?Locale\(/);
       expect(text, `${f} must assert with expectAllTranslated(...)`).toMatch(/expectAllTranslated\(/);
     }
   });

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
-import { PLAN_FEATURES, YEARLY_EXTRA } from './site/plans';
 import { track } from '../utils/track';
 import { PRICE_IDS } from '../billing/env';
 import { hasAll, useLocalizedPrices } from '../billing/prices';
-import { TRIAL_WORDS_CAP } from '../../shared/plans.js';
+import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
+import { useSiteBag, useSiteT } from '../i18n/marketing/useSite';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
@@ -24,8 +24,9 @@ import { TRIAL_WORDS_CAP } from '../../shared/plans.js';
 // rather than mapped over an array: these two anchors are the whole checkout
 // entry surface, and writing them as real attributes keeps them greppable.
 
-// Shared with the in-app paywall (site/plans.ts).
-const FEATURES = PLAN_FEATURES;
+// The four lines of site/plans.ts (PLAN_FEATURES, shared with the in-app paywall), written through the catalog; a test
+// pins that their English is exactly PLAN_FEATURES.
+const FEATURE_KEYS = ['plan.f1', 'plan.f2', 'plan.f3', 'plan.f4'] as const;
 
 function FeatureList({ features }: { features: string[] }) {
   return (
@@ -41,6 +42,9 @@ function FeatureList({ features }: { features: string[] }) {
 }
 
 export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1' | 'h2' }) {
+  const t = useSiteT(useChromeT);
+  const bag = useSiteBag();   // the list prices written for the language ($29.00 in English)
+  const features = FEATURE_KEYS.map(key => t(key));
   // One aggregate event the first time the plans scroll into view, with the
   // page as its fixed label, so view-to-trial_click can be read per page.
   const ref = useRef<HTMLElement>(null);
@@ -49,7 +53,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
     if (!el || typeof IntersectionObserver === 'undefined') return;
     const io = new IntersectionObserver(entries => {
       if (entries.some(e => e.isIntersecting)) {
-        track('pricing_view', window.location.pathname === '/pricing' ? 'pricing_page' : 'landing');
+        track('pricing_view', /\/pricing$/.test(window.location.pathname) ? 'pricing_page' : 'landing');
         io.disconnect();
       }
     }, { threshold: 0.4 });
@@ -67,9 +71,9 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
       {/* Left-aligned on the page's edge like every other section: centred
           and narrower, it read as a template block pasted in. */}
       <div className="max-w-4xl">
-        <Heading id="pricing-heading" className="sg-h2">$2.99 a month, or <span className="sg-mark">$29 a year.</span></Heading>
+        <Heading id="pricing-heading" className="sg-h2">{t.rich('pricing.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}</Heading>
         <p className="sg-lede mt-4 max-w-2xl">
-          {TRIAL_WORDS_CAP} free first, and no card to start. You pick a plan when the trial ends.
+          {t('pricing.lede')}
         </p>
       </div>
 
@@ -77,16 +81,16 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
         {/* ── Yearly: recommended ─────────────────────────────────────── */}
         <div className="sg-plate sg-dark relative flex flex-col !border-transparent !bg-[color:var(--sg-deep)] p-7 sm:p-9">
           <p className="absolute -top-3.5 left-7 rounded-full bg-[color:var(--sg-signal)] px-3 py-1 text-[0.8125rem] font-bold text-[color:var(--sg-deep)]">
-            {localized ? 'Best value' : 'Best value: save 19%'}
+            {localized ? t('pricing.badge.localized') : t('pricing.badge.save')}
           </p>
-          <p className="sg-h3">Yearly</p>
+          <p className="sg-h3">{t('pricing.yearly')}</p>
           <p className="mt-5 flex items-baseline gap-1.5">
-            <span className="sg-figure">{localized ? regional[PRICE_IDS.yearly].total : '$29.00'}</span>
-            <span className="sg-small">/ year</span>
+            <span className="sg-figure">{localized ? regional[PRICE_IDS.yearly].total : String(bag.pYearly)}</span>
+            <span className="sg-small">{t('pricing.perYear')}</span>
           </p>
-          <p className="sg-small mt-2">{localized ? 'Billed yearly' : '$2.42/month, billed yearly'}</p>
+          <p className="sg-small mt-2">{localized ? t('pricing.yearly.billed') : t('pricing.yearly.eq')}</p>
           <div className="mt-7 flex-1">
-            <FeatureList features={[...FEATURES, YEARLY_EXTRA]} />
+            <FeatureList features={[...features, t('plan.extra')]} />
           </div>
           <a
             href="/api/auth/google"
@@ -95,25 +99,25 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             onClick={() => track('trial_click', 'pricing_yearly')}
             className="sg-btn group mt-8 w-full"
           >
-            Start free trial
+            {t('trial.start')}
             <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
           </a>
         </div>
 
         {/* ── Monthly ─────────────────────────────────────────────────── */}
         <div className="sg-plate flex flex-col p-7 sm:p-8">
-          <p className="sg-h3">Monthly</p>
+          <p className="sg-h3">{t('pricing.monthly')}</p>
           <p className="mt-5 flex items-baseline gap-1.5">
-            <span className="sg-figure">{localized ? regional[PRICE_IDS.monthly].total : '$2.99'}</span>
-            <span className="sg-small">/ month</span>
+            <span className="sg-figure">{localized ? regional[PRICE_IDS.monthly].total : String(bag.pMonthly)}</span>
+            <span className="sg-small">{t('pricing.perMonth')}</span>
           </p>
-          <p className="sg-small mt-2">Billed monthly</p>
+          <p className="sg-small mt-2">{t('pricing.monthly.billed')}</p>
           {/* Stacked on a phone, right under Yearly, the same four lines word
               for word cost about 150px and said nothing new. Side by side
               (md up) the full list is what makes the cards comparable. */}
-          <p className="sg-small mt-7 flex-1 md:hidden">Everything in Yearly except priority support.</p>
+          <p className="sg-small mt-7 flex-1 md:hidden">{t('pricing.monthly.short')}</p>
           <div className="mt-7 hidden flex-1 md:block">
-            <FeatureList features={FEATURES} />
+            <FeatureList features={features} />
           </div>
           <a
             href="/api/auth/google"
@@ -122,7 +126,7 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
             onClick={() => track('trial_click', 'pricing_monthly')}
             className="sg-btn sg-btn-ink group mt-8 w-full"
           >
-            Start free trial
+            {t('trial.start')}
             <ArrowRight size={17} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
           </a>
         </div>
@@ -130,13 +134,12 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
 
       {localized && (
         <p className="sg-small mt-6 max-w-4xl">
-          These prices are shown in your local currency. The list prices are $2.99 a month and $29 a year.
+          {t('pricing.localizedNote')}
         </p>
       )}
 
       <p className="sg-small mt-8 max-w-4xl">
-        Payments go through Paddle. Cancel anytime in Settings. You can ask for a full refund within 14 days of
-        your first payment: see the <a href="/refund-policy" className="sg-link">refund policy</a>.
+        {t.rich('pricing.payments', undefined, { link: chunks => <a href="/refund-policy" className="sg-link">{chunks}</a> })}
       </p>
     </section>
   );

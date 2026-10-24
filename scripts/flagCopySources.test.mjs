@@ -18,22 +18,22 @@ const read = file => readFileSync(join(ROOT, file), 'utf8')
 
 // rule id -> the files that carry its text
 const SOURCES = {
-  'faq-alert-log': ['src/pages/Landing.tsx', 'index.html'],
-  'home-history-line': ['src/pages/Landing.tsx', 'server.js'],
-  'home-history-privacy': ['src/pages/Landing.tsx'],
-  'network-use': ['src/pages/Landing.tsx', 'src/pages/HowItWorks.tsx', 'server.js'],
-  'about-log': ['src/pages/About.tsx', 'server.js'],
+  'faq-alert-log': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
+  'home-history-line': ['src/i18n/scopes/marketing-home.ts', 'server.js'],
+  'home-history-privacy': ['src/i18n/scopes/marketing-home.ts'],
+  'network-use': ['src/i18n/scopes/marketing-home.ts', 'src/i18n/scopes/marketing-how.ts', 'server.js'],
+  'about-log': ['src/i18n/scopes/marketing-about.ts', 'server.js'],
   'settings-privacy-log': ['src/i18n/scopes/settings.ts'], // WS12a: the Settings text lives in the catalog now
-  'how-log-row': ['src/pages/HowItWorks.tsx'],
+  'how-log-row': ['src/i18n/scopes/marketing-how.ts'],
   'how-log-item': ['server.js'],
   'blog-log-not-synced': ['src/data/blogPosts.ts'],
   'blog-log-no-cloud': ['src/data/blogPosts.ts'],
-  'faq-google-account': ['src/pages/Landing.tsx', 'index.html'],
-  'home-sign-in': ['src/pages/Landing.tsx', 'server.js'],
+  'faq-google-account': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
+  'home-sign-in': ['src/i18n/scopes/marketing-home.ts', 'server.js'],
   'nailbitemenu-needs': ['src/data/comparePages.ts'],
   'nailbitemenu-requires': ['src/data/comparePages.ts'],
   'nailbitemenu-table': ['src/data/comparePages.ts'],
-  'faq-phone': ['src/pages/Landing.tsx', 'index.html'],
+  'faq-phone': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
 };
 
 describe('copy rules and the sources they replace text in', () => {

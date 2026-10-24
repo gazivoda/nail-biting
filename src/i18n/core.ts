@@ -57,6 +57,16 @@ const LOADERS: Record<ForeignLocale, () => Promise<LocaleModule>> = {
   'pt-BR': () => import('./locale-pt-BR'),
 };
 
+// The text of the localized MARKETING pages (WS12b) is a second, smaller catalog per language, fetched by a visitor
+// who opened one of those pages (and by nobody else). It is kept apart from the app's catalog above so that the
+// app's chunk does not grow, and so that opening /es/pricing does not download the whole signed-in app's text.
+// lookup() reads both.
+const SITE_LOADERS: Record<ForeignLocale, () => Promise<LocaleModule>> = {
+  es: () => import('./locale-site-es'),
+  de: () => import('./locale-site-de'),
+  'pt-BR': () => import('./locale-site-pt-BR'),
+};
+
 /** Where the pick lives. ./persist.ts plugs in the storage module; nothing is plugged in on the marketing pages. */
 export interface LocalePersistence {
   read(): unknown;
@@ -70,8 +80,15 @@ let effective: Locale = 'en';
 let version = 0;
 let langWritten = false;
 const catalogs = new Map<Locale, LocaleModule>();
+const siteCatalogs = new Map<Locale, LocaleModule>();
 const loading = new Map<Locale, Promise<void>>();
+const siteLoading = new Map<Locale, Promise<void>>();
 const failed = new Set<Locale>();
+const siteFailed = new Set<Locale>();
+// The language of the marketing PAGE being shown (WS12b): set from the address (/es/pricing) by App.tsx, never
+// stored, and never read from the browser's language. It wins over the pick and does not need the locale flag:
+// the server only serves a localized page while the flag is on.
+let pageLocale: Locale | null = null;
 const listeners = new Set<() => void>();
 let transform: ((s: string) => string) | null = null;
 
@@ -96,12 +113,38 @@ function load(locale: ForeignLocale) {
     LOADERS[locale]()
       .then(mod => { catalogs.set(locale, mod); })
       .catch(() => { failed.add(locale); }) // offline and never fetched: stay English
-      .finally(() => { loading.delete(locale); recompute(); }),
+      // notify: on a localized marketing page the language does not change when the app's catalog arrives (the demo asks for
+      // it), but the words that read it must be drawn again
+      .finally(() => { loading.delete(locale); recompute(); notify(); }),
+  );
+}
+
+function loadSite(locale: ForeignLocale) {
+  if (siteLoading.has(locale) || siteCatalogs.has(locale) || siteFailed.has(locale)) return;
+  siteLoading.set(
+    locale,
+    SITE_LOADERS[locale]()
+      .then(mod => { siteCatalogs.set(locale, mod); })
+      .catch(() => { siteFailed.add(locale); }) // offline: the page stays as it is
+      .finally(() => { siteLoading.delete(locale); recompute(); notify(); }), // notify: a failure changes nothing else, but the page waits on it
   );
 }
 
 /** Decide the effective locale from the pick, the allowed set and the loaded catalogs. */
 function recompute() {
+  if (pageLocale !== null) {
+    // A localized marketing page: its own language, as soon as the marketing catalog is here.
+    let next = effective;
+    if (pageLocale === 'en') next = 'en';
+    else if (siteCatalogs.has(pageLocale)) next = pageLocale;
+    else loadSite(pageLocale as ForeignLocale);
+    if (next !== effective) {
+      effective = next;
+      applyDocumentLang();
+      notify();
+    }
+    return;
+  }
   const pick = getPreferredLocale();
   const wanted: Locale = pick !== 'en' && allowed.has(pick) ? pick : 'en';
   let next = effective;
@@ -154,17 +197,27 @@ export function intlLocaleArg(): string | undefined {
 /** The translated message, or undefined (English locale, catalog not here yet, or the key is missing). */
 export function lookup(scope: string, key: string): string | undefined {
   if (effective === 'en') return undefined;
-  return catalogs.get(effective)?.catalog[scope]?.[key];
+  return catalogs.get(effective)?.catalog[scope]?.[key] ?? siteCatalogs.get(effective)?.catalog[scope]?.[key];
 }
 
 /** Whether a native speaker has checked this locale's file. English is its own source. */
 export function isLocaleReviewed(locale: Locale): boolean {
   if (locale === 'en') return true;
-  return catalogs.get(locale)?.reviewed ?? false;
+  return (catalogs.get(locale) ?? siteCatalogs.get(locale))?.reviewed ?? false;
 }
 
 export function isLocaleLoaded(locale: Locale): boolean {
   return locale === 'en' || catalogs.has(locale);
+}
+
+/** True when fetching the marketing catalog failed (offline, blocked): the page then stays as it is. */
+export function didSiteLocaleLoadFail(locale: Locale): boolean {
+  return siteFailed.has(locale);
+}
+
+/** Whether the marketing catalog of this locale is here (English has none to load). */
+export function isSiteLocaleLoaded(locale: Locale): boolean {
+  return locale === 'en' || siteCatalogs.has(locale);
 }
 
 /** True when fetching this locale's catalog failed (offline, blocked). Cleared by the next setLocale. */
@@ -190,6 +243,21 @@ export function setLocale(locale: Locale): void {
   failed.delete(locale);
   recompute();
   notify(); // the pick itself changed (the language card shows it)
+}
+
+/**
+ * The language of the marketing page on screen (App.tsx, from the address). `null` goes back to the pick. The page
+ * language is applied once the marketing catalog has arrived; until then the text stays as it is. Never stored.
+ */
+export function setPageLocale(locale: Locale | null): void {
+  if (pageLocale === locale) return;
+  pageLocale = locale;
+  recompute();
+  notify();
+}
+
+export function getPageLocale(): Locale | null {
+  return pageLocale;
 }
 
 /** Which locales may be used (their flags are on). <LocaleHost /> is the only caller. English is always allowed. */
@@ -223,15 +291,25 @@ export function installCatalogForTests(locale: ForeignLocale, mod: LocaleModule)
   failed.delete(locale);
 }
 
+/** The marketing catalog of a locale (src/i18n/locale-site-*.ts), installed by a test instead of fetched. */
+export function installSiteCatalogForTests(locale: ForeignLocale, mod: LocaleModule): void {
+  siteCatalogs.set(locale, mod);
+  siteFailed.delete(locale);
+}
+
 export function resetLocaleForTests(): void {
   preferred = null;
   allowed = new Set<Locale>(['en']);
   effective = 'en';
   version = 0;
   langWritten = false;
+  pageLocale = null;
   catalogs.clear();
+  siteCatalogs.clear();
   loading.clear();
+  siteLoading.clear();
   failed.clear();
+  siteFailed.clear();
   transform = null;
 }
 
@@ -240,4 +318,11 @@ export async function ensureLocaleLoaded(locale: Locale): Promise<void> {
   if (locale === 'en') return;
   load(locale);
   await loading.get(locale);
+}
+
+/** Waits for the marketing catalog of `locale` (resolves at once for English). A localized page renders after it. */
+export async function ensureSiteLocaleLoaded(locale: Locale): Promise<void> {
+  if (locale === 'en') return;
+  loadSite(locale);
+  await siteLoading.get(locale);
 }

@@ -605,6 +605,12 @@ html.dark .ed-page { --ed-hairline: oklch(32% 0.010 200); }
 .sg-btn:hover { background: var(--sg-btn-bg-h); }
 .sg-btn:active { transform: translateY(1px) scale(0.99); }
 .sg-btn-sm { min-height: 2.75rem; padding: 0 1.25rem; font-size: 0.9375rem; }
+/* WS12b: the other languages run long (German). A button label wraps instead of widening the page, and the footer links
+   (two columns) may break a very long word. Scoped to non-English pages on purpose: the English layout stays as it was. */
+html:not([lang='en']) .sg-btn { white-space: normal; text-align: center; flex-shrink: 1; min-width: 0; padding-block: 0.5rem; }
+html:not([lang='en']) .sg-note.whitespace-nowrap { white-space: normal; }   /* the offer line under the closing button */
+html:not([lang='en']) .sg-page footer nav[aria-label] { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; }
+html:not([lang='en']) .sg-page footer nav[aria-label] a { overflow-wrap: anywhere; hyphens: auto; }
 .sg-btn-ink { background: transparent; color: var(--sg-ink); box-shadow: inset 0 0 0 2px var(--sg-ink); }
 .sg-btn-ink:hover { background: var(--sg-ink); color: var(--sg-inv); }
 /* On a deep band or card: the lime pill, whatever the page scope says. */

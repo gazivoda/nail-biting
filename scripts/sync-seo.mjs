@@ -41,6 +41,10 @@ const { GATED_PAGE_MAP } = await import('../src/data/competitorPages.ts');
 // competitor pages above: dated in the ledger so the server can put a true lastmod on them while their
 // flag is on, never written into sitemap.xml or llms.txt here, and their meta is checked against their body.
 const { FEATURE_PAGE_MAP } = await import('../src/data/featurePages.ts');
+// WS12b: the localized core pages (/es, /es/pricing, /de/..., /pt-br/...). Dated in the ledger so the server can put a true
+// lastmod on them when a language is live, never written into sitemap.xml or llms.txt here (the server adds the live ones at
+// serve time), and kept out of the English claim corpus below.
+const { SITE_LOCALES, LOCALIZED_PAGES, pagePath: localizedPagePath } = await import('../src/i18n/marketing/routes.ts');
 // Source files spell this site's trial length with ${TRIAL_*} (JS/TS) and {{TRIAL_*}} (index.html)
 // placeholders (shared/plans.js). Every extractor below reads the SOURCE as text, so the placeholders are
 // filled in at the two read points (readWorkTree, readAtCommit) before any extractor runs: what they see is
@@ -455,6 +459,20 @@ const PAGE_SOURCES = {
 for (const p of Object.keys(PAGE_MAP)) PAGE_SOURCES[p] = [comparePage(p)];
 for (const p of Object.keys(GATED_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(GATED, p)];
 for (const p of Object.keys(FEATURE_PAGE_MAP)) PAGE_SOURCES[p] = [comparePageIn(FEATURES, p)];
+// A localized page's text is its translation: the page's own catalog file plus the shared chrome (pricing cards, closing offer,
+// footer). Editing a translation moves that language's date; editing another language's does not.
+const LOCALIZED_SCOPE = { home: 'marketing-home', how: 'marketing-how', pricing: 'marketing-pricing', about: 'marketing-about' };
+const LOCALIZED_PATHS = [];
+for (const locale of SITE_LOCALES) {
+  for (const page of LOCALIZED_PAGES) {
+    const path = localizedPagePath(locale, page);
+    LOCALIZED_PATHS.push(path);
+    PAGE_SOURCES[path] = [
+      pageComponent(`src/i18n/locales/${locale}/${LOCALIZED_SCOPE[page]}.ts`),
+      pageComponent(`src/i18n/locales/${locale}/marketing-chrome.ts`),
+    ];
+  }
+}
 
 const readWorkTree = file => {
   const text = safeRead(join(ROOT, file));
@@ -517,7 +535,7 @@ const nextLedger = {};
 // Gated pages are dated too, so the server can put a true lastmod on them when it adds
 // them to sitemap.xml and in their JSON-LD; they are not in CORE_PAGES, so this script
 // never writes them into the sitemap itself.
-for (const path of [...CORE_PAGES.map(p => p.path), ...Object.keys(GATED_PAGE_MAP), ...Object.keys(FEATURE_PAGE_MAP)]) {
+for (const path of [...CORE_PAGES.map(p => p.path), ...Object.keys(GATED_PAGE_MAP), ...Object.keys(FEATURE_PAGE_MAP), ...LOCALIZED_PATHS]) {
   if (path === '/blog') {
     nextLedger[path] = { lastmod: NEWEST_POST, source: 'newest article dateModified' };
     continue;
@@ -926,7 +944,7 @@ function siteCorpus() {
     return files.get(f);
   };
   for (const [path, sources] of Object.entries(PAGE_SOURCES)) {
-    if (path in GATED_PAGE_MAP || path in FEATURE_PAGE_MAP) continue;   // unpublished copy proves nothing about what the site says
+    if (path in GATED_PAGE_MAP || path in FEATURE_PAGE_MAP || LOCALIZED_PATHS.includes(path)) continue;   // unpublished copy proves nothing about what the site says
     for (const [file, pick] of sources) {
       const src = cachedRead(file);
       if (src) parts.push(pick(src) ?? '');

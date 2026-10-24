@@ -904,7 +904,8 @@ checks `electron/` (`tsc -b` does not).
 | Gated pages and testimonials: `src/data/competitorPages.ts`, `gatedComparePaths.ts`, `src/components/site/Testimonials*` | WS11a | see the WS11a paragraph in section 8 |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
 | `src/index.css`, `tailwind.config.js` | do not change tokens (a change reaches every surface; see lessons) | |
-| `src/i18n/**`, `scripts/i18n/**` | WS12a (WS12b adds marketing scopes and routes on top) | `createScope`, `t`/`useT`, `format.ts`; `scope.mjs` is the one list of what is exempt from the no-English rule |
+| `src/i18n/**`, `scripts/i18n/**` | WS12a; WS12b added the marketing scopes, `src/i18n/marketing/**` and the page locale | `createScope`, `t`/`useT`, `format.ts`; `scope.mjs` is the one list of what is exempt from the no-English rule |
+| Localized marketing pages: `server/marketing/localePages.js`, `scripts/generate-locale-pages.mjs`, `src/i18n/marketing/**`, `src/i18n/scopes/marketing-*.ts`, `src/i18n/locales/*/{marketing-*,site,meta,reviewed}.ts`, `LocalizedSite.tsx`, `LanguageSwitcher.tsx` | WS12b | `server.js` seams listed in section 24; `reviewed.ts` is the only thing that makes a language indexable; a new core page = `LOCALIZED_PAGES` in `routes.ts`, a builder in `articles.ts`, the scope, and its row in `sync-seo.mjs` |
 | `PrivacyPage`, `TermsPage`, `LegalPage`, `RefundPage` | nobody; drafts go to `docs/agents/legal/` | |
 
 ---
@@ -1412,7 +1413,7 @@ turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePath
 | `share_links` | `server/routes/share.js`; page `/features/share-with-therapist` | `SharingSection.tsx`, `SharingSettings.tsx` |
 | `compare_competitors` | `server.js` (`GATED_FLAG`), `server/marketing/gatedPages.js` | `ComparePage.tsx` |
 | `social_proof` | `server.js` (testimonials article) | `src/components/site/Testimonials.tsx` |
-| `locale_es`, `locale_de`, `locale_pt_br` | none yet (WS12b will add the marketing pages) | `src/i18n/LocaleHost.tsx` (the only link between a language and the flags), `LanguageSettings.tsx` (the card appears while one is on), `meta.ts` |
+| `locale_es`, `locale_de`, `locale_pt_br` | `server/marketing/localePages.js` via `server.js` (`localeState`: flag off = branded 404, on = served; the `reviewed` marker in `dist/i18n/<locale>.json` decides noindex or indexable; sitemap, hreflang, `sb-locales` switcher marker); section 24 | `src/i18n/LocaleHost.tsx` (the only link between a language and the flags), `LanguageSettings.tsx` (the card appears while one is on), `meta.ts` |
 
 ---
 
@@ -1440,5 +1441,28 @@ Full notes: `docs/agents/ws12a-notes.md`. The short version:
   pseudo-locale coverage test (`src/i18n/coverage/*.coverage.test.tsx`: German catalog, every `t()` result wrapped in `⟦ ⟧`, fail on any word outside the marks);
   `scripts/i18n/inventory.test.mjs` requires every file that uses `t()` to be rendered by one or carry a `NOT-RENDERED` reason; `src/i18n/catalogs.test.ts`
   checks keys, placeholders, plural forms and the `NEEDS NATIVE REVIEW` header of every locale.
-- **Not translated:** marketing pages, blog, compare pages, calculators, legal text, the 28 coaching lessons, every server-rendered page and email, the Electron tray menu.
+- **Not translated:** the blog, compare and solution pages, calculators, legal text, the 28 coaching lessons, every server-rendered page and email, the Electron tray menu. (The home page, how it works, pricing and about were done by WS12b: section 24.)
+
+## 24. Localized marketing pages (WS12b, flags `locale_es`, `locale_de`, `locale_pt_br`)
+
+Full notes: `docs/agents/ws12b-notes.md`. The short version:
+
+- **Routes.** `/es`, `/es/pricing`, `/es/how-it-works`, `/es/about`, and the same under `/de` and `/pt-br` (lower case). The language of the page is the URL's:
+  `setPageLocale()` in `src/i18n/core.ts` (never stored); `App.tsx` renders `<LocalizedSite>` before every other route. Route table and the English
+  equivalents: `src/i18n/marketing/routes.ts` (`LOCALIZED_PAGES`).
+- **Three states per language, one function** (`localeState` in `server/marketing/localePages.js`): flag off = the branded 404, no sitemap entry, no hreflang,
+  no switcher; flag on and `reviewed` false = draft (200, `noindex,follow` meta and `X-Robots-Tag`, not in the sitemap, not in any hreflang); flag on and
+  `reviewed` true = live (self canonical, reciprocal hreflang with `x-default`, sitemap `xhtml:link` alternates, localized meta and JSON-LD). `reviewed` is
+  `src/i18n/locales/<x>/reviewed.ts`, copied by the build into `dist/i18n/<locale>.json`; the server reads only that file (`SB_I18N_DIR` swaps the folder,
+  test only).
+- **Build.** `scripts/generate-locale-pages.mjs` (vite `closeBundle`, after `generate-seo-content.mjs`; needs Node 22.18+) renders the crawler article,
+  metadata and FAQ pairs of every page and language to `dist/i18n/*.json` with `{{if flag}}` variants for event sync, phone companion and the sign-in methods
+  (`src/i18n/marketing/{build,articles,translate,signin}.ts`). `/i18n/*` answers 404. `sync-seo.mjs` dates the localized pages in the freshness ledger (their
+  fingerprint is the rendered visible text), and `generate-seo-content.mjs` keeps those rows out of `seo-content.json`.
+- **Components** read text through `useSiteT` (the scope's `t` plus the shared "bag": trial days, USD prices formatted per language, flag-dependent phrases).
+  English keeps its literals and flag-aware copy rules, so English output is unchanged (pinned by tests). `LanguageSwitcher` (header and footer) shows only
+  when the server wrote `<meta name="sb-locales">`, links to the same page in the other language and stores the pick.
+- **Enforcement.** `scripts/i18n/scope.mjs` no longer exempts the converted files; `site*.coverage.test.tsx` render each page in the German pseudo-locale;
+  `articles.test.tsx` checks the crawler article against the React page both ways; `scripts/localePages.test.mjs` boots the real server in each state.
+- **Not translated:** blog, compare, solutions, features and tools pages, legal pages, sign-in, emails, OG images, the testimonials (hidden on localized pages).
 

@@ -17,8 +17,9 @@ import { useMemoryStorage as freshMemoryStorage, resetStorage } from '../../../t
 import { kv } from '../../storage/kv';
 import { resetFlagsForTests } from '../../features/flags';
 import '../persist';
-import { installCatalogForTests, resetLocaleForTests, setAllowedLocales, setLocale, setOutputTransformForTests } from '../core';
+import { installCatalogForTests, installSiteCatalogForTests, resetLocaleForTests, setAllowedLocales, setLocale, setOutputTransformForTests, setPageLocale } from '../core';
 import { catalog } from '../locales/de';
+import { catalog as siteCatalog } from '../locales/de/site';
 import { describeLeaks, findUnmarkedEnglish, mark, type ScanOptions } from './scan';
 
 /** Registers beforeEach/afterEach that put the app in German with marked output, on fresh in-memory storage. */
@@ -30,6 +31,28 @@ export function usePseudoLocale(options: { flags?: string[] } = {}): void {
     installCatalogForTests('de', { reviewed: true, catalog });
     setLocale('de');
     setAllowedLocales(['de']);
+    setOutputTransformForTests(mark);
+  });
+  afterEach(() => {
+    setOutputTransformForTests(null);
+    resetLocaleForTests();
+    resetStorage();
+    resetFlagsForTests();
+  });
+}
+
+/**
+ * Like usePseudoLocale, for the MARKETING pages (WS12b): the page is German because of its address (setPageLocale), the
+ * German marketing catalog is installed, and every t() result is wrapped in the marks. Nothing is picked and no flag is
+ * needed, which is exactly the situation on /de/pricing.
+ */
+export function usePseudoSiteLocale(options: { flags?: string[] } = {}): void {
+  beforeEach(() => {
+    freshMemoryStorage();
+    setFlags(...(options.flags ?? []));
+    resetLocaleForTests();
+    installSiteCatalogForTests('de', { reviewed: true, catalog: siteCatalog });
+    setPageLocale('de');
     setOutputTransformForTests(mark);
   });
   afterEach(() => {

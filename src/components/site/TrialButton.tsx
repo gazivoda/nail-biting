@@ -4,15 +4,14 @@ import { useIsPhone } from '../../hooks/useIsPhone';
 import { canShare, shareToComputer } from '../../utils/phoneLink';
 import { useSignInHref } from '../../auth/useSignInProviders';
 import { useCopyFlag } from '../../features/useFlagCopy';
+import { useT as useChromeT } from '../../i18n/scopes/marketing-chrome';
+import { useSiteT } from '../../i18n/marketing/useSite';
 
 // The app needs a computer webcam, and the trial clock starts at sign-in, so a
 // phone visitor who signs in here spends the trial before they can use it.
 // They get a way to send themselves the link instead. A mailto needs no
 // backend and stores nothing. The small header button keeps its label: it is
 // also where an existing account signs in from a phone.
-const PHONE_MAILTO =
-  'mailto:?subject=' + encodeURIComponent('Stop Biting, for my computer') +
-  '&body=' + encodeURIComponent('Open this on my laptop or desktop: https://stopbiting.today');
 
 type ButtonProps = { tone?: 'solid' | 'light'; size?: 'md' | 'sm'; source?: string };
 
@@ -20,6 +19,7 @@ type ButtonProps = { tone?: 'solid' | 'light'; size?: 'md' | 'sm'; source?: stri
 // demo running in it, stays open.
 export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button' }: ButtonProps) {
   const phone = useIsPhone();
+  const t = useChromeT();
   const signInHref = useSignInHref(); // /api/auth/google unless another sign-in method is switched on
   const className = `sg-btn group ${tone === 'light' ? 'sg-btn-light' : ''} ${size === 'sm' ? 'sg-btn-sm' : ''}`;
 
@@ -31,7 +31,7 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
       onClick={() => track('trial_click', source)}
       className={className}
     >
-      Start free trial
+      {size === 'sm' ? t('trial.startShort') : t('trial.start')}
       <ArrowRight size={size === 'sm' ? 15 : 18} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
     </a>
   );
@@ -47,20 +47,27 @@ export function TrialButton({ tone = 'solid', size = 'md', source = 'cta_button'
 // page (src/features/copyFlags.ts), never from a request.
 function PhoneTrialButton({ className, source, startTrial }: { className: string; source: string; startTrial: React.ReactElement }) {
   const companion = useCopyFlag('phone_companion');
+  const t = useSiteT(useChromeT);
   if (companion) return startTrial;
 
   // With the share sheet the link goes wherever the visitor picks; the href
   // stays a mailto for browsers without it and for when sharing fails.
+  const mailto =
+    'mailto:?subject=' + encodeURIComponent(t('trial.mailSubject')) +
+    '&body=' + encodeURIComponent(t('trial.mailBody'));
   const share = canShare(navigator);
   const onPhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     track('phone_link_click', source);
     if (!share) return;
     e.preventDefault();
-    void shareToComputer(data => navigator.share(data), () => { window.location.href = PHONE_MAILTO; });
+    void shareToComputer(
+      data => navigator.share({ ...data, title: t('trial.mailSubject'), text: t('trial.shareText') }),
+      () => { window.location.href = mailto; },
+    );
   };
   return (
-    <a href={PHONE_MAILTO} onClick={onPhoneClick} className={className}>
-      {share ? 'Send the link to my computer' : 'Email me the link for my computer'}
+    <a href={mailto} onClick={onPhoneClick} className={className}>
+      {share ? t('trial.send') : t('trial.email')}
       <ArrowRight size={18} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5" />
     </a>
   );
