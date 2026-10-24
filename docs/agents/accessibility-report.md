@@ -5,8 +5,9 @@ Measured on 24 October 2026 on a local run of this tree (base `b6b16f9` plus the
 Light and dark themes, 1280 px and 390 px (and 320 px for reflow). No real screen reader and no real assistive technology were used:
 every statement about what a screen reader "hears" is a statement about the page's accessibility tree and live regions.
 
-Result in one line: 29 surfaces checked, 1 not reachable (the mini-window strip). 29 issues found: 15 fixed, 14 open (12 findings and 2
-notes, none High). Lighthouse accessibility is 100 on all 9 reachable URL and form-factor combinations (that number alone proves little: see
+Result in one line: 29 surfaces checked, 1 not reachable (the mini-window strip). 29 issues found: **13 fixed, 16 open** (14 findings and 2
+notes, none High; two of the open ones are fixes that were made and then **taken out on the coordinator's decision** because they are
+visible with every flag off: see "Recommended, owner decision"). Lighthouse accessibility is 100 on all 9 reachable URL and form-factor combinations (that number alone proves little: see
 "Not reached or not verified").
 
 ## Method and tools
@@ -113,19 +114,72 @@ All class-level or markup-level; no colour token and no layout was redesigned. E
 | F9 | `src/background/PausedOverlay.tsx` | Same for the pause panel over the camera frame: focus goes to the camera card's Stop button. | verified in Chrome | f016a8f |
 | F10 | `src/pages/SignIn.tsx` | After "Email me a sign-in link" the form is replaced; focus now lands on "Check your inbox". | verified in Chrome | 6fe8500 |
 | F11 | `src/phone/LogToast.tsx` | Undo removes the toast and its own button; focus now goes to "I bit". | verified in Chrome | 6fe8500 |
-| F12 | `src/pages/Settings.tsx` **(pre-existing, visible with every flag off)** | `dark:placeholder:text-stone-600` on the two "Bite reasons" fields: stone-600 is the dark end of the inverted dark scale, 2.33:1 (needs 4.5). Now `stone-400`: 5.45:1 dark, light unchanged (5.68). | measured both themes | 2d5491c |
-| F13 | `src/components/DetectionWave.tsx` **(pre-existing, only while the wave spikes)** | The red "Detected!" label was 3.96:1 at 12 px on the white card. On a light page it is now `oklch(50% .18 25)`: 6.61:1 (dark keeps the old red, 4.74:1). | measured both themes | 2d5491c |
+| F12 | **REVERTED (recommended, owner decision).** `src/pages/Settings.tsx` **(pre-existing, visible with every flag off)** | `dark:placeholder:text-stone-600` on the two "Bite reasons" fields: stone-600 is the dark end of the inverted dark scale, 2.33:1 (needs 4.5). Now `stone-400`: 5.45:1 dark, light unchanged (5.68). | measured both themes | 2d5491c |
+| F13 | **REVERTED (recommended, owner decision).** `src/components/DetectionWave.tsx` **(pre-existing, only while the wave spikes)** | The red "Detected!" label was 3.96:1 at 12 px on the white card. On a light page it is now `oklch(50% .18 25)`: 6.61:1 (dark keeps the old red, 4.74:1). | measured both themes | 2d5491c |
 | F14 | `src/pages/Log.tsx` | At 320 px the WS3 line "N entries, M marked not a bite" (`shrink-0 whitespace-nowrap`) pushed "Clear all" off the screen and made the page scroll sideways by 10 px. With marked alarms the line may now wrap; with none marked the class string is exactly the old one. | `falsePositive/ui.test.tsx` | f32b80c |
 | F15 | `src/phone/RecentList.tsx` | At 320 px the phone view's "Recent" rows (no-wrap time label) were 6 px wider than the screen and the page scrolled sideways. Found by hiding each block in turn. The row now wraps (`flex-wrap`); the page is 320 wide afterwards. | measured in Chrome | 0a5c2dc |
 
-**Flags-off note for the integration diff.** F12 changes two class names in Settings > Bite reasons, which exists with every flag off, so a flags-off
-DOM comparison against `main` will show them (and F13 changes an inline colour only while an alarm spikes the wave). Both are in one commit
-(`2d5491c`); revert it if the flags-off diff must stay byte-identical. Nothing else here changes flags-off markup (F14 keeps the old class string
-when nothing is marked; the other files render only with a flag on).
+**Flags-off note.** F12 and F13 changed things that exist with every flag off (two class names in Settings > Bite reasons; an inline colour while
+the wave spikes), so they were **reverted** (commit `caa871f`, a plain revert of `2d5491c`) when the site had to stay byte-identical with
+every flag off. They are kept as recommendations below. Nothing else here changes flags-off markup: F14 keeps the old class string when nothing
+is marked ("Not a bite" needs `false_positive_controls`), F15 is in the phone view, the other files render only with a flag on. The DOM of the
+Watch, History and Settings tabs was compared again after the merge (`flags-off-diff-report.md`, section 10).
 
-Checks run for the code changes, on the final tree: `npx tsc -b` exit 0; `npx vitest run` 152 files passed, 1 skipped (the privacy smoke
-test), 2885 tests passed, 2 skipped; `npx eslint src scripts server electron test-utils` 23 errors and 4 warnings, the same count as the
-baseline (the two errors in `DetectionWave.tsx` are among them and are not mine); each fix above re-measured in Chrome on a fresh probe build.
+### Recommended, owner decision (not applied)
+
+Both are contrast fixes for screens that exist today with no flag. They failed WCAG 1.4.3 (4.5:1) when measured, and the numbers below were
+measured with the change in place. Applying them makes the flags-off site differ from production by two class names and one colour, so they are
+yours to take or leave.
+
+1. **Settings > Bite reasons, dark mode: the placeholders of the two fields are 2.33:1.** In `src/pages/Settings.tsx`, `ReasonsSection`, on both
+   inputs (the emoji field and the reason field), change `dark:placeholder:text-stone-600` to `dark:placeholder:text-stone-400` (5.45:1 in dark;
+   light is unchanged at 5.68:1). That is the whole change, two class names.
+2. **The red "Detected!" label on the wave is 3.96:1 on the white card in light mode (12 px text needs 4.5).** In `src/components/DetectionWave.tsx`
+   add `const RED_LABEL_LIGHT = 'oklch(50% 0.180 25)';` next to `RED`, and change `labelRef.current.style.color = RED;` to
+   `labelRef.current.style.color = document.documentElement.classList.contains('dark') ? RED : RED_LABEL_LIGHT;` (6.61:1 in light; dark keeps
+   the old red at 4.74:1). It shows only while the wave spikes.
+
+Until then they are the two open items **O15** and **O16** below. The harness still measures them: `docs/agents/a11y-audit/a14_verify.mjs`.
+
+Checks run for the code changes, on the final merged tree (after merging WS12a): `npx tsc -b` exit 0; `npm test` 174 files passed, 1 skipped
+(the privacy smoke test), 3,559 tests passed, 2 skipped; scoped lint 23 errors and 4 warnings, the baseline; every fix re-measured in Chrome
+on a fresh probe build, in English and in German (next section).
+
+## Re-check after merging WS12a (English and German)
+
+WS12a moved every string of the signed-in app into `t()` calls and extracted some JSX into new components (`SentNotice`, `ScheduleNotice`), so
+eight files conflicted with the fixes above. Resolution rule: keep WS12a's `t('...')` and extracted components, re-apply the focus and ARIA fixes
+on top. What that took: `BackgroundSlot.tsx` (the `firstPause` ref and the Resume hand-off kept, texts from the catalog),
+`ScheduleSettings.tsx` (`ScheduleNotice` got an optional `allowRef` for its Allow button; "Not now" now finds the switch by its **translated**
+label instead of the English `SWITCH_LABEL`), `SignIn.tsx` (`SentNotice` got an optional `headingRef`; the heading is focusable), `CalibrationView.tsx`
+and `steps.ts` (the one-announcement-per-step sentences are now five catalog keys `announce.*` in `src/i18n/scopes/calibration.ts` and in the es, de
+and pt-BR catalogs), `HeatmapGrid.tsx` (kept `div role="img"`, took WS12a's `heat.fewer` / `heat.more` keys), `SharingSettings.tsx`,
+`PhotoDiary.tsx`, `UrgeTimer.tsx` (the phase word in the live region uses the existing `urge.breatheIn` / `urge.breatheOut`). The lint rule
+(`local-i18n`) and the catalog parity tests would have failed on any English that slipped through; they pass.
+
+**English, on the merged tree** (the harness scripts `a1`, `a3`, `a5`, `a6`, `a9`, `a12`, `a13`, `a14`, `a18`, `a20`, `a22` run again; outputs
+matched the earlier run): pausing and Resume now -> focus on the first pause choice; schedule on -> focus on "Allow notifications"; "Done" and
+the revoke confirm -> focus on "Make a share link"; first photo saved -> focus on "Take this week's photo"; sign-in link sent -> focus on "Check your
+inbox"; calibration -> no live churn in 6 s and one step sentence per step; reflow at 320 px clean. The only measurements that changed are the two
+reverted ones (`a14`: "Detected!" 3.96:1 light, placeholders 2.33:1 dark).
+
+**German, flag `locale_de` on, the language picked through the same storage key the Language card writes** (new script
+`docs/agents/a11y-audit/a23_de.mjs`; every German text is read from the catalog, none typed; `<html lang>` = `de`). The "reviewed" marker needs no
+override: it only adds a note to the Language card, nothing else depends on it.
+
+| Surface | Result in German |
+|---|---|
+| Pause card: "Jetzt fortsetzen" | focus goes to "15 Minuten" (the first pause choice): OK |
+| Urge timer ("Ich spüre einen Drang", "Starten", "Stopp") | one phase word announced per phase ("Einatmen" then "Ausatmen", x1 in 7 s); after "Stopp" focus is on "Rückgängig": OK. (The camera card's button is also called "Stopp": a script that clicks the first "Stopp" stops detection. People are not affected, scripts are.) |
+| Calibration | the dialog announces "Schritt 1 von 2. Stütze dein Kinn ... Halte die Position." once, no churn in 6 s, Escape closes it and focus returns to "Kalibrieren"; no sideways scroll: OK |
+| Schedule | "Erinnere mich daran, die Überwachung zu starten" -> focus on "Benachrichtigungen erlauben"; "Jetzt nicht" -> focus back on the switch: OK |
+| Sharing | "Fertig" -> focus on "Link zum Teilen erstellen": OK |
+| Insights | three charts are `div role="img"` with German labels ("59 Bisse in diesem Zeitraum ...", "83 Bisse in diesem Bereich. Der aktivste Zeitraum ist Sonntag ..."), caption "Weniger ... Mehr"; contrast 7.06 light / 8.23 dark minimum, 0 failures; 44 px targets: OK |
+| Photo diary | after the first photo focus is on "Mach das Foto dieser Woche" (the Take button): OK |
+| Sign-in | after sending, focus is on "Schau in dein Postfach"; no sideways scroll at 390 px: OK |
+| 390 px, German | Watch, History, Settings and Sign-in: `scrollWidth` 390, no sideways scroll |
+
+Not repeated in Spanish or Portuguese (same code path, German is the longest text); not repeated with a real screen reader.
 
 ## Open issues
 
@@ -148,6 +202,8 @@ Low is a best practice, a minor barrier or a deliberate trade-off; Info is a not
 | O12 | Low | Escape does not cancel the inline two-step confirms (photos, data, History). The safe button has focus, so it is one key either way. | `TwoStepDelete.tsx`, `DataSettings.tsx` | Add an Escape handler to the confirm group. |
 | O13 | Info | Axe `region` (best practice): the toast, the coaching card and the install prompt are outside every landmark. | portals | None needed for the toasts; `role="region"` and a name on the install prompt if wanted. |
 | O14 | Info | History at 390 px: 32 controls between 37.5 and 44 px (the row buttons). Passes 2.5.8 (24 px), not the 44 px guidance. | `Log.tsx` | None. |
+| O15 | Medium | Settings > Bite reasons, dark mode: the placeholders are 2.33:1 (needs 4.5). Visible with every flag off. This was F12; it was reverted to keep the flags-off site identical. | `Settings.tsx` `ReasonsSection` | Owner: two class names, see "Recommended, owner decision". |
+| O16 | Low | The 12 px red "Detected!" label on the wave is 3.96:1 on the white card in light mode (needs 4.5). Shown only while the wave spikes. This was F13; reverted for the same reason. | `DetectionWave.tsx` | Owner: one colour constant, see "Recommended, owner decision". |
 
 ## Not reached or not verified
 
