@@ -199,6 +199,15 @@ Codes raised: `data-uri`, `events-call-while-sync-off`, `file-upload`, `float-ar
 
 <!-- results:end -->
 
+### Re-run on the merged tree (WS12a and `origin/main`), 90 seconds per mode
+
+The five-minute results above were taken on the tree before WS12a and the SEO commits were merged. After the merge the normal build was audited
+again in all four modes, 90 seconds each (`node scripts/privacy-audit/run.mjs --mode all --seconds 90`): **flags off PASS** (135 requests),
+**sync OFF PASS** (150 requests, 0 to `/api/events/*`), **sync ON PASS** (154 requests, 4 sync POSTs carrying 7 events, only whitelisted keys),
+**canary CAUGHT** (11 of 11). Hosts: the app's origin, `www.googletagmanager.com` and `www.google-analytics.com`, as before. The service worker is
+active and makes 75 requests of its own (65 before the merge: WS12a and the merged chunks are in the precache). The locale catalogs are lazy and are
+not fetched while English is in use. The five-minute set and the probe-build runs (real alarms) will be repeated after WS12b.
+
 ## 4. Hosts
 
 Allowed by the audit (and present in the server's CSP): the app's own origin; `www.googletagmanager.com`,

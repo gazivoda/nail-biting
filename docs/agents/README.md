@@ -1,7 +1,7 @@
 # docs/agents: index
 
-Everything the Stop Biting multi-agent build left behind, in one list. Written by WS13 on 2026-10-24 (`main` at b6b16f9). WS12
-(localization) had not landed yet: when it does it adds `ws12*-notes.md` here and the WS13 agent updates this index.
+Everything the Stop Biting multi-agent build left behind, in one list. Written by WS13 on 2026-10-24 and updated after WS12a (localization of
+the app screens) was merged. WS12b (the marketing pages) had not landed yet: when it does it adds `ws12b-notes.md` here and the WS13 agent updates this index.
 
 ## Start here
 
@@ -45,7 +45,8 @@ files. The first block is what the owner needs; the rest is detail.
 | [`ws10-notes.md`](ws10-notes.md) | WS10 Share links | Endpoints, exactly what a link reveals, the page, the service-worker caveat. | Before `share_links`. |
 | [`ws11a-notes.md`](ws11a-notes.md) | WS11a Site fixes | Privacy wording changes, meta, FAQ markup, testimonials, the two competitor pages and **every competitor fact with its source URL**. | Before `compare_competitors` or `social_proof`. |
 | [`ws11b-notes.md`](ws11b-notes.md) | WS11b Feature marketing | The six gated pages, flag-aware copy rules, the desktop STOP banner, stale legal-page sentences. | Before turning on any feature that has a page. |
-| `ws12*-notes.md` | WS12 Localization | **Pending.** Not in this tree yet. | Before any `locale_*` flag. |
+| [`ws12a-notes.md`](ws12a-notes.md) (+ `ws12a-evidence/`) | WS12a Localization of the signed-in app (es, de, pt-BR) | The translation layer `src/i18n/`, how to add a string or a language, how to turn a language on, what is not translated, the glossary. Evidence screenshots. | The owner, and a native speaker, before any `locale_*` flag. |
+| `ws12b-notes.md` | WS12b Localization of the marketing pages | **Pending.** Not in this tree yet. | Before the marketing pages are translated. |
 
 ## Evaluation reports (synthetic: do not quote them)
 
