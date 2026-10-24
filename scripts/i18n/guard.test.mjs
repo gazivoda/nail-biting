@@ -43,7 +43,13 @@ describe('no English text in the code of the app', () => {
     expect(isInScope('src/pages/Settings.tsx')).toBe(true);
     expect(isInScope('src/pages/Landing.tsx')).toBe(false);
     expect(isInScope('src/data/blogPosts.ts')).toBe(false);
-    expect(isInScope('src/components/site/SiteHeader.tsx')).toBe(false);
+    // WS12b: the site chrome and the pricing page are translated, so they are checked; the blog and the legal pages are not
+    expect(isInScope('src/components/site/SiteHeader.tsx')).toBe(true);
+    expect(isInScope('src/pages/PricingPage.tsx')).toBe(true);
+    expect(isInScope('src/components/PricingSection.tsx')).toBe(true);
+    expect(isInScope('src/components/site/BlogMidCta.tsx')).toBe(false);
+    expect(isInScope('src/pages/BlogIndex.tsx')).toBe(false);
+    expect(isInScope('src/pages/PrivacyPage.tsx')).toBe(false);
     expect(isInScope('src/components/demo/HeroDemo.tsx')).toBe(false);
     expect(isExcluded('src/pages/Log.test.tsx')).toBe(true);
     expect(isInScope('server/routes/phone.js')).toBe(false);

@@ -51,7 +51,7 @@ export function SiteFooter({ cta = true, ctaSource, page }: { cta?: boolean; cta
         <p aria-hidden="true" className="mt-12 select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.06em] text-[color:var(--c-signal)]">{t('footer.tagline')}</p>
         <p className="sg-small mt-10 border-t border-[color:var(--sg-rule)] pt-6">
           {t('footer.copy', { year: new Date().getFullYear() })}{' '}
-          <a href="https://stopbiting.today/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">stopbiting.today</a>
+          <a href="https://stopbiting.today/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">stopbiting.today</a>{/* i18n-ignore: the site's own address, not copy */}
         </p>
       </div>
     </footer>

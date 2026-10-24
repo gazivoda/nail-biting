@@ -124,9 +124,10 @@ describe('locale files carry the review header', () => {
     for (const file of files) expect(raw[file].split('\n')[0], file).toMatch(/NEEDS NATIVE REVIEW/);
   });
 
-  it('the index of each locale exports reviewed = false', () => {
+  it('the review marker of each locale (reviewed.ts, re-exported by the index; WS12b moved it so the marketing chunk can read it alone) is false', () => {
     for (const code of ['es', 'de', 'pt-BR']) {
-      expect(raw[`./locales/${code}/index.ts`], code).toMatch(/export const reviewed = false;/);
+      expect(raw[`./locales/${code}/reviewed.ts`], code).toMatch(/export const reviewed = false;/);
+      expect(raw[`./locales/${code}/index.ts`], code).toMatch(/export \{ reviewed \} from '\.\/reviewed';/);
     }
   });
 });

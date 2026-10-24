@@ -36,7 +36,7 @@ tester.run('no-hardcoded-text', plugin.rules['no-hardcoded-text'], {
     { filename: file, code: 'const A = () => <code>npm install</code>; // i18n-ignore: a shell command' },
     // files the scope list exempts are not checked at all
     { filename: 'src/pages/Landing.tsx', code: 'const A = () => <h1>Stop biting your nails</h1>;' },
-    { filename: 'src/components/site/SiteFooter.tsx', code: 'const A = () => <p>All rights reserved</p>;' },
+    { filename: 'src/components/site/BlogMidCta.tsx', code: 'const A = () => <p>All rights reserved</p>;' },
     { filename: 'src/data/example.tsx', code: 'export const x = <p>Anything at all</p>;' },
     { filename: 'src/pages/Log.test.tsx', code: 'const A = () => <p>Expected text</p>;' },
   ],

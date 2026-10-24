@@ -20,7 +20,7 @@ import { useFlagIsOn } from '../../features/useFlagCopy';
 import { useT as useChromeT } from '../scopes/marketing-chrome';
 import { siteBag } from './bag';
 import { methodsText, type MethodNames } from './signin';
-import { pagePath, type SitePage } from './routes';
+import { isLocalizedPage, pagePath, type SitePage } from './routes';
 
 export type ScopeFn<K extends string> = {
   (key: K, params?: Params): string;
@@ -62,14 +62,14 @@ export function useSiteT<K extends string>(useScopeT: () => ScopeFn<K>): ScopeFn
   );
 }
 
-/** The addresses of the four localized pages in the language on screen. */
+/**
+ * The addresses of the four core pages in the language on screen. A page that has no version in that language yet (see
+ * LOCALIZED_PAGES in routes.ts) points at the English one, so a link never lands on a 404.
+ */
 export function useSitePaths(): Record<SitePage, string> & { locale: string } {
   const { locale } = useLocale();
-  return useMemo(() => ({
-    locale,
-    home: pagePath(locale, 'home'),
-    how: pagePath(locale, 'how'),
-    pricing: pagePath(locale, 'pricing'),
-    about: pagePath(locale, 'about'),
-  }), [locale]);
+  return useMemo(() => {
+    const at = (page: SitePage) => pagePath(isLocalizedPage(page) ? locale : 'en', page);
+    return { locale, home: at('home'), how: at('how'), pricing: at('pricing'), about: at('about') };
+  }, [locale]);
 }

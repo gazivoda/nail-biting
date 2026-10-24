@@ -112,8 +112,9 @@ export function decorateEnglishHtml(html, requestPath, { states, files }) {
   const offered = servedLocales(states).filter(l => files[l]?.paths[page]);
   if (offered.length === 0) return html;
   const marker = `<meta name="sb-locales" content="${offered.join(' ')}">`;
-  const links = hreflangLinkTags(hreflangSet(page, states, files));
-  return html.replace('</head>', () => `${marker}${links ? `\n    ${links}\n  ` : ''}</head>`);
+  // Appended with no whitespace of their own, so taking the marker and the links out again gives back the page as it was.
+  const links = hreflangSet(page, states, files).map(h => `<link rel="alternate" hreflang="${h.hreflang}" href="${h.href}">`).join('');
+  return html.replace('</head>', () => `${marker}${links}</head>`);
 }
 
 // ── sitemap ──────────────────────────────────────────────────────────────────
@@ -178,7 +179,7 @@ export function localizedNotFound(englishHtml, data) {
     ['<h1>This page doesn\'t exist.</h1>', `<h1>${escapeHtml(data.notFound.h1)}</h1>`],
     ['<p>The link may be broken or the page may have moved. The app, the guides and everything else are where they were.</p>', `<p>${escapeHtml(data.notFound.p)}</p>`],
     ['<a class="btn btn-solid" href="/">Go to the homepage</a>', `<a class="btn btn-solid" href="${home}">${escapeHtml(data.notFound.home)}</a>`],
-    ['<a class="btn btn-line" href="/blog">Read the guides</a>', `<a class="btn btn-line" href="/blog" hreflang="en">${escapeHtml(data.notFound.blog)}</a>`],
+    ['<a class="btn btn-line" href="/blog">Read the guides</a>', `<a class="btn btn-line" href="/blog">${escapeHtml(data.notFound.blog)}</a>`],
     ['<a class="brand" href="/">', `<a class="brand" href="${home}">`],
   ];
   let out = englishHtml;
@@ -201,7 +202,7 @@ export function localizedNoscriptNav(html, data, englishItems, escape = escapeHt
   const own = data.nav.map(([href, label]) => `<li><a href="${escape(href)}">${escape(label)}</a></li>`);
   const english = englishItems
     .filter(([href]) => !covered.has(href))
-    .map(([href, label]) => `<li><a href="${escape(href)}" hreflang="en" lang="en">${escape(label)}</a></li>`);
+    .map(([href, label]) => `<li><a href="${escape(href)}" lang="en">${escape(label)}</a></li>`);
   const nav = `<noscript><nav aria-label="${escape(data.navLabel)}"><h2>Stop Biting</h2><ul>${[...own, ...english].join('')}</ul></nav></noscript>`;
   return html.replace('</body>', () => `    ${nav}\n  </body>`);
 }

@@ -60,14 +60,16 @@ export function buildPricing(tr: Translator, locale: SiteLocale): PageFile {
     `<h1>${e(c('pricing.heading'))}</h1>` +
     `<p class="article-summary">${e(c('pricing.lede'))}</p>` +
     // The two cards, in the order the page draws them: Yearly (the recommended one) first.
-    `<section><h2>${e(c('pricing.yearly'))}</h2>` +
-    `<p>${e(c('pricing.badge.save'))}</p>` +
+    `<section><p>${e(c('pricing.badge.save'))}</p>` +
+    `<h2>${e(c('pricing.yearly'))}</h2>` +
     `<p>${e(String(tr.bag.pYearly))} ${e(c('pricing.perYear'))}</p>` +
     `<p>${e(c('pricing.yearly.eq'))}</p>` +
     li([...features, e(c('plan.extra'))]) + '</section>' +
     `<section><h2>${e(c('pricing.monthly'))}</h2>` +
     `<p>${e(String(tr.bag.pMonthly))} ${e(c('pricing.perMonth'))}</p>` +
     `<p>${e(c('pricing.monthly.billed'))}</p>` +
+    // the page draws this line on a phone and the list on a desktop; the article has both, in the page's order
+    `<p>${e(c('pricing.monthly.short'))}</p>` +
     li(features) + '</section>' +
     `<p>${payments}</p>` +
     `<section><h2>${e(p('includes.heading'))}</h2>` +
