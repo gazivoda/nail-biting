@@ -173,6 +173,14 @@ function SharingCard() {
   );
 }
 
+/** Puts keyboard focus on `target` if the element that had it was just removed (focus is then on the page itself). */
+function keepFocusOn(target: HTMLElement | null) {
+  window.setTimeout(() => {
+    const a = document.activeElement;
+    if (!a || a === document.body) target?.focus();
+  }, 0);
+}
+
 export interface SharingCardViewProps {
   signedIn: boolean;
   /** This account has switched on sync on this browser, and the sync feature is on. */
@@ -210,11 +218,17 @@ export function SharingCardView(p: SharingCardViewProps) {
   const labelId = useId();
   const expiryId = useId();
   const linkInput = useRef<HTMLInputElement>(null);
+  const createButton = useRef<HTMLButtonElement>(null);
   const hasCreated = p.created !== null;
   // The panel with the new link appears with the link selected, ready to copy.
   useEffect(() => {
     if (hasCreated) linkInput.current?.select();
   }, [hasCreated]);
+  // The button that had focus ("Done" on the new-link panel, "Yes, revoke this link") disappears when it is pressed, and
+  // keyboard focus would fall back to the top of the page. If that happened, put it on the main button of the card.
+  useEffect(() => {
+    if (p.status) keepFocusOn(createButton.current); // "Link revoked."
+  }, [p.status]);
   const preview = previewFor(p.form.detailed);
   const links = p.list?.links ?? [];
   const atLimit = p.list !== null && links.length >= p.list.max;
@@ -282,7 +296,7 @@ export function SharingCardView(p: SharingCardViewProps) {
             </Row>
           </div>
 
-          <div className={panel} aria-label={t('preview.title')}>
+          <div className={panel} role="group" aria-label={t('preview.title')}>
             <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('preview.title')}</p>
             <ul className={`list-disc space-y-1 pl-5 ${note}`}>
               {preview.shows.map(line => <li key={line}>{line}</li>)}
@@ -294,7 +308,7 @@ export function SharingCardView(p: SharingCardViewProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button type="button" onClick={p.onCreate} disabled={p.creating || atLimit} className={primary}>
+            <button ref={createButton} type="button" onClick={p.onCreate} disabled={p.creating || atLimit} className={primary}>
               {p.creating ? t('create.busy') : t('create.button')}
             </button>
             {atLimit && p.list && (
@@ -320,7 +334,7 @@ export function SharingCardView(p: SharingCardViewProps) {
                 <button type="button" onClick={() => p.onCopy(linkInput.current)} className={primary}>
                   {p.copied === 'copied' ? t('new.copied') : t('new.copy')}
                 </button>
-                <button type="button" onClick={p.onDismissCreated} className={pill}>{tc('done')}</button>
+                <button type="button" onClick={() => { p.onDismissCreated(); keepFocusOn(createButton.current); }} className={pill}>{tc('done')}</button>
               </div>
               <p role="status" aria-live="polite" className={note}>
                 {p.copied === 'copied' && t('new.copiedStatus')}

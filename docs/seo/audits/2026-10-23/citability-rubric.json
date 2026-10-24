@@ -1,0 +1,357 @@
+{
+  "url": "https://stopbiting.today/",
+  "as_of": "2026-10-23",
+  "method": "Editorial heuristic scored actual SSR prose paragraphs and lists; navigation excluded. Not measured AI citation likelihood or ranking. Statistics dimension also credits precise product specifications. Accuracy and sourcing evaluated separately.",
+  "weights": [
+    0.25,
+    0.2,
+    0.2,
+    0.2,
+    0.15
+  ],
+  "blocks": [
+    {
+      "block": "Homepage product standfirst",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 90,
+        "structure": 60,
+        "specificity": 95,
+        "uniqueness": 80
+      },
+      "score": 81.0,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "Hero product explanation",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 85,
+        "structure": 60,
+        "specificity": 15,
+        "uniqueness": 70
+      },
+      "score": 62.5,
+      "flag": "improvable"
+    },
+    {
+      "block": "60-second live demo instructions",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 75,
+        "structure": 70,
+        "specificity": 95,
+        "uniqueness": 80
+      },
+      "score": 81.25,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "History and trigger tagging",
+      "dimensions": {
+        "answer": 75,
+        "self_containment": 65,
+        "structure": 65,
+        "specificity": 20,
+        "uniqueness": 70
+      },
+      "score": 59.25,
+      "flag": "improvable"
+    },
+    {
+      "block": "How to start",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 75,
+        "structure": 65,
+        "specificity": 0,
+        "uniqueness": 60
+      },
+      "score": 57.0,
+      "flag": "improvable"
+    },
+    {
+      "block": "Before you start requirements list",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 75,
+        "structure": 95,
+        "specificity": 40,
+        "uniqueness": 75
+      },
+      "score": 73.25,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "Why awareness matters",
+      "dimensions": {
+        "answer": 70,
+        "self_containment": 75,
+        "structure": 60,
+        "specificity": 0,
+        "uniqueness": 40
+      },
+      "score": 50.5,
+      "flag": "improvable"
+    },
+    {
+      "block": "Competing-response metaphor",
+      "dimensions": {
+        "answer": 70,
+        "self_containment": 60,
+        "structure": 60,
+        "specificity": 0,
+        "uniqueness": 60
+      },
+      "score": 50.5,
+      "flag": "improvable"
+    },
+    {
+      "block": "When to find a clinician",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 80,
+        "structure": 65,
+        "specificity": 0,
+        "uniqueness": 30
+      },
+      "score": 53.5,
+      "flag": "improvable"
+    },
+    {
+      "block": "On-device privacy explanation",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 75,
+        "structure": 65,
+        "specificity": 0,
+        "uniqueness": 85
+      },
+      "score": 62.0,
+      "flag": "improvable"
+    },
+    {
+      "block": "Founder lived-experience paragraph",
+      "dimensions": {
+        "answer": 75,
+        "self_containment": 75,
+        "structure": 60,
+        "specificity": 60,
+        "uniqueness": 95
+      },
+      "score": 72.0,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "Price, trial, cancellation and refund summary",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 85,
+        "structure": 70,
+        "specificity": 100,
+        "uniqueness": 75
+      },
+      "score": 83.5,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: what Stop Biting is",
+      "dimensions": {
+        "answer": 65,
+        "self_containment": 95,
+        "structure": 55,
+        "specificity": 100,
+        "uniqueness": 85
+      },
+      "score": 79.0,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: why people bite nails",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 95,
+        "structure": 75,
+        "specificity": 60,
+        "uniqueness": 30
+      },
+      "score": 71.75,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: best remedies",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 80,
+        "structure": 70,
+        "specificity": 0,
+        "uniqueness": 35
+      },
+      "score": 55.25,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: what HRT is",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 95,
+        "structure": 80,
+        "specificity": 15,
+        "uniqueness": 30
+      },
+      "score": 63.75,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: potential harms",
+      "dimensions": {
+        "answer": 75,
+        "self_containment": 55,
+        "structure": 65,
+        "specificity": 0,
+        "uniqueness": 30
+      },
+      "score": 47.25,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: camera privacy",
+      "dimensions": {
+        "answer": 90,
+        "self_containment": 85,
+        "structure": 70,
+        "specificity": 0,
+        "uniqueness": 75
+      },
+      "score": 64.75,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: time to stop biting",
+      "dimensions": {
+        "answer": 60,
+        "self_containment": 90,
+        "structure": 50,
+        "specificity": 95,
+        "uniqueness": 55
+      },
+      "score": 70.25,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: credit card and cancellation",
+      "dimensions": {
+        "answer": 90,
+        "self_containment": 90,
+        "structure": 70,
+        "specificity": 95,
+        "uniqueness": 55
+      },
+      "score": 81.75,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: phone compatibility",
+      "dimensions": {
+        "answer": 90,
+        "self_containment": 75,
+        "structure": 70,
+        "specificity": 0,
+        "uniqueness": 70
+      },
+      "score": 62.0,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: Google sign-in",
+      "dimensions": {
+        "answer": 90,
+        "self_containment": 80,
+        "structure": 65,
+        "specificity": 0,
+        "uniqueness": 65
+      },
+      "score": 61.25,
+      "flag": "improvable"
+    },
+    {
+      "block": "FAQ: other webcam apps",
+      "dimensions": {
+        "answer": 75,
+        "self_containment": 90,
+        "structure": 70,
+        "specificity": 70,
+        "uniqueness": 75
+      },
+      "score": 76.0,
+      "flag": "citation-ready"
+    }
+  ],
+  "top_five": [
+    {
+      "block": "Price, trial, cancellation and refund summary",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 85,
+        "structure": 70,
+        "specificity": 100,
+        "uniqueness": 75
+      },
+      "score": 83.5,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: credit card and cancellation",
+      "dimensions": {
+        "answer": 90,
+        "self_containment": 90,
+        "structure": 70,
+        "specificity": 95,
+        "uniqueness": 55
+      },
+      "score": 81.75,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "60-second live demo instructions",
+      "dimensions": {
+        "answer": 85,
+        "self_containment": 75,
+        "structure": 70,
+        "specificity": 95,
+        "uniqueness": 80
+      },
+      "score": 81.25,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "Homepage product standfirst",
+      "dimensions": {
+        "answer": 80,
+        "self_containment": 90,
+        "structure": 60,
+        "specificity": 95,
+        "uniqueness": 80
+      },
+      "score": 81.0,
+      "flag": "citation-ready"
+    },
+    {
+      "block": "FAQ: what Stop Biting is",
+      "dimensions": {
+        "answer": 65,
+        "self_containment": 95,
+        "structure": 55,
+        "specificity": 100,
+        "uniqueness": 85
+      },
+      "score": 79.0,
+      "flag": "citation-ready"
+    }
+  ],
+  "page_citability": 81.3,
+  "brand_sample_score": 0,
+  "crawler_score": 85,
+  "llms_score": 90,
+  "ai_visibility_heuristic": 58.7
+}

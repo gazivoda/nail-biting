@@ -372,7 +372,9 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
             <div className="space-y-6">
               {/* Header row with clear-all */}
               <div className="flex items-center justify-between gap-3 px-1">
-                <p className="shrink-0 whitespace-nowrap text-sm font-semibold text-stone-700 dark:text-stone-200">
+                {/* With nothing marked the line is short and stays on one line (as it always was). "N entries, M marked not a bite"
+                    is longer: it may wrap, or at 320 px it pushed "Clear all" off the screen and made the page scroll sideways. */}
+                <p className={`${markedCount === 0 ? 'shrink-0 whitespace-nowrap' : 'min-w-0'} text-sm font-semibold text-stone-700 dark:text-stone-200`}>
                   {markedCount === 0
                     ? t('list.count', { count: shown.length })
                     : t('list.countMarked', { counted: countedEntries, marked: markedCount })}

@@ -189,7 +189,7 @@ export function UrgeTimer({ initial }: { initial?: Ui } = {}) {
   );
 }
 
-function Breathing({ session, now, onStop, stopRef }: {
+export function Breathing({ session, now, onStop, stopRef }: {
   session: RunningSession;
   now: number;
   onStop: () => void;
@@ -203,6 +203,10 @@ function Breathing({ session, now, onStop, stopRef }: {
   const scale = elapsed < 120 ? SMALL : b.target === 1 ? 1 : SMALL;
   return (
     <div className="rounded-2xl border border-stone-200 bg-white p-5 text-center motion-safe:animate-fade-up dark:border-ink-400 dark:bg-ink-50">
+      {/* For a screen reader the picture and the ticking text below are hidden, so this is the guide: the phase word only,
+          read out when it changes (about every 4 to 6 seconds), never the seconds. Text that has not changed is not
+          touched in the page, so nothing is read again until the phase turns over. */}
+      <p role="status" aria-live="polite" aria-atomic="true" className="sr-only">{b.phase === 'in' ? t('urge.breatheIn') : t('urge.breatheOut')}</p>
       {/* The circle is decorative and not shown under reduced motion. The words below carry the instruction. */}
       <div aria-hidden="true" className="mx-auto grid h-40 w-40 place-items-center rounded-full border-2 border-forest-300 motion-reduce:hidden dark:border-forest-600">
         <div

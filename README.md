@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Stop Biting
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Stop Biting](https://stopbiting.today/) is a webcam app that alerts you when your hand reaches your mouth, helping you notice nail biting while you work at a computer. Built by [Igor Gazivoda](https://github.com/gazivoda).
 
-Currently, two official plugins are available:
+Try the [live detector demo](https://stopbiting.today/) without an account, or read [how it works](https://stopbiting.today/how-it-works). Current trial and subscription details are on the [pricing page](https://stopbiting.today/pricing).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What it does
 
-## React Compiler
+- Uses Google MediaPipe and WebAssembly to detect hand-to-mouth proximity on your device.
+- Offers sound and visual alerts, incident history, trigger tags and streak tracking.
+- Runs in a desktop browser with a webcam. Detection needs an open app window; it cannot cover time away from the camera.
+- Sends no camera data while detection runs. Signing in, payments, analytics and other online features use the network; see the [privacy policy](https://stopbiting.today/privacy).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Hand-to-mouth proximity is a signal, so alerts can include false positives and miss some biting. Stop Biting has no clinical efficacy study and is not a medical treatment. The [accuracy explanation](https://stopbiting.today/blog/nail-biting-detection-accuracy) describes its limits.
 
-## Expanding the ESLint configuration
+## Guides and free tools
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [How to stop nail biting](https://stopbiting.today/blog/how-to-stop-nail-biting)
+- [Body-focused repetitive behaviours explained](https://stopbiting.today/blog/bfrb-guide)
+- [Apps that detect nail biting compared](https://stopbiting.today/compare/ai-detection-apps)
+- [Nail growth timeline calculator](https://stopbiting.today/tools/nail-growth-timeline-calculator)
+- [Printable 30-day nail biting tracker](https://stopbiting.today/tools/nail-biting-tracker-printable)
+- [Editorial policy, sources and corrections](https://stopbiting.today/editorial-policy)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Local development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Use Node.js 22.18 or newer; the content scripts import TypeScript directly.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm ci
+cp .env.example .env
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Fill in the Google OAuth and JWT settings in `.env` to use sign-in locally. The example file documents the optional payment, email and contact-form settings. Keep credentials out of Git.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Vite serves the client at `http://localhost:5173` and proxies `/api` to the Express server on port 3000.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm test
+npm run build:web
+npm run seo:check
+npm start
 ```
+
+`build:web` produces the website with absolute asset URLs. `build` uses the relative asset paths needed by Electron. `npm start` serves the production web bundle from `dist/`.
+
+## Content and search metadata
+
+Articles live in `src/data/blogPosts.ts`; comparison and solution pages live in `src/data/comparePages.ts`. The web build generates article JSON and the server-rendered content from those sources. After changing page metadata, run `npm run seo:sync` and `npm run seo:check` to keep the sitemap, article index and LLM index synchronized.
+
+The [October 2026 audit](docs/seo/audits/2026-10-23/REPORT.md) records verified issues, implemented improvements and the measurement plan. Report product issues through this repository; send editorial corrections to [hello@stopbiting.today](mailto:hello@stopbiting.today).

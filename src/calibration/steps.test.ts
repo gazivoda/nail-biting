@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { BETWEEN_SECONDS, START, addFrame, begin, belongsToReal, belongsToRest, cancel, failureMessage, framesSoFar, profileToSave, secondsLeft, tick } from './steps';
+import { BETWEEN_SECONDS, START, addFrame, begin, belongsToReal, belongsToRest, cancel, failureMessage, framesSoFar, profileToSave, secondsLeft, stepAnnouncement, tick } from './steps';
 import { CALIBRATION } from '../detection/calibration';
 import type { PoseFeatures } from '../detection/pose';
 
@@ -107,5 +107,18 @@ describe('calibration steps', () => {
     const total = CALIBRATION.stepSeconds * 2 + BETWEEN_SECONDS;
     expect(total).toBeGreaterThanOrEqual(45);
     expect(total).toBeLessThanOrEqual(60);
+  });
+  it('what a screen reader says is the same text for a whole step: no clock, no frame count (a live region carrying it is read once per step, not every second)', () => {
+    const rest = begin(START, T0);
+    const sameAllStep = [0, 1000, 5000, STEP_MS - 1].map(ms => stepAnnouncement(addFrame(tick(rest, T0 + ms), restPose())));
+    expect(new Set(sameAllStep).size).toBe(1);
+    expect(sameAllStep[0]).toMatch(/Step 1 of 2/);
+    expect(stepAnnouncement(START)).toBe('');
+    expect(stepAnnouncement(cancel())).toBe('');
+    const between = tick(rest, T0 + STEP_MS);
+    expect(stepAnnouncement(between)).toMatch(/hand away/i);
+    const real = tick(between, T0 + STEP_MS + BETWEEN_SECONDS * 1000);
+    expect(stepAnnouncement(real)).toMatch(/Step 2 of 2/);
+    for (const s of [rest, between, real]) expect(stepAnnouncement(s)).not.toMatch(/\d+ (seconds|frames)/);
   });
 });

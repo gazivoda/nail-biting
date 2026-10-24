@@ -4,7 +4,7 @@
 //
 // Text and plain pills only. No picture of the habit, no icon that stands for it.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { useWatchGate } from './gate';
 import { pauseForMinutes, pauseUntilTomorrow, resumeWatching, startMeeting } from './actions';
@@ -31,6 +31,7 @@ export function BackgroundSlot() {
   const gate = useWatchGate();
   const cameraEnabled = useAppStore((s) => s.cameraEnabled);
   const [busy, setBusy] = useState(false);
+  const firstPause = useRef<HTMLButtonElement>(null);
   // What the last stretch in the background really ran at (src/background/cadence.ts). The sentence is made at render,
   // so it follows the language; `at` is the moment the report was read, so rendering never reads the clock.
   const [slow, setSlow] = useState(currentReport);
@@ -56,7 +57,8 @@ export function BackgroundSlot() {
           <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{note.title}</p>
           {/* a pause already explains itself in the camera card; meeting mode has no other place to say what it does */}
           {note.kind === 'meeting' && <p className="mt-1 text-sm text-stone-600 dark:text-stone-300">{note.detail}</p>}
-          <button type="button" onClick={resumeWatching} className={`${PRIMARY} mt-3`}>
+          {/* The button removes itself when pressed: send focus to the first pause choice, not to the top of the page. */}
+          <button type="button" onClick={() => { resumeWatching(); window.setTimeout(() => firstPause.current?.focus(), 0); }} className={`${PRIMARY} mt-3`}>
             {note.kind === 'paused' ? t('slot.resume') : t('slot.endMeeting')}
           </button>
         </div>
@@ -66,7 +68,7 @@ export function BackgroundSlot() {
         <div>
           <p className="mb-2 text-sm text-stone-600 dark:text-stone-300">{t('slot.pause.intro')}</p>
           <div className="flex flex-wrap gap-2">
-            <button type="button" disabled={busy} onClick={run(() => pauseForMinutes(15))} className={PILL}>{t('slot.pause.minutes', { n: 15 })}</button>
+            <button ref={firstPause} type="button" disabled={busy} onClick={run(() => pauseForMinutes(15))} className={PILL}>{t('slot.pause.minutes', { n: 15 })}</button>
             <button type="button" disabled={busy} onClick={run(() => pauseForMinutes(60))} className={PILL}>{t('slot.pause.hours', { n: 1 })}</button>
             <button type="button" disabled={busy} onClick={run(pauseUntilTomorrow)} className={PILL}>{t('slot.pause.tomorrow')}</button>
           </div>

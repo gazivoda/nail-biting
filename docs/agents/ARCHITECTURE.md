@@ -1,5 +1,12 @@
 # Stop Biting — Architecture (written by WS0, verified against the code)
 
+> **Final state (WS13), 2026-10-24, `main` at b6b16f9 (WS0 to WS11b merged).** This file now describes the whole product as built:
+> sections 1 to 15 are the original reference, corrected where later workstreams made them stale; sections 16 to 22 are new and
+> cover each later feature area (sign-in providers, sync and backup, billing, coaching and false-alarm controls, insights and the
+> weekly email, share links, the flag map), and section 23 is WS12a's localization of the signed-in app (merged after this file was
+> first finalised; **WS12b, the marketing pages in es, de and pt-BR, is not in it yet** and the WS13 agent updates this file once it lands).
+> What the owner has to do before turning a flag on lives in `docs/agents/RELEASE_NOTES.md`, not here.
+
 Every agent after WS0 reads this first, then `docs/agents/PLAN.md` (your workstream), `docs/agents/SWARM_RULES.md`
 and `tasks/lessons.md`. Claims here name the file and function so you can check them. Line numbers are left out on
 purpose; they rot. If something here is wrong, fix it in your PR and say so in your report.
@@ -7,7 +14,10 @@ purpose; they rot. If something here is wrong, fix it in your PR and say so in y
 Contents: 1 Stack and file map · 2 Detection · 3 History, streak, event schema v2 · 4 Storage module ·
 5 Feature flags · 6 Server: routes, auth, Paddle, database · 7 Settings shell · 8 Marketing pages, meta, schema ·
 9 PWA · 10 Electron · 11 Tests and tooling · 12 File ownership map · 13 Rules for later agents ·
-14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a) · 16 Localization (WS12a)
+14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a) · 16 Sign-in providers (WS8) ·
+17 Optional sync, export and import (WS4) · 18 Billing, trial length, referrals, free tier (WS9) ·
+19 Coaching, urge timer, false-alarm controls (WS2, WS3) · 20 Insights, photo diary, weekly email (WS5) ·
+21 Share links (WS10) · 22 Where each flag is checked · 23 Localization of the signed-in app (WS12a)
 
 ---
 
@@ -18,10 +28,10 @@ Contents: 1 Stack and file map · 2 Detection · 3 History, streak, event schema
 | Client | Vite 5, React 19, TypeScript (strict, `erasableSyntaxOnly`), Tailwind 3, Zustand 5 (`persist` to localStorage), `recharts`, `lucide-react`, `date-fns`. No router library: `src/App.tsx` switches on `window.location.pathname`. |
 | Detection | `@mediapipe/tasks-vision` (WASM) running in the page, fed by `getUserMedia`. |
 | Server | One Express 5 file, `server.js`, plus `server/` (route registry, flags, DB helpers). ESM, Node 22 in Docker (Node 24 locally). |
-| Data | SQLite via `better-sqlite3`, `data/users.db` (never commit). Users and subscriptions only; **no event history is stored server-side today**. |
-| Email | `resend` through `email.js`. |
-| Auth | Google OAuth, HS256 JWT in an HttpOnly cookie (`nh_session`), `Authorization: Bearer` for Electron. |
-| Payments | Paddle (checkout via `@paddle/paddle-js` on the client, webhook + verify + portal on the server). |
+| Data | SQLite via `better-sqlite3`, `data/users.db` (never commit). Users and subscriptions, plus 13 additive migrations' worth of tables for sync, sign-in providers, billing, share links and the weekly email (section 6). **Event history is stored server-side only for accounts that opted in (`event_sync`, section 17)**; with the flag off the tables are empty. |
+| Email | `resend` through `email.js` (welcome, feedback, admin notice, generic `sendEmail`); the emailed sign-in link, gift emails and the weekly summary use `sendEmail`. |
+| Auth | Google OAuth by default; with flags and keys also an emailed link, Sign in with Apple and Microsoft (section 16). All end in the same HS256 JWT in an HttpOnly cookie (`nh_session`); `Authorization: Bearer` for Electron. |
+| Payments | Paddle (checkout via `@paddle/paddle-js` on the client, webhook + verify + portal on the server). Lifetime, gift, referral credit and the free plan are WS9's, behind flags (section 18). |
 | Hosting | Coolify. `Dockerfile` (3 stages) or `nixpacks.toml`. **Pushing `main` auto-deploys.** |
 | Desktop | Electron wrapper in `electron/` (see section 10). |
 
@@ -34,6 +44,10 @@ server/
   routes/index.js         the route registry (ROUTE_MODULES, buildContext, registerRoutes)
   routes/features.js      GET /api/features
   routes/_example.js      worked example of a flagged route module
+  routes/events.js        WS4: POST /api/events/sync, GET /api/events/status, DELETE /api/events (flag event_sync)
+  events/                 WS4: limits.js, validate.js (the field whitelist), compare.js (tie rule), store.js (tables + createEventStore)
+  routes/authProviders.js WS8: emailed link, Apple, Microsoft, GET /auth/providers, GET /signin (flags signin_*)
+  auth/                   WS8: linkPolicy, accounts (identities), magicLink(+Email), apple, microsoft, jwks, oauthState, session, schema, googleLink
   routes/billing.js       WS9: lifetime, gifts, referrals, free tier (flagged); hooks for the webhook and /api/user/me
   billing/                WS9: entitlements, gift codes, referrals, purchases, webhook hook (see ws9-notes.md)
   routes/share.js         WS10: read-only share links (flag share_links): owner API + public page and JSON
@@ -41,7 +55,10 @@ server/
   routes/weeklyEmail.js   WS5: opt-in weekly summary email (weekly_email): preferences, unsubscribe pages
   weeklyEmail/            WS5: week bounds in a time zone, the summary maths, the unsubscribe token, the template
   jobs/weeklyEmail.js     WS5: the hourly in-process job (only with weekly_email on and RESEND_API_KEY set)
+  routes/phone.js         WS6: GET /manifest.webmanifest with home-screen shortcuts while phone_companion is on
+  marketing/              WS11a/b: gatedPages.js (pages that exist only while a flag is on), copyFlags.js (which copy flags are on)
 shared/                   WS9: plans.js (TRIAL_DAYS and the other plan numbers), access.js (the one access decision);
+                          WS11b: flagCopy.js (RULES, markers; sentences that change with a flag);
                           plain JS + .d.ts, imported by src/, server/, scripts/ and vite.config.ts
 email.js                  Resend: welcome, feedback, admin notice, generic sendEmail()
 trialFollowup.js          hourly job: one email 24 h after a trial ends
@@ -50,18 +67,32 @@ src/
   main.tsx                React root + service worker registration
   store/useAppStore.ts    THE persisted store (history, streak, settings) + migrations
   storage/                the storage module (section 4): adapter, kv, deviceId, blobs, events facade
+  detection/              WS1/WS3: zones, rules, registry, engine (section 2); controls, pose, learning, handedness (section 19)
+  falsePositive/          WS3: "Not a bite" seam and toast, pose store, Settings > Detection card, bridge (flag false_positive_controls)
+  calibration/            WS3: the optional one-minute calibration view
+  coaching/               WS2: competing-response prompt, urge timer, 4-week program (flags hrt_coaching, urge_timer; section 19)
+  background/             WS7a: hidden-tab tick sources, pause machine, schedule, reminders (section 15)
+  sync/                   WS4: the sync engine and its browser wiring (section 17); backup/ = export and import
   insights/               WS5: pure aggregation (aggregate.ts), milestones, share card, zone maths; ui/ = the Insights view
   photos/                 WS5: the local-only nail photo diary (flag photo_diary); never imports sync or network code
-  features/               feature flags on the client (section 5)
-  i18n/                   WS12a: messages, locale state, scopes (English), locales/ (es, de, pt-BR), format helpers (section 16)
+  phone/                  WS6: the phone view, its decision rule, log flow, offline access copy (flag phone_companion; section 9)
+  auth/                   WS8: client side of sign-in providers (provider list cache, hooks, link handling; section 16)
+  billing/                WS9: client side of billing (env, Paddle loader, localized prices, referral and gift storage, free-tier meter)
+  share/                  WS10: client side of share links (API calls, copy, clipboard)
+  desktop/                WS7b: the renderer half of the Electron bridge (section 10)
+  features/               feature flags on the client (section 5), useFlagCopy / copyFlags (section 8)
+  i18n/                   WS12a: messages, locale state, scopes (English), locales/ (es, de, pt-BR), format helpers (section 23)
   hooks/                  useDetection, biteDetector, useCamera, usePictureInPicture, useStreak, ...
   components/detection/   CameraView, DetectionSurface, AlertOverlay, PiPWindow, ...
   components/dashboard/   StreakHero, TodayStats, ReplacementPrompt, PanicButton, CameraPanel, ...
-  pages/                  Landing, Dashboard, Log, Settings, Pricing, About, HowItWorks, Blog*, Compare*, legal
+  components/billing/     WS9: PlanExtras, LifetimePlate, ReferralCard, FreeTierNotice, BillingHost
+  components/site/        marketing components; Testimonials.tsx (WS11a, flag social_proof)
+  pages/                  Landing, Dashboard, Log, Settings, Pricing, About, HowItWorks, Blog*, Compare*, SignIn, RedeemPage, Program, legal
   pages/settings/         Settings section registry and one file per new section (section 7)
   contexts/AuthContext    session, apiFetch, access status
-  utils/                  access, trial, insights, time, track, ...
-  data/                   blogPosts.ts, comparePages.ts (content; also read by build scripts), pageUpdates.json
+  utils/                  access, trial, insights, time, track, coachingStats, ...
+  data/                   blogPosts.ts, comparePages.ts (content; also read by build scripts), pageUpdates.json,
+                          competitorPages.ts, featurePages.ts, featurePagePaths.ts, hrtProgram.json, testimonials.json
   dev/preview.ts          DEV-ONLY fixtures: /?preview=trial|subscribed|paywall
 scripts/                  sync-seo.mjs, generate-seo-content.mjs, generate-og-images.mjs, indexnow-ping.mjs
 test-utils/               shared test helpers (in-memory storage adapter, in-memory SQLite, test HTTP server)
@@ -140,6 +171,9 @@ Changing sensitivity or alert settings does not restart the loop: they are read 
   `setInterval`, which stays as the fallback; `processFrame` parks itself while a hidden source drives the loop. The loop can be paused
   (inference off, camera released) and the alarm can be silenced (meeting mode). With the flag off every path above is exactly what it
   was. Measurements, mechanism, pause semantics: section 15 and `docs/agents/ws7a-notes.md`.
+
+- **WS2 update (coaching, flags `hrt_coaching`, `urge_timer`).** Nothing in the detector or the loop changed: the competing-response card
+  is mounted at the alarm UI's seams and hears about an alarm only after the sound is playing and the event is logged. Section 19.
 
 **Alarm.** `useDetection.startBiting`: starts the sound (`startAlarm(sound, volume)`, Web Audio, profiles
 `alarm | chime | buzz | chirp | whistle`), sets status `alert`, calls `onAlert()` once, flashes the tab title, and
@@ -238,8 +272,8 @@ v1-shaped literals still type-check.
 **Tombstones.** `state.tombstones: Tombstone[]` (minimal: id, ts, source, behavior, updatedAt, deviceId, `deleted: true`;
 no tag or trigger; newest first, capped at `MAX_TOMBSTONES = 1000`). `deleteIncident` writes one, `restoreIncident`
 (History's Undo) removes it. No screen or statistic reads them; they exist so WS4 can tell other devices about a
-delete. `clearHistory` and `clearAllData` reset the list; WS4 must handle "clear while sync is on" itself (its
-"Delete everything" flow), because a local clear drops the tombstones.
+delete. `clearHistory` and `clearAllData` reset the list, and they are local-only (not sync-aware: the synced copy stays). WS4's
+"Delete everything" (Settings > Data) is the flow that removes both, server copy first (section 17).
 
 ### The v1 -> v2 migration
 
@@ -264,7 +298,7 @@ delete. `clearHistory` and `clearAllData` reset the list; WS4 must handle "clear
   store over an injected adapter) cover count, ids, timestamps, idempotence, unknown fields, identical streak and
   statistics before and after, and the preview-fixture data.
 
-### Every reader and writer of the event shape (complete as of WS0)
+### Every reader and writer of the event shape (complete as of WS0; later readers are listed after it)
 
 Writers of `incidents` / `tombstones`:
 - `useAppStore.ts`: `logIncident` (creates; alarms and manual logs; accepts `extras` for behavior/hand/triggers),
@@ -293,6 +327,17 @@ Readers (fields they read):
 
 When you add a reader, prefer `events.list(query)` from `src/storage`; it returns canonical `HabitEvent`s and applies
 filters (behavior, source, time, trigger, falsePositive).
+
+**Readers and writers added by later workstreams** (all go through `events.*` or the shared predicates, none through `setState`):
+- *The predicates.* WS3 added `isFalsePositive`, `isPendingAlarm`, `isAlarmOrBite` beside `isBite` in `eventModel.ts`, and WS2 added
+  `isUrge`; the state table is at the head of them. Every counter below uses them.
+- *Client:* `src/insights/predicate.ts` and `aggregate.ts` (charts, milestones), `src/phone/history.ts` and `useLogFlow.ts` (phone
+  view; writes with `events.add / update / softDelete`), `src/utils/coachingStats.ts`, `src/coaching/` (writes `competingResponse`
+  and urge entries), `src/falsePositive/` (writes `falsePositive`), `src/sync/` and `src/backup/` (merge, export, import),
+  `Log.tsx` (behaviour filter, window for the free plan), `TodayStats.tsx`, `PaywallPage.tsx`.
+- *Server copies of the same rule*, because server code cannot import from `src/`: `server/weeklyEmail/summary.js`
+  (`isCountedBiteEvent`) and `server/share/summary.js`, over rows read through `createEventStore(db).listUserEvents` (section 17).
+  `server/weeklyEmail/parity.test.js` and `server/share/semantics.test.js` fail if a copy drifts from `isBite`.
 
 ### Adding a field to the event
 
@@ -330,7 +375,9 @@ falsePositive, competingResponse, confirmed; stamps `updatedAt`; `id`, `ts`, `so
 `events.exportAll()` -> `HabitExport` (`{ format: 'stop-biting-events', version: 2, exportedAt, deviceId, anchors,
 events, tombstones }`; includes the streak anchors so an import restores streaks exactly),
 `events.replaceAll(exportOrList)` -> `{ imported, skipped }` (malformed entries are skipped and counted),
-`events.merge(incoming)` (last write wins by `updatedAt`; `deleted: true` events remove; for sync),
+`events.merge(incoming)` (last write wins by `updatedAt`; a tie is settled by `compareEventVersions` in `eventModel.ts`: higher
+`updatedAt`, then a deletion beats a live record, then the higher `deviceId`, then the higher canonical text, the same rule as
+`server/events/compare.js`; `deleted: true` events remove; for sync),
 `events.subscribe(fn)`, and `parseWireEvent(x)` (strict validation of anything arriving from outside).
 Everything goes through the store, so streak fields are re-derived and persistence is the usual persist path.
 **Which to call for what:** a live alarm must be logged with `logIncident(tag, true, extras)` (the store action; it
@@ -398,8 +445,9 @@ max-age=60`, body is a flat map with **every** known flag present as `true` or `
 Resolution order: dev override (DEV only) > last answer from `/api/features` (re-asked at most every 10 minutes, and
 when a long-lived tab becomes visible) > the last-known answer cached through `kv` (`flags:last-known`) so offline use
 behaves the same > **off**. A failed request never clears what is known and never turns anything on. The first
-component that calls `useFeature` triggers one `/api/features` request per page load; pages that never read a flag
-make none (today only Settings does).
+component that calls `useFeature` triggers one `/api/features` request per page load. In the signed-in app that is the Watch tab
+(WS2's coaching slot), History and Settings. Marketing pages make no flag request at all: they learn the two flags their copy
+depends on from a marker in the page (section 8), and take the sign-in methods from `/auth/providers`.
 
 **Dev override.** `?ff=event_sync,insights` (remembered across reloads; `?ff=` clears) or
 `localStorage['sb:flags:dev-override'] = '["event_sync"]'`. It only ever turns flags **on**, only in the Vite dev
@@ -417,6 +465,12 @@ server: the code is behind `import.meta.env.DEV` and is absent from production b
 (WS11a); `locale_es`, `locale_de`, `locale_pt_br` (WS12). `social_proof` additionally hides itself while its data
 file is empty; that check is the feature's, not the flag's.
 
+`dependsOn` in the registry (and `FLAG_DEPENDS_ON` in `server/features.js`) is advisory: the server logs a warning at boot when
+a flag is on while something it lists is off, and switches nothing off. Today it lists `experimental` -> `detection_behaviors`,
+`urge_timer` -> `hrt_coaching`, `photo_diary` -> `insights`, `weekly_email` -> `event_sync` and `insights`. Two of those are
+stricter than the code: `urge_timer` and `photo_diary` work on their own. `share_links` has no `dependsOn` but shows nothing
+without `event_sync`. Where each flag is actually checked: section 22.
+
 ---
 
 ## 6. Server: routes, auth, Paddle, database
@@ -428,12 +482,15 @@ file is empty; that check is the feature's, not the flag's.
 2. `compression`, `Permissions-Policy`, `helmet` (CSP lists Paddle, GA, Formspree), CORS for `/api/` only
    (`ALLOWED_ORIGINS` + `APP_URL`), `cookieParser`.
 3. `express.json({ limit: '10kb' })` for everything except `/api/paddle/webhook` (which needs the raw body).
-   **A route that needs a bigger body (WS4 sync batches) cannot raise this per route**: the global parser runs first and
-   rejects with 413. Exempt your path in that one condition in `server.js` (like the webhook) and add a larger
-   parser inside your route module.
+   **A route that needs a bigger body cannot raise this per route**: the global parser runs first and rejects with 413. WS4's
+   sync batches are the one exception made: the condition is `req.path === '/api/paddle/webhook' || req.path === '/api/events/sync'`,
+   and `server/routes/events.js` parses its own 512 kb body after the flag and sign-in checks (a test reads `server.js` to keep
+   the exemption). Any other path that needs a bigger body does the same in that one condition.
 4. Rate limits: `/api/` 100 requests / 15 min / IP (`apiLimiter`), `/api/auth/` 10 / min. Background sync must fit.
 5. SQLite init (next section), `getUser/saveUser`, `signToken`, `authMiddleware`.
-6. `GET /health`, Google OAuth routes, `/api/user/me`, the three Paddle routes.
+6. `GET /health` (reports `SOURCE_COMMIT` or `COMMIT_SHA`), Google OAuth routes (with WS8's one-line `createGoogleLinker` seam in
+   the callback), `/api/user/me` (WS9's `app.locals.decorateUser` adds the optional `entitlement` key), the three Paddle routes
+   (WS9's `app.locals.billingWebhook.take` runs inside the webhook).
 7. **`registerRoutes({...})`** (the registry, below).
 8. `GET /downloads/:file` (302 to GitHub releases), then static + server-rendered pages (section 8), ending in the
    `/{*path}` catch-all, which returns the branded 404.
@@ -445,9 +502,13 @@ file is empty; that check is the feature's, not the flag's.
 the page catch-all** (otherwise `/api/...` would fall into the HTML 404; verified with a real request):
 
 ```js
-registerRoutes({ app, db, authMiddleware, getUser, saveUser, signToken,
+const { flags } = registerRoutes({ app, db, authMiddleware, getUser, saveUser, signToken,
   findUserByEmail: email => stmtFindByEmail.get(email) ?? null, config: { APP_URL, ELECTRON_PROTOCOL } });
 ```
+
+`server.js` keeps the returned `flags` and reads it in the page handlers (gated pages, copy rules, testimonials). `ROUTE_MODULES`
+today, in order: `features`, `_example`, `authProviders` (WS8), `events` (WS4), `billing` (WS9), `share` (WS10), `weeklyEmail` (WS5),
+`phone` (WS6).
 
 `buildContext` completes it into `ctx`: `app`, `db`, `authMiddleware` (sets `req.userId`), `getUser(id)`,
 `saveUser(user)`, `findUserByEmail(email)`, `signToken(userId)`, `sendEmail({ to, subject, html, text, headers })`
@@ -474,8 +535,10 @@ Gate order: `requireFeature` first (an off feature is a 404 for everyone, signed
 `server/routes/routes.test.js` shows how to boot a registry against an in-memory DB and call it over HTTP.
 
 **Deploy trap.** The Docker runtime image copies files by name (`COPY server.js email.js trialFollowup.js ./`, then
-`COPY server ./server`). A new top-level file or directory imported by `server.js` must be added to the Dockerfile or
-production crashes at boot (commit 57aa6b0 was exactly this). A test checks the `COPY server` line.
+`COPY server ./server` and `COPY shared ./shared`; the build stage also copies `shared`). A new top-level file or directory
+imported by `server.js` must be added to the Dockerfile or production crashes at boot (commit 57aa6b0 was exactly this). A
+test checks the `COPY server` line. Checked at WS13 (b6b16f9): every import and every file read at run time resolves inside
+`server.js`, `email.js`, `trialFollowup.js`, `server/`, `shared/` and `dist/`, so nothing is missing.
 
 ### Database
 
@@ -487,6 +550,17 @@ production crashes at boot (commit 57aa6b0 was exactly this). A test checks the 
 `ALTER TABLE users DROP COLUMN paypal_subscription_id` in a try/catch, and `trialFollowup.js` adds
 `trial_followup_sent_at` (only when `RESEND_API_KEY` is set). `getUser` lazily flips an expired trial to `expired`.
 Prepared statements: `stmtGet`, `stmtFindByEmail`, `stmtUpsert`.
+
+**Tables added by later workstreams** (13 migrations, all additive, run at every boot whatever the flags, recorded in
+`schema_migrations`; the `users` table is untouched by all of them; where the data is used: the section in brackets):
+
+| Migration id | Tables | Owner |
+|---|---|---|
+| `ws4_001_habit_events`, `ws4_002_habit_event_epochs` | `habit_events`, `habit_event_epochs` (section 17) | WS4 |
+| `ws5_001_email_preferences` | `email_preferences` (section 20) | WS5 |
+| `ws8_001_auth_identities`, `ws8_002_magic_link_tokens`, `ws8_003_auth_oauth_states` | `auth_identities`, `magic_link_tokens`, `auth_oauth_states` (section 16) | WS8 |
+| `ws9_001` to `ws9_006` (`paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`, `referral_codes`, `referrals`) | the same six tables (section 18) | WS9 |
+| `ws10_001_share_links` | `share_links` (section 21) | WS10 |
 
 `share_links` (WS10, additive migration `ws10_001_share_links`): `id`, `user_id`, `token_hash` (SHA-256 of the token, unique),
 `scope` JSON `{"detailed":bool}`, `label`, `created_at`, `expires_at`, `revoked_at`, `last_viewed_at`, `timezone`. The token is
@@ -510,13 +584,18 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 - `POST /api/auth/signout` clears the cookie. `GET /api/user/me` (`authMiddleware`) returns the user row.
 - `authMiddleware` accepts the `nh_session` cookie or `Authorization: Bearer`; sets `req.userId`.
 - `ELECTRON_PROTOCOL` is a **global switch** for the whole server (redirect URI, state check, redirect target, trial
-  follow-up job off). Whether production has it set is unverified (see Gotchas).
+  follow-up job off at `server.js` startup, weekly-email job off in `server/routes/weeklyEmail.js`; WS8's providers honour it the same
+  way). WS8 argued production almost certainly does not set it (the Google redirect URI would then be unregistered and web
+  sign-in could not work), but nothing in the repo proves it. `COOLIFY_DEPLOY.md` still lists it (line 24) and should not.
+- **More providers (WS8, flags `signin_*`):** emailed link, Apple, Microsoft, all ending in the same `nh_session` cookie via
+  `server/auth/session.js`. Section 16.
 - Client: `src/contexts/AuthContext.tsx`. `apiFetch(path, init)` sends `credentials: 'include'`, adds the Electron
   bearer token, throws `API error <status>` on non-2xx. On mount it calls `/api/user/me`; `sb_has_session` in
   localStorage only chooses the initial status (`loading` vs `no_auth`) so the landing page renders without waiting.
-  `AccessStatus = 'loading' | 'no_auth' | 'trial_active' | 'subscribed' | 'paywall'`, derived by
-  `computeAccessStatus(user)` in `src/utils/access.ts` (`active`/`paused` -> subscribed; unexpired non-cancelled trial
-  -> trial_active; else paywall). `App.tsx` `AppRouter` renders Landing, PaywallPage or the tabbed app from it.
+  `AccessStatus = 'loading' | 'no_auth' | 'trial_active' | 'subscribed' | 'free_tier' | 'paywall'` (`src/types/access.ts`),
+  derived by `computeAccessStatus(user)` in `src/utils/access.ts`, which calls `shared/access.js` (`active`/`paused` -> subscribed;
+  a running lifetime, gift or referral grant -> subscribed; unexpired non-cancelled trial -> trial_active; the free plan only if the
+  account carries free-tier limits -> free_tier; else paywall; section 18). `App.tsx` `AppRouter` renders Landing, PaywallPage or the tabbed app from it.
   `?preview=trial|subscribed|paywall` fixtures load `src/dev/preview.ts` by dynamic import behind
   `import.meta.env.DEV` only.
 
@@ -542,8 +621,9 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 - `POST /api/paddle/verify-subscription` (auth): looks the transaction up via the Paddle API, then the subscription;
   accepts `active`/`trialing`; writes the same fields. `GET /api/paddle/portal-session` (auth): returns the Paddle
   customer-portal URL.
-- The owner's uncommitted Paddle price-id filter (`PADDLE_PRICE_IDS`, `isOurPaddleData`) is not in this base; see
-  SWARM_RULES.md. WS9 edits these handlers in place, in small functions.
+- The owner's uncommitted Paddle price-id filter (`PADDLE_PRICE_IDS`, `isOurPaddleData`) is still not in `main`: it is in a stash
+  (`docs/agents/RELEASE_NOTES.md`, section f, says how to restore it). WS9 edits these handlers in place, in small functions, and
+  `git apply --check` of the patch passed after every merge up to WS11b. Billing, entitlements and referrals: section 18.
 
 ### Email
 
@@ -552,7 +632,9 @@ drop, rename or rewrite, on purpose. Tests use an in-memory database (`test-util
 (falls back to a Resend sandbox address that only delivers to the account owner). `FROM` is read at import time.
 **The Resend SDK returns `{ data, error }` and does not throw on an API error**, so `await sendEmail(...)` can "succeed"
 with `error` set (the older emails ignore this). WS5's job treats `result.error` (or no `data`) as a failure
-(`isSendSuccess` in `server/jobs/weeklyEmail.js`); do the same in anything new.
+(`isSendSuccess` in `server/jobs/weeklyEmail.js`); do the same in anything new. WS8's magic-link route and WS9's gift email
+check it too; the welcome, admin and trial follow-up emails still do not, so `trialFollowup.js` can mark someone mailed when
+nothing was sent.
 
 ---
 
@@ -578,9 +660,13 @@ them without importing the page.
 
 `meta.ts` (ids, titles, owners, flags, `visibleSections(flags)`), `sectionComponents.ts` (id -> component),
 `SettingsSlots.tsx` (the flag-aware renderer, a fragment of grid children rendered once in `Settings.tsx` after Bite
-reasons). Every section file is an empty component returning `null` with a header comment and a template. So with all
-flags off nothing is added; with a flag on but no content, still nothing. **Each workstream edits only its own section
-file.** Cards should be `fullWidth` unless they pair, follow DESIGN.md (pills, hairlines, no shadows), and gate single
+reasons). WS0 shipped every section file as an empty component returning `null`; **all seven have content now**:
+`DetectionSection` renders `falsePositive/DetectionSettings`, `AlertsSection` `CoachingSettings`, `BehaviorsSection` its own list,
+`ScheduleSection` `background/ScheduleSettings`, `AccountSyncSection` the sync card plus `WeeklyEmailSettings` and `ReferralCard`
+(the choice of sign-in method is on `/signin`, not here), `DataSection` `DataSettings` plus `PhotoDiarySettings`, `SharingSection`
+`SharingSettings`. The section files are static imports; the heavier cards inside them (sync, data, sharing, weekly email) are lazy
+chunks fetched only when a flag is on, so with all flags off nothing is added and nothing extra is downloaded. **Each workstream
+edits only its own section file.** Cards should be `fullWidth` unless they pair, follow DESIGN.md (pills, hairlines, no shadows), and gate single
 controls inside the card with `useFeature`. To add a section: id in `meta.ts`, file, line in `sectionComponents.ts`.
 The existing "Data" card (Clear all data) stays in `Settings.tsx`.
 Dark-mode tokens are the other way round than they look (lessons.md): `ink-300` is the darkest surface, `ink-400` the
@@ -604,7 +690,9 @@ names it.
 
 **Routes.** `/`, `/blog`, `/blog/:slug`, `/about`, `/pricing`, `/how-it-works`, `/privacy`, `/terms-and-conditions`,
 `/refund-policy`, `/editorial-policy`, three `/tools/*` pages, and one handler per entry of `COMPARE_META` (the
-`/compare/*` and `/solutions/*` pages). Static serving order: `/assets`, `/fonts`, `/og` (1 year, immutable), `/posts`
+`/compare/*` and `/solutions/*` pages, plus WS11a's two gated competitor pages and WS11b's five `/features/*` pages and
+`/solutions/cuticle-biting`, which answer the branded 404 while their flag is off). Route modules own `/signin` (WS8), `/redeem`
+(WS9) and `/share/...` (WS10), each the app shell or its own document, each the normal 404 while its flag is off. Static serving order: `/assets`, `/fonts`, `/og` (1 year, immutable), `/posts`
 (5 min, noindex), a noindex rule for stray `.json`/`.txt`, then `express.static(distPath)`.
 `KNOWN_ROUTES` + the `/{*path}` catch-all return the branded `NOT_FOUND_HTML` with status 404 for any GET that no
 handler matched.
@@ -625,6 +713,18 @@ orchestrator regenerates.
 `PAGE_SOURCES` in `sync-seo.mjs` (the file contains binary bytes: use `grep -a` and edit in bytes) and the llms.txt
 key-page list. Pages that must stay private use `noindex` and are kept out of the sitemap. A page that exists only
 while a flag is on must 404 on the server while it is off (`flags.isOn`) so it cannot be indexed.
+
+**Pages behind flags (WS11a, the first of them).** `/compare/hands-off` and `/compare/habitaware-keen` (flag `compare_competitors`):
+copy in `src/data/competitorPages.ts` (`GATED_PAGE_MAP`; two entries carry `needsVerification: true`, a human must confirm every
+sourced fact), paths in `src/data/gatedComparePaths.ts`, meta in `COMPARE_META` in `server.js` with `flag: GATED_FLAG`. Closed:
+the branded 404 (noindex, no canonical), absent from the sitemap, `llms*.txt` and the noscript nav; the copy is a lazy JS chunk
+excluded from the service-worker precache (`globIgnores` in `vite.config.ts`). Open: 200, self-canonical, in the sitemap with a
+ledger date. `social_proof` is the other WS11a flag: `src/components/site/Testimonials.tsx` (validator
+`testimonialsModel.ts`, loader `testimonialsData.ts`, data `src/data/testimonials.json` which is `[]`, rules in
+`src/data/README-testimonials.md`); an empty file returns before the flag hook is even mounted (no heading, no request); the
+crawler copy in `server.js` is built from `seo-content.json` by the same validator; no Review or AggregateRating markup.
+`generate-seo-content.mjs` also writes `dist/seo-gated.json` (the unpublished copy, never served) and the testimonials into
+`seo-content.json`. `server.js` keeps `const { flags } = registerRoutes(...)` and reads it in these handlers.
 
 **Pages and copy behind flags (WS11b).** Two mechanisms, both off with every flag off (the served site is byte-identical).
 1. *Pages that exist only while a flag is on.* Copy: `src/data/featurePages.ts` (`FEATURE_PAGE_MAP`); path -> flag:
@@ -664,7 +764,9 @@ swallowed. The generated worker has `skipWaiting` + `clientsClaim`, so a new dep
 (the open page is not reloaded; there is no update prompt). Manifest (generated, `dist/manifest.webmanifest`): name
 "Stop Biting: AI Nail Habit Tracker", `display: standalone`, `orientation: portrait-primary`, theme/background
 `#F7F7F1`, icons 192, 512 and a maskable 512 in `public/icons/`, `screenshots: []`. Workbox: precache of the app shell
-(21 entries), `navigateFallback: '/index.html'` with a denylist for `/api/`, `/downloads/`, `/posts/`, `/signin` (WS8), `/redeem` (WS9) and `/share/` (WS10); runtime caches:
+(21 entries when WS11a measured it, 60 when WS11b did, because the lazy chunks of the flagged features are precached so they work
+offline; `desktopHost-*.js` and the competitor-page chunk are excluded by `globIgnores`, and WS6 removed the manifest from it),
+`navigateFallback: '/index.html'` with a denylist for `/api/`, `/downloads/`, `/posts/`, `/signin` (WS8), `/redeem` (WS9) and `/share/` (WS10); runtime caches:
 `/assets/*.js|css` StaleWhileRevalidate, `/posts/<slug>.json` NetworkFirst (3 s), `/icons/*.png` CacheFirst.
 MediaPipe wasm and models are excluded from precache and not runtime-cached (browser HTTP cache only), so detection
 needs a network on the very first run of a profile. `/api/*` is never cached by the worker.
@@ -718,7 +820,11 @@ checks `electron/` (`tsc -b` does not).
 - **Not present**: auto-updater, `globalShortcut`, a signed build. Signing and the CI workflow
   (`.github/workflows/desktop.yml`, tag `desktop-v*` or manual) are documented in `docs/DESKTOP_SIGNING.md`. Existing
   claims of a signed v1.1.0 live only in a comment in `server.js`.
-- The desktop app is **not marketed** on the site (removed on purpose); marketing is WS11b behind `desktop_app`.
+- Before WS7b the builder config had `extraResources: data -> data`, which copies `data/users.db` into any installer built on the
+  owner's machine; it is now the two tray icons only. `server.js` still redirects `/downloads/Stop-Biting-1.1.0*.dmg` and the 1.0.0
+  files to GitHub releases (`DOWNLOAD_MAP`), so those older assets should be checked (`RELEASE_NOTES.md`, section f).
+- The desktop app is **not marketed** on the site (removed on purpose); marketing is WS11b's `/features/desktop-app` behind
+  `desktop_app`, which must stay off until desktop sign-in works, the Mac build is signed and the installer is linked.
 
 ---
 
@@ -732,10 +838,28 @@ checks `electron/` (`tsc -b` does not).
 - Render React in node with `react-dom/server` `renderToStaticMarkup` (see `settings.test.tsx`); there is no DOM.
 - Helpers in `test-utils/`: `memoryStorage.ts` (`createMemoryAdapter`, `createFlakyAdapter`, `useMemoryStorage`,
   `resetStorage`), `memorySqlite.js` (`createMemoryDb({ users })`), `testServer.js` (`startTestServer(app)` on an
-  ephemeral port; use global `fetch`; no supertest).
+  ephemeral port; use global `fetch`; no supertest), and one harness per server feature: `eventsHarness.js` and
+  `syncHarness.ts` / `fakeClock.ts` (WS4: two browsers over real HTTP), `authHarness.js` (WS8), `billingHarness.js` (WS9),
+  `shareHarness.js` (WS10), `weeklyEmailHarness.js` (WS5).
 - Fixtures of the v1 persisted state: `src/storage/fixtures/v1State.ts`.
-- Baseline before WS0: 18 files / 119 tests. `npm run lint` has pre-existing errors (23 errors, 7 warnings at the
-  start of WS0): do not add new ones, compare by file and rule.
+- Guard tests read source and fail on a forbidden pattern; they are the enforcement of several privacy rules: `storageGuard`
+  (no direct browser storage), `coachingGuards`, `falsePositiveGuards`, `syncGuard`, `photoGuard`, `phoneGuards`, `shareGuard`,
+  `backgroundGuards`, `trialLength`, `flagCopySources` (all `scripts/*.test.mjs`). `marketingSite`, `featurePages` and
+  `billingWebhook` boot the real `server.js` and need `dist/` (they skip without it, so run `npm run build:web` first).
+- Baseline before WS0: 18 files / 119 tests. Last gate recorded on `main` at 24cae22 (`tasks/todo.md`): 151 files / 2842 tests,
+  `npm run lint` 23 errors / 4 warnings (the pre-existing ones, same files and rules; 23 errors / 7 warnings at the start of WS0),
+  `seo:check` and `og:check` in sync. Do not add new lint errors: compare by file and rule. Plain `npm run lint` also scans
+  `.claude/worktrees/*`, so lint `src server scripts electron shared` instead. WS13's own run is in
+  `docs/agents/RELEASE_NOTES.md` ("QA results").
+- QA tooling (WS13), all Node ESM with no dependencies, driving Chrome over CDP:
+  `npm run privacy:audit` (`scripts/privacy-audit/`: the real server and a fake camera, every request recorded with its body,
+  fails on image data, landmarks, video, the photo diary, an unknown host or an `/api/events` call while sync is off;
+  `check.mjs` is the judge, `check.test.mjs` proves it can fail and runs in every `npm test`; `smoke.test.mjs` runs a 45 s
+  real-browser smoke only with `PRIVACY_AUDIT=1`; `probe-root.sh` builds the WS7a probe copy so real alarms with landmark data
+  can be audited; report in `docs/agents/privacy-audit-report.md`), `scripts/qa/gates.sh` (every release gate in one command)
+  and `scripts/qa/docker-repro.sh` (the Dockerfile reproduced by hand), `scripts/lighthouse/run.mjs` (Lighthouse and
+  installability against a local server; `docs/agents/lighthouse-report.md`) and `scripts/flags-off-diff/` (sameness against
+  another commit with all flags off; `docs/agents/flags-off-diff-report.md`). Accessibility: `docs/agents/accessibility-report.md`.
 - Verifying the server: `GOOGLE_CLIENT_ID=x GOOGLE_CLIENT_SECRET=x JWT_SECRET=<32+ chars> PORT=32NN
   DATA_DIR=<scratch> node server.js`, then `curl`. Restart after every build (it caches `dist/index.html`).
 - Headless Chrome without puppeteer: launch with `--remote-debugging-port` and drive it over CDP using Node's global
@@ -764,13 +888,20 @@ checks `electron/` (`tsc -b` does not).
 | Desktop shell: `electron/**`, `src/desktop/**`, `vite.electron*.config.ts`, `build/`, `.github/workflows/desktop.yml` | WS7b | `src/desktop/ipc.ts` is the contract with the Electron side; WS7a consumes `stopbiting:desktop-command` and reports with `stopbiting:desktop-state` (docs/agents/ws7b-notes.md) |
 | Alarm UI: `AlertOverlay.tsx`, `CameraView.tsx` `handleAlert` | WS2 mounts coaching overlay; WS3 mounted `<NotABiteSeam />` beside it (and in `PiPWindow.tsx`) | `handleAlert` is the one-line seam for `{ behavior, hand }` (`alarmHandExtras()`) |
 | Share links: `server/routes/share.js`, `server/share/**`, `src/share/**`, `SharingSettings.tsx` | WS10 | `buildShareView` in `server/share/summary.js` is the ONLY thing a link reveals; add a field there and in its exact-key-set tests, never anywhere else |
-| `Settings.tsx` | frozen; nobody edits it (WS9 may touch `PlanSection` for plans) | `<SettingsSlots />` |
+| `Settings.tsx` | frozen; nobody edits it. Two edits were made: WS9 in `PlanSection` (plans), WS11b in one sentence of the Privacy card (now through `useFlagCopy`, on the orchestrator's instruction) | `<SettingsSlots />` |
 | `src/pages/settings/sections/*.tsx` | one workstream per file (table in section 7) | |
 | `src/pages/settings/meta.ts`, `sectionComponents.ts` | WS0; add a section = a line in each | |
 | Marketing copy: `Landing.tsx`, FAQ data, meta/schema strings, `comparePages.ts` | WS11a wording; WS9 mechanical trial-length constant swap; WS11b, WS12 last | |
 | Feature pages, flag-aware copy: `src/data/featurePages.ts`, `featurePagePaths.ts`, `shared/flagCopy.js`, `server/marketing/**`, `src/features/useFlagCopy.ts` | WS11b | add a page = copy + map entry + path/flag + `COMPARE_META` entry (`gated: true`); change a sentence on an existing page = a rule in `RULES` and a line in `scripts/flagCopySources.test.mjs`; never edit the source sentence |
 | `App.tsx` routes | one added line per route | |
 | Phone view: `src/phone/**`, `server/routes/phone.js`, `scripts/generate-phone-icons.py` | WS6 | `Dashboard.tsx` renders `<PhoneView>` when `usePhoneView()` is true (lazy); `App.tsx` passes `onNavigate`; `TabBar` and `PWAGuideModal` read `usePhoneViewActive()`; `AuthContext` calls `resolveFailedSession` / `clearGrant`; `index.html` PWA head tags |
+| Sync and backup: `src/sync/**`, `src/backup/**`, `server/routes/events.js`, `server/events/**`, `SyncSettings.tsx`, `DataSettings.tsx` | WS4 | `SYNC_EVENT_FIELDS` (client, `src/sync/payload.ts`) and `EVENT_KEYS` (server, `server/events/validate.js`) are the two whitelists; `payload.parity.test.js` fails if they drift. A new event field touches both plus the places in section 3 |
+| Sign-in providers: `server/routes/authProviders.js`, `server/auth/**`, `src/auth/**`, `SignIn.tsx`, `ProviderButtons.tsx` | WS8 | the 3-line Google seam in `server.js` (`createGoogleLinker`); `GET /auth/providers` is the truth for "is this method on"; `/signin` is in the service worker denylist |
+| Billing: `server/billing/**`, `server/routes/billing.js`, `src/billing/**`, `src/components/billing/**`, `RedeemPage.tsx` | WS9 | `app.locals.billingWebhook` and `app.locals.decorateUser` are the only hooks into `server.js`; plan numbers only in `shared/plans.js` |
+| Coaching: `src/coaching/**`, `src/data/hrtProgram.json`, `src/pages/Program.tsx`, `CoachingSettings.tsx` | WS2 | `<CoachingSeam />` in `AlertOverlay.tsx` and `PiPWindow.tsx`, `<CoachingDashboardSlot />` in `Dashboard.tsx`, `<ProgramHost />` in `App.tsx`; guard: `scripts/coachingGuards.test.mjs` |
+| False-alarm controls: `src/falsePositive/**`, `src/calibration/**`, `src/detection/{controls,controlsRegistry,pose,learning,handedness}.ts` | WS3 | `<NotABiteSeam />` beside the coaching seam; `detectHandsWithSides` is the one changed line in `useDetection.ts`; guard: `scripts/falsePositiveGuards.test.mjs` |
+| Weekly email: `server/routes/weeklyEmail.js`, `server/weeklyEmail/**`, `server/jobs/weeklyEmail.js`, `WeeklyEmailSettings.tsx` | WS5 | `server/weeklyEmail/summary.js` is the server copy of the bite rule (`parity.test.js`); the unsubscribe routes are never flag-gated |
+| Gated pages and testimonials: `src/data/competitorPages.ts`, `gatedComparePaths.ts`, `src/components/site/Testimonials*` | WS11a | see the WS11a paragraph in section 8 |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
 | `src/index.css`, `tailwind.config.js` | do not change tokens (a change reaches every surface; see lessons) | |
 | `src/i18n/**`, `scripts/i18n/**` | WS12a (WS12b adds marketing scopes and routes on top) | `createScope`, `t`/`useT`, `format.ts`; `scope.mjs` is the one list of what is exempt from the no-English rule |
@@ -805,9 +936,10 @@ checks `electron/` (`tsc -b` does not).
 - **ESM imports are hoisted above `process.loadEnvFile()`** in `server.js`. Anything that reads `process.env` at import
   time (`email.js` reads `EMAIL_FROM` that way) sees the environment before `.env` is loaded in dev. `createFlags` is
   called inside `registerRoutes`, after the load.
-- **`ELECTRON_PROTOCOL` is global.** If production sets it (`COOLIFY_DEPLOY.md` says to), the web OAuth callback would
-  redirect to `stopbiting://` instead of setting the cookie. The production value is unverified; WS8 must check before
-  adding sign-in methods.
+- **`ELECTRON_PROTOCOL` is global.** If production sets it (`COOLIFY_DEPLOY.md` line 24 says to), the web OAuth callback would
+  redirect to `stopbiting://` instead of setting the cookie, and the trial follow-up and weekly-email jobs would not start. WS8
+  checked: production almost certainly does not set it, but the repo cannot prove it, so the owner should look and delete the
+  line from the file.
 - **Trial length** is now one constant, `TRIAL_DAYS` in `shared/plans.js` (default 3, env override, build and runtime).
   Copy spells it with `${TRIAL_*}` tokens (`{{TRIAL_*}}` in `index.html`); `scripts/trialLength.test.mjs` fails when a
   literal reappears. `scripts/sync-seo.mjs` fills the tokens before its extractors run.
@@ -828,6 +960,31 @@ checks `electron/` (`tsc -b` does not).
   function replacement when injecting copy (`injectMeta` does; so does the `sb-page-data` block).
 - **(WS11b) The gated state is decided once, at start-up**, because flags change only on a restart: nothing about a gated page is
   recomputed per request, and the handlers that serve it are registered only when it is open.
+- **(WS8, WS10) The service worker answers any GET navigation outside its denylist with the cached app shell**, which loads Google
+  Analytics. So a page that must not be the shell (`/signin`, `/redeem`, `/share/<token>`) needs a `navigateFallbackDenylist`
+  entry in `vite.config.ts`, and a server route that Apple or a mail client reaches by a plain GET lives under `/api/` for the same
+  reason. A browser still running the previous worker serves the shell for the new path until it updates (why `share_links`
+  should go on a day or two after the deploy).
+- **(WS8) Apple posts back from `appleid.apple.com`, so the request carries a foreign `Origin`**, which the `/api/` CORS check
+  turns into a 500. Its callback is `POST /auth/apple/callback`, outside `/api/`, then a 303 to `GET /api/auth/apple/finish`.
+- **(WS8, WS10) `server.js` sets no `trust proxy`.** Behind Coolify's proxy the global limits (`/api/` 100 per 15 minutes) may be
+  one bucket for every visitor. New public routes either sit outside `/api/` with their own limiter (`/auth/providers`,
+  `/share/...`) or read the proxy's `X-Forwarded-For` entry only from a private-network peer (`server/auth/session.js`).
+- **(WS7a) The page's CSP is `worker-src 'self'`**: a blob worker works under Vite's dev server and is refused in production.
+  Workers must be same-origin files (`new Worker(new URL('./x.ts', import.meta.url), { type: 'module' })`), and anything about
+  workers, service workers or caching must be measured through the real `server.js`, not the dev server.
+- **(WS6) On plain `http://localhost` the service worker never installs** (the app sends `upgrade-insecure-requests`, so the
+  redirect of `/index.html` is upgraded to https and the precache fetch fails). To test the worker or offline use, put a throwaway
+  https proxy that sends `x-forwarded-proto: https` in front of the server.
+- **(WS6) Two files in one folder that differ only by case** (`phoneView.ts`, `PhoneView.tsx`) break `tsc -b` on a case-insensitive
+  filesystem. Exporting a non-component from a component file trips `react-refresh/only-export-components`.
+- **(WS7a) The React compiler lint rules (`react-hooks/purity`) reject `Date.now()` in render**, and a lint error that disappears can
+  mean the compiler skipped the function (an `if (flag) steps++` on a captured `let` did that to `useDetection`). Keep counters in
+  an object and the clock in the store.
+- **(WS9, WS11a) `scripts/sync-seo.mjs` contains a literal NUL byte** (`parts.join('\x00')`): edit it with a bytes-safe script and
+  search it with `grep -a`. Also, writing `export const NAME =` or `export function NAME(` at the start of a line in
+  `comparePages.ts` stops `sync-seo.mjs` from following shared sections and moves every page's freshness date; the helpers are
+  exported with a trailing `export { ... }` list instead.
 
 ---
 
@@ -1001,7 +1158,265 @@ against a build of main: byte-identical.
 
 ---
 
-## 16. Localization of the signed-in app (WS12a, flags `locale_es`, `locale_de`, `locale_pt_br`)
+## 16. Sign-in providers (WS8, flags `signin_magic_link`, `signin_apple`, `signin_microsoft`)
+
+Details, the setup steps for Apple and Microsoft and the security table: `docs/agents/ws8-notes.md`. Code: `server/routes/authProviders.js`
+(registered in `ROUTE_MODULES`) and `server/auth/`; client `src/pages/SignIn.tsx`, `src/components/auth/ProviderButtons.tsx`, `src/auth/`.
+
+**A method is offered only when its flag is on AND its keys are configured.** `GET /auth/providers` returns
+`{ magic_link, apple, microsoft }` and is the one source of truth; it answers 404 while all three flags are off and sits outside
+`/api/` on purpose (marketing traffic must not spend the shared `/api/` limit). The client caches the answer for 10 minutes
+(`sb:auth:providers`, `src/auth/providers.ts`).
+
+| Route | Purpose |
+|---|---|
+| `POST /api/auth/magic-link/request` `{email}` | always `{ok:true}` for a valid address (no account enumeration); sends the link |
+| `POST /api/auth/magic-link/verify` `{token}` | JSON only, foreign `Origin` refused; sets the session and returns `{ok, redirect}` |
+| `GET /api/auth/apple`, `POST /auth/apple/callback`, `GET /api/auth/apple/finish` | Apple: start, Apple's `form_post` return (outside `/api/`: Apple's `Origin` would be refused), second hop that checks the cookie and exchanges the code |
+| `GET /api/auth/microsoft`, `GET /api/auth/microsoft/callback` | authorization code + PKCE (S256, verifier kept in the database) |
+| `GET /.well-known/apple-developer-domain-association.txt` | served from `APPLE_DOMAIN_VERIFICATION` while it is set, flag or not (`express.static` ignores dot directories) |
+| `GET /signin` | the app shell, `noindex`, `no-store`, with a script first in `<head>` that moves the token out of the address bar; the branded 404 while all flags are off |
+
+**One person, one account** (`server/auth/linkPolicy.js`, `accounts.js`). Every sign-in is an identity (`google:<sub>`,
+`email:<address>`, `apple:<sub>`, `microsoft:<tid>:<oid>`) in `auth_identities`. A known identity signs in to its account. A new identity
+joins an existing account only if the provider vouches for the address AND the existing account's address is itself vouched for (a
+legacy Google user, or an identity row with `email_verified = 1`); several candidates: a paying one, then the oldest. An unverified
+address is never stored on `users.email`; if an account already has it the sign-in is refused (`email_unverified`) and the person is
+told to use the emailed link. Apple vouches for any returned address (relay addresses included); Microsoft only for the personal-account
+tenant `9188040d-6c67-4c5b-b112-36a304b66dad` or when the optional claim `xms_edov` is true, never from `email` alone. The ID tokens are
+verified against the provider's JWKS (RS256 pinned, `aud`, `iss` per tenant, `exp`, `nonce`).
+
+**The Google seam** is the only edit to existing sign-in code: `server.js` creates `createGoogleLinker({ db, getUser })` and the Google
+callback does `if (!user) user = linkGoogleSignIn(googlePayload)`, which runs only when no user has that Google subject, so an existing
+Google user never reaches it. It returns an account made by another method with the same verified address, else `null`, and any
+error returns `null`.
+
+**Emailed link.** 32 random bytes, only the SHA-256 stored, single use (one conditional `UPDATE ... WHERE used_at IS NULL AND
+expires_at > now`), 15 minutes. The token travels in the URL fragment (`#t=...`), never sent to a server, and signing in needs a press of
+"Sign in to Stop Biting" (a POST), because mail scanners open GET links. Limits: 5 per address per hour and 30 s apart (counted in the
+database), 20 per caller per hour. Resend click tracking must be off for the sending domain or the fragment is lost. Retention:
+`magic_link_tokens` rows are deleted 24 hours after they expire, `auth_oauth_states` after use or 10 minutes.
+
+**Client.** `useSignInHref()` (used by `SiteHeader.tsx` and `TrialButton.tsx`) is `/api/auth/google` while no extra method is on, else
+`/signin`; `PricingSection` and `HeroDemo` still link straight to Google. New accounts get the trial from `TRIAL_MS`
+(`shared/plans.js`). `/signin` is in the service worker's `navigateFallbackDenylist`. `UserProfile.email` can be `NULL` for an account
+made by an unverified Microsoft sign-in; the client only reads it as `user?.email ?? ...`.
+
+Not built: showing the linked methods in Settings, deleting identities with an account. Not verified: any real Apple, Microsoft or Resend call.
+
+---
+
+## 17. Optional sync, export and import (WS4, flags `event_sync`, `data_backup`)
+
+Details, the contract for other features and the verification: `docs/agents/ws4-notes.md`. Privacy rule: **only the whitelisted
+`HabitEvent` fields can leave the device**; never video, frames, landmarks, photos, calibration or learned poses.
+
+**Server** (`server/routes/events.js`, `server/events/`). Flag `event_sync` first, then sign-in; with the flag off every path is a plain 404.
+
+| Route | |
+|---|---|
+| `POST /api/events/sync` `{ since, events[], deviceId, epoch? }` | the body is parsed by the route (512 kb; exempted from the global 10 kb parser). Returns `{ events[], cursor, hasMore, epoch }`: what other devices changed after `since`, plus the server's own version of any pushed event it kept instead |
+| `GET /api/events/status` | `{ epoch, count, live, deleted, quota, lastChangeAt }` |
+| `DELETE /api/events` | wipes the caller's synced events and starts a new **epoch** |
+
+Limits (`server/events/limits.js`): 500 events per batch, 1000 per page, 50,000 rows per account (`EVENTS_QUOTA_PER_USER`), 40 sync
+requests per 5 minutes and 30 status or delete requests per 15 minutes per account, on top of the global limit. Any key outside the
+whitelist (top level, event, `competingResponse`) refuses the whole batch with a 400 that names the field, never the value. Tables:
+`habit_events` (`seq` AUTOINCREMENT is the since-cursor; `UNIQUE(user_id, id)`; `false_positive` and `confirmed` are NULL when absent)
+and `habit_event_epochs`. **Other server features read a user's events only through
+`createEventStore(db).listUserEvents(userId, { since, until, includeDeleted, limit })`** (weekly email, share links); it hides deleted rows
+and decodes the JSON columns. A user who never synced has no rows, and a consumer must say so rather than show zeros.
+
+**Client** (`src/sync/`, pure TypeScript with injected ports: `engine.ts`, `payload.ts`, `controller.ts`; browser wiring in `api.ts`,
+`ports.ts`, `runtime.ts`, `optIn.ts`; `SyncHost.tsx` is mounted once in `App.tsx`). Opt-in belongs to **one account on one browser**
+(`sb:sync:optin = { userId, at }`); a different person signing in on the same browser starts with sync off. `SyncHost` renders nothing
+for an account that did not opt in (no request, no flag request, no chunk); only an opted-in account loads the lazy `SyncRunner`, and an
+engine exists only while someone is signed in AND `event_sync` is on AND that person opted in. The queue is **derived**, not kept: the
+engine remembers the `updatedAt` the server last acknowledged per event id (`sb:sync:versions`) and an event is waiting when its
+`updatedAt` differs, so it survives reloads, offline weeks and a clock that jumps backwards. A cycle pushes up to 500, pulls, merges
+through `events.merge`, and repeats while `hasMore` (at most 40 requests); it runs on start, about every 5 minutes (jittered), 30 s after a
+local change, on focus (at most once a minute) and on `online`; errors back off from 30 s to 30 min; a 401 stops, a 404 waits 30 minutes, a
+409 `epoch_changed` stops this device and tells the person. Conflicts: last write wins by `updatedAt`, ties by `compareEventVersions`
+(identical on client and server, proven on 20,000 random pairs). A delete is a tombstone that syncs; an edit made after a delete elsewhere
+brings the event back.
+
+**Data controls** (Settings > Data, `src/pages/settings/DataSettings.tsx`, `src/backup/`). "Delete synced data" pauses the engine, deletes the
+server rows, starts a new epoch and switches sync off on that device, so a second device cannot silently re-upload. "Delete everything"
+removes the server copy first (a box, ticked by default, when sync is on), then local history, settings and sync state; it does **not** touch
+nail photos. Export is JSON (`events.exportAll()`, restorable, with the streak anchors) or CSV (formula-looking cells defused); import checks
+size (10 MB), validates every entry with `parseWireEvent`, shows a preview and then applies it: a device with no history is restored whole
+through `replaceAll`, otherwise through `merge`. Both work with no account and no network.
+
+Limits worth knowing: custom bite reasons are not synced; streak start dates are per device; the app keeps the newest 5,000 events
+locally while the server keeps up to 50,000; server rows are kept until deleted, including for lapsed accounts and tombstones; deleting
+an account by hand must also delete its `habit_events` and `habit_event_epochs` rows. Guards: `scripts/syncGuard.test.mjs`,
+`server/events/payload.parity.test.js`.
+
+---
+
+## 18. Billing, trial length, referrals, free plan (WS9, flags `free_tier`, `lifetime_plan`, `gift_plan`, `referrals`, `regional_pricing`)
+
+Details, the owner's Paddle steps and the verification: `docs/agents/ws9-notes.md`. Legal drafts: `docs/agents/legal/ws9-*.md`.
+
+**One place for the numbers.** `shared/plans.js` (with `plans.d.ts`): `TRIAL_DAYS` (default 3, whole number 1 to 90 from the environment,
+read at import time, so it is a build argument AND a runtime variable; `vite.config.ts` copies it into the bundle with `define`),
+`TRIAL_MS`, the `${TRIAL_*}` copy tokens (`{{TRIAL_*}}` in `index.html`), free-tier limits, referral and gift numbers.
+`scripts/trialLength.test.mjs` fails when a literal trial length appears outside its `ALLOWED` list, which is also the list of the sentences
+a human must edit if the length changes. **One access decision:** `shared/access.js` (`evaluateAccess`), called by
+`src/utils/access.ts` and by the server. Order: active or paused Paddle subscription, then a running grant (lifetime, gift, referral
+credit), then trial, then the free plan (only if the account carries the limits, i.e. `free_tier` is on), else paywall. **Flags decide who
+is sold something and what the server reports, never whether something already paid for is honoured.**
+
+**Server** (`server/routes/billing.js`, `server/billing/`). Tables `paddle_events`, `billing_transactions`, `entitlements`, `gift_codes`,
+`referral_codes`, `referrals`; grants live in `entitlements`, so a cancelled subscription cannot overwrite a lifetime buyer.
+
+| Route | Flag | |
+|---|---|---|
+| `GET /api/referrals/me`, `POST /api/referrals/attach` | `referrals` | my code and counts; tie a NEW account (under 7 days old, nothing paid) to a link |
+| `GET /api/billing/gift-info`, `POST /api/billing/gift/redeem` | `gift_plan` | single use; 10 tries per 15 minutes per address |
+| `POST /api/billing/verify-transaction` | `lifetime_plan` | fallback after checkout; only for the caller's own payment |
+| `GET /redeem` | `gift_plan` | the app shell, `noindex`, with the gift code moved out of the address bar; the normal 404 while off; in the service worker denylist |
+
+**The webhook** keeps its raw-body parser and signature check. After the JSON parse, `app.locals.billingWebhook.take(event, res)`
+ignores an event id already in `paddle_events`, handles `transaction.completed` (lifetime grant, gift code and email, first payment for the
+referral program) and `adjustment.*` (refund, chargeback: revoke grant, gift, the referral credits that payment earned) itself, and records
+the other events once the existing `subscription.*` handlers have answered 2xx. Two layers of idempotence: the event id, and a unique key
+on every effect (`txn:<id>`). Out-of-order `subscription.*` delivery is still not guarded. The destination in Paddle must also send
+`transaction.completed`, `adjustment.created` and `adjustment.updated`. `GET /api/user/me` gets an optional `entitlement` key
+(`grants`, `banked_days`, `free_tier`) from `app.locals.decorateUser`; with every flag off and no grants it is exactly the users row.
+
+**Referrals.** Link `<site>/?ref=CODE` (kept 30 days in the browser, only when the flag is on). Reward when the referred user's FIRST
+payment completes: both get `REFERRAL_CREDIT_DAYS` (default 30). Checks: not the same user, same normalised email, same Paddle customer,
+or the same card; one reward per referred user; a refund or chargeback takes both credits back. A payment is rewarded only if its price id
+is positively one of ours (`PADDLE_PRICE_IDS`, or `PADDLE_PRICE_ID_MONTHLY` and `_YEARLY`, in the runtime environment). Gift and referral days
+are banked and start when the account has no other access.
+
+**Free plan.** Detection minutes are counted in the browser per local day (`src/billing/useFreeTier.ts`, `sb:billing:free-usage`; paused
+time never counts, WS7a) and the camera is switched off at the limit; History lists the last N days while statistics and streaks use
+everything. It replaces the paywall for accounts whose trial ended or lapsed. **Client:** `src/billing/` (env, Paddle loader,
+localized prices through `Paddle.PricePreview`, referral and gift-code storage), `src/components/billing/` (`PlanExtras`, `LifetimePlate`,
+`ReferralCard`, `FreeTierNotice`, `BillingHost`), `src/pages/RedeemPage.tsx`; any failure of localized prices keeps $2.99 and $29.
+
+---
+
+## 19. Coaching, urge timer and the false-alarm controls (WS2 and WS3, flags `hrt_coaching`, `urge_timer`, `false_positive_controls`)
+
+Detection-side detail of WS3 is in section 2; the full notes are `docs/agents/ws2-notes.md` and `ws3-notes.md`.
+
+**WS2 (`src/coaching/`).** After an alarm an optional card offers the person's competing response (15 to 60 s; Done, Skip, Escape; the prompt
+policy is off, hourly or every alarm, and defaults to **off per person** even with the flag on). It can never block, delay or silence the
+alarm: `useDetection.startBiting` starts the sound first and `logIncident` only then notifies; coaching hears about an alarm from a store
+listener (`watcher.ts`) that does one pure check, defers the rest with `queueMicrotask` and is wrapped in try/catch;
+`scripts/coachingGuards.test.mjs` fails if any coaching file imports the detector, camera, alarm sound or PiP code, or if the seam imports the
+store. Seams: `<CoachingSeam surface="main" />` in `AlertOverlay.tsx`, `surface="pip"` in `PiPWindow.tsx`, `<CoachingDashboardSlot />` in
+`Dashboard.tsx` (bridge, urge timer, program link), `<ProgramHost />` in `App.tsx`. The "I feel an urge" timer (`UrgeTimer.tsx`, 60 or 90 s,
+`urge_timer` alone is enough) logs a **manual event with trigger `urge`, which is not a bite** (`isUrge`, used by `isBite`, History, Today and
+the charts). The 4-week program (`src/data/hrtProgram.json`, 28 lessons, `reviewed: false`, NEEDS HUMAN REVIEW) is an in-app full-screen view
+(`Program.tsx`, `ProgramView.tsx`), not a URL; one new lesson a day, no backlog or streak. Data: `competingResponse` on the event; kv
+namespace `hrt` (`settings`, `last-prompt-at`, `program`); `src/utils/coachingStats.ts` gives the share of alarms followed by a finished response.
+
+**WS3 (`src/falsePositive/`, `src/calibration/`, `src/detection/controls.ts` and friends).** The controls can only remove or delay an alarm:
+chin-rest rule, learned poses (six numbers per "Not a bite" tap), hand filter, silence. `falsePositive: true` outranks `confirmed`
+(state table in `eventModel.ts`). The learned data and the calibration are kv namespace `falsePositive`: never an event field, never in
+the export, never synced (`localOnly.test.ts`, `falsePositiveGuards.test.mjs`). "Clear all data" does not touch `kv`; Settings > Detection
+has "Forget what it learned" and "Delete calibration". The MediaPipe handedness mapping assumes a mirrored picture and is one constant,
+`HANDEDNESS_INPUT_IS_MIRRORED` (`handedness.ts`), unverified on a real device.
+
+---
+
+## 20. Insights, photo diary and the weekly email (WS5, flags `insights`, `photo_diary`, `weekly_email`)
+
+Details: `docs/agents/ws5-notes.md`; legal drafts `legal/ws5-*.md`.
+
+**Insights is a view inside History, not a URL** (a new top-level path needs `server.js` `KNOWN_ROUTES` and the service worker's navigation
+fallback). `Log.tsx` has a History / Insights switch (`useInsightsAvailability()`, a lazy `InsightsView` in `src/insights/ui/`); with
+both flags off the switch renders nothing and `Log` renders what it did. The charts are plain HTML and CSS (recharts renders an empty box
+without a DOM, which would have left the 0 / 1 / 10,000-event tests with nothing to assert, and a scaled SVG shrinks its text on a phone).
+`src/insights/aggregate.ts` is one pass over the history (`computeInsights`; 10,000 events in about 2 ms in the browser's zone, 22 ms with a named zone), `zone.ts` does calendar maths in
+the browser's time zone (or a named IANA zone in tests), weeks start on Monday, and `predicate.ts` is the one place the charts decide what a
+bite is, built on WS3's predicates. Milestones (`milestones.ts`, clock injected): first hour without a bite, first day, 7 days, 30 days, and
+the 100th alarm that still stands; each celebrated once ever (`sb:insights:milestones`), with a baseline on first run so a new user is not
+greeted with old ones. The share card (`shareCard.ts`) is a 1080 x 1080 PNG drawn on a canvas: the figure, one sentence, the date, the app's
+name; no photo, name, email or other number, and it leaves the device only if the person sends it.
+
+**Photo diary (`src/photos/`).** Hands-only guided capture with a separate `getUserMedia` (all tracks stopped on save, discard, cancel,
+error, unmount and when the page is hidden), weekly in-app reminder strip (7 days, "Not now" snoozes a day, no Notification API),
+before/after slider. Bytes in IndexedDB through `localBlobs` (collection `photo-diary`), metadata in `sb:insights:photo-diary`, one JPEG per
+photo, at most 1,280 px and 104 photos. Photos are drawn on canvases via `createImageBitmap`, never `<img src="blob:...">`, because the CSP has no
+`blob:` image source. **Local only, by construction:** `scripts/photoGuard.test.mjs` (no network or sync imports, no photo-like key in either
+whitelist, the service worker caches no photo) and `src/photos/photoNetwork.test.tsx` (throwing spies on every network API through the
+lifecycle). The diary has no export; "Delete everything" does not delete it.
+
+**Weekly summary email.** Routes `GET` and `PUT /api/email/weekly` (flag `weekly_email`, then sign-in; the browser never sends an address)
+and `GET` and `POST /api/email/unsubscribe/:token` (**never flag-gated, no sign-in**: a dead unsubscribe link is a compliance problem; GET shows
+a confirmation and changes nothing, POST unsubscribes, including RFC 8058 one-click). The token is `base64url(userId).base64url(HMAC-SHA256(
+per-account secret, "weekly-summary-unsubscribe:v1:" + userId))`. Table `email_preferences`. The job (`server/jobs/weeklyEmail.js`) starts in
+`register()` only when `weekly_email` is on, `RESEND_API_KEY` is set and `ELECTRON_PROTOCOL` is not; it runs hourly, `.unref()`'d, and for each
+opted-in account with synced events works out the last completed ISO week in the person's own time zone and sends between 8 and 72 hours
+after it ended, only if the week ended after they opted in and either week had a bite. **Claim, then send:** `UPDATE ... SET last_sent_week = week
+WHERE ... last_sent_week < week` must change one row before anything is sent; if the send throws or returns `{ error }` the claim is put back.
+At most 200 sends per tick. The body is plain and branded, with no image or name, and says "A log is a way to notice a habit, not a treatment."
+
+---
+
+## 21. Share links (WS10, flag `share_links`)
+
+Details, the scope table and the verification: `docs/agents/ws10-notes.md`; legal draft `legal/ws10-*.md`.
+
+Owner routes (flag, then sign-in; 60 requests per 15 minutes per account): `POST /api/share/links` (body exactly `label?`, `expiresInDays?` of 7, 30,
+90 or null, `detailed?`, `timezone?`; returns the token ONCE; at most 5 active links), `GET /api/share/links` (no token, no hash),
+`DELETE /api/share/links/:id` (no entitlement needed, so an expired account can always revoke). Public routes (no sign-in, no cookie; the address
+is the credential): `GET /share/:token` (the page) and `GET /share/:token/data.json`. A revoked, expired, unknown or malformed token gets one
+answer: the same 404, body and headers (one query that already excludes revoked and expired rows). Table `share_links`: only the SHA-256 of the
+32-byte token is stored; revoked or expired rows are deleted 30 days later, whenever anyone next makes a link.
+
+**What a link reveals is whatever `buildShareView` returns** (`server/share/summary.js`; `toPublicView` names every key literally, no spread),
+pinned by exact-key-set tests for both modes: streak in whole days, bites in the last 7 days / the 7 before / the last 12 weeks, 28 daily and 12
+weekly counts as positions with no dates, reasons in the fixed groups `stress, focus, boredom, unknown, other`, the competing-response rate,
+and, only when the owner ticked "detailed", day-level dates and an hour-of-day histogram. Never: ids, device ids, hands, behaviours, free text,
+custom reason names, per-event timestamps, name, email, account id, time zone, photos, the private label. Definitions are the server's copy of
+the app's WS3 predicates (`server/share/semantics.test.js`). Events come from `createEventStore(db).listUserEvents`.
+
+**The page is not the app shell** (the shell loads Google Analytics and the address holds the token): `server/share/page.js` renders one
+self-contained document with an inline stylesheet and one inline script allowed by SHA-256 in its own CSP (`default-src 'none'`), no third
+party, no cookie, `Cache-Control: no-store`, `X-Robots-Tag: noindex, nofollow`, `Referrer-Policy: no-referrer`, a print stylesheet for one A4
+page. Two shared-file edits make it work: `server.js` exempts `/share/` from the canonicalising lower-case redirect (tokens are mixed case) and
+`vite.config.ts` has `/^\/share\//` in `navigateFallbackDenylist`. Known: the address is a bearer secret and may appear in host logs; a chat
+app that previews the link counts as a view.
+
+---
+
+## 22. Where each flag is checked
+
+All 27 flags are in `src/features/registry.ts` and `server/features.js`. This is where each one is actually read, to answer "what does
+turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePaths.ts`).
+
+| Flag | Server | Client |
+|---|---|---|
+| `detection_behaviors`, `experimental` | none (the worked-example route uses `experimental`); page `/solutions/cuticle-biting` for the first | `src/detection/useBehaviors.ts` (reads both), `registry.ts` `effectiveBehaviors()`, `BehaviorsSection` |
+| `hrt_coaching` | page `/features/habit-reversal-coaching` | `CoachingDashboardSlot.tsx`, `ProgramView.tsx`, Settings > Alerts, `InsightsView.tsx` |
+| `urge_timer` | | `CoachingDashboardSlot.tsx`, `src/phone/PhoneView.tsx` |
+| `false_positive_controls` | | `FalsePositiveSlot.tsx`, `useEnabled.ts`, `InsightsView.tsx`, Settings > Detection |
+| `event_sync` | `server/routes/events.js`; copy rules in `shared/flagCopy.js` | `SyncRunner.tsx`, `src/sync/ports.ts`, `SyncNoteView.tsx`, `DataSettings.tsx`, `SharingSettings.tsx` |
+| `data_backup` | none (export and import are client-only) | `DataSection.tsx`, `DataSettings.tsx` |
+| `insights`, `photo_diary` | none | `useInsightsAvailability.ts`, `MilestoneHost.tsx`, `PhotoReminder.tsx`, `PhotoDiarySettings.tsx` |
+| `weekly_email` | `server/routes/weeklyEmail.js` (routes and job start; unsubscribe is ungated) | `WeeklyEmailSettings.tsx` |
+| `phone_companion` | `server/routes/phone.js` (manifest shortcuts); copy rules; page `/features/phone-companion` | `src/phone/usePhoneView.ts`, `offlineGrant.ts` |
+| `background_watching` | none | `src/background/gate.ts`, `BackgroundHost.tsx`, `useDetection.ts`, `usePictureInPicture.ts`, `useNotifications.ts` |
+| `desktop_app` | page `/features/desktop-app` only | none |
+| `signin_magic_link`, `signin_apple`, `signin_microsoft` | `server/routes/authProviders.js`; copy rules (only when keys are configured, `server/marketing/copyFlags.js`) | `src/auth/`, `SignIn.tsx` |
+| `free_tier` | `server/billing/userDecorator.js` | `src/billing/useFreeTier.ts` (reads `entitlement.free_tier`) |
+| `lifetime_plan`, `gift_plan` | `server/routes/billing.js` | `PaywallPage.tsx`, `PlanExtras.tsx`, `useGiftInfo.ts` |
+| `referrals` | `server/routes/billing.js`, `server/billing/referrals.js`; page `/features/referral-program` | `ReferralCard.tsx`, `referralCapture.ts` |
+| `regional_pricing` | none | `src/billing/prices.ts` |
+| `share_links` | `server/routes/share.js`; page `/features/share-with-therapist` | `SharingSection.tsx`, `SharingSettings.tsx` |
+| `compare_competitors` | `server.js` (`GATED_FLAG`), `server/marketing/gatedPages.js` | `ComparePage.tsx` |
+| `social_proof` | `server.js` (testimonials article) | `src/components/site/Testimonials.tsx` |
+| `locale_es`, `locale_de`, `locale_pt_br` | none yet (WS12b will add the marketing pages) | `src/i18n/LocaleHost.tsx` (the only link between a language and the flags), `LanguageSettings.tsx` (the card appears while one is on), `meta.ts` |
+
+---
+
+## 23. Localization of the signed-in app (WS12a, flags `locale_es`, `locale_de`, `locale_pt_br`)
 
 Full notes: `docs/agents/ws12a-notes.md`. The short version:
 

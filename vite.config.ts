@@ -157,14 +157,16 @@ export default defineConfig({
         screenshots: [],
       },
       workbox: {
-        // Cache the app shell (JS/CSS/HTML) with StaleWhileRevalidate.
+        // Keep the offline app shell at the root. Public pages must reach
+        // Express for their own HTML, metadata and status; never runtime-cache
+        // navigation responses that could contain authenticated content.
         // MediaPipe WASM and model files are large and must NOT be cached by
         // the service worker — they have their own loading logic and caching
         // them in the SW cache would break WASM instantiation on some browsers.
         navigateFallback: '/index.html',
-        // /es, /de, /pt-br (WS12b): the server decides whether a localized page exists (flag, review state), so a
-        // navigation there must never be answered from the cached English shell.
-        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/, /^\/redeem/, /^\/share\//, /^\/(?:es|de|pt-br)(?:\/|$)/],
+        // Workbox matches pathname + search, including root campaign links.
+        navigateFallbackAllowlist: [/^\/(?:\?.*)?$/],
+        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/, /^\/redeem/, /^\/share\//],
         runtimeCaching: [
           {
             // App shell JS/CSS chunks — cache first, background update

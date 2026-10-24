@@ -28,6 +28,11 @@ export const messages: Record<keyof typeof en, string> = {
   'between.lead': 'Nimm deine Hand weg.',
   'between.next': 'Schritt 2 beginnt in {left, plural, one {# Sekunde} other {# Sekunden}}: Du führst dann eine Fingerspitze nah an deine Lippen.',
 
+  'announce.rest': 'Schritt 1 von 2. Stütze dein Kinn auf deine Hand, wie du es normalerweise tun würdest. Halte die Position.',
+  'announce.between': 'Nimm deine Hand weg. Schritt 2 beginnt in ein paar Sekunden.',
+  'announce.real': 'Schritt 2 von 2. Führe eine Fingerspitze nah an deine Lippen. Halte die Position.',
+  'announce.done': 'Fertig. Du kannst das Ergebnis speichern oder es noch einmal versuchen.',
+  'announce.failed': 'Das hat nicht geklappt. Du kannst es noch einmal versuchen.',
   'result.done': 'Fertig.',
   'result.summary': 'Die App hat {rest} Einzelbilder gesehen, auf denen du dein Kinn aufstützt, und {real} mit einer Fingerspitze nah an den Lippen. Beim Speichern bleiben ein paar Zahlen daraus auf diesem Gerät erhalten, und die Regel fürs Kinn-Aufstützen nutzt sie.',
   'result.failed': 'Das hat nicht geklappt.',

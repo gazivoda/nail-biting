@@ -950,179 +950,83 @@ BLOG_POSTS.push({
 
 BLOG_POSTS.push({
   slug: 'best-apps-to-stop-nail-biting',
-  title: '5 Best Tools to Stop Nail Biting in 2026, Ranked by Evidence',
+  title: 'Apps and Tools to Stop Nail Biting: What Each Does',
   seoTitle: 'Best Apps to Stop Nail Biting (2026), Compared',
-  description: 'Ranked by evidence, not marketing: AI detection apps, bitter polish, reminder bands and habit trackers. What each does for an automatic habit, and its cost.',
+  description: 'Compare nail biting apps, bitter polish, wrist sensors and trackers by what they do, where they work and their limits. Includes our own app, with disclosure.',
   tag: 'Comparison',
-  readingMinutes: 11,
+  readingMinutes: 9,
   datePublished: '2026-04-19',
-  dateModified: '2026-10-21',
+  dateModified: '2026-10-23',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
       heading: 'What are the best tools to stop nail biting?',
-      body: `Camera apps and wrist sensors are the tools built to flag biting as it happens, without you noticing first: webcam apps at a desk, a wearable such as HabitAware's Keen2 away from it. Bitter polish works anywhere but needs reapplying. Habit trackers and reminder bands only help with episodes you notice. Bitter polish is the best passive option away from a screen. General habit trackers and reminder bands both require awareness the habit removes.\n\nThe rest of this guide works through each category, and the first question is why most habit apps fail here at all.\n\nMost habit-tracking apps — Habitica, Streaks, Finch, generic habit loggers — share a fundamental design assumption: that you know when you performed the habit. You open the app, tap the habit, and mark it done or not done.\n\nNail biting breaks this assumption completely. The habit is unconscious. BFRB research distinguishes "automatic" from "focused" biting, and for many chronic biters a large share of episodes happens entirely outside conscious awareness. The biting happens below the threshold of conscious awareness — during deep focus, while watching something, in meetings. By the time you might think to log it, the moment has passed and you have likely forgotten it happened at all.\n\nThis is the core problem with applying general-purpose habit trackers to nail biting: they require you to consciously observe and record a habit that by definition operates outside conscious observation. The tool is mismatched to the problem.\n\nThe only intervention that can catch an unconscious habit is one that operates without your attention — something that watches passively and fires an alert at the exact moment the behaviour begins. That is what separates AI detection from every other category on this list.`,
+      body: `The useful distinction is between tools that prompt you during a hand-to-mouth movement and tools that help you record urges or track nail growth. A webcam app can cover time at your computer. A phone tracker or wearable may fit other parts of your day. Bitter polish and physical barriers are options that do not need a camera.\n\nDisclosure: Stop Biting is my own product. I am Igor Gazivoda, its developer and this site's author. This is a comparison of features, contexts and limitations, not an independent review or a clinical ranking. We have not run a trial showing that our app works better than these alternatives.\n\nStart with what you need help doing: noticing a movement, recording a trigger, protecting a nail, or seeing progress in photos. Those are different jobs. A feature list can help you choose a tool to try, but it cannot tell you which one will stop your biting.`,
     },
     {
-      heading: 'Category 1 — AI detection apps (four of them)',
-      body: `Disclosure up front: Stop Biting is my own product, made and sold by Igor Gazivoda, who writes this site, so read this section as a maker's explanation rather than an independent review.\n\nStop Biting is one of several apps that now detect nail biting in real time through a camera. It uses your existing webcam and Google's MediaPipe framework to run hand-landmark and face-mesh detection locally on your device. When the model detects your hand approaching your mouth with the posture characteristic of nail biting, it fires an immediate alert — before the bite completes.\n\nNo camera data is sent while it runs.\n\nThe clinical mechanism maps directly to awareness training — the primary active ingredient in Habit Reversal Training (HRT). The alert fires at the moment the automatic habit chain begins, creating the conscious interruption that allows a competing response to fire. Without that interruption, the competing response never has a chance to activate because the person is unaware the habit has started.\n\nLimitation: requires a screen-based context (computer with webcam). Does not monitor biting away from the desk. For non-screen biting, combining with bitter polish covers both contexts.\n\nPricing: Free ${TRIAL_HYPHEN} trial. $2.99/month or $29/year. No credit card required.\n\nThree other apps do the same job, and a page called "best apps" should name them. As of our 10 September 2026 check of the vendors' own sites and store listings: Hands Off (handsoffapp.com) runs on Mac and Windows, markets detection for five body-focused repetitive behaviours, and costs €2.99/month with a 3-day trial. Nailed (nailedapp.io) is a macOS menu bar app needing macOS 12 or later on an Apple M1 Mac or newer; its site advertises $4.99 as a one-time purchase while the Mac App Store listing it links to showed the app as a free download. SmartBehavior (smart-behavior.com) is the only one with native iOS and Android apps, also covering skin picking and hair pulling; no price is published on its site and its US App Store listing showed $0.99. All four process video on-device.\n\nPrices and features change, so confirm on the vendor's own site before buying.`,
+      heading: 'Camera apps: alerts while your hand is near your mouth',
+      body: `Stop Biting uses a computer webcam and on-device hand and face tracking to alert when a fingertip stays close to the mouth. Camera frames are processed locally. Proximity is a proxy for biting: false alarms and missed episodes are possible, and it cannot monitor you away from the camera.\n\nIts alert is intended as an awareness aid. Habit Reversal Training (HRT) combines awareness training with other components, including competing responses and social support. Evidence for that treatment package is not evidence that a particular app produces the same results.\n\nStop Biting costs $2.99/month or $29/year after a free ${TRIAL_HYPHEN} trial, with no credit card required to start.\n\nThere are other camera apps. Our 10 September 2026 vendor check recorded Hands Off for Mac and Windows and SmartBehavior with iOS and Android apps. Both describe support for behaviours beyond nail biting. Hands Off's homepage, rechecked on 23 October, says it costs €2.99/month with a 3-day trial. SmartBehavior's September store price was $0.99; confirm its current listing before buying.\n\nNailed is a macOS menu bar app. On 23 October 2026, both its official site and its linked US Mac App Store listing showed it as free. The listing requires macOS 12 or later and a Mac with an Apple M1 chip or later.`,
       list: [
-        `Biting mainly at a computer, and you want tracking plus a method around the alarm: Stop Biting. Ours, and the trial needs no card.`,
-        `Several BFRBs at a desktop, not just nails: Hands Off, which lists five.`,
-        `An Apple Silicon Mac and no appetite for a subscription: Nailed.`,
-        `Biting mostly away from the computer: SmartBehavior, the only one with native phone apps.`,
+        `For a browser-based alert at your desk: compare Stop Biting's setup and limits with the installed camera apps.`,
+        `For several BFRBs: check which specific behaviours Hands Off and SmartBehavior say they cover.`,
+        `For a free option on a supported Apple Silicon Mac: check Nailed.`,
+        `For a phone-based camera app: check SmartBehavior's current device requirements and how you would position the camera.`,
       ],
-      html: `<p>Full head-to-head on all four, including where ours loses: <a href="/compare/ai-detection-apps">every AI nail biting detection app compared</a>. Also: <a href="/how-it-works">how the detection works</a> · <a href="/compare/bitter-polish-alternative">Stop Biting vs bitter polish</a></p>`,
+      html: `<p><strong>Vendor sources:</strong> <a href="https://handsoffapp.com/" target="_blank" rel="noopener noreferrer">Hands Off</a>, <a href="https://smart-behavior.com/" target="_blank" rel="noopener noreferrer">SmartBehavior</a>, <a href="https://nailedapp.io/" target="_blank" rel="noopener noreferrer">Nailed</a> and <a href="https://apps.apple.com/us/app/nailed-quit-nail-biting/id6761733224?mt=12" target="_blank" rel="noopener noreferrer">Nailed's US Mac App Store listing</a>. Check dates are stated above; prices and features can change.</p><p>Read our <a href="/compare/ai-detection-apps">AI nail biting app comparison</a>, <a href="/how-it-works">how Stop Biting works</a> and <a href="/blog/nail-biting-detection-accuracy">what the detector can and cannot identify</a>.</p>`,
     },
     {
       heading: 'Category 2 — Bitter nail polish (Mavala Stop, Orly No Bite)',
-      body: `Bitter nail polishes use denatonium benzoate — the bitterest substance known to science — as a chemical deterrent. Applied to nails daily, the bitter taste triggers when fingers enter the mouth, creating an aversion response intended to break the habit loop.\n\nMavala Stop and Orly No Bite use the same active ingredient at similar concentrations; the main differences are formulation longevity (Orly markets a longer-wear formula, 3–5 days vs Mavala's daily reapplication) and availability by region.\n\nWhere they work well: early-stage habits, mild biters, and as a 24/7 supplementary deterrent for people who also use a screen-based detection tool. Bitter polish covers biting away from the desk — in meetings, commuting, watching TV — where a webcam tool cannot monitor.\n\nWhere they fail: established chronic biters habitually adapt to the bitterness within 1–3 weeks. The brain adjusts to predictable aversive stimuli, particularly when the underlying trigger (stress, focus, boredom) remains unaddressed. At that point, the deterrent has failed and the habit continues.\n\nPricing: ~$10–$12 per bottle, lasting 2–3 months with daily application.`,
+      body: `Bitter polish supplies a taste deterrent when the treated nail reaches the mouth. It does not need a screen or a charged device. Mavala Stop and Orly No Bite are examples; check the individual product's instructions, suitability and current price rather than assuming all formulas are the same.\n\nBitter preparations have been tested for nail biting. In a 45-person study by Allen (1996), mild aversion improved nail length significantly, while the competing-response group just missed significance. Both groups also self-monitored. That study does not compare any current camera app or establish a universal winner.`,
+      html: `<p><strong>Sources:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/8881096/" target="_blank" rel="noopener noreferrer">Allen KW. Chronic nailbiting: a controlled comparison of competing response and mild aversion treatments. Behav Res Ther. 1996;34(3):269–272.</a> The <a href="https://www.aad.org/nail-care-secrets/stop-biting-nails" target="_blank" rel="noopener noreferrer">American Academy of Dermatology's nail-biting guidance</a> also lists bitter polish among options.</p>`,
     },
     {
       heading: 'Category 3 — Reminder bands and physical barriers',
-      body: `Rubber bands on the wrist (the classic "snap the band" reminder), textured silicone wristbands, and physical barriers like finger cots or gloves fall into the reminder/barrier category.\n\nThe mechanism for reminder bands is conscious redirection — they provide a physical reminder that you're trying to stop, prompting you to redirect. This only works when you notice you're biting or about to bite, which circles back to the fundamental awareness problem: most biting episodes never reach conscious awareness.\n\nPhysical barriers (gloves, finger cots) prevent biting mechanically. They work while worn but don't alter the underlying habit. When the barrier is removed, the habit resumes. Used strategically during specific high-risk hours (late evening, during long calls), they can reduce overall frequency without requiring active effort in that window — but they are a management tool, not a change mechanism.\n\nBest use: supplementary to a primary intervention; useful during specific very high-risk windows as a circuit breaker.`,
+      body: `A reminder band is a visible or tactile cue; an ordinary band does not detect a hand-to-mouth movement. Gloves or nail coverings serve a different purpose by putting a physical barrier between the teeth and the nail.\n\nThe American Academy of Dermatology lists tape and gloves among options. Choose something practical for the activity where you bite, and consider whether it interferes with typing or other tasks. A barrier's presence does not tell us what happens after it is removed; this comparison cannot promise lasting habit change from wearing one.`,
     },
     {
       heading: 'Category 4 — General habit trackers (Habitica, Streaks)',
-      body: `Habitica gamifies habits with RPG mechanics. Streaks uses commitment streaks and calendar views. Both are well-designed, well-maintained apps with strong followings for building intentional habits — exercise, reading, meditation.\n\nFor nail biting, the core limitation is structural: both require manual logging. You must notice you bit, open the app, and record it. As discussed above, the majority of biting episodes never reach conscious attention. Logging only the minority of episodes you happen to notice gives you inaccurate data and weak feedback loops.\n\nStreaks is particularly well-suited to building new daily habits (flossing, language practice) where you perform the habit once and mark it done. It is not designed for interrupting an automatic behaviour that happens many times throughout the day below awareness.\n\nHabitica's "negative habit" feature allows logging each biting episode and taking damage, which provides some incentive. That incentive only ever reaches the episodes you catch, which for nail biting is the minority. The unconscious majority stay invisible.\n\nBottom line: both apps are good tools, wrong application. Use them for habits you perform consciously. For nail biting, the awareness gap is the real problem, and these tools don't address it.`,
+      body: `General habit trackers offer a place to record a habit or a planned action. Manual entries can help you keep notes about situations and urges, but they depend on what you notice and choose to record. A completed entry is not automatic observation of every bite.\n\nYou could track practising a competing response, filing a snag instead of biting it, or checking your notes at the end of the day. That is a different job from a camera alert, and it need not be treated as a competing solution. We do not have comparative evidence showing that one of these trackers or a detector is more effective for stopping nail biting.`,
       html: `<p>Related: <a href="/blog/habit-reversal-training-guide">the habit reversal training guide</a> — the evidence-based protocol that does address it.</p>`,
     },
     {
       heading: 'Also worth knowing: a photo tracker and a wrist sensor',
-      body: `Two products do not fit the categories above. Both were checked against the vendors' own pages in October 2026, and prices and features change, so confirm before buying.\n\nNailKeeper (nailkeeper.app) is a dedicated nail biting app built around photo tracking of nail growth, a time-since-quitting timer and reminders to take photos, on iPhone and Android. Its US App Store listing on 6 October 2026 showed it as free to download with in-app purchases of $4.99, $9.99 and $19.99. Its site and listing do not mention real-time detection, so it records progress rather than interrupting the habit, and it can sit alongside a detector rather than replace one.\n\nHabitAware's Keen2 bracelet (habitaware.com) is a wearable: its site says it vibrates on the wrist when it detects the behaviour, and it names hair pulling, skin picking and nail biting. It works away from a screen, which webcam detection cannot. We found no bracelet price on the pages we checked.`,
+      body: `NailKeeper and HabitAware serve different contexts from a desktop webcam. Their details below retain the October check dates from our earlier comparisons; confirm current features and prices before buying.\n\nNailKeeper describes photo tracking, a quit timer and photo reminders on iPhone and Android. Its US App Store listing on 6 October 2026 showed a free download with in-app purchases of $4.99, $9.99 and $19.99. The site, rechecked on 23 October, still describes photos and a timer. We found no real-time detection described there, which is a statement about the page rather than a test of the app.\n\nHabitAware's Keen2 bracelet is a wearable. Its site says it vibrates when it detects the behaviour and names hair pulling, skin picking and nail biting. It can be worn away from a computer. Our 5 October check did not record a bracelet price; that is a gap in our comparison, not a claim that the vendor has no published price.`,
       html: `<p>Side-by-side pages: <a href="/compare/stop-biting-vs-nailkeeper">Stop Biting vs NailKeeper</a> and <a href="/compare/stop-biting-vs-habitaware">Stop Biting vs HabitAware (Keen)</a>.</p>`,
     },
     {
       heading: 'Full feature comparison table',
-      body: `Here is how all five approaches compare across the dimensions that matter most for a chronic nail biter: The rows after Habitica and Streaks are named products, checked against their vendors' own pages or store listings on the dates shown. "Not described" means we found nothing on those pages, and "Not assessed" means we have not tested it and make no claim.`,
+      body: `These rows compare the job each tool does and where it can be used. They do not rank clinical benefit or habituation risk. Competitor prices retain their stated check dates; Nailed and the Hands Off homepage price were rechecked on 23 October 2026. Confirm current details before buying. "Not described" means we did not find a feature in the checked description, rather than proving it is absent.`,
       html: `<table>
   <thead>
-    <tr>
-      <th>Tool / Category</th>
-      <th>Catches unconscious biting?</th>
-      <th>Works away from screen?</th>
-      <th>Addresses root trigger?</th>
-      <th>Habituation risk?</th>
-      <th>Price</th>
-    </tr>
+    <tr><th>Tool / Category</th><th>How it prompts or records</th><th>Where it works</th><th>Price and check date</th></tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong>Stop Biting</strong> (AI detection)</td>
-      <td>Yes — passive real-time detection</td>
-      <td>No — screen + webcam required</td>
-      <td>Yes — awareness training mechanism</td>
-      <td>None</td>
-      <td>Free trial · $2.99/mo</td>
-    </tr>
-    <tr>
-      <td><strong>Mavala Stop</strong> (bitter polish)</td>
-      <td>Partially — only if it fires</td>
-      <td>Yes — 24/7</td>
-      <td>No — deterrent only</td>
-      <td>High (1–3 weeks)</td>
-      <td>~$10–$12 one-off</td>
-    </tr>
-    <tr>
-      <td><strong>Orly No Bite</strong> (bitter polish)</td>
-      <td>Partially — only if it fires</td>
-      <td>Yes — 24/7</td>
-      <td>No — deterrent only</td>
-      <td>High (1–3 weeks)</td>
-      <td>~$9–$11 one-off</td>
-    </tr>
-    <tr>
-      <td><strong>Reminder bands</strong></td>
-      <td>No — requires conscious noticing</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Medium</td>
-      <td>$0–$10</td>
-    </tr>
-    <tr>
-      <td><strong>Physical barriers</strong> (gloves, cots)</td>
-      <td>Prevents rather than catches</td>
-      <td>Yes</td>
-      <td>No — management only</td>
-      <td>N/A (habit resumes when removed)</td>
-      <td>$0–$20</td>
-    </tr>
-    <tr>
-      <td><strong>Habitica / Streaks</strong> (habit trackers)</td>
-      <td>No — manual logging only</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>N/A</td>
-      <td>Free / $2.99–$9.99/mo</td>
-    </tr>
-    <tr>
-      <td><strong>NailKeeper</strong> (photo tracker)</td>
-      <td>Not described: photo tracking, a quit timer and reminders</td>
-      <td>Yes — iPhone and Android app</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>Free; in-app $4.99–$19.99 (US App Store, 6 Oct 2026)</td>
-    </tr>
-    <tr>
-      <td><strong>HabitAware Keen2</strong> (wrist sensor)</td>
-      <td>Vibrates when it detects the behaviour, per its site</td>
-      <td>Yes — worn</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>Not stated on the pages we checked</td>
-    </tr>
-    <tr>
-      <td><strong>Pavlok</strong> (wearable)</td>
-      <td>On its nail biting page, you trigger the shock when you catch yourself</td>
-      <td>Yes — worn</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>$99.99–$134.99 devices shown, plus a $19/mo option (8 Oct 2026)</td>
-    </tr>
-    <tr>
-      <td><strong>BiteLess</strong> (Apple Watch)</td>
-      <td>Yes — automatic, per its listing</td>
-      <td>Yes — Apple Watch and iPhone, left wrist for now</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>In-app $9.99/mo or $69.99/yr (US App Store, 8 Oct 2026)</td>
-    </tr>
-    <tr>
-      <td><strong>Unbite</strong> (tap-logging tracker)</td>
-      <td>No — its listing describes logging urges and episodes with a tap, and mentions no camera or detection</td>
-      <td>Yes — iPhone and iPad app (iOS 16.4+)</td>
-      <td>Logs triggers such as stress, boredom or anxiety, per its listing</td>
-      <td>Not assessed</td>
-      <td>Free to download; premium by subscription after a free trial (US App Store, 13 Oct 2026)</td>
-    </tr>
-    <tr>
-      <td><strong>HabitCam</strong> (Windows and Linux webcam app)</td>
-      <td>Yes — webcam detection, processed locally, per its site</td>
-      <td>No — needs your webcam</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>$19.99 launch price for a lifetime license, regularly $39.99; 7-day trial (13 Oct 2026)</td>
-    </tr>
-    <tr>
-      <td><strong>NailBiteMenu</strong> (Mac menu bar app)</td>
-      <td>Yes — uses your Mac's camera, processed on-device, per its README</td>
-      <td>No — needs your Mac's camera</td>
-      <td>Not described</td>
-      <td>Not assessed</td>
-      <td>No price found; described as open source (13 Oct 2026)</td>
-    </tr>
+    <tr><td><strong>Stop Biting</strong> (camera app)</td><td>Alerts for sustained fingertip-to-mouth proximity; can false-alarm or miss an episode</td><td>Computer with webcam, while you are in view</td><td>${TRIAL_HYPHEN} trial, then $2.99/mo or $29/yr (our product)</td></tr>
+    <tr><td><strong>Nailed</strong> (Mac camera app)</td><td>Camera-based hand-to-mouth alert, per its site</td><td>A supported Apple Silicon Mac with camera</td><td>Free (official site and US Mac App Store, 23 Oct 2026)</td></tr>
+    <tr><td><strong>Mavala Stop</strong> (bitter polish)</td><td>Bitter taste when a treated nail reaches the mouth</td><td>Away from a screen; follow product instructions</td><td>Check current product listing</td></tr>
+    <tr><td><strong>Orly No Bite</strong> (bitter polish)</td><td>Bitter taste when a treated nail reaches the mouth</td><td>Away from a screen; follow product instructions</td><td>Check current product listing</td></tr>
+    <tr><td><strong>Reminder bands</strong></td><td>A visible or tactile cue, without automatic detection</td><td>Wherever worn</td><td>Varies by band</td></tr>
+    <tr><td><strong>Physical barriers</strong> (gloves, cots)</td><td>A physical barrier while worn</td><td>Where practical for the activity</td><td>Varies by product</td></tr>
+    <tr><td><strong>Habitica / Streaks</strong> (habit trackers)</td><td>Manual habit entries</td><td>Where you can use the app</td><td>Check the individual app's current listing</td></tr>
+    <tr><td><strong>NailKeeper</strong> (photo tracker)</td><td>Photos, a quit timer and reminders; real-time detection not described</td><td>iPhone and Android</td><td>Free; in-app $4.99–$19.99 (US App Store, 6 Oct 2026)</td></tr>
+    <tr><td><strong>HabitAware Keen2</strong> (wrist sensor)</td><td>Vibrates when it detects the behaviour, per its site</td><td>Wherever worn</td><td>No price recorded in our 5 Oct 2026 check; verify with vendor</td></tr>
+    <tr><td><strong>Pavlok</strong> (wearable)</td><td>Its nail-biting page describes triggering the shock yourself</td><td>Wherever worn</td><td>$99.99–$134.99 devices shown, plus a $19/mo option (8 Oct 2026)</td></tr>
+    <tr><td><strong>BiteLess</strong> (Apple Watch)</td><td>Automatic alerts, per its listing</td><td>Apple Watch and iPhone, left wrist in the checked version</td><td>In-app $9.99/mo or $69.99/yr (US App Store, 8 Oct 2026)</td></tr>
+    <tr><td><strong>Unbite</strong> (tap-logging tracker)</td><td>Tap logging of urges, episodes and triggers; camera detection not described</td><td>iPhone and iPad (iOS 16.4+)</td><td>Free download; premium subscription after a free trial (US App Store, 13 Oct 2026)</td></tr>
+    <tr><td><strong>HabitCam</strong> (webcam app)</td><td>Local webcam detection, per its site</td><td>Windows and Linux computer with webcam</td><td>$19.99 launch lifetime price, regularly $39.99; 7-day trial (13 Oct 2026)</td></tr>
+    <tr><td><strong>NailBiteMenu</strong> (Mac menu bar app)</td><td>On-device camera detection, per its README</td><td>Mac with camera</td><td>No price found; described as open source (13 Oct 2026)</td></tr>
   </tbody>
 </table>`,
     },
     {
-      heading: 'Verdict — for unconscious habits, passive detection is the only real-time solution',
-      body: `The pattern across every category is consistent: tools that require your conscious participation to work are structurally unable to catch the majority of nail biting episodes, because most episodes happen without conscious awareness.\n\nBitter polish is the best passive option across all contexts — it doesn't require you to notice the habit — but habituation limits its long-term effectiveness for established biters. It remains useful as a 24/7 complement for biting away from screens.\n\nAI detection is the only tool that catches the habit in real time at the screen, without any input from you. That makes it the only approach that directly solves the awareness gap — the fundamental reason nail biting is so hard to stop with willpower or manual tracking.\n\nThe most effective combination for chronic screen-time biters: Stop Biting for desk hours + bitter polish for away-from-screen contexts + a competing response you have pre-selected and practiced. HRT provides the framework; the tools make the awareness component tractable.`,
+      heading: 'How to choose a tool for your routine',
+      body: `If you want an alert during desk work, test a camera app in your actual lighting and posture. Check for alerts during ordinary activities as well as missed hand-to-mouth movements. If you mainly bite away from a computer, a desktop webcam app will not cover that time.\n\nIf your goal is to see nail growth, a photo tracker may be the closer fit. If you want to record triggers or practise a response, a manual tracker may be enough for that job. A wearable, bitter polish or a physical barrier involves different costs and practical limits.\n\nChoose based on the job and context, then review whether the tool is useful to you. We have not established the fastest or most effective combination of these products, or that combining them improves outcomes.`,
       html: `<p>An app is one component, not the method. For the method it plugs into, start with <a href="/blog/how-to-stop-nail-biting">how to stop nail biting</a>, then read the <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a> for the full protocol walkthrough. To compare Stop Biting directly against bitter polish, see the <a href="/compare/bitter-polish-alternative">bitter polish alternative comparison</a>.</p><p>See also: <a href="/compare/habit-tracking-apps">habit tracking apps compared</a>, and <a href="/compare/ai-detection-apps">AI detection apps compared</a> if you want the camera-based options side by side.</p>`,
     },
     {
       heading: 'Frequently asked questions',
       body: `Answers to the questions people ask most about these tools.`,
-      html: `<h3>Are there any free apps to stop nail biting?</h3><p>Stop Biting offers a free ${TRIAL_HYPHEN} trial with full AI detection — no credit card required. After the trial it costs $2.99/month. General habit trackers (Habitica, Streaks) are free or low-cost but require manual logging and cannot detect biting automatically.</p><h3>Do nail biting apps actually work?</h3><p>Apps using real-time passive detection work by solving the awareness gap — the core obstacle in nail biting cessation. Catching each episode at the moment it happens creates the conscious interruption needed for a competing response to fire. General habit trackers are effective for consciously-performed habits; they are structurally limited for automatic unconscious ones like nail biting.</p><h3>What is the fastest combination to reduce biting?</h3><p>For screen-time biters: AI detection (Stop Biting) combined with a pre-selected competing response targets the awareness gap directly, which is the mechanism the HRT literature identifies as doing the heavy lifting. For biters who need 24/7 coverage, adding bitter polish for off-screen hours covers both contexts at under $15/month combined.</p>`,
+      html: `<h3>Are there any free apps to stop nail biting?</h3><p>Nailed's official site and linked US Mac App Store listing both showed it as free on 23 October 2026, for supported Apple Silicon Macs. NailKeeper's earlier listing showed a free download with in-app purchases. Stop Biting offers a free ${TRIAL_HYPHEN} trial, then costs $2.99/month or $29/year; the trial is not a permanent free plan.</p><h3>Do nail biting apps actually work?</h3><p>An app's features do not establish its clinical effectiveness. A camera alert can prompt awareness, and a tracker can record what you enter, but the HRT trial cited here tested a treatment package rather than these apps. We have not run a trial of Stop Biting or established that it outperforms the alternatives.</p><h3>What is the fastest combination to reduce biting?</h3><p>We do not have comparative evidence identifying a fastest combination. Start with where biting happens and what support you need. If biting causes injury or significant distress, ask a clinician about an appropriate treatment plan.</p><p><strong>HRT evidence:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a> Thirty adults were randomized to HRT or a conversation placebo; this was not a trial of any app named here.</p>`,
     },
     {
       heading: `Where to go next`,
@@ -1555,39 +1459,40 @@ BLOG_POSTS.push({
   seoTitle: 'Grow Nails Back After Biting: What to Expect',
   description: 'Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out. What to expect, and what no study has measured.',
   tag: 'Health',
-  readingMinutes: 5,
+  readingMinutes: 4,
   datePublished: '2026-04-21',
-  dateModified: '2026-10-21',
+  dateModified: '2026-10-23',
   ogImage: '/og/grow-nails-after-nail-biting.png',
   sections: [
     {
       heading: "How fast do nails grow after stopping nail biting?",
-      body: `Expect several months, not several weeks. In 22 healthy young adults, fingernails grew an average of 3.47mm a month (Yaemsiri et al., 2010), and the same study found no statistically significant difference in growth rate for nail biting. No study has measured full regrowth in nail biters, so any exact month count is arithmetic, not a finding. The volunteers marked their own nails and measured the distance one to three months later. Toenails grew 1.62mm a month, markedly slower, and the little fingernail was slower than the rest. Do not expect biting to speed anything up.\n\nEvery "it takes X months to grow out" figure you will read, including ones we used to print here, is arithmetic someone did on that rate divided by an assumed nail length. We could not find a study that measured full regrowth time, so we are not going to state one as a finding. If you want to do the arithmetic yourself: a fingernail runs roughly 15–20mm from the proximal fold to the free edge, and at about 3.5mm a month that is a several-month project rather than a several-week one. Your own nails, your own timeline.\n\nThe main variable is how much damage exists at the matrix level (the root of the nail, hidden under the skin). Where chronic biting has caused loss of the nail plate, the exposed nail bed can keratinise, which the standard review describes as leading to irreversible nail plate shortening, and pterygium is described as a scar in the nail matrix (Lee & Lipner, 2022). Those are specific mechanisms with no incidence figure attached, not a general rule that biting damage is permanent.`,
+      body: `Fingernails grew an average of 3.47mm a month in 22 healthy young adults (Yaemsiri et al., 2010). The volunteers marked their nails and measured the distance one to three months later. The study found no statistically significant difference in growth rate associated with nail biting.\n\nThis gives a reference for growth, not a recovery deadline. The study did not follow people from stopping biting to complete regrowth. An estimate for a chosen length is arithmetic from the measured rate; it does not predict when damage will heal or how the nail bed will look.\n\nThe nail matrix is the tissue that produces the nail plate. The dermatology review by Lee and Lipner describes lasting changes that can follow injury to the matrix or loss of the plate. It does not give the probability that a person who bites will develop them.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19744178/" target="_blank" rel="noopener noreferrer">Yaemsiri S, Hou N, Slining MM, He K. Growth rate of human fingernails and toenails in healthy American young adults. J Eur Acad Dermatol Venereol. 2010;24(4):420–423.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     {
-      heading: "What you'll see week by week",
-      body: `The recovery trajectory follows a predictable sequence if you stop completely.\n\nWeeks 1–3: The first visible change is usually at the free edge, where the nail starts to grow past the fingertip. If your nails were bitten to the quick, this won't look dramatic — just a thin sliver of white appearing. The nail surface may look rough, ridged, or discolored from years of mechanical trauma. This is normal and will improve as fresh nail grows in.\n\nWeeks 4–8: The nail is now visibly longer and the surface quality typically improves as new, undamaged nail emerges from the matrix. The nail plate (the visible surface) is generated at the matrix — any damage to the surface of old nail is shed as the nail grows out. By week 6–8, most people have nails long enough to be recognizable as "normal" nails even if not yet at their natural full length.\n\nMonths 2–4: Full length reached by most people. Ridging and surface irregularities have largely grown out. Some people see continued improvement in thickness and strength as the matrix recovers from years of mechanical stress reduction. Nail beds (the skin visible under the nail) may still appear short due to years of biting exposing and sensitizing the hyponychium (the sealed junction between nail and fingertip). This also normalizes with time.`,
+      heading: "What can a week-by-week timeline tell you?",
+      body: `A growth estimate can show the scale of the wait, but it cannot tell you when your nails will look or feel recovered. At the study average of 3.47mm a month, one month would add about 3.5mm and two months about 7mm. Those are calculations from a group average, not measured milestones for people recovering from nail biting.\n\nThe amount of nail you start with matters. So does whether the nail-producing tissue or nail bed has been injured. A longer free edge, a smoother plate and a change in the nail bed's appearance are different outcomes; a single date cannot promise all three.`,
+      html: `<p><a href="/tools/nail-growth-timeline-calculator">Estimate nail growth for a length you choose</a>. The calculation uses the growth-rate study cited above; it does not predict healing or nail-bed recovery.</p>`,
     },
     {
-      heading: "Care tips that genuinely speed recovery",
-      body: `Nail structure is protein (keratin) with a water and lipid component that affects flexibility. These care practices improve recovery trajectory:`,
+      heading: "How to protect your nails while they grow",
+      body: `Gentle care can protect the nail you are growing. It is different from making the nail grow faster. The American Academy of Dermatology recommends filing snags, protecting nails from too much water and avoiding cuticle damage.`,
       list: [
-        "Biotin supplementation — Biotin (vitamin B7) is the most-studied supplement for nail strength, but the evidence is thinner than marketing suggests. A review of the literature (Lipner & Scher, 2018) reports that clinical trials have shown improvements in the firmness, hardness and thickness of brittle nails with oral biotin, while concluding that larger controlled trials are still needed to establish efficacy and optimal dosing. Nothing in that review shows biotin speeding up growth rate, or helping nails that are not brittle to begin with.",
-        "Keep nails filed smooth — Rough edges after initial growth are one of the most common relapse triggers. Filing nails smooth removes the tactile cue that initiates many biting episodes. Keep a fine-grit nail file at your desk and in your bag.",
-        "Nail hardeners during early recovery — Products containing hydrolyzed wheat protein or calcium strengthen nails during the fragile early growth phase. Avoid formaldehyde-based hardeners for extended use — they cause brittleness over time.",
-        "Cuticle oil daily — Damaged cuticles (very common after years of biting) improve significantly with daily hydration. Jojoba and sweet almond oils are effective and non-irritating. Healthy cuticles reduce hangnails, which are a frequent biting trigger.",
-        "Avoid prolonged water exposure — Water weakens the nail temporarily. Wearing gloves for dishes and cleaning accelerates recovery of nail structure, particularly in the first 2–3 months.",
+        "File snags with an emery board rather than using your teeth to smooth them. Keep a file somewhere convenient, such as next to your keyboard.",
+        "Protect nails from prolonged water exposure. Wear gloves when cleaning or washing dishes, and moisturise after washing your hands.",
+        "Avoid biting the nails or removing the cuticles. Do not use your nails as tools to open or pry things apart.",
+        "Do not assume supplements will speed growth. A review of biotin for nail disease reports some improvements in brittle nails, but calls for larger controlled trials. It does not show that biotin makes bitten nails grow faster.",
       ],
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/29057689/" target="_blank" rel="noopener noreferrer">Lipner SR, Scher RK. Biotin for the treatment of nail disease: what is the evidence? J Dermatolog Treat. 2018;29(4):411–414.</a></li></ul>`,
+      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://www.aad.org/public/everyday-care/nail-care-secrets/basics/healthy-nail-tips" target="_blank" rel="noopener noreferrer">American Academy of Dermatology. 11 dermatologists' tips for healthy nails.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29057689/" target="_blank" rel="noopener noreferrer">Lipner SR, Scher RK. Biotin for the treatment of nail disease: what is the evidence? J Dermatolog Treat. 2018;29(4):411–414.</a></li></ul>`,
     },
     {
-      heading: "The urge to bite growing nails: why it gets harder before it gets easier",
-      body: `Many people who successfully stop biting encounter an unexpected problem in weeks 2–6: the urge to bite actually intensifies as nails grow.\n\nThis makes mechanical sense. After years of biting, the nail is typically very short, with little free edge exposed. There's not much to bite, and the habit's sensory trigger (feeling a rough edge, a hangnail, an uneven surface) is rarely present. As nails begin to grow, they introduce exactly the sensory cues that trigger biting — edge irregularities, a visible white tip, a hangnail that catches on things.\n\nThis is the most common relapse window. The solution is proactive management of the sensory cues rather than relying on willpower to resist them. File nails before the edges become rough. Address hangnails with nail scissors (not your teeth) immediately when they appear. The goal is to remove the sensory trigger before it triggers the habit, not to resist the habit after the trigger has already fired.`,
+      heading: "What if growing nails make you want to bite again?",
+      body: `If you notice that a rough edge or hangnail prompts biting, make that observation part of your plan. The American Academy of Dermatology names hangnails among possible physical triggers and recommends identifying the situations that lead you to bite.\n\nKeep a file nearby so that smoothing a snag does not mean biting it. Decide what you will do when an urge appears, such as reaching for a stress ball. You do not need to reach a particular week of recovery to prepare that response.`,
+      html: `<p><strong>Source:</strong> <a href="https://www.aad.org/nail-care-secrets/stop-biting-nails" target="_blank" rel="noopener noreferrer">American Academy of Dermatology: how to stop biting your nails</a>. For a structured approach, see our <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a>.</p>`,
     },
     {
       heading: "What damage is permanent?",
-      body: `The nail plate is replaced continuously, so surface damage on the existing nail grows out — at a measured average of about 3.47mm a month for fingernails (Yaemsiri et al., 2010), which puts a full length somewhere in the several-month range depending on your nails. We are not going to convert that into a recovery guarantee with a date on it, because no study has measured how long nail biters take to recover.\n\nThe matrix is where lasting change would have to happen, since it generates the plate. What is documented, rather than assumed: after partial or complete loss of the nail plate the exposed nail bed can keratinise, which the standard review describes as leading to irreversible nail plate shortening, and pterygium is described as a scar in the matrix (Lee & Lipner, 2022). A case report describes longitudinal melanonychia, splinter haemorrhages, leukonychia and pterygium inversum unguis together in one young adult, with the authors calling the pigmentary changes "relatively uncommon" (Fıçıcıoğlu & Korkmaz, 2018).\n\nWhat nobody has measured is how often any of that happens, how severe biting has to be before it does, or what share of people recover fully. Claims about "decades of intense biting" or recovery "within 6–12 months" — we have made both here previously — have no source behind them. The defensible version is narrower: most of what you can see is on the plate and grows out; the exceptions involve the matrix and the nail bed; and nobody can give you a probability.`,
+      body: `Damage to the existing nail plate and damage to the tissue producing it are different questions. The growth-rate study gives an average for new nail growth, not a guarantee about recovery after an injury.\n\nThe review by Lee and Lipner describes keratinisation of an exposed nail bed after partial or complete loss of the plate, which can lead to irreversible shortening. It also describes pterygium as a scar in the nail matrix. These are documented complications, not a prediction that biting damage is permanent in every person.\n\nA case report describes several changes together in one young adult, including nail pigmentation and pterygium inversum unguis (Fıçıcıoğlu & Korkmaz, 2018). A single case cannot tell us how often those changes occur. The cited papers do not establish an individual recovery probability or a month-by-month healing schedule. A dermatologist can assess persistent changes, pain or swelling.`,
       html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/19744178/" target="_blank" rel="noopener noreferrer">Yaemsiri S, Hou N, Slining MM, He K. Growth rate of human fingernails and toenails in healthy American young adults. J Eur Acad Dermatol Venereol. 2010;24(4):420–423.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5831699/" target="_blank" rel="noopener noreferrer">Fıçıcıoğlu S, Korkmaz S. Onychophagia Induced Melanonychia, Splinter Hemorrhages, Leukonychia, and Pterygium Inversum Unguis Concurrently. Case Rep Dermatol Med. 2018;2018:3230582.</a></li></ul>`,
     },
     {
@@ -2834,37 +2739,37 @@ BLOG_POSTS.push({
   seoTitle: 'BFRBs: Body-Focused Repetitive Behaviours',
   description: 'BFRBs are repeated habits such as nail biting, skin picking and hair pulling that damage the body. What they share, and what the evidence says helps.',
   tag: 'Clinical',
-  readingMinutes: 5,
+  readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-10-23',
   ogImage: '/og/bfrb-guide.png',
   sections: [
     {
       heading: `What is a BFRB?`,
-      body: `Body-focused repetitive behaviours (BFRBs) are a group of habits involving repeated actions directed at one's own body that cause physical damage and are difficult to stop despite repeated attempts. The category includes nail biting (onychophagia), skin picking (excoriation disorder), hair pulling (trichotillomania), cheek or lip biting, and a handful of related behaviours like nose picking (rhinotillexomania) at clinical severity.\n\nWhat unites them isn't the specific body part or action but the underlying pattern: automatic, repetitive, self-directed behaviour that provides some form of sensory or emotional regulation, causes real physical consequences, and resists simple willpower-based stopping — the same core mechanics that make nail biting specifically so persistent.`,
+      body: `Body-focused repetitive behaviours (BFRBs) are repeated actions directed at the body, such as nail biting, skin picking or hair pulling. They can cause physical damage and can be difficult to stop. The term describes a group of behaviours, not a diagnosis for everyone who occasionally bites a nail.\n\nThe body part and action differ, but the practical questions overlap. When does it happen? Do you notice before, during or after it? Is it causing injury or distress? Those details matter when choosing support.`,
     },
     {
       heading: `The BFRB family`,
       body: `The major recognised BFRBs, and how they typically present:`,
       list: [
-        `Nail biting (onychophagia) — biting nails, cuticles, or surrounding skin; the most common BFRB, affecting an estimated 20–30% of adults.`,
-        `Skin picking (excoriation disorder) — repetitive picking at skin, often at perceived imperfections, causing lesions and scarring; frequently co-occurs with nail biting.`,
-        `Hair pulling (trichotillomania) — pulling hair from the scalp, eyebrows, or eyelashes, resulting in noticeable hair loss; among the more clinically studied BFRBs.`,
-        `Cheek and lip biting — chewing the inside of the cheek or lip, sometimes to the point of sores; often overlooked as a BFRB because it's less visible than nail biting.`,
-        `Nose picking (rhinotillexomania) — at low frequency this is near-universal and not clinically significant; at high frequency and with resulting tissue damage it's recognised as a BFRB.`,
+        `Nail biting (onychophagia): repeatedly biting the nail plate. The skin around the nail can also be damaged.`,
+        `Skin picking: repeatedly picking at skin. Excoriation disorder involves skin damage and difficulty stopping, with distress or impairment.`,
+        `Hair pulling (trichotillomania): repeatedly pulling out hair, often from the scalp, eyebrows or eyelashes.`,
+        `Cheek and lip biting: repeatedly chewing the cheek or lip, sometimes causing sores.`,
+        `Nose picking (rhinotillexomania): repetitive picking that can become damaging. Occasional picking alone does not establish a disorder.`,
       ],
     },
     {
-      heading: `What they share neurologically`,
-      body: `Across BFRBs, the behaviour tends to be encoded as a habit loop stored largely in the basal ganglia rather than driven primarily by conscious deliberation — meaning the actions often occur with limited real-time awareness, are triggered by similar states (stress, boredom, deep focus, fatigue), and produce a brief sensory or emotional payoff (tension relief, stimulation, a sense of "finishing" something) that reinforces the loop over time.\n\nStudies of BFRBs collectively also find elevated rates of co-occurrence with each other — someone who bites their nails is meaningfully more likely than the general population to also pick at their skin, for instance — and elevated (though not universal) rates of co-occurring anxiety and OCD-spectrum symptoms, consistent with their DSM-5 grouping near obsessive-compulsive and related disorders.`,
+      heading: `What these behaviours can have in common`,
+      body: `A behaviour may happen with little awareness, or in response to a noticed urge. The dermatology review cited below describes both automatic and focused nail biting. These patterns can call for different practical changes: noticing a hand movement, planning for an urge, or changing the situation where biting happens.\n\nDo not assume that stress explains every episode or that one BFRB explains another. If you bite your nails and also pick your skin, describe both to a clinician. The specific actions, injuries and situations matter more than fitting everything into one explanation.`,
     },
     {
       heading: `How treatment differs by BFRB type`,
-      body: `Habit Reversal Training is the common evidence-based backbone across nearly all BFRBs — its three trial-defined components are awareness training, competing response training and social support, and they apply regardless of whether the target behaviour is nail biting, skin picking, or hair pulling. A meta-analysis pooling 18 habit reversal studies and 575 participants across tics, stuttering, nail biting, thumb sucking, temporomandibular disorder and mixed oral-digital habits found a large effect versus control conditions from pre-treatment to final post-treatment assessment (d = 0.80) — a pooled post-treatment figure across all six behaviour classes, not a nail-biting effect size and not a follow-up result. Where treatment diverges is in the specifics of the competing response and the environmental modifications, which need to fit the particular behaviour: keeping nails filed short and hands occupied for nail biting; keeping skin moisturised and covering high-pick areas for skin picking; using specific hair-pulling-aware tools (like a "fidget" object positioned near where pulling typically happens) for trichotillomania.\n\nFor hair pulling and severe skin picking specifically, N-acetylcysteine (NAC) has more established research support than it does for nail biting, and some clinicians will suggest it as an adjunct for those particular BFRBs more readily than for nail biting alone. The adult trials are where that support sits: 56% of adults with trichotillomania were rated much or very much improved on NAC versus 16% on placebo, and 47% versus 19% among completers in a skin-picking trial. A Cochrane review graded the adult trichotillomania result as moderate-certainty evidence from a single trial — and found little to no difference in the one paediatric trial (25% versus 21.1%, low certainty).`,
+      body: `Habit Reversal Training (HRT) combines noticing the behaviour with practising a response that cannot happen at the same time. Social support was also part of the package tested in the nail-biting trial by Twohig and colleagues. A competing response needs to fit the particular action; a plan for nail biting will not automatically suit hair pulling.\n\nA meta-analysis pooled 18 habit reversal studies involving 575 participants. It included nail biting and five other behaviour classes, including tics and stuttering. The pooled effect versus control conditions was large (d = 0.80), measured from before treatment to the final post-treatment assessment. That is neither a nail-biting-only effect size nor a long-term follow-up result.\n\nMedication studies also need to be read by behaviour and age group. In one adult hair-pulling trial, 56% were rated much or very much improved with N-acetylcysteine (NAC), versus 16% with placebo. An adult skin-picking trial reported 47% versus 19% among completers. Those are results for the conditions studied, not evidence of the same benefit for nail biting.\n\nA Cochrane review rated the adult hair-pulling finding as moderate-certainty evidence from one trial. In the paediatric trial, improvement was 25% with NAC versus 21.1% with placebo, with low-certainty evidence. These differences are why treatment decisions belong with a clinician who knows the person and the behaviour.`,
     },
     {
       heading: `Finding support`,
-      body: `Because BFRBs as a category are less well known than more commonly discussed conditions like generalised anxiety, many people who bite their nails, pick their skin, or pull their hair have never been told these are a recognised, named, treatable group of behaviours — which can itself add unnecessary shame to something that's genuinely well understood clinically.\n\nIf you experience more than one BFRB, or if your primary BFRB is causing significant distress or physical damage, it's worth seeking a therapist with specific BFRB experience rather than general anxiety-focused therapy, since the treatment approach (HRT-based, behaviourally focused) differs somewhat from standard talk therapy for mood or anxiety alone.`,
+      body: `If biting, picking or pulling is causing injury or distress, seek professional support. Ask whether the clinician has experience with BFRBs and habit reversal training. You can bring notes about the situations, urges and actions you have noticed; you do not need to arrive with a diagnosis.\n\nIf you have several behaviours, mention each one. A plan can account for the different body areas and circumstances instead of assuming the same response fits them all. The related guides below explain individual behaviours and how to look for a therapist.`,
       html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/21549664/" target="_blank" rel="noopener noreferrer">Bate KS, Malouff JM, Thorsteinsson ET, Bhullar N. The efficacy of habit reversal therapy for tics, habit disorders, and stuttering: a meta-analytic review. Clin Psychol Rev. 2011;31(5):865–871.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/19581567/" target="_blank" rel="noopener noreferrer">Grant JE, Odlaug BL, Kim SW. N-acetylcysteine, a glutamate modulator, in the treatment of trichotillomania: a double-blind, placebo-controlled study. Arch Gen Psychiatry. 2009;66(7):756–763.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/27007062/" target="_blank" rel="noopener noreferrer">Grant JE, Chamberlain SR, Redden SA, Leppink EW, Odlaug BL, Kim SW. N-Acetylcysteine in the Treatment of Excoriation Disorder: A Randomized Clinical Trial. JAMA Psychiatry. 2016;73(5):490–496.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8478440/" target="_blank" rel="noopener noreferrer">Hoffman J, Williams T, Rothbart R, Ipser JC, Fineberg N, Chamberlain SR, Stein DJ. Pharmacotherapy for trichotillomania. Cochrane Database Syst Rev. 2021;9(9):CD007662.</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li></ul>`,
     },
     {
@@ -5517,33 +5422,35 @@ BLOG_POSTS.push(
     slug: 'nail-biting-vitamin-deficiency',
     title: 'What Deficiency Causes Nail Biting? What the Evidence Says',
     seoTitle: 'What Deficiency Causes Nail Biting? Evidence',
-    description: 'No evidence links nail biting to a vitamin or mineral deficiency. In a 339-student survey, 92.2% of biters called the habit automatic: mechanics, not nutrients.',
+    description: 'Can low iron, zinc or magnesium cause nail biting? What the cited studies do and do not establish, and when to discuss symptoms with a clinician.',
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-10-21',
+    dateModified: '2026-10-23',
     ogImage: '/og/nail-biting-vitamin-deficiency.png',
     sections: [
       {
         heading: 'Is nail biting a sign of vitamin deficiency?',
-        body: `The evidence does not support it. Nail biting is a deeply grooved automatic behaviour, not a physiological need. The deficiency story is attractive because it points at a cheap solution, not because it is well evidenced.\n\nThe idea that nail biting is caused by a nutritional deficiency turns up constantly — usually iron, zinc, magnesium, or B vitamins, depending on who is telling you.\n\nIt is easy to see why it is attractive. It reframes a habit you feel bad about as a physiological need you cannot be blamed for, and it points at a solution that is cheap, available, and requires nothing difficult. That is a much nicer story than "you have a deeply grooved automatic behaviour that will take two months of consistent effort to change."\n\nUnfortunately the evidence does not really support it.`,
+        body: `Nail biting alone does not establish that you have a vitamin or mineral deficiency. The research cited here describes nail biting as a body-focused repetitive behaviour; it does not establish low iron, zinc or magnesium as its cause. That is different from saying that someone who bites their nails cannot also have a deficiency.\n\nThe survey and twin study below looked at behaviour and family patterns, not nutrient levels. They cannot rule a deficiency in or out. If nutrition is a concern, discuss your symptoms and diet with a clinician rather than choosing a supplement from the habit alone.`,
+        html: `<p><strong>Background:</strong> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></p>`,
       },
       {
-        heading: 'Where the belief probably comes from',
-        body: `Two threads seem to have combined into the modern version.\n\nThe first is pica — a genuine condition involving craving and eating non-food substances such as ice, clay, or starch, which is widely reported to be associated with iron deficiency. Nail biting gets grouped with pica in casual discussion because both involve putting non-food things in your mouth. But the behaviours differ substantially: pica is craving-driven and food-adjacent, while nail biting is a body-focused repetitive behaviour more closely related to skin picking and hair pulling, which are not associated with deficiency states.\n\nThe second is the general folk belief that visible nail abnormalities indicate nutritional problems. Since nail biters have visibly poor nails, the inference gets made backwards — the nails look damaged because they are repeatedly bitten, not because of anything nutritional.`,
+        heading: 'Damaged nails and nail biting are different questions',
+        body: `Biting can damage nails mechanically. The appearance of a bitten nail does not explain why the person bites it, or tell you whether nutrition is part of their wider health picture.\n\nTry to separate the questions: "Why do I keep putting my hand to my mouth?" and "Why are my nails brittle or changing?" A clinician can assess nail changes rather than assuming every change comes from biting. Research on a supplement for brittle nails would not, by itself, show that it treats the biting behaviour.`,
       },
       {
         heading: 'What the behaviour is actually associated with',
-        body: `The correlates of chronic nail biting that get named are psychological and behavioural rather than nutritional: tension and stress reactivity, boredom and understimulation, deep focus states, family history, and co-occurrence with other body-focused repetitive behaviours. Two of those have numbers behind them, and one of the numbers is a useful corrective. In 339 Polish medical students, 92.2% of nail biters described the behaviour as automatic, 65.7% reported tension before biting and 42% reported pleasure afterwards — but the same study found anxiety disorders in 22.5% of people with lifetime onychophagia against 26.2% of those without, and OCD in 3.1% against 5.0%, and reported no correlation between nail biting and anxiety disorders or OCD (Pacan et al., 2014). So "linked to anxiety" needs care: the moment-to-moment tension is reported, the diagnosed disorder was not more common. On family history, a study of 1,131 pairs of 12-year-old Japanese twins attributed about 50% of the variance in nail biting to genetic influences — a population variance component, not an individual's odds (Ooki, 2005).\n\nNone of that is to say nutrition is irrelevant to health generally. It is to say that if you are looking for the reason your hand goes to your mouth during meetings, the evidence points at habit mechanics rather than micronutrients. Nobody has run a head-to-head trial of habit treatment against supplementation, so we will put it this way instead: habit-focused treatment has trial evidence behind it, and supplementation for nail biting does not.`,
+        body: `In a survey of 339 Polish medical students, 92.2% of nail biters described the behaviour as automatic. Tension before biting was reported by 65.7%, and pleasure afterwards by 42% (Pacan et al., 2014). These reports describe the experience of biting, not its nutritional cause.\n\nThe same study found anxiety disorders in 22.5% of people with lifetime nail biting versus 26.2% of those without. OCD was reported in 3.1% versus 5.0%. The authors found no correlation between nail biting and anxiety disorders or OCD in this sample. Feeling tension before biting and having a diagnosed anxiety disorder are different findings.\n\nA study of 1,131 pairs of 12-year-old Japanese twins attributed about 50% of the variation in nail biting to genetic influences (Ooki, 2005). That is an estimate of variation within a population, not an individual's odds or a test for deficiency. Neither study tells us whether taking a vitamin changes nail biting.`,
         html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/23756561/" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67–71.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/16176716/" target="_blank" rel="noopener noreferrer">Ooki S. Genetic and environmental influences on finger-sucking and nail-biting in Japanese twin children. Twin Res Hum Genet. 2005;8(4):320–327.</a></li></ul>`,
       },
       {
         heading: 'The related question about magnesium',
-        body: `Magnesium deserves separate mention because the reasoning behind it is at least coherent, unlike the calcium claims.\n\nThe argument is not that nail biting is caused by magnesium deficiency directly, but that magnesium is involved in stress regulation, and stress drives nail biting, so improving magnesium status might reduce biting indirectly. That is a plausible chain rather than an established one, and any effect would be indirect and modest at best.\n\nIt is also worth noting that if stress is genuinely the main driver of your biting, addressing stress directly has considerably better evidence behind it than supplementation does.`,
+        body: `The sources cited here do not include a trial testing magnesium as a treatment for nail biting. A proposed effect on stress would not, by itself, establish an effect on biting. We cannot use that reasoning to recommend a dose or predict a benefit.\n\nIf a clinician identifies a deficiency, treating it is a separate decision from choosing a plan for the biting habit. Tell them about both concerns so that neither is assumed to explain the other.`,
       },
       {
-        heading: 'When it is worth actually testing',
-        body: `None of this means you should ignore genuine symptoms. If you have persistent fatigue, unusual pallor, hair loss, brittle nails that split without being bitten, or you have restrictive dietary patterns or heavy menstrual bleeding, then testing for iron and other deficiencies is entirely reasonable — but on the strength of those symptoms, not on the strength of nail biting.\n\nAnd if a deficiency is found and corrected, expect it to help the things deficiency actually causes. We found no study testing whether correcting a deficiency changes nail biting, so there is no reason to expect it to. In the 339-student survey cited above, 92.2% of nail biters described the behaviour as automatic (Pacan et al., 2014), which points at habit mechanics: noticing the moment the habit fires, and having something else ready for your hands.`,
+        heading: 'What to do if you are worried about a deficiency',
+        body: `Bring your concern to a clinician, especially if you have symptoms beyond the bitten nails or concerns about your diet. They can decide whether a nutritional assessment or tests are appropriate. This article cannot make that decision from the habit or a photograph.\n\nYou can also keep a separate record of when biting happens: during meetings, while studying, or when you notice a rough edge. That gives you something concrete to work on without assuming a nutritional explanation. Habit reversal training has been studied for nail biting; that does not make it a replacement for investigating other health concerns.`,
+        html: `<p><strong>Behavioural treatment evidence:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a> See our <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a> for what that approach involves.</p>`,
       },
       {
         heading: `Related reading`,
@@ -6284,39 +6191,41 @@ BLOG_POSTS.push(
     slug: 'nail-biting-detection-accuracy',
     title: 'How Accurate Is AI Nail Biting Detection? A Straight Answer',
     seoTitle: 'How Accurate Is AI Nail Biting Detection?',
-    description: 'It detects fingertip-to-mouth proximity, not teeth on a nail: five frames a second, three consecutive positives, about 600 milliseconds, before an alert fires.',
+    description: 'Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and missed episodes occur, and what is unmeasured.',
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-09-15',
+    dateModified: '2026-10-23',
     ogImage: '/og/nail-biting-detection-accuracy.png',
     sections: [
       {
         heading: 'How accurate is AI nail biting detection?',
-        body: `It is proximity detection used as a proxy for biting, not observation of teeth on a nail. Two on-device models measure the distance from each fingertip to the inner lips, and treat a fingertip inside a threshold as a positive.\n\nIt is worth being precise, because the honest answer to "how accurate is it" depends entirely on what the question means.\n\nStop Biting does not detect biting. It detects a fingertip being close to your mouth. Two models run on each sampled frame — a hand landmark model that locates twenty-one points on the hand, and a face landmark model that locates the mouth. The system measures the distance between each of the five fingertip landmarks and the midpoint of the inner lips, and treats a fingertip inside a threshold distance as a positive.\n\nSo the accurate description is proximity detection used as a proxy for biting. That proxy is good, because the hand-to-mouth position is a necessary precondition for biting and is not a posture most people hold accidentally for long. It is not the same thing as observing teeth on a nail, and any product claiming otherwise from a standard webcam is overstating things.`,
+        body: `Stop Biting detects fingertip-to-mouth proximity as a proxy for biting. It does not observe teeth contacting a nail. We have not published a validated real-world accuracy benchmark, so we cannot give a measured percentage of biting episodes caught or alerts that are correct.\n\nThis describes default nail-biting detection. Optional detection settings can change which movements trigger alerts. On each sampled frame, hand and face models estimate landmark positions. The detector compares each fingertip with the midpoint of the inner lips. A fingertip inside the chosen distance threshold counts as a positive frame, whether or not biting is actually happening.`,
       },
       {
-        heading: 'Why a dwell requirement exists',
-        body: `A single frame showing a fingertip near the mouth means very little. People touch their faces constantly — scratching a nose, resting a chin, adjusting glasses, covering a yawn.\n\nSo a positive frame alone does not trigger anything. Detection runs at five frames per second, and three consecutive positive frames are required before an alert fires. That is roughly 600 milliseconds of sustained proximity.\n\nThat single design choice removes the large majority of incidental face touching, because brief contact does not survive the dwell requirement while actual biting comfortably does. It is also why the alarm arrives a fraction of a second after your hand arrives rather than instantly — that delay is doing useful work.`,
+        heading: 'Why the alert waits for consecutive frames',
+        body: `A single positive frame does not trigger an alert. The current implementation schedules detection at 200-millisecond intervals, about five times a second, and requires three consecutive positive frames. Processing and scheduling can affect the actual delay.\n\nThis rule rejects a movement seen in only one or two sampled frames. It does not establish how many ordinary face touches are rejected, and it can also miss a brief biting episode. Holding a finger near the lips without biting can still satisfy the rule.`,
       },
       {
-        heading: 'The sensitivity trade-off, concretely',
-        body: `Detection thresholds are expressed as a fraction of the frame, and the three sensitivity settings correspond to different distances.\n\nHigh sensitivity uses the tightest threshold: the fingertip has to be very close to the lips before it counts. This produces the fewest false alarms and will miss episodes where you bite with your hand held slightly away from your mouth. Low sensitivity uses the widest threshold, catching more real episodes at the cost of flagging more chin-resting and face-touching. Medium sits between them and is the sensible default.\n\nThere is no setting that catches everything and flags nothing, and any product that claims otherwise is describing marketing rather than engineering. The useful framing is which error you would rather have. In the first week, most people are better served by tolerating some false positives, because the goal at that stage is building awareness — and being prompted to notice where your hand is turns out to be useful even when you were not about to bite.`,
+        heading: 'What the sensitivity settings actually change',
+        body: `The current settings change the allowed distance between a fingertip and the mouth in normalised image coordinates. The setting labelled High uses the smallest distance threshold, Medium is between them, and Low uses the largest. These labels describe the app controls, not measured clinical sensitivity or precision.\n\nA smaller threshold requires the estimated fingertip to be closer to the estimated mouth position. A larger threshold accepts a wider area. Neither tells us what percentage of real bites will be caught.\n\nTry the settings in your usual position and lighting. Check both an ordinary non-biting hand movement and a deliberate fingertip-to-mouth movement. Choose based on the alerts and misses you observe, rather than assuming that a label guarantees fewer errors.`,
       },
       {
-        heading: 'What reliably degrades accuracy',
-        body: `Failures are mostly not model failures. They are input failures, and they are largely fixable.`,
+        heading: 'Where false alarms and missed episodes can occur',
+        body: `The detector depends on what the camera and landmark models can see. These are practical limitations to check in your own setup, not a measured ranking of failure causes.`,
         list: [
-          'Poor lighting. Both models need to resolve landmarks. A backlit face against a bright window is the single most common cause of missed detections.',
-          'The hand leaving frame. A standard laptop webcam has a limited field of view, and a hand approaching from below the frame edge may not be fully visible.',
-          'Extreme head angles. Looking sharply down at a phone or desk can take the mouth landmarks out of reliable range.',
-          'Occlusion. A hand covering most of the mouth, resting a face fully in a palm, or holding an object can interfere with landmark placement.',
-          'One hand at a time. The configuration tracks a single hand, so simultaneous two-handed activity is not fully covered.',
+          'False alarms: eating, resting a finger near the lips or another sustained non-biting movement can meet the proximity rule.',
+          'Missed episodes: a brief movement may end before three positive frames are recorded.',
+          'Framing and obstruction: a hand outside the image, an object covering the mouth or a changed head angle can prevent usable landmark positions.',
+          'Lighting: test in the conditions where you will use the app, including backlighting or a dim room; a successful test in one setup does not establish performance in another.',
+          'Coverage: the camera needs usable views of your face and hands. It cannot monitor you away from its view.',
         ],
+        html: `<p>For practical checks, see <a href="/blog/nail-biting-camera-setup">setting up your camera</a>. The technical description here was checked against the current detector implementation on 23 October 2026; it is not a clinical validation study.</p>`,
       },
       {
-        heading: 'Why imperfect detection still works',
-        body: `This is the part that matters, and it is easy to lose sight of while comparing accuracy numbers.\n\nThe therapeutic mechanism is not comprehensive surveillance. It is interrupting enough episodes, often enough, that the cue stops reliably predicting the reward. Habit reversal training works through repeated interruption over weeks, and a system catching a substantial majority of episodes supplies that.\n\nCompare it against the actual alternative rather than against perfection. Unassisted, most nail biters notice well under half their own episodes, and the ones they notice are systematically the memorable ones rather than the typical ones. A detector that catches most episodes, including the ones during deep focus that you would never have registered, is a large improvement over that baseline even with its failure modes fully acknowledged.`,
+        heading: 'What an alert or a quiet log can tell you',
+        body: `An alert means the proximity rule was met. It does not prove a bite happened. A quiet log does not prove you were bite-free: the camera may have missed a movement or you may have been outside its view. Treat logged events as prompts to inspect your pattern, rather than a complete count of biting.\n\nAn awareness prompt may be useful to you, but the mechanism alone does not establish a treatment benefit. The nail-biting HRT trial cited below tested awareness training, competing responses and social support together. It did not test Stop Biting, compare it with self-monitoring software, or measure this detector's accuracy.`,
+        html: `<p><strong>Clinical source:</strong> <a href="https://pubmed.ncbi.nlm.nih.gov/12590622/" target="_blank" rel="noopener noreferrer">Twohig MP, Woods DW, Marcks BA, Teng EJ. Evaluating the efficacy of habit reversal: comparison with a placebo control. J Clin Psychiatry. 2003;64(1):40–48.</a> Read the <a href="/blog/habit-reversal-training-guide">habit reversal training guide</a> for the treatment components.</p>`,
       },
     ],
   },

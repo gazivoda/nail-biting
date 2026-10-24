@@ -1,0 +1,912 @@
+{
+  "at": "2026-10-24T00:07:41.395Z",
+  "runs": 3,
+  "flags": "compare_competitors,hrt_coaching,urge_timer,phone_companion,share_links,event_sync,referrals,detection_behaviors,social_proof",
+  "lighthouse": "13.5.0",
+  "results": [
+    {
+      "path": "/",
+      "label": "home",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 76,
+          "seo": 100,
+          "bestPractices": 96,
+          "accessibility": 100,
+          "lcpMs": 6055,
+          "cls": 0,
+          "tbtMs": 9,
+          "fcpMs": 1954,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console"
+          ]
+        },
+        {
+          "performance": 93,
+          "seo": 100,
+          "bestPractices": 96,
+          "accessibility": 100,
+          "lcpMs": 3083,
+          "cls": 0,
+          "tbtMs": 4,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console"
+          ]
+        },
+        {
+          "performance": 93,
+          "seo": 100,
+          "bestPractices": 92,
+          "accessibility": 100,
+          "lcpMs": 3084,
+          "cls": 0,
+          "tbtMs": 5,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console",
+            "inspector-issues"
+          ]
+        }
+      ],
+      "median": {
+        "performance": 93,
+        "seo": 100,
+        "bestPractices": 96,
+        "accessibility": 100,
+        "lcpMs": 3084,
+        "cls": 0,
+        "tbtMs": 5,
+        "fcpMs": 1953
+      },
+      "failedAudits": [
+        "errors-in-console",
+        "inspector-issues"
+      ]
+    },
+    {
+      "path": "/",
+      "label": "home",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 96,
+          "accessibility": 100,
+          "lcpMs": 647,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 404,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console"
+          ]
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 96,
+          "accessibility": 100,
+          "lcpMs": 646,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console"
+          ]
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 96,
+          "accessibility": 100,
+          "lcpMs": 606,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console"
+          ]
+        }
+      ],
+      "median": {
+        "performance": 100,
+        "seo": 100,
+        "bestPractices": 96,
+        "accessibility": 100,
+        "lcpMs": 646,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 403
+      },
+      "failedAudits": [
+        "errors-in-console"
+      ]
+    },
+    {
+      "path": "/how-it-works",
+      "label": "how-it-works",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 93,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2930,
+          "cls": 0,
+          "tbtMs": 4,
+          "fcpMs": 1954,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 93,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 3004,
+          "cls": 0,
+          "tbtMs": 4,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2929,
+          "cls": 0,
+          "tbtMs": 3,
+          "fcpMs": 1952,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 93,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 2930,
+        "cls": 0,
+        "tbtMs": 4,
+        "fcpMs": 1953
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/how-it-works",
+      "label": "how-it-works",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 624,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 402,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 625,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 627,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 404,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 100,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 625,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 403
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/pricing",
+      "label": "pricing",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2856,
+          "cls": 0,
+          "tbtMs": 10,
+          "fcpMs": 1954,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2854,
+          "cls": 0,
+          "tbtMs": 8,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2854,
+          "cls": 0,
+          "tbtMs": 9,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 94,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 2854,
+        "cls": 0,
+        "tbtMs": 9,
+        "fcpMs": 1953
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/pricing",
+      "label": "pricing",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 605,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 604,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 607,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 404,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 100,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 605,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 403
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/about",
+      "label": "about",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2855,
+          "cls": 0,
+          "tbtMs": 5,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2855,
+          "cls": 0,
+          "tbtMs": 5,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 94,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 2855,
+          "cls": 0,
+          "tbtMs": 4,
+          "fcpMs": 1953,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 94,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 2855,
+        "cls": 0,
+        "tbtMs": 5,
+        "fcpMs": 1953
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/about",
+      "label": "about",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 604,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 604,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 100,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 605,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 403,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 100,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 604,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 403
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/compare/stop-biting-vs-hands-off",
+      "label": "compare (existing)",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5443,
+          "cls": 0,
+          "tbtMs": 12,
+          "fcpMs": 2107,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5428,
+          "cls": 0,
+          "tbtMs": 8,
+          "fcpMs": 2106,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5446,
+          "cls": 0,
+          "tbtMs": 11,
+          "fcpMs": 2105,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 78,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 5443,
+        "cls": 0,
+        "tbtMs": 11,
+        "fcpMs": 2106
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/compare/stop-biting-vs-hands-off",
+      "label": "compare (existing)",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1310,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 443,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1309,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 444,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1310,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 444,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 97,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 1310,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 444
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/blog/nail-biting-health-risks",
+      "label": "blog post",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 55,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5361,
+          "cls": 0.719,
+          "tbtMs": 11,
+          "fcpMs": 2030,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 54,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5512,
+          "cls": 0.719,
+          "tbtMs": 12,
+          "fcpMs": 2030,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 54,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5507,
+          "cls": 0.719,
+          "tbtMs": 8,
+          "fcpMs": 2030,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 54,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 5507,
+        "cls": 0.719,
+        "tbtMs": 11,
+        "fcpMs": 2030
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/blog/nail-biting-health-risks",
+      "label": "blog post",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 73,
+          "seo": 100,
+          "bestPractices": 92,
+          "accessibility": 100,
+          "lcpMs": 1312,
+          "cls": 0.754,
+          "tbtMs": 0,
+          "fcpMs": 424,
+          "version": "13.5.0",
+          "failed": [
+            "errors-in-console",
+            "inspector-issues"
+          ]
+        },
+        {
+          "performance": 73,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1311,
+          "cls": 0.754,
+          "tbtMs": 0,
+          "fcpMs": 424,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 73,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1310,
+          "cls": 0.754,
+          "tbtMs": 0,
+          "fcpMs": 425,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 73,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 1311,
+        "cls": 0.754,
+        "tbtMs": 0,
+        "fcpMs": 424
+      },
+      "failedAudits": [
+        "errors-in-console",
+        "inspector-issues"
+      ]
+    },
+    {
+      "path": "/features/habit-reversal-coaching",
+      "label": "WS11b feature page (hrt_coaching on)",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5438,
+          "cls": 0,
+          "tbtMs": 11,
+          "fcpMs": 2105,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5429,
+          "cls": 0,
+          "tbtMs": 10,
+          "fcpMs": 2104,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 79,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5288,
+          "cls": 0,
+          "tbtMs": 13,
+          "fcpMs": 2105,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 78,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 5429,
+        "cls": 0,
+        "tbtMs": 11,
+        "fcpMs": 2105
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/features/habit-reversal-coaching",
+      "label": "WS11b feature page (hrt_coaching on)",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1314,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 447,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1310,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 445,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1311,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 425,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 97,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 1311,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 445
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/compare/hands-off",
+      "label": "WS11a compare page (flag on)",
+      "formFactor": "mobile",
+      "runs": [
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5438,
+          "cls": 0,
+          "tbtMs": 12,
+          "fcpMs": 2182,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5426,
+          "cls": 0,
+          "tbtMs": 8,
+          "fcpMs": 2182,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 78,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 5432,
+          "cls": 0,
+          "tbtMs": 11,
+          "fcpMs": 2183,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 78,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 5432,
+        "cls": 0,
+        "tbtMs": 11,
+        "fcpMs": 2182
+      },
+      "failedAudits": []
+    },
+    {
+      "path": "/compare/hands-off",
+      "label": "WS11a compare page (flag on)",
+      "formFactor": "desktop",
+      "runs": [
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1289,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 465,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1298,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 469,
+          "version": "13.5.0",
+          "failed": []
+        },
+        {
+          "performance": 97,
+          "seo": 100,
+          "bestPractices": 100,
+          "accessibility": 100,
+          "lcpMs": 1294,
+          "cls": 0,
+          "tbtMs": 0,
+          "fcpMs": 448,
+          "version": "13.5.0",
+          "failed": []
+        }
+      ],
+      "median": {
+        "performance": 97,
+        "seo": 100,
+        "bestPractices": 100,
+        "accessibility": 100,
+        "lcpMs": 1294,
+        "cls": 0,
+        "tbtMs": 0,
+        "fcpMs": 465
+      },
+      "failedAudits": []
+    }
+  ],
+  "installability": [
+    {
+      "flags": "(none)",
+      "errors": [],
+      "manifestUrl": "http://localhost:3213/manifest.webmanifest",
+      "manifestErrors": [],
+      "shortcuts": 0
+    },
+    {
+      "flags": "phone_companion",
+      "errors": [],
+      "manifestUrl": "http://localhost:3213/manifest.webmanifest",
+      "manifestErrors": [],
+      "shortcuts": 2
+    }
+  ]
+}

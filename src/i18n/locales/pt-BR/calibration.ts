@@ -28,6 +28,11 @@ export const messages: Record<keyof typeof en, string> = {
   'between.lead': 'Afaste a mão.',
   'between.next': 'A etapa 2 começa em {left, plural, one {# segundo} other {# segundos}}: você vai aproximar a ponta de um dedo dos lábios.',
 
+  'announce.rest': 'Etapa 1 de 2. Apoie o queixo na mão como você faria normalmente. Mantenha a posição.',
+  'announce.between': 'Tire a mão. A etapa 2 começa em alguns segundos.',
+  'announce.real': 'Etapa 2 de 2. Aproxime a ponta de um dedo dos lábios. Mantenha a posição.',
+  'announce.done': 'Pronto. Você pode salvar o resultado ou tentar de novo.',
+  'announce.failed': 'Isso não funcionou. Você pode tentar de novo.',
   'result.done': 'Pronto.',
   'result.summary': 'O app viu {rest} quadros de você apoiando o queixo e {real} com a ponta de um dedo perto dos lábios. Ao salvar, alguns números deles são guardados, neste dispositivo, e a regra do apoio de queixo vai usá-los.',
   'result.failed': 'Isso não funcionou.',

@@ -65,6 +65,8 @@ describe('Insights page with 1 event', () => {
   it('draws all the charts', () => {
     // daily, weekly and the heatmap are each one labelled figure
     expect(count(html, 'role="img"')).toBe(3);
+    // a <figure> does not accept role="img" (axe: aria-allowed-role); the charts are plain elements with that role
+    expect(html).not.toMatch(/<figure[^>]*role="img"/);
     expect(html).toContain('Each day');
     expect(html).toContain('Each week');
     expect(html).toContain('When it happens');
