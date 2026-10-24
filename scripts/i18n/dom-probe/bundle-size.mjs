@@ -101,4 +101,16 @@ const sw = join(distThis, 'sw.js');
 if (existsSync(sw)) {
   const pre = [...readFileSync(sw, 'utf8').matchAll(/assets\/([A-Za-z0-9_.-]+\.(?:js|css))/g)].map(m => m[1]);
   console.log(`\nService worker precache of this build: ${pre.length} asset entries; locale chunks in it: ${pre.filter(f => /^locale-/.test(f)).length}`);
+  // A chunk that only a language catalog imports is translated text too, whatever Rollup named it (WS12b: a shared chunk was
+  // once named reviewed-*.js and was precached for every English visitor). Flag any precached chunk reachable only that way.
+  // The entry's `__vite__mapDeps` list names every file a dynamic import may preload, so it is taken out before looking for who imports whom.
+  const withoutDepList = t => t.replace(/__vite__mapDeps=\(i,m=__vite__mapDeps,d=\(m\.f\|\|\(m\.f=\[[^\]]*\]\)\)\)=>i\.map\(i=>d\[i\]\)/g, '');
+  const referrers = new Map();
+  for (const [f, c] of B.chunks) {
+    for (const m of withoutDepList(c.text).matchAll(/["'`](?:\.\/|\/assets\/|assets\/)?([A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8}\.(?:js|css))["'`]/g)) {
+      if (B.chunks.has(m[1]) && m[1] !== f) referrers.set(m[1], [...new Set([...(referrers.get(m[1]) ?? []), f])]);
+    }
+  }
+  const viaCatalogOnly = [...new Set(pre)].filter(f => !/^locale-/.test(f) && (referrers.get(f) ?? []).length > 0 && (referrers.get(f) ?? []).every(r => /^locale-/.test(r)));
+  console.log(`precached chunks imported only by a language catalog: ${viaCatalogOnly.length}${viaCatalogOnly.length ? ' (' + viaCatalogOnly.join(', ') + ') <- these must be pinned to a locale-* chunk in vite.config.ts' : ''}`);
 }

@@ -96,6 +96,12 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('@mediapipe')) return 'mediapipe';
+          // WS12b: the two modules of a language that its app catalog (locale-<x>) and its marketing catalog
+          // (locale-site-<x>) both import. Left to Rollup they become a chunk named after one of them
+          // (reviewed-*.js), which the service worker would precache for every English visitor. Named locale-*
+          // they stay behind `globIgnores: **/assets/locale-*.js` below.
+          const lang = id.match(/[\\/]src[\\/]i18n[\\/]locales[\\/](es|de|pt-BR)[\\/](?:plans|reviewed)\.ts$/);
+          if (lang) return `locale-${lang[1]}-shared`;
           // Split the libraries only the signed-in app touches into their own
           // chunks. Lumping every node_modules file into one `vendor` chunk
           // undoes route-level code splitting: React lives there too, so the
