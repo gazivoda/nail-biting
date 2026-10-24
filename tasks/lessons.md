@@ -190,3 +190,31 @@ Commit the page first, then sync, then commit the generated files.
 ## 2026-10-23 — Repeated permission prompts
 
 **Reuse authorization and reduce permission interruptions (user correction).** The user explicitly requested implementation, commit and push, then asked to stop repeated permission prompts because they were approving every action. Do not add routine confirmation menus after that authorization. Reuse approved command prefixes and batch necessary setup, verification and report edits. Check writable roots before selecting an isolated workspace so a protected worktree does not create a new approval for every operation. Sandbox approvals remain enforced; do not bypass them or request unnecessarily broad prefixes.
+
+## 2026-10-24 — Gap-plan swarm (16 workstreams, parallel agents in worktrees)
+
+**Agent worktrees fork from `origin/main`, not from local `main`.** The first WS0 branch had no trace of the orchestrator's own docs commit. Every brief starts with `git reset --hard main` and a check that the top commit is the last merge.
+
+**Remote refs are shared, so `origin/main` can move under a long swarm.** The owner's other session pushed three SEO commits in the middle of this one. Before every push: `git fetch`, `git merge-base --is-ancestor origin/main main`, merge (never force-push), re-run the gates on the merged tree.
+
+**Build BEFORE tests when tests read `dist/`.** Tests that need `dist/seo-gated.json` skip silently when `dist/` is stale; "51 passed | 1 skipped" was the only hint. Read the skipped count after every merge.
+
+**Cross-workstream bugs only show up on the merged tree.** A hook calling `useAuth` threw in 13 History render tests written by other agents; a test mock of the store lacked an export a later agent started using. Fix with `useAuth({ optional: true })` (an overload, no new export) and `importOriginal` mocks. Run the full gates after EVERY merge, not just per branch.
+
+**`npm run lint` on the main checkout also scans `.claude/worktrees/*`.** Counts inflate by hundreds. Scope it: `eslint src server scripts electron shared` (baseline 23 errors / 4 warnings).
+
+**The account usage limit is shared by all parallel agents.** It killed 4-5 agents mid-work three times. Agents that commit after every milestone lose nothing; resume with `SendMessage` after the reset and tell them to commit first. Prefer 2-3 concurrent long agents.
+
+**Owner WIP and a shared stash stack.** Stash with a unique message, keep the SHA and a patch backup, restore with `git stash apply <sha>` (never bare `pop`), and `git apply --check` the patch after every merge.
+
+**With the Docker daemon down, reproduce the Dockerfile by hand.** Copy only what stage 1 copies into a clean dir and build; copy only what stage 3 copies plus that `dist` and boot the server there. It catches missing `COPY` lines (`server/`, `shared/`) before Coolify does. Also run new migrations against a copy of `data/users.db`.
+
+**A passing audit proves nothing unless it can fail.** The privacy audit has a synthetic meta-test and a canary build that leaks on purpose (caught 11/11). Do the same for any "no X leaves the device" claim.
+
+**Identical HTML is not identical pixels.** Merging three text nodes into one translated string moved glyphs by 0.02 px. When a "no visible change" claim matters, diff pixels, not only DOM.
+
+**Service worker and CSP traps.** `upgrade-insecure-requests` stops the service worker from installing on plain-http localhost (test behind https or strip the directive). A page with a secret in its URL (share links) must not use the SPA shell, because the shell loads analytics. `manifestTransforms` never sees vite-plugin-pwa's manifest entry (use `api.extendManifestEntries`). A Rollup chunk shared by two entries is named after one of its modules, so a glob on names (globIgnores) can precache the wrong thing.
+
+**Machine translations ship in three states.** Flag off = 404; flag on but unreviewed = served `noindex`, no sitemap, no hreflang; flag on and reviewed = indexable. One `reviewed` marker per language (`src/i18n/locales/<x>/reviewed.ts`) controls the app and the marketing pages.
+
+**Case-insensitive filesystems bite twice.** `phoneView.ts` next to `PhoneView.tsx` and `programView.ts` next to `ProgramView.tsx` both broke `tsc -b`; a guard test now catches it. Never name two files in a folder the same apart from case.

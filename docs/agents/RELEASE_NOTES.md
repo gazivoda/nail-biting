@@ -1,8 +1,8 @@
 # Stop Biting: release notes for the owner
 
 Written by WS13 on 2026-10-24, first against `main` at b6b16f9 (WS11b merged), then updated after WS12a (localization of the app screens) and the
-SEO session's `origin/main` commits were merged. **WS12b (the marketing pages in es, de and pt-BR) is not in this file yet:** it lands later and
-the WS13 agent will update this file after it.
+SEO session's `origin/main` commits were merged. WS12b (the marketing pages in es, de and pt-BR) was merged last and is described below
+(section (a), `docs/agents/ws12b-notes.md`); the orchestrator re-ran the gates, the Dockerfile reproduction and the privacy audit on the final tree.
 
 How to read this: every new feature is switched off. With `FEATURE_FLAGS` empty the site behaves as it did before, apart from
 the WS11a site fixes (privacy wording, meta tags, FAQ markup), which are meant to be visible. The detail for each workstream is in
@@ -47,7 +47,7 @@ build arguments · (d) Things only a human can review or verify · (e) Known gap
 |---|---|
 | Already on production | PUSH #1, `origin/main` at ffbf29a: WS0 to WS5, WS7b, WS8 to WS11a, all 27 flags off. The only visible differences are the WS11a site fixes. |
 | **Moved since** | `origin/main` is no longer ffbf29a: another session (the SEO traffic work) pushed a2f94c5 and 46a484c ("Record verified SEO release...") on top of it. **`main` has since merged it (`f871859`)** and the WS13 branch has merged `main`, so a push after WS13 merges is a fast-forward. If you ever see "rejected, non-fast-forward", `origin/main` moved again: merge it first, then re-run `bash scripts/qa/gates.sh`. |
-| Not on production yet | WS6 (phone view), WS7a (background watching), WS11b (feature pages and flag-aware copy), WS12a (localization of the app, flags off), WS12b (when it lands) and the WS13 fixes, which go out with PUSH #2. |
+| Not on production yet | WS6 (phone view), WS7a (background watching), WS11b (feature pages and flag-aware copy), WS12a (localization of the app, flags off), WS12b (localized marketing pages, flags off) and the WS13 fixes, which go out with PUSH #2. |
 | Migrations | All 13 additive migrations (list in (f)) came with PUSH #1. WS6, WS7a and WS11b add none. |
 
 ---
@@ -141,7 +141,14 @@ screens now goes through a small translation layer (`src/i18n/`), with machine-d
 (`locale_es`, `locale_de`, `locale_pt_br`, all off). With a flag on, Settings > Account & Sync gets a Language card; a person's choice is kept on
 their device and the browser language is never read. Dates, numbers and money follow the language. Lint rules and tests fail any English
 that is not translated. Marketing pages, the blog, legal pages, the 28 coaching lessons, server-rendered pages and emails stay English.
-**WS12b** (translated marketing pages, hreflang) is still to come.
+**WS12b, Localized core marketing pages** (`docs/agents/ws12b-notes.md`). The home page, /how-it-works, /pricing and /about, with their header, footer,
+closing call to action, trial button, pricing section, FAQ, contact form, demo text and 404 page, in Spanish, German and Brazilian Portuguese at `/es`, `/de` and
+`/pt-br` (311 messages per language, machine drafts marked NEEDS NATIVE REVIEW). **Three states per language**: flag off (production today) gives the
+branded 404, no sitemap entry, no hreflang and no language switcher; flag on with `reviewed = false` gives a page for QA that is `noindex` (meta tag and
+`X-Robots-Tag`), not in the sitemap and not named in any hreflang; flag on with `reviewed = true` gives indexable pages with a self canonical, reciprocal
+hreflang plus x-default, sitemap alternates, localized meta and JSON-LD and `<html lang>`. A language switcher in the header and footer appears only while a
+language is being served; it never redirects by browser language. Not translated: the blog, compare and solutions pages, the WS11b feature pages, the
+calculators, the legal pages, llms files and emails. One `reviewed` marker per language covers the app and the marketing pages.
 
 ---
 
@@ -176,7 +183,7 @@ switched off). **Do first** is the `before` field plus what the notes add. Paths
 | `share_links` (WS10) | Settings > Sharing, `/share/<token>`. Opens `/features/share-with-therapist`. | `event_sync` (not enforced: no `dependsOn`, see appendix) | Publish `legal/ws10-privacy.md` and `ws10-terms.md`. Decide whether `/share/` stays out of access logs. Turn on a day or two after the deploy. | The address is a bearer secret and may appear in host logs. A chat app that previews the link counts as a view. The streak shown can differ from the app's streak. |
 | `compare_competitors` (WS11a) | Two competitor pages, indexable and in the sitemap only while on. | | Verify every fact against its source URL (`ws11a-notes.md` tables), then set `needsVerification: false` (`src/data/competitorPages.ts`, 2 places) and redeploy. Decide whether to run these next to the live `vs` pages. Refresh the live `/compare/stop-biting-vs-habitaware`. Re-date both `COMPARE_META` entries in `server.js`. | Competitor facts may be out of date (habitaware.com rate-limited the fact check). |
 | `social_proof` (WS11a) | Testimonials on the home and pricing pages. | | Add real, consented entries to `src/data/testimonials.json` following `src/data/README-testimonials.md`, deploy, then turn on. | Hidden anyway while the file is empty. |
-| `locale_es`, `locale_de`, `locale_pt_br` (WS12a) | A Language card in Settings > Account & Sync; the signed-in app in that language for people who pick it. | | A native speaker reads `src/i18n/locales/<language>/*.ts` (glossary in `ws12a-notes.md`), fixes the wording, sets `reviewed` to `true` in `src/i18n/locales/<language>/index.ts` and flips the matching expectation in `src/i18n/catalogs.test.ts`; then add the flag. The marketing pages are not translated until WS12b. | Machine translation of health-adjacent copy; text length changes layouts (German was checked at 390 px: no sideways scroll). |
+| `locale_es`, `locale_de`, `locale_pt_br` (WS12a) | A Language card in Settings > Account & Sync; the signed-in app in that language for people who pick it. | | A native speaker reads `src/i18n/locales/<language>/*.ts` (app: glossary in `ws12a-notes.md`) and `marketing-*.ts` (marketing pages: `ws12b-notes.md`), fixes the wording, sets `export const reviewed = true;` in `src/i18n/locales/<language>/reviewed.ts` (`index.ts` only re-exports it) and flips the matching expectation in `src/i18n/catalogs.test.ts`; then add the flag. Until `reviewed` is true the localized marketing pages are noindex and out of the sitemap; one marker covers the app and the marketing pages. WS12b's catalogs and routes are live only with the flag. | Machine translation of health-adjacent copy; text length changes layouts (German was checked at 390 px: no sideways scroll). |
 
 ### Recommended turn-on order
 
@@ -557,8 +564,8 @@ The code was trusted. Items marked *fixed* were corrected in `ARCHITECTURE.md` b
 Run by WS13 on 2026-10-24 on the branch `worktree-agent-a69ebea783dc66ca0`, headless Chrome 155 on macOS, Node 24. First on
 `main` at b6b16f9 plus the WS13 commits, then again after merging `main` (which by then held **WS12a, the localization of the app screens, and
 the SEO session's `origin/main` commits**) into the branch (merge `3be2efc`, conflicts resolved, see `accessibility-report.md`). The numbers
-below are the merged tree's unless a line says otherwise. **WS12b (the marketing pages in es, de and pt-BR) was not merged yet: re-run the
-gates, the privacy audit and Lighthouse after it lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-diff-report.md`, `accessibility-report.md`,
+below are the merged tree's unless a line says otherwise. **WS12b (the marketing pages in es, de and pt-BR) was merged after this was written; the orchestrator re-ran the
+gates and the Dockerfile reproduction on the final tree (all pass) and a privacy audit; re-run Lighthouse if you want fresh numbers** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-diff-report.md`, `accessibility-report.md`,
 `lighthouse-report.md`.
 
 ### Gates (`bash scripts/qa/gates.sh`, one command)
