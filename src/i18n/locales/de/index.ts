@@ -2,7 +2,7 @@
 //
 // Before turning the language on for people (FEATURE_FLAGS=locale_de):
 //   1. have a native speaker read every file in this folder (and check the terms in docs/agents/ws12a-notes.md),
-//   2. then set `reviewed` below to true. While it is false the language picker says the translation is a draft.
+//   2. then set `reviewed` in ./reviewed.ts to true (it also covers the marketing pages, locales/*/marketing-*.ts). While it is false the language picker says the translation is a draft and the localized marketing pages are noindex.
 import type { LocaleCatalog } from '../../scopes';
 import { messages as common } from './common';
 import { messages as shell } from './shell';
@@ -25,7 +25,7 @@ import { messages as trial } from './trial';
 import { messages as labels } from './labels';
 import { messages as plans } from './plans';
 
-export const reviewed = false;
+export { reviewed } from './reviewed';
 
 export const catalog = {
   plans,

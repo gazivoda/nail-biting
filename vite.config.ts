@@ -21,6 +21,12 @@ function generateSeoContent(): Plugin {
         [path.resolve(__dirname, 'scripts/generate-seo-content.mjs')],
         { stdio: 'inherit' },
       )
+      // WS12b: dist/i18n/<locale>.json, the localized marketing pages the server reads (never served).
+      execFileSync(
+        process.execPath,
+        [path.resolve(__dirname, 'scripts/generate-locale-pages.mjs')],
+        { stdio: 'inherit' },
+      )
     },
   }
 }
@@ -156,7 +162,9 @@ export default defineConfig({
         // the service worker — they have their own loading logic and caching
         // them in the SW cache would break WASM instantiation on some browsers.
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/, /^\/redeem/, /^\/share\//],
+        // /es, /de, /pt-br (WS12b): the server decides whether a localized page exists (flag, review state), so a
+        // navigation there must never be answered from the cached English shell.
+        navigateFallbackDenylist: [/^\/api\//, /^\/downloads\//, /^\/posts\//, /^\/signin/, /^\/redeem/, /^\/share\//, /^\/(?:es|de|pt-br)(?:\/|$)/],
         runtimeCaching: [
           {
             // App shell JS/CSS chunks — cache first, background update

@@ -1,0 +1,70 @@
+// NEEDS NATIVE REVIEW (machine draft). Scope "marketing-chrome", locale es.
+import type { messages as en } from '../../scopes/marketing-chrome';
+
+export const messages: Record<keyof typeof en, string> = {
+  'nav.label': 'Navegación del sitio',
+  'nav.skip': 'Ir al contenido',
+  'nav.how': 'Cómo empezar',
+  'nav.science': 'Ciencia',
+  'nav.privacy': 'Privacidad',
+  'nav.pricing': 'Precios',
+  'nav.faq': 'FAQ',
+  'nav.blog': 'Blog',
+  'nav.signin': 'Iniciar sesión',
+
+  'trial.start': 'Empezar la prueba gratuita',
+  'trial.send': 'Enviar el enlace a mi computadora',
+  'trial.email': 'Enviarme por correo el enlace para mi computadora',
+  'trial.mailSubject': 'Stop Biting, para mi computadora',
+  'trial.mailBody': 'Abre esto en mi laptop o computadora de escritorio: {homeUrl}',
+  'trial.shareText': 'Abre esto en mi laptop o computadora de escritorio:',
+
+  'offer.line': '{trialDays, plural, one {# día} other {# días}} gratis, sin tarjeta, luego {pMonthly}/mes',
+
+  'cta.aria': 'Llamada a la acción',
+  'cta.heading': 'Atrapa tu próximo <hl>mordisco.</hl>',
+  'cta.body': 'Déjalo funcionando durante tu próxima jornada laboral y luego abre el Historial para ver cuándo te muerdes las uñas.',
+
+  'footer.about': 'Una alarma para tomar conciencia de cuándo te muerdes las uñas (onicofagia), creada por <link>Igor Gazivoda</link>. La detección se ejecuta en tu navegador. No se envían datos de la cámara mientras funciona.',
+  'footer.nav': 'Navegación del pie de página',
+  'footer.home': 'Inicio',
+  'footer.blog': 'Blog',
+  'footer.pricing': 'Precios',
+  'footer.contact': 'Contacto',
+  'footer.editorial': 'Política editorial',
+  'footer.privacy': 'Política de privacidad',
+  'footer.terms': 'Términos del servicio',
+  'footer.refund': 'Política de reembolso',
+  'footer.tagline': 'Deja de morderte.',
+  'footer.copy': '© {year} Stop Biting.',
+  'footer.englishOnly': 'El blog y las páginas legales solo están disponibles en inglés.',
+
+  'lang.label': 'Idioma',
+
+  'signin.google': 'Google',
+  'signin.apple': 'Apple',
+  'signin.microsoft': 'Microsoft',
+  'signin.magic': 'un enlace enviado por correo',
+
+  'plan.f1': 'Detección mientras la mantengas activa',
+  'plan.f2': 'Racha actual y mejor racha',
+  'plan.f3': 'Historial completo con etiquetas de desencadenantes',
+  'plan.f4': 'Sonido, destello o ambos',
+  'plan.extra': 'Soporte prioritario',
+  'plan.privacy': 'La detección se ejecuta en tu dispositivo; ningún dato de la cámara sale de él',
+
+  'pricing.heading': '{pMonthly} al mes, o <mark>{pYearlyShort} al año.</mark>',
+  'pricing.lede': '{trialDays, plural, one {# día} other {# días}} gratis para empezar, sin tarjeta. Eliges un plan cuando termine la prueba.',
+  'pricing.badge.save': 'Mejor valor: ahorra un {pSave}',
+  'pricing.badge.localized': 'Mejor valor',
+  'pricing.yearly': 'Anual',
+  'pricing.perYear': '/ año',
+  'pricing.yearly.eq': '{pMonthlyEq}/mes, facturado anualmente',
+  'pricing.yearly.billed': 'Facturación anual',
+  'pricing.monthly': 'Mensual',
+  'pricing.perMonth': '/ mes',
+  'pricing.monthly.billed': 'Facturación mensual',
+  'pricing.monthly.short': 'Todo lo del plan anual, salvo el soporte prioritario.',
+  'pricing.localizedNote': 'Estos precios se muestran en tu moneda local. Los precios de lista son {pMonthly} al mes y {pYearlyShort} al año.',
+  'pricing.payments': 'Los pagos se procesan a través de Paddle. Cancela cuando quieras en Ajustes. Puedes pedir un reembolso completo dentro de los 14 días posteriores a tu primer pago: consulta la <link>política de reembolso</link>.',
+};

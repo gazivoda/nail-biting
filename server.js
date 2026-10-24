@@ -22,6 +22,10 @@ import {
 import { createCopyIsOn } from './server/marketing/copyFlags.js';
 import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
 import { TRIAL_HYPHEN, TRIAL_MS, describeDays, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
+import {
+  decorateEnglishHtml, liveLocales, loadLocaleFiles, localeStates, localizedNoscriptNav, registerLocalePages, servedLocales,
+  withLocaleAlternates,
+} from './server/marketing/localePages.js';   // WS12b: the localized marketing pages (Spanish, German, Brazilian Portuguese)
 
 // In Electron, env vars are injected by the main process via spawn().
 // In web dev (npm run dev), load from .env using Node's built-in (v20.12+).
@@ -1640,8 +1644,21 @@ if (!existsSync(distPath)) {
   // they are all off.
   const copyMarkerFlags = ['event_sync', 'phone_companion'].filter(name => flags.isOn(name));
   const copyMarkerTag = copyMarkerFlags.length ? `<meta name="sb-copy-flags" content="${copyMarkerFlags.join(' ')}">` : '';
+  // ── Localized marketing pages (WS12b) ───────────────────────────────────────
+  // dist/i18n/<locale>.json holds each language's rendered pages and its review marker (src/i18n/locales/<x>/reviewed.ts).
+  // Never served (the /i18n route below). Each language is off, draft (flag on, not reviewed: 200, noindex, no sitemap, no
+  // hreflang) or live (flag on and reviewed: indexable); server/marketing/localePages.js has the rule. SB_I18N_DIR points a
+  // test at another folder of the same files; nothing makes a language "reviewed" except the marker in the file.
+  const LOCALE_FILES = loadLocaleFiles(process.env.SB_I18N_DIR || join(distPath, 'i18n'));
+  const LOCALE_STATES = localeStates(flags, LOCALE_FILES);
+  const LOCALE_CTX = { files: LOCALE_FILES, states: LOCALE_STATES };
+  if (servedLocales(LOCALE_STATES).length) {
+    console.log(`[locale] served: ${servedLocales(LOCALE_STATES).map(l => `${l} (${LOCALE_STATES[l]})`).join(', ')}`);
+  }
   function sendHtml(res, html, status = 200, lastModified = null) {
     if (copyMarkerTag && status === 200) html = html.replace('</head>', () => `${copyMarkerTag}</head>`);
+    // The language switcher's marker and the hreflang links of the four core pages: nothing while no language is served.
+    if (status === 200) html = decorateEnglishHtml(html, res.req?.path, LOCALE_CTX);
     if (lastModified) {
       const when = new Date(`${lastModified}T00:00:00Z`);
       if (!Number.isNaN(when.valueOf())) res.set('Last-Modified', when.toUTCString());
@@ -2041,10 +2058,18 @@ if (!existsSync(distPath)) {
   // gated flag is off this handler is not registered and express.static serves the file exactly as before.
   const SITEMAP_PATH = join(distPath, 'sitemap.xml');
   const GATED_OPEN = Object.keys(GATED_CONTENT).length > 0;
-  if (GATED_OPEN && existsSync(SITEMAP_PATH)) {
-    const sitemapWithGated = withGatedSitemapEntries(
-      readFileSync(SITEMAP_PATH, 'utf-8'),
-      gatedSitemapEntries(GATED_CONTENT, pageLastmod, { warn: console.warn }),
+  // WS12b: a language that is live (flag on AND reviewed) puts its pages in, with xhtml:link alternates on both sides.
+  // Draft and off languages add nothing; with none live the handler below exists only for the gated pages, as before.
+  const LOCALE_SITEMAP = liveLocales(LOCALE_STATES).length > 0;
+  if ((GATED_OPEN || LOCALE_SITEMAP) && existsSync(SITEMAP_PATH)) {
+    const sitemapWithGated = withLocaleAlternates(
+      GATED_OPEN
+        ? withGatedSitemapEntries(
+          readFileSync(SITEMAP_PATH, 'utf-8'),
+          gatedSitemapEntries(GATED_CONTENT, pageLastmod, { warn: console.warn }),
+        )
+        : readFileSync(SITEMAP_PATH, 'utf-8'),
+      LOCALE_CTX,
     );
     app.get('/sitemap.xml', (_req, res) => {
       res.set('Cache-Control', 'public, max-age=0').type('application/xml').send(sitemapWithGated);
@@ -2094,6 +2119,9 @@ if (!existsSync(distPath)) {
   }
   // The unpublished copy of the gated pages is for this server only.
   app.get('/seo-gated.json', (_req, res) => res.status(404).type('text/plain').send('Not found'));
+  // WS12b: dist/i18n/*.json (the rendered localized pages and the review markers) is for this server only: it answers like
+  // any address that does not exist.
+  app.get('/i18n/{*rest}', (_req, res) => sendHtml(res, NOT_FOUND_HTML, 404));
 
   app.use(express.static(distPath, { redirect: false }));
 
@@ -3032,6 +3060,22 @@ if (!existsSync(distPath)) {
   </main>
 </body>
 </html>`;
+
+  // ── The localized marketing pages (WS12b) ─────────────────────────────────
+  // /es, /es/pricing, /de/..., /pt-br/...: registered only for a language that is served (flag on). A language that is off
+  // registers nothing, so its addresses fall through to the branded 404 below, exactly as before this block existed.
+  if (indexHtml && servedLocales(LOCALE_STATES).length) {
+    const { notices } = registerLocalePages({
+      app, files: LOCALE_FILES, states: LOCALE_STATES, shell: indexHtml, notFoundHtml: NOT_FOUND_HTML,
+      sendHtml, injectMeta, injectSsrArticle, schemaTag, copyIsOn,
+      tokens: () => ({}),
+      noscriptNav: (html, data) => localizedNoscriptNav(html, data, [...SITE_NAV, ...GATED_NAV], escapeHtml),
+      k: {
+        WEBSITE_ID, ORG_ID, APP_ID, PERSON_ID, SCHEMA_AUTHOR, SCHEMA_SPEAKABLE, PERSON_KNOWS_ABOUT, breadcrumbSchema, faqPageSchema,
+      },
+    });
+    for (const note of notices) console.warn(`[locale] ${note}`);
+  }
 
   // SPA fallback. Every entry in KNOWN_ROUTES already has its own handler above,
   // so in practice this only ever 404s — the sendFile is a safety net for a

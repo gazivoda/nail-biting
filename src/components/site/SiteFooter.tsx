@@ -1,10 +1,21 @@
 import { ClosingCta } from './ClosingCta';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { Rings } from './Rings';
+import { useLocale } from '../../i18n/hooks';
+import { useT as useChromeT } from '../../i18n/scopes/marketing-chrome';
+import { useSitePaths } from '../../i18n/marketing/useSite';
+import type { SitePage } from '../../i18n/marketing/routes';
 
 // The site footer for every page in the sign system. Must sit inside a `.sg-page`.
 // Marketing pages also get the closing call to action above it; the homepage
 // renders its own, so it passes cta={false}.
-export function SiteFooter({ cta = true, ctaSource }: { cta?: boolean; ctaSource?: string } = {}) {
+// `page` names which of the four localized pages this is (WS12b), for the language switcher.
+export function SiteFooter({ cta = true, ctaSource, page }: { cta?: boolean; ctaSource?: string; page?: SitePage } = {}) {
+  const t = useChromeT();
+  const paths = useSitePaths();
+  const { locale } = useLocale();
+  // The blog and the legal pages exist only in English: on a localized page those links say so (hreflang) and a line below says it.
+  const english = locale === 'en' ? {} : { hrefLang: 'en' };
   return (
     <>
     {cta && <ClosingCta source={ctaSource} />}
@@ -18,28 +29,28 @@ export function SiteFooter({ cta = true, ctaSource }: { cta?: boolean; ctaSource
               <span className="font-display text-xl font-extrabold tracking-[-0.03em]">Stop Biting</span>
             </div>
             <p className="sg-small mt-4">
-              An awareness alarm for nail biting (onychophagia), made by{' '}
-              <a href="/about" className="sg-link">Igor Gazivoda</a>. Detection runs in your browser.
-              No camera data is sent while it runs.
+              {t.rich('footer.about', undefined, { link: chunks => <a href={paths.about} className="sg-link">{chunks}</a> })}
             </p>
+            <LanguageSwitcher page={page} variant="footer" />
+            {locale !== 'en' && <p className="sg-small mt-3">{t('footer.englishOnly')}</p>}
           </div>
           {/* Written out one by one: these eight hrefs are the site's whole
               legal and navigational surface, and spelling them as real
               attributes keeps them greppable. */}
-          <nav aria-label="Footer navigation" className="grid grid-cols-2 gap-x-10 text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)]">
-            <a href="/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Home</a>
-            <a href="/blog" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Blog</a>
-            <a href="/#pricing" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Pricing</a>
-            <a href="mailto:hello@stopbiting.today" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Contact</a>
-            <a href="/editorial-policy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Editorial Policy</a>
-            <a href="/privacy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Privacy Policy</a>
-            <a href="/terms-and-conditions" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Terms of Service</a>
-            <a href="/refund-policy" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">Refund Policy</a>
+          <nav aria-label={t('footer.nav')} className="grid grid-cols-2 gap-x-10 text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)]">
+            <a href={paths.home} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.home')}</a>
+            <a href="/blog" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.blog')}</a>
+            <a href={`${paths.home}#pricing`} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.pricing')}</a>
+            <a href="mailto:hello@stopbiting.today" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.contact')}</a>
+            <a href="/editorial-policy" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.editorial')}</a>
+            <a href="/privacy" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.privacy')}</a>
+            <a href="/terms-and-conditions" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.terms')}</a>
+            <a href="/refund-policy" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.refund')}</a>
           </nav>
         </div>
-        <p aria-hidden="true" className="mt-12 select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.06em] text-[color:var(--c-signal)]">Stop biting.</p>
+        <p aria-hidden="true" className="mt-12 select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.06em] text-[color:var(--c-signal)]">{t('footer.tagline')}</p>
         <p className="sg-small mt-10 border-t border-[color:var(--sg-rule)] pt-6">
-          © {new Date().getFullYear()} Stop Biting.{' '}
+          {t('footer.copy', { year: new Date().getFullYear() })}{' '}
           <a href="https://stopbiting.today/" className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">stopbiting.today</a>
         </p>
       </div>

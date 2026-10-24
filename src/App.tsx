@@ -35,6 +35,8 @@ import { EditorialPolicyPage } from './pages/EditorialPolicyPage';
 import { About } from './pages/About';
 import { HowItWorks } from './pages/HowItWorks';
 import { PricingPage } from './pages/PricingPage';
+import { LocalizedSite } from './pages/LocalizedSite';
+import { hasLocalePrefix, parseSitePath } from './i18n/marketing/routes';
 import { CostCalculator } from './pages/CostCalculator';
 import { NailGrowthCalculator } from './pages/NailGrowthCalculator';
 import { PrintableTracker } from './pages/PrintableTracker';
@@ -154,6 +156,13 @@ function AppRouter() {
 
 export default function App() {
   const path = usePath();
+
+  // The four core marketing pages in Spanish, German and Brazilian Portuguese (WS12b): /es, /es/pricing, ... The server
+  // only serves these addresses while the language's flag is on. Rendered bare (no AuthProvider): a landing page.
+  if (hasLocalePrefix(path)) {
+    const site = parseSitePath(path);
+    if (site && site.locale !== 'en') return <LocalizedSite locale={site.locale} page={site.page} />;
+  }
 
   // Blog index
   if (path === '/blog' || path === '/blog/') {

@@ -1,0 +1,70 @@
+// NEEDS NATIVE REVIEW (machine draft). Scope "marketing-chrome", locale pt-BR.
+import type { messages as en } from '../../scopes/marketing-chrome';
+
+export const messages: Record<keyof typeof en, string> = {
+  'nav.label': 'Navegação do site',
+  'nav.skip': 'Ir para o conteúdo',
+  'nav.how': 'Como começar',
+  'nav.science': 'Ciência',
+  'nav.privacy': 'Privacidade',
+  'nav.pricing': 'Preços',
+  'nav.faq': 'FAQ',
+  'nav.blog': 'Blog',
+  'nav.signin': 'Entrar',
+
+  'trial.start': 'Começar o teste grátis',
+  'trial.send': 'Enviar o link para o meu computador',
+  'trial.email': 'Enviar o link para o meu computador por e-mail',
+  'trial.mailSubject': 'Stop Biting, para o meu computador',
+  'trial.mailBody': 'Abra isto no meu notebook ou desktop: {homeUrl}',
+  'trial.shareText': 'Abra isto no meu notebook ou desktop:',
+
+  'offer.line': '{trialDays, plural, one {# dia} other {# dias}} grátis, sem cartão, depois {pMonthly}/mês',
+
+  'cta.aria': 'Chamada para ação',
+  'cta.heading': 'Pegue sua próxima <hl>mordida.</hl>',
+  'cta.body': 'Deixe rodando durante o seu próximo dia de trabalho e depois abra o Histórico para ver quando você rói as unhas.',
+
+  'footer.about': 'Um alarme de consciência para roer as unhas (onicofagia), criado por <link>Igor Gazivoda</link>. A detecção roda no seu navegador. Nenhum dado da câmera é enviado enquanto ela funciona.',
+  'footer.nav': 'Navegação do rodapé',
+  'footer.home': 'Início',
+  'footer.blog': 'Blog',
+  'footer.pricing': 'Preços',
+  'footer.contact': 'Contato',
+  'footer.editorial': 'Política editorial',
+  'footer.privacy': 'Política de Privacidade',
+  'footer.terms': 'Termos de Serviço',
+  'footer.refund': 'Política de Reembolso',
+  'footer.tagline': 'Pare de roer.',
+  'footer.copy': '© {year} Stop Biting.',
+  'footer.englishOnly': 'O blog e as páginas legais estão disponíveis apenas em inglês.',
+
+  'lang.label': 'Idioma',
+
+  'signin.google': 'Google',
+  'signin.apple': 'Apple',
+  'signin.microsoft': 'Microsoft',
+  'signin.magic': 'um link enviado por e-mail',
+
+  'plan.f1': 'Detecção enquanto você a mantiver ativa',
+  'plan.f2': 'Sequência atual e melhor sequência',
+  'plan.f3': 'Histórico completo com tags de gatilhos',
+  'plan.f4': 'Som, flash ou os dois',
+  'plan.extra': 'Suporte prioritário',
+  'plan.privacy': 'A detecção roda no seu dispositivo; nenhum dado da câmera sai dele',
+
+  'pricing.heading': '{pMonthly} por mês, ou <mark>{pYearlyShort} por ano.</mark>',
+  'pricing.lede': '{trialDays, plural, one {# dia} other {# dias}} grátis para começar, sem cartão. Você escolhe um plano quando o teste terminar.',
+  'pricing.badge.save': 'Melhor custo-benefício: economize {pSave}',
+  'pricing.badge.localized': 'Melhor custo-benefício',
+  'pricing.yearly': 'Anual',
+  'pricing.perYear': '/ ano',
+  'pricing.yearly.eq': '{pMonthlyEq}/mês, cobrado anualmente',
+  'pricing.yearly.billed': 'Cobrança anual',
+  'pricing.monthly': 'Mensal',
+  'pricing.perMonth': '/ mês',
+  'pricing.monthly.billed': 'Cobrança mensal',
+  'pricing.monthly.short': 'Tudo do plano anual, exceto o suporte prioritário.',
+  'pricing.localizedNote': 'Estes preços são exibidos na sua moeda local. Os preços de tabela são {pMonthly} por mês e {pYearlyShort} por ano.',
+  'pricing.payments': 'Os pagamentos são processados pelo Paddle. Cancele quando quiser em Configurações. Você pode pedir reembolso integral até 14 dias após o primeiro pagamento: veja a <link>política de reembolso</link>.',
+};
