@@ -19,6 +19,13 @@ export const messages = {
   'about.name': 'About Stop Biting',
   'about.personDescription': 'Igor Gazivoda is the founder of Stop Biting, an on-device AI app for nail biting detection built with MediaPipe and WebAssembly.',
 
+  // ── /how-it-works ──
+  'how.title': 'How AI Nail Biting Detection Works | Stop Biting',
+  'how.description': 'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, on your device. No camera data is sent while it runs.',
+  'how.name': 'How AI nail biting detection works',
+  'how.howtoName': 'How to Use Stop Biting for Nail Biting Detection',
+  'how.howtoDescription': 'Set up real-time AI nail biting detection in under 2 minutes using your webcam.',
+
   // ── The product, as structured data (SoftwareApplication, on every localized page) ──
   'app.description': 'Web app that uses your webcam and on-device AI (MediaPipe) to detect nail biting (onychophagia) in real-time. Sounds an alarm the moment your hand nears your mouth. Includes streak tracking, incident logging, habit reversal training guidance, and 7-day bite history. No camera data is sent while it runs.',
   'app.os': 'Web browser (Mac or Windows)',

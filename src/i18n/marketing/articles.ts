@@ -92,6 +92,52 @@ export function buildPricing(tr: Translator, locale: SiteLocale): PageFile {
   };
 }
 
+// ── /how-it-works ────────────────────────────────────────────────────────────
+
+export function buildHow(tr: Translator, locale: SiteLocale): PageFile {
+  const h = (key: string) => tr.text('marketing-how', key);
+  const c = (key: string) => tr.text('marketing-chrome', key);
+  const m = (key: string) => tr.text('marketing-meta', key);
+  const html = (key: string, tags?: Parameters<Translator['html']>[3]) => tr.html('marketing-how', key, undefined, tags);
+  const numbers = (count: number) => Array.from({ length: count }, (_, i) => i + 1);
+
+  // The HowTo steps ARE the visible steps (title and body): the schema describes what the page shows.
+  const steps = numbers(5).map(n => ({ name: h(`step.${n}.title`), text: h(`step.${n}.body`) }));
+  const faq = numbers(5).map(n => ({ q: h(`faq.${n}.q`), a: h(`faq.${n}.a`) }));
+
+  const article =
+    `<h1>${e(h('hero.title'))}</h1>` +
+    `<p class="article-summary">${e(h('hero.lede'))}</p>` +
+    // The same real capture, alt text and caption as the React page.
+    '<figure><img src="/shots/app-watch-1280.webp" srcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
+    `sizes="(min-width: 1024px) 48rem, 100vw" width="1280" height="792" loading="lazy" decoding="async" alt="${e(h('figure.alt'))}">` +
+    `<figcaption>${e(h('figure.caption'))}</figcaption></figure>` +
+    `<section><h2>${e(h('why.heading'))}</h2><p>${html('why.body', { link: inner => `<a href="/blog/habit-reversal-training-guide">${inner}</a>` })}</p></section>` +
+    `<section><h2>${e(h('steps.heading'))}</h2><ol>${steps.map(s => `<li><p>${e(s.name)}</p><p>${e(s.text)}</p></li>`).join('')}</ol></section>` +
+    `<section><h2>${e(h('specs.heading'))}</h2><dl>${numbers(4).map(n => `<dt>${e(h(`spec.${n}.label`))}</dt><dd>${html(`spec.${n}.value`)}</dd>`).join('')}</dl></section>` +
+    `<section><h2>${e(h('faq.heading'))}</h2>${numbers(5).map(n => `<h3>${e(h(`faq.${n}.q`))}</h3><p>${html(`faq.${n}.a`)}</p>`).join('')}</section>` +
+    `<section><h2>${e(h('learn.heading'))}</h2><p>${e(h('learn.note'))}</p><ul>${[
+      ['/blog/habit-reversal-training-guide', 'link.1'], ['/blog/stop-biting-app-review', 'link.2'],
+      ['/blog/webcam-privacy-nail-biting-app', 'link.3'], ['/compare/bitter-polish-alternative', 'link.4'],
+    ].map(([href, key]) => `<li><a href="${href}" lang="en">${e(h(key))}</a></li>`).join('')}</ul></section>` +
+    `<section><h2>${e(c('bottom.heading'))}</h2><p>${e(c('bottom.note'))}</p></section>`;
+
+  return {
+    title: m('how.title'),
+    description: m('how.description'),
+    name: m('how.name'),
+    schemaDescription: m('how.description'),
+    article,
+    faq,
+    faqName: m('how.name'),
+    breadcrumb: [
+      [c('bc.home'), `https://stopbiting.today${pagePath(locale, 'home')}`],
+      [h('bc.how'), `https://stopbiting.today${pagePath(locale, 'how')}`],
+    ],
+    howTo: { name: m('how.howtoName'), description: m('how.howtoDescription'), totalTime: 'PT2M', steps },
+  };
+}
+
 // ── /about ───────────────────────────────────────────────────────────────────
 
 export function buildAbout(tr: Translator, locale: SiteLocale): PageFile {

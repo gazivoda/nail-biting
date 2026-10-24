@@ -13,6 +13,12 @@ export const messages: Record<keyof typeof en, string> = {
   'about.name': 'Acerca de Stop Biting',
   'about.personDescription': 'Igor Gazivoda es el fundador de Stop Biting, una app con IA en el dispositivo para detectar cuándo te muerdes las uñas, creada con MediaPipe y WebAssembly.',
 
+  'how.title': 'Cómo funciona la detección con IA de morderse las uñas | Stop Biting',
+  'how.description': 'Stop Biting usa MediaPipe y WebAssembly para detectar en tiempo real cuándo te muerdes las uñas, en tu dispositivo. No se envían datos de la cámara mientras funciona.',
+  'how.name': 'Cómo funciona la detección con IA de morderse las uñas',
+  'how.howtoName': 'Cómo usar Stop Biting para detectar cuándo te muerdes las uñas',
+  'how.howtoDescription': 'Configura la detección con IA de morderse las uñas en tiempo real en menos de 2 minutos con tu cámara web.',
+
   'app.description': 'App web que usa tu cámara web y una IA que se ejecuta en tu dispositivo (MediaPipe) para detectar en tiempo real cuándo te muerdes las uñas (onicofagia). Hace sonar una alarma en el momento en que tu mano se acerca a la boca. Incluye seguimiento de rachas, registro de incidentes, orientación de entrenamiento de reversión de hábito (HRT) e historial de mordiscos de 7 días. No se envían datos de la cámara mientras funciona.',
   'app.os': 'Navegador web (Mac o Windows)',
   'app.offer.trial.name': 'Prueba gratuita',

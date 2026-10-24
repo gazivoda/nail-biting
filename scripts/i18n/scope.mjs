@@ -14,7 +14,6 @@
 export const EXCLUDED = [
   // ── Marketing pages: WS12b (localised routes /es/..., hreflang, SSR) ──────
   { pattern: 'src/pages/Landing.tsx', reason: 'Marketing home page. WS12b: needs localised routes and server-rendered meta, not just a catalog.' },
-  { pattern: 'src/pages/HowItWorks.tsx', reason: 'Marketing page (WS12b).' },
   { pattern: 'src/pages/ComparePage.tsx', reason: 'Competitor and solutions pages; the copy lives in src/data/comparePages.ts (WS12b or never).' },
   { pattern: 'src/pages/BlogIndex.tsx', reason: 'Blog index: ~190 English articles are not translated (WS12 scope decision).' },
   { pattern: 'src/pages/BlogPost.tsx', reason: 'Blog article page: articles are English only (WS12 scope decision).' },

@@ -16,6 +16,7 @@ import * as plans from './plans.ts';
 import * as chrome from './marketing-chrome.ts';
 import * as pricing from './marketing-pricing.ts';
 import * as about from './marketing-about.ts';
+import * as how from './marketing-how.ts';
 import * as meta from './marketing-meta.ts';
 
 export const SITE_SCOPES = {
@@ -23,6 +24,7 @@ export const SITE_SCOPES = {
   'marketing-chrome': chrome,
   'marketing-pricing': pricing,
   'marketing-about': about,
+  'marketing-how': how,
 } as const;
 
 export const META_SCOPES = {

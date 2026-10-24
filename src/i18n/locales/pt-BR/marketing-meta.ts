@@ -13,6 +13,12 @@ export const messages: Record<keyof typeof en, string> = {
   'about.name': 'Sobre o Stop Biting',
   'about.personDescription': 'Igor Gazivoda é o fundador do Stop Biting, um app com IA no dispositivo para detectar quando você rói as unhas, criado com MediaPipe e WebAssembly.',
 
+  'how.title': 'Como funciona a detecção de roer unhas com IA | Stop Biting',
+  'how.description': 'O Stop Biting usa MediaPipe e WebAssembly para detectar em tempo real quando você rói as unhas, no seu dispositivo. Nenhum dado da câmera é enviado enquanto ele funciona.',
+  'how.name': 'Como funciona a detecção de roer unhas com IA',
+  'how.howtoName': 'Como usar o Stop Biting para detectar quando você rói as unhas',
+  'how.howtoDescription': 'Configure a detecção de roer unhas com IA em tempo real em menos de 2 minutos usando sua webcam.',
+
   'app.description': 'App web que usa sua webcam e uma IA que roda no seu dispositivo (MediaPipe) para detectar em tempo real quando você rói as unhas (onicofagia). Toca um alarme no momento em que sua mão se aproxima da boca. Inclui acompanhamento de sequências, registro de ocorrências, orientação de treinamento de reversão de hábito (HRT) e histórico de mordidas de 7 dias. Nenhum dado da câmera é enviado enquanto ela funciona.',
   'app.os': 'Navegador web (Mac ou Windows)',
   'app.offer.trial.name': 'Teste grátis',

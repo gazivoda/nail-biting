@@ -36,6 +36,7 @@ import { LanguageSwitcher } from '../../components/site/LanguageSwitcher';
 import { PricingSection } from '../../components/PricingSection';
 import { PricingPage } from '../../pages/PricingPage';
 import { About } from '../../pages/About';
+import { HowItWorks } from '../../pages/HowItWorks';
 import { LocalizedSite } from '../../pages/LocalizedSite';
 import { PRICE_IDS } from '../../billing/env';
 
@@ -48,6 +49,7 @@ export const COVERS = [
   'src/components/PricingSection.tsx',
   'src/pages/PricingPage.tsx',
   'src/pages/About.tsx',
+  'src/pages/HowItWorks.tsx',
   'src/pages/LocalizedSite.tsx',
 ];
 
@@ -114,6 +116,18 @@ describe('site chrome and pricing, pseudo-locale', () => {
     expect(html).toContain('Dein Alarm- und Bissprotokoll wird in deinem Browser gespeichert.');   // sync off
   });
 
+  it('the whole /how-it-works page is translated; the article titles stay English and are marked as English', () => {
+    const html = renderToStaticMarkup(<HowItWorks />);
+    // the four article titles are the same in every language (the articles are English only)
+    const english = ['Habit Reversal Training: the clinical method behind the app', 'Stop Biting app review: what to expect in the first two weeks', 'How we verified on-device processing', 'Stop Biting vs bitter nail polish: which works?'];
+    expectAllTranslated(html, { allow: [...ALLOW, 'MediaPipe', 'WebAssembly', 'WASM', 'Hand', 'Landmarker', 'Chrome', 'Edge', 'Firefox', 'Mac', 'Linux', 'Chromebook', 'HRT', ...english.flatMap(s => s.split(/\W+/).filter(Boolean))] });
+    expectNoMissingParams(html);
+    expect(html).toContain('So funktioniert es');
+    expect(html).toContain('Diese Artikel sind auf Englisch.');
+    expect(html.match(/lang="en"/g)).toHaveLength(5);   // the HRT link in the text and the four titles
+    for (const title of english) expect(html).toContain(title);
+  });
+
   it('LocalizedSite draws the page of its address once the catalog is here, and nothing before', () => {
     const html = renderToStaticMarkup(<LocalizedSite locale="de" page="pricing" />);
     expectAllTranslated(html, { allow: ALLOW });
@@ -141,7 +155,7 @@ describe('site chrome and pricing, pseudo-locale', () => {
     expect(renderToStaticMarkup(<LanguageSwitcher page="pricing" variant="footer" />)).toBe('');
     h.marker = 'es';
     expect(renderToStaticMarkup(<LanguageSwitcher variant="footer" />)).toBe('');
-    expect(renderToStaticMarkup(<LanguageSwitcher page="how" variant="footer" />)).toBe('');   // not translated yet
+    expect(renderToStaticMarkup(<LanguageSwitcher page="home" variant="footer" />)).toBe('');   // the home page is not translated (yet)
   });
 });
 
@@ -176,6 +190,26 @@ describe('site chrome and pricing, English', () => {
       'Try it free for 3 days.', 'No card to start. Curious first? Read <a href="/how-it-works" class="sg-link">how the detection works</a>, or <a href="/tools/nail-biting-cost-calculator" class="sg-link">work out what biting costs you</a>.',
       '<a href="/" class="hover:text-[color:var(--sg-ink)]">Home</a>',
     ]) expect(html, s).toContain(s);
+  });
+
+  it('the how it works page says what it always said', () => {
+    const html = renderToStaticMarkup(<HowItWorks />);
+    for (const s of [
+      'How AI nail biting <span class="sg-hl">detection</span> works',
+      'Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your device. The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires about 0.6 seconds after it sees your hand approaching your mouth. Setup takes under two minutes.',
+      'alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running."',
+      'The Watch screen, shown with example data.',
+      'Why awareness is the bottleneck', '<a href="/blog/habit-reversal-training-guide" class="sg-link">Habit Reversal Training</a> (the gold-standard treatment)',
+      'Getting started', 'Open the app', 'Grant camera access', 'Position your camera', 'Work, game, or study normally', 'Respond to the alarm',
+      'It needs three consecutive frames before it acts, so an alarm fires about six tenths of a second after your hand starts moving to your mouth.',
+      'Technical specifications', 'Detection model', 'Google MediaPipe Hand Landmarker (21 landmarks)', 'WebAssembly: sandboxed, runs on your device',
+      'Alarm latency', 'Incident logging', 'Timestamped log stored locally, never transmitted',
+      'Common questions', 'What happens to my camera data?', 'Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
+      'Will it false-alarm when I&#x27;m eating or touching my face?', 'Does it work in the dark?', 'Learn more',
+      'Try it free for 3 days.', 'No card to start. Then $2.99 a month or $29 a year, cancel anytime.',
+    ]) expect(html, s).toContain(s);
+    expect(html).not.toContain('These articles are in English');   // the note is only for the other languages
+    expect(html).not.toContain(' lang="en"');
   });
 
   it('the about page says what it always said', () => {

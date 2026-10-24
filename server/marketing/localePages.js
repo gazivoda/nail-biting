@@ -267,6 +267,31 @@ export function schemaNodes(page, data, content, canonical, k) {
         primaryImageOfPage: image,
         ...dated,
       }, faq, breadcrumb].filter(Boolean);
+    case 'how':
+      return [{
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: content.howTo.name,
+        description: content.howTo.description,
+        totalTime: content.howTo.totalTime,
+        inLanguage,
+        // the steps are the visible steps: title and body as the page prints them
+        step: content.howTo.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
+      }, {
+        // FAQPage is a WebPage subtype, so it is also the page node: canonical as its @id, speakable, freshness date.
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': canonical,
+        url: canonical,
+        name: content.faqName,
+        description: content.schemaDescription,
+        isPartOf: { '@id': k.WEBSITE_ID },
+        publisher: { '@id': k.ORG_ID },
+        speakable: k.SCHEMA_SPEAKABLE,
+        inLanguage,
+        ...dated,
+        mainEntity: content.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+      }, breadcrumb];
     case 'about':
       return [{
         '@context': 'https://schema.org',

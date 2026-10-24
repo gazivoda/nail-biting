@@ -5,78 +5,38 @@ import { SiteHeader } from '../components/site/SiteHeader';
 import { SiteFooter } from '../components/site/SiteFooter';
 import { PageHero } from '../components/site/PageHero';
 import { TrialButton } from '../components/site/TrialButton';
-import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
 import { useFlagCopy } from '../features/useFlagCopy';
+import { useLocale } from '../i18n/hooks';
+import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
+import { useT as useHowT } from '../i18n/scopes/marketing-how';
+import { useSitePaths, useSiteT } from '../i18n/marketing/useSite';
 
-// /how-it-works, in the homepage's sign system (tokens in `.sg-page`, see
-// DESIGN.md). The h1, the standfirst, "Why awareness is the bottleneck", the
-// steps and the five questions are mirrored as crawler prose and
-// HowTo/FAQPage schema in server.js (HOW_IT_WORKS_FAQS): edit both together.
+// /how-it-works (and /es/how-it-works, /de/how-it-works, /pt-br/how-it-works, WS12b), in the homepage's sign system (tokens
+// in `.sg-page`, see DESIGN.md). The text is in the marketing-how scope. The h1, the standfirst, "Why awareness is the
+// bottleneck", the steps and the five questions are mirrored as crawler prose and HowTo/FAQPage schema (server.js for
+// English, server/marketing/localePages.js for the other languages): they are made from these same messages.
 
-const STEPS = [
-  {
-    title: 'Open the app',
-    body: 'Visit stopbiting.today in Chrome, Edge, or Firefox. There is nothing to install.',
-  },
-  {
-    title: 'Grant camera access',
-    body: 'Allow webcam access. The video feed is processed entirely on your device by MediaPipe running in WebAssembly. No camera data is sent while it runs.',
-  },
-  {
-    title: 'Position your camera',
-    body: 'Make sure your face and hands are visible in the camera view. The AI tracks 21 hand landmarks and detects when they approach the mouth region.',
-  },
-  {
-    title: 'Work, game, or study normally',
-    body: 'Stop Biting runs in the background, checking five times a second. It needs three consecutive frames before it acts, so an alarm fires about six tenths of a second after your hand starts moving to your mouth.',
-  },
-  {
-    title: 'Respond to the alarm',
-    body: 'The alarm is your awareness signal. Do the hand exercise the app suggests, such as pressing your palms flat or clenching a fist: a competing response your hands cannot do while biting. Doing it every time is the core of habit reversal training.',
-  },
-];
+const STEPS = [1, 2, 3, 4, 5] as const;
+const SPECS = [1, 2, 3, 4] as const;
+const FAQS = [1, 2, 3, 4, 5] as const;
 
-const SPECS = [
-  { label: 'Detection model', value: 'Google MediaPipe Hand Landmarker (21 landmarks)' },
-  { label: 'Processing', value: 'WebAssembly: sandboxed, runs on your device' },
-  { label: 'Alarm latency', value: 'About 0.6 seconds after your hand starts moving to your mouth' },
-  { label: 'Incident logging', value: 'Timestamped log stored locally, never transmitted' },
-];
-
-// All five match HOW_IT_WORKS_FAQS in server.js (FAQPage schema), word for word.
-const FAQS = [
-  {
-    q: 'What happens to my camera data?',
-    a: 'It is processed frame by frame on your device by the MediaPipe WASM binary running locally. No camera data is sent while it runs. Signing in and paying use the network, and you can check this yourself by watching your network traffic while the app runs.',
-  },
-  {
-    q: 'Does it work on Mac, Windows, and Linux?',
-    a: 'The web app works on any device with a modern browser and webcam: Mac, Windows, Linux, and Chromebook.',
-  },
-  {
-    q: "Will it false-alarm when I'm eating or touching my face?",
-    a: 'The detection model distinguishes sustained hand-to-mouth proximity from brief touches, and sensitivity can be adjusted in settings.',
-  },
-  {
-    q: "Does it work if I'm not at the camera?",
-    a: 'Detection needs your face and hands in frame. At a desk you are usually in frame anyway.',
-  },
-  {
-    q: 'Does it work in the dark?',
-    a: "Detection accuracy drops in poor lighting. A desk lamp or ordinary room light is enough; you don't need anything special.",
-  },
-];
-
+// Where the "Learn more" links go (English articles; their titles are the same in every language).
 const LINKS = [
-  { href: '/blog/habit-reversal-training-guide', label: 'Habit Reversal Training: the clinical method behind the app' },
-  { href: '/blog/stop-biting-app-review', label: 'Stop Biting app review: what to expect in the first two weeks' },
-  { href: '/blog/webcam-privacy-nail-biting-app', label: 'How we verified on-device processing' },
-  { href: '/compare/bitter-polish-alternative', label: 'Stop Biting vs bitter nail polish: which works?' },
-];
+  { href: '/blog/habit-reversal-training-guide', key: 'link.1' },
+  { href: '/blog/stop-biting-app-review', key: 'link.2' },
+  { href: '/blog/webcam-privacy-nail-biting-app', key: 'link.3' },
+  { href: '/compare/bitter-polish-alternative', key: 'link.4' },
+] as const;
 
 export function HowItWorks() {
   useTheme('light');
-  const copy = useFlagCopy();   // the log row and one answer change when sync is on; unchanged otherwise
+  const copy = useFlagCopy();   // the log row and one answer change when sync is on (English); unchanged otherwise
+  const t = useSiteT(useHowT);
+  const c = useSiteT(useChromeT);
+  const paths = useSitePaths();
+  const { locale } = useLocale();
+  // The articles are English only: on a localized page the links say so.
+  const english = locale === 'en' ? {} : { lang: 'en' };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -84,22 +44,20 @@ export function HowItWorks() {
 
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
-      <SiteHeader />
+      <SiteHeader page="how" />
 
       <main id="main" className="sg-container pt-28 pb-20 lg:pt-32">
         <PageHero className="mb-14">
-        <nav aria-label="Breadcrumb" className="sg-note mb-8 flex items-center gap-2">
-          <a href="/" className="hover:text-[color:var(--sg-ink)]">Home</a>
+        <nav aria-label={c('bc.label')} className="sg-note mb-8 flex items-center gap-2">
+          <a href={paths.home} className="hover:text-[color:var(--sg-ink)]">{c('bc.home')}</a>
           <span aria-hidden="true">/</span>
-          <span className="text-[color:var(--sg-ink)]">How it works</span>
+          <span className="text-[color:var(--sg-ink)]">{t('bc.how')}</span>
         </nav>
 
         <header className="max-w-3xl">
-          <h1 className="sg-h1-md">How AI nail biting <span className="sg-hl">detection</span> works</h1>
+          <h1 className="sg-h1-md">{t.rich('hero.title', undefined, { hl: chunks => <span className="sg-hl">{chunks}</span> })}</h1>
           <p className="sg-lede sg-measure mt-5">
-            Stop Biting uses MediaPipe and WebAssembly to detect nail biting in real time, entirely on your
-            device. The MediaPipe Hand Landmarker tracks 21 hand landmarks, and the alarm fires about 0.6 seconds
-            after it sees your hand approaching your mouth. Setup takes under two minutes.
+            {t('hero.lede')}
           </p>
         </header>
         </PageHero>
@@ -115,33 +73,31 @@ export function HowItWorks() {
             height={792}
             loading="lazy"
             decoding="async"
-            alt="Stop Biting Watch screen with a large streak counter, alarms and bites today, and detection running."
+            alt={t('figure.alt')}
             className="w-full h-auto rounded-lg border border-[color:var(--sg-rule)]"
           />
           <figcaption className="sg-note mt-2">
-            The Watch screen, shown with example data.
+            {t('figure.caption')}
           </figcaption>
         </figure>
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-10">
           <section aria-labelledby="awareness-heading" className="lg:col-span-4">
-            <h2 id="awareness-heading" className="sg-h3">Why awareness is the bottleneck</h2>
+            <h2 id="awareness-heading" className="sg-h3">{t('why.heading')}</h2>
             <p className="sg-body mt-3">
-              Most biting episodes happen without you noticing: the habit is automatic, and it runs below
-              the threshold of conscious awareness.{' '}
-              <a href="/blog/habit-reversal-training-guide" className="sg-link">Habit Reversal Training</a>{' '}
-              (the gold-standard treatment) identifies awareness training as its most critical component.
-              Stop Biting automates that component: it catches the episodes you don't notice.
+              {t.rich('why.body', undefined, {
+                link: chunks => <a href="/blog/habit-reversal-training-guide" {...english} className="sg-link">{chunks}</a>,
+              })}
             </p>
           </section>
 
           <section aria-labelledby="steps-heading" className="lg:col-span-7 lg:col-start-6">
-            <h2 id="steps-heading" className="sg-h3">Getting started</h2>
+            <h2 id="steps-heading" className="sg-h3">{t('steps.heading')}</h2>
             <ol className="mt-4 list-decimal space-y-5 border-t border-[color:var(--sg-rule)] pt-5 pl-5 marker:font-extrabold marker:text-[color:var(--sg-ink)]">
-              {STEPS.map(step => (
-                <li key={step.title} className="pl-2">
-                  <p className="font-bold">{step.title}</p>
-                  <p className="sg-body mt-1">{step.body}</p>
+              {STEPS.map(n => (
+                <li key={n} className="pl-2">
+                  <p className="font-bold">{t(`step.${n}.title`)}</p>
+                  <p className="sg-body mt-1">{t(`step.${n}.body`)}</p>
                 </li>
               ))}
             </ol>
@@ -149,12 +105,12 @@ export function HowItWorks() {
         </div>
 
         <section aria-labelledby="specs-heading" className="mt-20">
-          <h2 id="specs-heading" className="sg-h3">Technical specifications</h2>
+          <h2 id="specs-heading" className="sg-h3">{t('specs.heading')}</h2>
           <dl className="mt-4 border-t border-[color:var(--sg-rule)]">
-            {SPECS.map(spec => (
-              <div key={spec.label} className="grid gap-1 border-b border-[color:var(--sg-rule)] py-4 sm:grid-cols-12 sm:gap-10">
-                <dt className="font-bold sm:col-span-4">{spec.label}</dt>
-                <dd className="sg-body sm:col-span-8">{copy(spec.value)}</dd>
+            {SPECS.map(n => (
+              <div key={n} className="grid gap-1 border-b border-[color:var(--sg-rule)] py-4 sm:grid-cols-12 sm:gap-10">
+                <dt className="font-bold sm:col-span-4">{t(`spec.${n}.label`)}</dt>
+                <dd className="sg-body sm:col-span-8">{copy(t(`spec.${n}.value`))}</dd>
               </div>
             ))}
           </dl>
@@ -162,27 +118,28 @@ export function HowItWorks() {
 
         <div className="mt-20 grid gap-12 lg:grid-cols-12 lg:gap-10">
           <section aria-labelledby="hiw-faq-heading" className="lg:col-span-7">
-            <h2 id="hiw-faq-heading" className="sg-h3">Common questions</h2>
+            <h2 id="hiw-faq-heading" className="sg-h3">{t('faq.heading')}</h2>
             <div className="mt-4 border-t border-[color:var(--sg-rule)]">
-              {FAQS.map(({ q, a }) => (
-                <details key={q} className="group border-b border-[color:var(--sg-rule)]">
+              {FAQS.map(n => (
+                <details key={n} className="group border-b border-[color:var(--sg-rule)]">
                   <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 py-4 text-[1.0625rem] font-bold marker:content-none [&::-webkit-details-marker]:hidden">
-                    {q}
+                    {t(`faq.${n}.q`)}
                     <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-[color:var(--sg-ink-2)] transition-transform duration-200 group-open:rotate-180" />
                   </summary>
-                  <p className="sg-body pb-5">{copy(a)}</p>
+                  <p className="sg-body pb-5">{copy(t(`faq.${n}.a`))}</p>
                 </details>
               ))}
             </div>
           </section>
 
           <section aria-labelledby="learn-heading" className="lg:col-span-4 lg:col-start-9">
-            <h2 id="learn-heading" className="sg-h3">Learn more</h2>
+            <h2 id="learn-heading" className="sg-h3">{t('learn.heading')}</h2>
+            {locale !== 'en' && <p className="sg-small mt-2">{t('learn.note')}</p>}
             <ul className="mt-4 border-t border-[color:var(--sg-rule)]">
               {LINKS.map(link => (
                 <li key={link.href} className="border-b border-[color:var(--sg-rule)]">
-                  <a href={link.href} className="group flex min-h-12 items-center justify-between gap-4 py-3 font-semibold hover:text-[color:var(--sg-accent)]">
-                    <span className="group-hover:underline group-hover:underline-offset-4">{link.label}</span>
+                  <a href={link.href} {...english} className="group flex min-h-12 items-center justify-between gap-4 py-3 font-semibold hover:text-[color:var(--sg-accent)]">
+                    <span className="group-hover:underline group-hover:underline-offset-4">{t(link.key)}</span>
                     <ArrowRight size={16} aria-hidden="true" className="shrink-0" />
                   </a>
                 </li>
@@ -193,14 +150,14 @@ export function HowItWorks() {
 
         <div className="mt-20 flex flex-col items-start gap-4 border-t border-[color:var(--sg-rule)] pt-10 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="sg-h3">Try it free for {TRIAL_DAYS_TEXT}.</p>
-            <p className="sg-small mt-1">No card to start. Then $2.99 a month or $29 a year, cancel anytime.</p>
+            <p className="sg-h3">{c('bottom.heading')}</p>
+            <p className="sg-small mt-1">{c('bottom.note')}</p>
           </div>
           <TrialButton source="how_it_works" />
         </div>
       </main>
 
-      <SiteFooter />
+      <SiteFooter page="how" />
     </div>
   );
 }

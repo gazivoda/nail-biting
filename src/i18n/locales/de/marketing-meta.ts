@@ -13,6 +13,12 @@ export const messages: Record<keyof typeof en, string> = {
   'about.name': 'Über Stop Biting',
   'about.personDescription': 'Igor Gazivoda ist der Gründer von Stop Biting, einer App mit KI auf dem Gerät zur Erkennung von Nägelkauen, entwickelt mit MediaPipe und WebAssembly.',
 
+  'how.title': 'So funktioniert die KI-Erkennung von Nägelkauen | Stop Biting',
+  'how.description': 'Stop Biting nutzt MediaPipe und WebAssembly, um Nägelkauen in Echtzeit auf deinem Gerät zu erkennen. Solange es läuft, werden keine Kameradaten gesendet.',
+  'how.name': 'So funktioniert die KI-Erkennung von Nägelkauen',
+  'how.howtoName': 'So nutzt du Stop Biting zur Erkennung von Nägelkauen',
+  'how.howtoDescription': 'Richte die KI-Erkennung von Nägelkauen in Echtzeit in unter 2 Minuten mit deiner Webcam ein.',
+
   'app.description': 'Web-App, die deine Webcam und eine KI auf deinem Gerät (MediaPipe) nutzt, um Nägelkauen (Onychophagie) in Echtzeit zu erkennen. Sie löst einen Alarm aus, sobald sich deine Hand dem Mund nähert. Mit Serien-Tracking, Vorfallsprotokoll, Anleitung zum Habit-Reversal-Training (HRT) und einem 7-Tage-Verlauf der Bisse. Solange sie läuft, werden keine Kameradaten gesendet.',
   'app.os': 'Webbrowser (Mac oder Windows)',
   'app.offer.trial.name': 'Kostenlose Testphase',

@@ -19,6 +19,7 @@ import { catalog as ptMeta } from '../locales/pt-BR/meta';
 import { installSiteCatalogForTests, resetLocaleForTests, setPageLocale } from '../core';
 import { useMemoryStorage, resetStorage } from '../../../test-utils/memoryStorage';
 import { flagAwareDeep } from '../../../shared/flagCopy.js';
+import { setFlags } from '../testing/pseudo';
 
 vi.mock('../../billing/prices', async importOriginal => ({
   ...(await importOriginal<typeof import('../../billing/prices')>()),
@@ -27,10 +28,11 @@ vi.mock('../../billing/prices', async importOriginal => ({
 
 import { PricingPage } from '../../pages/PricingPage';
 import { About } from '../../pages/About';
+import { HowItWorks } from '../../pages/HowItWorks';
 
 const SITE = { es: esSite, de: deSite, 'pt-BR': ptSite } as const;
 const META = { es: esMeta, de: deMeta, 'pt-BR': ptMeta } as const;
-const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage, about: About };
+const PAGES: Partial<Record<SitePage, ComponentType>> = { pricing: PricingPage, about: About, how: HowItWorks };
 
 const decode = (s: string) => s
   .replace(/&nbsp;/g, ' ').replace(/&#x27;|&#39;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
@@ -43,7 +45,7 @@ const norm = (s: string) => decode(s)
   .replace(/\s+/g, ' ')
   .trim();
 /** The text of each heading, paragraph, list item and question, in order. */
-const blocks = (html: string) => [...html.matchAll(/<(h1|h2|h3|p|li|summary)\b[^>]*>([\s\S]*?)<\/\1>/g)].map(m => norm(m[2])).filter(Boolean);
+const blocks = (html: string) => [...html.matchAll(/<(h1|h2|h3|p|li|summary|dt|dd|figcaption)\b[^>]*>([\s\S]*?)<\/\1>/g)].map(m => norm(m[2])).filter(Boolean);
 const mainOf = (html: string) => html.match(/<main\b[\s\S]*<\/main>/)?.[0] ?? html;
 
 function renderPage(locale: SiteLocale, page: SitePage): string {
@@ -81,6 +83,21 @@ describe.each(SITE_LOCALES)('the server-rendered article follows the page: %s', 
     const missing = visible.filter(b => b.length >= 12 && !articleText.includes(b));
     // the breadcrumb is navigation, not copy
     expect(missing.filter(b => !/^(?:[^ ]+ \/ ?)+[^ ]+$/.test(b)), 'on the page but not in the article').toEqual([]);
+  });
+
+  it.each(LOCALIZED_PAGES)('%s: with the optional history sync on, the page and the article change together', page => {
+    const off = norm(resolved.pages[page]!.article);
+    const on = flagAwareDeep(file, (name: string) => name === 'event_sync');
+    const onBlocks = blocks(on.pages[page]!.article);
+    if (norm(on.pages[page]!.article) === off) return;   // this page says nothing about where the history lives
+    setFlags('event_sync');
+    const pageText = norm(mainOf(renderPage(locale, page)));
+    let from = 0;
+    for (const block of onBlocks) {
+      const at = pageText.indexOf(block, from);
+      expect(at, `with sync on, not on the page (or out of order): "${block.slice(0, 90)}"`).toBeGreaterThanOrEqual(0);
+      from = at + block.length;
+    }
   });
 
   it.each(LOCALIZED_PAGES)('%s: the FAQPage pairs are the visible questions and answers', page => {
