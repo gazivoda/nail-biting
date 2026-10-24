@@ -24,6 +24,7 @@
 import { compareEventVersions, type HabitEventWire } from '../storage/eventModel';
 import { parseWireEvent, type events as EventsFacade, type HabitExport } from '../storage';
 import { MAX_INCIDENTS } from '../store/useAppStore';
+import { t } from '../i18n/scopes/data';
 
 /** Larger files are refused before they are read. A full export of 5,000 events is about 1.5 MB. */
 export const MAX_IMPORT_BYTES = 10 * 1024 * 1024;
@@ -77,13 +78,13 @@ const isRecord = (x: unknown): x is Record<string, unknown> => x !== null && typ
 export function planImport(text: string, local: HabitEventWire[]): ImportPlan | ImportRefusal {
   // text.length counts characters, not bytes; for JSON that is mostly ASCII, so this is a close, cheap guard.
   if (text.length > MAX_IMPORT_BYTES) {
-    return { ok: false, reason: 'too_big', message: `That file is larger than ${Math.round(MAX_IMPORT_BYTES / 1024 / 1024)} MB. A history export is far smaller, so this is probably not one.` };
+    return { ok: false, reason: 'too_big', message: t('import.tooBig', { mb: Math.round(MAX_IMPORT_BYTES / 1024 / 1024) }) };
   }
   let data: unknown;
   try {
     data = JSON.parse(text);
   } catch {
-    return { ok: false, reason: 'not_json', message: 'That file is not valid JSON. Choose a file you exported from Stop Biting.' };
+    return { ok: false, reason: 'not_json', message: t('import.notJson') };
   }
 
   let format: 'export' | 'list';
@@ -99,10 +100,10 @@ export function planImport(text: string, local: HabitEventWire[]): ImportPlan | 
     if (typeof data.exportedAt === 'number') exportedAt = data.exportedAt;
     file = data as unknown as HabitExport;
   } else {
-    return { ok: false, reason: 'not_history', message: 'That file does not look like a Stop Biting history export.' };
+    return { ok: false, reason: 'not_history', message: t('import.notHistory') };
   }
   if (rawEntries.length > MAX_IMPORT_ENTRIES) {
-    return { ok: false, reason: 'too_many', message: `That file has more than ${MAX_IMPORT_ENTRIES.toLocaleString('en')} entries.` };
+    return { ok: false, reason: 'too_many', message: t('import.tooMany', { max: MAX_IMPORT_ENTRIES }) };
   }
 
   // Validate each entry; fold duplicate ids to the winning version.
@@ -121,7 +122,7 @@ export function planImport(text: string, local: HabitEventWire[]): ImportPlan | 
     }
   }
   if (winners.size === 0) {
-    return { ok: false, reason: 'nothing_valid', message: rawEntries.length === 0 ? 'That file has no events in it.' : 'None of the entries in that file are valid events.' };
+    return { ok: false, reason: 'nothing_valid', message: rawEntries.length === 0 ? t('import.noEvents') : t('import.noneValid') };
   }
 
   const here = new Map(local.map(e => [e.id, e]));

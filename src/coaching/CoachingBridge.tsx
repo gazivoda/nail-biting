@@ -8,9 +8,16 @@
 import { useEffect } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { events } from '../storage';
+import { t } from '../i18n/scopes/coaching';
+import { setCardText } from './cardText';
 import { startCoachingWatcher } from './watcher';
 
 export function CoachingBridge() {
+  // The card is rendered by a light seam that cannot import the translator itself (./cardText says why).
+  useEffect(() => {
+    setCardText(t);
+    return () => setCardText(null);
+  }, []);
   useEffect(
     () =>
       startCoachingWatcher({

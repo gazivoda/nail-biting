@@ -23,7 +23,7 @@ const SOURCES = {
   'home-history-privacy': ['src/pages/Landing.tsx'],
   'network-use': ['src/pages/Landing.tsx', 'src/pages/HowItWorks.tsx', 'server.js'],
   'about-log': ['src/pages/About.tsx', 'server.js'],
-  'settings-privacy-log': ['src/pages/Settings.tsx'],
+  'settings-privacy-log': ['src/i18n/scopes/settings.ts'], // WS12a: the Settings text lives in the catalog now
   'how-log-row': ['src/pages/HowItWorks.tsx'],
   'how-log-item': ['server.js'],
   'blog-log-not-synced': ['src/data/blogPosts.ts'],

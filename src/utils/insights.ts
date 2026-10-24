@@ -1,5 +1,7 @@
 import type { Incident } from '../types';
 import { BEHAVIORS, DEFAULT_BEHAVIOR, isFalsePositive, type Behavior } from '../storage/eventModel';
+import { t } from '../i18n/scopes/history';
+import { formatDatePattern } from '../i18n/format';
 
 /** The behaviours that appear in a history, in the schema's order. Entries from before WS1 count as nail biting. */
 export function behaviorsIn(incidents: readonly Incident[]): Behavior[] {
@@ -41,12 +43,19 @@ export function peakHour(allBites: Incident[]): { hour: number; count: number } 
   return counts[hour] >= 2 ? { hour, count: counts[hour] } : null;
 }
 
+// An hour of the day. English keeps its 12-hour wording ("3 pm"); the other languages get their own 24-hour
+// clock ("15:00") from Intl, so no am/pm word needs translating.
+const CLOCK_24 = { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' } as const;
+const atHour = (hour: number, enPattern: string): string => formatDatePattern(new Date(2024, 0, 1, ((hour % 24) + 24) % 24), enPattern, CLOCK_24);
+
+/** 0 -> "12 am", 9 -> "9 am", 13 -> "1 pm". */
+export function hourLabel(hour: number): string {
+  return atHour(hour, 'h aaa');
+}
+
 /** "3 to 4 pm", "11 am to 12 pm" */
 export function hourRange(hour: number): string {
-  const fmt = (h: number) => {
-    const n = h % 12 === 0 ? 12 : h % 12;
-    return { n, ap: h % 24 < 12 ? 'am' : 'pm' };
-  };
-  const a = fmt(hour), b = fmt(hour + 1);
-  return a.ap === b.ap ? `${a.n} to ${b.n} ${b.ap}` : `${a.n} ${a.ap} to ${b.n} ${b.ap}`;
+  const h = ((hour % 24) + 24) % 24;
+  const sameHalf = (h < 12) === ((h + 1) % 24 < 12);
+  return t('hourRange', { from: atHour(h, sameHalf ? 'h' : 'h aaa'), to: atHour(h + 1, 'h aaa') });
 }

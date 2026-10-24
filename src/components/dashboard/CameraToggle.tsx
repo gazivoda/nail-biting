@@ -1,10 +1,12 @@
 import { AlertTriangle, Camera, Eye, EyeOff, ShieldCheck, Square } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import type { WatchNote } from '../../background/watchText';
+import { useT } from '../../i18n/scopes/watch';
 
 /** `problem`: detection is switched on but nothing is watching (the camera
  *  didn't start, or the models didn't load), as a short title. */
 export function CameraToggle({ problem = null, note = null }: { problem?: string | null; note?: WatchNote | null }) {
+  const t = useT();
   const cameraProblem = problem !== null;
   const { cameraEnabled, showCameraFeed, setCameraEnabled, setShowCameraFeed } = useAppStore();
 
@@ -13,11 +15,10 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
     return (
       <div className="p-6 sm:p-7">
         <h2 className="font-display text-[1.75rem] sm:text-[2rem] font-extrabold leading-[1.05] tracking-[-0.04em] text-stone-900 dark:text-stone-100">
-          Start the alarm
+          {t('toggle.off.title')}
         </h2>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-          Your browser will ask to use the camera. Keep this tab open while you work; the alarm
-          sounds when a hand reaches your mouth.
+          {t('toggle.off.body')}
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
           <button
@@ -28,11 +29,11 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-lime-300 text-deep dark:bg-deep dark:text-lime-300">
               <Camera size={20} aria-hidden="true" />
             </span>
-            Start detection
+            {t('toggle.off.start')}
           </button>
           <span className="flex items-center gap-1.5 text-xs text-stone-600 dark:text-stone-300">
             <ShieldCheck size={13} aria-hidden="true" />
-            No camera data is sent while it runs
+            {t('toggle.off.privacy')}
           </span>
         </div>
       </div>
@@ -63,10 +64,10 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
           )}
           <div>
             <p className="font-display text-lg font-bold leading-tight tracking-[-0.02em] text-white">
-              {problem ?? note?.title ?? 'Detection active'}
+              {problem ?? note?.title ?? t('toggle.on.title')}
             </p>
             <p className="mt-0.5 text-xs text-white/75">
-              {cameraProblem ? 'See below for how to fix it' : note ? note.hint : 'Runs on this device'}
+              {cameraProblem ? t('toggle.on.problemHint') : note ? note.hint : t('toggle.on.hint')}
             </p>
           </div>
         </div>
@@ -77,7 +78,7 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
           className="flex min-h-11 items-center gap-1.5 px-4 rounded-full text-sm font-semibold text-white bg-white/15 hover:bg-white/25 transition-colors duration-150"
         >
           <Square size={11} fill="currentColor" aria-hidden="true" />
-          Stop
+          {t('toggle.on.stop')}
         </button>
       </div>
 
@@ -94,7 +95,7 @@ export function CameraToggle({ problem = null, note = null }: { problem?: string
       >
         <span className="flex items-center gap-2 text-white/85">
           {showCameraFeed ? <Eye size={14} aria-hidden="true" /> : <EyeOff size={14} aria-hidden="true" />}
-          <span className="text-sm">Show camera feed</span>
+          <span className="text-sm">{t('toggle.showFeed')}</span>
         </span>
         <span
           aria-hidden="true"

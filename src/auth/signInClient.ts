@@ -2,6 +2,8 @@
 // failed sign-ins, reading the emailed token out of the page address, and the
 // two calls to the emailed-link endpoints. Tested in node.
 
+import { t } from '../i18n/scopes/auth';
+
 export type SignInErrorCode =
   | 'cancelled' | 'state_mismatch' | 'no_code' | 'callback_failed' | 'email_unverified' | 'unknown';
 
@@ -16,15 +18,13 @@ const PROVIDER_NAMES: Record<string, string> = { apple: 'Apple', microsoft: 'Mic
 
 /** The words shown above the buttons after a sign-in that did not finish. */
 export function errorMessage(code: SignInErrorCode, provider?: string | null): string {
-  const who = (provider && PROVIDER_NAMES[provider]) || 'Your sign-in provider';
   switch (code) {
     case 'cancelled':
-      return 'Sign-in was cancelled, so nothing was set up. You can try again whenever you like.';
+      return t('error.cancelled');
     case 'email_unverified':
-      return `${who} did not confirm that this email address belongs to you, so we did not connect it to an existing account. `
-        + 'Use the emailed sign-in link instead: it proves you can read that inbox.';
+      return t('error.unverified', { who: (provider && PROVIDER_NAMES[provider]) || t('error.who.default') });
     default:
-      return "Sign-in didn't finish, so nothing was set up. Please try again.";
+      return t('error.generic');
   }
 }
 
@@ -33,10 +33,26 @@ export type LinkFailure = 'expired' | 'used' | 'invalid';
 
 export function linkFailureMessage(reason: LinkFailure): string {
   switch (reason) {
-    case 'expired': return 'That sign-in link has expired. Links work for 15 minutes. Enter your email and we will send a new one.';
-    case 'used': return 'That sign-in link was already used. Each link works once. Enter your email and we will send a new one.';
-    default: return "That sign-in link isn't valid. Enter your email and we will send a new one.";
+    case 'expired': return t('link.expired');
+    case 'used': return t('link.used');
+    default: return t('link.invalid');
   }
+}
+
+/** Why asking for the emailed link did not work. */
+export type SendFailure = 'invalid_email' | 'too_many' | 'failed';
+
+/** The words for it (looked up at each render, so a language change applies). */
+export function sendFailureMessage(reason: SendFailure): string {
+  return reason === 'invalid_email' ? t('error.invalidEmail') : reason === 'too_many' ? t('error.tooMany') : t('error.sendFailed');
+}
+
+/** The note above the buttons: what the emailed link did, else what the provider redirect reported. */
+export function signInNotice(
+  linkFailure: LinkFailure | 'failed' | null, errorCode: SignInErrorCode | null, provider?: string | null,
+): string | null {
+  if (linkFailure) return linkFailure === 'failed' ? t('error.finishFailed') : linkFailureMessage(linkFailure);
+  return errorCode ? errorMessage(errorCode, provider) : null;
 }
 
 /** Only addresses the server could have produced: our own site, a path, or the desktop app's deep link. */
@@ -74,7 +90,7 @@ export function takeMagicToken(win: Pick<Window, 'location' | 'history'> & { __s
   return typeof raw === 'string' && TOKEN_SHAPE.test(raw) ? raw : null;
 }
 
-export type RequestLinkResult = { ok: true } | { ok: false; reason: 'invalid_email' | 'too_many' | 'failed' };
+export type RequestLinkResult = { ok: true } | { ok: false; reason: SendFailure };
 
 export async function requestMagicLink(email: string, doFetch: typeof fetch = fetch): Promise<RequestLinkResult> {
   try {

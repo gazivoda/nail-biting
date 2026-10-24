@@ -4,9 +4,10 @@
 // dragging on the picture itself.
 
 import { useId, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { format } from 'date-fns';
 import { PhotoCanvas } from './PhotoCanvas';
 import { defaultComparePair, sortNewestFirst, type PhotoMeta } from './diaryMeta';
+import { formatDatePattern } from '../i18n/format';
+import { useT } from '../i18n/scopes/photos';
 
 export interface CompareViewProps {
   photos: readonly PhotoMeta[];
@@ -15,9 +16,10 @@ export interface CompareViewProps {
   initialPosition?: number;
 }
 
-const dateLabel = (ms: number) => format(ms, 'd MMM yyyy');
+const dateLabel = (ms: number) => formatDatePattern(ms, 'd MMM yyyy', { day: 'numeric', month: 'short', year: 'numeric' });
 
 export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareViewProps) {
+  const t = useT();
   const beforeSelectId = useId();
   const afterSelectId = useId();
   const [picked, setPicked] = useState<{ before?: string; after?: string }>({});
@@ -26,7 +28,7 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
   if (photos.length < 2) {
     return (
       <p className="text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-        You need two photos to compare. Take another one next week and this is where you can lay it over today's.
+        {t('compare.needTwo')}
       </p>
     );
   }
@@ -50,7 +52,7 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
         <label htmlFor={beforeSelectId} className="block text-sm font-semibold text-stone-800 dark:text-stone-100">
-          Before
+          {t('compare.before')}
           <select
             id={beforeSelectId}
             value={beforeId}
@@ -61,7 +63,7 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
           </select>
         </label>
         <label htmlFor={afterSelectId} className="block text-sm font-semibold text-stone-800 dark:text-stone-100">
-          After
+          {t('compare.after')}
           <select
             id={afterSelectId}
             value={afterId}
@@ -75,7 +77,7 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
 
       {same && (
         <p role="status" className="text-sm text-stone-600 dark:text-stone-300">
-          Both sides show the same photo. Pick two different dates to see a difference.
+          {t('compare.same')}
         </p>
       )}
 
@@ -90,14 +92,14 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
           sourceKey={after.id}
           load={() => loadBlob(after.id)}
           maxWidth={960}
-          label={`Photo from ${dateLabel(after.takenAt)} (after)`}
+          label={t('compare.photoAfter', { date: dateLabel(after.takenAt) })}
           className="absolute inset-0 h-full w-full object-cover"
         />
         <PhotoCanvas
           sourceKey={before.id}
           load={() => loadBlob(before.id)}
           maxWidth={960}
-          label={`Photo from ${dateLabel(before.takenAt)} (before)`}
+          label={t('compare.photoBefore', { date: dateLabel(before.takenAt) })}
           className="absolute inset-0 h-full w-full object-cover"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         />
@@ -109,15 +111,15 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
           <span className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-deep/70" />
         </div>
         <span className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
-          Before, {dateLabel(before.takenAt)}
+          {t('compare.badgeBefore', { date: dateLabel(before.takenAt) })}
         </span>
         <span className="pointer-events-none absolute right-2 top-2 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white">
-          After, {dateLabel(after.takenAt)}
+          {t('compare.badgeAfter', { date: dateLabel(after.takenAt) })}
         </span>
       </div>
 
       <div className="mx-auto max-w-2xl">
-        <label htmlFor={`${beforeSelectId}-slider`} className="sr-only">Reveal the earlier photo</label>
+        <label htmlFor={`${beforeSelectId}-slider`} className="sr-only">{t('compare.sliderLabel')}</label>
         <input
           id={`${beforeSelectId}-slider`}
           type="range"
@@ -126,11 +128,11 @@ export function CompareView({ photos, loadBlob, initialPosition = 50 }: CompareV
           step={1}
           value={position}
           onChange={e => setPosition(Number(e.target.value))}
-          aria-valuetext={`The earlier photo is shown across ${position} percent of the picture`}
+          aria-valuetext={t('compare.sliderValue', { percent: position })}
           className="block h-11 w-full cursor-ew-resize accent-forest-500 dark:accent-lime-300"
         />
         <p className="mt-1 text-center text-xs text-stone-600 dark:text-stone-300">
-          Drag the picture or the slider to move between the two.
+          {t('compare.hint')}
         </p>
       </div>
     </div>

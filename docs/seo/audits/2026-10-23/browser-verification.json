@@ -1,0 +1,259 @@
+{
+  "origin": "http://127.0.0.1:3218",
+  "session": "seo-sw-verification",
+  "fixture": {
+    "cacheName": "workbox-precache-v2-http://127.0.0.1:3218/",
+    "key": "http://127.0.0.1:3218/index.html?__WB_REVISION__=254183cb516517d1eeb9df9524f86923",
+    "source": "Real unauthenticated local GET / response",
+    "emittedWorkerChanged": false
+  },
+  "publicRows": [
+    {
+      "name": "blog",
+      "actual": {
+        "canonical": "https://stopbiting.today/blog",
+        "description": "Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.",
+        "schemas": [
+          {
+            "id": "https://stopbiting.today/#website",
+            "type": "WebSite"
+          },
+          {
+            "id": "https://stopbiting.today/#organization",
+            "type": "Organization"
+          },
+          {
+            "id": "https://stopbiting.today/#app",
+            "type": "SoftwareApplication"
+          },
+          {
+            "id": "https://stopbiting.today/blog",
+            "type": "CollectionPage"
+          },
+          {
+            "type": "BreadcrumbList"
+          }
+        ],
+        "title": "Nail Biting Resources: Evidence-Based Guides | Stop Biting"
+      },
+      "canonicalCorrect": true,
+      "controller": "http://127.0.0.1:3218/sw.js",
+      "h1": "Nail biting resources",
+      "metadataMatchesNetwork": true,
+      "navigationStatus": 200,
+      "pageEntityPresent": true,
+      "transferSize": 24633,
+      "url": "http://127.0.0.1:3218/blog",
+      "workerStart": 0.6000000014901161
+    },
+    {
+      "name": "pricing",
+      "actual": {
+        "canonical": "https://stopbiting.today/pricing",
+        "description": "Stop Biting pricing: 3-day free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.",
+        "schemas": [
+          {
+            "id": "https://stopbiting.today/#website",
+            "type": "WebSite"
+          },
+          {
+            "id": "https://stopbiting.today/#organization",
+            "type": "Organization"
+          },
+          {
+            "id": "https://stopbiting.today/#app",
+            "type": "SoftwareApplication"
+          },
+          {
+            "id": "https://stopbiting.today/pricing",
+            "type": "WebPage"
+          },
+          {
+            "id": "https://stopbiting.today/pricing#faq",
+            "type": "FAQPage"
+          },
+          {
+            "type": "BreadcrumbList"
+          }
+        ],
+        "title": "Pricing: $2.99/month or $29/year | Stop Biting"
+      },
+      "canonicalCorrect": true,
+      "controller": "http://127.0.0.1:3218/sw.js",
+      "h1": "$2.99 a month, or $29 a year.",
+      "metadataMatchesNetwork": true,
+      "navigationStatus": 200,
+      "pageEntityPresent": true,
+      "transferSize": 7675,
+      "url": "http://127.0.0.1:3218/pricing",
+      "workerStart": 0.6000000014901161
+    },
+    {
+      "name": "article",
+      "actual": {
+        "canonical": "https://stopbiting.today/blog/grow-nails-after-nail-biting",
+        "description": "Fingernails grow about 3.5mm a month (22 adults), so bitten nails take several months to grow out. What to expect, and what no study has measured.",
+        "schemas": [
+          {
+            "id": "https://stopbiting.today/#website",
+            "type": "WebSite"
+          },
+          {
+            "id": "https://stopbiting.today/#organization",
+            "type": "Organization"
+          },
+          {
+            "id": "https://stopbiting.today/#app",
+            "type": "SoftwareApplication"
+          },
+          {
+            "id": "https://stopbiting.today/blog/grow-nails-after-nail-biting#article",
+            "type": "BlogPosting"
+          },
+          {
+            "type": "BreadcrumbList"
+          }
+        ],
+        "title": "Grow Nails Back After Biting: What to Expect | Stop Biting"
+      },
+      "canonicalCorrect": true,
+      "controller": "http://127.0.0.1:3218/sw.js",
+      "metadataMatchesNetwork": true,
+      "navigationStatus": 200,
+      "pageEntityPresent": true,
+      "transferSize": 10349,
+      "url": "http://127.0.0.1:3218/blog/grow-nails-after-nail-biting",
+      "workerStart": 0.5999999977648258
+    },
+    {
+      "name": "comparison",
+      "actual": {
+        "canonical": "https://stopbiting.today/compare/ai-detection-apps",
+        "description": "Every AI webcam app that detects nail biting in 2026 (Stop Biting, Hands Off, Nailed and SmartBehavior) compared on platforms, price and privacy.",
+        "schemas": [
+          {
+            "id": "https://stopbiting.today/#website",
+            "type": "WebSite"
+          },
+          {
+            "id": "https://stopbiting.today/#organization",
+            "type": "Organization"
+          },
+          {
+            "id": "https://stopbiting.today/#app",
+            "type": "SoftwareApplication"
+          },
+          {
+            "id": "https://stopbiting.today/compare/ai-detection-apps#article",
+            "type": "Article"
+          },
+          {
+            "type": "BreadcrumbList"
+          },
+          {
+            "type": "ItemList"
+          },
+          {
+            "id": "https://stopbiting.today/compare/ai-detection-apps#faq",
+            "type": "FAQPage"
+          }
+        ],
+        "title": "Best AI Apps to Stop Nail Biting: 2026 Comparison"
+      },
+      "canonicalCorrect": true,
+      "controller": "http://127.0.0.1:3218/sw.js",
+      "metadataMatchesNetwork": true,
+      "navigationStatus": 200,
+      "pageEntityPresent": true,
+      "transferSize": 11165,
+      "url": "http://127.0.0.1:3218/compare/ai-detection-apps",
+      "workerStart": 0.6000000014901161
+    }
+  ],
+  "query": {
+    "canonical": "https://stopbiting.today/blog",
+    "collection": true,
+    "controller": true,
+    "status": 200,
+    "title": "Nail Biting Resources: Evidence-Based Guides | Stop Biting",
+    "transferSize": 24633,
+    "url": "http://127.0.0.1:3218/blog?page=2"
+  },
+  "notfound": {
+    "canonical": null,
+    "controller": true,
+    "h1": "This page doesn't exist.",
+    "robots": "noindex",
+    "status": 404,
+    "title": "Page not found | Stop Biting",
+    "url": "http://127.0.0.1:3218/not-a-real-sw-verification-page"
+  },
+  "api": {
+    "body": "{\"error\":\"Unauthorized\"}",
+    "contentType": "application/json; charset=utf-8",
+    "controller": true,
+    "status": 401
+  },
+  "cache": [
+    {
+      "name": "workbox-precache-v2-http://127.0.0.1:3218/",
+      "paths": [
+        "/index.html",
+        "/assets/vendor-en_5DLDy.js",
+        "/assets/useDetection-mRTSWwau.js",
+        "/assets/triggerTags-ed1oR9JM.js",
+        "/assets/paddle-CQAbpomY.js",
+        "/assets/mediapipe-db9maXuS.js",
+        "/assets/index-O0plFH7s.css",
+        "/assets/index-BEIMukKv.js",
+        "/assets/charts-sA76-PQx.js",
+        "/assets/Settings-C7L8EtIT.js",
+        "/assets/SegmentedControl-DO62mPm1.js",
+        "/assets/PaywallPage-C9Z-hqhj.js",
+        "/assets/Log-5yoflZnF.js",
+        "/assets/HeroDemo-D-jBCjaZ.js",
+        "/assets/Dashboard-DNObPmWL.js",
+        "/assets/ComparePage-DQ8JmdNY.js",
+        "/assets/BlogPost-Dg4pJRh7.js",
+        "/icons/icon-192x192.png",
+        "/icons/icon-512x512.png",
+        "/icons/maskable-512x512.png",
+        "/manifest.webmanifest"
+      ]
+    },
+    {
+      "name": "posts",
+      "paths": [
+        "/posts/grow-nails-after-nail-biting.json"
+      ]
+    }
+  ],
+  "offline": [
+    {
+      "path": "/",
+      "bodyCharacters": 7936,
+      "canonical": "https://stopbiting.today/",
+      "controller": true,
+      "h1": "Stop biting your nails.",
+      "networkBlocked": true,
+      "reactMounted": true,
+      "status": 200,
+      "title": "Nail Biting App: Stop Biting with AI | Stop Biting",
+      "transferSize": 0,
+      "url": "http://127.0.0.1:3218/"
+    },
+    {
+      "path": "/?utm_source=offline-check",
+      "bodyCharacters": 7936,
+      "canonical": "https://stopbiting.today/",
+      "controller": true,
+      "h1": "Stop biting your nails.",
+      "networkBlocked": true,
+      "reactMounted": true,
+      "status": 200,
+      "title": "Nail Biting App: Stop Biting with AI | Stop Biting",
+      "transferSize": 0,
+      "url": "http://127.0.0.1:3218/?utm_source=offline-check"
+    }
+  ]
+}

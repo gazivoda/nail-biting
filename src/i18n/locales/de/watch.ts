@@ -1,0 +1,96 @@
+// NEEDS NATIVE REVIEW (machine draft). Scope "watch", locale de.
+import type { messages as en } from '../../scopes/watch';
+
+export const messages: Record<keyof typeof en, string> = {
+  'dashboard.greeting.morning': 'Guten Morgen, <name>{name}</name>.',
+  'dashboard.greeting.afternoon': 'Guten Tag, <name>{name}</name>.',
+  'dashboard.greeting.evening': 'Guten Abend, <name>{name}</name>.',
+  'dashboard.nameFallback': 'du',
+  'dashboard.trial': 'Kostenlose Testphase: {text}.',
+  'dashboard.choosePlan': 'Tarif wählen',
+
+  'toggle.off.title': 'Alarm starten',
+  'toggle.off.body': 'Dein Browser fragt, ob er die Kamera verwenden darf. Lass diesen Tab geöffnet, während du arbeitest; der Alarm ertönt, wenn eine Hand deinen Mund erreicht.',
+  'toggle.off.start': 'Erkennung starten',
+  'toggle.off.privacy': 'Solange sie läuft, werden keine Kameradaten gesendet',
+  'toggle.on.title': 'Erkennung aktiv',
+  'toggle.on.problemHint': 'Unten steht, wie du es behebst',
+  'toggle.on.hint': 'Läuft auf diesem Gerät',
+  'toggle.on.stop': 'Stopp',
+  'toggle.showFeed': 'Kamerabild anzeigen',
+
+  'panel.cameraNotRunning': 'Kamera läuft nicht',
+  'panel.detectionNotRunning': 'Erkennung läuft nicht',
+
+  'camera.error.permissionDenied': 'Der Zugriff auf die Kamera wurde blockiert. Erlaube ihn über das Kamera-Symbol in der Adressleiste deines Browsers und versuche es dann erneut.',
+  'camera.error.noCamera': 'Keine Kamera gefunden. Die Erkennung braucht eine Webcam, um auf deine Hände zu achten.',
+  'camera.error.insecureContext': 'Die Kamera braucht eine sichere Verbindung (HTTPS). Öffne diese Seite über https:// und versuche es erneut.',
+  'camera.error.unavailable': 'Deine Kamera konnte nicht starten: Möglicherweise wird sie von einer anderen App verwendet. Schließe alles, was sie nutzt, und versuche es erneut.',
+  'camera.error.model': 'Die Erkennung konnte nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.',
+
+  'status.idle': 'Erkennung aus',
+  'status.loading': 'Erkennung wird geladen…',
+  'status.watching': 'Überwacht',
+  'status.alert': 'Hände nah am Mund',
+  'status.error': 'Erkennung konnte nicht geladen werden',
+
+  'view.pip.exitTitle': 'Bild-im-Bild beenden',
+  'view.pip.floatTitle': 'In ein schwebendes Mini-Fenster verschieben. Die Erkennung läuft weiter, wenn du die App wechselst',
+  'view.pip.exit': 'PiP beenden',
+  'view.pip.minimize': 'Minimieren',
+
+  'wave.watching': 'Überwacht…',
+  'wave.detected': 'Erkannt!',
+  'wave.loading': 'Modelle werden geladen…',
+  'wave.error': 'Modellfehler',
+  'wave.waiting': 'Warten…',
+
+  'mini.status.idle': 'Wartet',
+  'mini.status.loading': 'Startet',
+  'mini.status.watching': 'Überwacht',
+  'mini.status.alert': 'Nägelkauen erkannt',
+  'mini.status.error': 'Läuft nicht',
+  'mini.status.stopped': 'Gestoppt',
+  'mini.resumeTitle': 'Überwachung fortsetzen',
+  'mini.pauseTitle': 'Für 15 Minuten pausieren',
+  'mini.resume': 'Fortsetzen',
+  'mini.pause': 'Pause',
+  'mini.stop': 'Stopp',
+  'mini.start': 'Start',
+
+  'session.title': 'Sitzung',
+  'session.goal': '/ Ziel: {minutes} Min.',
+  'session.reached': 'Ziel erreicht!',
+  'session.paused': 'Pausiert. Starte die Erkennung, um weiterzumachen.',
+
+  'streak.title': 'Aktuelle Serie',
+  'streak.onARoll': 'Läuft bei dir',
+  'streak.unit.days': 'Tage',
+  'streak.unit.hours': 'Std.',
+  'streak.unit.minutes': 'Min.',
+  'streak.since.today': 'Seit deinem letzten Biss: heute, {time} Uhr.',
+  'streak.since.yesterday': 'Seit deinem letzten Biss: gestern, {time} Uhr.',
+  'streak.since.date': 'Seit deinem letzten Biss: {date}, {time} Uhr.',
+  'streak.since.start': 'Seit du angefangen hast. Ein Biss setzt sie zurück, ein Alarm nicht.',
+  'streak.best': 'Rekord: <b>{value}</b>',
+  'streak.bestNone': 'noch keiner',
+
+  'today.title': 'Heute',
+  'today.alarms': 'Alarme zu prüfen',
+  'today.bites': 'Bisse',
+
+  'panic.button': 'Ich habe gerade an den Nägeln gekaut',
+  'panic.question': 'Was hat es ausgelöst?',
+  'panic.logged': 'Eingetragen: {label}. Deine Serie beginnt jetzt von vorn.',
+
+  'followUp.title': 'Alarm: probier stattdessen das',
+  'followUp.closeLabel': 'Schließen. Der Alarm bleibt im Verlauf zum Prüfen',
+  'followUp.question': 'Falls es ein Biss war: Was hat ihn ausgelöst?',
+  'followUp.notABite': 'Kein Biss, meine Hand war nur in der Nähe',
+  'followUp.unknownTag': 'Biss, Grund unklar',
+
+  'rate.alone': '{marked} von {alarms} {alarms, plural, one {Alarm} other {Alarmen}} der letzten 7 Tage als „Kein Biss“ markiert ({percent} %).',
+  'rate.down': '{marked} von {alarms} {alarms, plural, one {Alarm} other {Alarmen}} der letzten 7 Tage als „Kein Biss“ markiert ({percent} %), weniger als in den 7 Tagen davor ({beforeMarked} von {beforeAlarms}, {beforePercent} %).',
+  'rate.up': '{marked} von {alarms} {alarms, plural, one {Alarm} other {Alarmen}} der letzten 7 Tage als „Kein Biss“ markiert ({percent} %), mehr als in den 7 Tagen davor ({beforeMarked} von {beforeAlarms}, {beforePercent} %).',
+  'rate.same': '{marked} von {alarms} {alarms, plural, one {Alarm} other {Alarmen}} der letzten 7 Tage als „Kein Biss“ markiert ({percent} %), ungefähr so viel wie in den 7 Tagen davor ({beforeMarked} von {beforeAlarms}, {beforePercent} %).',
+};

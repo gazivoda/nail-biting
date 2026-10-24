@@ -122,6 +122,7 @@ describe('src/photos makes no network request of its own', () => {
   it('imports only from itself and a short list of outside modules', () => {
     const ALLOWED_OUTSIDE = new Set([
       'src/storage/blobs.ts', 'src/storage/kv.ts', 'src/store/useAppStore.ts', 'src/features/useFeature.ts', 'src/pages/settings/ui.tsx',
+      'src/i18n/scopes/photos.ts', 'src/i18n/scopes/common.ts', 'src/i18n/format.ts', // WS12a: the words and the date/number formats (the closure check below still follows them)
     ]);
     const ALLOWED_PACKAGES = new Set(['react', 'lucide-react', 'date-fns']);
     const bad = [];

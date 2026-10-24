@@ -1,6 +1,18 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { useLocale } from '../i18n/hooks';
+import { t, type messages } from '../i18n/scopes/watch';
 
 type WaveState = 'watching' | 'spike' | 'decay';
+
+// The label under the wave. The text is chosen by id and looked up when it is written, in the language showing then.
+const WAVE_LABEL = {
+  watching: 'wave.watching',
+  detected: 'wave.detected',
+  loading: 'wave.loading',
+  error: 'wave.error',
+  waiting: 'wave.waiting',
+} as const satisfies Record<string, keyof typeof messages>;
+type WaveLabel = keyof typeof WAVE_LABEL;
 
 interface WaveConfig {
   /** Number of SVG points across the width */
@@ -100,6 +112,18 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
   const stateStartRef = useRef(0);
   const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // The label is written straight into the DOM (the wave animates without re-rendering), so remember which message
+  // it shows and write it again when the language changes.
+  const { locale } = useLocale();
+  const labelIdRef = useRef<WaveLabel>('watching');
+  const showLabel = useCallback((label: WaveLabel) => {
+    labelIdRef.current = label;
+    if (labelRef.current) labelRef.current.textContent = t(WAVE_LABEL[label]);
+  }, []);
+  useEffect(() => {
+    if (labelRef.current) labelRef.current.textContent = t(WAVE_LABEL[labelIdRef.current]);
+  }, [locale]);
+
   // Pre-generate stable noise per point
   const noise = useRef<number[]>(
     Array.from({ length: CFG.points }, () => (Math.random() * 2 - 1)),
@@ -123,8 +147,8 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
 
     setGradColor(RED);
 
+    showLabel('detected');
     if (labelRef.current) {
-      labelRef.current.textContent = 'Detected!';
       labelRef.current.style.color = RED;
     }
     if (dotRef.current) {
@@ -141,8 +165,8 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
     setTimeout(() => {
       stateRef.current = 'watching';
       setGradColor(GREEN);
+      showLabel('watching');
       if (labelRef.current) {
-        labelRef.current.textContent = 'Watching…';
         labelRef.current.style.color = '';
       }
       if (dotRef.current) {
@@ -153,7 +177,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
         cycleTimerRef.current = setTimeout(triggerSpike, CYCLE_INTERVAL);
       }
     }, SPIKE_DURATION + DECAY_DURATION);
-  }, []);
+  }, [showLabel]);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -220,14 +244,14 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
       triggerSpike();
     } else if (labelRef.current) {
       if (detectionStatus === 'loading') {
-        labelRef.current.textContent = 'Loading models…';
+        showLabel('loading');
       } else if (detectionStatus === 'watching') {
-        labelRef.current.textContent = 'Watching…';
+        showLabel('watching');
       } else if (detectionStatus === 'idle' || detectionStatus === 'error') {
-        labelRef.current.textContent = detectionStatus === 'error' ? 'Model error' : 'Waiting…';
+        showLabel(detectionStatus === 'error' ? 'error' : 'waiting');
       }
     }
-  }, [detectionStatus, triggerSpike]);
+  }, [detectionStatus, triggerSpike, showLabel]);
 
   return (
     <div
@@ -287,7 +311,7 @@ export function DetectionWave({ className = '', detectionStatus }: Props) {
             ref={labelRef}
             className="text-xs font-medium text-forest-600 dark:text-forest-400 transition-colors duration-300 tabular-nums"
           >
-            Watching…
+            {t('wave.watching')}
           </span>
         </div>
       </div>

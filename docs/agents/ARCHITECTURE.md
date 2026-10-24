@@ -3,9 +3,9 @@
 > **Final state (WS13), 2026-10-24, `main` at b6b16f9 (WS0 to WS11b merged).** This file now describes the whole product as built:
 > sections 1 to 15 are the original reference, corrected where later workstreams made them stale; sections 16 to 22 are new and
 > cover each later feature area (sign-in providers, sync and backup, billing, coaching and false-alarm controls, insights and the
-> weekly email, share links, the flag map). **WS12 (localization) lands after this file was finalised**; the `i18n` kv namespace and
-> the three `locale_*` flags exist, nothing else of WS12 does yet, and the WS13 agent will touch this file again after WS12. What the owner
-> has to do before turning a flag on lives in `docs/agents/RELEASE_NOTES.md`, not here.
+> weekly email, share links, the flag map), and section 23 is WS12a's localization of the signed-in app (merged after this file was
+> first finalised; **WS12b, the marketing pages in es, de and pt-BR, is not in it yet** and the WS13 agent updates this file once it lands).
+> What the owner has to do before turning a flag on lives in `docs/agents/RELEASE_NOTES.md`, not here.
 
 Every agent after WS0 reads this first, then `docs/agents/PLAN.md` (your workstream), `docs/agents/SWARM_RULES.md`
 and `tasks/lessons.md`. Claims here name the file and function so you can check them. Line numbers are left out on
@@ -17,7 +17,7 @@ Contents: 1 Stack and file map · 2 Detection · 3 History, streak, event schema
 14 Gotchas · 15 Background watching and Picture-in-Picture (WS7a) · 16 Sign-in providers (WS8) ·
 17 Optional sync, export and import (WS4) · 18 Billing, trial length, referrals, free tier (WS9) ·
 19 Coaching, urge timer, false-alarm controls (WS2, WS3) · 20 Insights, photo diary, weekly email (WS5) ·
-21 Share links (WS10) · 22 Where each flag is checked
+21 Share links (WS10) · 22 Where each flag is checked · 23 Localization of the signed-in app (WS12a)
 
 ---
 
@@ -81,6 +81,7 @@ src/
   share/                  WS10: client side of share links (API calls, copy, clipboard)
   desktop/                WS7b: the renderer half of the Electron bridge (section 10)
   features/               feature flags on the client (section 5), useFlagCopy / copyFlags (section 8)
+  i18n/                   WS12a: messages, locale state, scopes (English), locales/ (es, de, pt-BR), format helpers (section 23)
   hooks/                  useDetection, biteDetector, useCamera, usePictureInPicture, useStreak, ...
   components/detection/   CameraView, DetectionSurface, AlertOverlay, PiPWindow, ...
   components/dashboard/   StreakHero, TodayStats, ReplacementPrompt, PanicButton, CameraPanel, ...
@@ -653,7 +654,7 @@ them without importing the page.
 | `alerts` | Alerts | WS2 | `hrt_coaching` | `sections/AlertsSection.tsx` |
 | `behaviors` | Behaviors | WS1 | `detection_behaviors` | `sections/BehaviorsSection.tsx` |
 | `schedule` | Schedule | WS7a | `background_watching` | `sections/ScheduleSection.tsx` |
-| `account-sync` | Account & Sync | WS4 (+WS8, WS5, WS9) | `event_sync`, `signin_*`, `weekly_email`, `referrals` | `sections/AccountSyncSection.tsx` |
+| `account-sync` | Account & Sync | WS4 (+WS8, WS5, WS9, WS12a) | `event_sync`, `signin_*`, `weekly_email`, `referrals`, `locale_*` (the Language card) | `sections/AccountSyncSection.tsx` |
 | `data` | Data | WS4 (+WS5) | `data_backup`, `event_sync`, `photo_diary` | `sections/DataSection.tsx` |
 | `sharing` | Sharing | WS10 | `share_links` | `sections/SharingSection.tsx` |
 
@@ -903,6 +904,7 @@ checks `electron/` (`tsc -b` does not).
 | Gated pages and testimonials: `src/data/competitorPages.ts`, `gatedComparePaths.ts`, `src/components/site/Testimonials*` | WS11a | see the WS11a paragraph in section 8 |
 | `useAppStore.ts` | do not reshape persisted state; new persisted data goes through `kv` or `events` | |
 | `src/index.css`, `tailwind.config.js` | do not change tokens (a change reaches every surface; see lessons) | |
+| `src/i18n/**`, `scripts/i18n/**` | WS12a (WS12b adds marketing scopes and routes on top) | `createScope`, `t`/`useT`, `format.ts`; `scope.mjs` is the one list of what is exempt from the no-English rule |
 | `PrivacyPage`, `TermsPage`, `LegalPage`, `RefundPage` | nobody; drafts go to `docs/agents/legal/` | |
 
 ---
@@ -1410,4 +1412,33 @@ turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePath
 | `share_links` | `server/routes/share.js`; page `/features/share-with-therapist` | `SharingSection.tsx`, `SharingSettings.tsx` |
 | `compare_competitors` | `server.js` (`GATED_FLAG`), `server/marketing/gatedPages.js` | `ComparePage.tsx` |
 | `social_proof` | `server.js` (testimonials article) | `src/components/site/Testimonials.tsx` |
-| `locale_es`, `locale_de`, `locale_pt_br` | none yet (WS12) | none yet (WS12) |
+| `locale_es`, `locale_de`, `locale_pt_br` | none yet (WS12b will add the marketing pages) | `src/i18n/LocaleHost.tsx` (the only link between a language and the flags), `LanguageSettings.tsx` (the card appears while one is on), `meta.ts` |
+
+---
+
+## 23. Localization of the signed-in app (WS12a, flags `locale_es`, `locale_de`, `locale_pt_br`)
+
+Full notes: `docs/agents/ws12a-notes.md`. The short version:
+
+- **Where the text lives.** `src/i18n/scopes/<area>.ts` holds the English messages of one area and exports its `t` / `useT`; the translations are
+  `src/i18n/locales/{es,de,pt-BR}/<area>.ts`, typed `Record<keyof English, string>`. English is the source of truth. A scope is imported by the
+  code of its area, so the English text stays in that area's lazy chunk; keep the scopes imported by the main bundle (`common`, `shell`, `alarm`,
+  `trial`, `plans`, the i18n core) small. The `labels` scope (tag and behavior names) is read through getters in `triggerTags.ts` / `detection/registry.ts`.
+- **Messages.** ICU-like subset in `message.ts`: `{name}`, `{n, number}`, `{n, plural, =0 {..} one {# ..} other {# ..}}`, `{x, select, ..}`, rich `<tag>..</tag>`
+  through `t.rich`. Stored ids (tags, behaviors, settings values) are never translated; only what is displayed, through a lookup.
+- **Which language.** Only what the person picked (Settings > Account & Sync > Language, kept in `kv('i18n', 'locale')` via `src/i18n/persist.ts`) and only
+  when that locale's flag is on: `<LocaleHost />` (mounted by `App.tsx`, `SignIn.tsx`, `RedeemPage.tsx`) is the only link between the language and the
+  flags. The browser language is never read. The catalog of the language is fetched by dynamic import (`assets/locale-*.js`, kept out of the service
+  worker precache); until it arrives, and for any missing key, English shows. `<html lang>` follows (written only after a language was applied).
+- **`src/i18n/core.ts` imports no storage, flags or store.** The alarm overlay, `useDetection` and the not-a-bite seam are also loaded by the marketing demo,
+  and `scripts/coachingGuards`, `falsePositiveGuards`, `backgroundGuards` keep storage and the flag client out of that part of the bundle. `format.ts` imports
+  date-fns, so those modules must not import it (`backgroundGuards` pins `useDetection`'s packages).
+- **Formatting.** `src/i18n/format.ts`: numbers, money, dates, times, relative time, lists. While English shows they behave exactly like the code they replaced
+  (browser formats, date-fns patterns), so English output is unchanged.
+- **Enforcement.** Two ESLint rules (`local-i18n/no-hardcoded-text`, `local-i18n/no-english-literals`; `scripts/i18n/`) fail on English in any file under `src/`
+  that `scripts/i18n/scope.mjs` does not exempt (each exemption has a reason). `scripts/i18n/guard.test.mjs` runs them inside `npm test`. Every area has a
+  pseudo-locale coverage test (`src/i18n/coverage/*.coverage.test.tsx`: German catalog, every `t()` result wrapped in `⟦ ⟧`, fail on any word outside the marks);
+  `scripts/i18n/inventory.test.mjs` requires every file that uses `t()` to be rendered by one or carry a `NOT-RENDERED` reason; `src/i18n/catalogs.test.ts`
+  checks keys, placeholders, plural forms and the `NEEDS NATIVE REVIEW` header of every locale.
+- **Not translated:** marketing pages, blog, compare pages, calculators, legal text, the 28 coaching lessons, every server-rendered page and email, the Electron tray menu.
+

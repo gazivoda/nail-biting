@@ -10,7 +10,9 @@
 // 03:30 (the browser's own rule), on a fall-back day the repeated hour is still one window (the window id has no
 // time zone offset in it, so it cannot fire twice).
 
-import type { WatchState } from './pauseMachine';
+import { weekdayShort, type WatchState } from './pauseMachine';
+import { formatTime } from '../i18n/format';
+import { t } from '../i18n/scopes/background';
 
 export interface Schedule {
   /** Remind me to start watching during these hours. Off by default. */
@@ -163,15 +165,23 @@ export function pauseMorningMinutes(s: Schedule): number | null {
 
 /** "9:00 AM to 5:00 PM, Mon to Fri" in words, for the settings card. */
 export function describeSchedule(s: Schedule, clock: (minutes: number) => string = defaultClock): string {
-  const names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const days = s.days.length === 0
-    ? 'no days chosen'
-    : s.days.length === 7 ? 'every day'
-    : s.days.join(',') === '1,2,3,4,5' ? 'Mon to Fri'
-    : s.days.map((d) => names[d]).join(', ');
-  return `${clock(s.startMinutes)} to ${clock(s.endMinutes)}${isOvernight(s) ? ' (next morning)' : ''}, ${days}`;
+    ? t('schedule.days.none')
+    : s.days.length === 7 ? t('schedule.days.every')
+    : s.days.join(',') === '1,2,3,4,5' ? t('schedule.days.weekdays')
+    : s.days.map(weekdayShort).join(', ');
+  return t(isOvernight(s) ? 'schedule.describe.overnight' : 'schedule.describe', {
+    start: clock(s.startMinutes),
+    end: clock(s.endMinutes),
+    days,
+  });
 }
 
 function defaultClock(minutes: number): string {
-  return new Date(2000, 0, 1, Math.floor(minutes / 60), minutes % 60).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  return formatTime(new Date(2000, 0, 1, Math.floor(minutes / 60), minutes % 60));
 }
+
+const WEEKDAY_LONG = ['day.0.long', 'day.1.long', 'day.2.long', 'day.3.long', 'day.4.long', 'day.5.long', 'day.6.long'] as const;
+
+/** "Sunday" ... "Saturday" for a weekday number (0 = Sunday), in the language of the app. For screen readers. */
+export const weekdayLong = (day: number): string => t(WEEKDAY_LONG[day]);

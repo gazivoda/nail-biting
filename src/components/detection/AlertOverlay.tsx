@@ -1,6 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 import { CoachingSeam } from '../../coaching/CoachingSeam';
 import { NotABiteSeam } from '../../falsePositive/NotABiteSeam';
+import { useT } from '../../i18n/scopes/alarm';
 
 interface Props {
   visible: boolean;
@@ -20,6 +21,7 @@ export function AlertOverlay({ visible }: Props) {
 }
 
 function AlertFlash() {
+  const t = useT();
   return (
     <div className="fixed inset-0 z-50 pointer-events-none">
       {/* Alert border flash */}
@@ -31,8 +33,8 @@ function AlertFlash() {
           {/* An instruction, not a scolding: the alarm also fires on the
               occasional false catch, and a competing response is what
               habit reversal asks for in this moment. */}
-          <p className="font-display text-3xl font-extrabold tracking-[-0.04em] text-cream-100">Hands down</p>
-          <p className="text-alert-100 text-sm">Press your thumb to each fingertip.</p>
+          <p className="font-display text-3xl font-extrabold tracking-[-0.04em] text-cream-100">{t('overlay.title')}</p>
+          <p className="text-alert-100 text-sm">{t('overlay.hint')}</p>
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ import { createCaptureController } from './captureController';
 import { CapturePanelView } from './CapturePanelView';
 import { encodeVideoFrame, openDiaryCamera } from './frameEncoder';
 import { photoStore } from './photoStore';
+import { t } from '../i18n/scopes/photos';
 import type { PhotoMeta } from './diaryMeta';
 
 export interface SavedPhoto {
@@ -18,7 +19,6 @@ export interface SavedPhoto {
   persisted: boolean;
 }
 
-const HIDDEN_NOTICE = 'The camera was turned off because you left this page. Start it again when you are ready.';
 /** Time for the Watch tab to let go of the camera after it is stopped. */
 const RETRY_DELAY_MS = 900;
 
@@ -49,7 +49,7 @@ export function CapturePanel({ onClose, onSaved }: { onClose: () => void; onSave
   }, [controller]);
 
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden) controller.release(HIDDEN_NOTICE); };
+    const onVisibility = () => { if (document.hidden) controller.release(t('capture.hiddenNotice')); };
     const onPageHide = () => controller.dispose();
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', onPageHide);

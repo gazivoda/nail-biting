@@ -2,8 +2,10 @@
 // Renders nothing for every account that is not in the free tier, which is every account while the flag is off.
 
 import { useFreeTier } from '../../billing/useFreeTier';
+import { useT } from '../../i18n/scopes/billing';
 
 export function FreeTierNotice({ onUpgrade }: { onUpgrade?: () => void }) {
+  const t = useT();
   const free = useFreeTier();
   if (!free.active) return null;
 
@@ -11,8 +13,8 @@ export function FreeTierNotice({ onUpgrade }: { onUpgrade?: () => void }) {
     <p role="status" className="-mt-4 mb-6 flex flex-wrap items-center gap-x-3 text-sm text-stone-600 dark:text-stone-300">
       <span>
         {free.reached
-          ? `You have used today's ${free.limitMinutes} free minutes of detection. It starts again tomorrow.`
-          : `Free plan: ${free.usedMinutes} of ${free.limitMinutes} minutes of detection used today.`}
+          ? t('freeTier.reached', { minutes: free.limitMinutes })
+          : t('freeTier.used', { used: free.usedMinutes, limit: free.limitMinutes })}
       </span>
       {onUpgrade && (
         <button
@@ -20,7 +22,7 @@ export function FreeTierNotice({ onUpgrade }: { onUpgrade?: () => void }) {
           onClick={onUpgrade}
           className="inline-flex min-h-11 items-center font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
         >
-          Choose a plan
+          {t('freeTier.choose')}
         </button>
       )}
     </p>

@@ -9,6 +9,8 @@ import { TagMark } from '../components/dashboard/TagMark';
 import type { CustomTag } from '../types';
 import type { LogFlow, LogToast as Toast } from './logFlow';
 import { toastMessage } from './toastText';
+import { useT } from '../i18n/scopes/phone';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 const CHIP =
   'inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors duration-150 active:scale-95 motion-reduce:active:scale-100';
@@ -17,6 +19,8 @@ const CHIP_OFF =
 const CHIP_ON = 'border-transparent bg-deep text-white dark:bg-lime-300 dark:text-deep';
 
 export function LogToast({ toast, flow, customTags }: { toast: Toast | null; flow: LogFlow; customTags: ReadonlyArray<CustomTag> }) {
+  const t = useT();
+  const tc = useCommonT();
   const options: TagOption[] = [...PRESET_TAGS, ...customTags];
   const message = toastMessage(toast, options);
 
@@ -37,12 +41,12 @@ export function LogToast({ toast, flow, customTags }: { toast: Toast | null; flo
               }}
               className="-mr-2 inline-flex min-h-11 shrink-0 items-center px-3 text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
             >
-              Undo
+              {tc('undo')}
             </button>
           </div>
           {toast.kind === 'bite' && (
             <div className="mt-1">
-              <p id="phone-trigger-label" className="text-xs font-semibold text-stone-600 dark:text-stone-300">What set it off? You can skip this.</p>
+              <p id="phone-trigger-label" className="text-xs font-semibold text-stone-600 dark:text-stone-300">{t('toast.question')}</p>
               <div role="group" aria-labelledby="phone-trigger-label" className="mt-2 flex flex-wrap gap-2">
                 {options.map(opt => {
                   const on = toast.trigger === opt.id;

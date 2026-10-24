@@ -9,6 +9,7 @@
 // outline. The number is the same in both, so nothing is lost.
 
 import { Check } from 'lucide-react';
+import { cardText } from './cardText';
 
 export interface CoachingCardProps {
   /** `main`: the card over the app. `pip`: the one-line strip in the 240x64 minimized window. */
@@ -74,8 +75,8 @@ function MainCard({ text, remainingSec, progress, finished, onDone, onSkip }: Co
         <CountdownRing remainingSec={remainingSec} progress={progress} />
       )}
       <div className="min-w-[9rem] flex-1">
-        <p className="text-xs font-semibold text-white/70">{finished ? 'Logged with this alarm' : 'Try this instead'}</p>
-        <p className="font-display text-lg font-bold leading-tight tracking-[-0.02em]">{finished ? 'Done' : text}</p>
+        <p className="text-xs font-semibold text-white/70">{finished ? cardText('card.logged') : cardText('card.tryInstead')}</p>
+        <p className="font-display text-lg font-bold leading-tight tracking-[-0.02em]">{finished ? cardText('card.done') : text}</p>
       </div>
       <div className="flex w-full gap-2 sm:w-auto">
         {/* One primary button in the same place in both phases, so keyboard focus is not lost when "Done" becomes "Close". */}
@@ -84,7 +85,7 @@ function MainCard({ text, remainingSec, progress, finished, onDone, onSkip }: Co
           onClick={finished ? onSkip : onDone}
           className="min-h-11 flex-1 rounded-full bg-white px-5 font-display text-sm font-bold text-deep transition-colors hover:bg-white/90 sm:flex-none"
         >
-          {finished ? 'Close' : 'Done'}
+          {finished ? cardText('card.close') : cardText('card.done')}
         </button>
         {!finished && (
           <button
@@ -92,7 +93,7 @@ function MainCard({ text, remainingSec, progress, finished, onDone, onSkip }: Co
             onClick={onSkip}
             className="min-h-11 flex-1 rounded-full border border-white/30 px-5 text-sm font-semibold text-white/90 transition-colors hover:border-white/60 sm:flex-none"
           >
-            Skip
+            {cardText('card.skip')}
           </button>
         )}
       </div>
@@ -132,7 +133,7 @@ function PipStrip({ text, remainingSec, progress, finished, onDone, onSkip }: Co
           display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
         }}
       >
-        {finished ? 'Done' : text}
+        {finished ? cardText('card.done') : text}
       </span>
       <span style={{ display: 'flex', flexDirection: 'column', gap: 4, flexShrink: 0 }}>
         <button
@@ -140,7 +141,7 @@ function PipStrip({ text, remainingSec, progress, finished, onDone, onSkip }: Co
           onClick={finished ? onSkip : onDone}
           style={{ ...btn, background: '#ffffff', color: '#0B2A1E', border: 'none' }}
         >
-          {finished ? 'Close' : 'Done'}
+          {finished ? cardText('card.close') : cardText('card.done')}
         </button>
         {!finished && (
           <button
@@ -148,7 +149,7 @@ function PipStrip({ text, remainingSec, progress, finished, onDone, onSkip }: Co
             onClick={onSkip}
             style={{ ...btn, background: 'transparent', color: 'rgba(255,255,255,0.88)', border: '1px solid rgba(255,255,255,0.35)' }}
           >
-            Skip
+            {cardText('card.skip')}
           </button>
         )}
       </span>

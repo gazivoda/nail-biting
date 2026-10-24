@@ -7,7 +7,7 @@ import { markNotABite, undoNotABite } from '../falsePositive/actions';
 import { FalsePositiveRate } from '../falsePositive/FalsePositiveRate';
 import { formatTime, formatDate } from '../utils/time';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { subDays, startOfDay, format } from 'date-fns';
+import { subDays, startOfDay } from 'date-fns';
 import { Rings } from '../components/site/Rings';
 import { PageTitle } from '../components/ui/PageTitle';
 import { SegmentedControl } from '../components/ui/SegmentedControl';
@@ -21,6 +21,9 @@ import type { CustomTag, Incident, StatsMetric } from '../types';
 import { HistoryInsightsSwitch, type HistoryView } from '../insights/ui/ViewSwitch';
 import { useInsightsAvailability } from '../insights/useInsightsAvailability';
 import { PhotoReminder } from '../photos/PhotoReminder';
+import { formatDatePattern } from '../i18n/format';
+import { useT } from '../i18n/scopes/history';
+import { useT as useCommonT } from '../i18n/scopes/common';
 // WS5: the Insights view is its own chunk, fetched only when someone opens it (flags `insights` / `photo_diary`).
 const InsightsView = lazy(() => import('../insights/ui/InsightsView').then(m => ({ default: m.InsightsView })));
 // One fill for every bar. Colouring bars by count (green, amber, red) meant a
@@ -50,20 +53,21 @@ const INCIDENT_TAG_COLOR = 'text-amber-800 dark:text-amber-400 bg-amber-50 dark:
 
 // Every bite pill starts with "Bite", and a tagged one uses the same words as
 // the tag picker (triggerTags.ts): "Deep focus", not "Focus".
-function biteTagLabel(inc: Incident, customTags: CustomTag[]): string {
-  if (inc.tag === 'auto-detected') return 'Bite';
+function biteTagLabel(inc: Incident, customTags: CustomTag[], t: ReturnType<typeof useT>): string {
+  if (inc.tag === 'auto-detected') return t('tag.bite');
   const preset = PRESET_TAGS.find(x => x.id === inc.tag);
   // A comma, not a middle dot: Overpass sets the dot hard against the next
   // word (DESIGN.md, the Comma Offer Rule).
-  if (preset) return `Bite, ${preset.label}`;
+  if (preset) return t('tag.biteWith', { reason: preset.label });
   const custom = customTags.find(x => x.id === inc.tag);
-  return custom ? ['Bite,', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite';
+  return custom ? t('tag.biteWith', { reason: [custom.emoji, custom.label].filter(Boolean).join(' ') }) : t('tag.bite');
 }
 
 // What the empty state promises ("this page shows what sets you off"), from
 // confirmed and logged bites only. Each row appears once there is enough data
 // to mean something (see utils/insights).
 function BiteInsights({ incidents: shown }: { incidents?: Incident[] }) {
+  const t = useT();
   const { incidents: all, customTags } = useAppStore();
   const incidents = shown ?? all;
   const bites = incidents.filter(isConfirmedBite);
@@ -71,21 +75,21 @@ function BiteInsights({ incidents: shown }: { incidents?: Incident[] }) {
   const peak = peakHour(bites);
   if (!trigger && !peak) return null;
   const triggerLabel = trigger
-    ? [...PRESET_TAGS, ...customTags].find(t => t.id === trigger.tag)?.label ?? trigger.tag
+    ? [...PRESET_TAGS, ...customTags].find(x => x.id === trigger.tag)?.label ?? trigger.tag
     : null;
   return (
     <div className="mt-4 space-y-2 border-t border-stone-200 pt-4 text-sm dark:border-ink-400">
       {trigger && (
         <div className="flex justify-between gap-4">
-          <span className="text-stone-600 dark:text-stone-300">Top trigger</span>
+          <span className="text-stone-600 dark:text-stone-300">{t('summary.topTrigger')}</span>
           <span className="text-right font-semibold text-stone-700 dark:text-stone-200">
-            {triggerLabel} <span className="font-normal text-stone-500 dark:text-stone-400">({trigger.count} of {trigger.of} tagged)</span>
+            {triggerLabel} <span className="font-normal text-stone-500 dark:text-stone-400">{t('summary.tagged', { count: trigger.count, total: trigger.of })}</span>
           </span>
         </div>
       )}
       {peak && (
         <div className="flex justify-between gap-4">
-          <span className="text-stone-600 dark:text-stone-300">Most bites</span>
+          <span className="text-stone-600 dark:text-stone-300">{t('summary.mostBites')}</span>
           <span className="text-right font-semibold text-stone-700 dark:text-stone-200">{hourRange(peak.hour)}</span>
         </div>
       )}
@@ -94,6 +98,7 @@ function BiteInsights({ incidents: shown }: { incidents?: Incident[] }) {
 }
 
 function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
+  const t = useT();
   const { incidents: all, weekChartMetric, setWeekChartMetric } = useAppStore();
   const incidents = shown ?? all;
 
@@ -107,15 +112,16 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
       const d = startOfDay(new Date(inc.timestamp));
       return d.getTime() === date.getTime();
     }).length;
-    return { day: format(date, 'EEE'), count, date };
+    return { day: formatDatePattern(date, 'EEE', { weekday: 'short' }), count, date };
   });
 
   const total = days.reduce((n, d) => n + d.count, 0);
   const busiest = days.reduce((a, b) => (b.count > a.count ? b : a), days[0]);
-  const noun = weekChartMetric === 'confirmed' ? 'bite' : 'entry';
-  const summary = total === 0
-    ? `No ${noun === 'bite' ? 'bites' : 'entries'} in the last 7 days.`
-    : `${total} ${total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week, most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`;
+  const confirmedOnly = weekChartMetric === 'confirmed';
+  const busiestDay = formatDatePattern(busiest.date, 'EEEE', { weekday: 'long' });
+  const caption = total === 0
+    ? t(confirmedOnly ? 'week.captionBitesNone' : 'week.captionAllNone')
+    : t(confirmedOnly ? 'week.captionBites' : 'week.captionAll', { day: busiestDay, count: busiest.count });
 
   const tickColor = 'oklch(100% 0 0 / 0.72)';
   const tooltipBg = 'oklch(31% 0.06 160)';
@@ -123,25 +129,25 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
 
   return (
     <div className="bite sg-dark relative overflow-hidden rounded-2xl border border-transparent bg-deep p-6 text-white dark:border-ink-400">
-      <h2 className="font-display text-lg font-bold tracking-[-0.02em]">Last 7 days</h2>
+      <h2 className="font-display text-lg font-bold tracking-[-0.02em]">{t('week.title')}</h2>
       <p className="mt-3 flex items-baseline gap-3">
         <span className="font-display text-7xl font-extrabold leading-none tracking-[-0.045em] tabular-nums">{total}</span>
         <span className="text-base font-medium text-white/75">
-          {total === 1 ? noun : noun === 'bite' ? 'bites' : 'entries'} this week
+          {t(confirmedOnly ? 'week.bitesThisWeek' : 'week.entriesThisWeek', { count: total })}
         </span>
       </p>
       <p className="mt-2 text-sm text-white/75">
-        {weekChartMetric === 'confirmed' ? 'Bites per day' : 'Alarms and bites per day'}. {total === 0 ? summary : `Most on ${format(busiest.date, 'EEEE')} (${busiest.count}).`}
+        {caption}
       </p>
       <div className="mt-4">
         <SegmentedControl<StatsMetric>
-          ariaLabel="Chart shows"
+          ariaLabel={t('week.chartShows')}
           onDeep
           value={weekChartMetric}
           onChange={setWeekChartMetric}
           options={[
-            { label: 'All', value: 'incidents' },
-            { label: 'Bites', value: 'confirmed' },
+            { label: t('week.filterAll'), value: 'incidents' },
+            { label: t('week.filterBites'), value: 'confirmed' },
           ]}
         />
       </div>
@@ -156,7 +162,7 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
               itemStyle={{ color: BAR_FILL }}
               cursor={{ fill: 'rgba(255,255,255,0.06)' }}
             />
-            <Bar dataKey="count" name={weekChartMetric === 'confirmed' ? 'bites' : 'entries'} radius={[8, 8, 0, 0]} fill={BAR_FILL} />
+            <Bar dataKey="count" name={t(confirmedOnly ? 'week.seriesBites' : 'week.seriesEntries')} radius={[8, 8, 0, 0]} fill={BAR_FILL} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -167,31 +173,43 @@ function WeekChart({ incidents: shown }: { incidents?: Incident[] }) {
 // Clears History only. Settings and bite reasons are the Settings page's
 // "Clear all data", which says so. Focus goes to Cancel on open (the safe
 // choice) and back to the trigger on cancel, never to <body>.
+export function ClearAllConfirm({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) {
+  const t = useT();
+  const tc = useCommonT();
+  return (
+    <div className="flex flex-wrap items-center justify-end gap-2 text-sm">
+      <span className="text-stone-600 dark:text-stone-300">{t('clear.confirm')}</span>
+      <button
+        type="button"
+        onClick={onConfirm}
+        className="min-h-11 rounded-full bg-alert-600 px-5 font-semibold text-cream-100 transition-colors hover:bg-alert-800"
+      >
+        {t('clear.yes')}
+      </button>
+      <button
+        type="button"
+        autoFocus
+        onClick={onCancel}
+        className="min-h-11 rounded-full border border-stone-300 px-5 font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
+      >
+        {tc('cancel')}
+      </button>
+    </div>
+  );
+}
+
 function ClearAllButton() {
+  const t = useT();
   const { clearHistory } = useAppStore();
   const [confirming, setConfirming] = useState(false);
   const [returnFocus, setReturnFocus] = useState(false);
 
   if (confirming) {
     return (
-      <div className="flex flex-wrap items-center justify-end gap-2 text-sm">
-        <span className="text-stone-600 dark:text-stone-300">Clear all history? This can't be undone.</span>
-        <button
-          type="button"
-          onClick={() => { clearHistory(); setConfirming(false); }}
-          className="min-h-11 rounded-full bg-alert-600 px-5 font-semibold text-cream-100 transition-colors hover:bg-alert-800"
-        >
-          Yes, clear
-        </button>
-        <button
-          type="button"
-          autoFocus
-          onClick={() => { setConfirming(false); setReturnFocus(true); }}
-          className="min-h-11 rounded-full border border-stone-300 px-5 font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
-        >
-          Cancel
-        </button>
-      </div>
+      <ClearAllConfirm
+        onConfirm={() => { clearHistory(); setConfirming(false); }}
+        onCancel={() => { setConfirming(false); setReturnFocus(true); }}
+      />
     );
   }
 
@@ -203,12 +221,32 @@ function ClearAllButton() {
       className="flex min-h-11 items-center gap-1.5 rounded-full border border-stone-300 px-4 text-sm font-semibold text-stone-700 transition-colors hover:border-alert-600 hover:text-alert-600 dark:border-ink-400 dark:text-stone-200 dark:hover:border-alert-400 dark:hover:text-alert-400"
     >
       <Trash2 size={14} aria-hidden="true" />
-      Clear all
+      {t('clear.button')}
     </button>
   );
 }
 
+// The bar after a deletion: what was removed and a way back. Rendered inside the page's polite live region.
+export function UndoBar({ time, onUndo }: { time: string; onUndo: () => void }) {
+  const t = useT();
+  const tc = useCommonT();
+  return (
+    <div className="-mt-3 mb-5 flex items-center justify-between gap-3 rounded-full border border-stone-200 bg-white py-1 pl-5 pr-3 text-sm dark:border-ink-400 dark:bg-ink-50">
+      <span className="text-stone-700 dark:text-stone-200">{t('undo.deleted', { time })}</span>
+      <button
+        type="button"
+        onClick={onUndo}
+        className="inline-flex min-h-11 items-center px-2 font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
+      >
+        {tc('undo')}
+      </button>
+    </div>
+  );
+}
+
 export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
+  const t = useT();
+  const tc = useCommonT();
   const { incidents: allIncidents, deleteIncident, restoreIncident, confirmIncident, customTags } = useAppStore();
   // The "Not a bite" button on each alarm is the `false_positive_controls` feature. An entry already marked keeps its label
   // and its Undo whatever the flag says (the mark is data), so turning the flag off never strands one.
@@ -267,7 +305,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
   if (insightsTab && view === 'insights') {
     return (
       <div className="p-5 sm:p-8 pb-10">
-        <PageTitle mark="History" />
+        <PageTitle mark={t('title')} />
         <HistoryInsightsSwitch view={view} onChange={setView} insightsLabel={insightsTab.label} />
         <Suspense fallback={null}>
           <InsightsView onGoToWatch={onGoToWatch} />
@@ -278,33 +316,22 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
 
   return (
     <div className="p-5 sm:p-8 pb-10">
-      <PageTitle mark="History" />
+      <PageTitle mark={t('title')} />
       {insightsTab && <HistoryInsightsSwitch view={view} onChange={setView} insightsLabel={insightsTab.label} />}
       <PhotoReminder onOpen={() => setView('insights')} />
 
       <div role="status" aria-live="polite">
-        {lastDeleted && (
-          <div className="-mt-3 mb-5 flex items-center justify-between gap-3 rounded-full border border-stone-200 bg-white py-1 pl-5 pr-3 text-sm dark:border-ink-400 dark:bg-ink-50">
-            <span className="text-stone-700 dark:text-stone-200">Entry from {formatTime(lastDeleted.timestamp)} deleted.</span>
-            <button
-              type="button"
-              onClick={undoDelete}
-              className="inline-flex min-h-11 items-center px-2 font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
-            >
-              Undo
-            </button>
-          </div>
-        )}
+        {lastDeleted && <UndoBar time={formatTime(lastDeleted.timestamp)} onUndo={undoDelete} />}
       </div>
 
       {showBehaviorFilter && (
         <div className="-mt-2 mb-6 max-w-full overflow-x-auto">
           <SegmentedControl<Behavior | 'all'>
-            ariaLabel="Show behavior"
+            ariaLabel={t('filter.label')}
             value={behaviorFilter}
             onChange={setPickedBehavior}
             options={[
-              { label: 'All', value: 'all' },
+              { label: t('filter.all'), value: 'all' },
               ...behaviorsPresent.map(b => ({ label: BEHAVIOR_REGISTRY[b].shortLabel, value: b as Behavior | 'all' })),
             ]}
           />
@@ -319,9 +346,9 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
       <div className="bite sg-dark relative max-w-2xl overflow-hidden rounded-[2rem] border border-transparent bg-deep p-7 text-white sm:p-10 dark:border-ink-400">
         <Rings className="-bottom-24 -left-24 h-72 w-72 sm:h-96 sm:w-96" />
         <div className="relative flex flex-col items-start">
-          <h2 className="font-display text-4xl font-extrabold leading-[0.95] tracking-[-0.045em] sm:text-5xl">No history yet</h2>
+          <h2 className="font-display text-4xl font-extrabold leading-[0.95] tracking-[-0.045em] sm:text-5xl">{t('empty.title')}</h2>
           <p className="mt-4 max-w-md text-pretty text-base leading-relaxed text-white/80">
-            Alarms from the Watch tab and bites you log with “I just bit my nails” appear here, day by day. Tag them and this page shows what sets you off.
+            {t('empty.body')}
           </p>
           {onGoToWatch && (
             <button
@@ -329,7 +356,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
               onClick={onGoToWatch}
               className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-lime-300 px-6 font-display text-base font-bold text-deep transition-colors hover:bg-lime-200"
             >
-              Go to Watch
+              {t('empty.goToWatch')}
               <ArrowRight size={16} aria-hidden="true" />
             </button>
           )}
@@ -349,8 +376,8 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                     is longer: it may wrap, or at 320 px it pushed "Clear all" off the screen and made the page scroll sideways. */}
                 <p className={`${markedCount === 0 ? 'shrink-0 whitespace-nowrap' : 'min-w-0'} text-sm font-semibold text-stone-700 dark:text-stone-200`}>
                   {markedCount === 0
-                    ? <>{shown.length} {shown.length !== 1 ? 'entries' : 'entry'}</>
-                    : <>{countedEntries} {countedEntries !== 1 ? 'entries' : 'entry'}, {markedCount} marked not a bite</>}
+                    ? t('list.count', { count: shown.length })
+                    : t('list.countMarked', { counted: countedEntries, marked: markedCount })}
                 </p>
                 <ClearAllButton />
               </div>
@@ -367,12 +394,12 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                       const notABite = isFalsePositive(inc);
                       const tagColor = notABite ? FALSE_TAG_COLOR : urge ? URGE_TAG_COLOR : bite ? BITE_TAG_COLOR : INCIDENT_TAG_COLOR;
                       const tagLabel = notABite
-                        ? 'Not a bite'
+                        ? t('tag.notABite')
                         : urge
-                          ? (inc.competingResponse?.done ? `${URGE_TAG.label}, timer finished` : URGE_TAG.label)
+                          ? (inc.competingResponse?.done ? t('tag.urgeFinished', { label: URGE_TAG.label }) : URGE_TAG.label)
                           : bite
-                            ? biteTagLabel(inc, customTags)
-                            : 'Alarm';
+                            ? biteTagLabel(inc, customTags, t)
+                            : t('tag.alarm');
                       return (
                         <div
                           key={inc.id}
@@ -390,37 +417,37 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
                             {isPendingAlarm(inc) && (
                               <button
                                 onClick={() => confirmIncident(inc.id)}
-                                aria-label={`Confirm alarm at ${formatTime(inc.timestamp)} as a bite`}
-                                title="This was an actual bite"
+                                aria-label={t('row.confirmAria', { time: formatTime(inc.timestamp) })}
+                                title={t('row.confirmTitle')}
                                 className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 items-center gap-1 px-2 text-xs text-amber-800 dark:text-amber-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150 font-medium"
                               >
                                 <CheckCircle size={13} />
-                                <span>Bite</span>
+                                <span>{t('tag.bite')}</span>
                               </button>
                             )}
                             {notABite && (
                               <button
                                 onClick={() => undoNotABite(inc.id)}
-                                aria-label={`Undo: count the alarm at ${formatTime(inc.timestamp)} again`}
-                                title="Count this alarm again"
+                                aria-label={t('row.undoAria', { time: formatTime(inc.timestamp) })}
+                                title={t('row.undoTitle')}
                                 className="flex min-h-11 items-center gap-1 px-2 text-xs font-medium text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
                               >
-                                Undo
+                                {tc('undo')}
                               </button>
                             )}
                             {falsePositiveControls && inc.autoDetected && !notABite && (
                               <button
                                 onClick={() => markNotABite(inc.id)}
-                                aria-label={`Mark the alarm at ${formatTime(inc.timestamp)} as not a bite`}
-                                title="My hand was only resting there"
+                                aria-label={t('row.notABiteAria', { time: formatTime(inc.timestamp) })}
+                                title={t('row.notABiteTitle')}
                                 className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 items-center gap-1 px-2 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100 transition-all duration-150"
                               >
-                                Not a bite
+                                {t('tag.notABite')}
                               </button>
                             )}
                             <button
                               onClick={() => removeEntry(inc)}
-                              aria-label={`Delete entry from ${formatTime(inc.timestamp)}`}
+                              aria-label={t('row.deleteAria', { time: formatTime(inc.timestamp) })}
                               className="lg:opacity-0 lg:group-hover:opacity-100 focus-visible:opacity-100 flex min-h-11 min-w-11 items-center justify-center text-stone-500 dark:text-stone-400 hover:text-alert-600 dark:hover:text-alert-400 transition-all duration-150"
                             >
                               <Trash2 size={14} />
@@ -435,7 +462,7 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
 
               {hiddenCount > 0 && (
                 <p className="px-1 text-sm text-stone-600 dark:text-stone-300">
-                  {hiddenCount} older {hiddenCount === 1 ? 'entry is' : 'entries are'} saved on this device and show again with a plan.
+                  {t('list.hidden', { count: hiddenCount })}
                 </p>
               )}
             </div>
@@ -449,19 +476,19 @@ export function Log({ onGoToWatch }: { onGoToWatch?: () => void }) {
 
           {incidents.length > 0 && (
             <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6">
-              <h2 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">Summary</h2>
+              <h2 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{t('summary.title')}</h2>
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div>
                   <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
                     {incidents.filter(isConfirmedBite).length}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-alert-600 dark:text-alert-400">Bites</p>
+                  <p className="mt-2 text-sm font-medium text-alert-600 dark:text-alert-400">{t('summary.bites')}</p>
                 </div>
                 <div>
                   <p className="font-display text-5xl font-extrabold leading-none tracking-[-0.04em] tabular-nums text-stone-900 dark:text-stone-100">
                     {incidents.filter(isPendingAlarm).length}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">Alarms to review</p>
+                  <p className="mt-2 text-sm font-medium text-amber-800 dark:text-amber-400">{t('summary.alarms')}</p>
                 </div>
               </div>
               <BiteInsights incidents={incidents} />

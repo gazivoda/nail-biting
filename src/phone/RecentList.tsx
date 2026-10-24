@@ -5,6 +5,7 @@
 import { useAppStore } from '../store/useAppStore';
 import { useHistoryWindow } from '../billing/useFreeTier';
 import { recentRows, todayCounts, todaySentence, whenLabel, type EntryKind } from './history';
+import { useT } from '../i18n/scopes/phone';
 
 const PILL: Record<EntryKind, string> = {
   bite: 'text-alert-600 dark:text-alert-400 bg-alert-100 dark:bg-alert-900/30 border-alert-400 dark:border-alert-800',
@@ -15,11 +16,13 @@ const PILL: Record<EntryKind, string> = {
 };
 
 export function TodayLine() {
+  useT(); // re-render when the language changes: todaySentence() reads the language showing
   const incidents = useAppStore(s => s.incidents);
   return <p className="text-sm font-semibold text-stone-700 dark:text-stone-200">{todaySentence(todayCounts(incidents))}</p>;
 }
 
 export function RecentList({ onSeeAll }: { onSeeAll?: () => void }) {
+  const t = useT(); // also re-renders the pills, whose words come from describeEntry()
   const incidents = useAppStore(s => s.incidents);
   const customTags = useAppStore(s => s.customTags);
   // A free account sees the last N days (WS9), here as in History; counts and the streak use everything.
@@ -29,20 +32,20 @@ export function RecentList({ onSeeAll }: { onSeeAll?: () => void }) {
   return (
     <section aria-labelledby="phone-recent">
       <div className="flex items-center justify-between gap-3">
-        <h2 id="phone-recent" className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">Recent</h2>
+        <h2 id="phone-recent" className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{t('recent.title')}</h2>
         {onSeeAll && rows.length > 0 && (
           <button
             type="button"
             onClick={onSeeAll}
             className="-mr-3 inline-flex min-h-11 items-center px-3 text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
           >
-            All history
+            {t('recent.all')}
           </button>
         )}
       </div>
       {rows.length === 0 ? (
         <p className="mt-2 rounded-2xl border border-stone-200 bg-white p-5 text-sm leading-relaxed text-stone-600 dark:border-ink-400 dark:bg-ink-50 dark:text-stone-300">
-          Nothing logged yet. Tap a button above when it happens.
+          {t('recent.empty')}
         </p>
       ) : (
         <ul className="mt-2 divide-y divide-stone-200 overflow-hidden rounded-2xl border border-stone-200 bg-white dark:divide-ink-400 dark:border-ink-400 dark:bg-ink-50">

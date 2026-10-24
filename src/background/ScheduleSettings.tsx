@@ -5,28 +5,21 @@
 // The browser's notification prompt is shown only when the person turns the reminder ON, after the card has said
 // what it is for (reminders.planTurnOn). A refusal is explained, not worked around, and leaves the reminder off.
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type Ref } from 'react';
 import { CalendarClock } from 'lucide-react';
 import { Section, Row, Toggle } from '../pages/settings/ui';
 import {
-  describeSchedule, formatClock, isOvernight, parseClock, type NotificationPermissionState, type Schedule,
+  describeSchedule, formatClock, isOvernight, parseClock, weekdayLong, type NotificationPermissionState, type Schedule,
 } from './schedule';
+import { weekdayShort } from './pauseMachine';
 import { loadSchedule, saveSchedule, subscribeSchedule } from './scheduleStore';
 import { askNotificationPermission, notificationPermission, planTurnOn } from './reminders';
+import { useT } from '../i18n/scopes/background';
 
-const SWITCH_LABEL = 'Remind me to start watching';
+export type Notice = null | 'explain' | 'denied' | 'unsupported' | 'unanswered';
 
-type Notice = null | 'explain' | 'denied' | 'unsupported' | 'unanswered';
-
-const DAYS: { day: number; label: string; name: string }[] = [
-  { day: 1, label: 'Mon', name: 'Monday' },
-  { day: 2, label: 'Tue', name: 'Tuesday' },
-  { day: 3, label: 'Wed', name: 'Wednesday' },
-  { day: 4, label: 'Thu', name: 'Thursday' },
-  { day: 5, label: 'Fri', name: 'Friday' },
-  { day: 6, label: 'Sat', name: 'Saturday' },
-  { day: 0, label: 'Sun', name: 'Sunday' },
-];
+// Monday first, Sunday last (0 = Sunday). The names come from the catalog when the buttons are drawn.
+const DAYS: number[] = [1, 2, 3, 4, 5, 6, 0];
 
 const BUTTON =
   'inline-flex min-h-11 items-center rounded-full px-5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest-500';
@@ -35,7 +28,50 @@ const QUIET = `${BUTTON} border border-stone-300 text-stone-800 hover:border-sto
 const TIME_INPUT =
   'min-h-11 rounded-full border border-stone-300 bg-white px-4 text-sm text-stone-900 dark:border-ink-400 dark:bg-ink-100 dark:text-stone-100';
 
+/** What the card says after the person turned the reminder on: why we ask, or why it stayed off. Nothing when `notice` is null. */
+export function ScheduleNotice({ notice, asking, onAllow, onNotNow, allowRef }: {
+  notice: Notice;
+  asking: boolean;
+  onAllow: () => void;
+  onNotNow: () => void;
+  /** The "Allow notifications" button, so the card can move focus to it when the explanation opens (keyboard and screen reader). */
+  allowRef?: Ref<HTMLButtonElement>;
+}) {
+  const t = useT();
+  return (
+    <>
+      {notice === 'explain' && (
+        <div role="region" aria-label={t('schedule.explain.allow')} className="rounded-xl border border-stone-200 p-4 dark:border-ink-400">
+          <p className="text-sm text-stone-800 dark:text-stone-200">
+            {t('schedule.explain.body')}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button ref={allowRef} type="button" disabled={asking} onClick={onAllow} className={PRIMARY}>{t('schedule.explain.allow')}</button>
+            <button type="button" onClick={onNotNow} className={QUIET}>{t('schedule.explain.notNow')}</button>
+          </div>
+        </div>
+      )}
+      {notice === 'unanswered' && (
+        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
+          {t('schedule.notice.unanswered')}
+        </p>
+      )}
+      {notice === 'denied' && (
+        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
+          {t('schedule.notice.denied')}
+        </p>
+      )}
+      {notice === 'unsupported' && (
+        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
+          {t('schedule.notice.unsupported')}
+        </p>
+      )}
+    </>
+  );
+}
+
 export function ScheduleSettings() {
+  const t = useT();
   const [schedule, setSchedule] = useState<Schedule>(loadSchedule);
   const [notice, setNotice] = useState<Notice>(null);
   const [asking, setAsking] = useState(false);
@@ -64,7 +100,8 @@ export function ScheduleSettings() {
   // "Not now" removes the buttons: put focus back on the switch that opened them.
   const notNow = () => {
     setNotice(null);
-    window.setTimeout(() => document.querySelector<HTMLElement>(`button[role="switch"][aria-label="${SWITCH_LABEL}"]`)?.focus(), 0);
+    const label = t('schedule.remind.label');
+    window.setTimeout(() => [...document.querySelectorAll<HTMLElement>('button[role="switch"]')].find((b) => b.getAttribute('aria-label') === label)?.focus(), 0);
   };
 
   const allow = async () => {
@@ -94,71 +131,43 @@ export function ScheduleSettings() {
   };
 
   return (
-    <Section title="Schedule" icon={CalendarClock} fullWidth>
+    <Section title={t('schedule.title')} icon={CalendarClock} fullWidth>
       <Row
-        label={SWITCH_LABEL}
-        description="A notification when your watching hours begin, once per day, only if watching is off. It never switches the camera on by itself."
+        label={t('schedule.remind.label')}
+        description={t('schedule.remind.description')}
       >
         <Toggle
-          label={SWITCH_LABEL}
+          label={t('schedule.remind.label')}
           value={schedule.enabled}
           onChange={(on) => { if (on) turnOn(); else { setNotice(null); update({ enabled: false }); } }}
         />
       </Row>
 
-      {notice === 'explain' && (
-        <div role="region" aria-label="Allow notifications" className="rounded-xl border border-stone-200 p-4 dark:border-ink-400">
-          <p className="text-sm text-stone-800 dark:text-stone-200">
-            To remind you, Stop Biting needs your browser&rsquo;s permission to show notifications. It is used for one thing: a
-            &ldquo;Start watching?&rdquo; note when your hours begin. Nothing else, and it never shows one outside your hours.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button ref={allowButton} type="button" disabled={asking} onClick={allow} className={PRIMARY}>Allow notifications</button>
-            <button type="button" onClick={notNow} className={QUIET}>Not now</button>
-          </div>
-        </div>
-      )}
-      {notice === 'unanswered' && (
-        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
-          The browser did not get an answer, so the reminder is still off. Turn it on again when you want to try once more.
-        </p>
-      )}
-      {notice === 'denied' && (
-        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
-          Notifications are blocked for this site, so the reminder stays off. To allow them, open the site settings from the
-          icon at the left of the address bar, set Notifications to Allow, then turn this on again.
-        </p>
-      )}
-      {notice === 'unsupported' && (
-        <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
-          This browser cannot show notifications, so the reminder is not available here.
-        </p>
-      )}
+      <ScheduleNotice notice={notice} asking={asking} onAllow={allow} onNotNow={notNow} allowRef={allowButton} />
 
       {schedule.enabled && notificationPermission() === 'denied' && (
         <p role="status" className="text-sm text-stone-700 dark:text-stone-300">
-          Notifications were blocked for this site after you turned this on, so no reminder will show. Allow them in the
-          site settings (the icon at the left of the address bar) to get it back.
+          {t('schedule.notice.blockedLater')}
         </p>
       )}
 
       {schedule.enabled && (
         <>
-          <div role="group" aria-label="Days" className="flex flex-wrap gap-2">
-            {DAYS.map(({ day, label, name }) => {
+          <div role="group" aria-label={t('schedule.days.aria')} className="flex flex-wrap gap-2">
+            {DAYS.map((day) => {
               const on = schedule.days.includes(day);
               return (
                 <button
                   key={day}
                   type="button"
                   aria-pressed={on}
-                  aria-label={name}
+                  aria-label={weekdayLong(day)}
                   onClick={() => toggleDay(day)}
                   className={`${BUTTON} ${on
                     ? 'bg-deep text-white dark:bg-lime-300 dark:text-deep'
                     : 'border border-stone-300 text-stone-700 hover:border-stone-500 dark:border-ink-400 dark:text-stone-300 dark:hover:border-stone-300'}`}
                 >
-                  {label}
+                  {weekdayShort(day)}
                 </button>
               );
             })}
@@ -166,31 +175,29 @@ export function ScheduleSettings() {
 
           <div className="flex flex-wrap items-center gap-3">
             <label className="flex items-center gap-2 text-sm text-stone-800 dark:text-stone-200">
-              From
+              {t('schedule.time.from')}
               <input type="time" className={TIME_INPUT} value={formatClock(schedule.startMinutes)} onChange={(e) => setTime('startMinutes', e.target.value)} />
             </label>
             <label className="flex items-center gap-2 text-sm text-stone-800 dark:text-stone-200">
-              to
+              {t('schedule.time.to')}
               <input type="time" className={TIME_INPUT} value={formatClock(schedule.endMinutes)} onChange={(e) => setTime('endMinutes', e.target.value)} />
             </label>
           </div>
 
           <p className="text-sm text-stone-600 dark:text-stone-300">
             {schedule.days.length === 0
-              ? 'No days are chosen, so no reminder will show.'
-              : `Reminders: ${describeSchedule(schedule)}.`}
-            {isOvernight(schedule) && schedule.days.length > 0 && ' A window that starts in the evening runs into the next morning.'}
+              ? t('schedule.summary.noDays')
+              : t('schedule.summary', { summary: describeSchedule(schedule) })}
+            {isOvernight(schedule) && schedule.days.length > 0 && t('schedule.overnight')}
           </p>
         </>
       )}
 
       <p className="text-sm text-stone-600 dark:text-stone-300">
-        Reminders show while Stop Biting is open in a browser tab or window, and in the desktop app. A closed browser tab
-        cannot show one.
+        {t('schedule.note.open')}
       </p>
       <p className="text-sm text-stone-600 dark:text-stone-300">
-        Pause and meeting mode are on the Watch tab and in the mini window. &ldquo;Until tomorrow&rdquo; ends at the start of
-        these hours when the reminder is on, and at 6:00 AM when it is off.
+        {t('schedule.note.pause')}
       </p>
     </Section>
   );

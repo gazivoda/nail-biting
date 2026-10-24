@@ -5,6 +5,9 @@
 // LOCAL ONLY. Nothing in src/photos may import sync, export, auth or network code;
 // scripts/photoGuard.test.mjs fails the build if it does.
 
+import { formatNumber } from '../i18n/format';
+import { t } from '../i18n/scopes/photos';
+
 const DAY = 24 * 60 * 60 * 1000;
 
 /** IndexedDB collection (src/storage/blobs.ts) that holds the JPEG bytes. */
@@ -96,10 +99,9 @@ export function daysSince(takenAt: number, now: number): number {
   return Math.max(0, Math.floor((now - takenAt) / DAY));
 }
 
-/** "today", "1 day ago", "9 days ago". */
+/** "today", "1 day ago", "9 days ago" (in the language showing). */
 export function describeAge(takenAt: number, now: number): string {
-  const d = daysSince(takenAt, now);
-  return d === 0 ? 'today' : d === 1 ? '1 day ago' : `${d} days ago`;
+  return t('age.ago', { count: daysSince(takenAt, now) });
 }
 
 /** Oldest and newest, the default pair for the before/after slider; null with fewer than two photos. */
@@ -117,11 +119,12 @@ export function fitWithin(width: number, height: number, max: number = MAX_SIDE)
   return { width: Math.max(1, Math.round(width * k)), height: Math.max(1, Math.round(height * k)) };
 }
 
-/** "180 KB", "2.4 MB". */
+/** "180 KB", "2.4 MB". The unit stays as it is in every language; the decimal mark follows the language showing. */
 export function formatBytes(bytes: number): string {
   if (!(bytes > 0)) return '0 KB';
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  const oneDecimal = { minimumFractionDigits: 1, maximumFractionDigits: 1, useGrouping: false };
+  return `${formatNumber(bytes / (1024 * 1024), oneDecimal)} MB`;
 }
 
 export function totalBytes(photos: readonly PhotoMeta[]): number {

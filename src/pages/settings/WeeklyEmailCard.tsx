@@ -10,6 +10,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Mail } from 'lucide-react';
 import { Row, Section, Toggle } from './ui';
 import { apiFetch, useAuth } from '../../contexts/AuthContext';
+import { t as tNow, useT } from '../../i18n/scopes/sharing';
+import { useT as useCommonT } from '../../i18n/scopes/common';
 
 /** What GET/PUT /api/email/weekly return. */
 export interface WeeklyEmailState {
@@ -32,52 +34,46 @@ export interface WeeklyEmailCardViewProps {
   onRetry(): void;
 }
 
-const LABEL = 'Email me a weekly summary';
-
 /** The card without any hook of its own, so every state can be rendered in a test. */
 export function WeeklyEmailCardView(p: WeeklyEmailCardViewProps) {
+  const t = useT();
+  const tc = useCommonT();
   const enabled = p.state?.enabled === true;
+  const label = t('weekly.label');
   return (
-    <Section title="Weekly summary email" icon={Mail} fullWidth>
-      <Row
-        label={LABEL}
-        description="One email a week: how many bites you logged, how that compares with the week before, the reason you pick most, and your quietest days."
-      >
-        {p.phase === 'signed-out' && <span className="text-sm text-stone-600 dark:text-stone-300">Sign in to use this.</span>}
-        {p.phase === 'loading' && <span className="text-sm text-stone-600 dark:text-stone-300" role="status">Loading…</span>}
-        {p.phase === 'ready' && p.state && <Toggle value={enabled} onChange={p.onToggle} label={LABEL} />}
+    <Section title={t('weekly.title')} icon={Mail} fullWidth>
+      <Row label={label} description={t('weekly.description')}>
+        {p.phase === 'signed-out' && <span className="text-sm text-stone-600 dark:text-stone-300">{t('weekly.signedOut')}</span>}
+        {p.phase === 'loading' && <span className="text-sm text-stone-600 dark:text-stone-300" role="status">{tc('loading')}</span>}
+        {p.phase === 'ready' && p.state && <Toggle value={enabled} onChange={p.onToggle} label={label} />}
         {p.phase === 'load-failed' && (
           <button
             type="button"
             onClick={p.onRetry}
             className="inline-flex min-h-11 items-center justify-center rounded-full border border-stone-300 px-5 text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-100 dark:border-ink-400 dark:text-stone-200 dark:hover:bg-ink-fill"
           >
-            Try again
+            {tc('tryAgain')}
           </button>
         )}
       </Row>
 
-      <p className="-mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">
-        It goes to the email address on your account and is built from the history you sync, so it needs “Sync my history across
-        devices” to be on. It is off until you turn it on, it is never more than one email a week, and every email has an
-        unsubscribe link. A week with nothing logged sends nothing.
-      </p>
+      <p className="-mt-2 text-sm leading-relaxed text-stone-600 dark:text-stone-300">{t('weekly.about')}</p>
 
       {p.phase === 'load-failed' && (
         <p role="alert" className="text-sm font-semibold text-alert-600 dark:text-alert-400">
-          Could not load this setting. Check your connection and try again.
+          {t('weekly.loadFailed')}
         </p>
       )}
 
       {p.phase === 'ready' && p.state && !p.state.hasEmail && (
         <p role="status" className="text-sm font-semibold text-stone-700 dark:text-stone-200">
-          Your account has no email address, so a summary cannot be sent.
+          {t('weekly.noEmail')}
         </p>
       )}
 
       {p.phase === 'ready' && p.state && p.state.hasEmail && !p.state.hasSyncedData && (
         <p role="status" className="text-sm font-semibold text-stone-700 dark:text-stone-200">
-          Turn on sync first. The summary is built from your synced history, and nothing from this account has synced yet.
+          {t('weekly.needSync')}
         </p>
       )}
 
@@ -85,7 +81,7 @@ export function WeeklyEmailCardView(p: WeeklyEmailCardViewProps) {
         <p role="alert" className="text-sm font-semibold text-alert-600 dark:text-alert-400">{p.error}</p>
       )}
       <p className="sr-only" role="status" aria-live="polite">
-        {p.saving ? 'Saving' : p.phase === 'ready' ? (enabled ? 'Weekly summary email is on' : 'Weekly summary email is off') : ''}
+        {p.saving ? t('weekly.saving') : p.phase === 'ready' ? (enabled ? t('weekly.isOn') : t('weekly.isOff')) : ''}
       </p>
     </Section>
   );
@@ -107,11 +103,11 @@ function statusOf(err: unknown): number | null {
 
 function saveErrorText(err: unknown): string {
   switch (statusOf(err)) {
-    case 400: return 'Your account has no email address, so this cannot be turned on.';
-    case 401: return 'You were signed out. Sign in again to change this.';
-    case 404: return 'The weekly summary is not available right now.';
-    case 429: return 'Too many changes in a short time. Wait a moment and try again.';
-    default: return 'Could not save that. Check your connection and try again.';
+    case 400: return tNow('weekly.error.noEmail');
+    case 401: return tNow('weekly.error.signedOut');
+    case 404: return tNow('weekly.error.unavailable');
+    case 429: return tNow('weekly.error.tooMany');
+    default: return tNow('weekly.error.generic');
   }
 }
 

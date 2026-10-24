@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAppStore } from '../../store/useAppStore';
+import { useT } from '../../i18n/scopes/watch';
 
 const GOAL_MS = 25 * 60 * 1000; // 25 minutes
 
 export function SessionGoal() {
+  const t = useT();
   const { cameraEnabled } = useAppStore();
   const [elapsedMs, setElapsedMs] = useState(0);
   const startRef = useRef<number | null>(null);
@@ -32,13 +34,13 @@ export function SessionGoal() {
 
   return (
     <div className="bg-white dark:bg-ink-50 border border-stone-200 dark:border-ink-400 rounded-2xl p-6 sm:p-7">
-      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-5">Session</p>
+      <p className="text-sm font-semibold text-stone-700 dark:text-stone-200 mb-5">{t('session.title')}</p>
 
       <div className="flex items-baseline gap-1.5 mb-1">
         <span className="font-display text-[56px] font-extrabold leading-none tabular-nums text-stone-900 dark:text-stone-100 tracking-[-0.04em]">
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
         </span>
-        <span className="text-sm text-stone-500 dark:text-stone-400">/ 25m goal</span>
+        <span className="text-sm text-stone-500 dark:text-stone-400">{t('session.goal', { minutes: GOAL_MS / 60000 })}</span>
       </div>
 
       {/* Progress bar */}
@@ -51,13 +53,13 @@ export function SessionGoal() {
 
       {done && (
         <p className="text-xs text-forest-600 dark:text-forest-400 font-medium mt-2">
-          Goal reached!
+          {t('session.reached')}
         </p>
       )}
 
       {!cameraEnabled && !done && (
         <p className="text-xs text-stone-500 dark:text-stone-400 mt-2">
-          Paused. Start detection to carry on.
+          {t('session.paused')}
         </p>
       )}
     </div>

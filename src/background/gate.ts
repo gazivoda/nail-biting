@@ -6,6 +6,7 @@
 
 import { useMemo, useSyncExternalStore } from 'react';
 import { useFeatures } from '../features/useFeature';
+import { useLocaleVersion } from '../i18n/hooks';
 import { getWatchStamp, getWatchState, subscribeWatch } from './watchStore';
 import { INITIAL_WATCH_STATE, type WatchState } from './pauseMachine';
 import { watchNote, type WatchNote } from './watchText';
@@ -35,8 +36,11 @@ export function useWatchGate(): WatchGate {
   const readStamp = on ? getWatchStamp : offStamp;
   const state = useSyncExternalStore(on ? subscribeWatch : noSubscribe, read, read);
   const stamp = useSyncExternalStore(on ? subscribeWatch : noSubscribe, readStamp, readStamp);
+  // The words of the note are made in the language shown now, so a language change makes them again.
+  const language = useLocaleVersion();
   return useMemo<WatchGate>(
     () => (on ? { on, state, paused: state.kind === 'paused', silent: state.kind === 'meeting', note: watchNote(state, stamp) } : OFF),
-    [on, state, stamp],
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- `language` is a dependency on purpose: the note's words change with it
+    [on, state, stamp, language],
   );
 }

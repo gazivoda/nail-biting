@@ -5,12 +5,14 @@
 // sentence (a div with role img, not a figure: figure does not take that role); the squares themselves are hidden from assistive technology and carry a `title` for pointer users.
 
 import type { Heatmap } from '../aggregate';
-import { WEEKDAY_SHORT, hourLabel, plural } from '../labels';
+import { useT } from '../../i18n/scopes/insights';
+import { WEEKDAY_ROWS, countPhrase, hourLabel, weekdayShort } from '../labels';
 
 const HOURS = Array.from({ length: 24 }, (_, h) => h);
 const HOUR_TICKS = new Set([0, 6, 12, 18]);
 
 export function HeatmapGrid({ heatmap, summary }: { heatmap: Heatmap; summary: string }) {
+  const t = useT();
   const { cells, max } = heatmap;
   return (
     <div role="img" aria-label={summary} className="m-0">
@@ -25,26 +27,28 @@ export function HeatmapGrid({ heatmap, summary }: { heatmap: Heatmap; summary: s
             )}
           </span>
         ))}
-        {WEEKDAY_SHORT.map((day, row) => (
-          <Row key={day} day={day} row={row} cells={cells} max={max} />
+        {WEEKDAY_ROWS.map(row => (
+          <Row key={row} row={row} cells={cells} max={max} />
         ))}
       </div>
       <div className="mt-3 flex items-center justify-end gap-2 text-xs text-stone-600 dark:text-stone-300" aria-hidden="true">
-        Fewer
-        {[0, 0.25, 0.5, 0.75, 1].map(t => (
+        {t('heat.fewer')}
+        {[0, 0.25, 0.5, 0.75, 1].map(step => (
           <span
-            key={t}
-            className={`h-3 w-3 rounded-[3px] ${t === 0 ? 'bg-stone-100 dark:bg-ink-fill' : 'bg-forest-500 dark:bg-lime-300'}`}
-            style={t === 0 ? undefined : { opacity: 0.25 + 0.75 * t }}
+            key={step}
+            className={`h-3 w-3 rounded-[3px] ${step === 0 ? 'bg-stone-100 dark:bg-ink-fill' : 'bg-forest-500 dark:bg-lime-300'}`}
+            style={step === 0 ? undefined : { opacity: 0.25 + 0.75 * step }}
           />
         ))}
-        More
+        {t('heat.more')}
       </div>
     </div>
   );
 }
 
-function Row({ day, row, cells, max }: { day: string; row: number; cells: readonly number[]; max: number }) {
+function Row({ row, cells, max }: { row: number; cells: readonly number[]; max: number }) {
+  const t = useT();
+  const day = weekdayShort(row);
   return (
     <>
       <span className="self-center pr-2 text-xs font-medium text-stone-600 dark:text-stone-300">{day}</span>
@@ -53,7 +57,7 @@ function Row({ day, row, cells, max }: { day: string; row: number; cells: readon
         return (
           <span
             key={h}
-            title={`${day} ${hourLabel(h)}: ${n} ${plural(n, 'bite')}`}
+            title={t('heat.cell', { day, hour: hourLabel(h), count: countPhrase('bites', n) })}
             className={`aspect-square rounded-[3px] ${n === 0 ? 'bg-stone-100 dark:bg-ink-fill' : 'bg-forest-500 dark:bg-lime-300'}`}
             style={n === 0 ? undefined : { opacity: 0.25 + 0.75 * (n / max) }}
           />

@@ -7,6 +7,9 @@
 //
 // Shape: pills, to sit with the rest of the site (the providers allow the corner
 // radius to follow the host's style; colours, logo and wording are left as given).
+// The wording is each provider's own phrase in the person's language (src/i18n/locales/*/auth.ts).
+
+import { useT } from '../../i18n/scopes/auth';
 
 const BASE =
   'inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full px-5 text-[1rem] font-semibold leading-none transition-opacity hover:opacity-90 active:translate-y-px';
@@ -43,28 +46,31 @@ function GoogleLogo() {
 
 /** Google: the same address every Google button on the site uses. */
 export function GoogleButton() {
+  const t = useT();
   return (
     <a href="/api/auth/google" rel="nofollow" className={`${BASE} border border-[#747775] bg-white text-[#1f1f1f]`}>
       <GoogleLogo />
-      Sign in with Google
+      {t('provider.google')}
     </a>
   );
 }
 
 export function AppleButton() {
+  const t = useT();
   return (
     <a href="/api/auth/apple" rel="nofollow" className={`${BASE} bg-black text-white`}>
       <AppleLogo />
-      Sign in with Apple
+      {t('provider.apple')}
     </a>
   );
 }
 
 export function MicrosoftButton() {
+  const t = useT();
   return (
     <a href="/api/auth/microsoft" rel="nofollow" className={`${BASE} border border-[#8c8c8c] bg-white text-[#5e5e5e]`}>
       <MicrosoftLogo />
-      Sign in with Microsoft
+      {t('provider.microsoft')}
     </a>
   );
 }

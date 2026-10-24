@@ -81,9 +81,9 @@ describe('1. the seam in AlertOverlay stays light (the landing demo renders Aler
     expect([...packages].sort()).toEqual(['lucide-react', 'react', 'react-dom']);
   });
 
-  it('the seam files import only react, react-dom and each other', () => {
+  it('the seam files import only react, react-dom and each other (and, WS12a, the tiny alarm-text scope)', () => {
     for (const f of ['src/falsePositive/NotABiteSeam.tsx', 'src/falsePositive/controller.ts']) {
-      for (const spec of importsOf(read(f))) expect(['react', 'react-dom', './controller'], `${f} imports ${spec}`).toContain(spec);
+      for (const spec of importsOf(read(f))) expect(['react', 'react-dom', './controller', '../i18n/scopes/alarm'], `${f} imports ${spec}`).toContain(spec);
     }
   });
 

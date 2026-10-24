@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type RefObject } from 'react';
 import { useTheme } from '../hooks/useTheme';
 import { useSignInProviders } from '../auth/useSignInProviders';
 import { AppleButton, GoogleButton, MicrosoftButton } from '../components/auth/ProviderButtons';
 import {
-  errorMessage, isSafeRedirect, linkFailureMessage, parseErrorCode, requestMagicLink, takeMagicToken, verifyMagicLink,
-  type LinkFailure,
+  isSafeRedirect, parseErrorCode, requestMagicLink, sendFailureMessage, signInNotice, takeMagicToken, verifyMagicLink,
+  type LinkFailure, type SendFailure,
 } from '../auth/signInClient';
+import { useT } from '../i18n/scopes/auth';
+import { useLocaleVersion } from '../i18n/hooks';
+import { LocaleHost } from '../i18n/LocaleHost';
 
 // /signin: every way into the app on one page. Google is always here (the same
 // link the rest of the site uses); Apple, Microsoft and the emailed link appear
@@ -42,18 +45,19 @@ const INPUT =
 
 export function SignInPage() {
   useTheme('light');
+  useLocaleVersion(); // this page is outside the app's router: a picked language applies through <LocaleHost /> below
+  const t = useT();
   const { providers, ready } = useSignInProviders();
   const first = bootState();
 
   const [pendingToken, setPendingToken] = useState<string | null>(first.token);
   const [phase, setPhase] = useState<'idle' | 'confirming'>('idle');
   const [linkFailure, setLinkFailure] = useState<LinkFailure | 'failed' | null>(null);
-  const [notice] = useState(() => (first.error ? errorMessage(first.error, first.provider) : null));
 
   const [email, setEmail] = useState('');
   const [sending, setSending] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
-  const [formError, setFormError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<SendFailure | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const emailRef = useRef<HTMLInputElement>(null);
   const sentHeading = useRef<HTMLHeadingElement>(null);
@@ -64,7 +68,10 @@ export function SignInPage() {
   }, [sentTo]);
 
   useEffect(() => {
-    document.title = 'Sign in | Stop Biting';
+    document.title = t('page.title');
+  }, [t]);
+
+  useEffect(() => {
     let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (!robots) {
       robots = document.createElement('meta');
@@ -106,17 +113,16 @@ export function SignInPage() {
       setCooldown(COOLDOWN_SECONDS);
       return;
     }
-    setFormError(
-      result.reason === 'invalid_email' ? "That doesn't look like an email address. Please check it and try again."
-        : result.reason === 'too_many' ? 'Too many tries. Please wait a few minutes and try again.'
-          : "We couldn't send the email. Please try again in a moment.",
-    );
+    setFormError(result.reason);
   }
 
   const showEmailForm = providers.magic_link && !pendingToken;
+  const notice = signInNotice(linkFailure, first.error, first.provider);
+  const formErrorText = formError ? sendFailureMessage(formError) : null;
 
   return (
     <div className="sg-page min-h-dvh bg-[color:var(--sg-ground)]">
+      <LocaleHost />
       <header className="sg-container flex h-16 items-center">
         <a href="/" className="flex min-h-11 items-center gap-2.5">
           <img src="/logo.svg" alt="" className="h-8 w-8 flex-shrink-0" />
@@ -127,33 +133,19 @@ export function SignInPage() {
       <main id="main" className="sg-container pb-20 pt-8 sm:pt-14">
         <div className="sg-plate mx-auto w-full max-w-md p-6 sm:p-8">
           {pendingToken ? (
-            <>
-              <h1 className="sg-h3">Finish signing in</h1>
-              <p className="sg-small mt-3">
-                Press the button to sign in on this device. Opening the email link on its own does not sign anyone in.
-              </p>
-              <button
-                type="button"
-                onClick={confirmSignIn}
-                disabled={phase === 'confirming'}
-                className="sg-btn mt-6 w-full disabled:opacity-60"
-              >
-                {phase === 'confirming' ? 'Signing in…' : 'Sign in to Stop Biting'}
-              </button>
-            </>
+            <FinishCard confirming={phase === 'confirming'} onConfirm={confirmSignIn} />
           ) : (
             <>
-              <h1 className="sg-h3">Sign in or start your free trial</h1>
+              <h1 className="sg-h3">{t('intro.title')}</h1>
               <p className="sg-small mt-3">
-                Choose how you want to sign in. New here? The same options start your trial. Already have an account? You
-                will be signed back in.
+                {t('intro.body')}
               </p>
             </>
           )}
 
-          {(notice || linkFailure) && (
+          {notice && (
             <p role="alert" className="mt-5 rounded-2xl border border-[color:var(--sg-rule)] bg-[color:var(--sg-ground)] px-4 py-3 text-[0.9375rem] leading-snug text-[color:var(--sg-ink)]">
-              {linkFailure ? (linkFailure === 'failed' ? "We couldn't finish signing you in. Please request a new link." : linkFailureMessage(linkFailure)) : notice}
+              {notice}
             </p>
           )}
 
@@ -162,7 +154,7 @@ export function SignInPage() {
               <GoogleButton />
               {providers.apple && <AppleButton />}
               {providers.microsoft && <MicrosoftButton />}
-              {!ready && <p className="sg-note text-center" role="status">Checking for more options…</p>}
+              {!ready && <p className="sg-note text-center" role="status">{t('checking')}</p>}
             </div>
           )}
 
@@ -170,74 +162,126 @@ export function SignInPage() {
             <div className="mt-6">
               <div className="mb-5 flex items-center gap-3 text-[color:var(--sg-ink-2)]" aria-hidden="true">
                 <span className="h-px flex-1 bg-[color:var(--sg-rule)]" />
-                <span className="sg-note">or</span>
+                <span className="sg-note">{t('divider.or')}</span>
                 <span className="h-px flex-1 bg-[color:var(--sg-rule)]" />
               </div>
 
               {sentTo ? (
-                <div role="status" aria-live="polite">
-                  <h2 ref={sentHeading} tabIndex={-1} className="sg-h3 outline-none">Check your inbox</h2>
-                  <p className="sg-small mt-2">
-                    A sign-in link is on its way to <strong className="break-all text-[color:var(--sg-ink)]">{sentTo}</strong>. It works
-                    once and expires in 15 minutes. If it has not arrived after a couple of minutes, check your spam folder.
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-                    <button
-                      type="button"
-                      onClick={() => void sendLink()}
-                      disabled={cooldown > 0 || sending}
-                      className="sg-link min-h-11 disabled:no-underline disabled:opacity-60"
-                    >
-                      {cooldown > 0 ? `Send another link (${cooldown}s)` : 'Send another link'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setSentTo(null); setFormError(null); window.setTimeout(() => emailRef.current?.focus(), 0); }}
-                      className="sg-link min-h-11"
-                    >
-                      Use a different email
-                    </button>
-                  </div>
-                  {formError && <p role="alert" className="mt-2 text-[0.9375rem] text-[color:var(--sg-ink)]">{formError}</p>}
-                </div>
+                <SentNotice
+                  email={sentTo}
+                  cooldown={cooldown}
+                  sending={sending}
+                  error={formErrorText}
+                  headingRef={sentHeading}
+                  onResend={() => void sendLink()}
+                  onDifferent={() => { setSentTo(null); setFormError(null); window.setTimeout(() => emailRef.current?.focus(), 0); }}
+                />
               ) : (
-                <form onSubmit={sendLink} noValidate>
-                  <label htmlFor="signin-email" className="block text-[0.9375rem] font-semibold text-[color:var(--sg-ink)]">
-                    Email address
-                  </label>
-                  <input
-                    ref={emailRef}
-                    id="signin-email"
-                    name="email"
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    required
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    aria-invalid={formError ? true : undefined}
-                    aria-describedby={formError ? 'signin-email-error' : undefined}
-                    className={`${INPUT} mt-2`}
-                  />
-                  {formError && (
-                    <p id="signin-email-error" role="alert" className="mt-2 text-[0.9375rem] text-[color:var(--sg-ink)]">{formError}</p>
-                  )}
-                  <button type="submit" disabled={sending || email.trim() === ''} className="sg-btn mt-3 w-full disabled:opacity-60">
-                    {sending ? 'Sending…' : 'Email me a sign-in link'}
-                  </button>
-                </form>
+                <EmailForm email={email} onEmail={setEmail} sending={sending} error={formErrorText} inputRef={emailRef} onSubmit={sendLink} />
               )}
             </div>
           )}
         </div>
 
         <p className="sg-note mx-auto mt-6 max-w-md text-center">
-          By continuing you agree to the{' '}
-          <a href="/terms-and-conditions" className="sg-link">Terms</a> and the{' '}
-          <a href="/privacy" className="sg-link">Privacy Policy</a>.
+          {t.rich('terms', {}, {
+            terms: c => <a href="/terms-and-conditions" className="sg-link">{c}</a>,
+            privacy: c => <a href="/privacy" className="sg-link">{c}</a>,
+          })}
         </p>
       </main>
     </div>
+  );
+}
+
+/** The page when the emailed link was opened: one more press signs in (so mail scanners cannot spend the link). */
+export function FinishCard({ confirming, onConfirm }: { confirming: boolean; onConfirm: () => void }) {
+  const t = useT();
+  return (
+    <>
+      <h1 className="sg-h3">{t('finish.title')}</h1>
+      <p className="sg-small mt-3">
+        {t('finish.body')}
+      </p>
+      <button
+        type="button"
+        onClick={onConfirm}
+        disabled={confirming}
+        className="sg-btn mt-6 w-full disabled:opacity-60"
+      >
+        {confirming ? t('finish.working') : t('finish.button')}
+      </button>
+    </>
+  );
+}
+
+/** "Check your inbox", with the resend button and its cooldown. */
+export function SentNotice({ email, cooldown, sending, error, onResend, onDifferent, headingRef }: {
+  email: string; cooldown: number; sending: boolean; error: string | null; onResend: () => void; onDifferent: () => void;
+  /** The heading takes focus when the form is replaced by this notice (the form's button is gone: focus must not fall to the page top). */
+  headingRef?: RefObject<HTMLHeadingElement | null>;
+}) {
+  const t = useT();
+  return (
+    <div role="status" aria-live="polite">
+      <h2 ref={headingRef} tabIndex={-1} className="sg-h3 outline-none">{t('sent.title')}</h2>
+      <p className="sg-small mt-2">
+        {t.rich('sent.body', { email }, { b: c => <strong className="break-all text-[color:var(--sg-ink)]">{c}</strong> })}
+      </p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <button
+          type="button"
+          onClick={onResend}
+          disabled={cooldown > 0 || sending}
+          className="sg-link min-h-11 disabled:no-underline disabled:opacity-60"
+        >
+          {cooldown > 0 ? t('sent.againWait', { seconds: cooldown }) : t('sent.again')}
+        </button>
+        <button
+          type="button"
+          onClick={onDifferent}
+          className="sg-link min-h-11"
+        >
+          {t('sent.different')}
+        </button>
+      </div>
+      {error && <p role="alert" className="mt-2 text-[0.9375rem] text-[color:var(--sg-ink)]">{error}</p>}
+    </div>
+  );
+}
+
+/** The address field and the send button. */
+export function EmailForm({ email, onEmail, sending, error, inputRef, onSubmit }: {
+  email: string; onEmail: (v: string) => void; sending: boolean; error: string | null;
+  inputRef: RefObject<HTMLInputElement | null>; onSubmit: (e: FormEvent) => void;
+}) {
+  const t = useT();
+  return (
+    <form onSubmit={onSubmit} noValidate>
+      <label htmlFor="signin-email" className="block text-[0.9375rem] font-semibold text-[color:var(--sg-ink)]">
+        {t('email.label')}
+      </label>
+      <input
+        ref={inputRef}
+        id="signin-email"
+        name="email"
+        type="email"
+        inputMode="email"
+        autoComplete="email"
+        required
+        value={email}
+        onChange={e => onEmail(e.target.value)}
+        placeholder={t('email.placeholder')}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? 'signin-email-error' : undefined}
+        className={`${INPUT} mt-2`}
+      />
+      {error && (
+        <p id="signin-email-error" role="alert" className="mt-2 text-[0.9375rem] text-[color:var(--sg-ink)]">{error}</p>
+      )}
+      <button type="submit" disabled={sending || email.trim() === ''} className="sg-btn mt-3 w-full disabled:opacity-60">
+        {sending ? t('email.sending') : t('email.send')}
+      </button>
+    </form>
   );
 }

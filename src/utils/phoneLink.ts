@@ -3,9 +3,14 @@
 // Web Share sheet (most phones) it opens the sheet, which offers Messages, Notes,
 // AirDrop, mail and so on; everywhere else, and if sharing fails, it falls back
 // to a mailto. Nothing is stored, nothing is sent to us.
+//
+// The words are getters, read when the sheet or the mail draft is built, in the language showing then.
+// Spreading the object (`{ ...PHONE_SHARE }`) reads them at that moment.
+import { t } from '../i18n/scopes/shell';
+
 export const PHONE_SHARE = {
-  title: 'Stop Biting, for my computer',
-  text: 'Open this on my laptop or desktop:',
+  get title() { return t('share.title'); },
+  get text() { return t('share.text'); },
   url: 'https://stopbiting.today',
 } as const;
 

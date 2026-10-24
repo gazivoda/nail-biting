@@ -17,6 +17,7 @@
 
 import { CALIBRATION, deriveProfile, type CalibrationProfile } from '../detection/calibration';
 import type { PoseFeatures } from '../detection/pose';
+import { t } from '../i18n/scopes/calibration';
 
 /** A frame only counts toward "resting on the chin" if the hand is at least this close to the lower face. */
 export const REST_MAX_CHIN_FW = 0.6;
@@ -102,10 +103,10 @@ export function profileToSave(state: CalibrationState): CalibrationProfile | nul
  */
 export function stepAnnouncement(state: CalibrationState): string {
   switch (state.phase) {
-    case 'rest': return 'Step 1 of 2. Rest your chin on your hand as you normally would. Hold it there.';
-    case 'between': return 'Take your hand away. Step 2 starts in a few seconds.';
-    case 'real': return 'Step 2 of 2. Bring a fingertip near your lips. Hold it there.';
-    case 'result': return profileToSave(state) ? 'Done. You can save the result or try again.' : 'That did not work. You can try again.';
+    case 'rest': return t('announce.rest');
+    case 'between': return t('announce.between');
+    case 'real': return t('announce.real');
+    case 'result': return profileToSave(state) ? t('announce.done') : t('announce.failed');
     default: return '';
   }
 }
@@ -113,8 +114,8 @@ export function stepAnnouncement(state: CalibrationState): string {
 /** A step that is enough on its own would be a half calibration; say in words why a result failed. */
 export function failureMessage(reason: 'no-rest' | 'no-real' | 'no-either'): string {
   switch (reason) {
-    case 'no-rest': return 'The camera did not see your hand resting on your chin for long enough. Try again with your hand in view.';
-    case 'no-real': return 'The camera did not see a fingertip near your lips for long enough. Try again with your hand in view.';
-    case 'no-either': return 'The camera did not see your hand. Check that your face and hand are in the picture and try again.';
+    case 'no-rest': return t('failure.noRest');
+    case 'no-real': return t('failure.noReal');
+    case 'no-either': return t('failure.noEither');
   }
 }

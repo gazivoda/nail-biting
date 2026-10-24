@@ -16,6 +16,9 @@
 // reload and owned by the Start/Stop buttons. The machine mirrors it (`start` / `stop`) and layers pause and
 // meeting on top. Consequence: reloading while paused keeps the pause (camera stays off), and Stop clears it.
 
+import { intlLocaleArg } from '../i18n/core';
+import { t } from '../i18n/scopes/background';
+
 /** Same bound the tray enforces in src/desktop/ipc.ts (27 hours): "until tomorrow" is never more than 26. */
 export const MAX_PAUSE_MINUTES = 1620;
 /** Meeting mode lasts at most this long; the buttons offer 30, 60 and 120 minutes. */
@@ -208,7 +211,14 @@ export function untilTomorrow(now: Date, startMinutes: number | null = null): nu
 // ─── words ───────────────────────────────────────────────────────────────────
 
 export type ClockFormatter = (ts: number) => string;
-const defaultClock: ClockFormatter = (ts) => new Date(ts).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+// intlLocaleArg() is undefined while English shows (the browser's own time format, as before), else the picked language.
+// (Not i18n/format: that file brings date-fns along, and this file is loaded by the home-page demo.)
+const defaultClock: ClockFormatter = (ts) => new Date(ts).toLocaleTimeString(intlLocaleArg(), { hour: 'numeric', minute: '2-digit' });
+
+const WEEKDAY_SHORT = ['day.0.short', 'day.1.short', 'day.2.short', 'day.3.short', 'day.4.short', 'day.5.short', 'day.6.short'] as const;
+
+/** "Sun" ... "Sat" for a weekday number (0 = Sunday), in the language of the app. */
+export const weekdayShort = (day: number): string => t(WEEKDAY_SHORT[day]);
 
 /** "3:45 PM", "tomorrow 6:00 AM" or "Sat 6:00 AM": when it ends, in local time, for a label. */
 export function describeEnd(until: number, now: number, clock: ClockFormatter = defaultClock): string {
@@ -220,8 +230,8 @@ export function describeEnd(until: number, now: number, clock: ClockFormatter = 
   );
   const time = clock(until);
   if (dayDiff <= 0) return time;
-  if (dayDiff === 1) return `tomorrow ${time}`;
-  return `${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()]} ${time}`;
+  if (dayDiff === 1) return t('end.tomorrow', { time });
+  return t('end.weekday', { day: weekdayShort(d.getDay()), time });
 }
 
 /** Whole minutes left, rounded up (never 0 while time remains). */

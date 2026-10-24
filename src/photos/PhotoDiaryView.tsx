@@ -6,13 +6,14 @@
 // dark mode), pills, no shadows. Nothing here draws a hand, a face or a mouth.
 
 import { useRef, type ReactNode } from 'react';
-import { format } from 'date-fns';
 import { Camera, Lock } from 'lucide-react';
 import { CompareView } from './CompareView';
 import { PhotoCanvas } from './PhotoCanvas';
 import { TwoStepDelete } from './TwoStepDelete';
 import { describeAge, formatBytes, isDue, totalBytes, type PhotoMeta } from './diaryMeta';
-import { INTRO, NOT_MEDICAL, NOT_SAVED_WARNING, PRIVACY_DETAIL, PRIVACY_STATEMENT } from './copy';
+import { formatDatePattern } from '../i18n/format';
+import { useT } from '../i18n/scopes/photos';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 export interface PhotoDiaryViewProps {
   /** null while the photos are being read. */
@@ -38,9 +39,11 @@ const primary = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-
 /** The button that opens the capture panel; focus returns to it when the panel closes. */
 export const TAKE_BUTTON_ID = 'photo-diary-take';
 
-const dayLabel = (ms: number) => format(ms, 'd MMM yyyy');
+const dayLabel = (ms: number) => formatDatePattern(ms, 'd MMM yyyy', { day: 'numeric', month: 'short', year: 'numeric' });
 
 export function PhotoDiaryView(p: PhotoDiaryViewProps) {
+  const t = useT();
+  const tc = useCommonT();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const photos = p.photos ?? [];
   const empty = p.photos !== null && photos.length === 0;
@@ -65,12 +68,12 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
             tabIndex={-1}
             className="font-display text-4xl font-extrabold leading-[0.95] tracking-[-0.045em] outline-none sm:text-5xl"
           >
-            Photo diary
+            {t('diary.title')}
           </h2>
-          <p className="mt-4 max-w-lg text-pretty text-base leading-relaxed text-white/80">{INTRO}</p>
+          <p className="mt-4 max-w-lg text-pretty text-base leading-relaxed text-white/80">{t('diary.intro')}</p>
           <div className="mt-6 flex max-w-lg items-start gap-3 text-sm leading-relaxed text-white/80">
             <Lock size={16} aria-hidden="true" className="mt-0.5 flex-shrink-0" />
-            <p>{PRIVACY_STATEMENT} {PRIVACY_DETAIL}</p>
+            <p>{t('diary.privacy.statement')} {t('diary.privacy.detail')}</p>
           </div>
           <button
             type="button"
@@ -79,9 +82,9 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
             className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-lime-300 px-6 font-display text-base font-bold text-deep transition-colors hover:bg-lime-200"
           >
             <Camera size={18} aria-hidden="true" />
-            Take your first photo
+            {t('diary.takeFirst')}
           </button>
-          <p className="mt-5 text-xs text-white/70">{NOT_MEDICAL}</p>
+          <p className="mt-5 text-xs text-white/70">{t('diary.notMedical')}</p>
         </div>
       ) : (
         <div className={card}>
@@ -91,22 +94,22 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
             tabIndex={-1}
             className="font-display text-2xl font-bold tracking-[-0.02em] text-stone-900 outline-none dark:text-stone-100"
           >
-            Photo diary
+            {t('diary.title')}
           </h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-stone-600 dark:text-stone-300">{INTRO}</p>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-stone-600 dark:text-stone-300">{t('diary.intro')}</p>
           <div className="mt-4 flex max-w-xl items-start gap-3 rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm leading-relaxed text-stone-700 dark:border-ink-400 dark:bg-ink-100 dark:text-stone-200">
             <Lock size={16} aria-hidden="true" className="mt-0.5 flex-shrink-0" />
-            <p>{PRIVACY_STATEMENT} {PRIVACY_DETAIL}</p>
+            <p>{t('diary.privacy.statement')} {t('diary.privacy.detail')}</p>
           </div>
           {due && photos.length > 0 && (
             <p className="mt-4 text-sm font-semibold text-stone-800 dark:text-stone-100">
-              Your last photo was {describeAge(photos[0].takenAt, p.now)}. A new one is due.
+              {t('diary.due', { age: describeAge(photos[0].takenAt, p.now) })}
             </p>
           )}
           {!p.capture && p.photos !== null && (
             <button type="button" id={TAKE_BUTTON_ID} onClick={p.onStartCapture} className={`${primary} mt-5`}>
               <Camera size={16} aria-hidden="true" />
-              Take this week's photo
+              {t('diary.takeThisWeek')}
             </button>
           )}
         </div>
@@ -118,20 +121,20 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
 
       {!p.persistent && (
         <p className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm leading-relaxed text-amber-800 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-400">
-          {NOT_SAVED_WARNING}
+          {t('diary.notSaved')}
         </p>
       )}
 
       {p.canDecode === false && (
         <p className="text-sm text-stone-600 dark:text-stone-300">
-          This browser cannot show saved photos. Update it, or open the diary in a recent Chrome, Edge, Firefox or Safari.
+          {t('diary.cannotDecode')}
         </p>
       )}
 
       {p.capture}
 
       {p.photos === null && (
-        <p role="status" className="text-sm text-stone-600 dark:text-stone-300">Reading your photos from this device</p>
+        <p role="status" className="text-sm text-stone-600 dark:text-stone-300">{t('diary.loading')}</p>
       )}
 
       {photos.length > 0 && (
@@ -139,9 +142,9 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
           <div className={card}>
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <h3 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">
-                Your photos ({photos.length})
+                {t('diary.count', { count: photos.length })}
               </h3>
-              <p className="text-xs text-stone-600 dark:text-stone-300">{formatBytes(totalBytes(photos))} on this device</p>
+              <p className="text-xs text-stone-600 dark:text-stone-300">{t('diary.size', { size: formatBytes(totalBytes(photos)) })}</p>
             </div>
             <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {photos.map(photo => (
@@ -155,7 +158,7 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
                       load={() => p.loadBlob(photo.id)}
                       maxWidth={360}
                       lazy
-                      label={`Photo from ${dayLabel(photo.takenAt)}`}
+                      label={t('diary.photoLabel', { date: dayLabel(photo.takenAt) })}
                       className="absolute inset-0 h-full w-full object-cover"
                     />
                   </div>
@@ -165,11 +168,11 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
                   </div>
                   <TwoStepDelete
                     compact
-                    label="Delete"
-                    ariaLabel={`Delete the photo from ${dayLabel(photo.takenAt)}`}
-                    question="Delete this photo?"
-                    confirmLabel="Delete"
-                    keepLabel="Keep"
+                    label={tc('delete')}
+                    ariaLabel={t('diary.deleteOne.aria', { date: dayLabel(photo.takenAt) })}
+                    question={t('diary.deleteOne.question')}
+                    confirmLabel={tc('delete')}
+                    keepLabel={t('diary.keep')}
                     onConfirm={() => deleteOne(photo.id)}
                   />
                 </li>
@@ -178,7 +181,7 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
           </div>
 
           <div className={card}>
-            <h3 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">Before and after</h3>
+            <h3 className="font-display text-lg font-bold tracking-[-0.02em] text-stone-900 dark:text-stone-100">{t('diary.compareHeading')}</h3>
             <div className="mt-4">
               <CompareView photos={photos} loadBlob={p.loadBlob} />
             </div>
@@ -186,13 +189,13 @@ export function PhotoDiaryView(p: PhotoDiaryViewProps) {
 
           <div className={`${card} flex flex-wrap items-center justify-between gap-3`}>
             <p className="max-w-md text-sm text-stone-600 dark:text-stone-300">
-              Deleting removes a photo from this browser for good.
+              {t('diary.deleteNote')}
             </p>
             <TwoStepDelete
-              label="Delete all photos"
-              question={`Delete all ${photos.length} photos?`}
-              confirmLabel="Delete all"
-              keepLabel="Keep my photos"
+              label={t('diary.deleteAll')}
+              question={t('diary.deleteAll.question', { count: photos.length })}
+              confirmLabel={t('diary.deleteAll.confirm')}
+              keepLabel={t('diary.deleteAll.keep')}
               onConfirm={deleteAll}
             />
           </div>

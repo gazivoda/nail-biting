@@ -1,0 +1,96 @@
+// NEEDS NATIVE REVIEW (machine draft). Scope "watch", locale es.
+import type { messages as en } from '../../scopes/watch';
+
+export const messages: Record<keyof typeof en, string> = {
+  'dashboard.greeting.morning': 'Buenos días, <name>{name}</name>.',
+  'dashboard.greeting.afternoon': 'Buenas tardes, <name>{name}</name>.',
+  'dashboard.greeting.evening': 'Buenas noches, <name>{name}</name>.',
+  'dashboard.nameFallback': 'tú',
+  'dashboard.trial': 'Prueba gratuita: {text}.',
+  'dashboard.choosePlan': 'Elegir un plan',
+
+  'toggle.off.title': 'Activa la alarma',
+  'toggle.off.body': 'Tu navegador te pedirá permiso para usar la cámara. Mantén esta pestaña abierta mientras trabajas; la alarma suena cuando una mano llega a tu boca.',
+  'toggle.off.start': 'Iniciar detección',
+  'toggle.off.privacy': 'No se envían datos de la cámara mientras funciona',
+  'toggle.on.title': 'Detección activa',
+  'toggle.on.problemHint': 'Mira abajo cómo solucionarlo',
+  'toggle.on.hint': 'Se ejecuta en este dispositivo',
+  'toggle.on.stop': 'Detener',
+  'toggle.showFeed': 'Mostrar imagen de la cámara',
+
+  'panel.cameraNotRunning': 'La cámara no está funcionando',
+  'panel.detectionNotRunning': 'La detección no está funcionando',
+
+  'camera.error.permissionDenied': 'Se bloqueó el acceso a la cámara. Permítelo desde el icono de la cámara en la barra de direcciones del navegador y vuelve a intentarlo.',
+  'camera.error.noCamera': 'No se encontró ninguna cámara. El detector necesita una cámara web para vigilar tus manos.',
+  'camera.error.insecureContext': 'La cámara necesita una conexión segura (HTTPS). Abre esta página con https:// y vuelve a intentarlo.',
+  'camera.error.unavailable': 'No se pudo iniciar tu cámara: puede que otra aplicación la esté usando. Cierra todo lo que la use y vuelve a intentarlo.',
+  'camera.error.model': 'No se pudo cargar la detección. Revisa tu conexión y vuelve a intentarlo.',
+
+  'status.idle': 'Detección desactivada',
+  'status.loading': 'Cargando detección…',
+  'status.watching': 'Vigilando',
+  'status.alert': 'Manos cerca de la boca',
+  'status.error': 'No se pudo cargar la detección',
+
+  'view.pip.exitTitle': 'Salir de imagen en imagen',
+  'view.pip.floatTitle': 'Pasa a una ventana mini flotante. La detección sigue activa cuando cambias de aplicación',
+  'view.pip.exit': 'Salir de PiP',
+  'view.pip.minimize': 'Minimizar',
+
+  'wave.watching': 'Vigilando…',
+  'wave.detected': '¡Detectado!',
+  'wave.loading': 'Cargando modelos…',
+  'wave.error': 'Error del modelo',
+  'wave.waiting': 'En espera…',
+
+  'mini.status.idle': 'En espera',
+  'mini.status.loading': 'Iniciando',
+  'mini.status.watching': 'Vigilando',
+  'mini.status.alert': 'Se detectó morderse las uñas',
+  'mini.status.error': 'No está funcionando',
+  'mini.status.stopped': 'Detenido',
+  'mini.resumeTitle': 'Reanudar la vigilancia',
+  'mini.pauseTitle': 'Pausar durante 15 minutos',
+  'mini.resume': 'Reanudar',
+  'mini.pause': 'Pausar',
+  'mini.stop': 'Detener',
+  'mini.start': 'Iniciar',
+
+  'session.title': 'Sesión',
+  'session.goal': '/ meta de {minutes} min',
+  'session.reached': '¡Meta alcanzada!',
+  'session.paused': 'En pausa. Inicia la detección para continuar.',
+
+  'streak.title': 'Racha actual',
+  'streak.onARoll': 'En racha',
+  'streak.unit.days': 'días',
+  'streak.unit.hours': 'h',
+  'streak.unit.minutes': 'min',
+  'streak.since.today': 'Desde tu último mordisco, hoy a las {time}.',
+  'streak.since.yesterday': 'Desde tu último mordisco, ayer a las {time}.',
+  'streak.since.date': 'Desde tu último mordisco, {date} a las {time}.',
+  'streak.since.start': 'Desde que empezaste. Un mordisco la reinicia; una alarma no.',
+  'streak.best': 'Mejor: <b>{value}</b>',
+  'streak.bestNone': 'aún no hay',
+
+  'today.title': 'Hoy',
+  'today.alarms': 'alarmas por revisar',
+  'today.bites': 'mordiscos',
+
+  'panic.button': 'Acabo de morderme las uñas',
+  'panic.question': '¿Qué lo desencadenó?',
+  'panic.logged': 'Registrado: {label}. Tu racha vuelve a empezar desde ahora.',
+
+  'followUp.title': 'Alarma: prueba esto en su lugar',
+  'followUp.closeLabel': 'Cerrar. La alarma queda en el Historial para revisarla',
+  'followUp.question': 'Si fue un mordisco, ¿qué lo desencadenó?',
+  'followUp.notABite': 'No fue un mordisco, solo tenía la mano cerca',
+  'followUp.unknownTag': 'Mordisco, no sé por qué',
+
+  'rate.alone': 'Últimos 7 días: «No fue un mordisco» en {marked} de {alarms} {alarms, plural, one {alarma} other {alarmas}} ({percent} %).',
+  'rate.down': 'Últimos 7 días: «No fue un mordisco» en {marked} de {alarms} {alarms, plural, one {alarma} other {alarmas}} ({percent} %), por debajo de {beforeMarked} de {beforeAlarms} ({beforePercent} %) en los 7 días anteriores.',
+  'rate.up': 'Últimos 7 días: «No fue un mordisco» en {marked} de {alarms} {alarms, plural, one {alarma} other {alarmas}} ({percent} %), por encima de {beforeMarked} de {beforeAlarms} ({beforePercent} %) en los 7 días anteriores.',
+  'rate.same': 'Últimos 7 días: «No fue un mordisco» en {marked} de {alarms} {alarms, plural, one {alarma} other {alarmas}} ({percent} %), casi igual que {beforeMarked} de {beforeAlarms} ({beforePercent} %) en los 7 días anteriores.',
+};

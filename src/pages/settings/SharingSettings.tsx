@@ -15,6 +15,9 @@ import { useFeatures } from '../../features/useFeature';
 import { useAuth } from '../../contexts/AuthContext';
 import { apiFetchRequest } from '../../sync/apiFetchRequest';
 import { getOptedInUserId, subscribeSyncOptIn } from '../../sync/optIn';
+import { useT } from '../../i18n/scopes/sharing';
+import { useT as useCommonT } from '../../i18n/scopes/common';
+import { t as dataT } from '../../i18n/scopes/data';
 import { createLink, listLinks, revokeLink } from '../../share/api';
 import { browserClipboard, copyText } from '../../share/clipboard';
 import {
@@ -44,9 +47,13 @@ const browserZone = () => {
   }
 };
 
-/** Scrolls to the Account & Sync card, if it is on the page. The card is another workstream's; this only looks for its heading. */
+/**
+ * Scrolls to the Account & Sync card, if it is on the page. The card is another workstream's; this only looks for its
+ * heading, by the card's own title in the language that shows (the message the card itself uses).
+ */
 function goToSyncSettings() {
-  const heading = Array.from(document.querySelectorAll('h2')).find(h => h.textContent?.trim() === 'Account & Sync');
+  const title = dataT('sync.title');
+  const heading = Array.from(document.querySelectorAll('h2')).find(h => h.textContent?.trim() === title);
   if (!heading) return;
   heading.setAttribute('tabindex', '-1');
   heading.scrollIntoView({ block: 'start' });
@@ -56,6 +63,7 @@ function goToSyncSettings() {
 type Load = 'loading' | 'ready' | 'error';
 
 function SharingCard() {
+  const t = useT();
   const { user } = useAuth();
   const flags = useFeatures();
   const optedInFor = useSyncExternalStore(subscribeSyncOptIn, getOptedInUserId, () => null);
@@ -131,7 +139,7 @@ function SharingCard() {
     if (created?.id === confirmId) setCreated(null);
     setConfirmId(null);
     setError(null);
-    setStatus('Link revoked. It stopped working straight away.');
+    setStatus(t('status.revoked'));
     void refresh();
   };
 
@@ -205,6 +213,8 @@ export interface SharingCardViewProps {
 
 /** The card without any hook of its own, so every state can be rendered in a test. */
 export function SharingCardView(p: SharingCardViewProps) {
+  const t = useT();
+  const tc = useCommonT();
   const labelId = useId();
   const expiryId = useId();
   const linkInput = useRef<HTMLInputElement>(null);
@@ -225,37 +235,35 @@ export function SharingCardView(p: SharingCardViewProps) {
   const nothingSynced = p.list !== null && p.list.syncedEntries === 0;
 
   return (
-    <Section title="Sharing" icon={Share2} fullWidth>
-      <p className={`-mt-2 ${note}`}>{INTRO}</p>
+    <Section title={t('card.title')} icon={Share2} fullWidth>
+      <p className={`-mt-2 ${note}`}>{String(INTRO)}</p>
 
-      {!p.signedIn && <p className={note}>Sign in to make a share link.</p>}
+      {!p.signedIn && <p className={note}>{t('card.signedOut')}</p>}
 
       {p.signedIn && !p.syncOn && (
         <div className={panel} role="note">
-          <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{SYNC_NEEDED}</p>
+          <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{String(SYNC_NEEDED)}</p>
           <p className={note}>
-            {p.syncFlag
-              ? 'A link shows the history your account has synced. Turn on “Sync my history across devices” under Account & Sync, then come back here.'
-              : 'History sync is not available yet, so a link would have nothing to show. It will work once sync is available.'}
+            {p.syncFlag ? t('sync.turnOn') : t('sync.notAvailable')}
           </p>
           {p.syncFlag && (
-            <button type="button" onClick={p.onGoToSync} className={pill}>Go to Account &amp; Sync</button>
+            <button type="button" onClick={p.onGoToSync} className={pill}>{t('sync.go')}</button>
           )}
         </div>
       )}
 
       {p.signedIn && p.syncOn && nothingSynced && (
         <p className={note} role="status">
-          Nothing from your history has synced yet, so a link would show “no history yet”. It fills in as soon as sync has run.
+          {t('card.nothingSynced')}
         </p>
       )}
 
       {p.signedIn && (
         <>
           <div className="space-y-4">
-            <Row label="Note for yourself" description="Only you see this, for example “for my appointment on Friday”. It is never shown on the shared page.">
+            <Row label={t('form.note.label')} description={t('form.note.description')}>
               <div>
-                <label htmlFor={labelId} className="sr-only">Note for yourself</label>
+                <label htmlFor={labelId} className="sr-only">{t('form.note.label')}</label>
                 <input
                   id={labelId}
                   type="text"
@@ -267,9 +275,9 @@ export function SharingCardView(p: SharingCardViewProps) {
               </div>
             </Row>
 
-            <Row label="Stops working after" description="You can revoke a link at any time, whatever you pick.">
+            <Row label={t('form.expiry.label')} description={t('form.expiry.description')}>
               <div>
-                <label htmlFor={expiryId} className="sr-only">Stops working after</label>
+                <label htmlFor={expiryId} className="sr-only">{t('form.expiry.label')}</label>
                 <select
                   id={expiryId}
                   value={p.form.expiresInDays === null ? 'none' : String(p.form.expiresInDays)}
@@ -283,40 +291,37 @@ export function SharingCardView(p: SharingCardViewProps) {
               </div>
             </Row>
 
-            <Row label="Include calendar dates" description="Off by default. Adds dates to the charts and a time-of-day chart.">
-              <Toggle value={p.form.detailed} onChange={p.onDetailed} label="Include calendar dates" />
+            <Row label={t('form.dates.label')} description={t('form.dates.description')}>
+              <Toggle value={p.form.detailed} onChange={p.onDetailed} label={t('form.dates.label')} />
             </Row>
           </div>
 
-          <div className={panel} role="group" aria-label="What this link will show">
-            <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">What this link will show</p>
+          <div className={panel} role="group" aria-label={t('preview.title')}>
+            <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('preview.title')}</p>
             <ul className={`list-disc space-y-1 pl-5 ${note}`}>
-              {preview.shows.map(t => <li key={t}>{t}</li>)}
+              {preview.shows.map(line => <li key={line}>{line}</li>)}
             </ul>
-            <p className="pt-1 text-[15px] font-semibold text-stone-900 dark:text-stone-100">What it never shows</p>
+            <p className="pt-1 text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('preview.neverTitle')}</p>
             <ul className={`list-disc space-y-1 pl-5 ${note}`}>
-              {preview.never.map(t => <li key={t}>{t}</li>)}
+              {preview.never.map(line => <li key={line}>{line}</li>)}
             </ul>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <button ref={createButton} type="button" onClick={p.onCreate} disabled={p.creating || atLimit} className={primary}>
-              {p.creating ? 'Making link…' : 'Make a share link'}
+              {p.creating ? t('create.busy') : t('create.button')}
             </button>
             {atLimit && p.list && (
-              <span className={note}>You have {p.list.max} active links, the most allowed. Revoke one to make another.</span>
+              <span className={note}>{t('create.limit', { max: p.list.max })}</span>
             )}
           </div>
 
           {p.created && (
-            <div className={panel} role="group" aria-label="Your new link">
-              <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">Your link is ready. Copy it now.</p>
-              <p className={note}>
-                This is the only time it is shown. Stop Biting keeps just a fingerprint of it, so it cannot be shown again.
-                If you lose it, revoke it and make a new one.
-              </p>
+            <div className={panel} role="group" aria-label={t('new.group')}>
+              <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('new.title')}</p>
+              <p className={note}>{t('new.note')}</p>
               <div className="flex flex-wrap items-center gap-2">
-                <label htmlFor={`${labelId}-url`} className="sr-only">Your share link</label>
+                <label htmlFor={`${labelId}-url`} className="sr-only">{t('new.urlLabel')}</label>
                 <input
                   id={`${labelId}-url`}
                   ref={linkInput}
@@ -327,13 +332,13 @@ export function SharingCardView(p: SharingCardViewProps) {
                   className={`${field} min-w-0 flex-1 basis-64 font-mono text-xs`}
                 />
                 <button type="button" onClick={() => p.onCopy(linkInput.current)} className={primary}>
-                  {p.copied === 'copied' ? 'Copied' : 'Copy link'}
+                  {p.copied === 'copied' ? t('new.copied') : t('new.copy')}
                 </button>
-                <button type="button" onClick={() => { p.onDismissCreated(); keepFocusOn(createButton.current); }} className={pill}>Done</button>
+                <button type="button" onClick={() => { p.onDismissCreated(); keepFocusOn(createButton.current); }} className={pill}>{tc('done')}</button>
               </div>
               <p role="status" aria-live="polite" className={note}>
-                {p.copied === 'copied' && 'Copied to your clipboard.'}
-                {p.copied === 'manual' && 'Could not copy automatically. The link is selected: press Ctrl+C (Cmd+C on a Mac).'}
+                {p.copied === 'copied' && t('new.copiedStatus')}
+                {p.copied === 'manual' && t('new.copyManual')}
               </p>
             </div>
           )}
@@ -342,9 +347,9 @@ export function SharingCardView(p: SharingCardViewProps) {
           {p.error && <p role="alert" className="text-sm text-alert-600 dark:text-alert-400">{p.error}</p>}
 
           <div className="space-y-3">
-            <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">Active links</p>
-            {p.load === 'loading' && <p className={note}>Loading…</p>}
-            {p.load === 'ready' && links.length === 0 && <p className={note}>No active links. Anyone you shared one with has lost access.</p>}
+            <p className="text-[15px] font-semibold text-stone-900 dark:text-stone-100">{t('links.title')}</p>
+            {p.load === 'loading' && <p className={note}>{tc('loading')}</p>}
+            {p.load === 'ready' && links.length === 0 && <p className={note}>{t('links.empty')}</p>}
             {links.length > 0 && (
               <ul className="space-y-3">
                 {links.map(l => (
@@ -360,14 +365,15 @@ export function SharingCardView(p: SharingCardViewProps) {
 }
 
 function LinkRow({ link, now, confirming, revoking, p }: { link: ShareLink; now: number; confirming: boolean; revoking: boolean; p: SharingCardViewProps }) {
+  const t = useT();
   return (
     <li className="rounded-2xl border border-stone-200 p-4 dark:border-ink-400">
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="min-w-0">
           <p className="break-words text-[15px] font-semibold text-stone-900 dark:text-stone-100">
-            {link.label || 'Unnamed link'}
+            {link.label || t('link.unnamed')}
             <span className="ml-2 rounded-full border border-stone-300 px-2 py-0.5 align-middle text-xs font-medium text-stone-600 dark:border-ink-400 dark:text-stone-300">
-              {link.detailed ? 'With dates' : 'Counts only'}
+              {link.detailed ? t('link.withDates') : t('link.countsOnly')}
             </span>
           </p>
           <p className={note}>
@@ -376,21 +382,19 @@ function LinkRow({ link, now, confirming, revoking, p }: { link: ShareLink; now:
           <p className={note}>{describeViewed(link.lastViewedAt)}</p>
         </div>
         {!confirming && (
-          <button type="button" onClick={() => p.onAskRevoke(link.id)} className={pill} aria-label={`Revoke link ${link.label || 'without a note'}`}>
-            Revoke
+          <button type="button" onClick={() => p.onAskRevoke(link.id)} className={pill} aria-label={link.label ? t('link.revokeNamed', { label: link.label }) : t('link.revokeUnnamed')}>
+            {t('link.revoke')}
           </button>
         )}
       </div>
       {confirming && (
-        <div className={`mt-3 ${panel}`} role="group" aria-label="Confirm revoking this link">
-          <p className="text-sm text-alert-600 dark:text-alert-400">
-            Anyone who opens this link will see a “link does not work” page, straight away. You can make a new link later.
-          </p>
+        <div className={`mt-3 ${panel}`} role="group" aria-label={t('revoke.group')}>
+          <p className="text-sm text-alert-600 dark:text-alert-400">{t('revoke.warning')}</p>
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={p.onConfirmRevoke} disabled={revoking} className={danger}>
-              {revoking ? 'Revoking…' : 'Yes, revoke this link'}
+              {revoking ? t('revoke.busy') : t('revoke.yes')}
             </button>
-            <button type="button" autoFocus onClick={p.onCancelRevoke} disabled={revoking} className={pill}>Keep it</button>
+            <button type="button" autoFocus onClick={p.onCancelRevoke} disabled={revoking} className={pill}>{t('revoke.keep')}</button>
           </div>
         </div>
       )}

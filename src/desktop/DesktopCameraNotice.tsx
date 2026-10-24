@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera } from 'lucide-react';
 import type { CameraPrompt, DesktopAPI } from './ipc';
+import { useT } from '../i18n/scopes/shell';
+import { useT as useCommonT } from '../i18n/scopes/common';
 
 /**
  * The explanation shown before the operating system asks for the camera, in the
@@ -73,9 +75,30 @@ export function DesktopCameraNotice({ api }: { api: DesktopAPI }) {
     }
   };
 
-  const settingsPath = api.platform === 'win32'
-    ? 'Settings, under Privacy & security, then Camera'
-    : 'System Settings, under Privacy & Security, then Camera';
+  return (
+    <CameraNoticeCard
+      explain={explain}
+      platform={api.platform}
+      busy={busy}
+      primaryRef={primaryRef}
+      onPrimary={onPrimary}
+      onDismiss={dismiss}
+    />
+  );
+}
+
+/** The card itself, apart from the state around it, so its words can be rendered on their own. */
+export function CameraNoticeCard({ explain, platform, busy, primaryRef, onPrimary, onDismiss }: {
+  explain: boolean;
+  platform: DesktopAPI['platform'];
+  busy: boolean;
+  primaryRef?: React.Ref<HTMLButtonElement>;
+  onPrimary: () => void;
+  onDismiss: () => void;
+}) {
+  const t = useT();
+  const tc = useCommonT();
+  const settingsPath = platform === 'win32' ? t('camera.path.win') : t('camera.path.mac');
 
   return (
     <div className="app-type fixed bottom-4 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 px-4 sm:left-auto sm:right-2 sm:translate-x-0">
@@ -93,7 +116,7 @@ export function DesktopCameraNotice({ api }: { api: DesktopAPI }) {
             id="desktop-camera-title"
             className="font-display text-lg font-extrabold tracking-[-0.03em] text-stone-900 dark:text-stone-100"
           >
-            {explain ? 'Camera access' : 'The camera is turned off'}
+            {explain ? t('camera.explain.title') : t('camera.blocked.title')}
           </h2>
         </div>
 
@@ -101,14 +124,13 @@ export function DesktopCameraNotice({ api }: { api: DesktopAPI }) {
           {explain ? (
             <>
               <p>
-                Stop Biting uses your camera to notice when your hand reaches your face. Detection runs on your
-                device. No camera data is sent while it runs.
+                {t('camera.explain.body')}
               </p>
-              {api.platform === 'darwin' && <p className="mt-2">Next, macOS will ask you to allow it.</p>}
+              {platform === 'darwin' && <p className="mt-2">{t('camera.explain.macos')}</p>}
             </>
           ) : (
             <p>
-              Camera access is off for Stop Biting. Turn it on in {settingsPath}, then start watching again.
+              {t('camera.blocked.body', { path: settingsPath })}
             </p>
           )}
         </div>
@@ -121,15 +143,15 @@ export function DesktopCameraNotice({ api }: { api: DesktopAPI }) {
             disabled={busy}
             className="inline-flex min-h-11 items-center rounded-full bg-deep px-5 font-display text-sm font-bold text-white transition-colors hover:bg-forest-500 disabled:opacity-60 dark:bg-lime-300 dark:text-deep dark:hover:bg-lime-200"
           >
-            {explain ? 'Continue' : 'Open settings'}
+            {explain ? tc('continue') : t('camera.openSettings')}
           </button>
           <button
             type="button"
-            onClick={dismiss}
+            onClick={onDismiss}
             disabled={busy}
             className="min-h-11 text-sm font-medium text-stone-600 underline-offset-4 hover:underline dark:text-stone-300"
           >
-            {explain ? 'Not now' : 'Close'}
+            {explain ? t('camera.notNow') : tc('close')}
           </button>
         </div>
       </div>

@@ -13,19 +13,21 @@ import { trialLeft } from '../utils/trial';
 import { FreeTierNotice } from '../components/billing/FreeTierNotice';
 import { usePhoneView } from '../phone/usePhoneView';
 import type { PhoneTab } from '../phone/PhoneView';
+import { useT } from '../i18n/scopes/watch';
 
 // WS6 (flag phone_companion): a lazy chunk, so a visitor who never sees the phone view never downloads it.
 const PhoneView = lazy(() => import('../phone/PhoneView'));
 
 export function Dashboard({ onUpgrade, onNavigate }: { onUpgrade?: () => void; onNavigate?: (tab: PhoneTab) => void }) {
+  const t = useT();
   const { user, accessStatus } = useAuth();
   const phoneView = usePhoneView(); // WS6: true only with the flag on, on a phone or a computer with no webcam
   const trialLeftText = accessStatus === 'trial_active' ? trialLeft(user?.trial_end_date) : null;
-  const firstName = user?.name?.split(' ')[0] ?? 'there';
+  const firstName = user?.name?.split(' ')[0] ?? t('dashboard.nameFallback');
 
   const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+  const greetingKey =
+    hour < 12 ? 'dashboard.greeting.morning' : hour < 17 ? 'dashboard.greeting.afternoon' : 'dashboard.greeting.evening';
 
   // WS6: the phone view replaces the camera dashboard (no camera panel, so no detection starts).
   if (phoneView) {
@@ -45,8 +47,9 @@ export function Dashboard({ onUpgrade, onNavigate }: { onUpgrade?: () => void; o
           for dark surfaces only). */}
       <header className="mb-7">
         <h1 className="font-display text-[2.25rem] sm:text-[3rem] font-extrabold leading-[1] tracking-[-0.045em] text-stone-900 dark:text-stone-100">
-          {greeting},{' '}
-          <span className="sg-mark whitespace-nowrap dark:![background:none]">{firstName}</span>.
+          {t.rich(greetingKey, { name: firstName }, {
+            name: chunks => <span className="sg-mark whitespace-nowrap dark:![background:none]">{chunks}</span>,
+          })}
         </h1>
       </header>
 
@@ -55,14 +58,14 @@ export function Dashboard({ onUpgrade, onNavigate }: { onUpgrade?: () => void; o
           the countdown and the way to a plan are visible. */}
       {trialLeftText && (
         <p className="lg:hidden -mt-4 mb-6 flex flex-wrap items-center gap-x-3 text-sm text-stone-600 dark:text-stone-300">
-          <span>Free trial: {trialLeftText}.</span>
+          <span>{t('dashboard.trial', { text: trialLeftText })}</span>
           {onUpgrade && (
             <button
               type="button"
               onClick={onUpgrade}
               className="inline-flex min-h-11 items-center font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-400 dark:hover:text-forest-300"
             >
-              Choose a plan
+              {t('dashboard.choosePlan')}
             </button>
           )}
         </p>

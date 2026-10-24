@@ -1,3 +1,6 @@
+import { t } from '../i18n/scopes/history';
+import { formatDate as formatDateIntl, formatTime as formatTimeIntl } from '../i18n/format';
+
 export function formatDuration(ms: number): string {
   if (ms < 0) ms = 0;
   const totalSeconds = Math.floor(ms / 1000);
@@ -7,18 +10,18 @@ export function formatDuration(ms: number): string {
 
   if (days > 0) {
     const remHours = hours % 24;
-    return remHours > 0 ? `${days}d ${remHours}h` : `${days} day${days > 1 ? 's' : ''}`;
+    return remHours > 0 ? t('time.daysHours', { days, hours: remHours }) : t('time.days', { count: days });
   }
   if (hours > 0) {
     const remMinutes = minutes % 60;
-    return remMinutes > 0 ? `${hours}h ${remMinutes}m` : `${hours}h`;
+    return remMinutes > 0 ? t('time.hoursMinutes', { hours, minutes: remMinutes }) : t('time.hours', { hours });
   }
-  if (minutes > 0) return `${minutes}m`;
-  return 'just now';
+  if (minutes > 0) return t('time.minutes', { minutes });
+  return t('time.justNow');
 }
 
 export function formatTime(timestamp: number): string {
-  return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return formatTimeIntl(timestamp, { hour: '2-digit', minute: '2-digit' });
 }
 
 export function formatDate(timestamp: number): string {
@@ -27,7 +30,7 @@ export function formatDate(timestamp: number): string {
   const yesterday = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
-  if (d.toDateString() === today.toDateString()) return 'Today';
-  if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
-  return d.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+  if (d.toDateString() === today.toDateString()) return t('date.today');
+  if (d.toDateString() === yesterday.toDateString()) return t('date.yesterday');
+  return formatDateIntl(d, { weekday: 'short', month: 'short', day: 'numeric' });
 }

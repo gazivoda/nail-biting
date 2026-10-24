@@ -3,12 +3,16 @@ import { useAppStore } from '../../store/useAppStore';
 import { PRESET_TAGS, type TagOption } from './triggerTags';
 import { TagMark } from './TagMark';
 import type { TriggerTag } from '../../types';
+import { useT } from '../../i18n/scopes/watch';
+import { useT as useCommonT } from '../../i18n/scopes/common';
 
 // "I just bit my nails": log a bite and what set it off. Logging resets the
 // streak, so the confirmation says so, stays up long enough to read, and can
 // be undone (a wrong tap should not cost a streak). No emoji and no artificial
 // press delay: the sheet opens on the press, like every other button.
 export function PanicButton() {
+  const t = useT();
+  const tc = useCommonT();
   const { logIncident, deleteIncident, customTags } = useAppStore();
   const tags: TagOption[] = [...PRESET_TAGS, ...customTags];
   const [showTags, setShowTags] = useState(false);
@@ -44,7 +48,7 @@ export function PanicButton() {
   // that arrives together with its text often is not read.
   const announcer = (
     <p role="status" aria-live="polite" className="sr-only">
-      {logged ? `Logged: ${logged.label}. Your streak starts again from now.` : ''}
+      {logged ? t('panic.logged', { label: logged.label }) : ''}
     </p>
   );
 
@@ -56,7 +60,7 @@ export function PanicButton() {
         className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border border-forest-300 bg-forest-50 px-4 py-2 animate-fade-up dark:border-forest-700 dark:bg-forest-800/50"
       >
         <p className="text-sm font-medium text-forest-700 dark:text-forest-300">
-          Logged: {logged.label}. Your streak starts again from now.
+          {t('panic.logged', { label: logged.label })}
         </p>
         <button
           ref={undoRef}
@@ -64,7 +68,7 @@ export function PanicButton() {
           onClick={undo}
           className="inline-flex min-h-11 items-center text-sm font-semibold text-forest-700 underline underline-offset-4 hover:text-forest-600 dark:text-forest-300 dark:hover:text-forest-200"
         >
-          Undo
+          {tc('undo')}
         </button>
       </div>
       </>
@@ -76,7 +80,7 @@ export function PanicButton() {
       <>
       {announcer}
       <div className="bg-white dark:bg-ink-50 border border-alert-400 dark:border-alert-800 rounded-2xl p-4 animate-fade-up">
-        <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">What triggered it?</p>
+        <p className="text-stone-500 dark:text-stone-400 text-sm text-center mb-3">{t('panic.question')}</p>
         <div className="grid grid-cols-2 gap-2">
           {tags.map(tag => (
             <button
@@ -95,7 +99,7 @@ export function PanicButton() {
           onClick={() => setShowTags(false)}
           className="mt-2 min-h-11 w-full text-sm text-stone-500 transition-colors hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200"
         >
-          Cancel
+          {tc('cancel')}
         </button>
       </div>
       </>
@@ -111,7 +115,7 @@ export function PanicButton() {
       onClick={() => setShowTags(true)}
       className="w-full select-none rounded-full bg-alert-600 min-h-14 py-4 font-display text-lg font-bold tracking-[-0.01em] text-white transition-colors duration-150 hover:bg-alert-800 active:scale-[0.99] motion-reduce:active:scale-100 dark:bg-alert-400 dark:text-alert-900 dark:hover:bg-alert-100"
     >
-      I just bit my nails
+      {t('panic.button')}
     </button>
     </>
   );

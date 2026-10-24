@@ -9,6 +9,7 @@ import { isBite } from '../store/useAppStore';
 import { isFalsePositive, isPendingAlarm, isUrge } from '../storage/eventModel';
 import { PRESET_TAGS, URGE_TAG } from '../components/dashboard/triggerTags';
 import { formatDate, formatTime } from '../utils/time';
+import { t } from '../i18n/scopes/phone';
 import type { CustomTag, Incident } from '../types';
 
 export type EntryKind = 'bite' | 'urge' | 'alarm' | 'dismissed';
@@ -30,15 +31,16 @@ export interface EntryRow {
  */
 export function describeEntry(inc: Incident, customTags: ReadonlyArray<CustomTag> = []): Pick<EntryRow, 'kind' | 'label'> {
   if (isUrge(inc)) {
-    return { kind: 'urge', label: inc.competingResponse?.done ? `${URGE_TAG.label}, timer finished` : URGE_TAG.label };
+    return { kind: 'urge', label: inc.competingResponse?.done ? t('entry.urgeDone', { urge: URGE_TAG.label }) : URGE_TAG.label };
   }
-  if (isFalsePositive(inc)) return { kind: 'dismissed', label: 'Not a bite' };
-  if (!isBite(inc)) return { kind: 'alarm', label: 'Alarm' };
-  if (inc.tag === 'auto-detected') return { kind: 'bite', label: 'Bite' };
-  const preset = PRESET_TAGS.find(t => t.id === inc.tag);
-  if (preset) return { kind: 'bite', label: `Bite, ${preset.label}` };
-  const custom = customTags.find(t => t.id === inc.tag);
-  return { kind: 'bite', label: custom ? ['Bite,', custom.emoji, custom.label].filter(Boolean).join(' ') : 'Bite' };
+  if (isFalsePositive(inc)) return { kind: 'dismissed', label: t('entry.notBite') };
+  if (!isBite(inc)) return { kind: 'alarm', label: t('entry.alarm') };
+  if (inc.tag === 'auto-detected') return { kind: 'bite', label: t('entry.bite') };
+  const preset = PRESET_TAGS.find(p => p.id === inc.tag);
+  if (preset) return { kind: 'bite', label: t('entry.biteWith', { reason: preset.label }) };
+  const custom = customTags.find(c => c.id === inc.tag);
+  // A reason the person typed is shown as typed, with the emoji they chose.
+  return { kind: 'bite', label: custom ? t('entry.biteWith', { reason: [custom.emoji, custom.label].filter(Boolean).join(' ') }) : t('entry.bite') };
 }
 
 /** The newest `limit` entries, newest first. */
@@ -72,15 +74,13 @@ export function todayCounts(incidents: ReadonlyArray<Incident>, now: number = Da
   };
 }
 
-const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-
 /** "Nothing logged today" / "2 bites, 1 urge today" (and alarms to review when there are some). */
 export function todaySentence({ bites, urges, alarmsToReview }: TodayCounts): string {
   const parts: string[] = [];
-  if (bites > 0) parts.push(plural(bites, 'bite', 'bites'));
-  if (urges > 0) parts.push(plural(urges, 'urge', 'urges'));
-  if (alarmsToReview > 0) parts.push(plural(alarmsToReview, 'alarm to review', 'alarms to review'));
-  return parts.length === 0 ? 'Nothing logged today' : `${parts.join(', ')} today`;
+  if (bites > 0) parts.push(t('today.bites', { count: bites }));
+  if (urges > 0) parts.push(t('today.urges', { count: urges }));
+  if (alarmsToReview > 0) parts.push(t('today.alarms', { count: alarmsToReview }));
+  return parts.length === 0 ? t('today.none') : t('today.some', { list: parts.join(', ') });
 }
 
 /** "14:32" for today, "Yesterday, 14:32" or "Fri, Sep 25, 14:32" before that. */
