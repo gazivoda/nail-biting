@@ -2047,9 +2047,9 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', legalPageSchemas('/terms-and-conditions', 'Terms of Service', description));
     injected = injectSsrArticle(injected,
       '<h1>Terms of Service</h1>' +
-      '<p class="article-summary">Last updated April 9, 2026. These are the terms for using Stop Biting at stopbiting.today, including the free trial, subscriptions and billing, refunds, acceptable use and governing law.</p>' +
+      '<p class="article-summary">Last updated October 24, 2026. These are the terms for using Stop Biting at stopbiting.today, including the free trial, subscriptions and billing, the Lifetime plan, the referral program, refunds, acceptable use and governing law.</p>' +
       '<h2>In this policy</h2>' +
-      '<ul><li>Acceptance of Terms</li><li>Description of Service</li><li>Free Trial</li><li>Subscriptions and Billing</li><li>Refunds</li><li>User Accounts</li><li>Acceptable Use</li><li>Privacy</li><li>Disclaimer of Warranties</li><li>Limitation of Liability</li><li>Changes to Terms</li><li>Governing Law</li><li>Contact</li></ul>');
+      '<ul><li>Acceptance of Terms</li><li>Description of Service</li><li>Free Trial</li><li>Subscriptions and Billing</li><li>Lifetime Plan</li><li>Referral Program</li><li>Refunds</li><li>User Accounts</li><li>Acceptable Use</li><li>Privacy</li><li>Disclaimer of Warranties</li><li>Limitation of Liability</li><li>Changes to Terms</li><li>Governing Law</li><li>Contact</li></ul>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/terms-and-conditions'));
   });
 
@@ -2065,9 +2065,9 @@ if (!existsSync(distPath)) {
     injected = injected.replace('</head>', legalPageSchemas('/refund-policy', 'Refund Policy', description));
     injected = injectSsrArticle(injected,
       '<h1>Refund Policy</h1>' +
-      '<p class="article-summary">Last updated April 9, 2026. This policy outlines when and how refunds are issued for Stop Biting subscription payments. All new users get a 3-day free trial with no credit card required.</p>' +
+      '<p class="article-summary">Last updated October 24, 2026. This policy outlines when and how refunds are issued for Stop Biting subscription payments and the one-time Lifetime plan. All new users get a 3-day free trial with no credit card required.</p>' +
       '<h2>In this policy</h2>' +
-      '<ul><li>Overview</li><li>Free Trial</li><li>Refund Eligibility</li><li>How to Request a Refund</li><li>Processing</li><li>Cancellation</li><li>Exceptional Circumstances</li><li>Contact</li></ul>');
+      '<ul><li>Overview</li><li>Free Trial</li><li>Refund Eligibility</li><li>Lifetime Plan</li><li>Referral Bonus Access</li><li>How to Request a Refund</li><li>Processing</li><li>Cancellation</li><li>Exceptional Circumstances</li><li>Contact</li></ul>');
     sendHtml(res, injectNoscriptNav(injected), 200, pageLastmod('/refund-policy'));
   });
 
