@@ -2,7 +2,7 @@
   "mode": "canary",
   "flags": "event_sync,data_backup,insights,photo_diary,urge_timer,hrt_coaching,false_positive_controls",
   "seconds": 300,
-  "startedAt": "2026-10-23T23:20:13.755Z",
+  "startedAt": "2026-10-24T03:33:48.151Z",
   "origin": "http://localhost:3213",
   "signedIn": true,
   "chrome": "Chrome/155.0.8059.85",
