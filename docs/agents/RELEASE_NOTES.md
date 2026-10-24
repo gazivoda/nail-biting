@@ -378,6 +378,21 @@ tomorrow" (08:00, `TOMORROW_RESUME_HOUR` in `src/desktop/trayModel.ts`) and the 
 - Account deletion by hand leaves rows behind: delete the account's rows in `habit_events` and `habit_event_epochs` (WS4),
   `email_preferences` (WS5), `share_links` (WS10; `removeAllForUser` exists but nothing calls it) and `auth_identities` (WS8).
 - The sign-in follow-up "show which methods are linked to my account" in Settings was not built.
+- **Blog posts have a layout shift of 0.72 (mobile Lighthouse CLS; performance 54 mobile, 73 desktop).** The article is rendered
+  from `dist/posts/<slug>.json` after it is fetched, so the bottom call-to-action block jumps down when it arrives. A CLS above 0.1
+  is "poor" in Core Web Vitals. It predates the swarm and was not touched (`docs/agents/lighthouse-report.md`).
+- **With every flag off, the build still fetches code for features that are off** (WS13 flags-off report, F2 and F3): the signed-in
+  Watch tab loads 5 more small JS files (+11 kB gzip) and Settings 1 more; the service worker precache grows from 49 to 60 entries
+  (+58 KiB), so a returning visitor downloads the phone view and the background-watching code once, in the background, although no flag is
+  on. No visible change, no request on a page load. Fix if it matters: import those chunks dynamically behind their flag.
+- A closed gated OG card (`/og/features-*.png`, `/og/solutions-cuticle-biting.png`) answers 404 gzip-compressed with
+  `Vary: Accept-Encoding` instead of plain (F4 in the flags-off report). Harmless.
+- **Open accessibility issues** (14, none High; `docs/agents/accessibility-report.md`): text-field borders are 1.3 to 2.0:1 against
+  the 3:1 that WCAG 1.4.11 asks for, and the switch's off-state track is 1.99:1 in light mode (1.39:1 in dark), both design-token
+  decisions; an unreviewed alarm row is wider than the card under about 380 px and its delete button is cut off at 320 px (the
+  fix is `flex-wrap`, but the WS3 parity test pins that row's markup); the alarm flash is never announced when
+  `false_positive_controls` is off; the coaching card and toast are about 24 Tab stops from the top of the page; the toast
+  timeouts are 8 and 15 seconds; heading order on History; a streak colon not hidden from screen readers.
 
 ---
 
