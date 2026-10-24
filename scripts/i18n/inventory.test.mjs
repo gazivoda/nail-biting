@@ -34,7 +34,11 @@ const usesI18n = f => /from\s+['"][^'"]*\/i18n\/(?:scopes\/|format|hooks|core|Lo
 const coverageFiles = all.filter(f => /^src\/i18n\/coverage\/.*\.coverage\.test\.tsx?$/.test(f));
 const coverageText = coverageFiles.map(f => readFileSync(join(root, f), 'utf8')).join('\n');
 
-const covered = f => coverageText.includes(`'${f}'`) || coverageText.includes(`"${f}"`);
+// A path counts as rendered only when it is in a `COVERS = [...]` list (a path inside a readFileSync call is not a claim).
+const coversPaths = new Set(
+  [...coverageText.matchAll(/COVERS\s*=\s*\[([\s\S]*?)\]/g)].flatMap(block => [...block[1].matchAll(/['"](src\/[A-Za-z0-9_./-]+\.tsx?)['"]/g)].map(m => m[1])),
+);
+const covered = f => coversPaths.has(f);
 const notRendered = new Map(
   [...coverageText.matchAll(/\/\/\s*NOT-RENDERED\s+(src\/\S+?):\s*(.+)/g)].map(m => [m[1], m[2].trim()]),
 );
@@ -56,6 +60,8 @@ describe('pseudo-locale coverage inventory', () => {
     for (const [file, reason] of notRendered) {
       expect(existsSync(join(root, file)), `${file} does not exist`).toBe(true);
       expect(reason.length, `${file}: give a real reason`).toBeGreaterThanOrEqual(15);
+      // it must not ALSO be listed as rendered: pick one
+      expect(covered(file), `${file} is both listed in COVERS and declared NOT-RENDERED`).toBe(false);
     }
   });
 
