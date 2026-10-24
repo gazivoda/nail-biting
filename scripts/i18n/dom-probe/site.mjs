@@ -42,6 +42,19 @@ const FIND = `(() => {
   return [...new Set(issues)].slice(0, 40);
 })()`;
 
+const SHAPE = `(() => {
+  const out = [];
+  const walk = (n) => {
+    if (n.nodeType === 3) { if (n.data.trim()) out.push('T' + JSON.stringify(n.data.slice(0, 24))); return; }
+    if (n.nodeType !== 1 || n.tagName === 'SCRIPT' || n.tagName === 'STYLE') return;
+    out.push('<' + n.tagName.toLowerCase());
+    for (const c of n.childNodes) walk(c);
+    out.push('>');
+  };
+  walk(document.body);
+  return out.join('\\n');
+})()`;
+
 async function withBrowser(url, flagsEnv, dist, fn) {
   const rig = await startRig({ dist, port, flags: flagsEnv });
   const chrome = await launchChrome({ port: port + 1000, headless: 'new' });
@@ -96,7 +109,9 @@ if (mode === 'compare') {
         for (const path of PAGES) {
           await page.send('Page.navigate', { url: rig.url + path });
           await sleep(5000);
-          out[`${name} ${path}`] = mask(await page.eval('document.documentElement.outerHTML'));
+          // outerHTML hides where one text run ends and the next begins ("Three days" + " free first..." is two text nodes),
+          // and Chrome positions glyphs per run, so the shape of the text nodes is compared too: the same HTML can still paint differently
+          out[`${name} ${path}`] = mask(await page.eval('document.documentElement.outerHTML')) + '\n<!-- text nodes -->\n' + await page.eval(SHAPE);
         }
       }
     } finally { cdp.close(); chrome.close(); rig.stop(); }
