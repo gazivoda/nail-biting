@@ -229,7 +229,7 @@ async function main() {
   for (const m of modes) results.push(await auditMode(m, args, log));
   console.log('\n=== summary ===');
   for (const r of results) console.log(`${r.mode.padEnd(9)} ${r.verdict}  (${r.stats?.requests ?? 0} requests, ${Object.keys(r.stats?.hosts ?? {}).length} hosts, ${r.violations ?? 0} violations)`);
-  writeFileSync(join(args.out, 'summary.json'), JSON.stringify({ commit, finishedAt: new Date().toISOString(), seconds: args.seconds, results: results.map(r => ({ mode: r.mode, verdict: r.verdict, exitCode: r.exitCode, violations: r.violations, requests: r.stats?.requests, hosts: r.stats?.hosts })) }, null, 2));
+  writeFileSync(join(args.out, `summary${args.probe ? '-probe' : ''}.json`), JSON.stringify({ commit, finishedAt: new Date().toISOString(), seconds: args.seconds, results: results.map(r => ({ mode: r.mode, verdict: r.verdict, exitCode: r.exitCode, violations: r.violations, requests: r.stats?.requests, hosts: r.stats?.hosts })) }, null, 2));
   process.exit(Math.max(...results.map(r => r.exitCode ?? 2)));
 }
 

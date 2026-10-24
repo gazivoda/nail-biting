@@ -49,7 +49,8 @@ if [ -n "$BASE" ]; then
   if [ "$HITS" = 0 ]; then pass "secret scan of git diff $BASE..HEAD ($(wc -l <"$LOG/added.txt" | tr -d ' ') added lines): 0 hits"; else fail "secret scan: $HITS hit(s)"; grep -nE "$PATTERNS" "$LOG/added.txt" | cut -c1-160 | head; fi
 else note "secret scan skipped: no merge-base with origin/main"; fi
 
-PATCH=/private/tmp/claude-501/-Users-igorgazivoda-nail-habit-app/21f5a19b-6228-40f9-b8b4-d32a1d4d5d1a/scratchpad/preexisting-wip.patch
+# The owner's uncommitted Paddle filter, saved as a patch. Point PADDLE_PATCH at the file to check it applies.
+PATCH="${PADDLE_PATCH:-/private/tmp/claude-501/-Users-igorgazivoda-nail-habit-app/21f5a19b-6228-40f9-b8b4-d32a1d4d5d1a/scratchpad/preexisting-wip.patch}"
 if [ -f "$PATCH" ]; then
   if git apply --check "$PATCH" 2>"$LOG/patch.log"; then pass "owner's Paddle WIP patch: git apply --check clean"; else fail "owner's Paddle WIP patch no longer applies (see $LOG/patch.log)"; head -5 "$LOG/patch.log"; fi
 else note "paddle patch file not found at $PATCH"; fi
