@@ -546,4 +546,79 @@ The code was trusted. Items marked *fixed* were corrected in `ARCHITECTURE.md` b
 
 ## QA results
 
-<!-- WS13-QA-RESULTS: the WS13 agent fills this in -->
+Run by WS13 on 2026-10-24 on the branch `worktree-agent-a69ebea783dc66ca0` (= `main` at b6b16f9 plus the WS13 commits), headless
+Chrome 155 on macOS, Node 24. **WS12 (localization) was not merged yet: re-run the gates, the privacy audit and Lighthouse after it
+lands** (commands at the end). Reports: `privacy-audit-report.md`, `flags-off-diff-report.md`, `accessibility-report.md`,
+`lighthouse-report.md`.
+
+### Gates (`bash scripts/qa/gates.sh`, one command)
+
+| Gate | Result |
+|---|---|
+| `npm run build:web` | exit 0 |
+| `npm test` | 152 files passed + 1 skipped (the real-browser privacy smoke, which runs with `PRIVACY_AUDIT=1`); 2,885 tests passed, 2 skipped (baseline before WS13: 151 files / 2,842 tests; +43 tests = the privacy-audit judge's 37 and the accessibility regression tests) |
+| lint, scoped to `src server scripts electron shared` | 23 errors / 4 warnings: the pre-existing baseline, same files and rules (plain `npm run lint` also walks `.claude/worktrees/*`) |
+| `node --check` | `server.js`, `email.js`, `trialFollowup.js`, every file under `server/` and `shared/`: 85 files, 0 failures |
+| `npm run electron:typecheck`, `seo:check`, `og:check`, `eval:detection` | all pass |
+| dev-only code in the bundle (`seedPreviewData`, `previewKind`, `dev-override`, `readDevOverrides`, `__sbProbe` over `dist/assets`) | 0 files |
+| secret scan of `git diff ffbf29a..HEAD` (added lines: API keys, private keys, JWTs, provider tokens) | 0 hits. The base is ffbf29a, not `origin/main`, because `origin/main` moved (see below) and ffbf29a was already scanned for push #1 |
+| the owner's uncommitted Paddle patch (`PADDLE_PRICE_IDS`) | `git apply --check` clean, also on the merge candidate below |
+| Dockerfile reproduced by hand (`bash scripts/qa/docker-repro.sh`; docker was not used) | stage 1 builds from only the files the Dockerfile copies; stage 3 boots `server.js` from only the files it copies; 24 key routes answer as expected; all 27 flags off; server log clean. Production dependencies are not reproduced (`node_modules` is the repo's), see (f) |
+| **Merge candidate** = this branch + `origin/main` (46a484c), in a scratch worktree | merges without conflict; every gate above passes (154 files / 2,918 tests); Docker reproduction passes |
+
+**`origin/main` has moved.** It is 46a484c, not ffbf29a: another session pushed two SEO commits (a2f94c5, 46a484c) on top of push
+#1. Local `main` does not contain them, so **merge `origin/main` before the next push** (a plain push is rejected), then re-run
+`bash scripts/qa/gates.sh`. The merge is clean and both sets of changes coexist (`flags-off-diff-report.md`, section 5.4).
+
+### Privacy audit (`npm run privacy:audit`; 5 minutes of detection per mode, fake camera, real server, real sign-in)
+
+| Mode | Verdict | Requests | `/api/events/*` | Hosts contacted |
+|---|---|---|---|---|
+| flags off (production as shipped) | **PASS** | 118 | 0 | own origin, `www.googletagmanager.com`, `www.google-analytics.com` |
+| sync OFF (flag on, nobody opted in) | **PASS** | 130 | 0 | same |
+| sync ON (opted in through the UI) | **PASS** | 140 | 8 POSTs, 9 event records, only whitelisted keys | same |
+| sync OFF, probe build (real alarms, real landmark data in the page) | **PASS** | 133 | 0 | same |
+| sync ON, probe build | **PASS** | 142 | 8 POSTs, 11 events, all 12 whitelisted keys seen, nothing else | same |
+| canary (the page sends images, landmarks, a beacon to a stranger on purpose) | **CAUGHT** 11 of 11 | | | |
+
+No request carried image data, landmarks, frames or video; the diary photo's bytes (4 fingerprints, raw/hex/base64/percent-encoded)
+appear in no request; the service worker (active, 65 requests of its own) and its code have no upload path. **What it cannot
+prove:** a real hand or face (Chrome's fake camera is a test pattern; the probe build injects generated landmarks), Safari or
+Firefox, the desktop app, Paddle checkout. Details and limits: `privacy-audit-report.md` section 5.
+
+### Flags off against production (`flags-off-diff-report.md`)
+
+With every flag off the tree behaves like production apart from changes that each trace to WS6, WS7a or WS11b: 0 unexplained
+differences in 531 dist files, 91 HTTP responses (61 identical) and 25 signed-in DOM captures per build (identical in body, title,
+console errors and every pixel, at 1280 and 390 px, light and dark). Merging `origin/main` is additive. Findings: F2/F3 (extra JS fetched and
+precached with flags off), F4 (a gzip quirk on closed OG cards), F5 (WS6 head tags are unconditional). **Four accessibility fixes
+afterwards are visible with flags off** (section 10 of that report): two class names on the Bite reasons fields in Settings and the
+colour of the "Detected!" label in light mode (commit `2d5491c`: revert it if "nothing visible" must hold literally), and two
+reflow fixes that only act when something is marked "Not a bite" or in the phone view.
+
+### Accessibility (`accessibility-report.md`)
+
+29 surfaces with every UI flag on, light and dark, 1280 / 390 / 320 px: real Tab walks, focus indicators by pixel comparison, Escape
+and focus return, accessibility tree, live regions, reduced motion, contrast, target size, reflow, axe 4.13 in every state.
+**29 issues found: 15 fixed (21 files under `src/`, with tests), 14 open, none High** (list in (e)). Lighthouse accessibility 100 on all
+9 reachable URL and form-factor combinations, and 100 on all 16 site-page runs below. Not verified: a real screen reader, Safari,
+Firefox, forced colours, 200 % zoom, the Picture-in-Picture strip.
+
+### Lighthouse (`lighthouse-report.md`, local server, 3 runs, medians)
+
+SEO 100 and accessibility 100 on all 8 pages, mobile and desktop (including the WS11b feature page and the WS11a compare page with
+their flags on). Best practices 100 except `/` (92-96: the console 404 of `/auth/providers`, see (e)). Performance: 93-94 mobile and 100
+desktop on `/`, `/how-it-works`, `/pricing`, `/about`; 78 mobile / 97 desktop on the compare and feature pages (the same as the compare page
+that already existed); **blog post 54 mobile / 73 desktop because of a layout shift of 0.72** (not from the swarm). Installability: Chrome
+reports no errors and no manifest errors with `phone_companion` off and on (Lighthouse 13 has no PWA category).
+
+### Re-run after WS12 or any merge
+
+```
+git merge origin/main                          # first, see above
+bash scripts/qa/gates.sh                       # build, tests, lint, syntax, typecheck, seo/og, eval, leaks, secrets, Paddle patch
+bash scripts/qa/docker-repro.sh                # the Dockerfile by hand
+npm run privacy:audit                          # 5 min per mode, sync off and on (add --mode all for flags-off and the canary)
+node scripts/lighthouse/run.mjs --runs 3 && node scripts/lighthouse/report.mjs
+```
+
