@@ -17,7 +17,7 @@
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { spawn } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import net from 'node:net';
@@ -102,6 +102,37 @@ const jsonLd = html => [...html.matchAll(/<script type="application\/ld\+json">(
 const pageDataOf = html => JSON.parse(html.match(/<script type="application\/json" id="sb-page-data">([\s\S]*?)<\/script>/)[1]);
 const dist = file => readFileSync(join(ROOT, 'dist', file), 'utf8');
 
+// The links to the open pages: the data block the server writes into the head (src/features/gatedLinks.ts reads it) and
+// the list at the end of the crawler article. Absent, not empty, while no page is open.
+const GATED_LINKS_ID = 'sb-gated-links';
+const gatedLinksText = html => html.match(new RegExp(`<script type="application/json" id="${GATED_LINKS_ID}">([\\s\\S]*?)</script>`))?.[1] ?? null;
+const gatedLinksOf = html => { const text = gatedLinksText(html); return text === null ? null : JSON.parse(text); };
+const gatedHrefsIn = html => PATHS.filter(path => html.includes(`href="${path}"`));
+// What a page is called in a footer: its title up to the first colon (the pages' titles are "Name: what it is").
+const footerLabel = title => title.split(':')[0].trim();
+// Pages of every kind that carry the site chrome and the crawler article.
+const KINDS = ['/', '/pricing', '/about', '/how-it-works', '/blog', '/blog/how-to-stop-nail-biting', '/compare/ai-detection-apps', '/solutions/for-adhd', '/privacy'];
+
+// The React footer from the data block a server wrote. There is no DOM here: the page is a stub with the one method the
+// reader calls, and the render is the real component (react-dom/server).
+async function renderWithPage(load, blockText, props = {}) {
+  const [{ createElement }, { renderToStaticMarkup }, Component] = await Promise.all([import('react'), import('react-dom/server'), load()]);
+  const had = Object.prototype.hasOwnProperty.call(globalThis, 'document');
+  const before = globalThis.document;
+  globalThis.document = { querySelector: () => null, getElementById: id => (id === GATED_LINKS_ID && blockText !== null ? { textContent: blockText } : null) };
+  try { return renderToStaticMarkup(createElement(Component, props)); } finally {
+    if (had) globalThis.document = before; else delete globalThis.document;
+  }
+}
+const FOOTER_ONLY = async () => (await import('../src/components/site/SiteFooter.tsx')).SiteFooter;
+const WHOLE_PAGES = {
+  '/': async () => (await import('../src/pages/Landing.tsx')).Landing,
+  '/pricing': async () => (await import('../src/pages/PricingPage.tsx')).PricingPage,
+  '/about': async () => (await import('../src/pages/About.tsx')).About,
+  '/how-it-works': async () => (await import('../src/pages/HowItWorks.tsx')).HowItWorks,
+};
+const footerOf = html => html.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '';
+
 describe.skipIf(!built)('feature pages, every flag off', () => {
   let srv;
   beforeAll(async () => { srv = await startServer(''); }, 30000);
@@ -153,6 +184,35 @@ describe.skipIf(!built)('feature pages, every flag off', () => {
   it('adds no marker, and makes no request for flags: the pages are the built pages', async () => {
     for (const page of ['/', '/about', '/how-it-works', '/pricing', '/compare/ai-detection-apps', '/this-does-not-exist']) {
       big((await get(srv, page)).text, page).notToContain('sb-copy-flags');
+      big((await get(srv, page)).text, page).notToContain(GATED_LINKS_ID);
+    }
+  });
+
+  it('links to none of them, on any kind of page: no data block, no list in the crawler article, no anchor', async () => {
+    for (const page of KINDS) {
+      const { status, text } = await get(srv, page);
+      expect(status, page).toBe(200);
+      big(text, page).notToContain(GATED_LINKS_ID);
+      big(articleOf(text), `${page} article`).notToContain('aria-label="More from Stop Biting"');
+      expect(gatedHrefsIn(text), `${page} links`).toEqual([]);
+    }
+    big((await get(srv, '/this-does-not-exist')).text).notToContain(GATED_LINKS_ID);
+  });
+
+  it('the footer draws none of them for a visitor whose page carries no data block', async () => {
+    for (const [path, load] of Object.entries(WHOLE_PAGES)) {
+      const html = await renderWithPage(load, null);
+      expect(footerOf(html), `${path} has a footer`).toMatch(/^<footer/);
+      for (const gated of PATHS) big(html, path).notToContain(`href="${gated}"`);
+    }
+  });
+
+  it('the browser bundle carries no address of a gated page: the footer learns them from the server, and only while they are open', () => {
+    const files = readdirSync(join(ROOT, 'dist/assets')).filter(f => f.endsWith('.js'));
+    expect(files.length).toBeGreaterThan(5);
+    for (const file of files) {
+      const text = readFileSync(join(ROOT, 'dist/assets', file), 'utf8');
+      for (const path of PATHS) expect(text.includes(path), `${file} contains ${path}`).toBe(false);
     }
   });
 
@@ -258,9 +318,98 @@ describe.skipIf(!built)('feature pages, one flag at a time', () => {
     }
   });
 
+  // The page is linked from the site chrome while its flag is on, for readers who run the page and for crawlers who do
+  // not, from one source: the data block in the head and the list at the end of the crawler article are the same pairs.
+  it.each(PAGES)('%s is linked on every kind of page while %s is on, in the data block and in the crawler article, and no other page is', async (path, flag) => {
+    const srv = servers.get(flag);
+    const label = footerLabel(JSON.parse((await get(srv, `/page-data${path}.json`)).text).title);
+    expect(label.length).toBeGreaterThan(3);
+    for (const page of [...KINDS, path]) {
+      const { status, text } = await get(srv, page);
+      expect(status, page).toBe(200);
+      expect(gatedLinksOf(text), `${page} data block`).toEqual([[path, label]]);
+      expect(text.indexOf(GATED_LINKS_ID), `${page}: the block is in the head`).toBeLessThan(text.indexOf('</head>'));
+      const article = articleOf(text);
+      expect(article, `${page} article`).toContain(`<nav aria-label="More from Stop Biting"><ul><li><a href="${path}">`);
+      expect(textOf(article.match(/<nav aria-label="More from Stop Biting">[\s\S]*?<\/nav>/)[0]), `${page} article list`).toBe(label);
+      // the noscript site navigation, the data block and the article name the same page, and no other gated page appears anywhere:
+      // not in the chrome, and not in the open page's own "Related reading" either (a link to a closed page is a link to the 404)
+      expect(gatedHrefsIn(text), `${page} anchors`).toEqual([path]);
+      for (const other of PATHS.filter(p => p !== path)) big(text, page).notToContain(other);
+    }
+    for (const other of PATHS.filter(p => p !== path)) {
+      big((await get(srv, `/page-data${path}.json`)).text, `${path} data`).notToContain(other);
+    }
+    // a page that is not a marketing page, or not found, carries nothing
+    big((await get(srv, '/this-does-not-exist')).text).notToContain(GATED_LINKS_ID);
+  });
+
+  it.each(PAGES)('%s: the footer React draws from that data block links it, in the style of the other footer links, and links no other', async (path, flag) => {
+    const srv = servers.get(flag);
+    const label = footerLabel(JSON.parse((await get(srv, `/page-data${path}.json`)).text).title);
+    const home = (await get(srv, '/')).text;
+    const block = gatedLinksText(home);
+    expect(block, 'the home page carries the block').not.toBeNull();
+    const anchor = `<a href="${path}" class="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">${label}</a>`;
+
+    const footer = await renderWithPage(FOOTER_ONLY, block, { cta: false });
+    expect(footer).toContain(anchor);
+    expect(footer.indexOf(anchor), 'after the legal links').toBeGreaterThan(footer.indexOf('href="/refund-policy"'));
+    expect(gatedHrefsIn(footer)).toEqual([path]);
+    // the same styling as an ordinary footer link, so the 44px target and the hover colour come with it
+    expect(footer).toContain('href="/blog" class="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]"');
+
+    // the whole page, not only the footer, for each page the footer is drawn into without a request
+    for (const [pagePath, load] of Object.entries(WHOLE_PAGES)) {
+      const html = await renderWithPage(load, gatedLinksText((await get(srv, pagePath)).text));
+      expect(footerOf(html), `${pagePath} footer`).toContain(anchor);
+      expect(gatedHrefsIn(html), `${pagePath} anchors`).toEqual([path]);
+    }
+    // and the same page without the block (the cached app shell) shows none
+    expect(gatedHrefsIn(await renderWithPage(WHOLE_PAGES['/pricing'], null))).toEqual([]);
+  });
+
+  it('the footer React draws never requests the flags: the data block is the only source', async () => {
+    const calls = [];
+    const realFetch = globalThis.fetch;
+    globalThis.fetch = (...args) => { calls.push(String(args[0])); return realFetch(...args); };
+    try {
+      const srv = servers.get('phone_companion');
+      await renderWithPage(FOOTER_ONLY, gatedLinksText((await get(srv, '/')).text), { cta: false });
+      await new Promise(r => setTimeout(r, 50));
+    } finally { globalThis.fetch = realFetch; }
+    expect(calls.filter(url => /\/api\//.test(url))).toEqual([]);
+  });
+
   it('the unpublished copy file is still not served', async () => {
     for (const srv of servers.values()) expect((await get(srv, '/seo-gated.json')).status).toBe(404);
   });
+});
+
+describe.skipIf(!built)('links to open pages when several flags are on', () => {
+  it('lists every open page once, in the order of the build, and not the pages whose flags are off', async () => {
+    const srv = await startServer('phone_companion,detection_behaviors,referrals');
+    try {
+      const home = (await get(srv, '/')).text;
+      const links = gatedLinksOf(home);
+      expect(links.map(([href]) => href)).toEqual(PATHS.filter(p => ['phone_companion', 'detection_behaviors', 'referrals'].includes(FEATURE_PAGE_FLAGS[p])));
+      expect(new Set(links.map(([href]) => href)).size).toBe(links.length);
+      for (const [href] of links) expect((await get(srv, href)).status, `${href} exists`).toBe(200);
+      expect(gatedHrefsIn(home).sort()).toEqual(links.map(([href]) => href).sort());
+      const footer = await renderWithPage(FOOTER_ONLY, gatedLinksText(home), { cta: false });
+      expect(gatedHrefsIn(footer).sort()).toEqual(links.map(([href]) => href).sort());
+    } finally { await srv.stop(); }
+  }, 30000);
+
+  it('a flag that is not a page\'s own opens no link to it (the sync flag opens none)', async () => {
+    const srv = await startServer('event_sync,urge_timer,share_links');
+    try {
+      const home = (await get(srv, '/')).text;
+      const path = '/features/share-with-therapist';
+      const title = JSON.parse((await get(srv, `/page-data${path}.json`)).text).title;
+      expect(gatedLinksOf(home)).toEqual([[path, footerLabel(title)]]);
+    } finally { await srv.stop(); }
+  }, 30000);
 });
 
 describe.skipIf(!built)('page copy that depends on other flags', () => {

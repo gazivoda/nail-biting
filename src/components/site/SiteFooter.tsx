@@ -1,6 +1,8 @@
+import { useMemo } from 'react';
 import { ClosingCta } from './ClosingCta';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Rings } from './Rings';
+import { readGatedLinks } from '../../features/gatedLinks';
 import { useLocale } from '../../i18n/hooks';
 import { useT as useChromeT } from '../../i18n/scopes/marketing-chrome';
 import { useSitePaths } from '../../i18n/marketing/useSite';
@@ -16,6 +18,10 @@ export function SiteFooter({ cta = true, ctaSource, page }: { cta?: boolean; cta
   const { locale } = useLocale();
   // The blog and the legal pages exist only in English: on a localized page those links say so (hreflang) and a line below says it.
   const english = locale === 'en' ? {} : { hrefLang: 'en' };
+  // Pages that exist only while their feature flag is on (/features/..., see src/features/gatedLinks.ts): the server lists the
+  // open ones in the page it sent, so there is no link while a page is closed and no request to find out. They are English
+  // only, like the blog, so a localized footer does not carry them.
+  const gatedLinks = useMemo(() => (locale === 'en' ? readGatedLinks() : []), [locale]);
   return (
     <>
     {cta && <ClosingCta source={ctaSource} />}
@@ -34,9 +40,10 @@ export function SiteFooter({ cta = true, ctaSource, page }: { cta?: boolean; cta
             <LanguageSwitcher page={page} variant="footer" />
             {locale !== 'en' && <p className="sg-small mt-3">{t('footer.englishOnly')}</p>}
           </div>
-          {/* Written out one by one: these eight hrefs are the site's whole
+          {/* Written out one by one: these eight hrefs are the site's fixed
               legal and navigational surface, and spelling them as real
-              attributes keeps them greppable. */}
+              attributes keeps them greppable. The links after them are the
+              feature pages that are open right now, from the server. */}
           <nav aria-label={t('footer.nav')} className="grid grid-cols-2 gap-x-10 text-[0.9375rem] font-semibold text-[color:var(--sg-ink-2)]">
             <a href={paths.home} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.home')}</a>
             <a href="/blog" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.blog')}</a>
@@ -46,6 +53,9 @@ export function SiteFooter({ cta = true, ctaSource, page }: { cta?: boolean; cta
             <a href="/privacy" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.privacy')}</a>
             <a href="/terms-and-conditions" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.terms')}</a>
             <a href="/refund-policy" {...english} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{t('footer.refund')}</a>
+            {gatedLinks.map(({ href, label }) => (
+              <a key={href} href={href} className="inline-flex min-h-11 items-center hover:text-[color:var(--sg-ink)]">{label}</a>
+            ))}
           </nav>
         </div>
         <p aria-hidden="true" className="mt-12 select-none font-display text-[clamp(3.5rem,13vw,11rem)] font-extrabold leading-[0.85] tracking-[-0.06em] text-[color:var(--c-signal)]">{t('footer.tagline')}</p>
