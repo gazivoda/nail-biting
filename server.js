@@ -20,8 +20,9 @@ import {
   openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
 } from './server/marketing/gatedPages.js';
 import { createCopyIsOn } from './server/marketing/copyFlags.js';
+import { createLifetimeCopy } from './server/marketing/lifetimeCopy.js';   // the Lifetime plan in the words crawlers read (flag lifetime_plan)
 import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
-import { TRIAL_HYPHEN, TRIAL_MS, describeDays, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS)
+import { TRIAL_HYPHEN, TRIAL_MS, describeDays, lifetimePriceUsd, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS), the Lifetime list price
 import {
   decorateEnglishHtml, liveLocales, loadLocaleFiles, localeStates, localizedNoscriptNav, registerLocalePages, servedLocales,
   withLocaleAlternates,
@@ -805,6 +806,15 @@ if (!existsSync(distPath)) {
   const copyIsOn = createCopyIsOn(flags);
   const COPY_ACTIVE = anyRuleActive(copyIsOn);
   const copyHtml = text => flagAware(text, copyIsOn);
+  // The Lifetime plan, for the readers that do not run the page: on only when the flag is on AND the server knows the
+  // Lifetime price id (the visible card needs the same two things, server/marketing/copyFlags.js). Off, every function
+  // below returns what it is given, so nothing is served differently. Decided once, here: flags change only on a restart.
+  const LIFETIME = createLifetimeCopy({ on: copyIsOn('lifetime_plan'), price: lifetimePriceUsd() });
+  if (LIFETIME.on) {
+    console.log(`[marketing] lifetime_plan: pricing copy names the Lifetime plan ($${LIFETIME.price}; LIFETIME_PRICE_USD must equal the Paddle price)`);
+  } else if (flags.isOn('lifetime_plan')) {
+    console.warn('[marketing] lifetime_plan is on but no Lifetime price id (PADDLE_PRICE_ID_LIFETIME) is in the server\'s environment: the pricing copy, schema and llms.txt do not mention the Lifetime plan');
+  }
   // dist/seo-gated.json: the copy of the pages that exist only while a flag is on, and the flag
   // of each. Read by this server and never served (the 404 route further down). Read here, not
   // where the rest of the gated state is built, because /og and /posts are mounted next.
@@ -971,7 +981,7 @@ if (!existsSync(distPath)) {
   function injectSsrArticle(html, articleInnerHtml) {
     return html
       .replace('</head>', `  ${SSR_ARTICLE_HEAD}\n  </head>`)
-      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${copyHtml(articleInnerHtml)}</article>`);
+      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${LIFETIME.article(copyHtml(articleInnerHtml))}</article>`);
   }
 
   // Sections come straight from blogPosts.ts via seo-content.json. `body` and
@@ -1113,7 +1123,7 @@ if (!existsSync(distPath)) {
 
   function injectNoscriptNav(html, extraLinks = []) {
     const link = ([href, label]) =>
-      `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`;
+      `<li><a href="${escapeHtml(href)}">${escapeHtml(LIFETIME.navLabel(label))}</a></li>`;
     const extra = extraLinks.length
       ? `<h2>Articles</h2><ul>${extraLinks.map(link).join('')}</ul>`
       : '';
@@ -1507,7 +1517,8 @@ if (!existsSync(distPath)) {
     '',
   );
   if (existsSync(indexPath)) {
-    indexHtmlRaw = readFileSync(indexPath, 'utf-8');
+    // The one product node (#app) of the shell says what is for sale: with the Lifetime plan on, it lists that offer too.
+    indexHtmlRaw = LIFETIME.shell(readFileSync(indexPath, 'utf-8'));
     // MedicalCondition comes off both shells — it is only ever re-emitted
     // per page. FAQPage comes off the default shell too, so it survives on the
     // homepage alone (see app.get('/') below); no other route may carry it.
@@ -2103,23 +2114,25 @@ if (!existsSync(distPath)) {
   // registered with every flag off, so both files are served byte for byte as built.
   const LLMS_TXT_PATH = join(distPath, 'llms.txt');
   const LLMS_FULL_PATH = join(distPath, 'llms-full.txt');
-  if (GATED_OPEN && existsSync(LLMS_TXT_PATH)) {
+  // The Lifetime plan (LIFETIME.llmsTxt / .llmsFull) is the same kind of addition: a Lifetime bullet in the Pricing
+  // block, and a Pricing section llms-full.txt never had, only while the plan is for sale.
+  if ((GATED_OPEN || LIFETIME.on) && existsSync(LLMS_TXT_PATH)) {
     let llmsTxt = null;   // built on the first request: COMPARE_META (the descriptions) is declared further down
     app.get('/llms.txt', (_req, res) => {
-      llmsTxt ??= withGatedLlmsTxt(
+      llmsTxt ??= LIFETIME.llmsTxt(withGatedLlmsTxt(
         readFileSync(LLMS_TXT_PATH, 'utf-8'),
         gatedLlmsTxtLines(GATED_CONTENT, path => COMPARE_META[path]),
-      );
+      ));
       res.set('Cache-Control', 'public, max-age=0').type('text/plain; charset=utf-8').send(llmsTxt);
     });
   }
-  if ((GATED_OPEN || COPY_ACTIVE) && existsSync(LLMS_FULL_PATH)) {
+  if ((GATED_OPEN || COPY_ACTIVE || LIFETIME.on) && existsSync(LLMS_FULL_PATH)) {
     // A section a marker emptied leaves a bare "### " line in the text version; drop it with its blank line.
     const resolveBlock = text => flagAware(fillCopyTokens(text, COPY_TOKENS), copyIsOn).replace(/^### *\n\n/gm, '');
-    const llmsFullTxt = withGatedLlmsFull(
+    const llmsFullTxt = LIFETIME.llmsFull(withGatedLlmsFull(
       copyHtml(readFileSync(LLMS_FULL_PATH, 'utf-8')),
       gatedLlmsFullText(GATED_CONTENT, GATED_FILE.llmsFull, resolveBlock),
-    );
+    ));
     app.get('/llms-full.txt', (_req, res) => {
       res.set('Cache-Control', 'public, max-age=0').type('text/plain; charset=utf-8').send(llmsFullTxt);
     });
@@ -2336,11 +2349,13 @@ if (!existsSync(distPath)) {
 
   app.get('/pricing', (_req, res) => {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
-    let injected = injectMeta(indexHtml, {
+    // LIFETIME.meta hands the object back untouched unless the Lifetime plan is for sale; the literals stay as they
+    // were (scripts/sync-seo.mjs reads them for llms.txt).
+    let injected = injectMeta(indexHtml, LIFETIME.meta({
       title: 'Pricing: $2.99/month or $29/year | Stop Biting',
       description: `Stop Biting pricing: ${TRIAL_HYPHEN} free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.`,
       canonical: 'https://stopbiting.today/pricing',
-    });
+    }));
     // This page used to declare its own SoftwareApplication with its own copy of
     // the three Offers. The shell (index.html) already ships that entity on every
     // route, so the money page described the product as two unlinked nodes — and
@@ -2356,7 +2371,7 @@ if (!existsSync(distPath)) {
       '@id': 'https://stopbiting.today/pricing',
       name: 'Stop Biting Pricing',
       url: 'https://stopbiting.today/pricing',
-      description: `Pricing for Stop Biting: ${TRIAL_HYPHEN} free trial, then $2.99/month or $29/year.`,
+      description: LIFETIME.pageDescription(`Pricing for Stop Biting: ${TRIAL_HYPHEN} free trial, then $2.99/month or $29/year.`),
       isPartOf: { '@id': WEBSITE_ID },
       mainEntity: { '@id': APP_ID },
       // Selectors resolve against the SSR <h1> and the `article-summary`

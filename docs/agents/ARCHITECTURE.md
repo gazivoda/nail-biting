@@ -746,6 +746,20 @@ crawler copy in `server.js` is built from `seo-content.json` by the same validat
    `scripts/flagCopySources.test.mjs` fails when a source sentence is reworded and its rule stops matching. A sign-in method counts
    as on only when its keys are configured (`server/marketing/copyFlags.js`).
 
+3. *The Lifetime plan in the words crawlers read* (flag `lifetime_plan`; `server/marketing/lifetimeCopy.js`, test
+   `scripts/lifetimeCopy.test.mjs`). The pricing section shows three cards while the flag is on, so the `<title>`, description, the
+   `/pricing`, homepage and how-it-works crawler articles, the noscript nav label, the product node's `offers` (patched once into the
+   shell at start-up, so every route carries the same node) and `llms.txt` / `llms-full.txt` say so too. `copyIsOn('lifetime_plan')` is
+   the flag AND a Lifetime price id in the server's environment (`copyFlags.js`: the card needs the build's id, which the server
+   cannot see). It is not a `RULES` entry because it adds markup, and not a marker because a marker's text would enter a page's
+   freshness fingerprint: each source sentence is found by its exact text (`ANCHORS`, which a test finds in `server.js` once each)
+   and rewritten at serve time, and the handlers' literals stay as they were, so with the plan not for sale every response is byte for
+   byte the old one (240 URLs compared, status, headers and body) and no `lastmod` moves. The price is `LIFETIME_PRICE_USD` in
+   `shared/plans.js` and must equal the Paddle price. **Not covered, on purpose** (the client has no marker for this flag, so a
+   change would make the visible text and the schema disagree): the `/pricing` FAQ ("pick the monthly or yearly plan"), the homepage
+   FAQ answers, the compare and solutions pages' price rows and calls to action, the calculators' "then $2.99/month or $29/year", the
+   localized pages (draft).
+
 **A page whose address contains a secret** (WS10 `/share/<token>`) must not be the app's HTML shell: that shell loads
 Google Analytics (`index.html`) and the app bundle. `server/share/page.js` renders a self-contained document (inline style
 and one inline script allowed by hash in its own CSP, no third party, no cookie, `no-store`, `noindex`,
@@ -1261,7 +1275,8 @@ Details, the owner's Paddle steps and the verification: `docs/agents/ws9-notes.m
 
 **One place for the numbers.** `shared/plans.js` (with `plans.d.ts`): `TRIAL_DAYS` (default 3, whole number 1 to 90 from the environment,
 read at import time, so it is a build argument AND a runtime variable; `vite.config.ts` copies it into the bundle with `define`),
-`TRIAL_MS`, the `${TRIAL_*}` copy tokens (`{{TRIAL_*}}` in `index.html`), free-tier limits, referral and gift numbers.
+`TRIAL_MS`, the `${TRIAL_*}` copy tokens (`{{TRIAL_*}}` in `index.html`), free-tier limits, referral and gift numbers, and `LIFETIME_PRICE_USD`
+(default 99, env override of the same name; the Lifetime list price for the server-rendered words only, which must equal the Paddle price, section 8).
 `scripts/trialLength.test.mjs` fails when a literal trial length appears outside its `ALLOWED` list, which is also the list of the sentences
 a human must edit if the length changes. **One access decision:** `shared/access.js` (`evaluateAccess`), called by
 `src/utils/access.ts` and by the server. Order: active or paused Paddle subscription, then a running grant (lifetime, gift, referral

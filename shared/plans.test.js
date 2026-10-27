@@ -115,3 +115,22 @@ describe('other configurable numbers', () => {
     for (const name of Object.keys(plans)) expect(dts, name).toMatch(new RegExp(`\\b${name}\\b`));
   });
 });
+
+describe('the Lifetime list price (what the server-rendered copy says)', () => {
+  it('is 99 US dollars by default, the price of the Paddle product', () => {
+    expect(plans.DEFAULT_LIFETIME_PRICE_USD).toBe(99);
+    expect(plans.lifetimePriceUsd({})).toBe(99);
+    const out = inChild({ LIFETIME_PRICE_USD: '' }, `import * as p from './shared/plans.js'; console.log(JSON.stringify(p.LIFETIME_PRICE_USD))`);
+    expect(out).toBe(99);
+  });
+
+  it('is overridden by the environment variable LIFETIME_PRICE_USD, read at import time', () => {
+    const out = inChild({ LIFETIME_PRICE_USD: '149' }, `import * as p from './shared/plans.js'; console.log(JSON.stringify(p.LIFETIME_PRICE_USD))`);
+    expect(out).toBe(149);
+    expect(plans.lifetimePriceUsd({ LIFETIME_PRICE_USD: ' 79 ' })).toBe(79);
+  });
+
+  it.each(['', '0', '-5', '9.99', 'ninety', '1e3', '100001', ' '])('ignores the unusable value %j and keeps 99', raw => {
+    expect(plans.lifetimePriceUsd({ LIFETIME_PRICE_USD: raw })).toBe(99);
+  });
+});
