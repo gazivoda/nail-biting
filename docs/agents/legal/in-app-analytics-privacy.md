@@ -199,4 +199,45 @@ one place. If you apply only that, nothing is wrong in the meantime.
 
 ## Privacy audit evidence (`npm run privacy:audit`)
 
-Filled in below after the runs. See the final section.
+Run on this branch (`433b3fa`, built with `npm run build:web`), headless Chrome with a fake camera, the real server and
+a real sign-in, as the audit's own documentation describes (`docs/agents/privacy-audit-report.md`).
+
+**Flag off (`app_analytics` not in `FEATURE_FLAGS`), every mode, 300 s of detection each**
+
+| Mode | Result | Video frames/s to MediaPipe | Logged | Requests | Google Analytics requests |
+|---|---|---|---|---|---|
+| canary (the audit's negative control) | CAUGHT, 11 of 11 deliberate leaks | n/a | n/a | 135 | n/a |
+| flagsoff (`FEATURE_FLAGS` empty) | PASS | 9.64 | 7 bites | 136 | 3 |
+| off (sync flag on, nobody opted in) | PASS | 9.63 | 7 bites, 1 urge, 1 photo | 150 | 3 |
+| on (opted in to sync) | PASS | 9.60 | 7 bites, 1 urge, 1 photo | 160 | 3 |
+| off, probe build (real alarms) | PASS | 9.48 | + 2 real alarms | 151 | 3 |
+| on, probe build (real alarms) | PASS | 9.44 | + 2 real alarms | 162 | 3 |
+
+The committed baseline in `privacy-audit-report.md` shows 2 Google Analytics requests per run; it is now 3 with the flag
+off because the audit's fresh browser signs in, which is what `signin_complete` counts. No request left for a host outside
+the allowlist and none carried an image, a landmark or a video.
+
+**Flag on (`app_analytics` added), which Google Analytics events went out.** The audit's own result file keeps only the first
+300 characters of each URL and no beacon bodies, so the event names were read with a scratch copy of the runner that is
+identical except that it prints the `en=` name and any custom parameter of every `google-analytics.com/g/collect`
+request (not committed; the judge is untouched).
+
+| Run | Verdict | Events seen, in order | Custom parameters on our events |
+|---|---|---|---|
+| flag off, 60 s | PASS | `page_view`, `signin_complete`, `scroll` (GA's own) | none |
+| flag on, 60 s | PASS | `page_view`, `signin_complete`, `scroll`, **`detection_start`** (about 5.9 s in, once) | none |
+| flag on, probe build, 120 s, 1 real alarm | PASS | the above + **`first_alarm`** | none |
+| flag on, probe build, 300 s, 2 real alarms | PASS | the above, `first_alarm` exactly once | none |
+
+(`scroll` carries GA's built-in `percent_scrolled`; that is Google's own event, not ours.) `signin_complete` goes out right
+after `page_view`, which shows the wait for the page's load event works: the Google Analytics tag exists by then.
+
+**What this does and does not prove.** The audit **passes with the flag on**, and that is correct by its own rules: it
+hunts for images, landmarks, video, the diary photo and hosts outside the allowlist, and `en=detection_start` is none of
+those. It does not look at event names, so it cannot tell the owner that a camera-derived signal now reaches Google. **A
+green audit here is not approval of the wording**; this draft is the gate. If you want the audit to enforce the promise
+too, the follow-up is a rule that lists the allowed Google Analytics event names and fails on any other name or any
+custom (`ep.`/`epn.`) parameter on ours. That changes what the audit judges, so it is your call and was not done here.
+
+Not exercised: a real camera, a real hand, Safari, Firefox, a real Google Analytics property (the audit never reaches
+Google's collector; it only records the request the page makes).
