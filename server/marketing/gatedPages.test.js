@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { createFlags } from '../features.js';
 import {
-  gatedFlagOf, gatedLlmsFullText, gatedLlmsTxtLines, gatedNavLinks, gatedOgFile, gatedSitemapEntries, isClosedGatedFile, isGateOpen,
+  GATED_LINKS_ID, gatedFlagOf, gatedFooterLinks, gatedLinkLabel, gatedLinksArticleHtml, gatedLinksMarkerTag, gatedLlmsFullText,
+  gatedLlmsTxtLines, gatedNavLinks, gatedOgFile, gatedSitemapEntries, isClosedGatedFile, isGateOpen,
   jsonForScript, openGatedPages, pageDataPath, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
 } from './gatedPages.js';
 
@@ -181,5 +182,52 @@ describe('llms files and cards for open pages', () => {
     expect(text).not.toContain('<!--');
     expect(text).not.toContain(String.fromCharCode(0x2028));
     expect(JSON.parse(text)).toEqual({ a: '</script><!--', b: String.fromCharCode(0x2028) });
+  });
+});
+
+describe('links to the open pages: footer, marker and crawler article', () => {
+  const open = {
+    '/features/phone-companion': { title: 'Log nail biting from your phone in two taps' },
+    '/features/referral-program': { title: 'Refer a friend: you both get bonus access' },
+    '/solutions/cuticle-biting': { title: 'Cuticle and skin biting: the same mouth alarm, logged under its own name' },
+  };
+  const escape = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  it('is one [href, label] per open page, in file order, and nothing when none is open', () => {
+    expect(gatedFooterLinks(open)).toEqual([
+      ['/features/phone-companion', 'Log nail biting from your phone in two taps'],
+      ['/features/referral-program', 'Refer a friend'],
+      ['/solutions/cuticle-biting', 'Cuticle and skin biting'],
+    ]);
+    expect(gatedFooterLinks({})).toEqual([]);
+    expect(gatedFooterLinks(undefined)).toEqual([]);
+    expect(gatedFooterLinks({ '/features/x': {} })).toEqual([]);
+  });
+
+  it('labels a page with its title up to the first colon, and with the whole title when that leaves nothing', () => {
+    expect(gatedLinkLabel('Refer a friend: you both get bonus access')).toBe('Refer a friend');
+    expect(gatedLinkLabel('No colon in this one')).toBe('No colon in this one');
+    expect(gatedLinkLabel(': starts with one')).toBe(': starts with one');
+    expect(gatedLinkLabel(undefined)).toBe('');
+  });
+
+  it('writes a data block the footer reads, and adds nothing at all when there is no link', () => {
+    const links = gatedFooterLinks(open);
+    const tag = gatedLinksMarkerTag(links);
+    expect(tag.startsWith(`<script type="application/json" id="${GATED_LINKS_ID}">`)).toBe(true);
+    expect(JSON.parse(tag.replace(/^<script[^>]*>/, '').replace(/<\/script>$/, ''))).toEqual(links);
+    expect(gatedLinksMarkerTag([])).toBe('');
+    // text that looks like the end of the block cannot end it
+    expect(gatedLinksMarkerTag([['/features/a', 'x </script><!--']]).match(/<\/script>/g)).toHaveLength(1);
+  });
+
+  it('lists the same links as real anchors for readers that do not run the page, with the text escaped', () => {
+    const html = gatedLinksArticleHtml(gatedFooterLinks(open), escape);
+    expect(html.startsWith('<nav aria-label="')).toBe(true);
+    expect(html).toContain('<a href="/features/phone-companion">Log nail biting from your phone in two taps</a>');
+    expect(html).toContain('<a href="/features/referral-program">Refer a friend</a>');
+    expect(html.match(/<a /g)).toHaveLength(3);
+    expect(gatedLinksArticleHtml([], escape)).toBe('');
+    expect(gatedLinksArticleHtml([['/features/a', 'R&D "x" <b>']], escape)).toContain('R&amp;D &quot;x&quot; &lt;b&gt;');
   });
 });

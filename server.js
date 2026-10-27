@@ -16,6 +16,7 @@ import { startTrialFollowupJob } from './trialFollowup.js';
 import { registerRoutes } from './server/routes/index.js';
 import { createGoogleLinker } from './server/auth/googleLink.js';
 import {
+  gatedFooterLinks, gatedLinksArticleHtml, gatedLinksMarkerTag,
   gatedLlmsFullText, gatedLlmsTxtLines, gatedNavLinks, gatedSitemapEntries, isClosedGatedFile, isGateOpen, jsonForScript,
   openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
 } from './server/marketing/gatedPages.js';
@@ -902,10 +903,14 @@ if (!existsSync(distPath)) {
   const GATED_CONTENT = Object.fromEntries(Object.entries(
     openGatedPages(GATED_FILE.comparePages ?? {}, GATED_FLAGS, flags),
   ).map(([path, page]) => [path, resolveGatedPage(page, { isOn: copyIsOn, tokens: COPY_TOKENS })]));
-  // [href, label] pairs the noscript site nav gains for the open pages. The only place this
-  // site lists them in its chrome; the React footer never did.
+  // [href, label] pairs the noscript site nav gains for the open pages.
   const GATED_NAV = gatedNavLinks(GATED_CONTENT);
   if (GATED_NAV.length) console.log(`[marketing] pages open (flag on): ${GATED_NAV.map(([href]) => href).join(', ')}`);
+  // The same pages as the site footer links them, while (and only while) they are open: a data block in the head of
+  // every page for the React footer, and a list at the end of the crawler article (injectSsrArticle). Both are '' with
+  // every page closed, so nothing is added to any page then (server/marketing/gatedPages.js).
+  const GATED_LINKS = gatedFooterLinks(GATED_CONTENT);
+  const gatedLinksTag = gatedLinksMarkerTag(GATED_LINKS);
   // path → { lastmod } — the core-page freshness ledger from
   // src/data/pageUpdates.json, the same dates sitemap.xml carries. Each one is
   // pinned to a fingerprint of that page's content and only moves when the
@@ -978,10 +983,13 @@ if (!existsSync(distPath)) {
     '</style>' +
     '<script>document.documentElement.classList.add("js")</script>';
 
-  function injectSsrArticle(html, articleInnerHtml) {
+  // `pageLinks` is false for the localized pages: the pages the list names are English only, and the footer React
+  // draws on those pages does not link them either (src/components/site/SiteFooter.tsx).
+  function injectSsrArticle(html, articleInnerHtml, { pageLinks = true } = {}) {
+    const links = pageLinks ? gatedLinksArticleHtml(GATED_LINKS, escapeHtml) : '';
     return html
       .replace('</head>', `  ${SSR_ARTICLE_HEAD}\n  </head>`)
-      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${LIFETIME.article(copyHtml(articleInnerHtml))}</article>`);
+      .replace('<div id="root">', `<div id="root"><article id="ssr-page-content">${LIFETIME.article(copyHtml(articleInnerHtml))}${links}</article>`);
   }
 
   // Sections come straight from blogPosts.ts via seo-content.json. `body` and
@@ -1691,6 +1699,8 @@ if (!existsSync(distPath)) {
   }
   function sendHtml(res, html, status = 200, lastModified = null) {
     if (copyMarkerTag && status === 200) html = html.replace('</head>', () => `${copyMarkerTag}</head>`);
+    // The links to the open pages, for the React footer (server/marketing/gatedPages.js). '' while none is open.
+    if (gatedLinksTag && status === 200) html = html.replace('</head>', () => `${gatedLinksTag}</head>`);
     // The language switcher's marker and the hreflang links of the four core pages: nothing while no language is served.
     if (status === 200) html = decorateEnglishHtml(html, res.req?.path, LOCALE_CTX);
     if (lastModified) {
@@ -3105,7 +3115,8 @@ if (!existsSync(distPath)) {
   if (indexHtml && servedLocales(LOCALE_STATES).length) {
     const { notices } = registerLocalePages({
       app, files: LOCALE_FILES, states: LOCALE_STATES, shell: indexHtml, notFoundHtml: NOT_FOUND_HTML,
-      sendHtml, injectMeta, injectSsrArticle, schemaTag, copyIsOn,
+      sendHtml, injectMeta, schemaTag, copyIsOn,
+      injectSsrArticle: (html, article) => injectSsrArticle(html, article, { pageLinks: false }),
       noscriptNav: (html, data) => localizedNoscriptNav(html, data, [...SITE_NAV, ...GATED_NAV], escapeHtml),
       k: {
         WEBSITE_ID, ORG_ID, APP_ID, PERSON_ID, SCHEMA_AUTHOR, SCHEMA_SPEAKABLE, PERSON_KNOWS_ABOUT, breadcrumbSchema, faqPageSchema,

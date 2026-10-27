@@ -13,6 +13,9 @@
 //   resolveGatedPage(...)          the page copy for the flags and numbers of this process
 //   gatedNavLinks(content)         the [href, label] pairs the noscript site nav
 //                                  adds for the OPEN pages
+//   gatedFooterLinks(content)      the same pages as the site footer links them (a short
+//                                  label); gatedLinksMarkerTag / gatedLinksArticleHtml
+//                                  write them for the React footer and for crawlers
 //   gatedSitemapEntries(...)       <url> data for the open pages that have a
 //                                  freshness date
 //   withGatedSitemapEntries(...)   splices those into the generated sitemap.xml
@@ -61,6 +64,44 @@ export function isGateOpen(flags, meta) {
 /** [href, label] for the noscript site navigation, in the order the content file lists them. */
 export function gatedNavLinks(gatedContent) {
   return Object.entries(gatedContent ?? {}).map(([path, page]) => [path, page.title]);
+}
+
+// ── Links to the open pages ─────────────────────────────────────────────────
+// A page that exists only while its flag is on needs a link from the site, or nothing but the sitemap and the
+// <noscript> navigation points at it (a crawler that renders the page sees neither). The link must exist exactly
+// while the page does, so it cannot be written into the footer or a post: it is built here, from the open pages,
+// and reaches the footer two ways from the same list:
+//   - a data block in the head of every page, which the React footer reads on its first render without asking
+//     the server anything (src/features/gatedLinks.ts), and
+//   - a list at the end of the crawler article, for readers that do not run the page.
+// With no page open both are the empty string, so the served pages are the built pages.
+
+/** The id of the data block; src/features/gatedLinks.ts reads the same one. */
+export const GATED_LINKS_ID = 'sb-gated-links';
+
+/** A page's name in a footer: its title up to the first colon ("Refer a friend: you both get bonus access" is "Refer a friend"). */
+export function gatedLinkLabel(title) {
+  const whole = String(title ?? '').trim();
+  return whole.split(':')[0].trim() || whole;
+}
+
+/** [href, label] for each open page that has a title, in the order the content file lists them. */
+export function gatedFooterLinks(openContent) {
+  return Object.entries(openContent ?? {})
+    .filter(([, page]) => page?.title)
+    .map(([path, page]) => [path, gatedLinkLabel(page.title)]);
+}
+
+/** The data block for the head, or '' while no page is open. */
+export function gatedLinksMarkerTag(links) {
+  return links.length ? `<script type="application/json" id="${GATED_LINKS_ID}">${jsonForScript(links)}</script>` : '';
+}
+
+/** The list at the end of the crawler article, or '' while no page is open. `escape` is the server's HTML escaper. */
+export function gatedLinksArticleHtml(links, escape) {
+  if (!links.length) return '';
+  const items = links.map(([href, label]) => `<li><a href="${escape(href)}">${escape(label)}</a></li>`).join('');
+  return `<nav aria-label="More from Stop Biting"><ul>${items}</ul></nav>`;
 }
 
 /**
