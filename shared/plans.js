@@ -153,6 +153,26 @@ export function giftDays(env = processEnv()) {
   return parseWholeNumber(env.GIFT_PLAN_DAYS, DEFAULT_GIFT_DAYS, 1, 3650);
 }
 
+// ─── Lifetime plan ────────────────────────────────────────────────────────────
+
+/**
+ * The Lifetime plan's list price in US dollars, for the copy only: the visible price on the page is what Paddle
+ * reports (src/billing/prices.ts), so the server has no other way to know it. THIS NUMBER MUST EQUAL THE PADDLE
+ * PRICE. It is what /pricing, the homepage article, the product node's Offer, llms.txt and llms-full.txt say
+ * (server/marketing/lifetimeCopy.js) when the plan is for sale; nothing else reads it, and nothing charges it.
+ * If the Paddle price changes, change this (the environment variable LIFETIME_PRICE_USD, no rebuild: a runtime
+ * variable) AND the "$99.00" in src/pages/TermsPage.tsx, which is the owner's legal wording and is not read from here.
+ */
+export const DEFAULT_LIFETIME_PRICE_USD = 99;
+
+/** The Lifetime list price as written in the environment: a whole number of dollars, 1 to 100000, else the default. */
+export function lifetimePriceUsd(env = processEnv()) {
+  return parseWholeNumber(env.LIFETIME_PRICE_USD, DEFAULT_LIFETIME_PRICE_USD, 1, 100000);
+}
+
+/** The Lifetime list price this process uses (read at import time, like TRIAL_DAYS: a real environment variable). */
+export const LIFETIME_PRICE_USD = /* @__PURE__ */ lifetimePriceUsd();
+
 /** A length of time in the words the copy uses: "one year", "3 months", "45 days". */
 export function describeDays(days) {
   if (days % 365 === 0) { const y = days / 365; return y === 1 ? 'one year' : `${y} years`; }

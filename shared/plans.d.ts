@@ -42,5 +42,9 @@ export function giftDays(env?: Record<string, string | undefined>): number;
 export function describeDays(days: number): string;
 export function giftCodeExpiryDays(env?: Record<string, string | undefined>): number;
 
+export const DEFAULT_LIFETIME_PRICE_USD: number;
+export function lifetimePriceUsd(env?: Record<string, string | undefined>): number;
+export const LIFETIME_PRICE_USD: number;
+
 export type GrantKind = 'lifetime' | 'gift' | 'referral_credit';
 export const GRANT_KINDS: readonly GrantKind[];
