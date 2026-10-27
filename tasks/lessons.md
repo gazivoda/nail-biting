@@ -245,3 +245,13 @@ Commit the page first, then sync, then commit the generated files.
 
 **Search Console numbers are tiny here.** 122 clicks in 90 days: per-page CTR is noise below about 100 impressions. Pool pages before judging a change.
 
+**Two branches that each pass can fail together: run the gates on the merge.** Agent 3's footer tests imported the pages early in `featurePages.test.mjs` and froze `import.meta.env` with no Lifetime price id; agent 4's later `vi.stubEnv` then had no effect and 7 tests failed, though both branches were green alone. Stub env, then `vi.resetModules()`, then import. Never push a swarm on per-branch results.
+
+**A brief's implementation hint can collide with pins already in the repo.** The brief said `useFeature(flag)` for the footer links; the repo pins "marketing pages make no flag request" and "no unreleased page path in `dist/assets`". Read the existing pins first; the agent that deviated and said why was right.
+
+**A "no other X is linked" assertion also finds sibling dead links.** Written at the strictest scope, it showed an open gated page linking to a closed one (a link to the branded 404). Write the negative assertion first and widest.
+
+**The first flag-copy rule that goes live changes how static files are served.** `COPY_ACTIVE` flips on, and `/posts/*.json`, `/seo-content.json` and `llms-full.txt` stop going through `express.static` (`Last-Modified` and `Accept-Ranges` lost, ETag becomes a content hash). A RULES `on` text must also not contain its own `off` text, or the idempotence test fails.
+
+**Do not reuse a scratch directory for `git archive` exports.** A directory such as `base` can hold stale files from an earlier run and make a byte-identity proof meaningless. Use `mktemp`.
+

@@ -487,6 +487,9 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
   beforeAll(async () => {
     // The production build has the Lifetime price id (the card needs it); the words of a page served without a marker need it too.
     vi.stubEnv('VITE_PADDLE_PRICE_ID_LIFETIME', 'pri_test_build');
+    // `import.meta.env` is read when a module is first imported, and the footer tests above already imported the pages
+    // (with no Lifetime id): drop the module cache so the pages imported below see the stubbed build.
+    vi.resetModules();
     flagsModule = await import('../src/features/flags.ts');
     providersModule = await import('../src/auth/providers.ts');
     kvModule = (await import('../src/storage/kv.ts')).kv;
