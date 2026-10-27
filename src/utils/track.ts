@@ -3,8 +3,9 @@
 //
 // They go to the Google Analytics that index.html already loads and the privacy
 // policy already discloses, as aggregate counts with no parameters. Nothing
-// here identifies a person, and nothing is sent when gtag has not loaded
-// (blocked, offline, or before the deferred load handler runs).
+// here identifies a person. index.html queues gtag calls from the first line of the
+// page (only the gtag.js download waits for `load`), so an early event is kept, and
+// nothing is sent when the tag is absent (an automated browser, navigator.webdriver).
 export type FunnelEvent =
   | 'demo_start'
   | 'demo_complete'

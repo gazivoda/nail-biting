@@ -117,8 +117,17 @@ export function HeroDemo({ autoStart = false }: Props) {
     setFailure(null);
     setNow(t);
     dispatch({ type: 'start', now: t });
-    track('demo_start');
   }, []);
+
+  // A session is counted when the phase becomes `running`, not inside `start`. The first session of a
+  // visit (`autoStart`, from the visitor's click on the landing page) begins in the reducer's initial
+  // state and never goes through `start`, so counting there recorded only "Run it again" and "Try again"
+  // and missed every first run. "Run it again" (from `finished`) and "Try again" (from `idle`) still count,
+  // since each enters `running` from another phase. The re-anchor below dispatches `start` while already
+  // running, so it does not count a second time.
+  useEffect(() => {
+    if (state.phase === 'running') track('demo_start');
+  }, [state.phase]);
 
   // Expiry + countdown clock. Cleared when the phase leaves `running` and on
   // unmount, which is also what stops the camera: `cameraOn` is derived from the
