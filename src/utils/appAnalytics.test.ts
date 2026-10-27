@@ -272,7 +272,7 @@ describe('where the app events are wired (a source guard: the camera view cannot
   });
 
   it('first_alarm fires from handleAlert, after the alarm is logged, and the existing log call is unchanged', () => {
-    const handler = /const handleAlert = \(behavior: Behavior\) => \{([\s\S]*?)\n  \};/.exec(camera)?.[1] ?? '';
+    const handler = /const handleAlert = \(behavior: Behavior\) => \{([\s\S]*?)\n {2}\};/.exec(camera)?.[1] ?? '';
     expect(handler).toContain("logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });");
     expect(handler.indexOf('logIncident(')).toBeLessThan(handler.indexOf("trackApp('first_alarm')"));
     expect(handler.match(/trackApp\(/g)).toHaveLength(1);
