@@ -43,6 +43,25 @@ describe('copyFlagIsOn', () => {
     expect(copyFlagIsOn('event_sync', { marker, cached, now: NOW })).toBe(false);
   });
 
+  it('knows the Lifetime plan: the server lists it only when the flag is on AND it has the price id, so the marker decides the FAQ', () => {
+    expect(COPY_MARKER_FLAGS).toContain('lifetime_plan');
+    expect([...parseCopyMarker('event_sync lifetime_plan')!]).toEqual(['event_sync', 'lifetime_plan']);
+    const flagOnly = { at: NOW - 1000, flags: { lifetime_plan: true } };   // what /api/features says: the flag, not the price id
+    expect(copyFlagIsOn('lifetime_plan', { marker: new Set(['lifetime_plan']), cached: null, now: NOW })).toBe(true);
+    expect(copyFlagIsOn('lifetime_plan', { marker: new Set(['event_sync']), cached: flagOnly, now: NOW })).toBe(false);
+    expect(copyFlagIsOn('lifetime_plan', { marker: null, cached: flagOnly, now: NOW })).toBe(true);   // no marker: a visitor served the cached shell
+  });
+
+  it('with no marker the Lifetime words also wait for the price id the build was given, as the card does; a marker needs no such help', () => {
+    const flagOnly = { at: NOW - 1000, flags: { lifetime_plan: true, event_sync: true } };
+    const withId = { lifetimePriceId: true };
+    const noId = { lifetimePriceId: false };
+    expect(copyFlagIsOn('lifetime_plan', { marker: null, cached: flagOnly, now: NOW }, withId)).toBe(true);
+    expect(copyFlagIsOn('lifetime_plan', { marker: null, cached: flagOnly, now: NOW }, noId)).toBe(false);   // flag on, no card: no Lifetime words
+    expect(copyFlagIsOn('lifetime_plan', { marker: new Set(['lifetime_plan']), cached: null, now: NOW }, noId)).toBe(true);   // the server judged
+    expect(copyFlagIsOn('event_sync', { marker: null, cached: flagOnly, now: NOW }, noId)).toBe(true);   // no other flag is held back
+  });
+
   it('with no marker uses the app\'s last answer only while it is fresh, and only an exact true', () => {
     const fresh = { at: NOW - 60_000, flags: { event_sync: true, phone_companion: 'yes' } };
     expect(copyFlagIsOn('event_sync', { marker: null, cached: fresh, now: NOW })).toBe(true);

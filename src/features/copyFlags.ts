@@ -21,8 +21,12 @@
 import { kv } from '../storage/kv';
 import { FLAGS_TTL_MS } from './flags';
 
-/** The flags the server lists in the marker: the ones that change copy on pages that exist today. */
-export const COPY_MARKER_FLAGS = ['event_sync', 'phone_companion'] as const;
+/**
+ * The flags the server lists in the marker: the ones that change copy on pages that exist today. `lifetime_plan` is listed only
+ * when the server also knows the Lifetime price id (server/marketing/copyFlags.js), which is the condition its crawler copy and
+ * its FAQPage data already follow: the marker hands the FAQ the same decision, so the page and the schema cannot disagree.
+ */
+export const COPY_MARKER_FLAGS = ['event_sync', 'phone_companion', 'lifetime_plan'] as const;
 
 export const COPY_MARKER_NAME = 'sb-copy-flags';
 
@@ -38,12 +42,26 @@ export interface CachedFlags {
   flags?: unknown;
 }
 
-/** Whether `name` is on, by the order above. */
+/** What only the BUILD knows, for the flags whose words also need it (see `copyFlagIsOn`). */
+export interface BuildFacts {
+  /** The build was given the Paddle price id of the Lifetime plan (VITE_PADDLE_PRICE_ID_LIFETIME): the same fact the card needs. */
+  lifetimePriceId: boolean;
+}
+
+/**
+ * Whether `name` is on, by the order above.
+ *
+ * `build` (optional) is for `lifetime_plan`, whose card needs the flag AND the build's price id. The server lists the flag in the
+ * marker only when it knows the id too, so a marker is the whole answer. Without a marker the app's own answer is only the flag,
+ * and the words must not say "Lifetime" next to a card that is not there: they wait for the build's id as well.
+ */
 export function copyFlagIsOn(
   name: string,
   { marker, cached, now }: { marker: ReadonlySet<string> | null; cached: CachedFlags | null | undefined; now: number },
+  build?: BuildFacts,
 ): boolean {
   if (marker) return marker.has(name);
+  if (name === 'lifetime_plan' && build && !build.lifetimePriceId) return false;
   if (!cached || typeof cached.at !== 'number' || now - cached.at >= FLAGS_TTL_MS || now < cached.at) return false;
   const flags = cached.flags;
   return flags !== null && typeof flags === 'object' && (flags as Record<string, unknown>)[name] === true;

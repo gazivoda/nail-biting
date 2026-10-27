@@ -446,8 +446,8 @@ Resolution order: dev override (DEV only) > last answer from `/api/features` (re
 when a long-lived tab becomes visible) > the last-known answer cached through `kv` (`flags:last-known`) so offline use
 behaves the same > **off**. A failed request never clears what is known and never turns anything on. The first
 component that calls `useFeature` triggers one `/api/features` request per page load. In the signed-in app that is the Watch tab
-(WS2's coaching slot), History and Settings. Marketing pages make no flag request at all: they learn the two flags their copy
-depends on from a marker in the page (section 8), and take the sign-in methods from `/auth/providers`.
+(WS2's coaching slot), History and Settings. Marketing pages make no flag request at all: they learn the three flags their copy
+depends on (`event_sync`, `phone_companion`, `lifetime_plan`) from a marker in the page (section 8), and take the sign-in methods from `/auth/providers`.
 
 **Dev override.** `?ff=event_sync,insights` (remembered across reloads; `?ff=` clears) or
 `localStorage['sb:flags:dev-override'] = '["event_sync"]'`. It only ever turns flags **on**, only in the Vite dev
@@ -749,16 +749,31 @@ crawler copy in `server.js` is built from `seo-content.json` by the same validat
 3. *The Lifetime plan in the words crawlers read* (flag `lifetime_plan`; `server/marketing/lifetimeCopy.js`, test
    `scripts/lifetimeCopy.test.mjs`). The pricing section shows three cards while the flag is on, so the `<title>`, description, the
    `/pricing`, homepage, how-it-works and cost calculator crawler articles (the last said "our two published prices"), the noscript nav label, the product node's `offers` (patched once into the
-   shell at start-up, so every route carries the same node) and `llms.txt` / `llms-full.txt` say so too. `copyIsOn('lifetime_plan')` is
+   shell at start-up, so every route carries the same node) and `llms.txt` / `llms-full.txt` say so too. (The questions and answers that listed
+   two plans are not in this module: they are `RULES`, item 4.) `copyIsOn('lifetime_plan')` is
    the flag AND a Lifetime price id in the server's environment (`copyFlags.js`: the card needs the build's id, which the server
    cannot see). It is not a `RULES` entry because it adds markup, and not a marker because a marker's text would enter a page's
    freshness fingerprint: each source sentence is found by its exact text (`ANCHORS`, which a test finds in `server.js` once each)
    and rewritten at serve time, and the handlers' literals stay as they were, so with the plan not for sale every response is byte for
    byte the old one (240 URLs compared, status, headers and body) and no `lastmod` moves. The price is `LIFETIME_PRICE_USD` in
-   `shared/plans.js` and must equal the Paddle price. **Not covered, on purpose** (the client has no marker for this flag, so a
-   change would make the visible text and the schema disagree): the `/pricing` FAQ ("pick the monthly or yearly plan"), the homepage
-   FAQ answers, the compare and solutions pages' price rows and calls to action, the calculators' "then $2.99/month or $29/year", the
-   localized pages (draft).
+   `shared/plans.js` and must equal the Paddle price. **Not covered, on purpose:** the compare and solutions pages' price rows and calls
+   to action, the calculators' "then $2.99/month or $29/year", the heading and the notes under the cards (`pricing.heading`,
+   `pricing.payments`, `pricing.localizedNote`, `bottom.note`), the localized pages (draft).
+
+4. *The Lifetime plan in the questions and answers a visitor reads* (same flag, same condition; `RULES` in `shared/flagCopy.js`, ids
+   `pricing-faq-pick-plan`, `pricing-faq-difference-q`, `pricing-faq-difference`, `home-faq-cost`, `home-faq-cancel`). The catalogs,
+   `PRICING_FAQS` in `server.js` and `index.html` keep the two-plan sentences, so a page's freshness date does not move. With the flag on
+   AND the server's Lifetime price id the page says Lifetime through `useFlagCopy` (`PricingPage`, and `Landing` for the two homepage
+   answers), the server through the same rules in `injectSsrArticle`, `faqPageSchema` and the homepage FAQPage block. The page learns
+   the decision from the marker: `lifetime_plan` is in `COPY_MARKER_FLAGS` (`src/features/copyFlags.ts`) and the server lists it with
+   `copyIsOn`, not `flags.isOn`, so flag on and no price id adds no marker and changes nothing. A visitor served the cached app shell
+   (the home page only: the service worker's navigate fallback is `/`) has no marker and uses the app's last fresh answer, as for the
+   other copy flags, but for this one only when the build also has the Lifetime price id (`BuildFacts` in `copyFlags.ts`: the card's own
+   condition), so a flag switched on before the Paddle product exists never puts "Lifetime" in a sentence next to a missing card. The rules carry no Lifetime price (it is a server setting, and the card carries it), quote no saving, never say
+   "best deal", and keep "cancel anytime" to the monthly and yearly plans. They match the English sentences only, so es, de and pt-BR
+   (draft, flag off, `reviewed: false`) are untouched and no catalog key changed; a translator words these sentences before a language is
+   marked `reviewed`. Not reworded: `faq.4` "Can I cancel anytime?" (a rich-text message with a link; it speaks of subscriptions and does
+   not mention a plan), `pricing.lede` ("You pick a plan when the trial ends", true for three plans) and the SSR `<h1>`.
 
 **A page whose address contains a secret** (WS10 `/share/<token>`) must not be the app's HTML shell: that shell loads
 Google Analytics (`index.html`) and the app bundle. `server/share/page.js` renders a self-contained document (inline style

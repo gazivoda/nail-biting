@@ -8,7 +8,7 @@
 //
 //  1. RULES. A sentence that is already on the site and stops being true when a
 //     flag is on (history stays in the browser, Google is the only sign-in, a phone
-//     cannot be used). The source files keep the sentence EXACTLY as it is today;
+//     cannot be used, there are two plans). The source files keep the sentence EXACTLY as it is today;
 //     a rule says "when this text appears and these flags are on, say this
 //     instead". With every flag off no rule applies and the text comes back
 //     unchanged (same string), so the served site is byte-identical to the site
@@ -36,6 +36,7 @@ export const COPY_FLAGS = Object.freeze([
   'signin_magic_link',
   'signin_apple',
   'signin_microsoft',
+  'lifetime_plan',
 ]);
 
 const SIGNIN_NAMES = [
@@ -222,6 +223,61 @@ export const RULES = Object.freeze([
     flags: ['phone_companion'],
     on: isOn => (isOn('phone_companion')
       ? 'The alarm needs a laptop or desktop with a webcam, because the detection needs a camera that can see your hands while you work. On a phone you can sign in and log a bite or an urge in two taps, see your streak, and add the app to your home screen; nothing is detected on the phone. Once you are signed in, a link on the phone screen sends the address to your computer for setting up the alarm.'
+      : null),
+  },
+
+  // ── the Lifetime plan is a third plan (lifetime_plan) ──────────────────────
+  // `isOn('lifetime_plan')` is the flag AND a Lifetime price id the server knows (server/marketing/copyFlags.js), and the
+  // browser learns exactly that from the page's marker, so the card, these sentences and the schema agree.
+  // The words are the card's own ("Pay once instead of every month or year. It includes everything in the monthly plan, with
+  // no renewals, for as long as Stop Biting is offered.", src/i18n/scopes/plans.ts and the Terms): no price (the card and the
+  // offer carry it, and the price is a server setting this file cannot see), no saving, never "the best deal". A statement that
+  // is only true of a subscription (cancel anytime) is kept to the monthly and yearly plans. English only: a translation
+  // never contains these English sentences, so the draft languages are untouched until a translator words them.
+  // Every `on` text must not contain its own `off` text (the rules are applied to text that has already been through them).
+  {
+    id: 'pricing-faq-pick-plan',
+    where: 'Pricing page FAQ "How does the free trial work?", its FAQPage and its crawler copy',
+    off: 'When the trial ends, pick the monthly or yearly plan to keep going.',
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan')
+      ? 'When the trial ends, pick the monthly, yearly or Lifetime plan to keep going.'
+      : null),
+  },
+  {
+    id: 'pricing-faq-difference-q',
+    where: 'Pricing page FAQ question about the plans, its FAQPage and its crawler copy',
+    off: 'What is the difference between Monthly and Yearly?',
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan')
+      ? 'What is the difference between Monthly, Yearly and Lifetime?'
+      : null),
+  },
+  {
+    id: 'pricing-faq-difference',
+    where: 'Pricing page FAQ answer about the plans, its FAQPage and its crawler copy',
+    off: 'Both plans include the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support.',
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan')
+      ? 'Every plan includes the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support. Lifetime is paid once instead of every month or year. It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered.'
+      : null),
+  },
+  {
+    id: 'home-faq-cost',
+    where: 'Landing FAQ 1 (what Stop Biting costs), the FAQPage in index.html and its crawler copy',
+    off: 'It costs $2.99 a month or $29 a year after a',
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan')
+      ? 'It costs $2.99 a month, $29 a year or a one-time Lifetime payment after a'
+      : null),
+  },
+  {
+    id: 'home-faq-cancel',
+    where: 'Landing FAQ 8 (credit card and cancelling), the FAQPage in index.html and its crawler copy',
+    off: 'After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period.',
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan')
+      ? 'After that it is $2.99 a month, $29 a year or a one-time Lifetime payment. A monthly or yearly plan can be cancelled anytime from the app settings, and you keep access until the end of the paid period.'
       : null),
   },
 ]);
