@@ -158,3 +158,40 @@ describe('remainingMs', () => {
     expect(remainingMs(finished, T0)).toBe(0);
   });
 });
+
+// HeroDemo counts a started demo (the `demo_start` funnel event) each time the phase BECOMES `running`.
+// Counting inside the start handler missed the first session of every visit, which begins in the reducer's
+// initial state (`autoStart`), and counted the re-anchor, which dispatches `start` while already running.
+describe('counting started sessions by phase', () => {
+  /** What an effect keyed on the phase sees: every time it is entered from another phase. */
+  function startsCounted(first: SessionState, ...events: SessionEvent[]): number {
+    let counted = first.phase === 'running' ? 1 : 0;
+    let state = first;
+    for (const event of events) {
+      const next = sessionReducer(state, event);
+      if (next.phase === 'running' && state.phase !== 'running') counted += 1;
+      state = next;
+    }
+    return counted;
+  }
+
+  it('counts the session that begins on the first render (autoStart)', () => {
+    const autoStarted = sessionReducer(initialSession, start(T0));
+    expect(startsCounted(autoStarted)).toBe(1);
+  });
+
+  it('does not count the re-anchor to the moment detection began', () => {
+    const autoStarted = sessionReducer(initialSession, start(T0));
+    expect(startsCounted(autoStarted, start(T0 + 6_000), tick(T0 + 7_000))).toBe(1);
+  });
+
+  it('counts "Run it again" after a finished session, and "Try again" after a failed one', () => {
+    const autoStarted = sessionReducer(initialSession, start(T0));
+    expect(startsCounted(autoStarted, tick(T0 + DEMO_DURATION_MS), start(T0 + 70_000))).toBe(2);
+    expect(startsCounted(autoStarted, RESET, start(T0 + 5_000))).toBe(2);
+  });
+
+  it('counts a click-started session once, when the idle card is used', () => {
+    expect(startsCounted(initialSession, start(T0), start(T0 + 4_000))).toBe(1);
+  });
+});

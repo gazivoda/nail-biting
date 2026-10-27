@@ -223,3 +223,28 @@ describe.skipIf(!existsSync(join(root, 'dist', 'index.html')))('the built shell'
     expect(built.replace(/\s+/g, ' ').trim()).toBe(snippet.replace(/\s+/g, ' ').trim());
   });
 });
+
+// The demo funnel. Landing mounts `<HeroDemo autoStart />` from the visitor's click, so the first session of
+// a visit begins in the reducer's initial state and never calls HeroDemo's `start`. `demo_start` used to be
+// tracked inside `start`, so it fired only for "Run it again" and "Try again" (GA4 showed 1 start for
+// the whole period). A component render is out of reach here (no DOM), so these read the source; the
+// phase rule itself is specified in src/components/demo/demoSession.test.ts.
+describe('the demo funnel: demo_start counts every session, including the autoStart one', () => {
+  const strip = src => src.replace(/^\s*\/\/.*$/gm, '').replace(/\s\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  const demo = strip(readFileSync(join(root, 'src/components/demo/HeroDemo.tsx'), 'utf8'));
+
+  it('the landing page really does start the demo without going through start()', () => {
+    expect(strip(readFileSync(join(root, 'src/pages/Landing.tsx'), 'utf8'))).toMatch(/<HeroDemo autoStart\s*\/>/);
+  });
+
+  it('start() does not count the session', () => {
+    const body = demo.match(/const start = useCallback\(([\s\S]*?)\n {2}\}, \[\]\);/);
+    expect(body, 'found the start callback').not.toBeNull();
+    expect(body[1]).not.toMatch(/track\(/);
+  });
+
+  it('the session is counted when the phase becomes running', () => {
+    expect(demo).toMatch(/useEffect\(\(\) => \{\s*if \(state\.phase === 'running'\) track\('demo_start'\);\s*\}, \[state\.phase\]\);/);
+    expect(demo.match(/track\('demo_start'/g)).toHaveLength(1);
+  });
+});
