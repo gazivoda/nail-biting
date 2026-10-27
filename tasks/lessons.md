@@ -232,3 +232,16 @@ Commit the page first, then sync, then commit the generated files.
 **Check the other session's recent edits before an SEO rewrite.** The 90-day Search Console window mostly predates the 2026-10-20..23 title rewrites, so low CTR there says nothing about the new titles. Skip a rewrite the data cannot judge, and record the date to re-read it.
 
 **An obsolete gate is a false alarm that trains people to ignore gates.** The "owner's Paddle WIP patch applies" check failed once the owner's change landed on main. Retire a gate in the same change that makes it meaningless.
+
+**Check how old a page is before reading zero clicks as a snippet problem.** Cancer, self-harm and pinworm each showed about 110 impressions at positions 7-10 and 0 clicks, but they were published 2026-10-08..20 and their titles already matched the queries word for word. A week of data at a 3% click rate is 0 clicks one time in twenty. Pull the publish date and the git history of a title before proposing to change it, and write down a decision rule and an evaluate-on date (`docs/seo/title-ledger.md`).
+
+**A brief's premise deserves one `curl`.** The brief said toenails had a truncated 70-character title; the live page showed a 55-character title with no truncation. Fetch the live page before building on a claim about it.
+
+**A flag-dependent sentence that adds markup is not a `flagCopy` rule.** RULES forbid `<` and `>`, and a `{{if}}` marker enters the freshness fingerprint. Rewriting the exact source sentence at serve time (anchors, with a test that finds each anchor once in `server.js`) keeps flag-off responses byte-identical and the freshness ledger untouched. Prove byte identity by booting the base commit and the branch side by side and diffing status, headers and bodies of every sitemap URL.
+
+**A static link to a flag-gated page is a latent 404.** Turn the flag off and the link points at the branded 404, and `featurePages.test.mjs` forbids the page in `seo-content.json`. Gated pages need a flag-aware rendered link (footer shown by `useFeature`), otherwise their only inbound link is the `<noscript>` nav and Google may skip them ("crawled, currently not indexed").
+
+**SEO build details.** A `seoTitle` edit needs `og:generate` (the card bakes `seoTitle ?? title`). `firstSentence()` feeds the `llms.txt` blurb, so never open a description with a one-word sentence ("Possibly."); use a colon. The mirror gate checks figures and cited surnames, not claim strength: a snippet can contradict its body after a body edit and stay green. No gate enforces 160 on post descriptions (`seo:check` allows 165).
+
+**Search Console numbers are tiny here.** 122 clicks in 90 days: per-page CTR is noise below about 100 impressions. Pool pages before judging a change.
+
