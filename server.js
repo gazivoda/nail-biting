@@ -1684,8 +1684,10 @@ if (!existsSync(distPath)) {
   // Omitted deliberately on 404s and on any route with no content date.
   // WS11b: the copy-affecting flags that are ON, as a marker in every 200 page, so a marketing page can word
   // its copy without asking for the flags (src/features/copyFlags.ts). Empty, and nothing is added, while
-  // they are all off.
-  const copyMarkerFlags = ['event_sync', 'phone_companion'].filter(name => flags.isOn(name));
+  // they are all off. It lists the flags as the WORDS see them (copyIsOn): for the Lifetime plan that is the flag AND the
+  // Lifetime price id, the same decision the crawler copy and the FAQPage data follow, so the page's FAQ cannot say what
+  // the schema does not. With the flag on but no price id it is absent and the response is the one of the flag being off.
+  const copyMarkerFlags = ['event_sync', 'phone_companion', 'lifetime_plan'].filter(name => copyIsOn(name));
   const copyMarkerTag = copyMarkerFlags.length ? `<meta name="sb-copy-flags" content="${copyMarkerFlags.join(' ')}">` : '';
   // ── Localized marketing pages (WS12b) ───────────────────────────────────────
   // dist/i18n/<locale>.json holds each language's rendered pages and its review marker (src/i18n/locales/<x>/reviewed.ts).

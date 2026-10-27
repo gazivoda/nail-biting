@@ -7,6 +7,7 @@ import { SiteFooter } from '../components/site/SiteFooter';
 import { TrialButton } from '../components/site/TrialButton';
 import { Testimonials } from '../components/site/Testimonials';
 import { PlanExtras } from '../components/billing/PlanExtras';
+import { useFlagCopy } from '../features/useFlagCopy';
 import { useLocale } from '../i18n/hooks';
 import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
 import { useT as usePricingT } from '../i18n/scopes/marketing-pricing';
@@ -32,6 +33,9 @@ export function PricingPage() {
   const c = useSiteT(useChromeT);
   const paths = useSitePaths();
   const { locale } = useLocale();
+  // The questions and answers that list the plans say a third one while the Lifetime plan is for sale (English; shared/flagCopy.js,
+  // the server words the crawler copy and the FAQPage data with the same rules). With the flag off `copy` returns the text it was given.
+  const copy = useFlagCopy();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -39,8 +43,8 @@ export function PricingPage() {
 
   const refundLink = { link: (chunks: ReactNode) => <a href="/refund-policy" className="sg-link">{chunks}</a> };
   const faqs: { q: string; a: ReactNode }[] = FAQ_KEYS.map(n => ({
-    q: t(`faq.${n}.q`),
-    a: n === 4 ? t.rich('faq.4.a', undefined, refundLink) : t(`faq.${n}.a`),
+    q: copy(t(`faq.${n}.q`)),
+    a: n === 4 ? t.rich('faq.4.a', undefined, refundLink) : copy(t(`faq.${n}.a`)),
   }));
 
   // In the homepage's sign system (tokens in `.sg-page`, see DESIGN.md), with

@@ -34,6 +34,12 @@ const SOURCES = {
   'nailbitemenu-requires': ['src/data/comparePages.ts'],
   'nailbitemenu-table': ['src/data/comparePages.ts'],
   'faq-phone': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
+  // lifetime_plan: the pricing questions (the catalog and the server's PRICING_FAQS) and two homepage answers
+  'pricing-faq-pick-plan': ['src/i18n/scopes/marketing-pricing.ts', 'server.js'],
+  'pricing-faq-difference-q': ['src/i18n/scopes/marketing-pricing.ts', 'server.js'],
+  'pricing-faq-difference': ['src/i18n/scopes/marketing-pricing.ts', 'server.js'],
+  'home-faq-cost': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
+  'home-faq-cancel': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
 };
 
 describe('copy rules and the sources they replace text in', () => {

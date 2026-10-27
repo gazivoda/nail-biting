@@ -159,3 +159,91 @@ describe('flagAwareDeep, dropEmptySections and tokens', () => {
     expect(mentionsFlagCopy(42)).toBe(false);
   });
 });
+
+// ─── The Lifetime plan in the sentences that listed two plans (flag lifetime_plan) ──────────────────────
+// `lifetime_plan` is on in production: the pricing section draws three cards. The questions and answers the page,
+// the crawler article and the FAQPage data say about the plans follow it, through these rules, in one voice.
+
+const LIFETIME_RULES = RULES.filter(r => r.flags.includes('lifetime_plan'));
+const lifetimeOn = only('lifetime_plan');
+const WITHOUT_LIFETIME = COPY_FLAGS.filter(f => f !== 'lifetime_plan');
+// What the Lifetime card and the Terms say, word for word (src/i18n/scopes/plans.ts lifetime.band.body).
+const CARD_WORDS = 'It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered.';
+
+describe('the Lifetime rules', () => {
+  it('cover the pricing questions and the two homepage answers that listed two plans, and nothing else', () => {
+    expect(LIFETIME_RULES.map(r => r.id).sort()).toEqual([
+      'home-faq-cancel', 'home-faq-cost', 'pricing-faq-difference', 'pricing-faq-difference-q', 'pricing-faq-pick-plan',
+    ]);
+    expect(COPY_FLAGS).toContain('lifetime_plan');
+  });
+
+  it('change nothing while the flag is off, whatever else is on, and say something once it is on', () => {
+    for (const rule of LIFETIME_RULES) {
+      expect(rule.on(none), rule.id).toBeNull();
+      expect(rule.on(only(...WITHOUT_LIFETIME)), rule.id).toBeNull();
+      expect(rule.on(lifetimeOn), `${rule.id} is reachable`).toBeTruthy();
+    }
+  });
+
+  it('pin the new wording, sentence by sentence', () => {
+    const on = id => LIFETIME_RULES.find(r => r.id === id).on(lifetimeOn);
+    expect(on('pricing-faq-pick-plan')).toBe('When the trial ends, pick the monthly, yearly or Lifetime plan to keep going.');
+    expect(on('pricing-faq-difference-q')).toBe('What is the difference between Monthly, Yearly and Lifetime?');
+    expect(on('pricing-faq-difference')).toBe(
+      'Every plan includes the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. '
+      + 'Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support. '
+      + `Lifetime is paid once instead of every month or year. ${CARD_WORDS}`,
+    );
+    expect(on('home-faq-cost')).toBe('It costs $2.99 a month, $29 a year or a one-time Lifetime payment after a');
+    expect(on('home-faq-cancel')).toBe(
+      'After that it is $2.99 a month, $29 a year or a one-time Lifetime payment. '
+      + 'A monthly or yearly plan can be cancelled anytime from the app settings, and you keep access until the end of the paid period.',
+    );
+  });
+
+  it('never quote a Lifetime price or a saving, call it the best deal, or promise more than the card does', () => {
+    for (const rule of LIFETIME_RULES) {
+      const on = rule.on(lifetimeOn);
+      expect(on, rule.id).not.toMatch(/best deal|best value|cheapest|bargain|forever|unlimited updates/i);
+      // the only dollar figures are the two subscription prices the sentence already had
+      for (const figure of on.match(/\$[\d.]+/g) ?? []) expect(['$2.99', '$29', '$29.00', '$2.42'], `${rule.id}: ${figure}`).toContain(figure);
+      // a sentence that says what Lifetime includes uses the card's own words
+      if (/includes everything/.test(on)) expect(on, rule.id).toContain(CARD_WORDS);
+    }
+  });
+
+  it('never let a subscription-only statement (cancel anytime) apply to the Lifetime plan', () => {
+    const cancel = LIFETIME_RULES.find(r => r.id === 'home-faq-cancel').on(lifetimeOn);
+    expect(cancel).toContain('A monthly or yearly plan can be cancelled anytime');
+    expect(cancel).not.toMatch(/Lifetime[^.]*cancel/i);
+    for (const rule of LIFETIME_RULES) expect(rule.on(lifetimeOn), rule.id).not.toMatch(/\bboth plans\b|\btwo plans\b/i);
+  });
+
+  it('leave alone the sentences the server\'s Lifetime copy (ANCHORS) has to find afterwards', async () => {
+    // server.js runs these rules (copyHtml) BEFORE server/marketing/lifetimeCopy.js looks for its anchors: a rule that
+    // reworded an anchor would make the Lifetime section silently vanish.
+    const { ANCHORS } = await import('../server/marketing/lifetimeCopy.js');
+    for (const [name, anchor] of Object.entries(ANCHORS)) {
+      expect(flagAware(anchor, lifetimeOn), `anchor ${name}`).toBe(anchor);
+      for (const rule of LIFETIME_RULES) expect(anchor.includes(rule.off) || rule.off.includes(anchor), `${rule.id} vs anchor ${name}`).toBe(false);
+    }
+  });
+
+  it('are idempotent: a sentence that already says Lifetime is not changed again', () => {
+    const text = LIFETIME_RULES.map(r => r.off).join(' | ');
+    const once = flagAware(text, lifetimeOn);
+    expect(once).not.toBe(text);
+    expect(flagAware(once, lifetimeOn)).toBe(once);
+  });
+
+  it('do not touch the translations: the draft languages keep saying what they said', async () => {
+    for (const locale of ['es', 'de', 'pt-BR']) {
+      const { messages: pricing } = await import(`../src/i18n/locales/${locale}/marketing-pricing.ts`);
+      const { messages: home } = await import(`../src/i18n/locales/${locale}/marketing-home.ts`);
+      for (const text of [pricing['faq.1.a'], pricing['faq.2.q'], pricing['faq.2.a'], home['faq.1.a'], home['faq.8.a']]) {
+        expect(flagAware(text, all) === text, `${locale}: ${text.slice(0, 40)}`).toBe(true);
+      }
+    }
+  });
+});

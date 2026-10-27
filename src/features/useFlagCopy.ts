@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { flagAware } from '../../shared/flagCopy.js';
 import { useSignInProviders } from '../auth/useSignInProviders';
-import { copyFlagIsOn, takeCopyFlagInputs } from './copyFlags';
+import { PRICE_IDS } from '../billing/env';
+import { copyFlagIsOn, takeCopyFlagInputs, type BuildFacts } from './copyFlags';
 
 // Copy that changes with a feature flag (WS11b, shared/flagCopy.js).
 //
@@ -17,9 +18,12 @@ import { copyFlagIsOn, takeCopyFlagInputs } from './copyFlags';
 // The three extra sign-in methods use the answer to GET /auth/providers instead, which already says
 // "flag on AND keys configured" and which these pages fetch anyway for their buttons.
 
+// What the build knows (a constant): the Lifetime words need the build's price id as well when there is no marker (copyFlags.ts).
+const BUILD: BuildFacts = { lifetimePriceId: PRICE_IDS.lifetime !== '' };
+
 /** One copy-affecting flag, by the marker or the app's last fresh answer. Never asks the server. */
 export function useCopyFlag(name: string): boolean {
-  return useMemo(() => copyFlagIsOn(name, takeCopyFlagInputs()), [name]);
+  return useMemo(() => copyFlagIsOn(name, takeCopyFlagInputs(), BUILD), [name]);
 }
 
 /** `isOn` for copy: the flags above, and the sign-in methods the server says are usable. */
@@ -31,7 +35,7 @@ export function useFlagIsOn(): (name: string) => boolean {
       if (name === 'signin_magic_link') return providers.magic_link;
       if (name === 'signin_apple') return providers.apple;
       if (name === 'signin_microsoft') return providers.microsoft;
-      return copyFlagIsOn(name, inputs);
+      return copyFlagIsOn(name, inputs, BUILD);
     };
   }, [providers]);
 }

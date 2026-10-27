@@ -15,7 +15,7 @@
 //   · the copy a flag changes is the same in the crawler article, the FAQPage data and the React page, in
 //     every flag state, and is the original text with every flag off.
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import { spawn } from 'node:child_process';
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -23,6 +23,7 @@ import { join } from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { RULES } from '../shared/flagCopy.js';
+import { TRIAL_HYPHEN } from '../shared/plans.js';
 import { FEATURE_PAGE_FLAGS } from '../src/data/featurePagePaths.ts';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -473,6 +474,10 @@ const STATES = [
   { name: 'sync and phone on', flags: 'event_sync,phone_companion', env: {}, on: ['event_sync', 'phone_companion'] },
   { name: 'Microsoft sign-in on and configured', flags: 'signin_microsoft', env: { MICROSOFT_CLIENT_ID: 'id', MICROSOFT_CLIENT_SECRET: 'secret' }, on: ['signin_microsoft'] },
   { name: 'Microsoft flag on but not configured', flags: 'signin_microsoft', env: {}, on: [] },
+  // the Lifetime plan: the words follow the flag AND the server's price id (the card needs the build's, the same product)
+  { name: 'Lifetime plan on and configured', flags: 'lifetime_plan', env: { PADDLE_PRICE_ID_LIFETIME: 'pri_test_lifetime' }, on: ['lifetime_plan'] },
+  { name: 'Lifetime flag on but no price id', flags: 'lifetime_plan', env: { PADDLE_PRICE_ID_LIFETIME: '', VITE_PADDLE_PRICE_ID_LIFETIME: '' }, on: [] },
+  { name: 'Lifetime plan, sync and phone on', flags: 'lifetime_plan,event_sync,phone_companion', env: { PADDLE_PRICE_ID_LIFETIME: 'pri_test_lifetime' }, on: ['lifetime_plan', 'event_sync', 'phone_companion'] },
 ];
 
 describe.skipIf(!built)('existing copy follows the flags, identically for readers and crawlers', () => {
@@ -480,23 +485,30 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
   let providersModule;
   let kvModule;
   beforeAll(async () => {
+    // The production build has the Lifetime price id (the card needs it); the words of a page served without a marker need it too.
+    vi.stubEnv('VITE_PADDLE_PRICE_ID_LIFETIME', 'pri_test_build');
     flagsModule = await import('../src/features/flags.ts');
     providersModule = await import('../src/auth/providers.ts');
     kvModule = (await import('../src/storage/kv.ts')).kv;
   });
   afterAll(() => {
+    vi.unstubAllEnvs();
     kvModule?.remove('flags', 'last-known');
     kvModule?.remove('auth', 'providers');
     flagsModule?.resetFlagsForTests();
     providersModule?.resetProvidersForTests();
   });
 
-  async function renderPage(path, on) {
+  // `on`: the flags the app last heard (its cached /api/features answer) and the providers it can use.
+  // `marker`: the content of the <meta name="sb-copy-flags"> the server wrote into the page, or null for a page without one
+  // (a visitor served the cached app shell); when there is one it wins over what the app last heard.
+  async function renderPage(path, on, { marker = null } = {}) {
     const [{ createElement }, { renderToStaticMarkup }] = await Promise.all([import('react'), import('react-dom/server')]);
     const load = {
       '/': async () => (await import('../src/pages/Landing.tsx')).Landing,
       '/about': async () => (await import('../src/pages/About.tsx')).About,
       '/how-it-works': async () => (await import('../src/pages/HowItWorks.tsx')).HowItWorks,
+      '/pricing': async () => (await import('../src/pages/PricingPage.tsx')).PricingPage,
     }[path];
     const flags = Object.fromEntries(on.map(name => [name, true]));
     kvModule.set('flags', 'last-known', { at: Date.now(), flags });
@@ -506,7 +518,11 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
     });
     flagsModule.resetFlagsForTests();
     providersModule.resetProvidersForTests();
-    return renderToStaticMarkup(createElement(await load()));
+    const Page = await load();
+    if (marker !== null) {
+      globalThis.document = { querySelector: selector => (selector === 'meta[name="sb-copy-flags"]' ? { getAttribute: () => marker } : null) };
+    }
+    try { return renderToStaticMarkup(createElement(Page)); } finally { if (marker !== null) delete globalThis.document; }
   }
 
   for (const state of STATES) {
@@ -525,11 +541,33 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
       } finally { await srv.stop(); }
     }, 30000);
 
+    it(`${state.name}: the pricing FAQ is one text in the page, the article and the FAQPage data`, async () => {
+      const srv = await startServer(state.flags, state.env);
+      try {
+        const html = (await get(srv, '/pricing')).text;
+        const faq = jsonLd(html).find(b => b['@type'] === 'FAQPage');
+        const schema = faq.mainEntity.map(q => [textOf(q.name), textOf(q.acceptedAnswer.text)]);
+        const rendered = await renderPage('/pricing', state.on);
+        const visible = [...rendered.matchAll(/<details[\s\S]*?<summary[^>]*>([\s\S]*?)<\/summary>\s*<p[^>]*>([\s\S]*?)<\/p>\s*<\/details>/g)]
+          .map(m => [textOf(m[1]), textOf(m[2])]);
+        expect(schema).toHaveLength(4);
+        expect(schema).toEqual(visible);
+        const article = textOf(articleOf(html));
+        for (const [q, a] of schema) { big(article, q).toContain(q); big(article, q).toContain(a); }
+        // and the plans it names are the ones this state sells: Lifetime in all three or in none
+        const lifetime = state.on.includes('lifetime_plan');
+        for (const [name, text] of [['page', JSON.stringify(visible)], ['data', JSON.stringify(schema)], ['article', article]]) {
+          expect(/pick the monthly, yearly or Lifetime plan/.test(text), `${state.name}: ${name}`).toBe(lifetime);
+          expect(/pick the monthly or yearly plan to keep going/.test(text), `${state.name}: ${name}`).toBe(!lifetime);
+        }
+      } finally { await srv.stop(); }
+    }, 30000);
+
     it(`${state.name}: every sentence a rule changes reads the same in the page and in the crawler article`, async () => {
       const srv = await startServer(state.flags, state.env);
       const isOn = name => state.on.includes(name);
       try {
-        for (const path of ['/', '/about', '/how-it-works']) {
+        for (const path of ['/', '/about', '/how-it-works', '/pricing']) {
           const article = textOf(articleOf((await get(srv, path)).text));
           const page = textOf(await renderPage(path, state.on));
           for (const rule of RULES) {
@@ -561,10 +599,26 @@ describe.skipIf(!built)('existing copy follows the flags, identically for reader
         big((await get(other, page)).text, page).notToContain('sb-copy-flags');
       }
       big((await get(both, '/this-does-not-exist')).text).notToContain('sb-copy-flags');
-      // the marker names no flag but the two that change copy, so it tells a crawler nothing about unreleased features
+      // the marker names no flag but the three that change copy, so it tells a crawler nothing about unreleased features
       big((await get(both, '/')).text).notToMatch(/sb-copy-flags" content="[^"]*hrt_coaching/);
     } finally { await both.stop(); await one.stop(); await other.stop(); }
   }, 30000);
+
+  it('a page served with the marker takes the Lifetime flag from it, not from what the app last heard', async () => {
+    const pickPlan = text => (/pick the monthly, yearly or Lifetime plan/.test(text) ? 'lifetime' : /pick the monthly or yearly plan to keep going/.test(text) ? 'two plans' : 'missing');
+    // the server judged the plan on (flag AND price id), though the app's cached answer has not heard of it
+    expect(pickPlan(textOf(await renderPage('/pricing', [], { marker: 'lifetime_plan' })))).toBe('lifetime');
+    expect(pickPlan(textOf(await renderPage('/pricing', ['event_sync'], { marker: 'event_sync lifetime_plan' })))).toBe('lifetime');
+    // the server judged it off (flag on, no price id: the marker lists other flags only), though the app's answer says the flag is on
+    expect(pickPlan(textOf(await renderPage('/pricing', ['lifetime_plan'], { marker: 'event_sync' })))).toBe('two plans');
+    // no marker (the cached shell): the app's own last answer, as for every other copy flag
+    expect(pickPlan(textOf(await renderPage('/pricing', ['lifetime_plan'])))).toBe('lifetime');
+    expect(pickPlan(textOf(await renderPage('/pricing', [])))).toBe('two plans');
+    // the homepage answers follow the marker too
+    const home = textOf(await renderPage('/', [], { marker: 'lifetime_plan' }));
+    expect(home).toContain(`It costs $2.99 a month, $29 a year or a one-time Lifetime payment after a ${TRIAL_HYPHEN} free trial with no card.`);
+    expect(home).toContain('A monthly or yearly plan can be cancelled anytime from the app settings, and you keep access until the end of the paid period.');
+  });
 
   it('the NailBiteMenu comparison follows the sign-in methods, in the page, the article and the FAQPage data', async () => {
     const srv = await startServer('signin_microsoft', { MICROSOFT_CLIENT_ID: 'id', MICROSOFT_CLIENT_SECRET: 'secret' });

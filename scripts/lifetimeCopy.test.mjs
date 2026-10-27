@@ -99,6 +99,74 @@ const EM_DASH = /[–—]/;
 // "Lifetime License" about HabitCam, and Pavlok and HabitAware prices contain "$99".)
 const SAYS_OUR_LIFETIME_PLAN = /Lifetime plan|Lifetime: \$|once for Lifetime|\$99 once|\$99\.00|"Lifetime"/;
 
+const decode = s => s
+  .replace(/&#x27;|&#39;/g, '\'').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&');
+const textOf = html => decode(html.replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+/** [question, answer] of the page's FAQPage data, as text. */
+const schemaFaq = html => jsonLd(html).find(b => b['@type'] === 'FAQPage').mainEntity.map(q => [textOf(q.name), textOf(q.acceptedAnswer.text)]);
+/** [question, answer] of the crawler article's <h2>/<h3> + <p> pairs. */
+const articleFaq = (html, heading) => [...articleOf(html).matchAll(new RegExp(`<section><${heading}>([\\s\\S]*?)</${heading}><p>([\\s\\S]*?)</p></section>`, 'g'))]
+  .map(m => [textOf(m[1]), textOf(m[2])]);
+/** The pricing questions and the two homepage answers that used to say two plans (the sentences of today, and the Lifetime wording). */
+const FAQ = {
+  pickPlan: {
+    now: `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly or yearly plan to keep going.`,
+    lifetime: `Every account starts with a ${TRIAL_HYPHEN} free trial that includes full detection and tracking features, with no credit card required. When the trial ends, pick the monthly, yearly or Lifetime plan to keep going.`,
+  },
+  differenceQ: { now: 'What is the difference between Monthly and Yearly?', lifetime: 'What is the difference between Monthly, Yearly and Lifetime?' },
+  difference: {
+    now: 'Both plans include the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support.',
+    lifetime: 'Every plan includes the same features: detection for as long as you run it, current and best streak, full history with trigger tags, and sound, flash, or both. Yearly is billed once at $29.00 (about $2.42/month, saving 19% versus $2.99/month billing) and adds priority support. Lifetime is paid once instead of every month or year. It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered.',
+  },
+  cancel: 'Yes. Cancel anytime from the app settings and you keep access until the end of the paid period. See the refund policy for details.',
+  homeCost: {
+    now: `It costs $2.99 a month or $29 a year after a ${TRIAL_HYPHEN} free trial with no card.`,
+    lifetime: `It costs $2.99 a month, $29 a year or a one-time Lifetime payment after a ${TRIAL_HYPHEN} free trial with no card.`,
+  },
+  homeCancel: {
+    now: 'After that it is $2.99 a month or $29 a year, and you can cancel anytime from the app settings and keep access until the end of the paid period.',
+    lifetime: 'After that it is $2.99 a month, $29 a year or a one-time Lifetime payment. A monthly or yearly plan can be cancelled anytime from the app settings, and you keep access until the end of the paid period.',
+  },
+};
+/** The questions and answers of the pricing page and of the homepage, as the FAQPage data and the crawler article tell them. */
+async function faqsOf(srv) {
+  const pricing = (await get(srv, '/pricing')).text;
+  const home = (await get(srv, '/')).text;
+  return {
+    pricingSchema: schemaFaq(pricing), pricingArticle: articleFaq(pricing, 'h2'),
+    homeSchema: schemaFaq(home), homeArticle: articleFaq(home, 'h3'),
+  };
+}
+/** The answer to a question, or undefined. */
+const answerTo = (pairs, question) => pairs.find(([q]) => q === question)?.[1];
+
+const PRICING_Q1 = `How does the ${TRIAL_HYPHEN} free trial work?`;
+const HOME_Q1 = 'What is Stop Biting and how does it work?';
+const HOME_Q8 = 'Do I need a credit card, and can I cancel anytime?';
+
+/** The questions and answers the pricing page and the homepage tell, in the data and in the article: the wording of `which`, and EQUAL. */
+async function expectFaqs(srv, which) {
+  const faq = await faqsOf(srv);
+  const q2 = FAQ.differenceQ[which];
+  for (const [name, pairs] of Object.entries(faq)) {
+    const label = `${name} (${which})`;
+    if (name.startsWith('pricing')) {
+      expect(answerTo(pairs, PRICING_Q1), label).toBe(FAQ.pickPlan[which]);
+      expect(answerTo(pairs, q2), label).toBe(FAQ.difference[which]);
+      expect(answerTo(pairs, 'Can I cancel anytime?'), label).toBe(FAQ.cancel);   // not reworded: it is about subscriptions
+      expect(pairs.some(([q]) => q === FAQ.differenceQ[which === 'now' ? 'lifetime' : 'now']), `${label}: the other wording is gone`).toBe(false);
+    } else {
+      expect(answerTo(pairs, HOME_Q1), label).toContain(FAQ.homeCost[which]);
+      expect(answerTo(pairs, HOME_Q8), label).toContain(FAQ.homeCancel[which]);
+    }
+  }
+  // what the data says is what the article says, question for question
+  expect(faq.pricingArticle).toEqual(expect.arrayContaining(faq.pricingSchema));
+  expect(faq.homeArticle).toEqual(expect.arrayContaining(faq.homeSchema));
+  expect(faq.pricingSchema).toHaveLength(4);
+}
+
 const TITLE_NOW = 'Pricing: $2.99/month or $29/year | Stop Biting';
 const DESCRIPTION_NOW = `Stop Biting pricing: ${TRIAL_HYPHEN} free trial, no card required. Then $2.99/month or $29/year (about $2.42/month, save 19%). Cancel anytime.`;
 const PAGES = ['/pricing', '/', '/how-it-works', '/about', '/llms.txt', '/llms-full.txt'];
@@ -126,6 +194,11 @@ describe.skipIf(!built)('Lifetime plan copy, flag off', () => {
     big(articleOf((await get(srv, '/tools/nail-biting-cost-calculator')).text)).toContain('Only the numbers you type and our two published prices: $2.99 a month, or $29 a year.');
   });
 
+  it('the pricing questions and the two homepage answers say what they said, in the FAQPage data and in the article, with no marker', async () => {
+    await expectFaqs(srv, 'now');
+    for (const path of PAGES.slice(0, 4)) expect((await get(srv, path)).text.includes('sb-copy-flags'), path).toBe(false);
+  });
+
   it('the shell offers are the three of today', async () => {
     const app = jsonLd((await get(srv, '/pricing')).text).find(b => b['@type'] === 'SoftwareApplication');
     expect(app.offers.map(o => o.name)).toEqual(['Free trial', 'Monthly', 'Yearly']);
@@ -146,6 +219,11 @@ describe.skipIf(!built)('Lifetime plan copy, flag on but no price id (the page s
     expect(titleOf((await get(srv, '/pricing')).text)).toBe(TITLE_NOW);
     for (const path of PAGES) expect(SAYS_OUR_LIFETIME_PLAN.test((await get(srv, path)).text), path).toBe(false);
     expect(srv.log()).toMatch(/lifetime_plan is on but no Lifetime price id/);
+  });
+
+  it('the questions and answers and the marker are those of the flag being off: the card, the FAQ and the schema agree', async () => {
+    await expectFaqs(srv, 'now');
+    for (const path of PAGES.slice(0, 4)) expect((await get(srv, path)).text.includes('sb-copy-flags'), path).toBe(false);
   });
 });
 
@@ -192,6 +270,23 @@ describe.skipIf(!built)('Lifetime plan copy, flag on with the price id', () => {
     big(article).toContain('<h1>$2.99 a month, or $29 a year.</h1>');   // the visible heading does not change
     expect(article).not.toMatch(/best deal|best value|save \$/i);
     expect(article.match(/<h2>Lifetime/g)).toHaveLength(1);
+  });
+
+  it('the pricing questions and the two homepage answers name the plan, and the FAQPage data equals the article', async () => {
+    await expectFaqs(srv, 'lifetime');
+    const faq = await faqsOf(srv);
+    // no sentence left that counts two plans (the pricing section of the homepage article is the Lifetime copy's own)
+    for (const [q, a] of faq.pricingSchema) expect(`${q} ${a}`, q).not.toMatch(/\bboth plans\b|monthly or yearly plan to keep/i);
+    // the sentences about Lifetime are the card's words, with no price, no saving and no "best deal"
+    expect(answerTo(faq.pricingSchema, FAQ.differenceQ.lifetime)).toContain('It includes everything in the monthly plan, with no renewals, for as long as Stop Biting is offered.');
+    expect(JSON.stringify([faq.pricingSchema, faq.homeSchema])).not.toMatch(/best deal|cheapest|\$99/i);
+  });
+
+  it('the page learns it from the marker, in every page that is served and in no error page', async () => {
+    for (const path of ['/', '/pricing', '/about', '/how-it-works', '/blog/habit-reversal-training-guide']) {
+      big((await get(srv, path)).text, path).toContain('<meta name="sb-copy-flags" content="lifetime_plan">');
+    }
+    big((await get(srv, '/this-does-not-exist')).text).notToContain('sb-copy-flags');
   });
 
   it('every page carries the Lifetime offer in the one product node, and the noscript nav names the plan', async () => {
@@ -255,5 +350,41 @@ describe.skipIf(!built)('Lifetime plan copy, the price follows LIFETIME_PRICE_US
     }
     const app = jsonLd((await get(srv, '/pricing')).text).find(b => b['@type'] === 'SoftwareApplication');
     expect(app.offers.at(-1).price).toBe('149.00');
+  });
+
+  it('the questions and answers name no price of the plan: the one number lives in the card and the offer', async () => {
+    const faq = await faqsOf(srv);
+    expect(JSON.stringify([faq.pricingSchema, faq.homeSchema])).not.toMatch(/\$149|\$99/);
+  });
+});
+
+describe.skipIf(!built)('Lifetime plan copy next to the other flags that change copy', () => {
+  let srv;
+  beforeAll(async () => {
+    srv = await startServer({ FEATURE_FLAGS: 'event_sync,lifetime_plan,phone_companion', PADDLE_PRICE_ID_LIFETIME: 'pri_test_lifetime' });
+  }, 30000);
+  afterAll(async () => { await srv?.stop(); });
+
+  it('lists every copy flag that is on in one marker, and the FAQ answers follow all of them at once', async () => {
+    big((await get(srv, '/pricing')).text).toContain('<meta name="sb-copy-flags" content="event_sync phone_companion lifetime_plan">');
+    const faq = await faqsOf(srv);
+    expect(answerTo(faq.pricingSchema, PRICING_Q1)).toBe(FAQ.pickPlan.lifetime);
+    // the homepage's answers follow sync, the phone and the Lifetime plan, and the data equals the article
+    expect(faq.homeArticle).toEqual(expect.arrayContaining(faq.homeSchema));
+    expect(answerTo(faq.homeSchema, HOME_Q1)).toContain(FAQ.homeCost.lifetime);
+    expect(answerTo(faq.homeSchema, HOME_Q1)).toContain('copied to your account only if you turn on sync');
+  });
+});
+
+describe.skipIf(!built)('Lifetime plan copy, flag off and another copy flag on', () => {
+  let srv;
+  beforeAll(async () => { srv = await startServer({ FEATURE_FLAGS: 'event_sync' }); }, 30000);
+  afterAll(async () => { await srv?.stop(); });
+
+  it('the marker does not list the plan and the pricing FAQ says two plans', async () => {
+    big((await get(srv, '/pricing')).text).toContain('<meta name="sb-copy-flags" content="event_sync">');
+    const faq = await faqsOf(srv);
+    expect(answerTo(faq.pricingSchema, PRICING_Q1)).toBe(FAQ.pickPlan.now);
+    expect(answerTo(faq.homeSchema, HOME_Q8)).toContain(FAQ.homeCancel.now);
   });
 });
