@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { computeAccessStatus } from '../utils/access';
 import { clearGrant, resolveFailedSession } from '../phone/offlineGrant';
+import { claimFreshSignIn, trackSignInComplete } from '../utils/appAnalytics';
 import type { UserProfile, AccessStatus } from '../types/access';
 
 export type { UserProfile, AccessStatus };
@@ -69,10 +70,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authError, setAuthError] = useState<string | null>(null);
   const clearAuthError = useCallback(() => setAuthError(null), []);
 
-  const applyUser = useCallback((profile: UserProfile) => {
-    localStorage.setItem(SESSION_FLAG, '1');
+  // `countSignIn` is true only where the server has just confirmed a session (the lookup on load and the
+  // Electron token paths). The offline grant, the dev preview and `refreshProfile` leave it false: none of
+  // them is a sign-in. `signin_complete` then fires once, for a browser that had no session marker yet.
+  const applyUser = useCallback((profile: UserProfile, countSignIn = false) => {
+    const freshSignIn = claimFreshSignIn(localStorage, SESSION_FLAG, countSignIn);
     setUser(profile);
     setAccessStatus(computeAccessStatus(profile));
+    if (freshSignIn) trackSignInComplete();
   }, []);
 
   // On mount: load session. For web, the HttpOnly cookie is sent automatically
@@ -84,7 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { token, error } = (e as CustomEvent<{ token?: string; error?: string }>).detail;
       if (token) {
         apiFetch('/api/user/me')
-          .then(profile => { setSigningIn(false); applyUser(profile); })
+          .then(profile => { setSigningIn(false); applyUser(profile, true); })
           .catch(() => {
             localStorage.removeItem(ELECTRON_TOKEN_KEY);
             setSigningIn(false);
@@ -127,7 +132,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Attempt to load the current session (cookie on web, localStorage on Electron)
     apiFetch('/api/user/me')
-      .then(applyUser)
+      .then(profile => applyUser(profile, true))
       .catch(err => {
         // No valid session — clear any stale Electron token too
         if (isElectron()) localStorage.removeItem(ELECTRON_TOKEN_KEY);
@@ -156,7 +161,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (token) {
           if (poll) { clearInterval(poll); poll = null; }
           apiFetch('/api/user/me')
-            .then(profile => { setSigningIn(false); applyUser(profile); })
+            .then(profile => { setSigningIn(false); applyUser(profile, true); })
             .catch(() => {
               localStorage.removeItem(ELECTRON_TOKEN_KEY);
               setSigningIn(false);
