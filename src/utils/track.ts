@@ -17,7 +17,13 @@ export type FunnelEvent =
   | 'tracker_pdf_download'
   | 'calculator_use'
   | 'pricing_view'
-  | 'share_click';
+  | 'share_click'
+  // In-app milestones, sent with no parameters (src/utils/appAnalytics.ts).
+  // detection_start and first_alarm come from the camera and the detector, so
+  // they stay off behind the app_analytics flag until the privacy wording is updated.
+  | 'signin_complete'
+  | 'detection_start'
+  | 'first_alarm';
 
 // Which button was clicked, so the demo-to-trial rate can be separated from the
 // plain landing-page rate. A fixed label, never anything about the visitor.

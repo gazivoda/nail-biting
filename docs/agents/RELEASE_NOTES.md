@@ -9,7 +9,7 @@ the WS11a site fixes (privacy wording, meta tags, FAQ markup), which are meant t
 its `docs/agents/wsN-notes.md`; this file is the part you need to act on. Where a notes file and the code disagreed, the code
 was trusted and the difference is listed in the appendix at the end.
 
-Contents: **Read first** · (a) What was built · (b) The 27 flags, and the order to turn them on · (c) Environment variables and
+Contents: **Read first** · (a) What was built · (b) The 28 flags, and the order to turn them on · (c) Environment variables and
 build arguments · (d) Things only a human can review or verify · (e) Known gaps and what was not verified · (f) Deploy notes ·
 (g) Rollback · Appendix: notes versus code · QA results.
 
@@ -18,7 +18,7 @@ build arguments · (d) Things only a human can review or verify · (e) Known gap
 ## Read first (before you flip anything)
 
 1. **Flags are read when the server starts.** Edit `FEATURE_FLAGS` in Coolify (comma separated names), restart, no rebuild. Check
-   `https://stopbiting.today/api/features`: all 27 names are listed as `true` or `false`. Unknown names are ignored and logged at boot.
+   `https://stopbiting.today/api/features`: all 28 names are listed as `true` or `false`. Unknown names are ignored and logged at boot.
 2. **Delete line 24 of `COOLIFY_DEPLOY.md` (`ELECTRON_PROTOCOL=stopbiting`) and make sure the Coolify environment of the web app does
    not set it.** It is a switch for the desktop sign-in flow that applies to the whole server. If it is set, Google sign-in on the
    website redirects to `stopbiting://` instead of setting the cookie, and two server jobs silently stop: the trial follow-up email
@@ -152,7 +152,7 @@ calculators, the legal pages, llms files and emails. One `reviewed` marker per l
 
 ---
 
-## (b) The 27 flags
+## (b) The 28 flags
 
 Columns: **Needs** is the `dependsOn` field in `src/features/registry.ts` (advisory: the server only logs a warning at boot, nothing is
 switched off). **Do first** is the `before` field plus what the notes add. Paths are relative to the repo root.
@@ -184,6 +184,7 @@ switched off). **Do first** is the `before` field plus what the notes add. Paths
 | `compare_competitors` (WS11a) | Two competitor pages, indexable and in the sitemap only while on. | | Verify every fact against its source URL (`ws11a-notes.md` tables), then set `needsVerification: false` (`src/data/competitorPages.ts`, 2 places) and redeploy. Decide whether to run these next to the live `vs` pages. Refresh the live `/compare/stop-biting-vs-habitaware`. Re-date both `COMPARE_META` entries in `server.js`. | Competitor facts may be out of date (habitaware.com rate-limited the fact check). |
 | `social_proof` (WS11a) | Testimonials on the home and pricing pages. | | Add real, consented entries to `src/data/testimonials.json` following `src/data/README-testimonials.md`, deploy, then turn on. | Hidden anyway while the file is empty. |
 | `locale_es`, `locale_de`, `locale_pt_br` (WS12a) | A Language card in Settings > Account & Sync; the signed-in app in that language for people who pick it. | | A native speaker reads `src/i18n/locales/<language>/*.ts` (app: glossary in `ws12a-notes.md`) and `marketing-*.ts` (marketing pages: `ws12b-notes.md`), fixes the wording, sets `export const reviewed = true;` in `src/i18n/locales/<language>/reviewed.ts` (`index.ts` only re-exports it) and flips the matching expectation in `src/i18n/catalogs.test.ts`; then add the flag. Until `reviewed` is true the localized marketing pages are noindex and out of the sitemap; one marker covers the app and the marketing pages. WS12b's catalogs and routes are live only with the flag. | Machine translation of health-adjacent copy; text length changes layouts (German was checked at 390 px: no sideways scroll). |
+| `app_analytics` (WS14) | Sends two in-app milestones to Google Analytics as counts with no parameters: `detection_start` (detection really started with the camera on; at most once per page load) and `first_alarm` (the detector fired for the first time on this device). `signin_complete` is NOT behind this flag (it is not a camera signal and the current Privacy wording covers it). | | **Do NOT turn on until the privacy sentence in `docs/agents/legal/in-app-analytics-privacy.md` is approved and applied.** The Privacy Policy says Google Analytics "never receives anything from your camera or your habit log"; these two events are signals from the camera and the habit detector even without parameters. The draft lists every other sentence that changes with it and the exact order (publish the wording first, then the flag). | A person watching their Network tab will see a Google Analytics request at the start of detection and one at the first alarm. The privacy audit passes with the flag on (it checks for images, landmarks and video, not event names), so a green audit does not mean the wording is honoured. A "first alarm" fires once for every existing user's device on its next alarm after the flag is turned on; segment on new users in Google Analytics. |
 
 ### Recommended turn-on order
 
@@ -209,6 +210,7 @@ rule). Restart after each change.
 6. **Marketing:** `compare_competitors` after the verification, `social_proof` after real testimonials. The six `/features/...`
    pages need no extra flag: each opens with its feature flag, so re-read its copy when you turn the feature on.
 7. **Not yet:** `desktop_app`, `experimental`; each `locale_*` flag only after a native speaker has read that language.
+8. **Analytics, after the legal text:** `app_analytics` only after the sentence in `docs/agents/legal/in-app-analytics-privacy.md` is approved, published in the same release, and its other copies are changed. The draft has the exact steps. `signin_complete` needs no flag and no wording change.
 
 ---
 
@@ -278,6 +280,7 @@ and `VITE_WS7A_PROBE` (a measurement build only; never set it in production).
 | `ws8-privacy.md`, `ws8-terms.md` | `signin_*` | Apple, Microsoft, emailed link; cookies; link records. | Keeping the requester's IP about 24 h; how to refer to Apple's and Microsoft's policies; the "merge accounts on request" sentence promises a process that does not exist in code. |
 | `ws9-terms.md`, `ws9-refund.md` | `lifetime_plan`, `gift_plan`, `referrals`, `free_tier`, `regional_pricing` | Lifetime, gifts, referrals, free plan, local prices, refunds, plus Privacy additions (section 6). | Consumer-law withdrawal rights; what a refunded redeemed gift does; chargebacks; the wording "as long as Stop Biting is offered". |
 | `ws10-privacy.md`, `ws10-terms.md` | `share_links` | Share links. | Health data; consent record; exclude `/share/` from host logs; cleanup schedule. |
+| `in-app-analytics-privacy.md` | `app_analytics` | The sentence on the Privacy page, the About copy ("no detections are transmitted"), their translations and the no-JS mirror; the turn-on order. | Whether "detection started" and "first alarm" count as data from the camera; wording in all four languages; whether to name the two events or only "aggregate counts of three milestones". |
 | (none) | `phone_companion` | WS6 wrote no draft. | Confirm the Privacy page's local-storage wording covers `sb:phone:grant` (user id, first name, plan status and dates, grants, free-tier limits; no email, avatar or payment ids). |
 
 ### d2. Sentences on the legal pages that become untrue (not edited: rule 8)
@@ -293,6 +296,7 @@ Line numbers are as of b6b16f9 and will drift.
 | `src/pages/TermsPage.tsx:42` | "You must sign in with a Google account to use the Service." | any `signin_*` |
 | `TermsPage.tsx:55` and Privacy | "your camera feed never leaves your device" | The approved line is "No camera data is sent while it runs" (`ws11a-notes.md`) |
 | `TermsPage.tsx:22`, `RefundPage.tsx:17`, the `/refund-policy` summary in `server.js` | "3-day free trial" | `TRIAL_DAYS` is not 3. Suggested wording that never needs editing again: `ws9-terms.md` section 0. |
+| `PrivacyPage.tsx:29` | "Google Analytics records page visits ... It never receives anything from your camera or your habit log." | `app_analytics`. `docs/agents/legal/in-app-analytics-privacy.md` lists every copy: `server.js:2220` and `:2222`, `src/i18n/scopes/marketing-about.ts:26` and `:27`, the es, de and pt-BR copies, `src/i18n/coverage/site.coverage.test.tsx:221` |
 | Terms and Refund | nothing about referral credits, gifts, Lifetime, share links, a free plan | `referrals`, `gift_plan`, `lifetime_plan`, `share_links`, `free_tier` |
 | `Refund` section 3 ("Refund Eligibility") | speaks of "subscription" payments only | `lifetime_plan`, `gift_plan` (`ws9-refund.md`, point 1) |
 

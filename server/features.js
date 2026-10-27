@@ -57,6 +57,8 @@ export const FLAG_NAMES = [
   'locale_es',
   'locale_de',
   'locale_pt_br',
+  // WS14 analytics: in-app milestones sent to Google Analytics (camera and detector signals; keep off until the privacy wording is published)
+  'app_analytics',
 ];
 
 /**

@@ -13,6 +13,7 @@ import { useWatchGate } from '../../background/gate';
 import { PausedOverlay } from '../../background/PausedOverlay';
 import { effectiveAlertType, inferenceEnabled, isDetecting } from '../../background/pauseMachine';
 import { useT } from '../../i18n/scopes/watch';
+import { trackApp } from '../../utils/appAnalytics';
 
 interface Props {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -46,7 +47,12 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   const gate = useWatchGate();
   const inferenceOn = inferenceEnabled(cameraEnabled, gate.state);
   // SEAM (WS3): alarmHandExtras() is {} unless the false-alarm controls are on, then { hand } (left or right as the person sees it).
-  const handleAlert = (behavior: Behavior) => logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });
+  const handleAlert = (behavior: Behavior) => {
+    logIncident('auto-detected', true, { behavior, ...alarmHandExtras() });
+    // Analytics seam (flag app_analytics, off by default): the detector fired in the signed-in app. Once per device,
+    // no parameters; a no-op with the flag off. After the log call so it can never come between an alarm and its entry.
+    trackApp('first_alarm');
+  };
 
   const handleRetry = useCallback(() => {
     if (retryTimeoutRef.current) clearTimeout(retryTimeoutRef.current);
@@ -73,6 +79,9 @@ export function CameraView({ videoRef, cameraError = null, onModelError }: Props
   // reminders) reads this instead.
   const running = isDetecting({ cameraEnabled, cameraError, status, watch: gate.state });
   useEffect(() => { setDetecting(running); }, [running, setDetecting]);
+  // Analytics seam (flag app_analytics, off by default): detection really started with the camera on. Once per page
+  // load, no parameters; a no-op with the flag off. The landing demo does not mount this component, so it never counts.
+  useEffect(() => { if (running) trackApp('detection_start'); }, [running]);
   useEffect(() => () => setDetecting(false), [setDetecting]);
   useEffect(() => { onModelError?.(modelFailed); }, [modelFailed, onModelError]);
 
