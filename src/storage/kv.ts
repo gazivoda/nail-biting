@@ -19,7 +19,7 @@ import { readRaw, writeRaw, removeRaw, listRawKeys } from './adapter';
  * when a workstream needs a new one; do not write keys outside the scheme.
  */
 export const KV_NAMESPACES = [
-  'app',           // WS0: device id, storage bookkeeping
+  'app',           // WS0: device id, storage bookkeeping; WS14: first-alarm-sent marker
   'flags',         // WS0: last-known feature flags, dev overrides
   'detection',     // WS1: monitored behaviours, per-rule settings
   'falsePositive', // WS3: learned poses, calibration, hand filter

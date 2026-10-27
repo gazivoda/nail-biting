@@ -6,6 +6,8 @@
 // here identifies a person. index.html queues gtag calls from the first line of the
 // page (only the gtag.js download waits for `load`), so an early event is kept, and
 // nothing is sent when the tag is absent (an automated browser, navigator.webdriver).
+// The in-app milestones (signin_complete and the flagged camera events) are sent from
+// src/utils/appAnalytics.ts through this same function.
 export type FunnelEvent =
   | 'demo_start'
   | 'demo_complete'

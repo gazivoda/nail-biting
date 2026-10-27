@@ -43,18 +43,11 @@ export function claimFreshSignIn(
 }
 
 /**
- * Sends `signin_complete`. The Google Analytics tag is only defined once the
- * window's load event has run (index.html defers it), and the session lookup that
- * follows a Google sign-in can finish before that, so wait for load rather than
- * lose the event. This listener is added after the tag's own, so it runs after it.
+ * Sends `signin_complete`. Safe at any time: index.html queues `gtag` calls from the first line of the head (before
+ * the gtag.js download), so the session lookup finishing before the window's load event loses nothing.
  */
 export function trackSignInComplete(): void {
   try {
-    const doc = (globalThis as { document?: Document }).document;
-    if (doc && doc.readyState !== 'complete' && typeof window !== 'undefined') {
-      window.addEventListener('load', () => track('signin_complete'), { once: true });
-      return;
-    }
     track('signin_complete');
   } catch {
     // Analytics must never break sign-in.

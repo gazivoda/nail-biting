@@ -457,12 +457,12 @@ server: the code is behind `import.meta.env.DEV` and is absent from production b
 
 **Adding a flag.** Add it to `FEATURES` in `registry.ts` and to `FLAG_NAMES` in `server/features.js` (and
 `FLAG_DEPENDS_ON` there if it has a prerequisite) and to the list in `.env.example`.
-`server/features.test.js` fails if the two lists differ. Registered flags (27): `detection_behaviors`, `experimental`
+`server/features.test.js` fails if the two lists differ. Registered flags (28): `detection_behaviors`, `experimental`
 (WS1); `hrt_coaching`, `urge_timer` (WS2); `false_positive_controls` (WS3); `event_sync`, `data_backup` (WS4);
 `insights`, `photo_diary`, `weekly_email` (WS5); `phone_companion` (WS6); `background_watching` (WS7a);
 `desktop_app` (WS7b); `signin_magic_link`, `signin_apple`, `signin_microsoft` (WS8); `free_tier`, `lifetime_plan`,
 `gift_plan`, `referrals`, `regional_pricing` (WS9); `share_links` (WS10); `compare_competitors`, `social_proof`
-(WS11a); `locale_es`, `locale_de`, `locale_pt_br` (WS12). `social_proof` additionally hides itself while its data
+(WS11a); `locale_es`, `locale_de`, `locale_pt_br` (WS12); `app_analytics` (WS14). `social_proof` additionally hides itself while its data
 file is empty; that check is the feature's, not the flag's.
 
 `dependsOn` in the registry (and `FLAG_DEPENDS_ON` in `server/features.js`) is advisory: the server logs a warning at boot when
@@ -1389,7 +1389,7 @@ app that previews the link counts as a view.
 
 ## 22. Where each flag is checked
 
-All 27 flags are in `src/features/registry.ts` and `server/features.js`. This is where each one is actually read, to answer "what does
+All 28 flags are in `src/features/registry.ts` and `server/features.js`. This is where each one is actually read, to answer "what does
 turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePaths.ts`).
 
 | Flag | Server | Client |
@@ -1410,6 +1410,7 @@ turning it on touch". "Page" = a gated marketing page (`src/data/featurePagePath
 | `lifetime_plan`, `gift_plan` | `server/routes/billing.js` | `PaywallPage.tsx`, `PlanExtras.tsx`, `useGiftInfo.ts` |
 | `referrals` | `server/routes/billing.js`, `server/billing/referrals.js`; page `/features/referral-program` | `ReferralCard.tsx`, `referralCapture.ts` |
 | `regional_pricing` | none | `src/billing/prices.ts` |
+| `app_analytics` | none | `src/utils/appAnalytics.ts` (`trackApp`), called from `CameraView.tsx` (`detection_start`, `first_alarm`) |
 | `share_links` | `server/routes/share.js`; page `/features/share-with-therapist` | `SharingSection.tsx`, `SharingSettings.tsx` |
 | `compare_competitors` | `server.js` (`GATED_FLAG`), `server/marketing/gatedPages.js` | `ComparePage.tsx` |
 | `social_proof` | `server.js` (testimonials article) | `src/components/site/Testimonials.tsx` |

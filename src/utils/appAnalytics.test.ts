@@ -56,38 +56,16 @@ describe('claimFreshSignIn', () => {
 });
 
 describe('trackSignInComplete', () => {
-  it('sends signin_complete to gtag with no parameters when the page has loaded', () => {
+  it('sends signin_complete to gtag with no parameters', () => {
     const gtag = vi.fn();
     vi.stubGlobal('window', { gtag });
-    vi.stubGlobal('document', { readyState: 'complete' });
     trackSignInComplete();
-    expect(gtag).toHaveBeenCalledTimes(1);
-    expect(gtag.mock.calls[0]).toEqual(['event', 'signin_complete', undefined]);
-  });
-
-  it('waits for the load event (that is when the Google Analytics tag is defined), then sends once', () => {
-    const gtag = vi.fn();
-    let onLoad: (() => void) | undefined;
-    const addEventListener = vi.fn((type: string, fn: () => void, opts?: { once?: boolean }) => {
-      expect(type).toBe('load');
-      expect(opts).toEqual({ once: true });
-      onLoad = fn;
-    });
-    // The tag is not there yet at the moment of the call.
-    const win: { gtag?: typeof gtag; addEventListener: typeof addEventListener } = { addEventListener };
-    vi.stubGlobal('window', win);
-    vi.stubGlobal('document', { readyState: 'interactive' });
-    trackSignInComplete();
-    expect(gtag).not.toHaveBeenCalled();
-    win.gtag = gtag; // index.html's load handler runs first and defines it
-    onLoad!();
     expect(gtag).toHaveBeenCalledTimes(1);
     expect(gtag.mock.calls[0]).toEqual(['event', 'signin_complete', undefined]);
   });
 
   it('never throws, with or without gtag', () => {
     vi.stubGlobal('window', {});
-    vi.stubGlobal('document', { readyState: 'complete' });
     expect(() => trackSignInComplete()).not.toThrow();
     vi.stubGlobal('window', { gtag: () => { throw new Error('boom'); } });
     expect(() => trackSignInComplete()).not.toThrow();

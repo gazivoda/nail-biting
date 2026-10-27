@@ -218,3 +218,17 @@ Commit the page first, then sync, then commit the generated files.
 **Machine translations ship in three states.** Flag off = 404; flag on but unreviewed = served `noindex`, no sitemap, no hreflang; flag on and reviewed = indexable. One `reviewed` marker per language (`src/i18n/locales/<x>/reviewed.ts`) controls the app and the marketing pages.
 
 **Case-insensitive filesystems bite twice.** `phoneView.ts` next to `PhoneView.tsx` and `programView.ts` next to `ProgramView.tsx` both broke `tsc -b`; a guard test now catches it. Never name two files in a folder the same apart from case.
+
+**Track on the state transition, not inside the handler.** `demo_start` lived in `start()`, but the landing mounts `<HeroDemo autoStart />`, whose first run begins in the reducer's initial state and never calls `start()`. Ten weeks of "1 demo start" were a code bug. When a flow can begin by prop, initial state or URL, put the event in an effect on the phase change.
+
+**A queue stub must exist before anything can call it.** `index.html` created `window.gtag` inside the `load` handler, so every `track()` before `load` (effects, an IntersectionObserver already in view at mount, early clicks) vanished silently. Define `dataLayer` and the stub in the head (it is an array push, no network) and defer only the script download.
+
+**Read the metric's bug before reading it as behaviour.** A tiny funnel (33 pricing views, 1 demo start) was first read as "visitors do not convert"; two tracking bugs were behind part of it. Before writing insights from analytics, check the events can fire in the situations the numbers describe.
+
+**No jsdom here.** Test an inline script from an HTML file with `node:vm` plus a hand-built window (see `scripts/analyticsTag.test.mjs`); do not add a dependency for it. The privacy-audit Chrome has `navigator.webdriver` false (no `--enable-automation`), so a webdriver guard does not hide analytics from the audit.
+
+**Agent runs against the real app hit production services.** The real-browser checks and the privacy audit loaded the built app, which loads the real GA tag, so a few `localhost` hits reached the production property. Tag test runs as internal (`?internal=1`) or use a disposable GA id; do not assume a localhost page is invisible.
+
+**Check the other session's recent edits before an SEO rewrite.** The 90-day Search Console window mostly predates the 2026-10-20..23 title rewrites, so low CTR there says nothing about the new titles. Skip a rewrite the data cannot judge, and record the date to re-read it.
+
+**An obsolete gate is a false alarm that trains people to ignore gates.** The "owner's Paddle WIP patch applies" check failed once the owner's change landed on main. Retire a gate in the same change that makes it meaningless.

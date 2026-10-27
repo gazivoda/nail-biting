@@ -42,7 +42,7 @@ export function recentFire(now: number, withinMs = 3000): FireInfo | null {
 /**
  * What to add to the event of an alarm that has just started: the hand it came from, as the person
  * sees it. Empty with no controls registered (the flag off), so the event is exactly what it was
- * before this feature. The one call CameraView.handleAlert makes.
+ * before this feature. The extras CameraView.handleAlert passes to logIncident.
  */
 export function alarmHandExtras(now: number = Date.now()): { hand?: Hand } {
   const fire = recentFire(now);
