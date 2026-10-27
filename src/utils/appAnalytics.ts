@@ -18,6 +18,8 @@
 // sends nothing and touches no storage.
 
 import { track } from './track';
+import { isFeatureOn } from '../features/flags';
+import { kv } from '../storage/kv';
 
 /**
  * Whether this applyUser call is a sign-in that has just finished on this device:
@@ -57,4 +59,50 @@ export function trackSignInComplete(): void {
   } catch {
     // Analytics must never break sign-in.
   }
+}
+
+/** The two milestones that come from the camera and the detector. Both are behind the `app_analytics` flag. */
+export type AppEvent = 'detection_start' | 'first_alarm';
+
+// Names already sent in this page load. `detection_start` is once per page session; it also stops
+// StrictMode's double effect and a pause/resume from sending twice.
+const sentThisPage = new Set<AppEvent>();
+
+// Marks that this device has sent `first_alarm`. A flag, never a count or a time. `kv` never throws and, when
+// storage is blocked, keeps the value in memory for the page, so a blocked store means once per page load.
+const FIRST_ALARM_SENT = 'first-alarm-sent';
+
+/**
+ * Sends `detection_start` or `first_alarm` to Google Analytics, and only while the `app_analytics` flag is on.
+ *
+ * - Flag off (or not known yet, which reads as off): returns before touching anything. Nothing is sent, nothing is
+ *   written, so a device that used the app flag-off still sends its first alarm after the owner turns the flag on.
+ * - `detection_start`: at most once per page load.
+ * - `first_alarm`: at most once per device, and the marker is written only after it was sent.
+ * - No parameters, ever: `track(name)` is called with the name alone. Nothing about the log, the time, how long
+ *   detection ran or what the camera saw is an argument here, so none can be sent.
+ *
+ * The flag is read from the cached `/api/features` answer (`isFeatureOn`), not a hook, because the callers are an
+ * effect and the detector's alert callback. It does not ask the server: the Watch tab's own flag reads do that,
+ * seconds before the models have loaded. If that answer has not arrived yet the event is dropped, an undercount.
+ */
+export function trackApp(name: AppEvent): void {
+  try {
+    if (!isFeatureOn('app_analytics')) return;
+    if (sentThisPage.has(name)) return;
+    if (name === 'first_alarm' && kv.get<boolean>('app', FIRST_ALARM_SENT, false) === true) {
+      sentThisPage.add(name);
+      return;
+    }
+    track(name);
+    sentThisPage.add(name);
+    if (name === 'first_alarm') kv.set('app', FIRST_ALARM_SENT, true);
+  } catch {
+    // Analytics must never break detection or the alarm.
+  }
+}
+
+/** Tests only: forget what this page load has already sent. */
+export function resetAppAnalyticsForTests(): void {
+  sentThisPage.clear();
 }
