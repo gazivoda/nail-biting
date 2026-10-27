@@ -332,12 +332,13 @@ describe.skipIf(!built)('feature pages, one flag at a time', () => {
       const article = articleOf(text);
       expect(article, `${page} article`).toContain(`<nav aria-label="More from Stop Biting"><ul><li><a href="${path}">`);
       expect(textOf(article.match(/<nav aria-label="More from Stop Biting">[\s\S]*?<\/nav>/)[0]), `${page} article list`).toBe(label);
-      // the noscript site navigation, the data block and the article name the same page, and no other gated page appears anywhere
-      // (the open page's own "Related reading" is checked on its own, below)
-      if (page !== path) {
-        expect(gatedHrefsIn(text), `${page} anchors`).toEqual([path]);
-        for (const other of PATHS.filter(p => p !== path)) big(text, page).notToContain(other);
-      }
+      // the noscript site navigation, the data block and the article name the same page, and no other gated page appears anywhere:
+      // not in the chrome, and not in the open page's own "Related reading" either (a link to a closed page is a link to the 404)
+      expect(gatedHrefsIn(text), `${page} anchors`).toEqual([path]);
+      for (const other of PATHS.filter(p => p !== path)) big(text, page).notToContain(other);
+    }
+    for (const other of PATHS.filter(p => p !== path)) {
+      big((await get(srv, `/page-data${path}.json`)).text, `${path} data`).notToContain(other);
     }
     // a page that is not a marketing page, or not found, carries nothing
     big((await get(srv, '/this-does-not-exist')).text).notToContain(GATED_LINKS_ID);

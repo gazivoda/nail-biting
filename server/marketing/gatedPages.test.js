@@ -4,6 +4,7 @@ import {
   GATED_LINKS_ID, gatedFlagOf, gatedFooterLinks, gatedLinkLabel, gatedLinksArticleHtml, gatedLinksMarkerTag, gatedLlmsFullText,
   gatedLlmsTxtLines, gatedNavLinks, gatedOgFile, gatedSitemapEntries, isClosedGatedFile, isGateOpen,
   jsonForScript, openGatedPages, pageDataPath, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
+  withoutClosedPageLinks,
 } from './gatedPages.js';
 
 const quiet = () => {};
@@ -229,5 +230,31 @@ describe('links to the open pages: footer, marker and crawler article', () => {
     expect(html.match(/<a /g)).toHaveLength(3);
     expect(gatedLinksArticleHtml([], escape)).toBe('');
     expect(gatedLinksArticleHtml([['/features/a', 'R&D "x" <b>']], escape)).toContain('R&amp;D &quot;x&quot; &lt;b&gt;');
+  });
+});
+
+describe('withoutClosedPageLinks', () => {
+  const flagsOf = { '/features/habit-reversal-coaching': 'hrt_coaching', '/features/phone-companion': 'phone_companion' };
+  const page = {
+    title: 'Phone',
+    relatedPosts: [
+      { href: '/how-it-works', label: 'How it works' },
+      { href: '/features/habit-reversal-coaching', label: 'Coaching after the alarm' },
+      { href: '/pricing', label: 'Pricing' },
+    ],
+  };
+  const flagSet = names => createFlags({ FEATURE_FLAGS: names }, { warn: quiet });
+
+  it('drops the links to gated pages whose flag is off, and keeps every other link in its place', () => {
+    const out = withoutClosedPageLinks(page, flagsOf, flagSet('phone_companion'));
+    expect(out.relatedPosts.map(p => p.href)).toEqual(['/how-it-works', '/pricing']);
+    expect(out.title).toBe('Phone');
+  });
+
+  it('keeps a link to a gated page while that page\'s own flag is on, and hands back the same page when nothing goes', () => {
+    const out = withoutClosedPageLinks(page, flagsOf, flagSet('phone_companion,hrt_coaching'));
+    expect(out).toBe(page);
+    expect(withoutClosedPageLinks({ title: 'x' }, flagsOf, flagSet(''))).toEqual({ title: 'x' });
+    expect(withoutClosedPageLinks(page, undefined, flagSet(''))).toBe(page);
   });
 });

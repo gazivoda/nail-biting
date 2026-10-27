@@ -18,7 +18,7 @@ import { createGoogleLinker } from './server/auth/googleLink.js';
 import {
   gatedFooterLinks, gatedLinksArticleHtml, gatedLinksMarkerTag,
   gatedLlmsFullText, gatedLlmsTxtLines, gatedNavLinks, gatedSitemapEntries, isClosedGatedFile, isGateOpen, jsonForScript,
-  openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries,
+  openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries, withoutClosedPageLinks,
 } from './server/marketing/gatedPages.js';
 import { createCopyIsOn } from './server/marketing/copyFlags.js';
 import { createLifetimeCopy } from './server/marketing/lifetimeCopy.js';   // the Lifetime plan in the words crawlers read (flag lifetime_plan)
@@ -900,9 +900,10 @@ if (!existsSync(distPath)) {
   const COPY_TOKENS = { REFERRAL_CREDIT: describeDays(referralCreditDays()) };
   // Open pages, with markers and placeholders resolved: the one copy the article, the schema, the
   // llms files and the JSON the page renders from are all made of.
+  // A page's "Related reading" loses its links to gated pages that are closed (they would be links to the 404).
   const GATED_CONTENT = Object.fromEntries(Object.entries(
     openGatedPages(GATED_FILE.comparePages ?? {}, GATED_FLAGS, flags),
-  ).map(([path, page]) => [path, resolveGatedPage(page, { isOn: copyIsOn, tokens: COPY_TOKENS })]));
+  ).map(([path, page]) => [path, withoutClosedPageLinks(resolveGatedPage(page, { isOn: copyIsOn, tokens: COPY_TOKENS }), GATED_FLAGS, flags)]));
   // [href, label] pairs the noscript site nav gains for the open pages.
   const GATED_NAV = gatedNavLinks(GATED_CONTENT);
   if (GATED_NAV.length) console.log(`[marketing] pages open (flag on): ${GATED_NAV.map(([href]) => href).join(', ')}`);

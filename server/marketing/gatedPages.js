@@ -56,6 +56,18 @@ export function resolveGatedPage(page, { isOn, tokens = {} }) {
   return dropEmptySections(flagAwareDeep(fillCopyTokensDeep(page, tokens), isOn));
 }
 
+/**
+ * An open page's "Related reading" without the links to gated pages that are closed right now: such a link would
+ * land on the branded 404. A link to any other page is kept, and the same page comes back when nothing is dropped.
+ */
+export function withoutClosedPageLinks(page, gatedFlags, flags) {
+  if (!Array.isArray(page?.relatedPosts)) return page;
+  const gated = gatedFlags ?? {};
+  const open = post => !Object.prototype.hasOwnProperty.call(gated, post?.href) || flags.isOn(gatedFlagOf(gated, post.href));
+  const kept = page.relatedPosts.filter(open);
+  return kept.length === page.relatedPosts.length ? page : { ...page, relatedPosts: kept };
+}
+
 /** Whether a COMPARE_META entry may be served right now. Entries without a `flag` are always open. */
 export function isGateOpen(flags, meta) {
   return !meta?.flag || flags.isOn(meta.flag);
