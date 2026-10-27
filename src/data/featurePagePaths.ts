@@ -12,6 +12,9 @@
 // noscript site navigation and the per-page social card, and its copy sits in
 // dist/seo-gated.json, which the server reads and never serves. Turning the flag on
 // is `FEATURE_FLAGS=<name>` plus a restart (docs/agents/ARCHITECTURE.md, section 5).
+// While it is on the site footer links the page (and the crawler article lists it): the server
+// writes the open pages into the page it sends and SiteFooter reads that, so this file is the
+// only place an address is written and none of it ships in the bundle (section 22).
 //
 // The copy lives in src/data/featurePages.ts. What must happen before each flag goes
 // on is in docs/agents/ws11b-notes.md.
