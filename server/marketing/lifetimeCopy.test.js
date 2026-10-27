@@ -125,6 +125,11 @@ describe('with the plan for sale: the server-rendered article', () => {
     expect(out).toBe(`<li><a href="/pricing">Pricing: $2.99/month, $29/year or $99 once, ${TRIAL_HYPHEN} free trial</a></li>`);
   });
 
+  it('stops calling the two subscriptions "our two published prices" in the cost calculator article', () => {
+    expect(ON.article(`<p>Only the numbers you type and ${ANCHORS.calculator}$2.99 a month, or $29 a year. It assumes no average.</p>`))
+      .toBe('<p>Only the numbers you type and our two subscription prices: $2.99 a month, or $29 a year. It assumes no average.</p>');
+  });
+
   it('changes nothing in an article that holds none of its anchors, and is idempotent', () => {
     const blog = '<h1>Why do people bite</h1><p>It costs $2.99/month or $29/year, and that is all.</p>';
     expect(ON.article(blog)).toBe(blog);

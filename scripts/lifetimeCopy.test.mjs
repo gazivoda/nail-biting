@@ -122,6 +122,10 @@ describe.skipIf(!built)('Lifetime plan copy, flag off', () => {
     expect(SAYS_OUR_LIFETIME_PLAN.test(text), `${path} mentions the Lifetime plan`).toBe(false);
   });
 
+  it('the cost calculator article still says "our two published prices"', async () => {
+    big(articleOf((await get(srv, '/tools/nail-biting-cost-calculator')).text)).toContain('Only the numbers you type and our two published prices: $2.99 a month, or $29 a year.');
+  });
+
   it('the shell offers are the three of today', async () => {
     const app = jsonLd((await get(srv, '/pricing')).text).find(b => b['@type'] === 'SoftwareApplication');
     expect(app.offers.map(o => o.name)).toEqual(['Free trial', 'Monthly', 'Yearly']);
@@ -206,6 +210,12 @@ describe.skipIf(!built)('Lifetime plan copy, flag on with the price id', () => {
     big(home).toContain('Lifetime: $99.00, paid once, with no renewals. Every plan includes unlimited AI detection');
     big(home).notToContain('Both plans include');
     big(articleOf((await get(srv, '/how-it-works')).text)).toContain(`Pricing: $2.99/month, $29/year or $99 once, ${TRIAL_HYPHEN} free trial</a>`);
+  });
+
+  it('the cost calculator article no longer says there are two published prices', async () => {
+    const article = articleOf((await get(srv, '/tools/nail-biting-cost-calculator')).text);
+    big(article).toContain('Only the numbers you type and our two subscription prices: $2.99 a month, or $29 a year.');
+    big(article).notToContain('our two published prices');
   });
 
   it('llms.txt names the plan in the Pricing block and on the pricing entry; llms-full.txt gains a Pricing section', async () => {

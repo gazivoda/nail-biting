@@ -55,6 +55,8 @@ export const ANCHORS = Object.freeze({
   homePricing: 'saving 19%. Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types.',
   /** the pricing link in the how-it-works article ("Learn more") */
   howLink: 'Pricing — $2.99/month or $29/year, ',
+  /** the cost calculator article says it uses "our two published prices": the two subscriptions, once there are three prices */
+  calculator: 'our two published prices: ',
 });
 
 const identity = value => value;
@@ -117,6 +119,7 @@ export function createLifetimeCopy({ on, price = LIFETIME_PRICE_USD } = {}) {
     out = replaceAll(out, ANCHORS.homePricing,
       `saving 19%. ${OFFER_NAME}: ${usdFull}, paid once, with no renewals. Every plan includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types.`);
     out = replaceAll(out, ANCHORS.howLink, `Pricing: $2.99/month, $29/year or ${usd} once, `);
+    out = replaceAll(out, ANCHORS.calculator, 'our two subscription prices: ');
     return out;
   }
 

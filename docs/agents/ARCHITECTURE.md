@@ -748,7 +748,7 @@ crawler copy in `server.js` is built from `seo-content.json` by the same validat
 
 3. *The Lifetime plan in the words crawlers read* (flag `lifetime_plan`; `server/marketing/lifetimeCopy.js`, test
    `scripts/lifetimeCopy.test.mjs`). The pricing section shows three cards while the flag is on, so the `<title>`, description, the
-   `/pricing`, homepage and how-it-works crawler articles, the noscript nav label, the product node's `offers` (patched once into the
+   `/pricing`, homepage, how-it-works and cost calculator crawler articles (the last said "our two published prices"), the noscript nav label, the product node's `offers` (patched once into the
    shell at start-up, so every route carries the same node) and `llms.txt` / `llms-full.txt` say so too. `copyIsOn('lifetime_plan')` is
    the flag AND a Lifetime price id in the server's environment (`copyFlags.js`: the card needs the build's id, which the server
    cannot see). It is not a `RULES` entry because it adds markup, and not a marker because a marker's text would enter a page's
