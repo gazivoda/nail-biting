@@ -110,6 +110,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'Step 2: Have something ready to do instead',
         body: `When you catch yourself biting — or about to — you need to immediately do something your hands can't do at the same time as biting. This is called a competing response, and the specifics matter.\n\nThings that work well: pressing your palms flat on a desk, clenching both fists, gripping a pen. Things that don't work: vague intentions to "just stop." Pick one specific thing, decide in advance that it's what you'll do, and hold it for about a minute. The point is to give the urge time to pass while you've broken the automatic chain.\n\nIt feels awkward at first. That's fine. The awkwardness is the habit being interrupted rather than completed.`,
+        html: `<p>For twelve options sorted by whether your biting is driven by stress, focus or boredom, see <a href="/blog/nail-biting-alternatives">what to do instead of biting your nails</a>.</p>`,
       },
       {
         heading: 'Step 3: Get an external signal',
@@ -167,7 +168,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: `Where to go next`,
         body: ``,
-        html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p><p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p>`,
+        html: `<p>For what has and has not been measured about nail biting and your teeth, see <a href="/blog/nail-biting-teeth-damage">does nail biting damage your teeth</a>.</p><p>For what has and has not been measured about swallowing bitten nails, see <a href="/blog/swallowing-fingernails">what happens if you swallow your fingernails</a>.</p><p>For what lives under the nail, and the study that compared the saliva of nail biters and non-biters, see <a href="/blog/nail-biting-bacteria-parasites">what lives under your fingernails</a>.</p>`,
       },
       {
         heading: `Related reading`,
@@ -385,6 +386,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: 'How does webcam-based nail biting detection actually work?',
         body: `Modern real-time nail biting detection uses a combination of hand landmark detection and face landmark detection to identify when fingers are near the mouth. The hand model tracks 21 key points on the hand with sub-centimetre precision; the face model tracks 468 facial landmarks including the precise location of the lips and mouth opening. When hand landmarks and mouth landmarks are simultaneously within a defined geometric proximity, the detection fires.\n\nThe underlying AI framework — MediaPipe, developed by Google — runs entirely in WebAssembly, a portable binary instruction format that executes at near-native speed inside browsers and desktop applications. This means detection can run entirely on the user's local CPU or GPU, so the video never has to be sent to a server to be analysed. Stop Biting deliberately runs it five times a second rather than on every frame — enough to catch a hand on its way to the mouth, at a fraction of the CPU cost. Detection runs on the device and no camera data is sent while it runs — a non-trivial privacy consideration for a tool that operates continuously during work hours.`,
+        html: `<p>For the two models, how often the check runs and how big the downloads are, see <a href="/blog/mediapipe-ai-detection-explained">how MediaPipe detects nail biting in Stop Biting</a>.</p>`,
       },
       {
         heading: 'Is AI detection as effective as human awareness training?',
@@ -708,7 +710,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     slug: 'webcam-privacy-nail-biting-app',
     title: 'Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained',
     seoTitle: 'Webcam Nail Biting App Privacy: Is It Safe?',
-    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
+    description: "Webcam apps for nail biting raise fair privacy questions. See what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-04-07',
@@ -722,6 +724,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
       {
         heading: 'How on-device AI processing works',
         body: `Stop Biting uses MediaPipe, Google's open-source machine learning framework, compiled to WebAssembly — a portable binary format that runs at near-native speed inside browsers and desktop applications. The hand and face landmark detection models run entirely on the user's local CPU or GPU. No video frames, no landmark coordinates, and no detection events are transmitted to any server.\n\nThis can be independently verified by anyone using network monitoring tools (Charles Proxy, Wireshark, or the browser's built-in Network tab in Developer Tools). Running Stop Biting while monitoring network traffic will show no camera data being sent. Detection runs in your browser, so there is no step at which video has to be uploaded. Signing in and paying do use the network.`,
+        html: `<p>The hand and face models themselves are described in <a href="/blog/mediapipe-ai-detection-explained">the MediaPipe detection explainer</a>.</p>`,
       },
       {
         heading: 'What data is and is not stored',
@@ -1071,6 +1074,7 @@ BLOG_POSTS.push({
     {
       heading: 'How Stop Biting works',
       body: `Stop Biting uses your existing webcam to run MediaPipe's hand-landmark and face-mesh models locally. When the AI detects your hand approaching your mouth with the characteristic posture of nail biting, it triggers an immediate audible alert — before the bite completes.\n\nThe clinical mechanism is awareness training — the primary active ingredient in Habit Reversal Training (HRT). The alert fires at the precise moment the automatic habit begins, creating the conscious interruption that the habit loop requires. Over time, repeated interruptions weaken the automatic chain through non-reinforcement (operant extinction).\n\nThe awareness advantage: Most chronic biters underestimate how often they bite, because the episodes that run automatically are the ones least likely to be noticed or remembered — we have not found a controlled study quantifying the shortfall. The behaviour happens below conscious awareness. Stop Biting closes this gap mechanistically, not through willpower.\n\nWhere Stop Biting is limited: Requires a webcam and screen-based context. Doesn't monitor biting away from the computer.`,
+      html: `<p>For the technical detail, see <a href="/blog/mediapipe-ai-detection-explained">how MediaPipe hand and face landmarks detect a hand near the mouth</a>.</p>`,
     },
     {
       heading: 'Which should you use?',
@@ -1302,8 +1306,8 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-alternatives',
   title: "What to Do Instead of Biting Your Nails: 12 Evidence-Based Alternatives",
-  seoTitle: 'Nail Biting Alternatives: 12 That Really Work',
-  description: "Competing responses only work when they meet the same need as nail biting. 12 evidence-based alternatives that work, organized by the trigger they address.",
+  seoTitle: 'What to Do Instead of Biting Your Nails: 12 Options',
+  description: "Match the substitute to your trigger and to where you bite. 12 options by stress, focus and boredom biting, with what research does and does not show.",
   tag: 'Treatment',
   readingMinutes: 4,
   datePublished: '2026-04-21',
@@ -1560,7 +1564,7 @@ BLOG_POSTS.push({
   slug: 'acrylics-to-stop-nail-biting',
   title: 'Can Acrylic Nails Stop Nail Biting? What Actually Happens When You Get Extensions',
   seoTitle: 'Can Acrylic Nails Stop Nail Biting?',
-  description: "Acrylic nails are one of the most popular ways to stop nail biting. What the evidence shows, when they work, when they don't, and what to pair them with.",
+  description: "Possibly: dermatology reviews say manicures can reduce biting in motivated patients, but no controlled trial has tested acrylics. When they help, what to add.",
   tag: 'Treatment',
   readingMinutes: 6,
   datePublished: '2026-04-23',
@@ -2024,6 +2028,7 @@ BLOG_POSTS.push({
     {
       heading: 'Privacy: the question everyone asks first',
       body: `The app uses your webcam, which creates an understandable privacy concern. The answer is simple: no camera data is sent while detection runs. The video feed is processed locally by MediaPipe, a framework that runs in WebAssembly — a sandboxed execution environment in your browser. The AI models are downloaded once, when you first start detection.\n\nThe alarm and bite log is stored in your browser, with no cloud sync. You sign in with Google so your trial and subscription work, and the site counts page visits with Google Analytics; neither ever sees your camera. You can disconnect from the internet after the initial load and the app functions identically. This isn't a privacy policy claim that requires trust — it's verifiable by monitoring your network traffic while the app runs.`,
+      html: `<p>The detection stack behind this is explained in <a href="/blog/mediapipe-ai-detection-explained">the MediaPipe explainer</a>.</p>`,
     },
     {
       heading: 'Where Stop Biting fits in the treatment stack',
@@ -2053,7 +2058,7 @@ BLOG_POSTS.push({
     {
       heading: 'Perfectionism: the most discussed link, and the thinnest evidence',
       body: `Perfectionism is the personality trait most often named in connection with nail biting, and the evidence behind it is one small experiment. In 2015, 24 people with body-focused repetitive behaviours — nail biting, hair pulling and skin picking pooled together — and 23 controls were put through boredom/frustration, stress and relaxation conditions (Roberts et al., Journal of Behavior Therapy and Experimental Psychiatry). The BFRB group reported stronger urges than controls overall, and stronger urges under boredom and frustration than under relaxation, but not stronger urges under stress. The same group scored higher on a measure the authors call maladaptive planning style.\n\nThat measure is not a perfectionism scale, no perfectionism instrument was used, and the outcome was self-reported urge rather than observed biting. So "perfectionism drives nail biting" is an interpretation laid over a correlation in 24 people, not a replicated finding — and we have not found a study testing it directly.\n\nWhat follows from that is modest. If your biting clusters around stalled work and things falling short of your standard, frustration is a reasonable thing to target, and Acceptance and Commitment Therapy is the approach usually suggested for frustration tolerance. We have found no trial comparing ACT with habit reversal training for nail biting, so treat that as a sensible addition rather than a substitute for the better-evidenced behavioural work.`,
-      html: `<p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25460266/" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li></ul>`,
+      html: `<p>The same study, and what it does and does not show, is written up in full in <a href="/blog/nail-biting-and-perfectionism">nail biting and perfectionism: what the evidence shows</a>.</p><p><strong>Sources:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/25460266/" target="_blank" rel="noopener noreferrer">Roberts S, O'Connor K, Aardema F, Bélanger C. The impact of emotions on body-focused repetitive behaviors: evidence from a non-treatment-seeking sample. J Behav Ther Exp Psychiatry. 2015;46:189–197.</a></li></ul>`,
     },
     {
       heading: 'Anxiety sensitivity: different from general anxiety',
@@ -2145,6 +2150,7 @@ BLOG_POSTS.push({
     {
       heading: 'Fidget tools with good sensory match',
       body: `Several types of fidget tools provide sensory input compatible with the nail biting function:\n\nMesh fidget rings and textured bands — worn on the finger, they provide tactile stimulation and can be manipulated in ways that somewhat replicate the finger-in-mouth proprioception. Useful for the tactile-seeking subtype.\n\nResistance putty and grip strengtheners — provide proprioceptive input through hand compression, satisfying some of the oral motor seeking. Better than spinner-type toys for most nail biters.\n\nRough-textured sensory cubes — work for the tactile-seeking pattern (compulsive addressing of nail imperfections). Provides a different surface irregularity to explore that doesn't damage nails.`,
+      html: `<p>Fidget tools are one group of substitutes. Others, such as gum, a nail file or knitting, are in <a href="/blog/nail-biting-alternatives">12 things to do instead of biting your nails, sorted by trigger</a>.</p>`,
     },
     {
       heading: 'Fidget tools that do not work for nail biters',
@@ -2710,6 +2716,7 @@ BLOG_POSTS.push({
     {
       heading: `CBT versus HRT: overlapping but distinct`,
       body: `Habit Reversal Training and CBT for BFRBs are often confused because HRT is frequently delivered within a broader CBT framework, and the two share behavioural techniques like competing responses and self-monitoring. The distinction is emphasis: HRT is narrowly focused on the habit loop itself — its three trial-defined components are awareness training, competing response training and social support — largely independent of why the habit started or what it means to the person doing it.\n\nCBT adds an explicit cognitive layer on top: identifying and restructuring the specific thoughts and beliefs that drive the urge to bite, particularly for people whose biting is closely tied to perfectionism, anxiety about performance, or self-critical thought patterns. For someone whose biting is largely automatic and habit-driven with minimal cognitive component, HRT alone is often sufficient. For someone whose biting is heavily entangled with anxious or perfectionistic thinking, the added cognitive work in full CBT is a reasonable extension — though no trial has compared CBT against habit reversal alone for nail biting, so that is clinical reasoning rather than a measured difference.`,
+      html: `<p>For the evidence on perfectionism, see <a href="/blog/nail-biting-and-perfectionism">nail biting and perfectionism</a>. For anxiety, see <a href="/blog/nail-biting-anxiety-treatment">nail biting and anxiety: is it the driver, and does treating it help</a>.</p>`,
     },
     {
       heading: `The cognitive component: identifying distorted thoughts`,
@@ -2861,7 +2868,7 @@ BLOG_POSTS.push({
     {
       heading: `Related reading`,
       body: ``,
-      html: `<ul><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li></ul>`,
+      html: `<ul><li><a href="/blog/nail-biting-colds-flu-norovirus">Does nail biting spread colds, flu or norovirus?</a></li><li><a href="/blog/nail-biting-bacteria-parasites">What lives under your fingernails: the real germ risk of nail biting</a></li></ul>`,
     },
     MEDICAL_DISCLAIMER_SECTION,
   ],
@@ -3683,7 +3690,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-fingerprints',
   title: `Does Nail Biting Affect Your Fingerprints?`,
-  description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could alter them.",
+  description: "Usually not: ridges are set in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could alter them.",
   tag: 'Science',
   readingMinutes: 2,
   datePublished: '2026-07-16',
@@ -4164,6 +4171,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'nail-biting-toenails',
   title: `Do People Bite Their Toenails? Yes. Here's What to Know`,
+  seoTitle: 'Do People Bite Their Toenails? Yes, but Rarely',
   description: `The standard review says biting usually occurs in the fingernails, as toenails are rarely bitten. A recognised but uncommon variant, with no prevalence figure.`,
   tag: 'Health',
   readingMinutes: 2,
@@ -4419,6 +4427,7 @@ BLOG_POSTS.push({
     {
       heading: `Where supplementation fits in an overall plan`,
       body: `If anxiety is a clear driver of your nail biting pattern, magnesium is a low-risk, reasonably evidence-informed thing to discuss with a doctor as one piece of a broader anxiety-management approach — alongside, not instead of, direct behavioural work on the habit itself. It's not a standalone fix for nail biting and shouldn't be expected to produce noticeable habit-frequency change on its own; its plausible value is in supporting the upstream anxiety-reduction side of the equation, similar in role to other stress-management measures like sleep and exercise, rather than functioning as a direct habit-reversal tool the way a competing response or detection tool does.`,
+      html: `<p>How firm the anxiety link is, and what has been measured about treating it, is covered in <a href="/blog/nail-biting-anxiety-treatment">nail biting and anxiety</a>.</p>`,
     },
     {
       heading: `Related reading`,
@@ -4455,6 +4464,7 @@ BLOG_POSTS.push({
     {
       heading: `Treating the panic disorder addresses the root driver`,
       body: `Because this pattern is downstream of a specific, diagnosable anxiety condition, standard nail-biting-specific techniques (competing responses, awareness training) are worth applying but are unlikely to fully resolve the pattern if the underlying panic disorder itself isn't being treated. Evidence-based treatments for panic disorder — cognitive behavioural therapy specifically targeting panic (which often includes interoceptive exposure, a technique that helps reduce fear of the physical sensations themselves), and in some cases medication — tend to reduce the frequency and intensity of the acute anxiety spikes that are driving the biting in the first place, which is a more direct path to reducing this specific pattern than habit-focused techniques applied to the biting symptom alone.`,
+      html: `<p>For what has and has not been measured about anxiety and nail biting more broadly, see <a href="/blog/nail-biting-anxiety-treatment">nail biting and anxiety: is it the driver, and does treating it help</a>.</p>`,
     },
     {
       heading: `When to seek evaluation`,
@@ -4936,6 +4946,7 @@ BLOG_POSTS.push(
       {
         heading: 'A practical approach for boredom biting',
         body: `Start by identifying your dead-time contexts rather than your emotional states. Where do you routinely wait? Commuting, queuing, adverts, loading screens, the last ten minutes of a meeting you have nothing to add to. Those are your target moments, and they are far easier to predict than a stress spike.\n\nThen put something in those moments deliberately. A textured object in the pocket you actually reach into. A rule that your hands go around a cup rather than to your face while you wait. It matters that the substitute is available before the moment arrives — deciding what to do instead while your finger is already at your mouth is too late.\n\nThe awareness problem still applies, though. Boredom biting is, if anything, even less conscious than stress biting, because nothing is happening to mark the moment in memory. This is where an external signal does the work you cannot reliably do yourself: something that notices the hand movement during the exact moments your attention has drifted, and hands the moment back to you while there is still something to do with it.`,
+        html: `<p>Four options for idle moments, including a nail file and knitting, are in <a href="/blog/nail-biting-alternatives">what to do instead of biting your nails</a>.</p>`,
       },
       {
         heading: `Related reading`,
@@ -6191,7 +6202,7 @@ BLOG_POSTS.push(
     slug: 'nail-biting-detection-accuracy',
     title: 'How Accurate Is AI Nail Biting Detection? A Straight Answer',
     seoTitle: 'How Accurate Is AI Nail Biting Detection?',
-    description: 'Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and missed episodes occur, and what is unmeasured.',
+    description: 'Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and misses occur, and what is unmeasured.',
     tag: 'Technology',
     readingMinutes: 3,
     datePublished: '2026-07-24',
@@ -6220,7 +6231,7 @@ BLOG_POSTS.push(
           'Lighting: test in the conditions where you will use the app, including backlighting or a dim room; a successful test in one setup does not establish performance in another.',
           'Coverage: the camera needs usable views of your face and hands. It cannot monitor you away from its view.',
         ],
-        html: `<p>For practical checks, see <a href="/blog/nail-biting-camera-setup">setting up your camera</a>. The technical description here was checked against the current detector implementation on 23 October 2026; it is not a clinical validation study.</p>`,
+        html: `<p>For practical checks, see <a href="/blog/nail-biting-camera-setup">setting up your camera</a>. For the two models behind the detector, see <a href="/blog/mediapipe-ai-detection-explained">how MediaPipe detection works in Stop Biting</a>. The technical description here was checked against the current detector implementation on 23 October 2026; it is not a clinical validation study.</p>`,
       },
       {
         heading: 'What an alert or a quiet log can tell you',
@@ -6292,6 +6303,7 @@ BLOG_POSTS.push(
       {
         heading: 'What the models themselves cost',
         body: `Both models come from MediaPipe, Google's on-device vision framework, and they are compiled to WebAssembly to run locally in the browser. These are small models designed for phones and laptops, not large models designed for servers — the same family of technology behind background blur in video calling, which runs acceptably on modest hardware while doing considerably more per second than this does.\n\nThe camera resolution is also deliberately unambitious — around 640 by 480 — because landmark detection does not benefit from more, and processing cost scales with pixel count.\n\nWorth noting what does not happen: no video is uploaded, so there is no network cost and no upload bandwidth being consumed continuously in the background. The absence of a network round trip is a meaningful part of why the ongoing cost stays low.`,
+        html: `<p>Model sizes and first-load time are covered in <a href="/blog/mediapipe-ai-detection-explained">how the MediaPipe models load and run</a>.</p>`,
       },
       {
         heading: 'What to expect in practice',
@@ -6901,7 +6913,7 @@ BLOG_POSTS.push({
 BLOG_POSTS.push({
   slug: 'pinworm-nail-biting',
   title: `Can You Get Pinworms From Biting Your Nails? What the Studies Show`,
-  seoTitle: 'Pinworms and Nail Biting: What Studies Show',
+  seoTitle: 'Does Biting Your Nails Give You Worms? Pinworm Studies',
   description: `Studies link nail biting to pinworm in children, but only as an association. What three studies and two reviews found, and what to do if you suspect it.`,
   tag: 'Health',
   readingMinutes: 4,

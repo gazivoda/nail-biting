@@ -154,7 +154,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "webcam-privacy-nail-biting-app",
     title: "Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained",
-    description: "Webcam apps for nail biting raise fair privacy questions. See exactly what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
+    description: "Webcam apps for nail biting raise fair privacy questions. See what data is collected, how on-device AI works, and why no camera data is sent while it runs.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-04-07",
@@ -271,7 +271,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-alternatives",
     title: "What to Do Instead of Biting Your Nails: 12 Evidence-Based Alternatives",
-    description: "Competing responses only work when they meet the same need as nail biting. 12 evidence-based alternatives that work, organized by the trigger they address.",
+    description: "Match the substitute to your trigger and to where you bite. 12 options by stress, focus and boredom biting, with what research does and does not show.",
     tag: "Treatment",
     readingMinutes: 4,
     datePublished: "2026-04-21",
@@ -316,7 +316,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "acrylics-to-stop-nail-biting",
     title: "Can Acrylic Nails Stop Nail Biting? What Actually Happens When You Get Extensions",
-    description: "Acrylic nails are one of the most popular ways to stop nail biting. What the evidence shows, when they work, when they don't, and what to pair them with.",
+    description: "Possibly: dermatology reviews say manicures can reduce biting in motivated patients, but no controlled trial has tested acrylics. When they help, what to add.",
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-04-23",
@@ -730,7 +730,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-fingerprints",
     title: "Does Nail Biting Affect Your Fingerprints?",
-    description: "Ridges are templated in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could alter them.",
+    description: "Usually not: ridges are set in the dermis and regrow after surface wear, so ordinary biting leaves them intact. Only deep fingertip damage could alter them.",
     tag: "Science",
     readingMinutes: 2,
     datePublished: "2026-07-16",
@@ -1252,7 +1252,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-detection-accuracy",
     title: "How Accurate Is AI Nail Biting Detection? A Straight Answer",
-    description: "Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and missed episodes occur, and what is unmeasured.",
+    description: "Stop Biting uses fingertip-to-mouth proximity as a proxy for biting. How its settings work, where false alarms and misses occur, and what is unmeasured.",
     tag: "Technology",
     readingMinutes: 3,
     datePublished: "2026-07-24",
