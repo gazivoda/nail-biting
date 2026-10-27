@@ -176,6 +176,13 @@ export const FEATURES = {
     description: 'Brazilian Portuguese app and core pages.',
     before: 'Native review of the machine translation.',
   },
+
+  // ── WS14 in-app analytics (the analytics-fix swarm; no plan section, see docs/agents/legal/in-app-analytics-privacy.md) ──
+  app_analytics: {
+    owner: 'WS14',
+    description: 'Sends two parameter-free in-app milestones to Google Analytics: detection started (camera on) and the first alarm on a device.',
+    before: 'Do NOT turn on until the privacy sentence in docs/agents/legal/in-app-analytics-privacy.md is approved and applied (NEEDS HUMAN REVIEW).',
+  },
 } as const satisfies Record<string, FlagInfo>;
 
 export type FeatureName = keyof typeof FEATURES;

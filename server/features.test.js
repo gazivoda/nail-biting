@@ -27,9 +27,17 @@ describe('the flag registry', () => {
       'event_sync', 'data_backup', 'insights', 'photo_diary', 'weekly_email', 'phone_companion',
       'background_watching', 'desktop_app', 'signin_magic_link', 'signin_apple', 'signin_microsoft',
       'free_tier', 'lifetime_plan', 'gift_plan', 'referrals', 'regional_pricing', 'share_links',
-      'compare_competitors', 'social_proof', 'locale_es', 'locale_de', 'locale_pt_br',
+      'compare_competitors', 'social_proof', 'locale_es', 'locale_de', 'locale_pt_br', 'app_analytics',
     ];
     expect([...FLAG_NAMES].sort()).toEqual([...planned].sort());
+  });
+
+  it('app_analytics exists, has no prerequisite and is off unless named (it sends camera-derived signals to Google Analytics)', () => {
+    expect(FLAG_NAMES).toContain('app_analytics');
+    expect(FLAG_DEPENDS_ON.app_analytics).toBeUndefined();
+    expect(parseFlags('').flags.app_analytics).toBe(false);
+    expect(parseFlags('event_sync,insights').flags.app_analytics).toBe(false);
+    expect(parseFlags('App_Analytics').flags.app_analytics).toBe(true);
   });
 
   it('only declares dependencies on flags that exist, on both sides', () => {
