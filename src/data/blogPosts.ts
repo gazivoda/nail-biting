@@ -5442,13 +5442,13 @@ BLOG_POSTS.push(
     tag: 'Health',
     readingMinutes: 3,
     datePublished: '2026-07-24',
-    dateModified: '2026-10-23',
+    dateModified: '2026-10-30',
     ogImage: '/og/nail-biting-vitamin-deficiency.png',
     sections: [
       {
         heading: 'Is nail biting a sign of vitamin deficiency?',
-        body: `Nail biting alone does not establish that you have a vitamin or mineral deficiency. The research cited here describes nail biting as a body-focused repetitive behaviour; it does not establish low iron, zinc or magnesium as its cause. That is different from saying that someone who bites their nails cannot also have a deficiency.\n\nThe survey and twin study below looked at behaviour and family patterns, not nutrient levels. They cannot rule a deficiency in or out. If nutrition is a concern, discuss your symptoms and diet with a clinician rather than choosing a supplement from the habit alone.`,
-        html: `<p><strong>Background:</strong> <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></p>`,
+        body: `Nail biting alone does not establish that you have a vitamin or mineral deficiency. The research cited here, including the dermatology review by Lee and Lipner (2022), describes nail biting as a body-focused repetitive behaviour; it does not establish low iron, zinc or magnesium as its cause. That is different from saying that someone who bites their nails cannot also have a deficiency.\n\nA survey of 339 Polish medical students (Pacan et al., 2014) and a study of 1,131 pairs of 12-year-old Japanese twins (Ooki, 2005) looked at behaviour and family patterns, not nutrient levels. They cannot rule a deficiency in or out. If nutrition is a concern, discuss your symptoms and diet with a clinician rather than choosing a supplement from the habit alone.`,
+        html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8953487/" target="_blank" rel="noopener noreferrer">Lee DK, Lipner SR. Update on Diagnosis and Management of Onychophagia and Onychotillomania. Int J Environ Res Public Health. 2022;19(6):3392.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/23756561/" target="_blank" rel="noopener noreferrer">Pacan P, Grzesiak M, Reich A, Kantorska-Janiec M, Szepietowski JC. Onychophagia and onychotillomania: prevalence, clinical picture and comorbidities. Acta Derm Venereol. 2014;94(1):67-71.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/16176716/" target="_blank" rel="noopener noreferrer">Ooki S. Genetic and environmental influences on finger-sucking and nail-biting in Japanese twin children. Twin Res Hum Genet. 2005;8(4):320-327.</a></li></ul>`,
       },
       {
         heading: 'Damaged nails and nail biting are different questions',
