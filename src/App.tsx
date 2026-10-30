@@ -1,20 +1,21 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { TabBar } from './components/layout/TabBar';
 import { Landing } from './pages/Landing';
+// Static on purpose. As a lazy route the blog index (src/data/blogIndex.ts, 18 KB gzipped) leaves the download of every
+// other page, but /blog then waits a round trip for its own chunk: measured under throttling, +0.6 s LCP on /blog for
+// -0.1 s on the home page (docs/agents/lighthouse-report.md, lane J). The home page needs only the number of guides.
 import { BlogIndex } from './pages/BlogIndex';
+import type { Tab } from './SignedInApp';
 // Not lazy: see the /blog/:slug route below.
 import { BlogPost } from './pages/BlogPost';
 
-// The signed-in app — and everything only it needs, notably recharts for the
-// week chart and the Paddle checkout SDK. Landing-page visitors are the bulk of
-// traffic and never reach any of it, so keep it out of their download.
-const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
-const Log = lazy(() => import('./pages/Log').then(m => ({ default: m.Log })));
-const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
-const PaywallPage = lazy(() =>
-  import('./components/auth/PaywallPage').then(m => ({ default: m.PaywallPage })),
-);
+// The signed-in app: the tab bar, the tour, the install guide, the hosts and the lazy pages (Dashboard, Log,
+// Settings, the paywall) with everything only they need, notably recharts for the week chart and the Paddle
+// checkout SDK. Landing-page visitors are the bulk of traffic and never reach any of it, so keep it out of their
+// download. `loadSignedInApp` is also called while a returning visitor's session is being looked up (AppRouter), so
+// the chunk is already on its way when the answer arrives.
+const loadSignedInApp = () => import('./SignedInApp');
+const SignedInApp = lazy(loadSignedInApp);
 // Same reason: comparePages.ts is ~94KB of source that only /compare/* and
 // /solutions/* read, and it was riding in the main chunk.
 const ComparePage = lazy(() =>
@@ -40,14 +41,6 @@ import { useNotifications } from './hooks/useNotifications';
 import { useTheme } from './hooks/useTheme';
 import { useAppStore } from './store/useAppStore';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
-import { PWAGuideModal } from './components/PWAGuideModal';
-import { OnboardingTour } from './components/onboarding/OnboardingTour';
-import { ProgramHost } from './coaching/ProgramHost';
-import { SyncHost } from './sync/SyncHost';
-import { BillingHost } from './components/billing/BillingHost';
-import { BackgroundHost } from './background/BackgroundHost';
-import { MilestoneHost } from './insights/ui/MilestoneHost';
-import { LocaleHost } from './i18n/LocaleHost';
 import { useLocaleVersion } from './i18n/hooks';
 import { useT as useCommonT } from './i18n/scopes/common';
 
@@ -61,8 +54,6 @@ function usePath() {
   }, []);
   return path;
 }
-
-type Tab = 'dashboard' | 'log' | 'settings';
 
 // Shown while the session is being checked and while a lazy chunk is in flight.
 // Same markup for both so a signed-in user sees one continuous state rather than
@@ -95,6 +86,11 @@ function AppRouter() {
   // inside Landing is what keeps it simple: this effect is the only writer of the
   // `dark` class on this route, so there is nothing for the page to fight.
   useTheme(accessStatus === 'no_auth' ? 'light' : undefined);
+  // A returning visitor (the session marker is set) is probably about to land in the app: fetch its shell next to
+  // the session lookup instead of after it. An anonymous visitor never has the marker, so never gets here.
+  useEffect(() => {
+    if (accessStatus === 'loading') void loadSignedInApp();
+  }, [accessStatus]);
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (accessStatus === 'loading') return <AppLoading />;
@@ -104,48 +100,16 @@ function AppRouter() {
     return <Landing authError={authError} onDismissAuthError={clearAuthError} />;
   }
 
-  // ── Paywall (trial expired) or voluntary upgrade ────────────────────────
-  if (accessStatus === 'paywall' || showPaywall) {
-    return (
-      <Suspense fallback={<AppLoading />}>
-        <div className="app-type">
-        <PaywallPage
-          onBack={accessStatus === 'trial_active' || accessStatus === 'free_tier' || accessStatus === 'subscribed' ? () => setShowPaywall(false) : undefined}
-        />
-        <PWAGuideModal />
-        <BillingHost />{/* WS9: a waiting gift or referral code. Nothing while every flag is off. */}
-        <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
-        </div>
-      </Suspense>
-    );
-  }
-
-  // ── App (trial_active or subscribed) ────────────────────────────────────
+  // ── Signed in: the paywall (trial expired) or voluntary upgrade, or the app (trial_active or subscribed) ───────
   return (
     <Suspense fallback={<AppLoading />}>
-      <div className="app-type">
-      <div className="flex bg-cream-200 dark:bg-ink-100 text-stone-800 dark:text-stone-200 min-h-dvh">
-        <TabBar
-          active={activeTab}
-          onChange={setActiveTab}
-          onUpgrade={() => setShowPaywall(true)}
-        />
-        <main className="flex-1 lg:ml-56 pb-20 lg:pb-0">
-          {/* Dashboard is always mounted so detection keeps running on other tabs */}
-          <div className={activeTab === 'dashboard' ? '' : 'hidden'}><Dashboard onUpgrade={() => setShowPaywall(true)} onNavigate={setActiveTab} /></div>
-          {activeTab === 'log' && <Log onGoToWatch={() => setActiveTab('dashboard')} />}
-          {activeTab === 'settings' && <Settings onUpgrade={() => setShowPaywall(true)} />}
-        </main>
-      </div>
-      <OnboardingTour />
-      <PWAGuideModal />
-      <ProgramHost />{/* WS2: the 4-week program view (hrt_coaching). Nothing while the flag is off. */}
-      <SyncHost />{/* WS4: background sync, only for a person who switched it on. Nothing, and no request, otherwise. */}
-      <BillingHost />{/* WS9: referral code, waiting gift, free-tier meter. Nothing while every flag is off. */}
-      <BackgroundHost />{/* WS7a: pause clock, desktop commands, schedule reminders (background_watching). Nothing while the flag is off. */}
-      <MilestoneHost />{/* WS5: milestone celebrations (insights). Nothing, and no extra download, while the flag is off. */}
-      <LocaleHost />{/* WS12a: applies a picked language once its flag is on. Nothing when none was picked. */}
-      </div>
+      <SignedInApp
+        accessStatus={accessStatus}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        showPaywall={showPaywall}
+        onShowPaywall={setShowPaywall}
+      />
     </Suspense>
   );
 }

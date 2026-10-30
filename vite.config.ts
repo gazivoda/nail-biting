@@ -4,6 +4,7 @@ import path from 'path'
 import { execFileSync } from 'child_process'
 import { VitePWA } from 'vite-plugin-pwa'
 import { fillTrialTokens } from './shared/plans.js'
+import { createNodeModulesChunks } from './scripts/build/chunks'
 
 // Regenerates dist/seo-content.json + dist/llms-full.txt from
 // src/data/blogPosts.ts and src/data/comparePages.ts after every build.
@@ -65,6 +66,8 @@ function manifestOutOfPrecache(): Plugin {
 
 const isWeb = process.env.VITE_BUILD_TARGET === 'web'
 
+const nodeModulesChunk = createNodeModulesChunks()
+
 export default defineConfig({
   // Electron (file://) needs relative base './'; web server needs absolute '/'.
   // Set VITE_BUILD_TARGET=web when building for Docker/Coolify.
@@ -94,31 +97,17 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('@mediapipe')) return 'mediapipe';
+        manualChunks(id, api) {
           // WS12b: the two modules of a language that its app catalog (locale-<x>) and its marketing catalog
           // (locale-site-<x>) both import. Left to Rollup they become a chunk named after one of them
           // (reviewed-*.js), which the service worker would precache for every English visitor. Named locale-*
           // they stay behind `globIgnores: **/assets/locale-*.js` below.
           const lang = id.match(/[\\/]src[\\/]i18n[\\/]locales[\\/](es|de|pt-BR)[\\/](?:plans|reviewed)\.ts$/);
           if (lang) return `locale-${lang[1]}-shared`;
-          // Split the libraries only the signed-in app touches into their own
-          // chunks. Lumping every node_modules file into one `vendor` chunk
-          // undoes route-level code splitting: React lives there too, so the
-          // landing page pulls the whole thing in and gets recharts and the
-          // Paddle SDK along for the ride.
-          if (id.includes('recharts') || id.includes('victory-vendor') || /node_modules[\\/]d3-/.test(id)) {
-            return 'charts';
-          }
-          // recharts' own dependencies (its package.json: the redux stack, immer, reselect, decimal.js-light,
-          // es-toolkit, eventemitter3, use-sync-external-store, tiny-invariant). Nothing else imports them, but
-          // they matched none of the lines above and so landed in `vendor`, which every page downloads: about a
-          // quarter of it was chart code that only the signed-in app runs.
-          if (/node_modules[\\/](?:@reduxjs[\\/]toolkit|redux|redux-thunk|react-redux|immer|reselect|decimal\.js-light|es-toolkit|eventemitter3|use-sync-external-store|tiny-invariant)[\\/]/.test(id)) {
-            return 'charts';
-          }
-          if (id.includes('@paddle')) return 'paddle';
-          if (id.includes('node_modules')) return 'vendor';
+          // Which node_modules chunk a library goes in is read off the module graph, see scripts/build/chunks.ts:
+          // `vendor` is only what the entry needs, so a marketing page does not download recharts' dependencies,
+          // date-fns or the icons only the signed-in app draws.
+          return nodeModulesChunk(id, api);
         },
       },
     },
