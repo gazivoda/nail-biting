@@ -130,7 +130,7 @@ describe('with the plan for sale: the server-rendered article', () => {
   });
 
   it('leaves the pricing link of the how-it-works article to the copy rules (shared/flagCopy.js how-it-works-pricing-link)', () => {
-    const link = '<li><a href="/pricing">Pricing — $2.99/month or $29/year, 3-day free trial</a></li>';
+    const link = `<li><a href="/pricing">Pricing — $2.99/month or $29/year, ${TRIAL_HYPHEN} free trial</a></li>`;
     expect(ON.article(link)).toBe(link);
   });
 

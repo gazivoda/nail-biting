@@ -4,6 +4,7 @@ import {
   lifetimeHeadline, mentionsFlagCopy, resolveMarkers, signInAnswer,
 } from './flagCopy.js';
 import { FLAG_NAMES } from '../server/features.js';
+import { TRIAL_HYPHEN } from './plans.js';
 
 const none = () => false;
 const only = (...names) => name => names.includes(name);
@@ -307,8 +308,8 @@ describe('the Lifetime rules on the pages that quote our price', () => {
     // The price lists sit last and take what the specific sentences leave; if one moved above them, a sentence such as
     // "(about $2.42/month)" would end up after "$99 once" and read as the Lifetime price.
     for (const rule of PAGE_RULES) expect(flagAware(rule.off, lifetimeOn), rule.id).toBe(rule.on(lifetimeOn));
-    expect(flagAware('Stop Biting: $2.99/month or $29/year (about $2.42/month), with a 3-day free trial', lifetimeOn))
-      .toBe('Stop Biting: $2.99/month, $29/year (about $2.42/month) or $99 once, with a 3-day free trial');
+    expect(flagAware(`Stop Biting: $2.99/month or $29/year (about $2.42/month), with a ${TRIAL_HYPHEN} free trial`, lifetimeOn))
+      .toBe(`Stop Biting: $2.99/month, $29/year (about $2.42/month) or $99 once, with a ${TRIAL_HYPHEN} free trial`);
   });
 
   it('quote no saving, call nothing the best deal, use no dash, and name no price but ours and the two it already listed', () => {

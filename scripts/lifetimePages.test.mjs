@@ -20,6 +20,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
+import { TRIAL_HYPHEN } from '../shared/plans.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const built = existsSync(join(ROOT, 'dist/index.html')) && existsSync(join(ROOT, 'dist/llms-full.txt'));
@@ -104,12 +105,12 @@ const SOLUTIONS = ['/solutions/for-students', '/solutions/for-remote-workers', '
 const POSTS = ['/blog/stop-biting-vs-mavala-stop', '/blog/best-apps-to-stop-nail-biting'];
 const PAGES = [...COMPARE, ...SOLUTIONS, ...POSTS];
 
-/** [page, the sentence (or piece of one) with the flag off, the same with the Lifetime plan for sale]. */
+/** [page, the sentence (or piece of one) with the flag off, the same with the Lifetime plan for sale]; {{T}} stands for the trial's length (TRIAL_HYPHEN). */
 const WORDING = [
   ['/compare/stop-biting-vs-hands-off', 'Stop Biting is $2.99/month or $29/year — about $2.42/month if you commit, roughly 19% cheaper than paying monthly.',
     'Stop Biting is $2.99/month, or $29/year (about $2.42/month if you commit, roughly 19% cheaper than paying monthly), or $99 once for the Lifetime plan.'],
-  ['/compare/stop-biting-vs-hands-off', 'Stop Biting: $2.99/month or $29/year (about $2.42/month), with a 3-day free trial',
-    'Stop Biting: $2.99/month, $29/year (about $2.42/month) or $99 once, with a 3-day free trial'],
+  ['/compare/stop-biting-vs-hands-off', 'Stop Biting: $2.99/month or $29/year (about $2.42/month), with a {{T}} free trial',
+    'Stop Biting: $2.99/month, $29/year (about $2.42/month) or $99 once, with a {{T}} free trial'],
   ['/compare/stop-biting-vs-nailed', 'choose Stop Biting, at $2.99/month or $29/year, if you need Windows', 'choose Stop Biting, at $2.99/month, $29/year or $99 once, if you need Windows'],
   ['/compare/stop-biting-vs-nailed', 'Stop Biting is a subscription that adds Windows', 'Stop Biting is a subscription, or a one-time Lifetime plan, that adds Windows'],
   ['/compare/stop-biting-vs-nailed', 'Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright',
@@ -117,13 +118,13 @@ const WORDING = [
   ['/compare/stop-biting-vs-nailed', 'Stop Biting: $2.99/month, or $29/year (~$2.42/month).', 'Stop Biting: $2.99/month, $29/year (~$2.42/month) or $99 once for the Lifetime plan.'],
   ['/compare/stop-biting-vs-nailed', 'What the subscription pays for is the rest of the system', 'What a Stop Biting plan pays for is the rest of the system'],
   ['/compare/stop-biting-vs-nailed', 'Should I buy Nailed or subscribe to Stop Biting?', 'Should I buy Nailed or pay for Stop Biting?'],
-  ['/compare/stop-biting-vs-smartbehavior', 'Choose Stop Biting, at $2.99/month or $29/year with a 3-day free trial', 'Choose Stop Biting, at $2.99/month, $29/year or $99 once with a 3-day free trial'],
+  ['/compare/stop-biting-vs-smartbehavior', 'Choose Stop Biting, at $2.99/month or $29/year with a {{T}} free trial', 'Choose Stop Biting, at $2.99/month, $29/year or $99 once with a {{T}} free trial'],
   ['/compare/stop-biting-vs-habitaware', 'It is a subscription with a published price: $2.99/month or $29/year, about $2.42/month on the annual plan.',
     'It has published prices: $2.99/month, $29/year (about $2.42/month on the annual plan) or $99 once for the Lifetime plan.'],
-  ['/compare/stop-biting-vs-nailkeeper', 'Stop Biting has a 3-day free trial, then $2.99/month or $29/year.', 'Stop Biting has a 3-day free trial, then $2.99/month, $29/year or $99 once.'],
+  ['/compare/stop-biting-vs-nailkeeper', 'Stop Biting has a {{T}} free trial, then $2.99/month or $29/year.', 'Stop Biting has a {{T}} free trial, then $2.99/month, $29/year or $99 once.'],
   ['/compare/stop-biting-vs-biteless', 'Both sell a subscription.', 'Both sell a subscription, and Stop Biting also has a one-time Lifetime plan.'],
-  ['/compare/stop-biting-vs-biteless', 'Stop Biting is $2.99/month or $29/year after a 3-day free trial.', 'Stop Biting is $2.99/month, $29/year or $99 once after a 3-day free trial.'],
-  ['/compare/stop-biting-vs-habitcam', 'costs $2.99/month or $29/year after a 3-day trial with no card', 'costs $2.99/month, $29/year or $99 once after a 3-day trial with no card'],
+  ['/compare/stop-biting-vs-biteless', 'Stop Biting is $2.99/month or $29/year after a {{T}} free trial.', 'Stop Biting is $2.99/month, $29/year or $99 once after a {{T}} free trial.'],
+  ['/compare/stop-biting-vs-habitcam', 'costs $2.99/month or $29/year after a {{T}} trial with no card', 'costs $2.99/month, $29/year or $99 once after a {{T}} trial with no card'],
   ['/compare/stop-biting-vs-habitcam', 'want one purchase instead of a subscription, or have more than one of those behaviours',
     'want to pay once for less than Stop Biting’s $99 Lifetime plan, or have more than one of those behaviours'],
   ['/compare/stop-biting-vs-habitcam', 'and it is a subscription.', 'and it is a subscription unless you choose the one-time Lifetime plan at $99.'],
@@ -131,17 +132,17 @@ const WORDING = [
   ['/compare/stop-biting-vs-nailbitemenu', 'Stop Biting is a paid subscription after the trial, requires an account', 'Stop Biting is a paid subscription or a one-time Lifetime plan after the trial, requires an account'],
   ['/compare/stop-biting-vs-pavlok', 'It costs far less to try: $2.99/month or $29/year, against the device prices on Pavlok’s home page.',
     'It costs far less to try: $2.99/month, or $29/year, against the device prices on Pavlok’s home page. Stop Biting also has a one-time Lifetime plan at $99.'],
-  ['/compare/stop-biting-vs-pavlok', 'a 3-day free trial with no card, then $2.99/month or $29/year. Pavlok’s home page shows $99.99',
-    'a 3-day free trial with no card, then $2.99/month, $29/year or $99 once. Pavlok’s home page shows $99.99'],
+  ['/compare/stop-biting-vs-pavlok', 'a {{T}} free trial with no card, then $2.99/month or $29/year. Pavlok’s home page shows $99.99',
+    'a {{T}} free trial with no card, then $2.99/month, $29/year or $99 once. Pavlok’s home page shows $99.99'],
   ['/compare/ai-detection-apps', 'Stop Biting ($2.99/month or $29/year), Hands Off', 'Stop Biting ($2.99/month, $29/year or $99 once), Hands Off'],
-  ['/compare/ai-detection-apps', 'Pricing is published: $2.99/month or $29/year (~$2.42/month), with a 3-day free trial', 'Pricing is published: $2.99/month, $29/year (~$2.42/month) or $99 once, with a 3-day free trial'],
-  ['/solutions/for-students', 'with a 3-day free trial and no card, then $2.99/month or $29/year.', 'with a 3-day free trial and no card, then $2.99/month, $29/year or $99 once.'],
-  ['/solutions/for-remote-workers', 'A 3-day free trial with no credit card, then $2.99/month or $29/year.', 'A 3-day free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
-  ['/solutions/for-mac', 'There is a 3-day free trial with no credit card, then $2.99/month or $29/year.', 'There is a 3-day free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
-  ['/solutions/for-windows', 'There is a 3-day free trial with no credit card, then $2.99/month or $29/year.', 'There is a 3-day free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
-  ['/blog/stop-biting-vs-mavala-stop', 'Price — Stop Biting: $2.99/month or $29/year with 3-day free trial.', 'Price — Stop Biting: $2.99/month, $29/year or $99 once with 3-day free trial.'],
-  ['/blog/best-apps-to-stop-nail-biting', 'Stop Biting costs $2.99/month or $29/year after a free 3-day trial', 'Stop Biting costs $2.99/month, $29/year or $99 once after a free 3-day trial'],
-];
+  ['/compare/ai-detection-apps', 'Pricing is published: $2.99/month or $29/year (~$2.42/month), with a {{T}} free trial', 'Pricing is published: $2.99/month, $29/year (~$2.42/month) or $99 once, with a {{T}} free trial'],
+  ['/solutions/for-students', 'with a {{T}} free trial and no card, then $2.99/month or $29/year.', 'with a {{T}} free trial and no card, then $2.99/month, $29/year or $99 once.'],
+  ['/solutions/for-remote-workers', 'A {{T}} free trial with no credit card, then $2.99/month or $29/year.', 'A {{T}} free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
+  ['/solutions/for-mac', 'There is a {{T}} free trial with no credit card, then $2.99/month or $29/year.', 'There is a {{T}} free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
+  ['/solutions/for-windows', 'There is a {{T}} free trial with no credit card, then $2.99/month or $29/year.', 'There is a {{T}} free trial with no credit card, then $2.99/month, $29/year or $99 once.'],
+  ['/blog/stop-biting-vs-mavala-stop', 'Price — Stop Biting: $2.99/month or $29/year with {{T}} free trial.', 'Price — Stop Biting: $2.99/month, $29/year or $99 once with {{T}} free trial.'],
+  ['/blog/best-apps-to-stop-nail-biting', 'Stop Biting costs $2.99/month or $29/year after a free {{T}} trial', 'Stop Biting costs $2.99/month, $29/year or $99 once after a free {{T}} trial'],
+].map(row => row.map(cell => cell.replaceAll('{{T}}', TRIAL_HYPHEN)));
 
 /** The money in a text, Stop Biting's own figures set aside: what the page says about everybody else. */
 const competitorMoney = text => (text.match(/[€$£]\d+(?:[.,]\d+)*/g) ?? []).filter(m => !['$2.99', '$29', '$2.42', '$99', '$149'].includes(m)).sort();
