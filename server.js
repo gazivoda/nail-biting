@@ -21,6 +21,7 @@ import {
   openGatedPages, pathOfPageData, resolveGatedPage, withGatedLlmsFull, withGatedLlmsTxt, withGatedSitemapEntries, withoutClosedPageLinks,
 } from './server/marketing/gatedPages.js';
 import { createCopyIsOn } from './server/marketing/copyFlags.js';
+import { postPreloadTag } from './server/marketing/postPreload.js';   // the preload hint for the article JSON on /blog/<slug>
 import { createLifetimeCopy } from './server/marketing/lifetimeCopy.js';   // the Lifetime plan in the words crawlers read (flag lifetime_plan)
 import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
 import { TRIAL_HYPHEN, TRIAL_MS, describeDays, lifetimePriceUsd, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS), the Lifetime list price
@@ -1938,10 +1939,13 @@ if (!existsSync(distPath)) {
     });
     if (condition) injected = injectSchema(injected, condition);
     // Same two dates the BlogPosting JSON-LD and sitemap lastmod carry, as the
-    // Open Graph article tags that Bing, Copilot and Perplexity read.
+    // Open Graph article tags that Bing, Copilot and Perplexity read. Then the preload
+    // hint for the article JSON (server/marketing/postPreload.js): the browser starts
+    // that request while it downloads the bundle, not after the bundle has run.
     injected = injected.replace('</head>', () =>
       `    <meta property="article:published_time" content="${escapeHtml(post.datePublished)}" />\n` +
-      `    <meta property="article:modified_time" content="${escapeHtml(post.dateModified)}" />\n  </head>`);
+      `    <meta property="article:modified_time" content="${escapeHtml(post.dateModified)}" />\n` +
+      `${postPreloadTag(slug)}  </head>`);
     injected = injectSsrArticle(injected, article);
     sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
