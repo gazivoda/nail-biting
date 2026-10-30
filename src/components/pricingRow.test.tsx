@@ -75,4 +75,22 @@ describe('pricing row', () => {
     setLifetime('pri_life');
     expect(html()).toContain('Best value');
   });
+
+  // The headline is the page's h1 on /pricing (and the section's h2 on the homepage): it names the third plan while its card is
+  // shown, in the words the crawler article uses (shared/flagCopy.js lifetimeHeadline, server/marketing/lifetimeCopy.js).
+  const heading = (markup: string) => markup.match(/<h2 id="pricing-heading"[^>]*>(.*?)<\/h2>/)?.[1];
+
+  it('says two prices in the headline while the Lifetime card is not shown', () => {
+    expect(heading(html())).toBe('$2.99 a month, or <span class="sg-mark">$29 a year.</span>');
+    h.flags.add('lifetime_plan');
+    setLifetime('');
+    expect(heading(html())).toBe('$2.99 a month, or <span class="sg-mark">$29 a year.</span>');
+  });
+
+  it('says the third price in the headline when the card is shown, with the yearly plan still marked', () => {
+    h.flags.add('lifetime_plan');
+    setLifetime('pri_life');
+    expect(heading(html())).toBe('$2.99 a month, <span class="sg-mark">$29 a year,</span> or $99 once.');
+    expect(renderToStaticMarkup(<PricingSection headingAs="h1" />)).toContain('<h1 id="pricing-heading" class="sg-h2">$2.99 a month, <span class="sg-mark">$29 a year,</span> or $99 once.</h1>');
+  });
 });

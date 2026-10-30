@@ -55,6 +55,7 @@ const SOURCES = {
   'compare-habitcam-limit': ['src/data/comparePages.ts'],
   'compare-nailbitemenu-limit': ['src/data/comparePages.ts'],
   'compare-biteless-both': ['src/data/comparePages.ts'],
+  'how-it-works-pricing-link': ['server.js'],
   'compare-cta-price': ['src/pages/ComparePage.tsx'],
   'price-list-short': ['src/data/comparePages.ts', 'src/data/blogPosts.ts'],
   'price-list': ['src/data/comparePages.ts', 'src/data/blogPosts.ts'],

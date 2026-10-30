@@ -181,8 +181,8 @@ describe('the Lifetime rules', () => {
     expect(PAGE_RULES.map(r => r.id)).toEqual([
       'compare-hands-off-annual', 'compare-hands-off-cost', 'compare-ai-apps-cost', 'compare-nailed-cost', 'compare-habitaware-plans',
       'compare-pavlok-try', 'compare-nailed-is-subscription', 'compare-nailed-buys', 'compare-nailed-pays', 'compare-nailed-heading',
-      'compare-habitcam-pick', 'compare-habitcam-limit', 'compare-nailbitemenu-limit', 'compare-biteless-both', 'compare-cta-price',
-      'price-list-short', 'price-list',
+      'compare-habitcam-pick', 'compare-habitcam-limit', 'compare-nailbitemenu-limit', 'compare-biteless-both', 'how-it-works-pricing-link',
+      'compare-cta-price', 'price-list-short', 'price-list',
     ]);
     expect(LIFETIME_RULES).toHaveLength(FAQ_RULES.length + PAGE_RULES.length);
     expect(COPY_FLAGS).toContain('lifetime_plan');
@@ -284,6 +284,7 @@ describe('the Lifetime rules on the pages that quote our price', () => {
     expect(on('compare-habitcam-limit')).toBe('and only in front of your webcam, and it is a subscription unless you choose the one-time Lifetime plan at $99.');
     expect(on('compare-nailbitemenu-limit')).toBe('Stop Biting is a paid subscription or a one-time Lifetime plan after the trial,');
     expect(on('compare-biteless-both')).toBe('Both sell a subscription, and Stop Biting also has a one-time Lifetime plan.');
+    expect(on('how-it-works-pricing-link')).toBe('Pricing: $2.99/month, $29/year or $99 once, ');
     expect(on('compare-cta-price')).toBe('then $2.99 a month, $29 a year or $99 once');
     expect(on('price-list-short')).toBe('$2.99/mo, $29/yr or $99 once');
     expect(on('price-list')).toBe('$2.99/month, $29/year or $99 once');

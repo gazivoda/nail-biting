@@ -395,6 +395,12 @@ export const RULES = Object.freeze([
     () => 'Both sell a subscription, and Stop Biting also has a one-time Lifetime plan.',
   ),
   lifetimeRule(
+    'how-it-works-pricing-link',
+    'How it works crawler article: the "Learn more" link to the pricing page (the new words use a colon where the old ones had a dash)',
+    'Pricing — $2.99/month or $29/year, ',
+    usd => `Pricing: $2.99/month, $29/year or ${usd} once, `,
+  ),
+  lifetimeRule(
     'compare-cta-price',
     'The offer at the foot of every compare and solutions page (src/pages/ComparePage.tsx)',
     'then $2.99 a month or $29 a year',
