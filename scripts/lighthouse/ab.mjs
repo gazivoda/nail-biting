@@ -13,6 +13,7 @@
 // (CrUX / Core Web Vitals) measurement.
 import { spawn } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { startServer, launchChrome } from '../privacy-audit/browser.mjs';
 
@@ -25,7 +26,7 @@ const PAGES = (typeof args.pages === 'string' ? args.pages : '/blog/nail-biting-
 const RUNS = Number(args.runs ?? 3);
 const FF = args.ff ?? 'mobile';
 const PORT = Number(args.port ?? 3310);
-const OUT = resolve(args.out ?? join(process.cwd(), 'lighthouse-ab'));
+const OUT = resolve(args.out ?? join(tmpdir(), 'lighthouse-ab'));   // not in the repo: the raw runs are large and machine-specific
 const BLOCK = typeof args.block === 'string' ? args.block : null;
 const DEVTOOLS = args.devtools === true;
 
