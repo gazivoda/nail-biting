@@ -1,6 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Landing } from './pages/Landing';
+// Static on purpose. As a lazy route the blog index (src/data/blogIndex.ts, 18 KB gzipped) leaves the download of every
+// other page, but /blog then waits a round trip for its own chunk: measured under throttling, +0.6 s LCP on /blog for
+// -0.1 s on the home page (docs/agents/lighthouse-report.md, lane J). The home page needs only the number of guides.
+import { BlogIndex } from './pages/BlogIndex';
 import type { Tab } from './SignedInApp';
 // Not lazy: see the /blog/:slug route below.
 import { BlogPost } from './pages/BlogPost';
@@ -12,9 +16,6 @@ import { BlogPost } from './pages/BlogPost';
 // the chunk is already on its way when the answer arrives.
 const loadSignedInApp = () => import('./SignedInApp');
 const SignedInApp = lazy(loadSignedInApp);
-// The blog index lists every guide, so it carries the whole index (src/data/blogIndex.ts, ~18 KB gzipped). Only a
-// reader who opens /blog downloads it; the home page gets its guide count from src/blogCount.ts.
-const BlogIndex = lazy(() => import('./pages/BlogIndex').then(m => ({ default: m.BlogIndex })));
 // Same reason: comparePages.ts is ~94KB of source that only /compare/* and
 // /solutions/* read, and it was riding in the main chunk.
 const ComparePage = lazy(() =>
@@ -125,11 +126,7 @@ export default function App() {
 
   // Blog index
   if (path === '/blog' || path === '/blog/') {
-    return (
-      <Suspense fallback={null}>
-        <BlogIndex />
-      </Suspense>
-    );
+    return <BlogIndex />;
   }
 
   // Blog post — /blog/:slug

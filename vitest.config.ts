@@ -1,9 +1,6 @@
 import { defineConfig } from 'vitest/config';
-import { BLOG_COUNT_DEFINE } from './scripts/build/blogCount';
 
 export default defineConfig({
-  // The home page's guide count (src/blogCount.ts), defined here as the build does it.
-  define: BLOG_COUNT_DEFINE,
   test: {
     environment: 'node',
     // Plain-TS and plain-JS tests only: there is no jsdom, so nothing here may
