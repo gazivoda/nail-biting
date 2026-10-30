@@ -107,7 +107,7 @@ describe.skipIf(!built)('/blog/<slug> preload hint', () => {
     return { res, html: await res.text() };
   };
 
-  it.each(POSTS)('%s has exactly one article preload, in the head, and it is the font preloads plus that one', async (slug) => {
+  it.each(POSTS)('%s has exactly one article preload, in the head', async (slug) => {
     const { res, html } = await page(`/blog/${slug}`);
     expect(res.status).toBe(200);
     const links = preloads(head(html));
