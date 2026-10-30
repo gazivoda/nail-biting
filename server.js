@@ -828,15 +828,20 @@ if (!existsSync(distPath)) {
   }
   const GATED_FLAGS = GATED_FILE.flags ?? {};
 
+  // redirect:false on /fonts, /og and /posts (and on the catch-all below): the 301 middleware at the top strips the
+  // trailing slash from an extensionless path, while a directory mount's default `redirect: true` adds it back, so
+  // `/fonts/`, `/og/` and `/posts/` bounced between the two forever (a redirect loop on a real prefix). A bare
+  // directory now falls through to the branded 404, exactly like /shots and /video.
   for (const dir of ['fonts']) {
     app.use(`/${dir}`, express.static(join(distPath, dir), {
       maxAge: '1y',
       immutable: true,
+      redirect: false,
     }));
   }
   // The social cards. The card of a page whose flag is off answers as a file that does not exist
   // (the page's title is printed on it, and nothing links to it, so it must not be findable).
-  const ogStatic = express.static(join(distPath, 'og'), { maxAge: '1y', immutable: true });
+  const ogStatic = express.static(join(distPath, 'og'), { maxAge: '1y', immutable: true, redirect: false });
   app.use('/og', (req, res, next) => (
     isClosedGatedFile(req.path.slice(1), GATED_FLAGS, flags) ? sendHtml(res, NOT_FOUND_HTML, 404) : ogStatic(req, res, next)
   ));
@@ -859,6 +864,7 @@ if (!existsSync(distPath)) {
   }
   app.use('/posts', express.static(join(distPath, 'posts'), {
     maxAge: '5m',
+    redirect: false,
     setHeaders: res => res.setHeader('X-Robots-Tag', 'noindex'),
   }));
 
