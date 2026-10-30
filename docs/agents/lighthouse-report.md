@@ -76,6 +76,10 @@ Runs (performance score per run, to show the spread): `/` mobile: 76/93/93; `/` 
   reserve the article's height (the server already knows the word count) or render the first screen of the article from the
   server HTML, or do not render the footer block until the article is in. It was not touched here (it is not a small safe fix
   and not in WS13's scope).
+  **Update 2026-10-30:** fixed by the last of those options (`BlogPost.tsx` no longer renders the footer while the article is
+  loading; `src/pages/BlogPost.test.tsx`). Lab, mobile, 3 runs on two posts: CLS 0.719 to 0, performance 56 to 80. The post's LCP
+  is unchanged at about 5.5 s on Lighthouse's simulated slow phone: the app's own h1 replaces the server-rendered one once the
+  bundle and the JSON have arrived. That is the design (a client-rendered article over a server-rendered copy), not a bug to fix cheaply.
 
 ## Installability (the PWA check)
 
