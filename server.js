@@ -171,8 +171,12 @@ app.use(helmet({
       styleSrc:    ["'self'", "'unsafe-inline'", 'https://cdn.paddle.com', 'https://fonts.googleapis.com'],
       fontSrc:     ["'self'", 'data:', 'https://fonts.gstatic.com'],
       workerSrc:   ["'self'"],  // PWA service worker registration
+      // stepto.net embeds the landing page as a live reference. frame-ancestors
+      // replaces X-Frame-Options (frameguard is off below); no other site may frame us.
+      frameAncestors: ["'self'", 'https://stepto.net', 'https://www.stepto.net'],
     },
   },
+  frameguard: false,
   // HSTS: force HTTPS for 1 year once on HTTPS. Fine to set even on HTTP (ignored by browsers on HTTP).
   strictTransportSecurity: { maxAge: 31536000, includeSubDomains: true },
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
