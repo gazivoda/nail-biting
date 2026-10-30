@@ -1940,12 +1940,21 @@ if (!existsSync(distPath)) {
     sendHtml(res, injectNoscriptNav(injected), 200, post.dateModified);
   });
 
-  // `hasPart` on /blog used to stub every post: 143 nodes, 44.6 KB of JSON-LD,
-  // 90% of the page's weight — restating links the SSR list below already
-  // carries in-flow with the same anchor text. The stubs now merge into the
-  // real article nodes by @id, so they are a recency window, not the index:
-  // the newest posts get a machine-readable entry, and the visible list stays
-  // the complete 143-link hub it has always been.
+  // The /blog description, once. The <meta> tag, the CollectionPage `description` and the visible
+  // standfirst are the same string; they were typed three times and had drifted apart (the JSON-LD named
+  // onychophagia and habit reversal training, which the page does not). scripts/sync-seo.mjs reads this
+  // const for the /blog entry in llms.txt.
+  const BLOG_INDEX_DESCRIPTION = 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.';
+
+  // `hasPart` on /blog is a recency window, not the index. It used to stub every post, which was most of
+  // the page's weight: restating links the SSR list below already carries in-flow with the same anchor
+  // text. The stubs merge into the real article nodes by @id, so the newest posts still get a
+  // machine-readable entry. Re-measured with 188 posts: stubs for all of them are 76.6 KB of JSON-LD
+  // (44.4 KB without descriptions), against a 51.7 KB visible list and a 27 KB shell, and they would
+  // buy nothing: Google documents no rich result for CollectionPage or hasPart, it asks for markup
+  // that describes what the page shows (the list already does, in full), and discovery runs through
+  // the in-flow links and the sitemap. A window is not false either: hasPart says "these are parts",
+  // not "only these". test: src/utils/serverSchema.test.ts.
   const BLOG_FEATURED_COUNT = 20;
   const BLOG_RECENT = Object.entries(BLOG_POSTS)
     // Newest first by publication date; slug breaks ties so the block is
@@ -1959,7 +1968,7 @@ if (!existsSync(distPath)) {
     if (!indexHtml) return res.sendFile(indexPath, HTML_SENDFILE_OPTS);
     let injected = injectMeta(indexHtml, {
       title: 'Nail Biting Resources: Evidence-Based Guides | Stop Biting',
-      description: 'Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.',
+      description: BLOG_INDEX_DESCRIPTION,
       canonical: 'https://stopbiting.today/blog',
     });
 
@@ -1973,7 +1982,7 @@ if (!existsSync(distPath)) {
       '@type': 'CollectionPage',
       '@id': 'https://stopbiting.today/blog',
       name: 'Nail Biting Resources — Evidence-Based Guides',
-      description: 'Research-backed articles on onychophagia, habit reversal training, and body-focused repetitive behaviors.',
+      description: BLOG_INDEX_DESCRIPTION,
       url: 'https://stopbiting.today/blog',
       isPartOf: { '@id': WEBSITE_ID },
       publisher: SCHEMA_PUBLISHER,
@@ -2000,13 +2009,13 @@ if (!existsSync(distPath)) {
     // The index is the hub: listing every article as a real in-flow link is
     // what makes each one reachable — with anchor text — by crawlers that
     // never run the JS, in one hop from /. This list stays complete even though
-    // `hasPart` above is a window — the links are the discovery path, not the
+    // `hasPart` above is a window; the links are the discovery path, not the
     // stubs.
     const postList = Object.entries(BLOG_POSTS).map(([slug, p]) =>
       `<li><a href="/blog/${slug}">${escapeHtml(p.title)}</a><br>${escapeHtml(p.description)}</li>`).join('');
     const articleHtml =
       '<h1>Nail biting resources</h1>' +
-      '<p class="article-summary">Research-backed articles on habit psychology, treatment options, and the science of breaking body-focused repetitive behaviours.</p>' +
+      `<p class="article-summary">${escapeHtml(BLOG_INDEX_DESCRIPTION)}</p>` +
       '<p>New here? Start with <a href="/blog/how-to-stop-nail-biting">How to stop nail biting: the complete guide</a>.</p>' +
       `<section><h2>All articles</h2><ul>${postList}</ul></section>`;
     injected = injectSsrArticle(injected, articleHtml);
