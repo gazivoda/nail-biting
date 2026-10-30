@@ -34,6 +34,7 @@ import { Landing } from '../../pages/Landing';
 import { ContactForm } from '../../components/ContactForm';
 import { HeroDemo } from '../../components/demo/HeroDemo';
 import { TRIAL_DAYS_TEXT, TRIAL_HYPHEN } from '../../../shared/plans.js';
+import { HERO_SHOT, heroShotPreloadTag } from '../../../shared/heroShot.js';
 
 export const COVERS = [
   'src/pages/Landing.tsx',
@@ -180,6 +181,17 @@ describe('home page, English', () => {
     ]) expect(html, s).toContain(s);
     expect(html).not.toContain('The guides are in English.');   // only shown on a localized page
     expect(html).not.toContain(' lang="en"');
+  });
+
+  it('the hero screenshot is rendered from the same constant the server preloads (one copy is fetched, and it is the LCP element)', () => {
+    const html = renderToStaticMarkup(<Landing />);
+    const img = html.match(/<img src="\/shots\/app-watch-1280\.webp"[^>]*>/)?.[0] ?? '';
+    expect(img).toContain(`srcSet="${HERO_SHOT.srcSet}"`);
+    expect(img).toContain(`sizes="${HERO_SHOT.sizes}"`);
+    expect(img).toContain(`width="${HERO_SHOT.width}" height="${HERO_SHOT.height}"`);
+    expect(img).toContain('fetchPriority="high"');
+    // The preload tag says the same three things in its own attribute names.
+    expect(heroShotPreloadTag()).toContain(`imagesrcset="${HERO_SHOT.srcSet}" imagesizes="${HERO_SHOT.sizes}"`);
   });
 
   it('the demo says what it always said', () => {

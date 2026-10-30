@@ -24,6 +24,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
+import { heroShotPreloadTag, HERO_SHOT } from '../shared/heroShot.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const built = existsSync(join(ROOT, 'dist/index.html')) && existsSync(join(ROOT, 'dist/seo-gated.json'));
@@ -184,6 +185,22 @@ describe.skipIf(!built)('marketing site, flags off', () => {
       expect(metaContent(text, 'name="twitter:image"'), page).toBe('https://stopbiting.today/og/site.png');
       big(withoutComments(text), page).notToContain('/og-image.png');
     }
+  });
+
+  // The home page's LCP element is the hero screenshot, which React only draws after the bundle has run. The HTML preloads it
+  // so it is already on its way, with the candidates and `sizes` of the <img> (shared/heroShot.js), and nothing else.
+  it('`/` preloads the hero screenshot once, with the shared candidates, and every candidate is served as an image', async () => {
+    const { text } = await get(srv, '/');
+    const preloads = text.match(/<link rel="preload" as="image"[^>]*>/g) ?? [];
+    expect(preloads).toEqual([heroShotPreloadTag()]);
+    for (const candidate of HERO_SHOT.srcSet.split(',').map(c => c.trim().split(/\s+/)[0])) {
+      const res = await fetch(srv.url + candidate);
+      expect(res.status, candidate).toBe(200);
+      expect(res.headers.get('content-type'), candidate).toMatch(/image\/webp/);
+      await res.arrayBuffer();
+    }
+    // The other marketing pages do not carry it: it is the home page's picture.
+    for (const page of ['/pricing', '/how-it-works', '/about']) big((await get(srv, page)).text, page).notToContain('rel="preload" as="image"');
   });
 
   it('serves none of the retired privacy phrases (Stop Biting\'s own claims)', async () => {

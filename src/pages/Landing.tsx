@@ -18,6 +18,7 @@ import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
 import { useT as useHomeT } from '../i18n/scopes/marketing-home';
 import { anySignIn, composeSignInAnswer } from '../i18n/marketing/signin';
 import { useSitePaths, useSiteT } from '../i18n/marketing/useSite';
+import { HERO_SHOT } from '../../shared/heroShot.js';
 
 // The live demo pulls in MediaPipe, 125 KB of WebAssembly glue that the landing
 // page's critical path must never pay for. Lazy so it lands in its own chunk,
@@ -195,12 +196,13 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
                 <figure className="relative w-full">
                   <span className="sg-sticker sg-sticker-lime -left-3 -top-4 sm:-left-5">{t('hero.sticker.trial')}</span>
                   <span className="sg-sticker sg-sticker-white bottom-14 -right-2 max-w-[10.5rem] text-center leading-tight max-sm:hidden sm:-right-4">{t('hero.sticker.privacy')}</span>
+                  {/* src, srcSet and sizes come from shared/heroShot.js: server.js preloads the same candidates from the HTML. */}
                   <img
-                    src="/shots/app-watch-1280.webp"
-                    srcSet="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w"
-                    sizes="(min-width: 1024px) 36rem, 100vw"
-                    width={1280}
-                    height={792}
+                    src={HERO_SHOT.src}
+                    srcSet={HERO_SHOT.srcSet}
+                    sizes={HERO_SHOT.sizes}
+                    width={HERO_SHOT.width}
+                    height={HERO_SHOT.height}
                     fetchPriority="high"
                     decoding="async"
                     alt={t('hero.shot.alt')}

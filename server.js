@@ -24,6 +24,7 @@ import { createCopyIsOn } from './server/marketing/copyFlags.js';
 import { createLifetimeCopy } from './server/marketing/lifetimeCopy.js';   // the Lifetime plan in the words crawlers read (flag lifetime_plan)
 import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
 import { TRIAL_HYPHEN, TRIAL_MS, describeDays, lifetimePriceUsd, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS), the Lifetime list price
+import { heroShotPreloadTag } from './shared/heroShot.js';   // the home hero screenshot's preload: one constant with the <img> in Landing.tsx
 import {
   decorateEnglishHtml, liveLocales, loadLocaleFiles, localeStates, localizedNoscriptNav, registerLocalePages, servedLocales,
   withLocaleAlternates,
@@ -1827,16 +1828,12 @@ if (!existsSync(distPath)) {
       canonical: 'https://stopbiting.today/',
     });
     if (condition) injected = injectSchema(injected, condition);
-    // The hero screenshot is the largest thing above the fold on desktop, but
+    // The hero screenshot is the largest thing above the fold (and the page's LCP element), but
     // React only creates its <img> after the JS bundle has run. Preloading it
-    // from the HTML starts the download in parallel. srcset/sizes mirror the
-    // <img> in Landing.tsx exactly, or the browser fetches a second copy.
-    injected = injected.replace(
-      '</head>',
-      '<link rel="preload" as="image" href="/shots/app-watch-1280.webp" ' +
-      'imagesrcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" ' +
-      'imagesizes="(min-width: 1024px) 36rem, 100vw" fetchpriority="high"></head>',
-    );
+    // from the HTML starts the download in parallel. srcset/sizes are the very
+    // constant Landing.tsx renders its <img> from (shared/heroShot.js), so the
+    // browser can never fetch a second copy.
+    injected = injected.replace('</head>', `${heroShotPreloadTag()}</head>`);
     // WebPage entity carrying the speakable spec — injected only here, so
     // legal/noindex routes (which share the same shell) never receive it.
     // Selectors resolve against the SSR article injected just below.
