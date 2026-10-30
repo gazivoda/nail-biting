@@ -63,7 +63,7 @@ Key facts:
 
 - [Why Do People Bite Their Nails, and Why Is It So Hard to Stop?](https://stopbiting.today/blog/why-do-people-bite-their-nails): Reviews estimate 20–30% of adults bite their nails, and up to 45% of children between 10 and puberty.
 - [The Stress–Nail Biting Connection: Why Anxiety Drives the Habit and How to Break the Loop](https://stopbiting.today/blog/stress-and-nail-biting): In 339 medical students, 65.7% of nail biters reported tension before biting and 42% pleasure after: self-report, not measured relief.
-- [Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit](https://stopbiting.today/blog/nail-biting-anxiety-treatment): In 339 medical students, anxiety disorder was diagnosed in 22.5% of those with lifetime nail biting against 26.2% of those without.
+- [Nail Biting and Anxiety: Is Anxiety Your Driver, and Does Treating It Help?](https://stopbiting.today/blog/nail-biting-anxiety-treatment): In 339 medical students, anxiety disorder was diagnosed in 22.5% of those with lifetime nail biting against 26.2% of those without.
 - [Why Nail Biting Persists into Adulthood, and What Makes It Different to Childhood Habits](https://stopbiting.today/blog/nail-biting-adults-why-persists): In a survey of 4,335 college students, body-focused repetitive behaviours tended to be chronic, lasting over a year.
 - [Nail Biting and ADHD: Why the Habit Is Harder to Stop, and What Actually Helps](https://stopbiting.today/blog/nail-biting-adhd): In a psychiatrically referred sample of nail-biting children, 74.6% also had ADHD, the most common co-occurring diagnosis.
 - [Why Nail Biting Feels Calming: The Emotional Regulation Mechanism Explained](https://stopbiting.today/blog/nail-biting-emotional-regulation): Why nail biting feels calming: the reinforcement loop, why regulation strategies often fail to replace it, and how to match a replacement to the mechanism.
@@ -244,7 +244,7 @@ Key facts:
 
 - [How AI Can Help You Stop Biting Your Nails: The Technology Behind Real-Time Detection](https://stopbiting.today/blog/how-ai-can-help-stop-nail-biting): Real-time AI detection solves the awareness problem behind nail biting.
 - [Is It Safe to Use a Webcam App to Stop Nail Biting? Privacy Explained](https://stopbiting.today/blog/webcam-privacy-nail-biting-app): Webcam apps for nail biting raise fair privacy questions.
-- [How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, on your device five times a second.
+- [How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer](https://stopbiting.today/blog/mediapipe-ai-detection-explained): Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 478-point face mesh, on your device five times a second.
 - [Wearable Technology for Nail Biting: Smartwatches and Motion Detection](https://stopbiting.today/blog/nail-biting-wearable-technology): Wrist-worn wearables are an emerging way to catch nail biting through motion sensing.
 - [How Accurate Is AI Nail Biting Detection? A Straight Answer](https://stopbiting.today/blog/nail-biting-detection-accuracy): Stop Biting uses fingertip-to-mouth proximity as a proxy for biting.
 - [Getting Your Camera Setup Right for Nail Biting Detection](https://stopbiting.today/blog/nail-biting-camera-setup): Detection quality depends more on lighting and camera angle than on hardware.

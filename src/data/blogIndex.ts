@@ -126,12 +126,12 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   },
   {
     slug: "nail-biting-anxiety-treatment",
-    title: "Nail Biting and Anxiety: When Treating Anxiety Is the Key to Stopping the Habit",
+    title: "Nail Biting and Anxiety: Is Anxiety Your Driver, and Does Treating It Help?",
     description: "In 339 medical students, anxiety disorder was diagnosed in 22.5% of those with lifetime nail biting against 26.2% of those without. Is anxiety your driver?",
     tag: "Psychology",
-    readingMinutes: 3,
+    readingMinutes: 5,
     datePublished: "2026-04-07",
-    dateModified: "2026-10-21",
+    dateModified: "2026-10-30",
   },
   {
     slug: "how-long-to-stop-nail-biting",
@@ -190,11 +190,11 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "mediapipe-ai-detection-explained",
     title: "How MediaPipe AI Detection Works in Stop Biting: A Technical Explainer",
-    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 468-point face mesh, on your device five times a second. The detection stack.",
+    description: "Stop Biting runs Google's MediaPipe in WebAssembly: a 21-point hand model and a 478-point face mesh, on your device five times a second. The detection stack.",
     tag: "Technology",
-    readingMinutes: 3,
+    readingMinutes: 5,
     datePublished: "2026-04-07",
-    dateModified: "2026-10-23",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-laptop-working-from-home",
@@ -273,9 +273,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "What to Do Instead of Biting Your Nails: 12 Evidence-Based Alternatives",
     description: "Match the substitute to your trigger and to where you bite. 12 options by stress, focus and boredom biting, with what research does and does not show.",
     tag: "Treatment",
-    readingMinutes: 4,
+    readingMinutes: 5,
     datePublished: "2026-04-21",
-    dateModified: "2026-10-20",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-pregnancy",
@@ -338,7 +338,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 8,
     datePublished: "2026-04-23",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-social-confidence",
@@ -372,9 +372,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Nail Biting and Perfectionism: What the Evidence Actually Shows",
     description: "The perfectionism link rests on one study of 24 people that used no perfectionism scale: boredom and frustration raised urges, and a stress induction did not.",
     tag: "Psychology",
-    readingMinutes: 5,
+    readingMinutes: 6,
     datePublished: "2026-04-23",
-    dateModified: "2026-09-11",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-gaming",
