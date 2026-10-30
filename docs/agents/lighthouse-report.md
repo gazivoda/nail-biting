@@ -99,6 +99,62 @@ Runs (performance score per run, to show the spread): `/` mobile: 76/93/93; `/` 
   loading; `src/pages/BlogPost.test.tsx`). Lab, mobile, 3 runs on two posts: CLS 0.719 to 0, performance 56 to 80. The post's LCP
   is unchanged at about 5.5 s on Lighthouse's simulated slow phone: the app's own h1 replaces the server-rendered one once the
   bundle and the JSON have arrived. That is the design (a client-rendered article over a server-rendered copy), not a bug to fix cheaply.
+  **Update, same day (lane H):** it was fixable cheaply after all, see "Blog post LCP" below; the server copy never paints for a visitor with JavaScript.
+
+## Blog post LCP (lane H, 2026-10-30)
+
+Lab only, Lighthouse 13.6.0 mobile, one laptop with other lanes' work running (load average 4 to 6 on 14 cores), base = the
+build of `bf6fdad`, head = this branch, the two builds served by their own `server.js` and measured alternately
+(`node scripts/lighthouse/ab.mjs`). **These are lab numbers; nothing here is a field or Core Web Vitals measurement.**
+
+**What the base LCP was.** The client-rendered h1 (`/blog/nail-biting-health-risks`) or lede paragraph
+(`/blog/how-to-stop-nail-biting`), painted by React. The earlier "replaces the server-rendered h1" is not quite it: for a visitor
+with JavaScript the server copy is `display:none` before the first paint (`html.js #ssr-page-content`), so it never paints.
+The wait is a serial chain: HTML, then the entry bundle (82 KB gz) and vendor (101 KB gz), then the lazy BlogPost chunk (requested
+only once the bundle has run), then `/posts/<slug>.json` (requested only after the chunk's first render and its effect).
+Also in the chain: React 19 holds a Suspense reveal back until 300 ms after the fallback committed
+(`FALLBACK_THROTTLE_MS = 300` in react-dom 19.2.4), so the chunk being there early did not help while the route stayed lazy.
+
+**What changed.** (1) `/blog/<slug>` carries `<link rel="preload" as="fetch" crossorigin href="/posts/<slug>.json">`
+(`server/marketing/postPreload.js`): one request, started at HTML parse, consumed by the page's own `fetch()` (checked in Chrome:
+one request per visit, answered by the service worker from the second visit on, no "preloaded but not used" warning). (2) `BlogPost` is a static import in `App.tsx`: its chunk was 10 KB since the articles moved
+to JSON, and lazy cost a request plus the 300 ms throttle (entry +9.6 KB raw, +2.4 KB gz). (3) recharts' own dependencies (redux
+toolkit, immer, reselect, decimal.js-light, es-toolkit ...) matched no `manualChunks` rule and shipped in `vendor` to every page:
+they are in `charts` now (vendor 100.9 to 75.1 KB gz). `scripts/blogPostPreload.test.mjs`, `scripts/bundleSplit.test.mjs`.
+
+**LCP, medians (every run in the list, ms).** `sim` = Lighthouse's default simulated slow phone, 5 runs. `chrome` = the same phone
+profile applied by Chrome itself (`--throttling-method=devtools`), 3 runs: slower to run, no modelling.
+
+| Page | sim base | sim head | chrome base | chrome head |
+|---|---|---|---|---|
+| `/blog/nail-biting-health-risks` | 5421 (4761 5421 5421 5430 5420) | 2855 (2860 2856 2704 903 2855) | 3511 | 2774 |
+| `/blog/how-to-stop-nail-biting` | 5571 (5570 5569 5572 5571 5575) | 2854 (2856 2858 2854 2854 2853) | 3503 | 2772 |
+| `/pricing` (control) | 903 (2854 903 903 2853 902) | 902 (903 902 903 902 902) | 2821 | 2690 |
+| `/` (control) | 3086 (3087 3087 3013 3086 3086) | 2933 (2935 2933 2933 2859 2933) | 3005 | 2888 |
+
+Performance score, sim (base to head): post 1 80 to 96, post 2 80 to 96, `/pricing` 100 to 100, `/` 92 to 93. Chrome-throttled:
+84 to 92, 84 to 92, 91 to 92, 86 to 88. TBT 12 to 5 ms on the posts, unchanged on the controls (3 to 18 ms either way). CLS 0 on
+both posts, `/pricing` 0, `/` 0.098 on both builds (not touched here). The sim number drops far more than the Chrome-throttled one
+(minus 2.6 s against minus 0.74 s), and the reason matters when reading either:
+
+- **Lighthouse's simulation puts `gtag.js` (178 KB, from the tag in `index.html`) on the LCP path whenever it finishes before the
+  paint it observed.** In the base build the paint is at about 380 ms on the unthrottled run and gtag finishes at about 170 ms, so
+  the modelled LCP carries a third-party download and its evaluation (5.4 s; with `--blocked-url-patterns=*googletagmanager*` the
+  same base build scores 3.0 s, TBT 0, performance 95). With the preload and the static import the observed paint moves to about
+  75 ms, before gtag finishes, and gtag leaves the modelled path. Chrome-throttled numbers do not have this effect.
+- **The same switch flips on `/pricing` with no code change**: the base column holds 903 and 2854 in one set of five runs,
+  depending on whether gtag finished near 160 ms or near 205 ms after navigation (internet latency to Google). A simulated LCP
+  difference of about 2 s on one page can be that switch, so judge a change on the Chrome-throttled column and on many runs.
+- Not done, in `index.html` (not this lane's file): start the gtag download later (for example on first interaction or after an
+  idle timeout), since a 178 KB third-party script competes for the same slow link as the chunk and the JSON.
+
+**Where the rest of the wait is.** About 2.7 s of the Chrome-throttled 2.77 s is the first paint of anything: a visitor with
+JavaScript sees nothing until the entry bundle has been downloaded and run, because the article already in the HTML is hidden.
+A prototype that left the server copy visible and mounted React with the article already in hand (no loading frame) measured
+1.74 s Chrome-throttled LCP, with the server paragraph as the LCP element and CLS 0. It was **not shipped**: visitors would see a
+plain-styled article that is replaced by the designed page when the bundle runs (a design call); the server copy's dark-mode text
+colour (`prefers-color-scheme: dark`) is light on the page's always-light background, so it would have to go; and the swap
+resets scroll to the top. The simulated score does not reward it.
 
 ## Installability (the PWA check)
 
@@ -118,5 +174,8 @@ installability check passes without it because Chrome's check does not need the 
 npm run build:web
 node scripts/lighthouse/run.mjs --runs 3          # about 15 minutes; or --only /pricing,/about
 node scripts/lighthouse/report.mjs                # rewrites the Results section above
+# two builds side by side (a base checkout and this one), same pages, alternating runs:
+node scripts/lighthouse/ab.mjs --base /path/to/base-checkout --head . --pages /blog/nail-biting-health-risks,/pricing --runs 5
+node scripts/lighthouse/ab.mjs ... --devtools     # throttle in Chrome instead of the simulation
 ```
 Run it alone: another browser or a build running at the same time moves the performance scores by several points.

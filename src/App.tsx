@@ -3,6 +3,8 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { TabBar } from './components/layout/TabBar';
 import { Landing } from './pages/Landing';
 import { BlogIndex } from './pages/BlogIndex';
+// Not lazy: see the /blog/:slug route below.
+import { BlogPost } from './pages/BlogPost';
 
 // The signed-in app — and everything only it needs, notably recharts for the
 // week chart and the Paddle checkout SDK. Landing-page visitors are the bulk of
@@ -12,12 +14,6 @@ const Log = lazy(() => import('./pages/Log').then(m => ({ default: m.Log })));
 const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
 const PaywallPage = lazy(() =>
   import('./components/auth/PaywallPage').then(m => ({ default: m.PaywallPage })),
-);
-// BlogPost is the only route that renders article bodies. It no longer imports
-// them: each article is fetched from /posts/<slug>.json (see hooks/usePost.ts),
-// so a reader downloads the one they open, not all of them.
-const BlogPost = lazy(() =>
-  import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
 );
 // Same reason: comparePages.ts is ~94KB of source that only /compare/* and
 // /solutions/* read, and it was riding in the main chunk.
@@ -174,11 +170,7 @@ export default function App() {
     const slug = path.slice(6).replace(/\/$/, '');
     // The server injects the article body and meta tags into the HTML shell, so
     // crawlers never depend on this chunk resolving.
-    return (
-      <Suspense fallback={null}>
-        <BlogPost slug={slug} />
-      </Suspense>
-    );
+    return <BlogPost slug={slug} />;
   }
 
   // About page

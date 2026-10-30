@@ -110,6 +110,13 @@ export default defineConfig({
           if (id.includes('recharts') || id.includes('victory-vendor') || /node_modules[\\/]d3-/.test(id)) {
             return 'charts';
           }
+          // recharts' own dependencies (its package.json: the redux stack, immer, reselect, decimal.js-light,
+          // es-toolkit, eventemitter3, use-sync-external-store, tiny-invariant). Nothing else imports them, but
+          // they matched none of the lines above and so landed in `vendor`, which every page downloads: about a
+          // quarter of it was chart code that only the signed-in app runs.
+          if (/node_modules[\\/](?:@reduxjs[\\/]toolkit|redux|redux-thunk|react-redux|immer|reselect|decimal\.js-light|es-toolkit|eventemitter3|use-sync-external-store|tiny-invariant)[\\/]/.test(id)) {
+            return 'charts';
+          }
           if (id.includes('@paddle')) return 'paddle';
           if (id.includes('node_modules')) return 'vendor';
         },
