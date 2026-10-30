@@ -21,6 +21,7 @@
 // and the /llms.txt and /llms-full.txt handlers. Pure functions, no I/O, so vitest tests them without a server.
 
 import { LIFETIME_PRICE_USD, TRIAL_DAYS_TEXT } from '../../shared/plans.js';
+import { lifetimeHeadline } from '../../shared/flagCopy.js';
 
 const BRAND_SUFFIX = ' | Stop Biting';
 const OFFER_NAME = 'Lifetime';
@@ -53,8 +54,10 @@ export const ANCHORS = Object.freeze({
   homeHero: 'credit card; after that it is $2.99/month or $29.00/year.</p>',
   /** the homepage pricing section, which says "Both plans" */
   homePricing: 'saving 19%. Both plans include unlimited AI detection, streak and habit tracking, full incident history, and all alert types.',
-  /** the pricing link in the how-it-works article ("Learn more") */
-  howLink: 'Pricing — $2.99/month or $29/year, ',
+  /** the headline of the /pricing article (the page's h1) */
+  pricingHeading: '<h1>$2.99 a month, or $29 a year.</h1>',
+  /** the headline of the pricing section of the homepage article (the page's h2: it is the same component as the h1) */
+  homeHeading: '<section><h2>$2.99 a month, or $29 a year.</h2>',
   /** the cost calculator article says it uses "our two published prices": the two subscriptions, once there are three prices */
   calculator: 'our two published prices: ',
 });
@@ -105,9 +108,14 @@ export function createLifetimeCopy({ on, price = LIFETIME_PRICE_USD } = {}) {
 
   const navLabel = label => (label === ANCHORS.nav ? onNav : label);
 
-  /** The crawler articles of /pricing, the homepage and how-it-works, after `copyHtml`. Idempotent. */
+  const { lead, mark, tail } = lifetimeHeadline(price);
+  const headline = `${lead}${mark}${tail}`;   // "$2.99 a month, $29 a year, or $99 once."
+
+  /** The crawler articles of /pricing, the homepage and the cost calculator, after `copyHtml`. Idempotent. */
   function article(html) {
     let out = html;
+    out = replaceAll(out, ANCHORS.pricingHeading, `<h1>${headline}</h1>`);
+    out = replaceAll(out, ANCHORS.homeHeading, `<section><h2>${headline}</h2>`);
     out = replaceAll(out, ANCHORS.pricingSummary,
       `then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing, or ${usdFull} once for the Lifetime plan.</p>`);
     if (!out.includes(`<h2>${OFFER_NAME}: `)) {
@@ -118,7 +126,6 @@ export function createLifetimeCopy({ on, price = LIFETIME_PRICE_USD } = {}) {
       `credit card; after that it is $2.99/month, $29.00/year, or ${usdFull} once for Lifetime.</p>`);
     out = replaceAll(out, ANCHORS.homePricing,
       `saving 19%. ${OFFER_NAME}: ${usdFull}, paid once, with no renewals. Every plan includes unlimited AI detection, streak and habit tracking, full incident history, and all alert types.`);
-    out = replaceAll(out, ANCHORS.howLink, `Pricing: $2.99/month, $29/year or ${usd} once, `);
     out = replaceAll(out, ANCHORS.calculator, 'our two subscription prices: ');
     return out;
   }

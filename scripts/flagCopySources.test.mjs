@@ -40,6 +40,24 @@ const SOURCES = {
   'pricing-faq-difference': ['src/i18n/scopes/marketing-pricing.ts', 'server.js'],
   'home-faq-cost': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
   'home-faq-cancel': ['src/i18n/scopes/marketing-home.ts', 'index.html'],
+  // lifetime_plan: the pages that quote Stop Biting's price (compare and solutions pages, two posts) and the offer at their foot
+  'compare-hands-off-annual': ['src/data/comparePages.ts'],
+  'compare-hands-off-cost': ['src/data/comparePages.ts'],
+  'compare-ai-apps-cost': ['src/data/comparePages.ts'],
+  'compare-nailed-cost': ['src/data/comparePages.ts'],
+  'compare-habitaware-plans': ['src/data/comparePages.ts'],
+  'compare-pavlok-try': ['src/data/comparePages.ts'],
+  'compare-nailed-is-subscription': ['src/data/comparePages.ts'],
+  'compare-nailed-buys': ['src/data/comparePages.ts'],
+  'compare-nailed-pays': ['src/data/comparePages.ts'],
+  'compare-nailed-heading': ['src/data/comparePages.ts'],
+  'compare-habitcam-pick': ['src/data/comparePages.ts'],
+  'compare-habitcam-limit': ['src/data/comparePages.ts'],
+  'compare-nailbitemenu-limit': ['src/data/comparePages.ts'],
+  'compare-biteless-both': ['src/data/comparePages.ts'],
+  'compare-cta-price': ['src/pages/ComparePage.tsx'],
+  'price-list-short': ['src/data/comparePages.ts', 'src/data/blogPosts.ts'],
+  'price-list': ['src/data/comparePages.ts', 'src/data/blogPosts.ts'],
 };
 
 describe('copy rules and the sources they replace text in', () => {

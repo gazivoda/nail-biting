@@ -9,7 +9,7 @@ import { PAGE_MAP, type PageContent } from '../data/comparePages';
 import { GATED_COMPARE_FLAG, isGatedComparePath } from '../data/gatedComparePaths';
 import { refreshFlags } from '../features/flags';
 import { useFeature } from '../features/useFeature';
-import { useFlagIsOn } from '../features/useFlagCopy';
+import { useFlagCopy, useFlagIsOn } from '../features/useFlagCopy';
 import { flagAwareDeep, mentionsFlagCopy } from '../../shared/flagCopy.js';
 import { AuthorBox } from './EditorialPolicyPage';
 import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
@@ -105,6 +105,9 @@ function FlaggedComparePage({ path }: Props) {
 
 export function ComparePageView({ path, content }: Props & { content: PageContent | undefined }) {
   useTheme('light');
+  // The offer at the foot of the page names the Lifetime plan while it is for sale (shared/flagCopy.js); the trial button below
+  // already reads the same flags, so this asks for nothing new.
+  const copy = useFlagCopy();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -195,8 +198,8 @@ export function ComparePageView({ path, content }: Props & { content: PageConten
             <p className="sg-h3">A webcam alarm for nail biting.</p>
             <p className="sg-small mt-1 max-w-[46ch]">
               Stop Biting runs in your browser on a laptop or desktop and sounds an alarm when your
-              hand moves toward your mouth. No camera data is sent while it runs. {TRIAL_DAYS_TEXT} free, no card,
-              then $2.99 a month or $29 a year. Read{' '}
+              hand moves toward your mouth. No camera data is sent while it runs. {TRIAL_DAYS_TEXT} free, no card,{' '}
+              {copy('then $2.99 a month or $29 a year')}. Read{' '}
               <a href="/how-it-works" className="sg-link">how it works</a>.
             </p>
           </div>
