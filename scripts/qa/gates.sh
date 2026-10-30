@@ -6,7 +6,7 @@
 #   SKIP_BUILD=1 bash scripts/qa/gates.sh    # reuse dist/
 #
 # Prints one line per gate (PASS / FAIL / NOTE) and a summary. Exit 1 if any gate FAILS.
-# Lint: the baseline is 23 errors / 4 warnings on real source (scoped to src server scripts electron shared; the
+# Lint: the baseline is 22 errors / 4 warnings on real source (lowered from 23 on 2026-10-30 when useIsPhone lost its set-state-in-effect error) (scoped to src server scripts electron shared; the
 # unscoped `npm run lint` also walks .claude/worktrees and counts other agents' trees).
 set -u
 cd "$(dirname "$0")/../.."
@@ -26,7 +26,7 @@ if grep -q "Test Files .* passed" "$LOG/test.log" && ! grep -qE "Test Files .*fa
 
 npx eslint src server scripts electron shared >"$LOG/lint.log" 2>&1
 SUMMARY=$(grep -E "problems \(" "$LOG/lint.log" | tail -1)
-if echo "$SUMMARY" | grep -q "(23 errors, 4 warnings)"; then pass "lint scoped: $SUMMARY (baseline)"; else fail "lint scoped: ${SUMMARY:-no summary} (baseline is 23 errors, 4 warnings)"; fi
+if echo "$SUMMARY" | grep -q "(22 errors, 4 warnings)"; then pass "lint scoped: $SUMMARY (baseline)"; else fail "lint scoped: ${SUMMARY:-no summary} (baseline is 22 errors, 4 warnings)"; fi
 
 BAD=0
 for f in server.js email.js trialFollowup.js $(find server shared -name '*.js'); do node --check "$f" 2>>"$LOG/check.log" || BAD=$((BAD + 1)); done
