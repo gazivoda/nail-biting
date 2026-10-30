@@ -709,11 +709,20 @@ const sitemapUrls = new Set();
 //   1. EVERY "## " section is a DERIVED link list, regenerated in full.
 //        "## Key pages"     — core routes: the title and description server.js
 //                             injects for that route. /compare/* and
-//                             /solutions/*: the title and subtitle
-//                             ComparePage.tsx renders from comparePages.ts.
-//        "## Blog articles" — title + first sentence of post.description.
+//                             /solutions/*: the page's title (comparePages.ts)
+//                             and the meta description server.js serves for
+//                             it (COMPARE_META).
+//        "## Blog articles" — title + the whole of post.description, the same
+//                             string the page serves as its meta description.
 //      The blurb is no longer a description OF the page, it IS the page's own
-//      sentence, so correcting the page corrects llms.txt on the next sync.
+//      description, so correcting the page corrects llms.txt on the next sync.
+//      It used to be the FIRST SENTENCE of that description, which cut 174 of
+//      188 blurbs short: "Almost nobody bites mid-workout." for the gym post,
+//      "Stress is the weakest-evidenced part of this." for the life-changes
+//      post, and "Can low iron, zinc or magnesium cause nail biting?" (a
+//      question with its answer cut off) for the deficiency post.
+//      Descriptions are capped at 160 characters (seo:check allows 165), so
+//      there is nothing to shorten. scripts/llmsTxt.test.mjs pins this.
 //
 //   2. The free prose above the first "## " (the summary, the pricing block,
 //      the key facts) summarises the whole site rather than restating one page,
@@ -740,7 +749,7 @@ const sitemapUrls = new Set();
       '## Blog articles': BLOG_POSTS.map(p => ({
         href: `${ORIGIN}/blog/${p.slug}`,
         title: p.title,
-        note: firstSentence(p.description),
+        note: p.description,
         group: p.tag,
       })),
     };
@@ -802,9 +811,19 @@ function keyPageEntries() {
     }
     entries.push({ href: `${ORIGIN}${path}`, title: meta.title, note: meta.description });
   }
+  // The note is the meta description server.js serves for the page (COMPARE_META), not the subtitle the
+  // page renders under its h1: the subtitle is a standfirst written to follow the headline, so on its own
+  // it can be a rhetorical question ("...at a computer, or everywhere else?") or a phrase with no verb.
+  // COMPARE_META is gated against the page body (checkMirrors), so it cannot out-claim it.
+  const metas = compareMetaEntries(server) ?? [];
   for (const [path, get] of Object.entries(PAGE_MAP)) {
     const page = get();
-    entries.push({ href: `${ORIGIN}${path}`, title: page.title, note: page.subtitle });
+    const description = metas.find(m => m.path === path)?.description;
+    if (!description) {
+      problems.push(`llms.txt: cannot read the COMPARE_META description for ${path} in server.js, so its entry has no blurb`);
+      continue;
+    }
+    entries.push({ href: `${ORIGIN}${path}`, title: page.title, note: description });
   }
   const privacy = routeMeta(server, '/privacy');
   if (privacy) entries.push({ href: `${ORIGIN}/privacy`, title: privacy.title, note: privacy.description });
@@ -1328,11 +1347,6 @@ if (CHECK_ONLY && (changes.length || problems.length)) {
 // escapes quotes, backslashes and newlines correctly.
 function js(str) {
   return JSON.stringify(str);
-}
-
-function firstSentence(text) {
-  const m = text.match(/^.*?[.!?](?=\s|$)/);
-  return (m ? m[0] : text).trim();
 }
 
 function writeIfChanged(path, content, label) {
