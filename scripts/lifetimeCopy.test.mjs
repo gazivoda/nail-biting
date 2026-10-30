@@ -20,6 +20,7 @@ import { join } from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { TRIAL_HYPHEN } from '../shared/plans.js';
+import { flagAware } from '../shared/flagCopy.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const built = existsSync(join(ROOT, 'dist/index.html')) && existsSync(join(ROOT, 'dist/llms-full.txt'));
@@ -182,6 +183,7 @@ describe.skipIf(!built)('Lifetime plan copy, flag off', () => {
     expect(titleOf(text)).toBe(TITLE_NOW);
     expect(metaContent(text, 'name="description"')).toBe(DESCRIPTION_NOW);
     big(articleOf(text)).toContain('then $2.99/month or $29.00/year, which is just $2.42/month and saves 19% versus monthly billing.</p>');
+    big(articleOf(text)).toContain('<h1>$2.99 a month, or $29 a year.</h1>');
   });
 
   it.each(PAGES)('%s does not mention the Lifetime plan', async path => {
@@ -267,7 +269,9 @@ describe.skipIf(!built)('Lifetime plan copy, flag on with the price id', () => {
     big(article).toContain(lifetime);
     expect(article.indexOf('<h2>Yearly')).toBeLessThan(article.indexOf('<h2>Lifetime'));
     expect(article.indexOf('<h2>Lifetime')).toBeLessThan(article.indexOf('<h2>What every plan includes'));
-    big(article).toContain('<h1>$2.99 a month, or $29 a year.</h1>');   // the visible heading does not change
+    // the headline is the page's h1: the visible heading (src/components/PricingSection.tsx) names the third price too
+    big(article).toContain('<h1>$2.99 a month, $29 a year, or $99 once.</h1>');
+    big(article).notToContain('<h1>$2.99 a month, or $29 a year.</h1>');
     expect(article).not.toMatch(/best deal|best value|save \$/i);
     expect(article.match(/<h2>Lifetime/g)).toHaveLength(1);
   });
@@ -304,6 +308,7 @@ describe.skipIf(!built)('Lifetime plan copy, flag on with the price id', () => {
     big(home).toContain('credit card; after that it is $2.99/month, $29.00/year, or $99.00 once for Lifetime.</p>');
     big(home).toContain('Lifetime: $99.00, paid once, with no renewals. Every plan includes unlimited AI detection');
     big(home).notToContain('Both plans include');
+    big(home).toContain('<section><h2>$2.99 a month, $29 a year, or $99 once.</h2>');   // the section's heading is the pricing page's h1, same component
     big(articleOf((await get(srv, '/how-it-works')).text)).toContain(`Pricing: $2.99/month, $29/year or $99 once, ${TRIAL_HYPHEN} free trial</a>`);
   });
 
@@ -324,11 +329,13 @@ describe.skipIf(!built)('Lifetime plan copy, flag on with the price id', () => {
     big(full).toContain('\n## Pricing\nURL: https://stopbiting.today/pricing\n');
     big(full).toContain('- Lifetime: $99.00, paid once');
     const base = readFileSync(join(ROOT, 'dist/llms-full.txt'), 'utf8');
-    expect(full.startsWith(base), 'llms-full.txt only gains a section at the end').toBe(true);
+    // the file gains a section at the end; the sentences that quote our price are worded by the copy rules (scripts/lifetimePages.test.mjs)
+    expect(full.startsWith(flagAware(base, name => name === 'lifetime_plan')), 'llms-full.txt only gains a section at the end').toBe(true);
   });
 
   it('the articles that never mention our plans are unchanged by the flag (only the navigation and the product node follow)', async () => {
-    for (const path of ['/about', '/privacy', '/compare/stop-biting-vs-habitcam', '/blog/habit-reversal-training-guide']) {
+    // (the compare pages that quote our price follow it too: scripts/lifetimePages.test.mjs)
+    for (const path of ['/about', '/privacy', '/compare/bitter-polish-alternative', '/blog/habit-reversal-training-guide']) {
       const { text } = await get(srv, path);
       expect(SAYS_OUR_LIFETIME_PLAN.test(articleOf(text)), path).toBe(false);
     }

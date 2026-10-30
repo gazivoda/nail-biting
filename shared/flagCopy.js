@@ -29,6 +29,8 @@
 // sent while it runs." Nothing here may say "100% private" or "nothing leaves your
 // device". Sign-in and, when on, sync do use the network, and the copy says so.
 
+import { lifetimePriceUsd } from './plans.js';
+
 /** The flags that change copy on pages that exist today. */
 export const COPY_FLAGS = Object.freeze([
   'event_sync',
@@ -76,6 +78,24 @@ export function signInAnswer(isOn) {
   if (isOn('signin_magic_link')) parts.push('The emailed link needs only your email address.');
   parts.push('The live demo on the homepage needs no account at all.');
   return parts.join(' ');
+}
+
+/**
+ * "$99": the Lifetime list price as the words write it (shared/plans.js, the one number; it must equal the Paddle price).
+ * Read when a rule runs, not when this file is imported: the server loads .env after its imports, and the offer in the
+ * structured data (server/marketing/lifetimeCopy.js) is made from the same call, so the sentence and the offer agree.
+ */
+const lifetimeUsd = () => `$${lifetimePriceUsd()}`;
+
+/** A rule of the Lifetime group: nothing with the flag off, `text(price)` with it on. */
+function lifetimeRule(id, where, off, text) {
+  return {
+    id,
+    where,
+    off,
+    flags: ['lifetime_plan'],
+    on: isOn => (isOn('lifetime_plan') ? text(lifetimeUsd()) : null),
+  };
 }
 
 /**
@@ -230,8 +250,9 @@ export const RULES = Object.freeze([
   // `isOn('lifetime_plan')` is the flag AND a Lifetime price id the server knows (server/marketing/copyFlags.js), and the
   // browser learns exactly that from the page's marker, so the card, these sentences and the schema agree.
   // The words are the card's own ("Pay once instead of every month or year. It includes everything in the monthly plan, with
-  // no renewals, for as long as Stop Biting is offered.", src/i18n/scopes/plans.ts and the Terms): no price (the card and the
-  // offer carry it, and the price is a server setting this file cannot see), no saving, never "the best deal". A statement that
+  // no renewals, for as long as Stop Biting is offered.", src/i18n/scopes/plans.ts and the Terms): the questions and answers
+  // below quote no price (the card and the offer carry it), no saving, never "the best deal"; the rules after them, for the
+  // pages that quote Stop Biting's price, say "$99 once" from shared/plans.js (lifetimeUsd). A statement that
   // is only true of a subscription (cancel anytime) is kept to the monthly and yearly plans. English only: a translation
   // never contains these English sentences, so the draft languages are untouched until a translator words them.
   // Every `on` text must not contain its own `off` text (the rules are applied to text that has already been through them).
@@ -280,7 +301,134 @@ export const RULES = Object.freeze([
       ? 'After that it is $2.99 a month, $29 a year or a one-time Lifetime payment. A monthly or yearly plan can be cancelled anytime from the app settings, and you keep access until the end of the paid period.'
       : null),
   },
+
+  // ── the Lifetime plan on the pages that quote Stop Biting's price ───────────
+  // The compare and solutions pages, and two blog posts, give the price as "$2.99/month or $29/year" and a few sentences call
+  // the app "a subscription". While the plan is for sale that is half the picture, and the structured data of the same pages
+  // (the one product node, server/marketing/lifetimeCopy.js) already lists the Lifetime offer. The sources keep their text, so no
+  // page's freshness date moves; these rules say the rest at serve time and in the browser, with the price from the same call
+  // as the offer (lifetimeUsd). Competitor facts, competitor prices and the conclusions of the comparisons are not touched.
+  // The sentences that need their own wording come first: a rule consumes its text, and the two price lists at the end take
+  // what is left (a table cell, a bullet, an answer), which is why they sit last. Nothing here quotes a saving or says "best deal".
+  lifetimeRule(
+    'compare-hands-off-annual',
+    'Compare page: Stop Biting vs Hands Off, "What does Stop Biting do better than Hands Off?"',
+    'Stop Biting is $2.99/month or $29/year — about $2.42/month if you commit, roughly 19% cheaper than paying monthly.',
+    usd => `Stop Biting is $2.99/month, or $29/year (about $2.42/month if you commit, roughly 19% cheaper than paying monthly), or ${usd} once for the Lifetime plan.`,
+  ),
+  lifetimeRule(
+    'compare-hands-off-cost',
+    'Compare page: Stop Biting vs Hands Off, the cost section',
+    'Stop Biting: $2.99/month or $29/year (about $2.42/month), with a',
+    usd => `Stop Biting: $2.99/month, $29/year (about $2.42/month) or ${usd} once, with a`,
+  ),
+  lifetimeRule(
+    'compare-ai-apps-cost',
+    'Compare page: AI nail biting detection apps, the Stop Biting section',
+    'Pricing is published: $2.99/month or $29/year (~$2.42/month), with a',
+    usd => `Pricing is published: $2.99/month, $29/year (~$2.42/month) or ${usd} once, with a`,
+  ),
+  lifetimeRule(
+    'compare-nailed-cost',
+    'Compare page: Stop Biting vs Nailed, "Which is cheaper"',
+    'Stop Biting: $2.99/month, or $29/year (~$2.42/month).',
+    usd => `Stop Biting: $2.99/month, $29/year (~$2.42/month) or ${usd} once for the Lifetime plan.`,
+  ),
+  lifetimeRule(
+    'compare-habitaware-plans',
+    'Compare page: Stop Biting vs HabitAware, "What does Stop Biting do better"',
+    'It is a subscription with a published price: $2.99/month or $29/year, about $2.42/month on the annual plan.',
+    usd => `It has published prices: $2.99/month, $29/year (about $2.42/month on the annual plan) or ${usd} once for the Lifetime plan.`,
+  ),
+  lifetimeRule(
+    'compare-pavlok-try',
+    'Compare page: Stop Biting vs Pavlok, "What does Stop Biting do better"',
+    'It costs far less to try: $2.99/month or $29/year, against the device prices on Pavlok’s home page.',
+    usd => `It costs far less to try: $2.99/month, or $29/year, against the device prices on Pavlok’s home page. Stop Biting also has a one-time Lifetime plan at ${usd}.`,
+  ),
+  lifetimeRule(
+    'compare-nailed-is-subscription',
+    'Compare page: Stop Biting vs Nailed (intro)',
+    'Stop Biting is a subscription that adds',
+    () => 'Stop Biting is a subscription, or a one-time Lifetime plan, that adds',
+  ),
+  lifetimeRule(
+    'compare-nailed-buys',
+    'Compare page: Stop Biting vs Nailed, "Why choose Stop Biting over Nailed?"',
+    'Stop Biting’s subscription buys you things you may not need',
+    () => 'Stop Biting’s paid plans buy you things you may not need',
+  ),
+  lifetimeRule(
+    'compare-nailed-pays',
+    'Compare page: Stop Biting vs Nailed, "Which is cheaper"',
+    'What the subscription pays for is the rest of the system',
+    () => 'What a Stop Biting plan pays for is the rest of the system',
+  ),
+  lifetimeRule(
+    'compare-nailed-heading',
+    'Compare page: Stop Biting vs Nailed, the heading of the last question',
+    'Should I buy Nailed or subscribe to Stop Biting?',
+    () => 'Should I buy Nailed or pay for Stop Biting?',
+  ),
+  lifetimeRule(
+    'compare-habitcam-pick',
+    'Compare page: Stop Biting vs HabitCam (intro)',
+    'want one purchase instead of a subscription, or have more than one of those behaviours',
+    usd => `want to pay once for less than Stop Biting’s ${usd} Lifetime plan, or have more than one of those behaviours`,
+  ),
+  lifetimeRule(
+    'compare-habitcam-limit',
+    'Compare page: Stop Biting vs HabitCam, "What does Stop Biting do better"',
+    'and only in front of your webcam, and it is a subscription.',
+    usd => `and only in front of your webcam, and it is a subscription unless you choose the one-time Lifetime plan at ${usd}.`,
+  ),
+  lifetimeRule(
+    'compare-nailbitemenu-limit',
+    'Compare page: Stop Biting vs NailBiteMenu, "What does Stop Biting do better"',
+    'Stop Biting is a paid subscription after the trial,',
+    () => 'Stop Biting is a paid subscription or a one-time Lifetime plan after the trial,',
+  ),
+  lifetimeRule(
+    'compare-biteless-both',
+    'Compare page: Stop Biting vs BiteLess, "What do they have in common?"',
+    'Both sell a subscription.',
+    () => 'Both sell a subscription, and Stop Biting also has a one-time Lifetime plan.',
+  ),
+  lifetimeRule(
+    'how-it-works-pricing-link',
+    'How it works crawler article: the "Learn more" link to the pricing page (the new words use a colon where the old ones had a dash)',
+    'Pricing — $2.99/month or $29/year, ',
+    usd => `Pricing: $2.99/month, $29/year or ${usd} once, `,
+  ),
+  lifetimeRule(
+    'compare-cta-price',
+    'The offer at the foot of every compare and solutions page (src/pages/ComparePage.tsx)',
+    'then $2.99 a month or $29 a year',
+    usd => `then $2.99 a month, $29 a year or ${usd} once`,
+  ),
+  lifetimeRule(
+    'price-list-short',
+    'The short price list in the AI detection apps table and the best-apps post table',
+    '$2.99/mo or $29/yr',
+    usd => `$2.99/mo, $29/yr or ${usd} once`,
+  ),
+  lifetimeRule(
+    'price-list',
+    'Stop Biting\'s price in a sentence, a table cell or a FAQ answer: compare and solutions pages, two blog posts, the llms-full.txt copies of them',
+    '$2.99/month or $29/year',
+    usd => `$2.99/month, $29/year or ${usd} once`,
+  ),
 ]);
+
+/**
+ * The pricing headline while the Lifetime card is shown, in three pieces so the page can mark the middle one
+ * (`<mark>` in the catalog message `pricing.heading`, "$2.99 a month, or <mark>$29 a year.</mark>"). It is not a rule: the
+ * catalog message has a tag in it and the server's copy of it is a heading, so the page (src/components/PricingSection.tsx)
+ * and the crawler article (ANCHORS in server/marketing/lifetimeCopy.js) both build it from here. English only.
+ */
+export function lifetimeHeadline(price = lifetimePriceUsd()) {
+  return { lead: '$2.99 a month, ', mark: '$29 a year,', tail: ` or $${price} once.` };
+}
 
 /** The rules that apply with these flags, as [off, on] pairs. */
 function activeRules(isOn) {

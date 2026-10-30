@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { TRIAL_HYPHEN, fillTrialTokens } from '../../shared/plans.js';
 import { messages as plansScope } from '../../src/i18n/scopes/plans.ts';
+import { lifetimeHeadline } from '../../shared/flagCopy.js';
 import { ANCHORS, CARD_BODY, createLifetimeCopy } from './lifetimeCopy.js';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
@@ -120,9 +121,17 @@ describe('with the plan for sale: the server-rendered article', () => {
     expect(out).not.toContain('Both plans include');
   });
 
-  it('updates the pricing link in the how-it-works article', () => {
-    const out = ON.article(`<li><a href="/pricing">${ANCHORS.howLink}${TRIAL_HYPHEN} free trial</a></li>`);
-    expect(out).toBe(`<li><a href="/pricing">Pricing: $2.99/month, $29/year or $99 once, ${TRIAL_HYPHEN} free trial</a></li>`);
+  it('names the plan in the /pricing headline and in the homepage pricing heading, in the pieces the page itself uses', () => {
+    const { lead, mark, tail } = lifetimeHeadline(99);
+    expect(`${lead}${mark}${tail}`).toBe('$2.99 a month, $29 a year, or $99 once.');
+    expect(ON.article(`${ANCHORS.pricingHeading}<p class="article-summary">x</p>`)).toBe('<h1>$2.99 a month, $29 a year, or $99 once.</h1><p class="article-summary">x</p>');
+    expect(ON.article(`${ANCHORS.homeHeading}<p>x</p></section>`)).toBe('<section><h2>$2.99 a month, $29 a year, or $99 once.</h2><p>x</p></section>');
+    expect(`${lead}${mark}${tail}`).not.toMatch(EM_DASH);
+  });
+
+  it('leaves the pricing link of the how-it-works article to the copy rules (shared/flagCopy.js how-it-works-pricing-link)', () => {
+    const link = `<li><a href="/pricing">Pricing — $2.99/month or $29/year, ${TRIAL_HYPHEN} free trial</a></li>`;
+    expect(ON.article(link)).toBe(link);
   });
 
   it('stops calling the two subscriptions "our two published prices" in the cost calculator article', () => {
@@ -242,7 +251,7 @@ describe('the price comes from one constant', () => {
       JSON.stringify(dear.meta({ title: TITLE_NOW, description: DESCRIPTION_NOW })),
       dear.pageDescription('then $2.99/month or $29/year.'),
       dear.navLabel(NAV_NOW),
-      dear.article(`${ANCHORS.pricingSummary}${ANCHORS.yearlySection}${ANCHORS.homeHero}${ANCHORS.homePricing}${ANCHORS.howLink}`),
+      dear.article(`${ANCHORS.pricingSummary}${ANCHORS.yearlySection}${ANCHORS.homeHero}${ANCHORS.homePricing}${ANCHORS.pricingHeading}${ANCHORS.homeHeading}`),
       dear.shell(shell),
       dear.llmsTxt(read('public/llms.txt')),
       dear.llmsFull('x\n'),

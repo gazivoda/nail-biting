@@ -162,6 +162,9 @@ export function giftDays(env = processEnv()) {
  * (server/marketing/lifetimeCopy.js) when the plan is for sale; nothing else reads it, and nothing charges it.
  * If the Paddle price changes, change this (the environment variable LIFETIME_PRICE_USD, no rebuild: a runtime
  * variable) AND the "$99.00" in src/pages/TermsPage.tsx, which is the owner's legal wording and is not read from here.
+ * The variable moves only what the SERVER writes. The browser bundle cannot see the environment, so the English compare-page
+ * sentences and the pricing headline that it draws itself (shared/flagCopy.js lifetimeUsd, lifetimeHeadline) use this
+ * default: to move the price for real, change this default too and rebuild.
  */
 export const DEFAULT_LIFETIME_PRICE_USD = 99;
 

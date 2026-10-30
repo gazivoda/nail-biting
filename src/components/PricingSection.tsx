@@ -5,8 +5,10 @@ import { PRICE_IDS } from '../billing/env';
 import { hasAll, useLocalizedPrices } from '../billing/prices';
 import { LifetimeCard } from './billing/LifetimeCard';
 import { useLifetimeOn } from '../billing/useLifetimeOn';
+import { useLocale } from '../i18n/hooks';
 import { useT as useChromeT } from '../i18n/scopes/marketing-chrome';
 import { useSiteBag, useSiteT } from '../i18n/marketing/useSite';
+import { lifetimeHeadline } from '../../shared/flagCopy.js';
 
 // The pricing block — shared verbatim by the landing page (#pricing anchor)
 // and the dedicated /pricing page, so the two can never show different
@@ -70,13 +72,21 @@ export function PricingSection({ headingAs: Heading = 'h2' }: { headingAs?: 'h1'
   // WS9 (flag lifetime_plan): the Lifetime plan is the third card of the same row. Off, the section is what it was.
   const lifetimeOn = useLifetimeOn();
   const priceLine = lifetimeOn ? 'mt-5 flex flex-wrap items-baseline gap-x-1.5' : 'mt-5 flex items-baseline gap-1.5';
+  // The headline names the third plan while its card is shown, as the crawler article does (English; shared/flagCopy.js
+  // `lifetimeHeadline`). Off, or in another language, the catalog message is what it was.
+  const { locale } = useLocale();
+  const headline = lifetimeOn && locale === 'en' ? lifetimeHeadline() : null;
 
   return (
     <section ref={ref} id="pricing" aria-labelledby="pricing-heading" className="sg-page">
       {/* Left-aligned on the page's edge like every other section: centred
           and narrower, it read as a template block pasted in. */}
       <div className="max-w-4xl">
-        <Heading id="pricing-heading" className="sg-h2">{t.rich('pricing.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}</Heading>
+        <Heading id="pricing-heading" className="sg-h2">
+          {headline
+            ? <>{headline.lead}<span className="sg-mark">{headline.mark}</span>{headline.tail}</>
+            : t.rich('pricing.heading', undefined, { mark: chunks => <span className="sg-mark">{chunks}</span> })}
+        </Heading>
         <p className="sg-lede mt-4 max-w-2xl">
           {t('pricing.lede')}
         </p>

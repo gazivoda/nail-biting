@@ -22,3 +22,4 @@ export function flagAwareDeep<T>(value: T, isOn: IsOn): T;
 export function dropEmptySections<T extends { sections?: { heading?: string; body?: string; html?: string }[] }>(page: T): T;
 export function fillCopyTokens(text: string, values: Record<string, string>): string;
 export function fillCopyTokensDeep<T>(value: T, values: Record<string, string>): T;
+export function lifetimeHeadline(price?: number): { lead: string; mark: string; tail: string };
