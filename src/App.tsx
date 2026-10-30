@@ -2,6 +2,8 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Landing } from './pages/Landing';
 import type { Tab } from './SignedInApp';
+// Not lazy: see the /blog/:slug route below.
+import { BlogPost } from './pages/BlogPost';
 
 // The signed-in app: the tab bar, the tour, the install guide, the hosts and the lazy pages (Dashboard, Log,
 // Settings, the paywall) with everything only they need, notably recharts for the week chart and the Paddle
@@ -10,12 +12,6 @@ import type { Tab } from './SignedInApp';
 // the chunk is already on its way when the answer arrives.
 const loadSignedInApp = () => import('./SignedInApp');
 const SignedInApp = lazy(loadSignedInApp);
-// BlogPost is the only route that renders article bodies. It no longer imports
-// them: each article is fetched from /posts/<slug>.json (see hooks/usePost.ts),
-// so a reader downloads the one they open, not all of them.
-const BlogPost = lazy(() =>
-  import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
-);
 // The blog index lists every guide, so it carries the whole index (src/data/blogIndex.ts, ~18 KB gzipped). Only a
 // reader who opens /blog downloads it; the home page gets its guide count from src/blogCount.ts.
 const BlogIndex = lazy(() => import('./pages/BlogIndex').then(m => ({ default: m.BlogIndex })));
@@ -141,11 +137,7 @@ export default function App() {
     const slug = path.slice(6).replace(/\/$/, '');
     // The server injects the article body and meta tags into the HTML shell, so
     // crawlers never depend on this chunk resolving.
-    return (
-      <Suspense fallback={null}>
-        <BlogPost slug={slug} />
-      </Suspense>
-    );
+    return <BlogPost slug={slug} />;
   }
 
   // About page

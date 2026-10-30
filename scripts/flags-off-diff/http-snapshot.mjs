@@ -4,6 +4,7 @@
 // you pass flags) and fetches every URL in URLS: status, headers, hash-normalised body. Writes
 // <outDir>/<label>.json (the table) and <outDir>/<label>/<n>.txt (the bodies, for diffing).
 // Compare two snapshots with http-diff.mjs. Needs a built dist/ in <checkoutRoot> (npm run build:web).
+// SITEMAP_ALL=1 (environment) also fetches every URL in dist/sitemap.xml that is not already listed below.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { normHashes, sha, unhash } from './lib.mjs';
@@ -88,7 +89,17 @@ try {
   const index = readFileSync(join(rig.dir, 'dist', 'index.html'), 'utf8');
   const entry = index.match(/\/assets\/index-[A-Za-z0-9_-]{8}\.js/)?.[0];
   const extraUrls = [...(wb ? [['GET', `/${wb}`]] : []), ...(entry ? [['GET', entry]] : [])];
-  const all = [...URLS, ...extraUrls];
+  // SITEMAP_ALL=1 adds every <loc> of the built sitemap.xml (each page once), so a change to a template that
+  // renders hundreds of pages (the 188 blog posts) is compared on all of them, not on one sample.
+  const sitemapUrls = [];
+  if (process.env.SITEMAP_ALL) {
+    const have = new Set(URLS.filter(([m]) => m === 'GET').map(([, p]) => p));
+    for (const [, loc] of readFileSync(join(rig.dir, 'dist', 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      const path = new URL(loc).pathname;
+      if (!have.has(path)) { have.add(path); sitemapUrls.push(['GET', path]); }
+    }
+  }
+  const all = [...URLS, ...sitemapUrls, ...extraUrls];
   // /api/auth/* is rate limited to 10 a minute; space those out
   let n = 0;
   for (const spec of all) {
