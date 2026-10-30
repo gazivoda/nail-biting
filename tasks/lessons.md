@@ -255,3 +255,23 @@ Commit the page first, then sync, then commit the generated files.
 
 **Do not reuse a scratch directory for `git archive` exports.** A directory such as `base` can hold stale files from an earlier run and make a byte-identity proof meaningless. Use `mktemp`.
 
+
+## 2026-10-30 — SEO/GEO delta swarm (lanes A to G, /loop 5 x 15 min)
+
+**Two audits in the last week means run a DELTA, not another full sweep.** Read what the last reports deferred (index-health, ledger, GSC pack), pre-flight the old "tranche 1" bugs with `curl`, and spend the agents there. A read-only live verifier lane (real crawler user agents, JSON-LD, sitemap, llms.txt) came back "no regression" in 15 minutes and produced the next wave.
+
+**`scripts/qa/gates.sh` already exists.** Build, tests, scoped lint (23/4), node --check, electron typecheck, seo:check, og:check, eval:detection, dev-leak grep, secret scan, in one call. `SKIP_BUILD=1` after a build. Do not hand-roll the sequence. The one thing it does not do is boot the server and sweep the sitemap: keep a small sweep script (rig from `scripts/flags-off-diff/rig.mjs`, flags `phone_companion,detection_behaviors,lifetime_plan`) and run it after every merge.
+
+**Merge lanes one at a time on main, gate each, push each.** Dry-run first with `git merge-tree --write-tree <a> <b>` (exit 0 = clean) while the lanes are still working. Generated files (`seo:sync`, `og:generate`) never conflicted because every lane put them in a last "generated:" commit and I re-ran the generators on the merged tree (they printed "nothing to do").
+
+**Re-check an agent's claims about real people and numbers on the primary source.** The famous-people lane quoted two public figures and the BFRB/children lanes added prevalence figures; I re-opened both articles and the PubMed abstracts and they matched. WebFetch fails on PubMed and PMC; NCBI eutils `efetch ... retmode=text` works and gives full text for PMC.
+
+**A rewritten body can contradict a frozen description.** The finger-tape body lost "more sustainable than gloves" (no source) while the description still said it. Check metadata against the body after every body edit, and record the exception in `docs/seo/title-ledger.md` (correctness change, evaluation restarted), not a silent edit.
+
+**A directory `express.static` mount re-adds the slash that the canonical middleware strips.** `/fonts/`, `/og/`, `/posts/` redirect-looped for months while every sitemap URL was fine. Set `redirect: false` on every directory mount and scan redirect chains for every directory prefix, not only for sitemap URLs.
+
+**A footer under a loading placeholder is a layout shift.** The blog post page rendered the footer under a one-line loading column, then pushed it ~10,000 px down when `/posts/<slug>.json` arrived: mobile CLS 0.72 on 188 of 219 pages. Do not render the footer until the article has loaded.
+
+**zsh does not word-split unquoted variables.** `set -- $pair` left `$1` as the whole string and `git merge-tree` printed usage. Pass branch names explicitly.
+
+**Do not guess the time for a log.** Use `date`. En dashes in numeric ranges ("20–30%") are not a regression: the repo checks em dashes in titles and descriptions only.
