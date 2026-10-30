@@ -112,6 +112,24 @@ it). Social cards for the three pages whose `seoTitle` changed were regenerated,
 - Left alone on purpose: the h1 `What to Do Instead of Biting Your Nails: 12 Evidence-Based Alternatives` has the same
   over-claim, and the brief fixes h1/title. Owner decision.
 
+### Correctness edits, 2026-10-30 (Lane A: sourcing of the "crawled, currently not indexed" pages)
+
+Neither of these is a CTR experiment. Both pages are "crawled, currently not indexed", so there is no click baseline.
+`seoTitle` and `description` of the other four Lane A pages (`nail-biting-anxiety-treatment`,
+`nail-biting-and-perfectionism`, `nail-biting-bacteria-parasites`, `nail-biting-alternatives`) are untouched; none was
+changed after 2026-10-20 except `nail-biting-alternatives`, which stays frozen until 2026-11-24 as above.
+
+| Date | URL | What changed | Why | Evaluate on |
+|---|---|---|---|---|
+| 2026-10-30 | `/blog/mediapipe-ai-detection-explained` | description: "468-point face mesh" to "478-point face mesh" (157 chars, nothing else changed) | The Face Landmarker guide says the task "outputs an estimate of 478 3-dimensional face landmarks", and the Face Mesh V2 model card lists 478 and a 15 September 2022 release that added 10 iris landmarks. The code comment in `src/detection/zones.ts` says 478 too. The description had not changed since 2026-10-19 (`git log -L`). | Not measurable until the page is indexed. |
+| 2026-10-30 | `/blog/nail-biting-anxiety-treatment` | h1 (`title`) only: "When Treating Anxiety Is the Key to Stopping the Habit" to "Is Anxiety Your Driver, and Does Treating It Help?". `seoTitle` and `description` unchanged. | `index-health.md` left the h1 as an owner decision: it promised that treating anxiety is the key, while the cited studies do not show it (22.5% against 26.2% anxiety disorder in nail biters and non-biters; no trial of an anxiety treatment with nail biting as the outcome). The body was rewritten to match. `seoTitle` ("Treatment Options") still fits the new body, so it was left alone. | Not measurable until the page is indexed. |
+
+Not changed, for the orchestrator: `nail-biting-alternatives` h1 ("... 12 Evidence-Based Alternatives") still over-claims,
+since the body now says none of the 12 has been tested alone for nail biting. Proposed: "What to Do Instead of Biting
+Your Nails: 12 Options and What the Evidence Shows". The rule above freezes `title` as well as `seoTitle` and
+`description`, so changing the h1 before 2026-11-24 needs an explicit exception row here. The h1 is not the snippet (a
+`seoTitle` exists), so it needs no card regeneration.
+
 ### Compliance trims (not experiments)
 
 Two descriptions had grown past the repo's 160-character ceiling when the 2026-10-23 privacy wording went in. They are
