@@ -5132,7 +5132,7 @@ BLOG_POSTS.push(
     seoTitle: 'Famous People Who Bite Their Nails',
     description: 'The 20–30% figure is inherited from older reviews, not measured. With a clinical threshold, 6% of 1,378 Australian adults met it. Success doesn\'t end it.',
     tag: 'Psychology',
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: '2026-07-24',
     dateModified: '2026-10-30',
     ogImage: '/og/nail-biting-famous-people.png',
