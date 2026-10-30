@@ -110,6 +110,7 @@ export const COVERS = [
   'src/utils/phoneLink.ts',
 ];
 // NOT-RENDERED src/App.tsx: the router, the auth provider and every lazy page cannot mount in node; its one word, the screen-reader "Loading…" of AppLoading, is the common scope's `loading` message, translated and checked in the catalog parity test.
+// NOT-RENDERED src/SignedInApp.tsx: the signed-in shell (App.tsx loads it lazily); it has no text of its own, only the tab bar, the tour, the install guide and the hosts, each rendered or explained in its own entry, and it needs the auth provider and the lazy pages, which cannot mount in node.
 
 // What a person typed (a custom bite reason) is shown as typed. The trial countdown sentence ("Less than an hour left")
 // comes from utils/trial.ts, owned by the billing group.

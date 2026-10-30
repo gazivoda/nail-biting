@@ -191,7 +191,8 @@ describe('5. everything is behind its flag', () => {
     expect(view).toMatch(/useFeature\('hrt_coaching'\)/);
     expect(view).toMatch(/if \(!enabled/);
     expect(view).toMatch(/lazy\(\(\) => import\('\.\.\/pages\/Program'\)/);
-    // App.tsx imports ProgramHost statically, and the landing page downloads App.tsx's chunk.
+    // SignedInApp.tsx imports ProgramHost statically (App.tsx loads SignedInApp lazily, so the landing page does not
+    // download it); either way the host's own static graph must stay this small.
     const host = graph('src/coaching/ProgramHost.tsx', true);
     expect([...host.files].sort()).toEqual(['src/coaching/ProgramHost.tsx', 'src/coaching/programViewState.ts']);
     expect([...host.packages]).toEqual(['react']);
@@ -200,10 +201,10 @@ describe('5. everything is behind its flag', () => {
 
   it('the shared files carry exactly the expected one-line seams', () => {
     expect(importsOf(read('src/pages/Dashboard.tsx'))).toContain('../coaching/CoachingDashboardSlot');
-    expect(importsOf(read('src/App.tsx'))).toContain('./coaching/ProgramHost');
+    expect(importsOf(read('src/SignedInApp.tsx'))).toContain('./coaching/ProgramHost');
     expect(importsOf(read('src/pages/settings/sections/AlertsSection.tsx'))).toContain('../CoachingSettings');
     expect((read('src/pages/Dashboard.tsx').match(/<CoachingDashboardSlot \/>/g) ?? []).length).toBe(1);
-    expect((read('src/App.tsx').match(/<ProgramHost \/>/g) ?? []).length).toBe(1);
+    expect((read('src/SignedInApp.tsx').match(/<ProgramHost \/>/g) ?? []).length).toBe(1);
   });
 
   it('registers both flags', () => {
