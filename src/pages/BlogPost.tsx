@@ -296,7 +296,11 @@ export function BlogPost({ slug }: Props) {
         </main>
       )}
 
-      <div className="sg-page"><SiteFooter ctaSource={`blog-${slug}`} /></div>
+      {/* Not while the article is loading: the footer would sit right under the one-line loading column, then be pushed
+          down by the whole article (~10,000 px on a phone) when it arrives. That is one layout shift of 0.72 on every
+          first visit (Lighthouse, mobile), against 0.1 for "good". Elements that appear are not shifts; elements that
+          move are. The error and not-found views are short and final, so they keep their footer. */}
+      {state.status !== 'loading' && <div className="sg-page"><SiteFooter ctaSource={`blog-${slug}`} /></div>}
     </div>
   );
 }
