@@ -86,7 +86,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Technology",
     readingMinutes: 4,
     datePublished: "2026-04-03",
-    dateModified: "2026-10-23",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-during-focus-and-work",
@@ -1400,7 +1400,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 4,
     datePublished: "2026-10-19",
-    dateModified: "2026-10-19",
+    dateModified: "2026-10-30",
   },
   {
     slug: "staph-mrsa-nail-biting",

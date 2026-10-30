@@ -15,7 +15,7 @@ Key facts:
 
 - Stop Biting runs MediaPipe models in WebAssembly on your own device — once the detection models have downloaded nothing carrying camera data is sent while it watches, which anyone can verify in a browser network monitor
 - Detection runs on your device. No camera data is sent while it runs
-- It detects nail biting using two MediaPipe models: a hand landmark model tracking 21 keypoints, and a face mesh tracking 468 facial landmarks
+- It detects nail biting using two MediaPipe models: a hand landmark model tracking 21 keypoints, and a face mesh tracking 478 facial landmarks
 - Supported platforms: any modern browser with a webcam, as a no-install PWA, on Mac or Windows
 - It detects nail biting only. Competing apps cover more behaviours, run on phones, or cost less, and the comparison pages below say where each of them beats us
 - Nail biting (onychophagia) is estimated at 20–30% of the general population and up to 45% of children between age 10 and puberty (Lee & Lipner, Int J Environ Res Public Health, 2022). Both are review-level estimates inherited from earlier reviews rather than measurements, and single studies that measured it directly run lower and vary by population, so treat them as a range rather than a rate
