@@ -1,7 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { Landing } from './pages/Landing';
-import { BlogIndex } from './pages/BlogIndex';
 import type { Tab } from './SignedInApp';
 
 // The signed-in app: the tab bar, the tour, the install guide, the hosts and the lazy pages (Dashboard, Log,
@@ -17,6 +16,9 @@ const SignedInApp = lazy(loadSignedInApp);
 const BlogPost = lazy(() =>
   import('./pages/BlogPost').then(m => ({ default: m.BlogPost })),
 );
+// The blog index lists every guide, so it carries the whole index (src/data/blogIndex.ts, ~18 KB gzipped). Only a
+// reader who opens /blog downloads it; the home page gets its guide count from src/blogCount.ts.
+const BlogIndex = lazy(() => import('./pages/BlogIndex').then(m => ({ default: m.BlogIndex })));
 // Same reason: comparePages.ts is ~94KB of source that only /compare/* and
 // /solutions/* read, and it was riding in the main chunk.
 const ComparePage = lazy(() =>
@@ -127,7 +129,11 @@ export default function App() {
 
   // Blog index
   if (path === '/blog' || path === '/blog/') {
-    return <BlogIndex />;
+    return (
+      <Suspense fallback={null}>
+        <BlogIndex />
+      </Suspense>
+    );
   }
 
   // Blog post — /blog/:slug

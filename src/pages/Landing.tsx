@@ -10,7 +10,7 @@ import { TrialButton } from '../components/site/TrialButton';
 import { Rings } from '../components/site/Rings';
 import { Testimonials } from '../components/site/Testimonials';
 import { PricingSection } from '../components/PricingSection';
-import { BLOG_INDEX } from '../data/blogIndex';
+import { BLOG_COUNT } from '../blogCount';
 import { useFlagCopy, useFlagIsOn } from '../features/useFlagCopy';
 import { ensureLocaleLoaded } from '../i18n/core';
 import { useLocale } from '../i18n/hooks';
@@ -499,7 +499,7 @@ export function Landing({ authError = null, onDismissAuthError }: { authError?: 
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h2 id="featured-guides-heading" className="sg-h2">{t('guides.heading')}</h2>
               <a href="/blog" {...english} className="sg-link inline-flex min-h-11 items-center gap-2">
-                {t('guides.all', { count: BLOG_INDEX.length })} <ArrowRight size={16} aria-hidden="true" />
+                {t('guides.all', { count: BLOG_COUNT })} <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
             {locale !== 'en' && <p className="sg-small mt-3">{t('guides.note')}</p>}

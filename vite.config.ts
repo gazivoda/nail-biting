@@ -5,6 +5,7 @@ import { execFileSync } from 'child_process'
 import { VitePWA } from 'vite-plugin-pwa'
 import { fillTrialTokens } from './shared/plans.js'
 import { createNodeModulesChunks } from './scripts/build/chunks'
+import { BLOG_COUNT_DEFINE } from './scripts/build/blogCount'
 
 // Regenerates dist/seo-content.json + dist/llms-full.txt from
 // src/data/blogPosts.ts and src/data/comparePages.ts after every build.
@@ -76,6 +77,7 @@ export default defineConfig({
   // The trial length the client copy says, from the build's environment (TRIAL_DAYS, default
   // 3). shared/plans.js reads exactly this expression; with nothing set it stays the default.
   define: {
+    ...BLOG_COUNT_DEFINE,
     'process.env.TRIAL_DAYS': JSON.stringify(process.env.TRIAL_DAYS ?? ''),
   },
 
