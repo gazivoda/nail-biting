@@ -1056,9 +1056,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Famous Nail Biters: The Habit Is More Common at the Top Than You Think",
     description: "The 20–30% figure is inherited from older reviews, not measured. With a clinical threshold, 6% of 1,378 Australian adults met it. Success doesn't end it.",
     tag: "Psychology",
-    readingMinutes: 3,
+    readingMinutes: 4,
     datePublished: "2026-07-24",
-    dateModified: "2026-09-15",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-paronychia",
@@ -1112,7 +1112,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-10-23",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-dermatophagia",
@@ -1211,7 +1211,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-24",
-    dateModified: "2026-07-24",
+    dateModified: "2026-10-30",
   },
   {
     slug: "nail-biting-regular-nail-polish",
