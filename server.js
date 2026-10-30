@@ -173,9 +173,10 @@ app.use(helmet({
       styleSrc:    ["'self'", "'unsafe-inline'", 'https://cdn.paddle.com', 'https://fonts.googleapis.com'],
       fontSrc:     ["'self'", 'data:', 'https://fonts.gstatic.com'],
       workerSrc:   ["'self'"],  // PWA service worker registration
-      // stepto.net embeds the landing page as a live reference. frame-ancestors
-      // replaces X-Frame-Options (frameguard is off below); no other site may frame us.
-      frameAncestors: ["'self'", 'https://stepto.net', 'https://www.stepto.net'],
+      // stepto.net embeds the landing page as a live reference (localhost so the
+      // embed also works while developing that site). frame-ancestors replaces
+      // X-Frame-Options (frameguard is off below); no other site may frame us.
+      frameAncestors: ["'self'", 'https://stepto.net', 'https://www.stepto.net', 'http://localhost:*'],
     },
   },
   frameguard: false,
