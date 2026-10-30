@@ -241,7 +241,7 @@ Commit the page first, then sync, then commit the generated files.
 
 **A static link to a flag-gated page is a latent 404.** Turn the flag off and the link points at the branded 404, and `featurePages.test.mjs` forbids the page in `seo-content.json`. Gated pages need a flag-aware rendered link (footer shown by `useFeature`), otherwise their only inbound link is the `<noscript>` nav and Google may skip them ("crawled, currently not indexed").
 
-**SEO build details.** A `seoTitle` edit needs `og:generate` (the card bakes `seoTitle ?? title`). `firstSentence()` feeds the `llms.txt` blurb, so never open a description with a one-word sentence ("Possibly."); use a colon. The mirror gate checks figures and cited surnames, not claim strength: a snippet can contradict its body after a body edit and stay green. No gate enforces 160 on post descriptions (`seo:check` allows 165).
+**SEO build details.** A `seoTitle` edit needs `og:generate` (the card bakes `seoTitle ?? title`). The `llms.txt` blurb is the whole post description (it was the first sentence until 2026-10-30, which left fragments and questions without answers), so a description is read in full by machines: make it complete, and `scripts/llmsTxt.test.mjs` fails on a blurb under 9 words or only a question. The mirror gate checks figures and cited surnames, not claim strength: a snippet can contradict its body after a body edit and stay green. No gate enforces 160 on post descriptions (`seo:check` allows 165).
 
 **Search Console numbers are tiny here.** 122 clicks in 90 days: per-page CTR is noise below about 100 impressions. Pool pages before judging a change.
 
@@ -275,3 +275,11 @@ Commit the page first, then sync, then commit the generated files.
 **zsh does not word-split unquoted variables.** `set -- $pair` left `$1` as the whole string and `git merge-tree` printed usage. Pass branch names explicitly.
 
 **Do not guess the time for a log.** Use `date`. En dashes in numeric ranges ("20–30%") are not a regression: the repo checks em dashes in titles and descriptions only.
+
+## 2026-10-30 — Lane G (llms.txt blurbs, /blog JSON-LD)
+
+**A derived summary built by cutting source text inherits the source's worst sentence.** Cutting each description at its first sentence gave 13 blurbs under 9 words and a question with its answer removed, while the preamble said every link "carries the page's own description". When the source is already short (descriptions are capped at 160 characters), use it whole; cutting only helps when there is something to cut. Pin the promise with a test on the artifact (exact line per post, word floor, not-only-a-question) and prove the checks can fail by feeding them the old fragments.
+
+**A rhetorical-question subtitle is not a blurb either.** The compare page standfirst "...where do you actually bite your nails: at a computer, or everywhere else?" was a key-pages blurb. The page's meta description (COMPARE_META in server.js, already gated against the page body) is the string written to stand alone.
+
+**Three hand copies of one sentence drift.** The /blog meta description, its standfirst and its CollectionPage JSON-LD description were typed three times and had already diverged ("onychophagia, habit reversal training" against "habit psychology, treatment options"). One const per page, used by all three.
