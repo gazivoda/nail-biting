@@ -760,8 +760,10 @@ crawler copy in `server.js` is built from `seo-content.json` by the same validat
    the pricing section (`pricing.heading`, on `/pricing` and `/`) is `lifetimeHeadline()` in `shared/flagCopy.js`: `PricingSection`
    draws it for English while the card is shown, and `ANCHORS.pricingHeading` / `homeHeading` rewrite the crawler `<h1>` / `<h2>` with
    the same pieces. **Not covered, on purpose:** the calculators' "then $2.99/month or $29/year", the notes under the cards
-   (`pricing.payments`, `pricing.localizedNote`), `bottom.note`, the compare pages' meta descriptions ("$2.99/mo or $29/yr", frozen with
-   the other descriptions) and their related-link labels, which repeat the page titles, the localized pages (draft).
+   (`pricing.payments`, `pricing.localizedNote`), `bottom.note`, the compare pages' meta descriptions and `Article.description` ("$2.99/mo
+   or $29/yr": true, but without the third plan; a description is the search snippet `docs/seo/title-ledger.md` measures, it needs a
+   `server.js` change to follow a flag and it is the owner's call) and their related-link labels, which repeat the page titles, the
+   localized pages (draft).
 
 4. *The Lifetime plan in the questions and answers a visitor reads* (same flag, same condition; `RULES` in `shared/flagCopy.js`, ids
    `pricing-faq-pick-plan`, `pricing-faq-difference-q`, `pricing-faq-difference`, `home-faq-cost`, `home-faq-cancel`). The catalogs,
@@ -784,8 +786,9 @@ crawler copy in `server.js` is built from `seo-content.json` by the same validat
    The compare pages, the solutions pages and two posts (`stop-biting-vs-mavala-stop`, `best-apps-to-stop-nail-biting`) give the
    price as "$2.99/month or $29/year" in sentences, table cells and FAQ answers, and a few sentences call the app "a subscription". The
    sources keep that text. With the flag on the price list ends "or $99 once" (the number is `lifetimePriceUsd()` of `shared/plans.js`,
-   read when the rule runs, so the sentence and the product node's offer come from the same call and a changed `LIFETIME_PRICE_USD`
-   moves both), and the sentences that needed more than an added clause have their own rule. **Order matters**: a rule consumes its text, so
+   read when the rule runs, so on the server the sentence and the product node's offer come from the same call and a changed
+   `LIFETIME_PRICE_USD` moves both; **the browser bundle cannot see the variable and draws these sentences, and the pricing headline,
+   with `DEFAULT_LIFETIME_PRICE_USD`**, so a price other than the default needs the default changed and a rebuild), and the sentences that needed more than an added clause have their own rule. **Order matters**: a rule consumes its text, so
    the sentences with their own wording come first and the two price lists last (`flagCopy.test.js` checks that each rule's `off`
    comes out as its own `on`). The price list is the bare phrase, which no markup can anchor, because table cells in `html` sections and
    the `Price | a | b` rows of `llms-full.txt` only share the phrase; that is why it is a rule and not an `ANCHORS` entry, and why the
