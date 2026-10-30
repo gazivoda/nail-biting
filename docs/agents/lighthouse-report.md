@@ -86,6 +86,24 @@ Runs (performance score per run, to show the spread): `/` mobile: 76/93/93; `/` 
   (CrUX) claim. Not changed: the font preloads (74 KB, about a quarter of the bytes ahead of the scripts, but text painted in a
   fallback font and swapped later risks a layout shift; not tried), inlining the stylesheet, and moving the hero into the
   server HTML (the page is client-rendered, not hydrated).
+  **Update 2026-10-30 (lane J, JavaScript before first paint, measured against main 35fd689 = lane I + lane H).** What the
+  home page must download and run before React renders went from 156.9 KB to 137.5 KB gzipped (entry + `vendor`, level 9; 180 KB
+  before lane H): `vendor` is now only react-dom, react, scheduler and zustand (60 KB; it was 73 KB, because the one-lump rule
+  `node_modules -> vendor` still held date-fns and every icon the signed-in app draws) and the signed-in shell (tab bar, tour,
+  install guide, eight hosts, 7 KB) is its own lazy chunk, `SignedInApp`. Lab, mobile, Lighthouse 13.6.0, flags off, medians of 3,
+  runs interleaved: `/` simulated LCP 2936 to 2783 ms, performance 95 to 96, CLS 0, TBT 2 to 5 ms; the `/pricing`, `/about`,
+  `/blog` and post cells moved by 0 to 150 ms. That is inside the run-to-run spread (about 0.2 s simulated): the cut is real
+  bytes, not a measurable LCP win. Why it is small: `vendor` is at its floor and the rest of the entry (78 KB) is the home page
+  itself (Landing, flagCopy, marketing-home copy, the pricing section) plus the other static marketing pages (about 10 KB gzipped,
+  and making them lazy moved `/` by 56 ms applied and 0 ms simulated, so they stay). Not done: the 188-post blog index (18 KB
+  gzipped) is imported only for the home page's "See all N guides" count; a build-time constant plus a lazy `BlogIndex` took
+  another 0.1 s off `/` but put `/blog` from 2.74 s to 3.37 s under applied throttling (performance 92 to 85, its own chunk costs a
+  round trip), so it was reverted (c18a83b; revert that commit to take the trade). Two things to know when reading Lighthouse
+  here: simulated LCP on pages whose largest paint is React text (`/pricing`, `/about`, `/blog`) is bimodal, 0.9 s or 2.3 to
+  2.9 s, run to run and in both builds (it depends on whether the unthrottled trace had run the entry before the paint), so read
+  those cells with applied throttling (`--throttling-method=devtools`), where `/pricing` went 2709 to 2605 ms and `/about`
+  2685 to 2580 ms; and the SSR copy is hidden by `html.js` before first paint, so a lazy route shows a blank page until its chunk
+  arrives, as BlogPost did before lane H.
 - **The blog post is the one real performance problem: CLS 0.72 on mobile (0.75 desktop), performance 54 / 73.** The element
   that moves is the bottom call-to-action block (`div.sg-page` that starts "Catch your next bite."): the article body is
   rendered from `dist/posts/<slug>.json` after it is fetched, and the footer sits where the empty page ended, then is pushed

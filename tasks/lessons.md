@@ -283,3 +283,14 @@ Commit the page first, then sync, then commit the generated files.
 **A rhetorical-question subtitle is not a blurb either.** The compare page standfirst "...where do you actually bite your nails: at a computer, or everywhere else?" was a key-pages blurb. The page's meta description (COMPARE_META in server.js, already gated against the page body) is the string written to stand alone.
 
 **Three hand copies of one sentence drift.** The /blog meta description, its standfirst and its CollectionPage JSON-LD description were typed three times and had already diverged ("onychophagia, habit reversal training" against "habit psychology, treatment options"). One const per page, used by all three.
+
+## 2026-10-30 — Lane J (JavaScript before first paint)
+
+**`node_modules -> vendor` is not code splitting.** manualChunks puts every library any chunk uses into `vendor`, so the home page downloaded date-fns, every icon the signed-in app draws and (until lane H) recharts' own dependencies. Read the module graph instead (`scripts/build/chunks.ts`: vendor is what the entry reaches through static imports, everything else `vendor-app`), and leave a barrel such as lucide-react to Rollup, because its `importedIds` list every icon whichever are drawn.
+
+**A lazy route costs a round trip the page did not have.** Making the blog index lazy took 0.1 s off the home page and put 0.6 s on `/blog` (applied throttling, 3 runs). Measure the page you are making lazy, not only the page you are helping, and keep the revert one commit.
+
+**Simulated LCP is bimodal on pages whose largest paint is React text.** `/pricing` read 0.9 s or 2.3 s run to run in both builds. Confirm with `--throttling-method=devtools` and interleave base and branch runs; do not report a regression or a win from three simulated runs of such a page.
+
+**Source-reading guards name files.** Moving JSX out of App.tsx broke `coachingGuards` (it reads App.tsx for the ProgramHost seam) and the i18n inventory (every file importing LocaleHost needs a COVERS or NOT-RENDERED line). `grep -rn "src/App.tsx" scripts src` before moving code.
+

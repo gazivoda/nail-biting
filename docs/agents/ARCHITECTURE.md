@@ -817,13 +817,21 @@ swallowed. The generated worker has `skipWaiting` + `clientsClaim`, so a new dep
 "Stop Biting: AI Nail Habit Tracker", `display: standalone`, `orientation: portrait-primary`, theme/background
 `#F7F7F1`, icons 192, 512 and a maskable 512 in `public/icons/`, `screenshots: []`. Workbox: precache of the app shell
 (21 entries when WS11a measured it, 60 when WS11b did, because the lazy chunks of the flagged features are precached so they work
-offline; `desktopHost-*.js` and the competitor-page chunk are excluded by `globIgnores`, and WS6 removed the manifest from it),
+offline; 69 on main before lane J, 78 after it: `SignedInApp`, `vendor-app` and the small chunks Rollup shares between lazy pages, none ignored, so
+the signed-in app still opens offline; `desktopHost-*.js` and the competitor-page chunk are excluded by `globIgnores`, and WS6 removed the manifest from it),
 `navigateFallback: '/index.html'` with a denylist for `/api/`, `/downloads/`, `/posts/`, `/signin` (WS8), `/redeem` (WS9) and `/share/` (WS10); runtime caches:
 `/assets/*.js|css` StaleWhileRevalidate, `/posts/<slug>.json` NetworkFirst (3 s), `/icons/*.png` CacheFirst.
 MediaPipe wasm and models are excluded from precache and not runtime-cached (browser HTTP cache only), so detection
 needs a network on the very first run of a profile. `/api/*` is never cached by the worker.
 Install UI: `usePWAInstall` (captures `beforeinstallprompt`, key `pwa_install_dismissed`), `PWAInstallPrompt`
 (banner), `usePWAGuide` + `PWAGuideModal` (iOS/Chromium instructions, key `pwa_guide_snoozed_until`).
+**Chunks and the first load (lane J).** What every page downloads before React renders is the entry (`index-*.js`) and `vendor-*.js`,
+nothing else (`scripts/homeBundle.test.mjs`, `scripts/bundleSplit.test.mjs`). `vendor` is *derived*, not listed: `scripts/build/chunks.ts`
+puts in it the `node_modules` modules the entry reaches through static imports (react-dom, react, scheduler, zustand); recharts and the
+modules only it uses go to `charts`, the Paddle SDK to `paddle`, MediaPipe to `mediapipe`, every other library to `vendor-app`, and
+lucide-react is left to Rollup (a barrel: each icon lands in the chunk that draws it). The signed-in shell (`src/SignedInApp.tsx`: tab
+bar, tour, install guide, the hosts, and the lazy Dashboard, Log, Settings and paywall) is a lazy chunk behind the same `Suspense` and
+`AppLoading` screen; a returning visitor (`sb_has_session`) starts it next to the `/api/user/me` lookup, an anonymous visitor never does.
 **A browser that has visited keeps the old bundle until the worker updates** (lessons.md): unregister the worker or use
 a fresh headless Chrome profile before judging a UI change.
 **WS6 (flag `phone_companion`).** The phone view is not a URL: it is `/` on a phone (or a computer that lists no
