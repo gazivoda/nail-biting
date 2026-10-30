@@ -1207,7 +1207,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
   {
     slug: "nail-biting-finger-tape",
     title: "Tape, Plasters and Finger Covers for Nail Biting",
-    description: "Taping target fingers is cheap, discreet, and more sustainable than gloves. Here is how to use it well and what it can and cannot achieve.",
+    description: "No study we found has tested finger tape for nail biting. What a 2022 review says about barriers, how tape differs from bitter polish, and how to use it.",
     tag: "Products",
     readingMinutes: 3,
     datePublished: "2026-07-24",

@@ -165,3 +165,15 @@ Title length histogram after: 20s 2, 30s 2, 40s 45, 50s 158, 60 exactly 14. Four
 Not fixed because outside this pass, worth knowing: no gate enforces 160 characters on post descriptions.
 `npm run seo:check` allows up to 165 (`checkMetaLength` in `scripts/sync-seo.mjs`), and `src/utils/serverMeta.test.ts`
 only reads the literals in `server.js`. The two overruns above got in on 2026-10-23 for that reason.
+
+## Correctness change, 2026-10-30 (lane E)
+
+| Date | URL | What changed | Baseline (90 d to 2026-10-25) | Evaluate on |
+|---|---|---|---|---|
+| 2026-10-30 | `/blog/nail-biting-finger-tape` | description only | 7 clicks / 306 impr / 2.3% / 7.1 (retitled 2026-10-20, so this restarts its evaluation) | 2026-11-27 |
+
+- Old description: `Taping target fingers is cheap, discreet, and more sustainable than gloves. Here is how to use it well and what it can and cannot achieve.`
+- New description (153 chars): `No study we found has tested finger tape for nail biting. What a 2022 review says about barriers, how tape differs from bitter polish, and how to use it.`
+- Why it changed despite the freeze: the body of the post was rewritten the same day because "more sustainable than gloves" had no source (PubMed search, 30 October 2026: no study of tape for nail biting). A snippet that still said it would contradict the page. This is a correctness change, not a click-through experiment.
+- `seoTitle` and `title` are untouched. The 2026-11-24 measurement of the other rows is unaffected.
+- Not applied, owner decision: `/blog/nail-biting-famous-people` title `Famous People Who Bite Their Nails` and its description's last sentence ("Success doesn't end it") promise more than the new top section delivers (two people named, both with a source we opened). The page is the third best clicker, so a retitle risks the clicks it earns. Proposed, if wanted: seoTitle `Famous People Who Bite Their Nails: Two Who Have Said So`.
