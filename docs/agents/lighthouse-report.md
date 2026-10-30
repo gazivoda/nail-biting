@@ -67,6 +67,25 @@ Runs (performance score per run, to show the spread): `/` mobile: 76/93/93; `/` 
   Lighthouse's simulated slow-phone conditions, TBT about 10 ms, CLS 0). Desktop is 97-100. The 78 is LCP, not JavaScript
   (I did not dig into which element it is). The two new pages perform exactly like the compare page that already existed (78 / 97), so the swarm did not
   make anything slower; the WS6 note ("first-visit 75, LCP 6.0 s on the phone view") is the same kind of number.
+  **Update 2026-10-30 (home page, mobile, Lighthouse 13.6.0, 3 runs, medians, `/` served by the real `server.js`):**
+  performance 92 to 94, **CLS 0.098 to 0**, TBT 4 to 3 ms, LCP 3.09 s to 3.09 s (unchanged within the run-to-run spread of about
+  0.2 s). Checked with Lighthouse's applied throttling as well (`--throttling-method=devtools`): 86 to 89, LCP 3.03 s to 2.96 s,
+  CLS 0.098 to 0. `/pricing` (100, LCP 0.9 s, CLS 0) and a blog post (80, LCP 5.4 s, CLS 0) did not move.
+  What the home page's numbers were: the LCP element is the hero screenshot `<img>` (React creates it after the bundle has run).
+  Its preload with `fetchpriority="high"` has been in the HTML since 55274aa, so "not discoverable" was not the problem. In real
+  (unthrottled) time the page paints at about 70 ms; on the simulated slow phone the picture arrives long before the bundle does
+  (applied throttling: picture at 2.1 s, `vendor` and `index` scripts at 2.8 s, first paint at 3.0 s), so **LCP is the JavaScript
+  chain (about 185 KB gzipped), not the picture and not the 17 KB stylesheet** (the CSS is in by 1.8 s, before any script can run, so
+  inlining it would not move LCP). The one thing the picture did cost was bytes sharing the pipe: a 412 px phone at 1.75x fetched
+  the 1280 px file (28 KB) because `sizes` said `100vw` (84 px more than it is drawn) and no smaller file existed. There is now a
+  640 px file (14 KB) and the right `sizes` (`shared/heroShot.js`, one constant for the `<img>` and both preloads), worth about 70 ms
+  of applied-throttling LCP and 14 KB. The CLS was `useIsPhone` starting at `false` and flipping in an effect: on a phone the first
+  frame showed "Start free trial" (200 px) and the next "Send the link to my computer" (full column), the "How it works" link
+  wrapped under it and the screenshot and notes moved 60 px (`figure.relative`). It is now decided in the first render
+  (`src/hooks/useIsPhone.ts`); the same swap is gone from every page with a full-size trial button. Lab numbers only, not a field
+  (CrUX) claim. Not changed: the font preloads (74 KB, about a quarter of the bytes ahead of the scripts, but text painted in a
+  fallback font and swapped later risks a layout shift; not tried), inlining the stylesheet, and moving the hero into the
+  server HTML (the page is client-rendered, not hydrated).
 - **The blog post is the one real performance problem: CLS 0.72 on mobile (0.75 desktop), performance 54 / 73.** The element
   that moves is the bottom call-to-action block (`div.sg-page` that starts "Catch your next bite."): the article body is
   rendered from `dist/posts/<slug>.json` after it is fetched, and the footer sits where the empty page ended, then is pushed
