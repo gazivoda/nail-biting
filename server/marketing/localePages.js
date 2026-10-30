@@ -22,6 +22,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { flagAwareDeep, fillCopyTokensDeep } from '../../shared/flagCopy.js';
+import { heroShotPreloadTag } from '../../shared/heroShot.js';
 
 export const ORIGIN = 'https://stopbiting.today';
 export const LOCALE_CODES = ['es', 'de', 'pt-BR'];
@@ -416,10 +417,9 @@ export function registerLocalePages(h) {
         const set = hreflangSet(page, h.states, h.files);
         const marker = `<meta name="sb-locales" content="${servedLocales(h.states).filter(l => h.files[l]?.paths[page]).join(' ')}">`;
         // The home page's hero screenshot is the largest thing above the fold, but React only creates its <img> after the
-        // JavaScript has run: preloading it from the HTML starts the download in parallel (srcset/sizes mirror the <img>).
-        const heroPreload = page === 'home'
-          ? ['<link rel="preload" as="image" href="/shots/app-watch-1280.webp" imagesrcset="/shots/app-watch-1280@1x.webp 1280w, /shots/app-watch-1280.webp 2560w" imagesizes="(min-width: 1024px) 36rem, 100vw" fetchpriority="high">']
-          : [];
+        // JavaScript has run: preloading it from the HTML starts the download in parallel (srcset/sizes are the <img>'s own,
+        // one constant in shared/heroShot.js).
+        const heroPreload = page === 'home' ? [heroShotPreloadTag()] : [];
         const head = [
           ...heroPreload,
           ...(state === 'live' && set.length ? [hreflangLinkTags(set)] : []),
