@@ -294,3 +294,11 @@ Commit the page first, then sync, then commit the generated files.
 
 **Source-reading guards name files.** Moving JSX out of App.tsx broke `coachingGuards` (it reads App.tsx for the ProgramHost seam) and the i18n inventory (every file importing LocaleHost needs a COVERS or NOT-RENDERED line). `grep -rn "src/App.tsx" scripts src` before moving code.
 
+
+## 2026-11-06 — Search Console through the owner's Chrome
+
+**The Search Console "Pages" report can be two weeks behind (it said "last update 10/23/26"); URL Inspection reads the live index.** Of the eight "crawled, currently not indexed" pages, five were already indexed when inspected. Inspect before asking Google to re-crawl, and before reporting a count from the report.
+
+**In a browser batch, read the URL at the top of every result.** Three of six inspections never loaded (the search box ignored the click) and each zoom showed the previous page's "URL is on Google". Only the URL line in the zoom exposed it. A result you did not tie to its input is not a result.
+
+**Run the check that finds the shippable work before launching agents.** This tick's live sweep, link crawl and Search Console read showed nothing unfrozen and verified left, so the right output was a stopped cron and an honest log, not a swarm on a prompt that no longer had targets.
