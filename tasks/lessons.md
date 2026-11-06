@@ -302,3 +302,11 @@ Commit the page first, then sync, then commit the generated files.
 **In a browser batch, read the URL at the top of every result.** Three of six inspections never loaded (the search box ignored the click) and each zoom showed the previous page's "URL is on Google". Only the URL line in the zoom exposed it. A result you did not tie to its input is not a result.
 
 **Run the check that finds the shippable work before launching agents.** This tick's live sweep, link crawl and Search Console read showed nothing unfrozen and verified left, so the right output was a stopped cron and an honest log, not a swarm on a prompt that no longer had targets.
+
+## 2026-11-06 — series 4 (body edits from SXO research)
+
+**A rolling deploy serves the old and the new container side by side for a few minutes.** `/health` flipped between the new commit and the previous one and the same URL returned old and new HTML on consecutive fetches. Wait for several consecutive new-commit health checks (and the new text on several fetches) before IndexNow, or the submission points crawlers at a page that may still serve the old copy.
+
+**Adding about 300 words to a short post can fail `readingMinutes.test.ts`.** The test counts body, list items and the text inside `html` (sources included) at 230 words a minute and allows one minute of drift; the OG card bakes the reading time, so `npm run og:generate` is needed after changing it.
+
+**An agent's trial or paper claim needs the registry or Crossref record, not only the agent's summary.** The report's "recruiting, 10 participants, primary completion May 2027, no results" matched the ClinicalTrials.gov API; its "12 weeks" was not checked, so it was left out of the copy.
