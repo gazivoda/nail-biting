@@ -4657,9 +4657,9 @@ BLOG_POSTS.push({
   seoTitle: 'Nail Biting Wearables: Smartwatch Detection',
   description: "Wrist-worn wearables are an emerging way to catch nail biting through motion sensing. How smartwatch detection works, and where its limitations lie.",
   tag: 'Technology',
-  readingMinutes: 2,
+  readingMinutes: 5,
   datePublished: '2026-07-16',
-  dateModified: '2026-10-19',
+  dateModified: '2026-11-06',
   ogImage: '/og/nail-biting-wearable-technology.png',
   sections: [
     {
@@ -4667,8 +4667,13 @@ BLOG_POSTS.push({
       body: `Webcam-based detection tools (like MediaPipe-powered apps) identify nail biting visually, tracking hand and face landmarks to detect the specific hand-to-mouth proximity pattern. Wrist-worn wearables — smartwatches and dedicated habit-tracking bands — take a fundamentally different approach: using accelerometer and gyroscope data to detect the specific motion signature of a hand moving to the mouth and staying there, independent of any camera or visual input.`,
     },
     {
+      heading: `Which smartwatch apps exist for nail biting?`,
+      body: `We checked the US App Store listings of two Apple Watch apps for nail biting on 6 November 2026. BiteLess says it monitors nail-biting actions automatically and alerts you on your watch, with a vibration or alarm, if it detects biting for over 1 to 2 seconds; its listing says it currently supports watches worn on the left wrist. HabitAware's KeenLite works differently: you start one-hour awareness training sessions, and its listing says Apple Watch's closed development system limits access to the sensors needed for full behavior monitoring, pointing to the HabitAware Keen2 bracelet for 24/7 gesture detection.\n\nThat is two apps, not a survey. We did not search Wear OS or other Android watches, so we cannot say whether an equivalent exists there. Neither listing gives an accuracy figure, and a listing describes what a vendor intends, not how well it works.`,
+      html: `<p>Prices, requirements and a side-by-side with Stop Biting: <a href="/compare/stop-biting-vs-biteless">Stop Biting vs BiteLess</a> and <a href="/compare/stop-biting-vs-habitaware">Stop Biting vs HabitAware (Keen)</a>.</p><p><strong>Sources:</strong> <a href="https://apps.apple.com/us/app/biteless-nail-biting-alert/id6743394450" target="_blank" rel="noopener noreferrer">BiteLess, US App Store listing</a> and <a href="https://apps.apple.com/us/app/keenlite-for-trichotillomania/id1673593723" target="_blank" rel="noopener noreferrer">KeenLite, US App Store listing</a>, both read 6 November 2026.</p>`,
+    },
+    {
       heading: `How motion-based detection works`,
-      body: `The accelerometer and gyroscope in a wrist-worn device continuously track wrist orientation, movement velocity, and rotation. Nail biting involves a rise of the wrist toward face height, a rotation as the fingers reach the mouth, and a period of relative stillness while biting occurs, and a detection algorithm could in principle tell that apart from other everyday wrist movements such as eating, adjusting glasses or scratching the face. We found no published accuracy figures for nail biting detection by a wrist sensor, so how well that works in practice is not something this page can state.`,
+      body: `The accelerometer and gyroscope in a wrist-worn device continuously track wrist orientation, movement velocity, and rotation. Nail biting involves a rise of the wrist toward face height, a rotation as the fingers reach the mouth, and a period of relative stillness while biting occurs, and a detection algorithm could in principle tell that apart from other everyday wrist movements such as eating, adjusting glasses or scratching the face. One 2025 engineering paper describes a smartwatch detector for nail biting (see the evidence section below), but its abstract gives no accuracy figure and we read nothing beyond it, so how well wrist sensing works in practice is not something this page can state.`,
     },
     {
       heading: `Advantages over webcam-based detection`,
@@ -4680,8 +4685,8 @@ BLOG_POSTS.push({
     },
     {
       heading: `Is there evidence that wearables work for nail biting?`,
-      body: `Not from trials that we could find. A PubMed search run on 19 October 2026 for smartwatch, wearable, accelerometer or wrist-worn together with nail biting, body-focused repetitive behaviours or hand-to-mouth returned 35 results. We read the first four abstracts: one was relevant, and the other three were about hand-to-mouth movement in stroke and birth-injury rehabilitation.\n\nThe relevant one is a 2025 content analysis of 173 online reviews of three vibration wearables for body-focused repetitive behaviours (BFRBs), including the HabitAware Keen. Of the clinical comments in those reviews, 96% were positive, and 8% reported complete remission of BFRBs (Marini et al., 2025). That is user feedback, not a controlled trial: reviewers choose to write, nothing was measured independently, and the devices were not compared with anything.`,
-      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41988436/" target="_blank" rel="noopener noreferrer">Marini C, Hermann JC, Gold ND, et al. Manual Content Analysis of Online Customer Reviews on Wearable Technologies for the Treatment of Body-Focused Repetitive Behaviours. Arch Psychiatry Res. 2025;61(2):155-160.</a></li></ul>`,
+      body: `Not from published trials that we could find. A PubMed search run on 19 October 2026 for smartwatch, wearable, accelerometer or wrist-worn together with nail biting, body-focused repetitive behaviours or hand-to-mouth returned 35 results. We read the first four abstracts: one was relevant, and the other three were about hand-to-mouth movement in stroke and birth-injury rehabilitation.\n\nThe relevant one is a 2025 content analysis of 173 online reviews of three vibration wearables for body-focused repetitive behaviours (BFRBs), including the HabitAware Keen. Of the clinical comments in those reviews, 96% were positive, and 8% reported complete remission of BFRBs (Marini et al., 2025). That is user feedback, not a controlled trial: reviewers choose to write, nothing was measured independently, and the devices were not compared with anything.\n\nOne trial is registered but has not reported. ClinicalTrials.gov lists NCT06111729, Habit Awareness Device for Treatment of Onychophagia, sponsored by Weill Cornell Medicine: a single-group study of the HabitAware wristband with an estimated 10 participants. On 6 November 2026 it was recruiting, with primary completion estimated for May 2027 and no results posted.\n\nOn the engineering side, Alesmaeil and Şehirli (Computational Intelligence, 2025) describe a pipeline of three neural networks that detects nail biting on a smartwatch. Its abstract says the pipeline reduces false positives significantly compared with a single model and uses less power, and gives no accuracy figure. We read only the abstract.`,
+      html: `<p><strong>Source for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/41988436/" target="_blank" rel="noopener noreferrer">Marini C, Hermann JC, Gold ND, et al. Manual Content Analysis of Online Customer Reviews on Wearable Technologies for the Treatment of Body-Focused Repetitive Behaviours. Arch Psychiatry Res. 2025;61(2):155-160.</a></li><li><a href="https://clinicaltrials.gov/study/NCT06111729" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov NCT06111729, Habit Awareness Device for Treatment of Onychophagia, record read 6 November 2026.</a></li><li><a href="https://doi.org/10.1111/coin.70020" target="_blank" rel="noopener noreferrer">Alesmaeil A, Şehirli E. Real-Time Nail-Biting Detection on a Smartwatch Using Three CNN Models Pipeline. Computational Intelligence. 2025;41(1). doi:10.1111/coin.70020 (abstract only).</a></li></ul>`,
     },
     {
       heading: `What does one maker say about its own device?`,
@@ -8198,15 +8203,15 @@ BLOG_POSTS.push({
   tag: 'Health',
   readingMinutes: 5,
   datePublished: '2026-10-20',
-  dateModified: '2026-10-20',
+  dateModified: '2026-11-06',
   ogImage: '/og/swallowing-nail-polish-biting.png',
   sections: [
     {
       heading: `Is it harmful to swallow nail polish, gel or acrylic when you bite your nails?`,
-      body: `We found no study of the tiny flakes of dried polish, gel or acrylic that an adult bites off and swallows, so we cannot say how harmful that is. The poisoning reports we did read describe something different: liquid nail products drunk or sucked, mostly by toddlers.
+      body: `For ordinary nail polish, poison centres give a reassuring answer for small amounts. Poison Control (run by the National Capital Poison Center) says a taste or lick of nail polish is not likely to result in significant toxicity, and that eating polish is likely to cause nausea, vomiting and abdominal pain. The Poison Control Center at Children's Hospital of Philadelphia rates swallowed polish as minimal to none in toxicity, with upset stomach the most common symptom, and says large ingestions may be concerning. Both pages are about swallowed polish in general rather than bitten flakes, and the Philadelphia page is written for parents of children.\n\nWe found no study of the tiny flakes of dried polish, gel or acrylic that an adult bites off and swallows, so we cannot say how harmful that is. The poisoning reports we did read describe something different: liquid nail products drunk or sucked, mostly by toddlers.
 
 Absence of data is not proof of safety, and it is not proof of harm. This post separates what was reported from what was not studied.`,
-      html: `<p><strong>Source(s) for this section:</strong></p><ul><li>PubMed search &quot;nail biting nail polish ingestion&quot;, run 20 October 2026: 2 results, both Polish-language papers on chewing function in children and the periodontium; neither is about swallowed polish.</li></ul>`,
+      html: `<p><strong>Source(s) for this section:</strong></p><ul><li><a href="https://www.poison.org/articles/nail-polish" target="_blank" rel="noopener noreferrer">Poison Control (National Capital Poison Center): Is nail polish poisonous?</a> Read 6 November 2026.</li><li><a href="https://www.chop.edu/centers-programs/poison-control-center/nail-polish" target="_blank" rel="noopener noreferrer">Poison Control Center at Children's Hospital of Philadelphia: Nail Polish.</a> Read 6 November 2026.</li><li>PubMed search &quot;nail biting nail polish ingestion&quot;, run 20 October 2026: 2 results, both Polish-language papers on chewing function in children and the periodontium; neither is about swallowed polish.</li></ul>`,
     },
     {
       heading: `What do poisoning reports describe?`,
@@ -8237,6 +8242,8 @@ None of them examined swallowed fragments. Whether a person who is already aller
     {
       heading: `What should I do?`,
       body: `If a child has swallowed or sucked any liquid nail polish, remover or nail glue remover, call your local poison control service or emergency number straight away and have the product with you. Do not wait for symptoms, and do not try home treatments; the cases above show that some products cause delayed effects.
+
+If ordinary polish gets in your mouth, Poison Control advises wiping out as much as possible and drinking small sips of water to rinse any remaining residue. In the US the poison control number is 1-800-222-1222, and calls are free and confidential. The example Poison Control gives of long-term ingestion is a woman who had been eating polish for a year; a poison center recommended a medical evaluation.
 
 For adults who bite polished or gel nails, the honest position is that the research is silent. Pain, mouth or skin reactions, or ongoing stomach symptoms are reasons to speak to a clinician. For what we know about swallowed nail fragments themselves, see our other article.`,
     },

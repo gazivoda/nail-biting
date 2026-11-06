@@ -939,9 +939,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "Wearable Technology for Nail Biting: Smartwatches and Motion Detection",
     description: "Wrist-worn wearables are an emerging way to catch nail biting through motion sensing. How smartwatch detection works, and where its limitations lie.",
     tag: "Technology",
-    readingMinutes: 2,
+    readingMinutes: 5,
     datePublished: "2026-07-16",
-    dateModified: "2026-10-19",
+    dateModified: "2026-11-06",
   },
   {
     slug: "nail-biting-evolutionary-psychology",
@@ -1607,7 +1607,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-10-20",
-    dateModified: "2026-10-20",
+    dateModified: "2026-11-06",
   },
   {
     slug: "nail-biting-before-period",
