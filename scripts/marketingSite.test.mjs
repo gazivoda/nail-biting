@@ -29,6 +29,9 @@ import { heroShotPreloadTag, HERO_SHOT } from '../shared/heroShot.js';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const built = existsSync(join(ROOT, 'dist/index.html')) && existsSync(join(ROOT, 'dist/seo-gated.json'));
 const GATED = ['/compare/hands-off', '/compare/habitaware-keen'];
+// The published wearable post (2026-11-09) names HabitAware's Keen3, so the bare product name no longer marks leaked gated copy. The
+// gated page's own title does: it appears only in src/data/competitorPages.ts.
+const GATED_TITLE_SENTINEL = 'HabitAware Keen3 Bracelet: Price';
 
 const freePort = () => new Promise((resolve, reject) => {
   const srv = net.createServer();
@@ -121,7 +124,7 @@ describe.skipIf(!built)('marketing site, flags off', () => {
     expect((await get(srv, '/seo-gated.json')).status).toBe(404);
     const content = (await get(srv, '/seo-content.json')).text;
     for (const path of GATED) big(content).notToContain(`"${path}"`);
-    big(content).notToContain('Keen3');
+    big(content).notToContain(GATED_TITLE_SENTINEL);
   });
 
   it('sitemap.xml is the generated file, byte for byte, with no gated URL', async () => {
@@ -134,7 +137,7 @@ describe.skipIf(!built)('marketing site, flags off', () => {
     for (const file of ['/llms.txt', '/llms-full.txt']) {
       const { text } = await get(srv, file);
       for (const path of GATED) big(text).notToContain(path);
-      big(text).notToContain('Keen3');
+      big(text).notToContain(GATED_TITLE_SENTINEL);
     }
     for (const page of ['/', '/pricing', '/how-it-works', '/compare/ai-detection-apps']) {
       const { text } = await get(srv, page);

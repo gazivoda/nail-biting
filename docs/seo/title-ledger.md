@@ -195,3 +195,15 @@ only reads the literals in `server.js`. The two overruns above got in on 2026-10
 - Why it changed despite the freeze: the body of the post was rewritten the same day because "more sustainable than gloves" had no source (PubMed search, 30 October 2026: no study of tape for nail biting). A snippet that still said it would contradict the page. This is a correctness change, not a click-through experiment.
 - `seoTitle` and `title` are untouched. The 2026-11-24 measurement of the other rows is unaffected.
 - Not applied, owner decision: `/blog/nail-biting-famous-people` title `Famous People Who Bite Their Nails` and its description's last sentence ("Success doesn't end it") promise more than the new top section delivers (two people named, both with a source we opened). The page is the third best clicker, so a retitle risks the clicks it earns. Proposed, if wanted: seoTitle `Famous People Who Bite Their Nails: Two Who Have Said So`.
+
+## Correctness change, 2026-11-09 (series 6)
+
+| Date | URL | What changed | Baseline (28 d to 2026-11-03) | Evaluate on |
+|---|---|---|---|---|
+| 2026-11-09 | `/blog/swallowing-fingernails` | description only | 624 impr / 1 click / position 12.1 (metadata last changed 2026-10-08) | 2026-12-07 |
+
+- Old description: `We found no study of what swallowed nail clippings do. What exists is one gastritis case report and association studies on germs and pinworm.`
+- New description (158 chars): `We found no study of what swallowed nail clippings do. What exists is two case reports (gastritis, appendicitis) and association studies on germs and pinworm.`
+- Why it changed despite the freeze: the body now also cites a 2020 appendicitis case report (Pagacz et al., PMID 32309003, abstract read 2026-11-09), so "one gastritis case report" contradicted the page. `title` and `seoTitle` are untouched.
+
+**Body-only edits on 2026-11-09 to pages with a running metadata evaluation** (no title or description changed, but a ranking or click-through move after this date cannot be credited to metadata alone): `nail-biting-cancer` (2018 thumb story, Choi 2022), `pinworm-nail-biting` (CDC and NHS lead), `nail-biting-toenails` (infection and ingrown-nail section), `is-nail-biting-self-harm` (Mann 2020 sentence), `swallowing-fingernails` (appendicitis case report, when-to-get-help line), `best-apps-to-stop-nail-biting` (phone apps section and table), `swallowing-nail-polish-biting` (already edited 2026-11-06). Read these pages' 2026-11-24 results with that in mind.

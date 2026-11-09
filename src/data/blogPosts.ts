@@ -6756,7 +6756,7 @@ BLOG_POSTS.push({
   slug: 'swallowing-fingernails',
   title: `What Happens If You Swallow Your Fingernails?`,
   seoTitle: 'What Happens If You Swallow Your Fingernails?',
-  description: `We found no study of what swallowed nail clippings do. What exists is one gastritis case report and association studies on germs and pinworm.`,
+  description: `We found no study of what swallowed nail clippings do. What exists is two case reports (gastritis, appendicitis) and association studies on germs and pinworm.`,
   tag: 'Health',
   readingMinutes: 3,
   datePublished: '2026-10-08',
