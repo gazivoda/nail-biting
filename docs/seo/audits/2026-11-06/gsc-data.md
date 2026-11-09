@@ -89,3 +89,12 @@ Five of the eight are in the index now. Re-inspect the other three on 2026-11-24
 `https://stopbiting.today/sitemap.xml` was resubmitted on 2026-11-06. Before: submitted 2026-04-20, last read
 2026-05-02, 45 discovered pages. After the resubmit the table showed submitted and last read 2026-11-06, status
 Success, 221 discovered pages (the production sitemap has 221 URLs).
+
+## Re-read, 2026-11-09 (window to 2026-11-07)
+
+- **Indexing:** the three pages I requested on 2026-11-06 (`nail-biting-anxiety-treatment`, `nail-biting-and-perfectionism`, `mediapipe-ai-detection-explained`) are now "URL is on Google: page is indexed" in URL Inspection. All eight pages from the 2026-10-27 index-health list are indexed. (The Pages report itself still carried an old "last update".)
+- **Totals, 28 days to 2026-11-07:** 89 clicks, 13.2K impressions, CTR 0.7%, average position 9.1, 218 pages with impressions (was 81 / 11.8K / 210 to 11-03).
+- **Top pages (clicks / impressions / position):** swallowing-nail-polish-biting 5 / 1,241 / 9.7; grow-nails-after-nail-biting 5 / 851 / 9.1; nail-biting-vitamin-deficiency 5 / 356 / 7.5; nail-biting-toenails 4 / 279 / 7.7; home 4 / 147 / 5.6; is-nail-biting-self-harm 3 / 666 / 8.1; nail-biting-finger-tape 3 / 187 / 7.1; pinworm-nail-biting 2 / 806 / 8.9.
+- **The cancer anomaly is persistent:** `nail-biting-cancer` 961 impressions, 1 click (0.1%), position 6.4, across 12 queries (largest "can biting nails cause cancer" 116 @6.5). At that position several percent is normal, so roughly 20 to 40 clicks were expected. Still unexplained from here (an answer shown above the results is the leading guess). The page is untouched, so the 2026-11-24 read and the planned description test stand.
+- **Links report (Google's view of backlinks):** 28 external links in total, all to the home page, from three sites: reddit.com 16, producthunt.com 11, awaira.app 1. No blog, compare or tool page has an external link. Anchor text is mostly "visit website" and the bare domain. This is the clearest measure of the authority gap: three referring domains.
+- **Internal links:** 1,823 in total; the home page, /blog, /how-it-works, the bitter-polish compare page and the legal pages are linked from about 215 pages each (sitewide footer).
