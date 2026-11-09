@@ -4234,9 +4234,9 @@ BLOG_POSTS.push({
   seoTitle: 'Do People Bite Their Toenails? Yes, but Rarely',
   description: `The standard review says biting usually occurs in the fingernails, as toenails are rarely bitten. A recognised but uncommon variant, with no prevalence figure.`,
   tag: 'Health',
-  readingMinutes: 2,
+  readingMinutes: 4,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-15',
+  dateModified: '2026-11-09',
   ogImage: '/og/nail-biting-toenails.png',
   sections: [
     {
@@ -4255,6 +4255,11 @@ BLOG_POSTS.push({
     {
       heading: `Distinguishing habit from an ingrown nail response`,
       body: `It's worth distinguishing habitual toenail biting from a one-off response to an acutely uncomfortable ingrown toenail or sharp edge catching on socks — the latter is a reasonable, if not ideal, response to genuine physical discomfort rather than an automatic habit pattern, and is better addressed with proper nail trimming or, for a genuinely ingrown nail, a podiatrist visit rather than habit-reversal techniques. If the behaviour is recurring, happens regardless of whether there's a specific physical irritant, or happens alongside fingernail biting as part of a broader pattern, it's more likely the same BFRB mechanism and responds to the same interventions.`,
+    },
+    {
+      heading: `Can biting a toenail cause an infection or an ingrown nail?`,
+      body: `We found no study of toenail biting and infection, so this is a plausible link, not a measured one. The nearest source is a StatPearls chapter on paronychia, infection of the skin fold beside a nail. It calls acute paronychia one of the most common infections of the hand and says it is typically precipitated by nail biting, trauma, manicures, ingrown nails and hangnail manipulation. It also says paronychia involving the toes is relatively common and may be associated with ingrowing toenails, although its focus is the hand (Macneal & Milroy, 2023).\n\nThe NHS gives the practical side. To help prevent ingrown toenails, it says not to cut toenails too short and to cut straight across the nail, not the edges. It lists pus coming out of a toe, or feeling hot or shivery, as signs of infection. It says to see a GP if a painful, swollen toe has pus coming out of it, if you have a very high temperature or feel hot, cold or shivery, or if you have diabetes and an ingrown toenail, because foot problems can be more serious with diabetes.`,
+      html: `<p>Infection beside a fingernail is covered in <a href="/blog/nail-biting-paronychia">paronychia and nail biting</a>.</p><p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/32644572/" target="_blank" rel="noopener noreferrer">Macneal P, Milroy C. Paronychia Drainage. StatPearls. Updated 2023.</a> Abstract read 9 November 2026.</li><li><a href="https://www.nhs.uk/conditions/ingrown-toenail/" target="_blank" rel="noopener noreferrer">NHS. Ingrown toenail (page last reviewed 30 June 2025).</a> Read 9 November 2026.</li></ul>`,
     },
     {
       heading: `What helps`,
