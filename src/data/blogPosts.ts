@@ -6751,7 +6751,7 @@ BLOG_POSTS.push({
   tag: 'Psychology',
   readingMinutes: 3,
   datePublished: '2026-10-08',
-  dateModified: '2026-10-19',
+  dateModified: '2026-11-09',
   ogImage: '/og/is-nail-biting-self-harm.png',
   sections: [
     {
@@ -6760,7 +6760,8 @@ BLOG_POSTS.push({
     },
     {
       heading: `What does the research say?`,
-      body: `A study of 1,523 people compared non-suicidal self-injury (NSSI) with BFRBs, including 487 people in a nail biting group (Mathew et al., 2020). It notes that the two are recognised as distinct categories in the DSM-5. People in the NSSI group were more likely to act for social-affective reasons, such as getting out of doing something or receiving attention, and to act to regulate tension and feelings of emptiness and to feel relief during the act. People in the BFRB groups were more likely to act automatically without reflective awareness, to reduce boredom, or to fix appearance. The NSSI group also scored significantly higher on stress, anxiety, depression and harm avoidance.\n\nThe authors also note that definitions of NSSI sometimes encompass behaviors similar to BFRBs, so the boundary is not always drawn cleanly.`,
+      body: `A study of 1,523 people compared non-suicidal self-injury (NSSI) with BFRBs, including 487 people in a nail biting group (Mathew et al., 2020). It notes that the two are recognised as distinct categories in the DSM-5. People in the NSSI group were more likely to act for social-affective reasons, such as getting out of doing something or receiving attention, and to act to regulate tension and feelings of emptiness and to feel relief during the act. People in the BFRB groups were more likely to act automatically without reflective awareness, to reduce boredom, or to fix appearance. The NSSI group also scored significantly higher on stress, anxiety, depression and harm avoidance.\n\nThe authors also note that definitions of NSSI sometimes encompass behaviors similar to BFRBs, so the boundary is not always drawn cleanly.\n\nA 2020 case series makes that concrete. It described three people, one of them a nail biter, whose behavior fit the intent, function and distress features of non-suicidal self-injury disorder even though the proposed DSM-5 criteria list nail biting among the excluded behaviors, and it concluded that the exclusion should be revised or removed (Mann et al., 2020). Three cases cannot say how often that happens, and the study does not show that ordinary nail biting is self-harm.`,
+      html: `<p><strong>Sources for this section:</strong></p><ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/32135390/" target="_blank" rel="noopener noreferrer">Mathew AS, Davine TP, Snorrason I, Houghton DC, Woods DW, Lee HJ. Body-focused repetitive behaviors and non-suicidal self-injury: A comparison of clinical characteristics and symptom features. J Psychiatr Res. 2020;124:115-122.</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/32567695/" target="_blank" rel="noopener noreferrer">Mann AJD, Van Voorhees EE, Patel TA, et al. Nail-biting, scab-picking, and tattooing as nonsuicidal self-injury (NSSI): A deviant case series analysis of the proposed NSSI disorder diagnostic criteria. J Clin Psychol. 2020;76(12):2296-2313. doi:10.1002/jclp.23008</a> Abstract read 9 November 2026.</li></ul>`,
     },
     {
       heading: `How do clinicians tell a BFRB from self-injury?`,
