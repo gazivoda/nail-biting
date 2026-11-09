@@ -1607,7 +1607,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Health",
     readingMinutes: 5,
     datePublished: "2026-10-20",
-    dateModified: "2026-11-06",
+    dateModified: "2026-11-09",
   },
   {
     slug: "nail-biting-before-period",
