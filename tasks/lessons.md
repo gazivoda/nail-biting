@@ -310,3 +310,19 @@ Commit the page first, then sync, then commit the generated files.
 **Adding about 300 words to a short post can fail `readingMinutes.test.ts`.** The test counts body, list items and the text inside `html` (sources included) at 230 words a minute and allows one minute of drift; the OG card bakes the reading time, so `npm run og:generate` is needed after changing it.
 
 **An agent's trial or paper claim needs the registry or Crossref record, not only the agent's summary.** The report's "recruiting, 10 participants, primary completion May 2027, no results" matched the ClinicalTrials.gov API; its "12 weeks" was not checked, so it was left out of the copy.
+
+## 2026-11-09 — series 6 (top 20 queries, SERP and AI baseline, three writer lanes)
+
+**A pin that uses a product name as a leak sentinel breaks when a public page legitimately names it.** `scripts/marketingSite.test.mjs` asserted flag-off responses never contain "Keen3" (the gated competitor page's subject); the published wearable post now states Keen3's preorder status. Key such pins on a string only the gated copy contains (its own page title), not on a name shared with public content.
+
+**`git merge-tree --write-tree A B` takes commits, not a tree id.** Passing the tree printed by a previous call exited 1 and looked like a conflict. Chain real merges (or commit the first merge) before dry-running the next.
+
+**Some public sources block scripts but not a real browser.** cdc.gov returned 403 to curl and urllib and a 227-character bot page; it read fine in the owner's Chrome. The eCFR API needs `--compressed`. Newsweek and Yahoo read with a Chrome user agent. Try the browser before calling a source unverifiable.
+
+**Search Console hides rare queries.** A page's total impressions can be double the sum of its listed queries (cancer page: 961 total, 453 under queries containing "cancer"). Use page totals for demand, query tables for phrasing.
+
+**Perplexity's free use answers "Sign up and repeat your request." for some queries** (three of 20 here, twice each). Record them as not captured; do not create an account to get around it.
+
+**Google's AI Overview text is not in `get_page_text`; take a screenshot.** The organic list, People Also Ask and snippets are in the text; the Overview and its source chips are only visible in the image.
+
+**Re-check an agent's numeric claims in the source table, not its summary.** The HRT lane's summary said "40% against 15% stopped completely" while its page text led with 99% against 60% fewer episodes; both are in Lee and Lipner Table 1 (and are different measures). Quote which measure each figure is.
