@@ -13,14 +13,10 @@ import { BlogMidCta } from '../components/site/BlogMidCta';
 import { midCtaAfterIndex, midCtaEligible } from '../components/site/midCtaRules';
 import { track } from '../utils/track';
 import { TRIAL_DAYS_TEXT } from '../../shared/plans.js';
+import { AUTHOR_DISCLOSURE, formatPostDate } from '../../shared/postHeader.js';
 
 interface Props {
   slug: string;
-}
-
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 
@@ -139,11 +135,11 @@ export function BlogPost({ slug }: Props) {
                   revised post leads with its update date. */}
               {post.dateModified !== post.datePublished ? (
                 <span className="sg-note">
-                  Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>
+                  Updated <time dateTime={post.dateModified}>{formatPostDate(post.dateModified)}</time>
                 </span>
               ) : (
                 <time dateTime={post.datePublished} className="sg-note">
-                  {formatDate(post.datePublished)}
+                  {formatPostDate(post.datePublished)}
                 </time>
               )}
             </div>
@@ -169,7 +165,7 @@ export function BlogPost({ slug }: Props) {
                   <span className="font-normal text-[color:var(--sg-ink-2)]"> ({AUTHOR_BIO.role})</span>
                 </p>
                 <p className="sg-small">
-                  A software developer who bit his nails for over 20 years, not a clinician.
+                  {AUTHOR_DISCLOSURE}
                 </p>
               </div>
             </div>
