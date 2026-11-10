@@ -11,7 +11,7 @@ Reusable short description for all forms:
 Stop Biting (stopbiting.today) detects nail biting through your webcam using
 on-device AI (Google MediaPipe in WebAssembly) and sounds an alarm the moment your
 hand nears your mouth. No camera data is sent anywhere while it runs.
-Browser PWA on Mac or Windows with a webcam. 3-day free trial, then $2.99/mo or $29/yr.
+Browser PWA on Mac or Windows with a webcam. 3-day free trial, then $2.99/mo, $29/yr or $99 once.
 ```
 
 ---

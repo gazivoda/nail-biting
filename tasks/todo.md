@@ -1126,3 +1126,16 @@ Evidence: `docs/seo/audits/2026-10-27/` (data pack from Search Console, written 
 - Production side effect (accepted): turning on the first flag-copy rule makes `/posts/*.json`, `/seo-content.json` and `llms-full.txt` go through per-request handlers instead of `express.static`: `Last-Modified` and `Accept-Ranges` are lost and `ETag` becomes a content hash; bodies, `Cache-Control` and `X-Robots-Tag` unchanged.
 - Known gaps: the three locale catalogs (draft, flag off) still say two plans until a translator words the Lifetime sentences; the home page served from the service-worker cache has no marker (falls back to the app's cached flags, 10 minute TTL); `faq.4.a` ("Can I cancel anytime?"), the calculators' "then $2.99/month or $29/year" lines and the compare-page price rows are unchanged on purpose.
 
+
+## Series 7 plan (2026-11-10): same request as series 6, re-issued after /clear
+
+The top-20 list and the SERP/AI baseline already exist (docs/seo/audits/2026-11-09/top-20-queries.md, serp-baseline.md). Do NOT rebuild either:
+a second list would fragment the 2026-11-24 measurement, and a re-capture one day after a push measures noise.
+Metadata (title, seoTitle, description) on ledger pages stays frozen until 2026-11-24 unless the owner lifts it.
+
+- [ ] A. Server/client parity (code): server `bylineHtml()` omits the "developer, not a clinician" line and writes dates without `<time>`; BlogPost.tsx has both. Crawlers read the server copy. Test first.
+- [ ] B. robots.txt: drop the inert `anthropic-ai` group, align Content-Signal per group. Google-Extended is an owner call and stays as is.
+- [ ] C. Body-only lead edits with a named source, one lane, facts re-checked at the primary source before merge: onychophagia (classification source), bitter-nail-polish-review (evidence answer before mechanism), how-to-stop-nail-biting (name the trial in the lead).
+- [ ] D. Gates on the merged tree (scripts/qa/gates.sh, flags sweep), push to main, 8 consecutive new-commit /health reads, then IndexNow.
+- [ ] E. Off-site (the real lever: 3 referring domains, all to the home page; "nail biting app" SERP is store listings): refresh docs/off-site-kit as an owner checklist. Nothing is sent by the swarm.
+- Not doing: children, why-do-people (audit: "none"/"fine"); grow-nails, vitamin-deficiency (top clickers, untouched); finger-tape (evaluation 11-27).

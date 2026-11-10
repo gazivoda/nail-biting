@@ -9,7 +9,7 @@ Complements, does not repeat: `outreach-templates.md` (section A covers r/calmha
 - Stop Biting, stopbiting.today. Webcam AI that sounds an alarm when your hand reaches your mouth.
 - Web app / PWA only. Needs a laptop or desktop with a webcam. It does not work away from a computer.
 - Detection runs on-device; no camera data is sent while it runs.
-- 3-day free trial, no card. Then $2.99/mo or $29/yr.
+- 3-day free trial, no card. Then $2.99/mo, $29/yr or $99 once.
 - Built by Igor Gazivoda, who bit his nails for 20 years.
 - Not a medical treatment, not therapy, not a diagnosis.
 - Not to be claimed: user counts, reviews, success rates, "cures", clinical results. None exist in the source material. If asked, say there are no published results.
@@ -126,7 +126,7 @@ Body:
 > The honest limits:
 > - Needs a laptop/desktop with a webcam. It does nothing on your phone or away from a screen.
 > - Not a medical treatment or therapy.
-> - 3-day free trial with no card, then $2.99/mo or $29/yr.
+> - 3-day free trial with no card, then $2.99/mo, $29/yr or $99 once.
 >
 > What I would like feedback on: onboarding in the first minute, whether the trial length is long enough to feel a difference, and how to explain "your camera never leaves your device" so that people actually believe it.
 >
@@ -184,7 +184,7 @@ First comment (post it immediately as the author):
 >
 > Technical notes: hand and face landmarks are computed in the browser with MediaPipe running in WebAssembly, on-device. No camera data is sent while it runs; you can verify in the network tab. It is a web app/PWA.
 >
-> Limits, stated plainly: it needs a laptop or desktop with a webcam, so it does nothing away from a computer. It is not a medical treatment. After a 3-day free trial (no card) it is $2.99/mo or $29/yr.
+> Limits, stated plainly: it needs a laptop or desktop with a webcam, so it does nothing away from a computer. It is not a medical treatment. After a 3-day free trial (no card) it is $2.99/mo, $29/yr or $99 once.
 >
 > Things I would like HN's view on: false-positive handling (scratching your chin, glasses, a mug), latency vs. accuracy tradeoffs in the browser, and how to make a privacy claim verifiable to skeptical users. I'm here to answer questions.
 
@@ -198,7 +198,7 @@ Body:
 
 > I'm Igor, solo maker of Stop Biting (stopbiting.today). It uses a laptop webcam and on-device detection to play an alarm when your hand reaches your mouth. I built it for myself after about 20 years of biting my nails without noticing.
 >
-> Where it stands, honestly: it is a web app/PWA, so it only works at a computer with a webcam, which is a real ceiling on who it can help. It is not a medical treatment. Pricing is a 3-day free trial with no card, then $2.99/mo or $29/yr. I'm not going to quote user or revenue numbers here because I'm not going to make any up; I'll post real ones once they exist.
+> Where it stands, honestly: it is a web app/PWA, so it only works at a computer with a webcam, which is a real ceiling on who it can help. It is not a medical treatment. Pricing is a 3-day free trial with no card, then $2.99/mo, $29/yr or $99 once. I'm not going to quote user or revenue numbers here because I'm not going to make any up; I'll post real ones once they exist.
 >
 > Questions for other makers: how do you think about selling a health-adjacent habit tool without implying medical claims? Is a 3-day trial the right length for a behaviour that takes time to change? And where did you find the first honest users for a niche, sensitive problem?
 >

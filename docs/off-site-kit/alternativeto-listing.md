@@ -56,14 +56,14 @@ sent anywhere while it runs, and none is uploaded or stored outside your device.
 incident with a timestamp and trigger tags (stress, focus, boredom), and tracks
 streaks with a 7-day frequency chart. Runs in the browser as an installable PWA
 (no download needed) on a Mac or Windows computer with a webcam. 3-day free trial with no credit card; then
-$2.99/month or $29/year.
+$2.99/month, $29/year or $99 once.
 ```
 
 **License / pricing fields**
 
 - License: Proprietary
 - Pricing: Subscription (Free Trial available)
-- Price note: `3-day free trial (no credit card) · $2.99/month · $29/year`
+- Price note: `3-day free trial (no credit card) · $2.99/month · $29/year · $99 once`
 
 **Platforms**
 

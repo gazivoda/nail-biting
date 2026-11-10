@@ -79,7 +79,7 @@ your browser. The live demo on the homepage needs no account.
 
 Works in the browser (PWA, no install) on a Mac or Windows computer with a
 webcam. 3-day free trial, no credit card.
-Then $2.99/month or $29/year.
+Then $2.99/month, $29/year or $99 once.
 ```
 
 ## 5. Topics / categories to select
@@ -128,7 +128,7 @@ your browser, and the live demo on the homepage needs no account.
 
 It runs in the browser as a PWA (nothing to install) on a Mac or Windows
 computer with a webcam. 3-day free trial, no credit card
-— then $2.99/month or $29/year.
+— then $2.99/month, $29/year or $99 once.
 
 Ask me anything — especially the skeptical questions about webcam privacy.
 I built this to survive them.

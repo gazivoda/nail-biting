@@ -83,8 +83,8 @@ the "awareness training" step of Habit Reversal Training.
 Site: https://stopbiting.today
 
 Two honest caveats for your evaluation:
-- It's freemium: there's a free 3-day trial (no card), then a paid subscription
-  ($2.99/mo). If paid tools don't belong on the list, I completely understand.
+- It's freemium: there's a free 3-day trial (no card), then paid plans
+  ($2.99/mo, $29/yr or $99 once). If paid tools don't belong on the list, I completely understand.
 - The blog (https://stopbiting.today/blog) is free with no paywall — 100+ articles on
   HRT, triggers, and the science of nail biting. If the app itself isn't a fit,
   perhaps the free guides are.
@@ -219,7 +219,7 @@ I'm writing to ask, not to pitch:
    way I can support your work — for example, our free evidence-summarizing articles
    on HRT, or donating/sponsoring within whatever guidelines you have?
 
-To be transparent: Stop Biting is a paid app ($2.99/month after a free trial) and I
+To be transparent: Stop Biting is a paid app ($2.99/month, $29/year or $99 once, after a free trial) and I
 have an obvious commercial interest. I'd rather be upfront about that and be told
 "no" than waste your time.
 
