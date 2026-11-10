@@ -5,31 +5,38 @@ Disallow: /api/
 
 # Allow all major AI search crawlers for citation visibility
 User-agent: GPTBot
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 User-agent: OAI-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 User-agent: ChatGPT-User
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 User-agent: ClaudeBot
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 # Anthropic's search and user-requested fetchers are separate agents from ClaudeBot.
 User-agent: Claude-SearchBot
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 User-agent: Claude-User
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
 User-agent: PerplexityBot
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 Disallow: /api/
 
@@ -39,9 +46,6 @@ User-agent: Bytespider
 Disallow: /
 
 User-agent: cohere-ai
-Disallow: /
-
-User-agent: anthropic-ai
 Disallow: /
 
 # Google-Extended controls TWO things, not one. Per Google's crawler docs it
