@@ -176,7 +176,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Treatment",
     readingMinutes: 6,
     datePublished: "2026-04-07",
-    dateModified: "2026-11-09",
+    dateModified: "2026-11-10",
   },
   {
     slug: "nail-biting-genetics",
@@ -471,9 +471,9 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     title: "How to Stop Nail Biting: The Complete Guide (2026)",
     description: "Habit Reversal Training has the strongest evidence: self-recorded biting episodes fell roughly 99% over five months in the 1980 trial. The method, step by step.",
     tag: "Treatment",
-    readingMinutes: 8,
+    readingMinutes: 10,
     datePublished: "2026-07-16",
-    dateModified: "2026-10-30",
+    dateModified: "2026-11-10",
   },
   {
     slug: "onychophagia",
@@ -482,7 +482,7 @@ export const BLOG_INDEX: BlogPostMeta[] = [
     tag: "Clinical",
     readingMinutes: 3,
     datePublished: "2026-07-16",
-    dateModified: "2026-09-16",
+    dateModified: "2026-11-10",
   },
   {
     slug: "nail-biting-and-depression",

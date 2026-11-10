@@ -833,7 +833,7 @@ const ADDITIONAL_POSTS: BlogPost[] = [
     tag: 'Treatment',
     readingMinutes: 6,
     datePublished: '2026-04-07',
-    dateModified: '2026-11-09',
+    dateModified: '2026-11-10',
     ogImage: '/og/bitter-nail-polish-review.png',
     sections: [
       {
@@ -2450,7 +2450,7 @@ BLOG_POSTS.push({
   tag: 'Treatment',
   readingMinutes: 10,
   datePublished: '2026-07-16',
-  dateModified: '2026-10-30',
+  dateModified: '2026-11-10',
   ogImage: '/og/how-to-stop-nail-biting.png',
   sections: [
     {
@@ -2536,7 +2536,7 @@ BLOG_POSTS.push({
   tag: 'Clinical',
   readingMinutes: 3,
   datePublished: '2026-07-16',
-  dateModified: '2026-09-16',
+  dateModified: '2026-11-10',
   ogImage: '/og/onychophagia.png',
   sections: [
     {
@@ -2546,7 +2546,7 @@ BLOG_POSTS.push({
     },
     {
       heading: `How is it classified?`,
-      body: `Onychophagia sits within the body-focused repetitive behaviour (BFRB) category, alongside excoriation (skin picking) and trichotillomania (hair pulling). In the DSM-5, when nail biting is frequent enough, distressing enough, or damaging enough to warrant clinical attention, it's coded under "Other Specified Obsessive-Compulsive and Related Disorders" — grouped near OCD because both involve repetitive behaviour, but distinguished from OCD proper because nail biting is typically automatic rather than driven by intrusive obsessive thoughts.\n\nMost people who bite their nails never receive or need a formal diagnosis — the DSM classification exists for the more severe end of the spectrum, where the behaviour is causing significant physical damage or distress and doesn't respond to simple self-management.`,
+      body: `Onychophagia sits within the body-focused repetitive behaviour (BFRB) category, alongside excoriation (skin picking) and trichotillomania (hair pulling). The DSM-5 has no diagnosis of its own for nail biting; when it causes clinically significant distress or impairment, it falls under "Other Specified Obsessive-Compulsive and Related Disorder" (Lee and Lipner, 2022) — grouped near OCD because both involve repetitive behaviour, but distinguished from OCD proper because nail biting is typically automatic rather than driven by intrusive obsessive thoughts.\n\nMost people who bite their nails never receive or need a formal diagnosis — the DSM classification exists for the more severe end of the spectrum, where the behaviour is causing significant physical damage or distress and doesn't respond to simple self-management.`,
     },
     {
       heading: `The severity spectrum`,

@@ -326,3 +326,19 @@ Commit the page first, then sync, then commit the generated files.
 **Google's AI Overview text is not in `get_page_text`; take a screenshot.** The organic list, People Also Ask and snippets are in the text; the Overview and its source chips are only visible in the image.
 
 **Re-check an agent's numeric claims in the source table, not its summary.** The HRT lane's summary said "40% against 15% stopped completely" while its page text led with 99% against 60% fewer episodes; both are in Lee and Lipner Table 1 (and are different measures). Quote which measure each figure is.
+
+## 2026-11-10 — series 7 (the series 6 prompt, re-issued)
+
+**A prompt you already answered yesterday is a continuation, not a new request.** Read the log first: the top-20 list and baseline existed, so a second list would have split the 2026-11-24 measurement and a re-capture a day after a push would have measured noise. Show the user the existing list and what each row did, run only the unshipped, unfrozen items, and put the one real decision (the metadata freeze) in front of them.
+
+**Prices in paste-ready third-party copy go stale when a plan ships.** The off-site kit still said "$2.99/mo or $29/yr" in ten places after the $99 Lifetime plan went live. After any pricing change, grep docs/off-site-kit for `\$[0-9]` and compare with the live /pricing title.
+
+**A constant that crawlers and browsers both render must not live in a file that sync-seo fingerprints.** The lane first put the byline disclosure in `src/data/editorialPolicy.ts`; `sync-seo.mjs` hashes that whole file as the text of /editorial-policy, so `seo:check` failed (stale pageUpdates.json and sitemap lastmod). It now lives in `shared/postHeader.js` with a test that keeps it out of that file.
+
+**A new sourced lead can leave an older, looser sentence on the same page contradicting it.** The onychophagia lead now says what the DSM-5 category is and its criterion; section 2 still said "damaging enough" and the plural label. After adding a sourced claim to a lead, grep the page body for the same claim and make every copy agree.
+
+**`SKIP_BUILD=0` still skips the build in `scripts/qa/gates.sh`** (it tests for a non-empty value). `unset SKIP_BUILD` to build.
+
+**Merged-tree sweep: boot `startRigFrom` from scripts/flags-off-diff/rig.mjs around the built dist and fetch every sitemap URL with a crawler user agent**, flags off and on. Asserting the new raw-HTML header on all 188 posts took one small script; keep it next to the gates.
+
+**`cd` in the shell tool persists.** A `cd docs/off-site-kit` for a sed moved the working directory for later calls. Use `cd /repo && ...` or absolute paths for every command.
