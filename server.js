@@ -26,6 +26,7 @@ import { createLifetimeCopy } from './server/marketing/lifetimeCopy.js';   // th
 import { anyRuleActive, fillCopyTokens, flagAware, flagAwareDeep } from './shared/flagCopy.js';   // WS11b: copy that follows the feature flags
 import { TRIAL_HYPHEN, TRIAL_MS, describeDays, lifetimePriceUsd, referralCreditDays } from './shared/plans.js';   // WS9: the one trial length (TRIAL_DAYS), the Lifetime list price
 import { heroShotPreloadTag } from './shared/heroShot.js';   // the home hero screenshot's preload: one constant with the <img> in Landing.tsx
+import { AUTHOR_DISCLOSURE, formatPostDate } from './shared/postHeader.js';   // the blog article header's date and author line: the same two BlogPost.tsx's header renders
 import {
   decorateEnglishHtml, liveLocales, loadLocaleFiles, localeStates, localizedNoscriptNav, registerLocalePages, servedLocales,
   withLocaleAlternates,
@@ -1022,9 +1023,16 @@ if (!existsSync(distPath)) {
   }
 
   function blogArticleHtml(post) {
+    // The date BlogPost.tsx shows in its header, as it shows it (same formatter, shared/postHeader.js): a revised post
+    // leads with "Updated <date>", one that was never revised shows its publish date alone, each in a <time> whose
+    // datetime is the value JSON-LD states as dateModified / datePublished. A revised post's publish date is then
+    // in the schema and in <meta property="article:published_time"> but in neither visible header.
+    const timeHtml = iso => `<time datetime="${escapeHtml(iso)}">${formatPostDate(iso)}</time>`;
     const dates = post.dateModified !== post.datePublished
-      ? `Published ${post.datePublished} · Updated ${post.dateModified}`
-      : `Published ${post.datePublished}`;
+      ? `Updated ${timeHtml(post.dateModified)}`
+      : timeHtml(post.datePublished);
+    // The line BlogPost.tsx puts under the byline: what the author is, from the one string both read.
+    const disclosureHtml = `<p>${escapeHtml(AUTHOR_DISCLOSURE)}</p>`;
     // The `article-summary` class is a stable hook for the SpeakableSpecification
     // cssSelector in the JSON-LD (SCHEMA_SPEAKABLE below) — keep them in step.
     // Mirrors the "Related articles" cards React renders, so crawlers that
@@ -1045,7 +1053,7 @@ if (!existsSync(distPath)) {
     // renders the exact string BlogPost.tsx shows once React mounts.
     return `<h1>${escapeHtml(post.title)}</h1>` +
       `<p>${escapeHtml(post.tag)} · ${post.readingMinutes} min read · ${dates}</p>` +
-      bylineHtml() +
+      bylineHtml() + disclosureHtml +
       `<p class="article-summary">${escapeHtml(post.description)}</p>` +
       renderSectionsHtml(post.sections) + productLinkHtml + related + authorBoxHtml();
   }

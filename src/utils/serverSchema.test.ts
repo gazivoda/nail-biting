@@ -4,8 +4,17 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_TRIAL_DAYS, fillTrialTokens, trialCopy } from '../../shared/plans.js';
+import type { PostState } from '../hooks/usePost';
+
+// The blog header parity test below renders the real BlogPost page: usePost is fed the fixture post instead of fetching it.
+const h = vi.hoisted(() => ({ state: { status: 'loading' } as PostState }));
+vi.mock('../hooks/usePost', () => ({ usePost: () => h.state }));
+
+import { BlogPost } from '../pages/BlogPost';
 
 type Schema = Record<string, unknown>;
 
@@ -180,5 +189,62 @@ describe('server-rendered schema identities', () => {
     }
     expect(allSlugs.length).toBeGreaterThan(BLOG_WINDOW);
     for (const slug of allSlugs) expect(html).toContain(`<a href="/blog/${slug}">`);
+  });
+
+  // What a crawler reads is #ssr-page-content; what a browser shows is BlogPost.tsx. The two wrote the date differently
+  // ("Published 2026-10-08 · Updated 2026-10-19", ISO, no <time>, against "Updated 19 October 2026" in a <time>) and only
+  // the client's header said what the author is. They are one page, so the header says one thing.
+  describe('blog article header: the crawler copy and the page React renders agree', () => {
+    const DISCLOSURE = 'A software developer who bit his nails for over 20 years, not a clinician.';
+    // React writes the attribute as dateTime, the crawler copy as datetime: one attribute, HTML does not tell them apart.
+    const TIME = /(Updated )?<time datetime="([^"]+)"[^>]*>([^<]+)<\/time>/gi;
+    const timesOf = (html: string) => [...html.matchAll(TIME)].map(m => [m[1] ?? '', m[2], m[3]]);
+    const crawlerArticle = (html: string) => html.match(/<article id="ssr-page-content">([\s\S]*?)<\/article>/)?.[1] ?? '';
+    const fixturePost = (slug: string) => JSON.parse(readFileSync(join(fixture, 'dist/seo-content.json'), 'utf8')).posts[slug];
+    const clientHtml = (slug: string) => {
+      h.state = { status: 'ok', post: { slug, ...fixturePost(slug), related: [], productLink: null } };
+      return renderToStaticMarkup(createElement(BlogPost, { slug }));
+    };
+
+    // [slug, the date line a reader sees]: schema-fixture was never revised, schema-filler-01 was (published 09-01, modified 09-30)
+    it.each([
+      ['schema-fixture', [['', '2026-10-01', '1 October 2026']]],
+      ['schema-filler-01', [['Updated ', '2026-09-30', '30 September 2026']]],
+    ])('%s: the same date text and <time> in both', async (slug, expected) => {
+      const { html, schemas } = await page(`/blog/${slug}`);
+      const crawler = crawlerArticle(html);
+      expect(timesOf(crawler)).toEqual(expected);
+      expect(timesOf(clientHtml(slug))).toEqual(expected);
+      expect(crawler.replace(/<[^>]*>/g, ' ')).not.toMatch(/\b\d{4}-\d{2}-\d{2}\b/);   // no ISO string left in the visible text (it lives in datetime=)
+
+      // The date the page shows is a date the schema states: <time datetime> is the JSON-LD value, not a rewrite of it.
+      const post = fixturePost(slug);
+      const article = schemas.find(schema => schema['@type'] === 'BlogPosting');
+      expect(article?.datePublished).toBe(post.datePublished);
+      expect(article?.dateModified).toBe(post.dateModified);
+      for (const [, iso] of timesOf(crawler)) expect([article?.datePublished, article?.dateModified]).toContain(iso);
+      expect(timesOf(crawler)[0][1]).toBe(post.dateModified);   // a revised post leads with its update date; an unrevised one has the same two
+    });
+
+    it.each(['schema-fixture', 'schema-filler-01'])('%s: says what the author is, under the byline, as the page React renders does', async slug => {
+      const { html } = await page(`/blog/${slug}`);
+      expect(clientHtml(slug)).toContain(DISCLOSURE);
+      const crawler = crawlerArticle(html);
+      const byline = crawler.indexOf('<p>By <a href="/about">Igor Gazivoda</a>');
+      const disclosure = crawler.indexOf(`<p>${DISCLOSURE}</p>`);
+      const summary = crawler.indexOf('<p class="article-summary">');
+      expect(byline).toBeGreaterThan(-1);
+      expect(disclosure).toBeGreaterThan(byline);
+      expect(disclosure).toBeLessThan(summary);
+      expect(crawler.split(DISCLOSURE)).toHaveLength(2);   // once, in the header: the author box at the end has its own sentence
+    });
+
+    // bylineHtml() is shared with the comparison pages, whose React page draws no disclosure line and no date under the heading.
+    it('leaves the comparison pages alone', async () => {
+      const crawler = crawlerArticle((await page('/compare/ai-detection-apps')).html);
+      expect(crawler).toContain('<p>By <a href="/about">Igor Gazivoda</a>');
+      expect(crawler).not.toContain(DISCLOSURE);
+      expect(timesOf(crawler)).toEqual([]);
+    });
   });
 });
