@@ -64,7 +64,7 @@ describe('compare and solutions pages, the Lifetime plan on or off', () => {
     expect(on).toContain('What a Stop Biting plan pays for is the rest of the system');
     expect(on).toContain('Should I buy Nailed or pay for Stop Biting?');
     // Nailed's own facts and prices, and the conclusion, are as they were
-    for (const kept of ['nailedapp.io advertises $4.99 one-time', 'Either way there is no subscription', 'on price Nailed wins outright for Mac users on Apple Silicon']) {
+    for (const kept of ['nailedapp.io and its Mac App Store listing both show the app as free', 'Nailed asks for nothing recurring', 'on price Nailed wins outright for Mac users on Apple Silicon']) {
       expect(on, kept).toContain(kept);
     }
 

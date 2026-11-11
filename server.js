@@ -2677,15 +2677,15 @@ if (!existsSync(distPath)) {
     },
     '/compare/stop-biting-vs-nailed': {
       // Two claims the body had already retracted survived here. The price:
-      // nailedapp.io advertises "$4.99 · macOS only" while the Mac App Store
-      // listing that is its only download button shows the app as Free
-      // (offers.price 0, hasInAppPurchases false), so the page reports both
-      // sources and asserts neither as the price a buyer pays — the title's
-      // "One-Time" asserted it anyway. And tracking: that same listing is
+      // nailedapp.io advertised "$4.99 · macOS only" on 2026-09-10 while the Mac
+      // App Store listing that is its only download button showed Free
+      // (offers.price 0, hasInAppPurchases false); on 2026-11-11 the site reads
+      // "Free · macOS only" too, so the description says Free and the title's
+      // "One-Time" stays out. And tracking: that same listing is
       // subtitled "Offline nail-biting tracking", so "Stop Biting adds
       // tracking" understated a competitor that ships it.
       title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
-      description: 'Nailed\'s site advertises $4.99, its App Store listing shows Free; we report both. Stop Biting adds Windows, the browser, deeper tracking. An honest comparison.',
+      description: 'Nailed is free on its site and the Mac App Store, so price is its win. Stop Biting adds Windows, the browser, deeper tracking. An honest comparison.',
       date: '2026-08-11',
     },
     '/compare/stop-biting-vs-smartbehavior': {

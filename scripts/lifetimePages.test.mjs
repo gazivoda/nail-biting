@@ -216,7 +216,7 @@ describe.skipIf(!built)('pages that quote our price, flag on with the price id',
     }
     const nailed = flatten(textOf(articleOf(on['/compare/stop-biting-vs-nailed'])));
     for (const kept of [
-      'nailedapp.io advertises $4.99 one-time', 'Either way there is no subscription', 'Nailed asks for nothing recurring',
+      'nailedapp.io and its Mac App Store listing both show the app as free', 'Nailed asks for nothing recurring',
       'on price Nailed wins outright for Mac users on Apple Silicon', 'Choose Nailed if: you’re on an Apple Silicon Mac, you want nothing recurring',
     ]) expect(nailed, kept).toContain(kept);
     const habitcam = flatten(textOf(articleOf(on['/compare/stop-biting-vs-habitcam'])));

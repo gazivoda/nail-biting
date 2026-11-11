@@ -506,7 +506,7 @@ function getWindowsContent(): PageContent {
 // refusal to name a price at all. A correction here is not finished until the
 // matching COMPARE_META entry has been re-read in the same edit.
 //
-// Last full re-verification: 2026-09-10. Previous pass: 2026-08-11.
+// Last full re-verification: 2026-09-10. Previous pass: 2026-08-11. Nailed alone re-checked 2026-11-11 (below).
 //
 //   Hands Off     https://handsoffapp.com  (HTTP 200, re-fetched 2026-09-10)
 //     CONFIRMED: "Download for Mac" and "Download for Windows", no web version;
@@ -530,7 +530,7 @@ function getWindowsContent(): PageContent {
 //       first week for most users". Uncited vendor marketing — we do not cite
 //       it for or against them.
 //
-//   Nailed        https://nailedapp.io     (HTTP 200, re-fetched 2026-09-10)
+//   Nailed        https://nailedapp.io     (HTTP 200, re-fetched 2026-09-10 and again 2026-11-11)
 //     CONFIRMED: "A tiny macOS menu bar app", macOS only; "MediaPipe machine
 //       learning models that run entirely in-browser via WebAssembly"; "Your
 //       camera feed is processed in memory and immediately discarded"; "We have
@@ -550,6 +550,19 @@ function getWindowsContent(): PageContent {
 //       nail biting habit". Our pages said tracking was not listed. Fixed.
 //     ADDED 2026-09-10: "Requires macOS 12.0 or later and a Mac with Apple M1
 //       chip or later" — a real hardware limit we had never stated.
+//     RE-CHECKED 2026-11-11 (home page, US Mac App Store listing; every other
+//       Nailed claim above was read again and still holds):
+//       CORRECTED — price: nailedapp.io now reads "Free · macOS only" and no
+//         longer contains "$4.99" anywhere; the store listing is still Free
+//         (schema.org offers.price 0 USD, hasInAppPurchases false). The two
+//         sources now agree, so the page states one price. Our best-apps post
+//         already recorded both as free on 2026-10-23, so the site changed
+//         between 2026-09-10 and 2026-10-23.
+//       CORRECTED — compatibility: the listing now says "Requires macOS 13.0
+//         or later and a Mac with Apple M1 chip or later" (was 12.0).
+//       Listing is now titled "Nailed: Quit Nail Biting" (apps.apple.com/us/app/
+//         nailed-quit-nail-biting/id6761733224, version 1.5.0 dated Oct 20).
+//       If either source changes again, re-check both before editing one line.
 //
 //   SmartBehavior https://smart-behavior.com/en (HTTP 200, re-fetched 2026-09-10)
 //     CONFIRMED: App Store, Google Play and Microsoft Store links all present;
@@ -803,20 +816,19 @@ function getVsHandsOffContent(): PageContent {
 
 function getVsNailedContent(): PageContent {
   return {
-    // Not "One-Time Mac App": the body below refuses to name a single price,
-    // because nailedapp.io advertises $4.99 while the Mac App Store listing
-    // that is its only download button shows the app as Free. A heading must
-    // not assert the one thing the page it heads says cannot be asserted.
+    // Not "One-Time Mac App": Nailed is free (nailedapp.io and its Mac App Store
+    // listing agreed on 2026-11-11; the site advertised $4.99 on 2026-09-10), so a
+    // heading that says "One-Time" would assert a price nobody pays.
     title: 'Stop Biting vs Nailed: Subscription vs Mac Menu Bar App',
     subtitle: 'Two apps built on the same detection engine, with very different scopes: a minimal Mac menu bar utility vs a cross-platform habit system',
-    intro: 'Choose Nailed if you’re on an Apple Silicon Mac — its store listing requires macOS 12 or later and an Apple M1 chip or later — and want nothing recurring; choose Stop Biting, at $2.99/month or $29/year, if you need Windows, an Intel Mac or a browser version, or you want streaks, incident history and habit-reversal content around the detector. Nailed and Stop Biting share more DNA than any other two apps in this category: both use Google’s MediaPipe machine learning models running via WebAssembly, entirely on-device. The difference is scope. Nailed is a deliberately minimal macOS menu bar app; Stop Biting is a subscription that adds Windows, a browser version, streak tracking, incident history, and a habit-reversal content library. One caveat before any of the comparisons below: nailedapp.io advertises $4.99, but the Mac App Store listing that is its only download link currently shows the app as a free download with no in-app purchases. Check the store page before you assume a price. Disclosure: Stop Biting is our product — we re-verified every Nailed claim here against nailedapp.io and its App Store listing on 10 September 2026 and tried to represent it fairly.',
+    intro: 'Choose Nailed if you’re on an Apple Silicon Mac — its store listing requires macOS 13 or later and an Apple M1 chip or later — and want nothing recurring; choose Stop Biting, at $2.99/month or $29/year, if you need Windows, an Intel Mac or a browser version, or you want streaks, incident history and habit-reversal content around the detector. Nailed and Stop Biting share more DNA than any other two apps in this category: both use Google’s MediaPipe machine learning models running via WebAssembly, entirely on-device. The difference is scope. Nailed is a deliberately minimal macOS menu bar app; Stop Biting is a subscription that adds Windows, a browser version, streak tracking, incident history, and a habit-reversal content library. On price Nailed wins outright: nailedapp.io and its Mac App Store listing both show it as free, and the listing shows no in-app purchases. Disclosure: Stop Biting is our product — we re-verified every Nailed claim here against nailedapp.io and its App Store listing on 11 November 2026 and tried to represent it fairly.',
     sections: [
       {
         heading: 'Stop Biting vs Nailed: what’s the difference?',
-        body: 'Same detection engine, different scope: Nailed is a macOS-only menu bar app; Stop Biting adds Windows and the browser, streak tracking, incident history and a habit-reversal content library.\n\nDetails re-verified against nailedapp.io and Nailed’s Mac App Store listing on 10 September 2026. Pricing and features change — confirm on the vendor’s site before buying.',
+        body: 'Same detection engine, different scope: Nailed is a macOS-only menu bar app; Stop Biting adds Windows and the browser, streak tracking, incident history and a habit-reversal content library.\n\nDetails re-verified against nailedapp.io and Nailed’s Mac App Store listing on 11 November 2026. Pricing and features change — confirm on the vendor’s site before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Nailed</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>macOS only (menu bar app); its store listing requires macOS 12 or later and an Apple M1 chip or later</td></tr>' +
-          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>nailedapp.io advertises $4.99 one-time; its Mac App Store listing currently shows “Free”, with no in-app purchases</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>macOS only (menu bar app); its store listing requires macOS 13 or later and an Apple M1 chip or later</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/month or $29/year</td><td>Free on nailedapp.io and on its Mac App Store listing, which shows no in-app purchases</td></tr>' +
           `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no credit card</td><td>None listed</td></tr>` +
           '<tr><td>Detection engine</td><td>MediaPipe models via WebAssembly, on-device</td><td>MediaPipe models via WebAssembly, on-device</td></tr>' +
           '<tr><td>Alerts</td><td>Audible alarm, multiple alert types</td><td>Red screen flash, optional beep</td></tr>' +
@@ -829,30 +841,30 @@ function getVsNailedContent(): PageContent {
       },
       {
         heading: 'Why choose Nailed over Stop Biting?',
-        body: 'Nailed asks for nothing recurring. Its site advertises $4.99 as a single purchase, and when we checked its Mac App Store listing on 10 September 2026 the app was listed as a free download with no in-app purchases at all. Either way there is no subscription — and if the free listing is current, Nailed is simply the cheapest credible detector in this category, which is worth saying plainly on a page published by one of its competitors.\n\nIt’s also admirably unobtrusive: it lives in the menu bar, flashes the screen red and optionally beeps when it catches you, and its site emphasizes minimal CPU and battery usage. For a conscious minimalist who just wants the awareness signal and nothing else, Nailed is a well-made tool.',
+        body: 'Nailed asks for nothing recurring, and nothing up front either: nailedapp.io and its Mac App Store listing both show the app as free, and the listing shows no in-app purchases (both checked on 11 November 2026). That makes Nailed the cheapest credible detector in this category, which is worth saying plainly on a page published by one of its competitors.\n\nIt’s also admirably unobtrusive: it lives in the menu bar, flashes the screen red and optionally beeps when it catches you, and its site emphasizes minimal CPU and battery usage. For a conscious minimalist who just wants the awareness signal and nothing else, Nailed is a well-made tool.',
       },
       {
         heading: 'Why choose Stop Biting over Nailed?',
-        body: `Platforms: Nailed is macOS-only, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs as a no-install web app in any modern browser on Mac or Windows, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial. Stop Biting’s ${TRIAL_HYPHEN} trial requires no credit card, so you can test detection accuracy on your actual desk before paying. This is a smaller advantage than it looks right now — if Nailed’s store listing is free, trying it costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.`,
+        body: `Platforms: Nailed is macOS-only, and its store listing requires macOS 13 or later on a Mac with an Apple M1 chip or later — so an older Intel Mac rules it out entirely. Stop Biting runs as a no-install web app in any modern browser on Mac or Windows, including on machines where you can’t install software.\n\nTrying before buying: Nailed lists no free trial, and it does not need one, because the app is free. Stop Biting’s ${TRIAL_HYPHEN} trial requires no credit card, so you can test detection accuracy on your actual desk before paying. That is a smaller advantage than it looks, since trying Nailed costs nothing either.\n\nThe system around the alarm: Stop Biting tracks bite-free streaks and keeps a timestamped incident history, and ships with over 100 science-backed guides on habit reversal training, so the alarm feeds a method rather than standing alone. Nailed does track: its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks, an incident history you can review, or any treatment content — so the difference is depth of measurement, not its absence.\n\nThe honest counterpoint: if the awareness signal alone fixes your habit, Stop Biting’s subscription buys you things you may not need — and on price Nailed wins outright for Mac users on Apple Silicon.`,
       },
       {
         heading: 'Which is cheaper, Stop Biting or Nailed?',
-        body: 'Nailed: advertised at $4.99 once on nailedapp.io, and listed as a free download on its Mac App Store page when we checked. Stop Biting: $2.99/month, or $29/year (~$2.42/month).\n\nThere’s no way to spin that: on price alone Nailed wins, and it wins by more if the free store listing is the current one. If price is your deciding factor and you’re on an Apple Silicon Mac, get Nailed.\n\nWhat the subscription pays for is the rest of the system — Windows and browser support, streaks and a reviewable incident history, alert options, ongoing model and feature updates, and the content library. Whether that’s worth ~$29/year depends on how established your habit is: casual biters often need only the nudge; chronic biters typically need the tracking and the method. Prices re-verified on 10 September 2026 against both nailedapp.io and its App Store listing, which did not agree — treat the store page as the one that decides what you actually pay.',
+        body: 'Nailed: free, on nailedapp.io and on its Mac App Store listing (both checked on 11 November 2026). Stop Biting: $2.99/month, or $29/year (~$2.42/month).\n\nThere’s no way to spin that: on price alone Nailed wins. If price is your deciding factor and you’re on an Apple Silicon Mac, get Nailed.\n\nWhat the subscription pays for is the rest of the system — Windows and browser support, streaks and a reviewable incident history, alert options, ongoing model and feature updates, and the content library. Whether that’s worth ~$29/year depends on how established your habit is: casual biters often need only the nudge; chronic biters typically need the tracking and the method. Prices re-verified on 11 November 2026 against both nailedapp.io and its App Store listing, which now agree. Nailed’s own site advertised $4.99 when we first checked on 10 September 2026, so confirm on the store page before downloading.',
       },
       {
         heading: 'Should I buy Nailed or subscribe to Stop Biting?',
         body: 'Choose Nailed if: you’re on an Apple Silicon Mac, you want nothing recurring, you’re confident the red-flash awareness cue alone will do it, and you don’t need streaks or a reviewable incident history.\n\nChoose Stop Biting if: you’re on Windows, an Intel Mac, or need a browser version; you want streaks and incident data to measure progress; or your habit has survived previous attempts and you want the full habit-reversal toolkit around the detector.',
       },
       faqSection(
-        'Every answer below rests on the same 10 September 2026 check of nailedapp.io and the Mac App Store listing that site links to.',
+        'Every answer below rests on the same 11 November 2026 check of nailedapp.io and the Mac App Store listing that site links to.',
         [
-          ['Does Nailed work on Windows?', 'No — it’s a macOS menu bar app, and its store listing requires macOS 12 or later on a Mac with an Apple M1 chip or later. Stop Biting runs as a web app in any modern browser on Mac or Windows.'],
-          ['How much does Nailed cost?', 'Its site advertises $4.99 as a one-time purchase, while the Mac App Store listing it links to currently shows the app as a free download with no in-app purchases. Check the store page before assuming a price.'],
+          ['Does Nailed work on Windows?', 'No — it’s a macOS menu bar app, and its store listing requires macOS 13 or later on a Mac with an Apple M1 chip or later. Stop Biting runs as a web app in any modern browser on Mac or Windows.'],
+          ['How much does Nailed cost?', 'Nothing. nailedapp.io and the Mac App Store listing it links to both show the app as free, and the listing shows no in-app purchases. Prices can change, so check the store page before downloading.'],
           ['Does Nailed track your progress?', 'Yes. Its App Store listing is subtitled “Offline nail-biting tracking” and says the app helps you track the habit. What it doesn’t describe is streaks or a reviewable incident history.'],
-          ['Does Nailed have a free trial?', `No free trial is listed. Its App Store listing showed the app as a free download when we checked, so trying it may cost nothing anyway; Stop Biting’s ${TRIAL_HYPHEN} trial needs no credit card.`],
+          ['Does Nailed have a free trial?', `No free trial is listed, and it does not need one: the app is free. Stop Biting’s ${TRIAL_HYPHEN} trial needs no credit card.`],
         ],
       ),
-      verificationSection('Every Nailed detail on this page was re-verified on 10 September 2026 against nailedapp.io and the Mac App Store listing that site links to as its only download button. Two things changed in Nailed’s favour and are corrected above: its store listing now shows the app as a free download with no in-app purchases, so we no longer present $4.99 as the price you pay, and that listing describes nail-biting tracking, which an earlier version of this page said was absent. Where a vendor’s own two sources disagree — as they do here on price — we show both and name each rather than picking the one that flatters us. Confirm on the App Store page before downloading.', ['https://nailedapp.io']),
+      verificationSection('Every Nailed detail on this page was re-verified on 11 November 2026 against nailedapp.io and the Mac App Store listing that site links to as its only download button. Three things have changed in Nailed’s favour since this page was first written, and all three are corrected above: its store listing shows the app as a free download with no in-app purchases, its own site now says “Free” where it advertised $4.99 when we checked on 10 September, and the listing describes nail-biting tracking, which an earlier version of this page said was absent. One correction went the other way: the listing now requires macOS 13 rather than 12. Where a vendor’s own two sources disagree we show both and name each rather than picking the one that flatters us; today they agree. Confirm on the App Store page before downloading.', ['https://nailedapp.io']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [
@@ -934,16 +946,16 @@ function getAiDetectionAppsContent(): PageContent {
   return {
     title: 'AI Apps That Detect Nail Biting: Every Option Compared',
     subtitle: 'Four apps now use on-device AI to catch nail biting in real time. Here’s the honest head-to-head, including where ours loses.',
-    intro: 'Real-time AI nail biting detection went from one app to a real category: four products now watch for hand-to-mouth movement through a camera and interrupt the habit as it happens — Stop Biting ($2.99/month or $29/year), Hands Off (€2.99/month), Nailed ($4.99 on its own site, but shown as a free download on the Mac App Store listing that site links to) and SmartBehavior (no price on its website; $0.99 on its US App Store listing). All four process video on-device. This page compares them directly; our per-app pages go deeper on each match-up. Disclosure: Stop Biting is our product. Every competitor claim below was re-verified against the vendors’ own websites and app store listings on 10 September 2026, and we’ve noted honestly where each alternative beats us.',
+    intro: 'Real-time AI nail biting detection went from one app to a real category: four products now watch for hand-to-mouth movement through a camera and interrupt the habit as it happens — Stop Biting ($2.99/month or $29/year), Hands Off (€2.99/month), Nailed (free, on its own site and on its Mac App Store listing) and SmartBehavior (no price on its website; $0.99 on its US App Store listing). All four process video on-device. This page compares them directly; our per-app pages go deeper on each match-up. Disclosure: Stop Biting is our product. Every competitor claim below was re-verified against the vendors’ own websites and app store listings on 10 September 2026 (Nailed again on 11 November 2026), and we’ve noted honestly where each alternative beats us.',
     sections: [
       {
         heading: 'Which apps detect nail biting in real time?',
         body: 'Four, as of 10 September 2026: Stop Biting, Hands Off, Nailed and SmartBehavior. All four process video on-device.\n\nAll details below were re-verified against each vendor’s public website, and their app store listings where those exist, on 10 September 2026. Pricing and features change — confirm before buying.',
         html: '<table><thead><tr><th></th><th>Stop Biting</th><th>Hands Off</th><th>Nailed</th><th>SmartBehavior</th></tr></thead><tbody>' +
-          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>Mac, Windows</td><td>macOS only; needs macOS 12+ and Apple M1 or later</td><td>iOS, Android, Windows; iPad app also runs on Apple Silicon Macs</td></tr>' +
+          '<tr><td>Platforms</td><td>Web app (PWA) in a browser on Mac or Windows</td><td>Mac, Windows</td><td>macOS only; needs macOS 13+ and Apple M1 or later</td><td>iOS, Android, Windows; iPad app also runs on Apple Silicon Macs</td></tr>' +
           '<tr><td>Behaviors</td><td>Nail biting</td><td>Five BFRBs (nail biting, skin picking, brow/lash pulling, ear picking, nose picking listed)</td><td>Nail biting</td><td>Nail biting, skin picking, hair pulling, other BFRBs</td></tr>' +
           '<tr><td>Detection</td><td>On-device (MediaPipe/WASM)</td><td>On-device, all processing local</td><td>On-device (MediaPipe/WASM)</td><td>On-device, 100% offline</td></tr>' +
-          '<tr><td>Price</td><td>$2.99/mo or $29/yr</td><td>€2.99/mo</td><td>$4.99 one-time on its site; its App Store listing shows “Free”</td><td>Not published on site; US App Store listing showed $0.99</td></tr>' +
+          '<tr><td>Price</td><td>$2.99/mo or $29/yr</td><td>€2.99/mo</td><td>Free, on its site and on its App Store listing</td><td>Not published on site; US App Store listing showed $0.99</td></tr>' +
           `<tr><td>Free trial</td><td>${TRIAL_DAYS_TEXT}, no card</td><td>3 days</td><td>None listed</td><td>Not stated on site</td></tr>` +
           '<tr><td>Tracking</td><td>Streaks + incident history</td><td>Statistics tracker showing progress over time</td><td>Store listing describes offline nail-biting tracking</td><td>Daily/weekly/monthly trends</td></tr>' +
           '</tbody></table>',
@@ -962,7 +974,7 @@ function getAiDetectionAppsContent(): PageContent {
       },
       {
         heading: 'Which app is best for Mac users who don’t want a subscription?',
-        body: 'Nailed (nailedapp.io) is a macOS menu bar app. Its site advertises $4.99 as a one-time purchase, while the Mac App Store listing it links to currently shows the app as a free download with no in-app purchases — so check the store page for the price that applies to you. It uses the same MediaPipe-via-WebAssembly approach as Stop Biting, entirely on-device: the camera feed is processed in memory and discarded, with no servers and no analytics. When it detects biting, it flashes the screen red with an optional beep. Its store listing also describes offline nail-biting tracking.\n\nNo free trial is listed, it needs macOS 12 or later on an Apple M1 Mac or newer, and it’s Mac-only — but if you want the cheapest credible detector and dislike subscriptions, Nailed is it. See our full Stop Biting vs Nailed comparison.',
+        body: 'Nailed (nailedapp.io) is a macOS menu bar app. Its site and the Mac App Store listing it links to both show it as free, and the listing shows no in-app purchases. It uses the same MediaPipe-via-WebAssembly approach as Stop Biting, entirely on-device: the camera feed is processed in memory and discarded, with no servers and no analytics. When it detects biting, it flashes the screen red with an optional beep. Its store listing also describes offline nail-biting tracking.\n\nNo free trial is listed, it needs macOS 13 or later on an Apple M1 Mac or newer, and it’s Mac-only — but if you want the cheapest credible detector and dislike subscriptions, Nailed is it. See our full Stop Biting vs Nailed comparison.',
       },
       {
         heading: 'Which app is best for phone-based detection?',
@@ -970,18 +982,18 @@ function getAiDetectionAppsContent(): PageContent {
       },
       {
         heading: 'How do I choose between these nail biting apps?',
-        body: 'Match the app to where your habit lives, not to feature counts.\n\nBite mainly at a computer, want tracking and a method around the alarm: Stop Biting — and the free trial needs no card, so testing it costs nothing.\n\nMultiple BFRBs (skin picking, brow pulling, ear picking) at a desktop: Hands Off.\n\nApple Silicon Mac user who wants nothing recurring: Nailed — and check its App Store page, which listed it free when we last looked.\n\nBite mainly away from the computer, want it on your phone: SmartBehavior.\n\nWhichever you pick, the mechanism is the same evidence-aligned idea: automate the awareness that habit reversal training requires and the habit itself suppresses.',
+        body: 'Match the app to where your habit lives, not to feature counts.\n\nBite mainly at a computer, want tracking and a method around the alarm: Stop Biting — and the free trial needs no card, so testing it costs nothing.\n\nMultiple BFRBs (skin picking, brow pulling, ear picking) at a desktop: Hands Off.\n\nApple Silicon Mac user who wants nothing recurring: Nailed, which is free.\n\nBite mainly away from the computer, want it on your phone: SmartBehavior.\n\nWhichever you pick, the mechanism is the same evidence-aligned idea: automate the awareness that habit reversal training requires and the habit itself suppresses.',
       },
       faqSection(
         'Every answer below rests on the same 10 September 2026 check of the four vendors’ own websites and app store listings.',
         [
-          ['Are there any free nail biting detection apps?', `Nailed’s Mac App Store listing showed the app as a free download with no in-app purchases when we checked, though its own site advertises $4.99. Stop Biting has a ${TRIAL_HYPHEN} free trial that needs no credit card.`],
+          ['Are there any free nail biting detection apps?', `Nailed is free on its own site and on its Mac App Store listing, which shows no in-app purchases (checked on 11 November 2026). Stop Biting has a ${TRIAL_HYPHEN} free trial that needs no credit card.`],
           ['Do these apps upload your camera feed?', 'No. All four process video on-device: Stop Biting and Nailed run MediaPipe models in WebAssembly, Hands Off states all processing is local, and SmartBehavior states it works 100% offline.'],
           ['Which of them detect more than nail biting?', 'Hands Off lists five BFRBs — nail biting, skin picking, brow or lash pulling, ear picking and nose picking — and SmartBehavior covers nail biting, skin picking, hair pulling and other BFRBs. Stop Biting and Nailed detect nail biting.'],
           ['Is there a nail biting detection app for iPhone or Android?', 'SmartBehavior has native iOS and Android apps. Stop Biting runs on a phone as a web app rather than an installed detector.'],
         ],
       ),
-      verificationSection('Every competitor claim in the table above was re-verified on 10 September 2026 against handsoffapp.com, nailedapp.io, smart-behavior.com and the App Store listings those sites link to. Three of the corrections that pass produced went against us, and they are worth naming: Hands Off ships a statistics tracker and lists a fifth behaviour, ear picking, that we had left out; Nailed’s App Store listing now shows the app as a free download and describes nail-biting tracking, both of which this page previously denied it; and SmartBehavior’s iPad app runs on Apple Silicon Macs, which we had presented as a gap. We re-check quarterly rather than writing a comparison once and leaving it to rot, and we date it here so you can judge how current it is. Prices and features change — confirm on the vendor’s own site before buying.', ['https://handsoffapp.com', 'https://nailedapp.io', 'https://smart-behavior.com']),
+      verificationSection('Every competitor claim in the table above was re-verified on 10 September 2026 against handsoffapp.com, nailedapp.io, smart-behavior.com and the App Store listings those sites link to. Three of the corrections that pass produced went against us, and they are worth naming: Hands Off ships a statistics tracker and lists a fifth behaviour, ear picking, that we had left out; Nailed’s App Store listing now shows the app as a free download and describes nail-biting tracking, both of which this page previously denied it; and SmartBehavior’s iPad app runs on Apple Silicon Macs, which we had presented as a gap. Nailed’s price and macOS requirement were checked again on 11 November 2026: its own site now says “Free” where it advertised $4.99 in September, and its listing requires macOS 13 rather than 12. We re-check quarterly rather than writing a comparison once and leaving it to rot, and we date it here so you can judge how current it is. Prices and features change — confirm on the vendor’s own site before buying.', ['https://handsoffapp.com', 'https://nailedapp.io', 'https://smart-behavior.com']),
       MEDICAL_DISCLAIMER_SECTION,
     ],
     relatedPosts: [

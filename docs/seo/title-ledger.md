@@ -207,3 +207,14 @@ only reads the literals in `server.js`. The two overruns above got in on 2026-10
 - Why it changed despite the freeze: the body now also cites a 2020 appendicitis case report (Pagacz et al., PMID 32309003, abstract read 2026-11-09), so "one gastritis case report" contradicted the page. `title` and `seoTitle` are untouched.
 
 **Body-only edits on 2026-11-09 to pages with a running metadata evaluation** (no title or description changed, but a ranking or click-through move after this date cannot be credited to metadata alone): `nail-biting-cancer` (2018 thumb story, Choi 2022), `pinworm-nail-biting` (CDC and NHS lead), `nail-biting-toenails` (infection and ingrown-nail section), `is-nail-biting-self-harm` (Mann 2020 sentence), `swallowing-fingernails` (appendicitis case report, when-to-get-help line), `best-apps-to-stop-nail-biting` (phone apps section and table), `swallowing-nail-polish-biting` (already edited 2026-11-06). Read these pages' 2026-11-24 results with that in mind.
+
+## Correctness change, 2026-11-11 (series 7, Nailed price)
+
+| Date | URL | What changed | Baseline | Evaluate on |
+|---|---|---|---|---|
+| 2026-11-11 | `/compare/stop-biting-vs-nailed` | description only (`COMPARE_META` in `server.js`, mirrored in `public/llms.txt`) | not in the top-20 list and not in this ledger; metadata last changed 2026-10-19 (the em-dash sweep, 6ce6c32) | not a CTR experiment; no evaluation |
+
+- Old description: `Nailed's site advertises $4.99, its App Store listing shows Free; we report both. Stop Biting adds Windows, the browser, deeper tracking. An honest comparison.`
+- New description (148 chars): `Nailed is free on its site and the Mac App Store, so price is its win. Stop Biting adds Windows, the browser, deeper tracking. An honest comparison.`
+- Why it changed despite the freeze: on 2026-11-11 nailedapp.io read "Free · macOS only" and no longer contained "$4.99" (checked with a browser User-Agent; the US Mac App Store listing still shows Free, `offers.price` 0, `hasInAppPurchases` false). The old description said the two sources disagreed, which is no longer true. `title` and the h1 are untouched. The page body was corrected in the same commit, as the `COMPARE_META` comment requires.
+- Also corrected in the same commit, body only: Nailed's macOS requirement (the listing now says macOS 13.0 or later, the pages said 12) on `/compare/stop-biting-vs-nailed`, `/compare/ai-detection-apps` and `/blog/best-apps-to-stop-nail-biting`.

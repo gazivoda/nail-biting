@@ -1022,7 +1022,7 @@ BLOG_POSTS.push({
   tag: 'Comparison',
   readingMinutes: 12,
   datePublished: '2026-04-19',
-  dateModified: '2026-11-09',
+  dateModified: '2026-11-11',
   ogImage: '/og/best-apps-to-stop-nail-biting.png',
   sections: [
     {
@@ -1031,7 +1031,7 @@ BLOG_POSTS.push({
     },
     {
       heading: 'Camera apps: alerts while your hand is near your mouth',
-      body: `Stop Biting uses a computer webcam and on-device hand and face tracking to alert when a fingertip stays close to the mouth. Camera frames are processed locally. Proximity is a proxy for biting: false alarms and missed episodes are possible, and it cannot monitor you away from the camera.\n\nIts alert is intended as an awareness aid. Habit Reversal Training (HRT) combines awareness training with other components, including competing responses and social support. Evidence for that treatment package is not evidence that a particular app produces the same results.\n\nStop Biting costs $2.99/month or $29/year after a free ${TRIAL_HYPHEN} trial, with no credit card required to start.\n\nThere are other camera apps. Our 10 September 2026 vendor check recorded Hands Off for Mac and Windows and SmartBehavior with iOS and Android apps. Both describe support for behaviours beyond nail biting. Hands Off's homepage, rechecked on 23 October, says it costs €2.99/month with a 3-day trial. SmartBehavior's September store price was $0.99; confirm its current listing before buying.\n\nNailed is a macOS menu bar app. On 23 October 2026, both its official site and its linked US Mac App Store listing showed it as free. The listing requires macOS 12 or later and a Mac with an Apple M1 chip or later.`,
+      body: `Stop Biting uses a computer webcam and on-device hand and face tracking to alert when a fingertip stays close to the mouth. Camera frames are processed locally. Proximity is a proxy for biting: false alarms and missed episodes are possible, and it cannot monitor you away from the camera.\n\nIts alert is intended as an awareness aid. Habit Reversal Training (HRT) combines awareness training with other components, including competing responses and social support. Evidence for that treatment package is not evidence that a particular app produces the same results.\n\nStop Biting costs $2.99/month or $29/year after a free ${TRIAL_HYPHEN} trial, with no credit card required to start.\n\nThere are other camera apps. Our 10 September 2026 vendor check recorded Hands Off for Mac and Windows and SmartBehavior with iOS and Android apps. Both describe support for behaviours beyond nail biting. Hands Off's homepage, rechecked on 23 October, says it costs €2.99/month with a 3-day trial. SmartBehavior's September store price was $0.99; confirm its current listing before buying.\n\nNailed is a macOS menu bar app. On 23 October 2026, both its official site and its linked US Mac App Store listing showed it as free; both still did on 11 November 2026, when the listing required macOS 13.0 or later and a Mac with an Apple M1 chip or later.`,
       list: [
         `For a browser-based alert at your desk: compare Stop Biting's setup and limits with the installed camera apps.`,
         `For several BFRBs: check which specific behaviours Hands Off and SmartBehavior say they cover.`,
