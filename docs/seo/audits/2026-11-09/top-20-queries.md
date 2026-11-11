@@ -57,3 +57,32 @@ For each row: the real Google result page (AI Overview present and who it cites,
 featured snippet) and the same query in Perplexity, recorded in `serp-baseline.md` in this folder. Then body, structure,
 internal-link and citability edits that the evidence supports, shipped through the usual gates. Nothing here claims a
 traffic effect; the next measurement is 2026-11-24, with a second read on 2026-12-08.
+
+## Status after series 6 and 7 (2026-11-10; live at 61d4de9)
+
+What each row got. "Frozen" means title, seoTitle and description are held to 2026-11-24 (`docs/seo/title-ledger.md`); bodies were not.
+
+| # | Query | Done to the landing page | Google 11-09 (page 1? AIO names us?) |
+|---|---|---|---|
+| 1 | can nail biting cause cancer | 2018 thumb-amputation story and Choi 2022 added (133e49e) | page 1 (about 5th); no; Perplexity cites us first |
+| 2 | is nail biting self harm | Mann 2020 line (e083ca2); SXO verdict: nothing else | no; no |
+| 3 | worms from biting nails | lead names what CDC and NHS say (5e9ccbf) | no; no |
+| 4 | swallow nail polish | opens with Poison Control and CHOP, then 911 and the number in the lead (11-06, 11-09) | page 1 (about 10th, our lead is the snippet); no |
+| 5 | swallow a fingernail | appendicitis case report, what a bezoar search did and did not find, NHS when-to-get-help (22c48d7) | no; no |
+| 6 | do people bite their toenails | infection and ingrown-nail section (StatPearls, NHS); first heading in query form | page 1 (about 7th); no |
+| 7 | grow nails after biting | untouched on purpose (top clicker, frozen) | no; no |
+| 8 | nail biting vitamin deficiency | untouched on purpose (top clicker, frozen) | no; no |
+| 9 | finger tape | untouched until 2026-11-27 | page 1 (about 11th); no |
+| 10 | acrylics to stop nail biting | untouched (Perplexity already cites it) | no; Perplexity cites us |
+| 11 | smartwatch for nail biting | leads with the smartwatch apps (BiteLess, KeenLite, NailGuard), registered trial, Keen3 status | page 1 (about 8th); no |
+| 12 | nail biting app | best-apps post: dated phone-app section, 11-row table | no (store-listing SERP); no |
+| 13 | how to stop nail biting | lead names the 1980 and 2003 trials with limits (series 7) | no; no |
+| 14 | why do people bite their nails | none; citability audit: fine | no; no |
+| 15 | nail biting (head term) | none; bfrb-guide lead already attributes TLC | no; no |
+| 16 | nail biting treatment / cure | not edited: the treatment lead is framing, the cure lead states a basal-ganglia claim with no source in the lead. Low value: AAD, NIH, Cleveland Clinic hold the SERP | no; no |
+| 17 | habit reversal training | step table, competing-response tests, trial dose table, supporter role, Azrin named | no; no |
+| 18 | nail biting in children | none; audit: strongest lead after cancer | no; no |
+| 19 | onychophagia | lead carries the DSM-5 category with its source (series 7) | no; no |
+| 20 | bitter nail polish | review corrected and dated; evidence-first lead (series 7) | no (page 1 elsewhere: Amazon, Manucurist); no |
+
+Next measurement: re-run `serp-baseline.md` on 2026-11-24 and 2026-12-08. Off-site targets: `docs/off-site-kit/roundup-targets-2026-11-11.md` (research lane running 2026-11-11).

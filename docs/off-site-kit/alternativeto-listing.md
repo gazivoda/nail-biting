@@ -89,7 +89,7 @@ After the listing is approved, use "Suggest alternatives":
 |---|---|---|
 | Hands Off (`hands-off-1`) | Same mechanism (on-device webcam AI for BFRBs, Mac/Windows). Its listing has 0 alternatives — you'd be the first. | Listing verified Aug 2026 |
 | StopBite | Same goal, different mechanism (manual iOS logging vs automatic detection). | On Product Hunt; not seen on AlternativeTo — suggest as new app if the flow allows |
-| Nailed (nailedapp.io) | Same MediaPipe-in-WASM approach, $4.99 one-time macOS menu bar app. | Facts verified on nailedapp.io Aug 2026 (see site's compare pages); not seen on AlternativeTo |
+| Nailed (nailedapp.io) | Same MediaPipe-in-WASM approach, macOS-only app, listed as "Free" with a Mac App Store download button on nailedapp.io (read 2026-11-11; it advertised $4.99 one-time in Aug-Sep 2026, and our compare page says so). | Re-verified 2026-11-11; not seen on AlternativeTo |
 | SmartBehavior | Mobile (iPhone/Android) detection app — the mobile counterpart. | Covered on site's compare pages; not seen on AlternativeTo |
 
 Do **not** register Stop Biting as an alternative to bitter polishes or physical
